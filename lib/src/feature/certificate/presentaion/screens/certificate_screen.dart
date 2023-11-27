@@ -1,10 +1,8 @@
-import 'package:demo/src/core/constants/app_theme.dart';
-import 'package:demo/src/core/constants/common_imports.dart';
-import 'package:flutter/material.dart';
-
+import '../../../../core/constants/common_imports.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../widgets/certificate_card.dart';
-class CertificateScreen extends StatelessWidget with AppTheme{
+
+class CertificateScreen extends StatelessWidget with AppTheme {
   const CertificateScreen({super.key});
 
   @override
@@ -36,12 +34,12 @@ class CertificateScreen extends StatelessWidget with AppTheme{
           ),
         ),
         child: const SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: Column(
             children: [
               CertificateCard(),
               CertificateCard(),
               CertificateCard(),
-
             ],
           ),
         ));

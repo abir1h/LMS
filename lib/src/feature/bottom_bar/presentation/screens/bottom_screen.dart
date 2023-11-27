@@ -22,9 +22,6 @@ class _BottomScreenState extends State<BottomScreen> with AppTheme {
     Container(),
     Container(),
     const ProfileScreen(),
-    // const ProfileScreen(),
-    // Container(),
-    const ProfileScreen(),
   ];
   @override
   void initState() {
@@ -39,7 +36,8 @@ class _BottomScreenState extends State<BottomScreen> with AppTheme {
       children: [
         Expanded(
           child: PageView.builder(
-            controller: _pageController,allowImplicitScrolling: false,scrollBehavior: ScrollBehavior(),
+            controller: _pageController, allowImplicitScrolling: false,
+            scrollBehavior: ScrollBehavior(),
             physics: const NeverScrollableScrollPhysics(),
             onPageChanged: (index) {
               setState(() {

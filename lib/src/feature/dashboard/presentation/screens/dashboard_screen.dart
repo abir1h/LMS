@@ -94,11 +94,6 @@ class _DashboardScreenState extends State<DashboardScreen> with AppTheme {
                 CourseCard(
                   onPressed: () => Get.toNamed(AppRoutes.ongoingCourse),
                   image: Image.asset("assets/images/image.png"),
-                  // image: SvgPicture.asset(
-                  //   ImageAssets.imgRunningCourse,
-                  //   width: 66.w,
-                  //   fit: BoxFit.cover,
-                  // ),
                   text1: StringData.cardText1,
                   text2: StringData.cardText2,
                   text3: StringData.cardText3,
@@ -108,7 +103,7 @@ class _DashboardScreenState extends State<DashboardScreen> with AppTheme {
                 RowItemTemplate(
                     leftChild: DashboardCard(
                       text1: StringData.dashboardCard1,
-                      onPressed: () {},
+                      onPressed: () => Get.toNamed(AppRoutes.ongoingCourse),
                       text2: StringData.dashboardCardValue1,
                       borderColor: clr.cardStrokeColorOrange,
                       primaryColor: clr.cardFillColorOrange,
@@ -119,7 +114,7 @@ class _DashboardScreenState extends State<DashboardScreen> with AppTheme {
                     ),
                     rightChild: DashboardCard(
                       text1: StringData.dashboardCard2,
-                      onPressed: () {},
+                      onPressed: () => Get.toNamed(AppRoutes.ongoingCourse),
                       text2: StringData.dashboardCardValue2,
                       borderColor: clr.cardStrokeColorGreen,
                       primaryColor: clr.cardFillColorGreen,
@@ -157,7 +152,7 @@ class _DashboardScreenState extends State<DashboardScreen> with AppTheme {
                 SizedBox(height: size.h32),
                 const CustomTextWidgets(text: StringData.karjo),
                 SizedBox(height: size.h12),
-                const LineChartSample2(),
+                const GraphChart(),
                 SizedBox(height: size.h20),
                 const CustomTextWidgets(text: StringData.noticeBoard),
                 SizedBox(height: size.h12),
@@ -169,151 +164,9 @@ class _DashboardScreenState extends State<DashboardScreen> with AppTheme {
                     ),
                     title: StringData.notice1),
                 SizedBox(height: size.h32),
-
-
-                /*LineChartSample2(),
-                Shimmer.fromColors(
-                  baseColor: Colors.grey.withOpacity(.4),
-                  highlightColor: Colors.grey.shade100,
-                  child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      BannerPlaceholder(),
-                      TitlePlaceholder(width: double.infinity),
-                      SizedBox(height: 16.0),
-                      ContentPlaceholder(
-                        lineType: ContentLineType.threeLines,
-                      ),
-                      SizedBox(height: 16.0),
-                      TitlePlaceholder(width: 200.0),
-                      SizedBox(height: 16.0),
-                      ContentPlaceholder(
-                        lineType: ContentLineType.twoLines,
-                      ),
-                      SizedBox(height: 16.0),
-                      TitlePlaceholder(width: 200.0),
-                      SizedBox(height: 16.0),
-                      ContentPlaceholder(
-                        lineType: ContentLineType.twoLines,
-                      ),
-                    ],
-                  ),
-                  ),*/
               ],
             ),
           ),
         ));
   }
 }
-
-/*class BannerPlaceholder extends StatelessWidget {
-  const BannerPlaceholder({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 200.0,
-      margin: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.0),
-        color: Colors.white,
-      ),
-    );
-  }
-}
-
-class TitlePlaceholder extends StatelessWidget {
-  final double width;
-
-  const TitlePlaceholder({
-    Key? key,
-    required this.width,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: width,
-            height: 12.0,
-            color: Colors.white,
-          ),
-          const SizedBox(height: 8.0),
-          Container(
-            width: width,
-            height: 12.0,
-            color: Colors.white,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-enum ContentLineType {
-  twoLines,
-  threeLines,
-}
-
-class ContentPlaceholder extends StatelessWidget {
-  final ContentLineType lineType;
-
-  const ContentPlaceholder({
-    Key? key,
-    required this.lineType,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            width: 96.0,
-            height: 72.0,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12.0),
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(width: 12.0),
-          Expanded(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: 10.0,
-                  color: Colors.white,
-                  margin: const EdgeInsets.only(bottom: 8.0),
-                ),
-                if (lineType == ContentLineType.threeLines)
-                  Container(
-                    width: double.infinity,
-                    height: 10.0,
-                    color: Colors.white,
-                    margin: const EdgeInsets.only(bottom: 8.0),
-                  ),
-                Container(
-                  width: 100.0,
-                  height: 10.0,
-                  color: Colors.white,
-                )
-              ],
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}*/

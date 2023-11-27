@@ -89,7 +89,7 @@ mixin CustomDialogWidget {
                                           leftButtonText,
                                           style: TextStyle(
                                               color: ThemeColor.instance
-                                                  .appSecondaryColorFlagRed,
+                                                  .appPrimaryColorGreen,
                                               fontSize:
                                                   ThemeSize.instance.textSmall,
                                               fontWeight: FontWeight.w500,

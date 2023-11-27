@@ -1,59 +1,77 @@
-import 'package:demo/src/core/constants/app_theme.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class LineChartSample2 extends StatefulWidget {
-  const LineChartSample2({super.key});
+import '../../../../core/constants/common_imports.dart';
+
+class GraphChart extends StatefulWidget {
+  const GraphChart({super.key});
 
   @override
-  State<LineChartSample2> createState() => _LineChartSample2State();
+  State<GraphChart> createState() => _GraphChartState();
 }
 
-class _LineChartSample2State extends State<LineChartSample2> with AppTheme {
+class _GraphChartState extends State<GraphChart> with AppTheme {
+  double maxX = 5.0;
+  double maxY = 4.0;
   List<FlSpot> dynamicData = [
     const FlSpot(0, 0),
-    const FlSpot(2, 7),
-    const FlSpot(4, 0),
-    const FlSpot(7, 9),
-    const FlSpot(8, 9),
-    const FlSpot(9, 10),
-    const FlSpot(9, 11),
-    const FlSpot(11, 11),
+    const FlSpot(1.5, 3),
+    const FlSpot(2.5, 0),
+    const FlSpot(5, 4),
   ];
   bool showAvg = false;
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        AspectRatio(
-          aspectRatio: 1.70,
-          child: Padding(
-            padding: EdgeInsets.only(right: size.w16),
-            child: LineChart(mainData()),
-          ),
-        ),
-      ],
+    return AspectRatio(
+      aspectRatio: 1.7,
+      child: Padding(
+        padding: EdgeInsets.only(right: size.w16),
+        child: LineChart(mainData()),
+      ),
     );
   }
 
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
-    const style = TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 12,
-    );
+    final TextStyle style = TextStyle(
+        fontWeight: FontWeight.w400,
+        fontSize: size.textXXSmall,
+        fontFamily: StringData.fontFamilyInter,
+        color: clr.textColorBlack);
     Widget text;
     switch (value.toInt()) {
       case 1:
         text = Column(
           children: [
             Container(
-              color: Colors.black,
-              height: 8.h,
+              color: clr.textColorAppleBlack,
+              height: 9.h,
               width: 1.w,
             ),
-            const Text('সপ্তাহ ১', style: style),
+            Text('সপ্তাহ ১', style: style),
+          ],
+        );
+        break;
+      case 2:
+        text = Column(
+          children: [
+            Container(
+              color: clr.textColorAppleBlack,
+              height: 9.h,
+              width: 1.w,
+            ),
+            Text('সপ্তাহ ২', style: style),
+          ],
+        );
+        break;
+      case 3:
+        text = Column(
+          children: [
+            Container(
+              color: clr.textColorAppleBlack,
+              height: 9.h,
+              width: 1.w,
+            ),
+            Text('সপ্তাহ ৩', style: style),
           ],
         );
         break;
@@ -61,11 +79,35 @@ class _LineChartSample2State extends State<LineChartSample2> with AppTheme {
         text = Column(
           children: [
             Container(
-              color: Colors.black,
-              height: 8.h,
+              color: clr.textColorAppleBlack,
+              height: 9.h,
               width: 1.w,
             ),
-            const Text('সপ্তাহ ২', style: style),
+            Text('সপ্তাহ ৪', style: style),
+          ],
+        );
+        break;
+      case 5:
+        text = Column(
+          children: [
+            Container(
+              color: clr.textColorAppleBlack,
+              height: 9.h,
+              width: 1.w,
+            ),
+            Text('সপ্তাহ 5', style: style),
+          ],
+        );
+        break;
+      case 6:
+        text = Column(
+          children: [
+            Container(
+              color: clr.textColorAppleBlack,
+              height: 9.h,
+              width: 1.w,
+            ),
+            Text('সপ্তাহ 6', style: style),
           ],
         );
         break;
@@ -73,40 +115,28 @@ class _LineChartSample2State extends State<LineChartSample2> with AppTheme {
         text = Column(
           children: [
             Container(
-              color: Colors.black,
+              color: clr.textColorAppleBlack,
               height: 8.h,
               width: 1.w,
             ),
-            const Text('সপ্তাহ ৩', style: style),
+            Text('সপ্তাহ 7', style: style),
           ],
         );
         break;
-      case 9:
+      case 8:
         text = Column(
           children: [
             Container(
-              color: Colors.black,
+              color: clr.textColorAppleBlack,
               height: 8.h,
               width: 1.w,
             ),
-            const Text('সপ্তাহ ৪', style: style),
-          ],
-        );
-        break;
-      case 11:
-        text = Column(
-          children: [
-            Container(
-              color: Colors.black,
-              height: 8.h,
-              width: 1.w,
-            ),
-            const Text('সপ্তাহ 5', style: style),
+            Text('সপ্তাহ 8', style: style),
           ],
         );
         break;
       default:
-        text = const Text('', style: style);
+        text = Text('', style: style);
         break;
     }
 
@@ -117,24 +147,26 @@ class _LineChartSample2State extends State<LineChartSample2> with AppTheme {
   }
 
   Widget leftTitleWidgets(double value, TitleMeta meta) {
-    const style = TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 15,
-    );
+    final TextStyle style = TextStyle(
+        fontWeight: FontWeight.w100,
+        fontSize: size.textXXSmall,
+        fontFamily: StringData.fontFamilyInter,
+        color: clr.textColorBlack,
+        fontStyle: FontStyle.italic);
     String text;
     switch (value.toInt()) {
       case 0:
         text = '০%';
         break;
-      case 3:
+      case 1:
         text = '২৫%';
         break;
-      case 6:
+      case 2:
         text = '৫০%';
         break;
-      case 8:
+      case 3:
         text = '৭৫%';
-      case 11:
+      case 4:
         text = '১০০%';
         break;
       default:
@@ -153,13 +185,13 @@ class _LineChartSample2State extends State<LineChartSample2> with AppTheme {
         verticalInterval: 1,
         getDrawingHorizontalLine: (value) {
           return FlLine(
-              color: Colors.grey.withOpacity(.2),
+              color: clr.placeHolderTextColorGray,
               strokeWidth: 1,
-              dashArray: [1, 2]);
+              dashArray: [2, 3]);
         },
         getDrawingVerticalLine: (value) {
           return const FlLine(
-            color: Colors.white,
+            color: Colors.transparent,
             strokeWidth: 1,
           );
         },
@@ -191,12 +223,12 @@ class _LineChartSample2State extends State<LineChartSample2> with AppTheme {
       ),
       borderData: FlBorderData(
         show: true,
-        border: Border.all(color: const Color(0x2f37434d)),
+        border: Border.all(color: clr.placeHolderTextColorGray),
       ),
       minX: 0,
-      maxX: 11,
+      maxX: maxX,
       minY: 0,
-      maxY: 11,
+      maxY: maxY,
       lineBarsData: [
         LineChartBarData(
           spots: dynamicData,
