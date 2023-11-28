@@ -42,11 +42,7 @@ class _GraphChartState extends State<GraphChart> with AppTheme {
       case 1:
         text = Column(
           children: [
-            Container(
-              color: clr.textColorAppleBlack,
-              height: 9.h,
-              width: 1.w,
-            ),
+            verticalLine(),
             Text('সপ্তাহ ১', style: style),
           ],
         );
@@ -54,11 +50,7 @@ class _GraphChartState extends State<GraphChart> with AppTheme {
       case 2:
         text = Column(
           children: [
-            Container(
-              color: clr.textColorAppleBlack,
-              height: 9.h,
-              width: 1.w,
-            ),
+            verticalLine(),
             Text('সপ্তাহ ২', style: style),
           ],
         );
@@ -66,11 +58,7 @@ class _GraphChartState extends State<GraphChart> with AppTheme {
       case 3:
         text = Column(
           children: [
-            Container(
-              color: clr.textColorAppleBlack,
-              height: 9.h,
-              width: 1.w,
-            ),
+            verticalLine(),
             Text('সপ্তাহ ৩', style: style),
           ],
         );
@@ -78,11 +66,7 @@ class _GraphChartState extends State<GraphChart> with AppTheme {
       case 4:
         text = Column(
           children: [
-            Container(
-              color: clr.textColorAppleBlack,
-              height: 9.h,
-              width: 1.w,
-            ),
+            verticalLine(),
             Text('সপ্তাহ ৪', style: style),
           ],
         );
@@ -90,11 +74,7 @@ class _GraphChartState extends State<GraphChart> with AppTheme {
       case 5:
         text = Column(
           children: [
-            Container(
-              color: clr.textColorAppleBlack,
-              height: 9.h,
-              width: 1.w,
-            ),
+            verticalLine(),
             Text('সপ্তাহ 5', style: style),
           ],
         );
@@ -102,11 +82,7 @@ class _GraphChartState extends State<GraphChart> with AppTheme {
       case 6:
         text = Column(
           children: [
-            Container(
-              color: clr.textColorAppleBlack,
-              height: 9.h,
-              width: 1.w,
-            ),
+            verticalLine(),
             Text('সপ্তাহ 6', style: style),
           ],
         );
@@ -114,11 +90,7 @@ class _GraphChartState extends State<GraphChart> with AppTheme {
       case 7:
         text = Column(
           children: [
-            Container(
-              color: clr.textColorAppleBlack,
-              height: 8.h,
-              width: 1.w,
-            ),
+            verticalLine(),
             Text('সপ্তাহ 7', style: style),
           ],
         );
@@ -126,11 +98,7 @@ class _GraphChartState extends State<GraphChart> with AppTheme {
       case 8:
         text = Column(
           children: [
-            Container(
-              color: clr.textColorAppleBlack,
-              height: 8.h,
-              width: 1.w,
-            ),
+            verticalLine(),
             Text('সপ্তাহ 8', style: style),
           ],
         );
@@ -174,6 +142,14 @@ class _GraphChartState extends State<GraphChart> with AppTheme {
     }
 
     return Text(text, style: style, textAlign: TextAlign.left);
+  }
+
+  Widget verticalLine() {
+    return Container(
+      color: clr.textColorAppleBlack,
+      height: 9.h,
+      width: 1.w,
+    );
   }
 
   LineChartData mainData() {
