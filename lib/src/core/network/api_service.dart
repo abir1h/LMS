@@ -13,7 +13,7 @@ class ApiService {
   Future<dynamic> getRequest(String url) async {
     appPrint('url ${ApiCredential.baseUrl + url}');
     try {
-      final response = await _baseClient.client.get(url);
+      final response = await _baseClient.authenticatedClient.get(url);
       return _returnResponse(response);
     } on DioException catch (e) {
       if (e.response != null) {
@@ -28,7 +28,7 @@ class ApiService {
   Future<dynamic> postRequest(String url, dynamic body) async {
     appPrint('url ${ApiCredential.baseUrl + url}');
     try {
-      final response = await _baseClient.client.post(
+      final response = await _baseClient.authenticatedClient.post(
         url,
         data: jsonEncode(body),
       );

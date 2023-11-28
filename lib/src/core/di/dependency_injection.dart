@@ -1,6 +1,9 @@
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../feature/profile/data/data_sources/remote/profile_data_source.dart';
+import '../../feature/profile/data/repositories/profile_repository_imp.dart';
+import '../../feature/profile/domain/repositories/profile_repository.dart';
 import '../../feature/authentication/data/data_sources/remote/auth_data_source.dart';
 import '../../feature/authentication/data/repositories/auth_repository_imp.dart';
 import '../../feature/authentication/domain/repositories/auth_repository.dart';
@@ -18,6 +21,9 @@ void setup(){
   locator.registerSingleton(BaseHttpClient());
   locator.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImp(authRemoteDataSource: AuthRemoteDataSourceImp()),
+  );
+  locator.registerLazySingleton<ProfileRepository>(
+        () => ProfileRepositoryImp(profileRemoteDataSource: ProfileRemoteDataSourceImp()),
   );
 }
 

@@ -5,4 +5,7 @@ class ApiCredential {
   static String apiKey = "";
 
   static String userLogin = "/login";
+  static String userProfile = "/profile";
+  static String userDashboard = "/dashboard";
+
 }

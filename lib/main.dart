@@ -6,8 +6,8 @@ import 'src/feature/app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  setup();
   await initLocalServices();
- await App.getCurrentLanguage();
+  setup();
+  await App.getCurrentLanguage();
   runApp(const Application());
 }
