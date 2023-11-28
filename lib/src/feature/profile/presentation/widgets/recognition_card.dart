@@ -2,8 +2,14 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/constants/common_imports.dart';
 
-class CertificateCard extends StatelessWidget with AppTheme {
-  const CertificateCard({Key? key}) : super(key: key);
+class RecognitionCard extends StatelessWidget with AppTheme {
+  final String title, time, description;
+  const RecognitionCard(
+      {Key? key,
+      required this.title,
+      required this.time,
+      required this.description})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,25 +28,16 @@ class CertificateCard extends StatelessWidget with AppTheme {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "পাঠ্যক্রম",
+                  title,
                   style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: size.textSmall,
-                      fontFamily: StringData.fontFamilyInter,
+                      fontFamily: StringData.fontFamilyPoppins,
                       color: clr.appPrimaryColorGreen),
                 ),
                 SizedBox(height: size.h8),
                 Text(
-                  "শিখন ক্ষেত্র ১ :  শিক্ষা নীতি ও শিক্ষায় ব্যাবস্থাপনা",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: size.textSmall,
-                      fontFamily: StringData.fontFamilyPoppins,
-                      color: clr.textColorBlack),
-                ),
-                SizedBox(height: size.h8),
-                Text(
-                  "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩",
+                  time,
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: size.textXXSmall,
@@ -48,13 +45,24 @@ class CertificateCard extends StatelessWidget with AppTheme {
                       color: clr.textColorBlack),
                 ),
                 SizedBox(height: size.h8),
-                Text(
-                  "স্বীকৃতিপত্র .pdf",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: size.textSmall,
-                      fontFamily: StringData.fontFamilyRoboto,
-                      color: clr.appPrimaryColorGreen),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.picture_as_pdf_outlined,
+                      color: clr.appSecondaryColorFlagRed,
+                    ),
+                    SizedBox(
+                      width: size.w8,
+                    ),
+                    Text(
+                      description,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: size.textSmall,
+                          fontFamily: StringData.fontFamilyRoboto,
+                          color: clr.appPrimaryColorGreen),
+                    ),
+                  ],
                 ),
               ],
             ),

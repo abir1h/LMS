@@ -1,13 +1,8 @@
 import 'package:get/get.dart';
 
-
-class CertificateController extends GetxController {
-
-
+class NotificationController extends GetxController {
   @override
   void onInit() {
-
     super.onInit();
   }
-
 }

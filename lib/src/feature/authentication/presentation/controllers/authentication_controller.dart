@@ -77,6 +77,7 @@ class AuthenticationController extends GetxController with AppTheme {
   bool validateLoginForeignFormData(
       TextEditingController userId, TextEditingController pass
       ) {
+
     if (Validator.isEmpty(userId.text)) {
       Get.snackbar(
         "Error",

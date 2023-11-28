@@ -1,3 +1,4 @@
+import 'package:demo/src/core/routes/app_routes.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
@@ -6,7 +7,7 @@ import '../../../../core/common_widgets/custom_switch_button.dart';
 import '../../../../core/common_widgets/drawer_widget.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/common_widgets/custom_app_bar.dart';
-import '../../../../core/routes/app_routes.dart';
+import '../widgets/recognition_widget.dart';
 import '../../../../core/utility/app_label.dart';
 
 class ProfileScreen extends StatefulWidget with AppTheme {
@@ -25,6 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen> with AppTheme {
       key: _scaffoldKey,
       backgroundColor: clr.iconColorWhiteIce,
       drawer: const DrawerWidget(),
+      endDrawer: const RecognitionWidget(),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(size.h56),
         child: CustomAppBar(
@@ -38,26 +40,29 @@ class _ProfileScreenState extends State<ProfileScreen> with AppTheme {
           primaryColor: Colors.white,
           toolbarHeight: size.h56,
           trailingOnPressed: () {},
-          trailing: Stack(
-            children: [
-              Icon(
-                Icons.notifications,
-                color: clr.appPrimaryColorGreen,
-                size: size.r24,
-              ),
-              Positioned(
-                right: -1,
-                top: 2.w,
-                child: Container(
-                  width: size.w12,
-                  height: size.h12,
-                  decoration: BoxDecoration(
-                      color: clr.appPrimaryColorGreen,
-                      shape: BoxShape.circle,
-                      border: Border.all(color: clr.whiteColor)),
+          trailing: GestureDetector(
+            onTap: () => Get.toNamed(AppRoutes.notification),
+            child: Stack(
+              children: [
+                Icon(
+                  Icons.notifications,
+                  color: clr.appPrimaryColorGreen,
+                  size: size.r24,
                 ),
-              ),
-            ],
+                Positioned(
+                  right: -1,
+                  top: 2.w,
+                  child: Container(
+                    width: size.w12,
+                    height: size.h12,
+                    decoration: BoxDecoration(
+                        color: clr.appPrimaryColorGreen,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: clr.whiteColor)),
+                  ),
+                ),
+              ],
+            ),
           ),
           leading: Icon(
             Icons.menu,
@@ -181,7 +186,7 @@ class _ProfileScreenState extends State<ProfileScreen> with AppTheme {
                             e: StringData.emailTextEn,
                             b: StringData.emailTextBn)),
                     TitleWithIcon(
-                      onTap: () => Get.toNamed(AppRoutes.certificate),
+                      onTap: () => _scaffoldKey.currentState!.openEndDrawer(),
                       svgIcon: ImageAssets.icEditorChoice,
                       title: label(
                           e: StringData.certificateTextEn,
