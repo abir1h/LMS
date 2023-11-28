@@ -1,10 +1,10 @@
-import 'package:demo/src/feature/ongoing_course/presentation/controllers/ongoing_course_controller.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/routes/app_routes.dart';
+import '../controllers/ongoing_course_controller.dart';
 
 class OngoingCourseScreen extends StatefulWidget with AppTheme {
   const OngoingCourseScreen({super.key});
@@ -17,6 +17,7 @@ class _OngoingCourseScreenState extends State<OngoingCourseScreen>
     with AppTheme {
   final OngoingCourseController controller =
       Get.find<OngoingCourseController>();
+
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(

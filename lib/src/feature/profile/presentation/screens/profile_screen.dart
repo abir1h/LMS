@@ -1,10 +1,12 @@
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 import '../../../../core/common_widgets/custom_dialog_widget.dart';
 import '../../../../core/common_widgets/custom_switch_button.dart';
 import '../../../../core/common_widgets/drawer_widget.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/common_widgets/custom_app_bar.dart';
+import '../../../../core/routes/app_routes.dart';
 import '../../../../core/utility/app_label.dart';
 
 class ProfileScreen extends StatefulWidget with AppTheme {
@@ -179,6 +181,7 @@ class _ProfileScreenState extends State<ProfileScreen> with AppTheme {
                             e: StringData.emailTextEn,
                             b: StringData.emailTextBn)),
                     TitleWithIcon(
+                      onTap: () => Get.toNamed(AppRoutes.certificate),
                       svgIcon: ImageAssets.icEditorChoice,
                       title: label(
                           e: StringData.certificateTextEn,
