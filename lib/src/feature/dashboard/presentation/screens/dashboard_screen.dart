@@ -114,7 +114,7 @@ class _DashboardScreenState extends State<DashboardScreen> with AppTheme {
                     ),
                     rightChild: DashboardCard(
                       text1: StringData.dashboardCard2,
-                      onPressed: () => Get.toNamed(AppRoutes.ongoingCourse),
+                      onPressed: () => Get.toNamed(AppRoutes.profile),
                       text2: StringData.dashboardCardValue2,
                       borderColor: clr.cardStrokeColorGreen,
                       primaryColor: clr.cardFillColorGreen,
