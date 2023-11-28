@@ -26,7 +26,8 @@ class _ProfileScreenState extends State<ProfileScreen> with AppTheme {
       key: _scaffoldKey,
       backgroundColor: clr.iconColorWhiteIce,
       drawer: const DrawerWidget(),
-      endDrawer: RecognitionWidget(),
+      endDrawer: const RecognitionWidget(),
+      endDrawerEnableOpenDragGesture: false,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(size.h56),
         child: CustomAppBar(
