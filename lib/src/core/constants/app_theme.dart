@@ -1,6 +1,7 @@
-import 'package:demo/src/core/utility/color_tools.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../utility/color_tools.dart';
 
 mixin AppTheme {
   ThemeColor get clr => ThemeColor.instance;

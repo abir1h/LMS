@@ -1,7 +1,9 @@
-import 'package:demo/src/core/constants/app_theme.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
+
+import '../constants/common_imports.dart';
 
 class CustomVideoPlayer extends StatefulWidget {
   final String videoUrl;

@@ -1,7 +1,7 @@
-import 'package:demo/src/feature/certificate/presentaion/bindings/certificate_binding.dart';
 import 'package:get/route_manager.dart';
 
 import '../../feature/bottom_bar/presentation/screens/bottom_screen.dart';
+import '../../feature/certificate/presentaion/bindings/certificate_binding.dart';
 import '../../feature/certificate/presentaion/screens/certificate_screen.dart';
 import '../../feature/dashboard/presentation/binding/dashboard_binding.dart';
 import '../../feature/dashboard/presentation/screens/dashboard_screen.dart';

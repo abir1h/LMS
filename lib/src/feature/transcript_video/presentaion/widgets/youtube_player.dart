@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-import 'package:demo/src/core/constants/app_theme.dart';
+import '../../../../core/constants/common_imports.dart';
+
 
 class CustomYoutubePlayer extends StatefulWidget {
   final String videoUrl;

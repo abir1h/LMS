@@ -1,5 +1,5 @@
-name: demo
-description: A new Flutter project.
+name: lms
+description: Learning management system.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
