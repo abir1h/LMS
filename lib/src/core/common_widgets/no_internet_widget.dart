@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../constants/common_imports.dart';
 
 class NoInternetWidget extends StatelessWidget with AppTheme {

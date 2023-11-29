@@ -1,8 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../constants/app_theme.dart';
 import '../constants/strings.dart';
-import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget with AppTheme {
   const CustomAppBar(

@@ -1,9 +1,12 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../../../../core/routes/app_routes.dart';
 import '../controllers/landing_controller.dart';
 import '../widgets/module_card_widget.dart';
 import '../widgets/row_item_template.dart';
 import '../../../../core/constants/common_imports.dart';
+
 class LandingScreen extends StatefulWidget {
   const LandingScreen({super.key});
 

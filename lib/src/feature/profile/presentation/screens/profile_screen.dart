@@ -1,4 +1,5 @@
-import 'package:demo/src/core/routes/app_routes.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
@@ -7,6 +8,7 @@ import '../../../../core/common_widgets/custom_switch_button.dart';
 import '../../../../core/common_widgets/drawer_widget.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/common_widgets/custom_app_bar.dart';
+import '../../../../core/routes/app_routes.dart';
 import '../widgets/recognition_widget.dart';
 import '../../../../core/utility/app_label.dart';
 

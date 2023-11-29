@@ -1,4 +1,5 @@
 import 'auth_data_mapper.dart';
+
 import '../models/auth_response_model.dart';
 import '../../domain/entities/auth_response_entity.dart';
 
@@ -21,10 +22,9 @@ class _AuthResponseModelToEntityMapper
   @override
   AuthResponseEntity toEntityFromModel(AuthResponseModel model) {
     return AuthResponseEntity(
-      message: model.message,
-      data: model.data?.toAuthDataEntity,
-      errors: model.errors
-    );
+        message: model.message,
+        data: model.data?.toAuthDataEntity,
+        errors: model.errors);
   }
 }
 

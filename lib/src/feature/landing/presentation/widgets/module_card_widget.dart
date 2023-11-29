@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/common_widgets/custom_card_tile.dart';
 
