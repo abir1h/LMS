@@ -6,7 +6,8 @@ class AuthUseCase {
   AuthUseCase({required AuthRepository authRepository})
       : _authRepository = authRepository;
 
-  Future<AuthResponseEntity> userLoginUseCase(String pdsID, String password) async{
+  Future<AuthResponseEntity> userLoginUseCase(
+      String pdsID, String password) async {
     final response = _authRepository.userLogin(pdsID, password);
     return response;
   }

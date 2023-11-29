@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -138,9 +140,7 @@ class _DashboardScreenState extends State<DashboardScreen> with AppTheme {
                     ),
                     rightChild: DashboardCard(
                       text1: StringData.dashboardCard4,
-                      onPressed: () {
-
-                      },
+                      onPressed: () {},
                       text2: StringData.dashboardCardValue4,
                       borderColor: clr.cardFillColorBlue,
                       primaryColor: clr.cardStrokeColorBlue,

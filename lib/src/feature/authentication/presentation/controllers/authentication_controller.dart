@@ -1,8 +1,9 @@
 import 'dart:async';
-import '../../../../core/common_widgets/custom_action_button.dart';
-import '../../../../core/constants/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../../core/common_widgets/custom_action_button.dart';
+import '../../../../core/constants/app_theme.dart';
 import '../../../../core/config/local_storage_services.dart';
 import '../../../../core/constants/strings.dart';
 import '../../../../core/routes/app_routes.dart';
@@ -22,12 +23,14 @@ class AuthenticationController extends GetxController with AppTheme {
   final passwordEditingController = TextEditingController(text: "password");
   late final FocusNode userIdFocusNode = FocusNode();
   late final FocusNode passFocusNode = FocusNode();
-  CustomActionButtonController buttonController=CustomActionButtonController();
+  CustomActionButtonController buttonController =
+      CustomActionButtonController();
 
   @override
   void onInit() async {
     super.onInit();
   }
+
   @override
   void dispose() {
     userIdEditingController.dispose();
@@ -46,22 +49,24 @@ class AuthenticationController extends GetxController with AppTheme {
   }
 
   Future<void> loginUserAccount(String userId, String password) async {
-
     final authorization =
         await _authenticationUseCase.userLoginUseCase(userId, password);
     if (authorization.errors == null) {
       buttonController.successTap();
-      Future.delayed(const Duration(milliseconds: 800)).then((value){
+      Future.delayed(const Duration(milliseconds: 800)).then((value) {
         if (authorization.data != null &&
             authorization.data!.accessToken.isNotEmpty) {
           appPrint(authorization.data!.accessToken);
           appPrint(authorization.data!.refreshToken);
           _saveUserInfo(
-              authorization.data!.accessToken, authorization.data!.refreshToken, authorization.data!.role, authorization.data!.permissions.toString());
+              authorization.data!.accessToken,
+              authorization.data!.refreshToken,
+              authorization.data!.role,
+              authorization.data!.permissions.toString());
           // _saveUser(email);
           Get.offNamed(AppRoutes.landing);
         }
-      } );
+      });
     } else {
       buttonController.errorTap();
       Get.snackbar(
@@ -75,9 +80,7 @@ class AuthenticationController extends GetxController with AppTheme {
   }
 
   bool validateLoginForeignFormData(
-      TextEditingController userId, TextEditingController pass
-      ) {
-
+      TextEditingController userId, TextEditingController pass) {
     if (Validator.isEmpty(userId.text)) {
       Get.snackbar(
         "Error",
@@ -87,10 +90,10 @@ class AuthenticationController extends GetxController with AppTheme {
         backgroundColor: clr.whiteColor,
       );
       return false;
-    }else if (Validator.isEmpty(pass.text)) {
+    } else if (Validator.isEmpty(pass.text)) {
       Get.snackbar(
         "Error",
-       "Password is empty !",
+        "Password is empty !",
         icon: const Icon(Icons.error, color: Colors.black),
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: clr.whiteColor,
@@ -100,7 +103,6 @@ class AuthenticationController extends GetxController with AppTheme {
       return true;
     }
   }
-
 
   _saveUserInfo(String accessToken, String refreshToken, String userRole,
       String userPermission) {

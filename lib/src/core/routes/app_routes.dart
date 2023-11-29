@@ -1,10 +1,10 @@
-import 'package:demo/src/feature/notification/presentation/bindings/notification_binding.dart';
-import 'package:demo/src/feature/notification/presentation/screens/notification_screen.dart';
 import 'package:get/route_manager.dart';
 
 import '../../feature/bottom_bar/presentation/screens/bottom_screen.dart';
 import '../../feature/dashboard/presentation/binding/dashboard_binding.dart';
 import '../../feature/dashboard/presentation/screens/dashboard_screen.dart';
+import '../../feature/notification/presentation/bindings/notification_binding.dart';
+import '../../feature/notification/presentation/screens/notification_screen.dart';
 import '../../feature/splash/presentation/bindings/splash_binding.dart';
 import '../../feature/splash/presentation/screens/splash_screen.dart';
 import '../../feature/authentication/presentation/bindings/authentication_binding.dart';
@@ -84,7 +84,8 @@ class AppPages {
       page: () => const TranscriptVideoScreen(),
       binding: TranscriptVideoBinding(),
       transition: Transition.rightToLeft,
-    ),GetPage(
+    ),
+    GetPage(
       name: AppRoutes.notification,
       page: () => const NotificationScreen(),
       binding: NotificationBinding(),

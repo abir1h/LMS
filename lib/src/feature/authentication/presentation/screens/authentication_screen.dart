@@ -1,15 +1,14 @@
-import 'package:demo/src/core/common_widgets/custom_button.dart';
-import 'package:demo/src/core/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../../core/common_widgets/custom_action_button.dart';
+import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/custom_switch_button.dart';
 import '../../../../core/common_widgets/text_field_widget.dart';
 import '../../../../core/constants/app_theme.dart';
 import '../../../../core/constants/image_assets.dart';
 import '../../../../core/constants/strings.dart';
+import '../../../../core/routes/app_routes.dart';
 import '../controllers/authentication_controller.dart';
 
 class AuthenticationScreen extends StatefulWidget {
@@ -159,7 +158,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
                                           )),
                                     )),
                                 SizedBox(height: size.h24),
-                              /*  CustomActionButton(
+                                /*  CustomActionButton(
                                     title: StringData.loginText,
                                     controller: authenticationController
                                         .buttonController,
@@ -171,7 +170,9 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
                                                 .passwordEditingController),
                                     onSuccess: (e) {},
                                     tapAction: _sendAuthRequest),*/
-                                CustomButton(onTap: ()=>Get.toNamed(AppRoutes.landing ), title: 'Login')
+                                CustomButton(
+                                    onTap: () => Get.toNamed(AppRoutes.landing),
+                                    title: 'Login')
                               ],
                             )),
                       ],
