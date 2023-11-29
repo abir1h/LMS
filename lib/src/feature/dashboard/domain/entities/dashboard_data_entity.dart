@@ -3,11 +3,11 @@ import 'curriculum_data_entity.dart';
 import 'current_module_data_entity.dart';
 
 class DashboardDataEntity{
-  final CurrentModuleDataEntity currentModuleData;
-  final CurriculumDataEntity curriculumData;
+  final CurrentModuleDataEntity? currentModuleData;
+  final CurriculumDataEntity? curriculumData;
   final int discussions;
   final int noticesCount;
-  final ActivityDurationDataEntity activityDurationData;
+  final ActivityDurationDataEntity? activityDurationData;
   final List<String> noticeboardList;
 
 

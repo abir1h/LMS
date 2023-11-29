@@ -1,6 +1,9 @@
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../feature/dashboard/data/data_sources/remote/dashboard_data_source.dart';
+import '../../feature/dashboard/data/repositories/dashboard_repository_imp.dart';
+import '../../feature/dashboard/domain/repositories/dashboard_repository.dart';
 import '../../feature/profile/data/data_sources/remote/profile_data_source.dart';
 import '../../feature/profile/data/repositories/profile_repository_imp.dart';
 import '../../feature/profile/domain/repositories/profile_repository.dart';
@@ -24,6 +27,9 @@ void setup(){
   );
   locator.registerLazySingleton<ProfileRepository>(
         () => ProfileRepositoryImp(profileRemoteDataSource: ProfileRemoteDataSourceImp()),
+  );
+  locator.registerLazySingleton<DashboardRepository>(
+        () => DashboardRepositoryImp(dashboardRemoteDataSource: DashboardRemoteDataSourceImp()),
   );
 }
 
