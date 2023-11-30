@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lms/src/feature/discussion/presentation/screens/discussion_screen.dart';
 
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/common_widgets/custom_expanded_text.dart';
@@ -101,7 +103,7 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                     ),
                     SizedBox(width: size.w16),
                     CustomButton(
-                      onTap: () {},
+                      onTap: onTapDiscussion,
                       icon: Icons.add,
                       title: 'আলোচনা',
                       textSize: size.textXXXSmall,
@@ -148,6 +150,13 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
           ),
         ),
       ),
+    );
+  }
+
+  void onTapDiscussion() {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (context) => const DiscussionScreen(),
     );
   }
 }
