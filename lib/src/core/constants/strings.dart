@@ -39,6 +39,7 @@ class StringData {
   static const String noFileFoundText = "ফাইল পাওয়া যায়নি";
   static const String backToHomeText = "হোমে ফিরে যান";
   static const String noInternetText = "ইন্টারনেট সংযোগ নেই";
+  static const String noInternetContentText = "সংযোগ ফিরে যেতে এই পদক্ষেপগুলি চেষ্টা করুন";
   static const String pageReloadText = "পেজটি রিলোড দিন";
 
   static const String userNameTextBn = "ব্যবহারকারীর নাম";
@@ -104,6 +105,6 @@ class StringData {
   static const String transcriptTitle2Description =
       "প্রযুক্তি বিশ্বজুড়ে মানুষের কাছে শিক্ষা দেওয়ার পদ্ধতিকে বদলে দিয়েছে আমরা এখন একটি আন্তঃসংযুক্ত বিশ্বে বাস করি যেখানে আনুষ্ঠানিক শিক্ষার ঐতিহ্যগত ধারণা, একটি একক শারীরিক অবস্থানে সংঘটিত হওয়া. প্রযুক্তি বিশ্বজুড়ে মানুষের কাছে শিক্ষা দেওয়ার পদ্ধতিকে বদলে দিয়েছে আমরা এখন একটি আন্তঃসংযুক্ত বিশ্বে বাস করি যেখানে আনুষ্ঠানিক শিক্ষার ঐতিহ্যগত ধারণা, একটি একক শারীরিক অবস্থানে সংঘটিত হওয়া | প্রযুক্তি বিশ্বজুড়ে মানুষের কাছে শিক্ষা দেওয়ার পদ্ধতিকে বদলে দিয়েছে আমরা এখন একটি আন্তঃসংযুক্ত বিশ্বে বাস করি যেখানে আনুষ্ঠানিক শিক্ষার ঐতিহ্যগত ধারণা, একটি একক শারীরিক অবস্থানে সংঘটিত হওয়া.";
 
-  static const String recognitionText= "স্বীকৃতিপত্র";
-  static const String notification= "নোটিফিকেশন";
+  static const String recognitionText = "স্বীকৃতিপত্র";
+  static const String notification = "নোটিফিকেশন";
 }
