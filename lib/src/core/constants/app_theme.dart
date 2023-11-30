@@ -27,6 +27,7 @@ class ThemeColor {
   Color get iconColorHint => HexColor("797979");
   Color get iconColorWhiteIce => HexColor("D1ECE4");
   Color get iconColorRed => HexColor("F27785");
+  Color get iconColorBlack => HexColor("1C1B1F");
 
   Color get textColorAppleBlack => HexColor("1D1D1F");
   Color get textColorBlack => HexColor("414141");
@@ -38,6 +39,7 @@ class ThemeColor {
   Color get cardStrokeColorGreen => HexColor("B7D37A");
   Color get cardStrokeColorPurple => HexColor("E5D9F7");
   Color get cardStrokeColorBlue => HexColor("BEDBED");
+  Color get dividerStrokeColorGrey => HexColor("B0B0B0");
 
   Color get fromBoxFillColor => HexColor("FCFFFE");
   Color get cardFillColorOrange => HexColor("FFE9D6");

@@ -23,6 +23,7 @@ class StringData {
   static const String authScreenContentText3 =
       "পূরণ করতে চায়| শিক্ষায় রাজনৈতিক গতির জন্য HSEA-এর মধ্যে সবচেয়ে গুরুত্বপূর্ণ অসুবিধাগুলি নেভিগেট করা যেতে পারে|";
   static const String userNameHintText = "ব্যবহারকারী আইডি";
+  static const String commentHintText = "এখানে কমেন্ট করুন...";
   static const String passwordHintText = "পাসওয়ার্ড";
   static const String loginText = "প্রবেশ করুন";
   static const String logoutTextBn = "প্রস্থান";
