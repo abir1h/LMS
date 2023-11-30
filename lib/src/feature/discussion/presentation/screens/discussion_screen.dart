@@ -156,7 +156,12 @@ class _DiscussionScreenState extends State<DiscussionScreen> with AppTheme {
                                       Icons.send,
                                       size: size.r24,
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () { _scrollController.animateTo(
+                                      0.0,
+                                      duration:
+                                      const Duration(milliseconds: 200),
+                                      curve: Curves.easeInOut,
+                                    );},
                                   ),
                                   onTaped: () {
 
