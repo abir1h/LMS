@@ -45,7 +45,7 @@ class _DashboardScreenState extends State<DashboardScreen> with AppTheme {
             automaticallyImplyLeading: false,
             primaryColor: Colors.white,
             toolbarHeight: size.h56,
-            trailingOnPressed: () {},
+            trailingOnPressed: () => Get.toNamed(AppRoutes.notification),
             trailing: Stack(
               children: [
                 Icon(

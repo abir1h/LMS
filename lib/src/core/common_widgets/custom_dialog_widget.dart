@@ -71,7 +71,7 @@ mixin CustomDialogWidget {
                                 ? const Offstage()
                                 : GestureDetector(
                                     onTap: () =>
-                                        Navigator.of(context).pop(false),
+                                        Navigator.of(context).pop(true),
                                     child: Container(
                                       width: double.infinity,
                                       padding: EdgeInsets.symmetric(
@@ -105,7 +105,7 @@ mixin CustomDialogWidget {
                           SizedBox(width: 12.w),
                           Expanded(
                             child: GestureDetector(
-                              onTap: () => Navigator.of(context).pop(true),
+                              onTap: () => Navigator.of(context).pop(false),
                               child: Container(
                                 width: double.infinity,
                                 padding: EdgeInsets.symmetric(

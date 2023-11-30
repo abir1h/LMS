@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:lms/src/core/common_widgets/no_internet_widget.dart';
 
 import '../../../../core/common_widgets/custom_dialog_widget.dart';
 import '../../../../core/common_widgets/custom_switch_button.dart';
@@ -9,6 +10,7 @@ import '../../../../core/common_widgets/drawer_widget.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/common_widgets/custom_app_bar.dart';
 import '../../../../core/routes/app_routes.dart';
+import '../../../landing/presentation/controllers/landing_controller.dart';
 import '../widgets/recognition_widget.dart';
 import '../../../../core/utility/app_label.dart';
 
@@ -42,30 +44,27 @@ class _ProfileScreenState extends State<ProfileScreen> with AppTheme {
           automaticallyImplyLeading: false,
           primaryColor: Colors.white,
           toolbarHeight: size.h56,
-          trailingOnPressed: () {},
-          trailing: GestureDetector(
-            onTap: () => Get.toNamed(AppRoutes.notification),
-            child: Stack(
-              children: [
-                Icon(
-                  Icons.notifications,
-                  color: clr.appPrimaryColorGreen,
-                  size: size.r24,
+          trailingOnPressed: () => Get.toNamed(AppRoutes.notification),
+          trailing: Stack(
+            children: [
+              Icon(
+                Icons.notifications,
+                color: clr.appPrimaryColorGreen,
+                size: size.r24,
+              ),
+              Positioned(
+                right: -1,
+                top: 2.w,
+                child: Container(
+                  width: size.w12,
+                  height: size.h12,
+                  decoration: BoxDecoration(
+                      color: clr.appPrimaryColorGreen,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: clr.whiteColor)),
                 ),
-                Positioned(
-                  right: -1,
-                  top: 2.w,
-                  child: Container(
-                    width: size.w12,
-                    height: size.h12,
-                    decoration: BoxDecoration(
-                        color: clr.appPrimaryColorGreen,
-                        shape: BoxShape.circle,
-                        border: Border.all(color: clr.whiteColor)),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
           leading: Icon(
             Icons.menu,
@@ -184,6 +183,7 @@ class _ProfileScreenState extends State<ProfileScreen> with AppTheme {
                             e: StringData.phoneNumberTextEn,
                             b: StringData.phoneNumberTextBn)),
                     TitleWithIcon(
+                        onTap: () {},
                         icon: Icons.email,
                         title: label(
                             e: StringData.emailTextEn,
@@ -223,7 +223,11 @@ class _ProfileScreenState extends State<ProfileScreen> with AppTheme {
           "আপনার কোর্সগুলো এবং মূল্যায়নের খবরের জন্য আপনার আইডি লগইন থাকা প্রয়োজন।",
       rightButtonText: "বাতিল করুন",
       leftButtonText: "প্রস্থান করুন",
-    );
+    ).then((value) {
+      if (value) {
+        Get.find<LandingController>().logout();
+      }
+    });
   }
 }
 
