@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/core/common_widgets/no_internet_widget.dart';
 
 import '../../../../core/common_widgets/custom_dialog_widget.dart';
 import '../../../../core/common_widgets/custom_switch_button.dart';
@@ -14,7 +13,7 @@ import '../../../landing/presentation/controllers/landing_controller.dart';
 import '../widgets/recognition_widget.dart';
 import '../../../../core/utility/app_label.dart';
 
-class ProfileScreen extends StatefulWidget with AppTheme {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
   @override
