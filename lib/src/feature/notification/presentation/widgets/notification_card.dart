@@ -7,19 +7,18 @@ class NotificationCard extends StatelessWidget with AppTheme {
   final Widget leading;
   final String title;
   final String time;
-  final Color? bgColor;
+  final bool seen;
   const NotificationCard(
       {super.key,
       required this.leading,
       required this.title,
-      this.bgColor = Colors.white,
-      required this.time});
+      required this.time,
+      this.seen = false});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 1.sw,
-      color: bgColor,
+      color: seen ? clr.shadeWhiteColor2 : clr.backgroundColorMintCream,
       padding: EdgeInsets.symmetric(horizontal: size.h16, vertical: size.h12),
       child: Row(
         mainAxisSize: MainAxisSize.max,
@@ -28,36 +27,34 @@ class NotificationCard extends StatelessWidget with AppTheme {
           leading,
           SizedBox(width: size.w16),
           Expanded(
-              flex: 1,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.justify,
-                    style: TextStyle(
-                        color: clr.textColorBlack,
-                        fontWeight: FontWeight.w500,
-                        fontSize: size.textSmall,
-                        fontFamily: StringData.fontFamilyPoppins),
-                  ),
-                  SizedBox(
-                    height: size.h8,
-                  ),
-                  Text(
-                    time,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.justify,
-                    style: TextStyle(
-                        color: clr.textColorBlack,
-                        fontWeight: FontWeight.w500,
-                        fontSize: size.textSmall,
-                        fontFamily: StringData.fontFamilyPoppins),
-                  ),
-                ],
-              ))
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                      color: clr.textColorBlack,
+                      fontWeight: FontWeight.w500,
+                      fontSize: size.textSmall,
+                      fontFamily: StringData.fontFamilyPoppins),
+                ),
+                SizedBox(height: size.h8),
+                Text(
+                  time,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                      color: clr.textColorBlack,
+                      fontWeight: FontWeight.w500,
+                      fontSize: size.textSmall,
+                      fontFamily: StringData.fontFamilyPoppins),
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );
