@@ -264,12 +264,12 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
                 top: 16,
                 child: CustomSwitchButton(
                   value: false,
-                  textOn: 'English',
+                  textOn: 'EN',
                   textSize: size.textXXSmall,
-                  textOff: 'বাংলা',
+                  textOff: 'বাং',
                   bgColor: clr.whiteColor,
-                  width: 85.w,
-                  animationDuration: const Duration(milliseconds: 800),
+                  width: 64.w,
+                  animationDuration: const Duration(milliseconds: 300),
                   onChanged: (bool state) {
                     print('turned ${(state) ? 'yes' : 'no'}');
                   },

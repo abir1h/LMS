@@ -55,11 +55,11 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                       padding: EdgeInsets.only(left: size.w8),
                       child: CustomSwitchButton(
                         value: App.currentAppLanguage == AppLanguage.english,
-                        textOn: 'English',
+                        textOn: 'EN',
                         textSize: size.textXXSmall,
-                        textOff: 'বাংলা',
+                        textOff: 'বাং',
                         bgColor: clr.whiteColor,
-                        width: 85.w,
+                        width: 64.w,
                         animationDuration: const Duration(milliseconds: 300),
                         onChanged: (bool state) {
                           App.setAppLanguage(state ? 1 : 0).then((value) {

@@ -63,11 +63,11 @@ class _DrawerWidgetState extends State<DrawerWidget> with AppTheme {
                 padding: EdgeInsets.only(left: size.w16),
                 child: CustomSwitchButton(
                   value: App.currentAppLanguage == AppLanguage.english,
-                  textOn: 'English',
+                  textOn: 'EN',
                   textSize: size.textXXSmall,
-                  textOff: 'বাংলা',
+                  textOff: 'বাং',
                   bgColor: clr.whiteColor,
-                  width: 85.w,
+                  width: 64.w,
                   animationDuration: const Duration(milliseconds: 300),
                   onChanged: (bool state) {
                     App.setAppLanguage(state ? 1 : 0).then((value) {
