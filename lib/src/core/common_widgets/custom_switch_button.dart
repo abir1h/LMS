@@ -84,7 +84,7 @@ class _RollingSwitchState extends State<CustomSwitchButton>
 
   @override
   Widget build(BuildContext context) {
-    Color? transitionColor = Color.lerp(widget.bgColor, widget.bgColor, value);
+    Color? transitionColor = Color.lerp(widget.bgColor,clr.appSecondaryColorFlagRed, value);
     var style = TextStyle(
         color: clr.appPrimaryColorGreen,
         fontWeight: FontWeight.w400,
@@ -114,14 +114,14 @@ class _RollingSwitchState extends State<CustomSwitchButton>
           children: [
             Transform.translate(
               offset: isRTL(context)
-                  ? Offset(-20 * value, 0)
-                  : Offset(20 * value, 0), //original
+                  ? Offset(-10 * value, 0)
+                  : Offset(10 * value, 0), //original
               child: Opacity(
                 opacity: (1 - value).clamp(0.0, 1.0),
                 child: Container(
                   padding: isRTL(context)
-                      ? const EdgeInsets.only(left: 10)
-                      : const EdgeInsets.only(right: 10),
+                      ? const EdgeInsets.only(left: 5)
+                      : const EdgeInsets.only(right: 5),
                   alignment: isRTL(context)
                       ? Alignment.centerLeft
                       : Alignment.centerRight,
@@ -149,25 +149,33 @@ class _RollingSwitchState extends State<CustomSwitchButton>
                   height: 20,
                   child: Text(
                     widget.textOn,
-                    style: style,
+                    style:  TextStyle(
+                        color: clr.whiteColor,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: StringData.fontFamilyRoboto,
+                        fontSize: widget.textSize),
                   ),
                 ),
               ),
             ),
             Transform.translate(
               offset: isRTL(context)
-                  ? Offset((-widget.width + 50) * value, 0)
-                  : Offset((widget.width - 50) * value, 0),
-              child: Transform.rotate(
-                angle: 0,
-                child: Container(
-                  height: 20,
-                  width: 40,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: clr.appPrimaryColorGreen),
-                  child: widget.buttonHolder,
-                ),
+                  ? Offset((-widget.width + 45) * value, 0)
+                  : Offset((widget.width - 45) * value, 0),
+              child:  turnState==true?Container(
+                height: 20,
+                width: 30,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle, color: clr.whiteColor),
+                child: widget.buttonHolder,
+              ):Container(
+                height: 20,
+                width: 30,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle, color: clr.appPrimaryColorGreen),
+                child: widget.buttonHolder,
               ),
             )
           ],
