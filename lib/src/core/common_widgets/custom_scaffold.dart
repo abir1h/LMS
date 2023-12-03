@@ -24,8 +24,7 @@ class CustomScaffold extends StatelessWidget with AppTheme {
     return Scaffold(
       backgroundColor: clr.scaffoldBackgroundColor,
       resizeToAvoidBottomInset: false,
-      body: Padding(
-        padding: EdgeInsets.only(top: size.h24),
+      body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -49,7 +48,7 @@ class CustomScaffold extends StatelessWidget with AppTheme {
                       child: Icon(
                         Icons.arrow_back,
                         color: clr.appPrimaryColorGreen,
-                        size: size.r28,
+                        size: size.r24,
                       ),
                     ),
                   ),
