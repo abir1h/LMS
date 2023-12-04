@@ -27,6 +27,7 @@ class ImageAssets {
   static String get downloadIcon => 'download'.svg;
   static String get icEdit => 'edit'.svg;
   static String get icEditorChoice => 'editor_choice'.svg;
+  static String get edit_square => 'edit_square'.svg;
 }
 
 extension on String {

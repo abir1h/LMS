@@ -1,7 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lms/src/core/constants/app_theme.dart';
+import 'package:lms/src/core/constants/common_imports.dart';
 import 'package:lms/src/core/constants/strings.dart';
 import '../../../../core/common_widgets/custom_app_bar.dart';
 import '../widgets/note_tile.dart';
@@ -53,9 +56,21 @@ class _NoteScreenState extends State<NoteScreen> with AppTheme {
         ),
       ),
       floatingActionButton:Container(
-        decoration: BoxDecoration(
+        height: 60.h,width: 60.w,
+        padding: EdgeInsets.all(size.r16),
 
-        ),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              spreadRadius: 2,
+              blurRadius: 3,
+              offset: Offset(0, 5), // changes position of shadow
+            ),
+          ],
+          color: clr.whiteColor
+        ),child: SvgPicture.asset(ImageAssets.edit_square,)  ,
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
