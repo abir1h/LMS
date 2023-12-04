@@ -121,11 +121,11 @@ class _ProfileScreenState extends State<ProfileScreen> with AppTheme {
                       SvgPicture.asset(ImageAssets.icEdit),
                       CustomSwitchButton(
                         value: false,
-                        textOn: 'English',
+                        textOn: 'EN',
                         textSize: size.textXXSmall,
-                        textOff: 'বাংলা',
+                        textOff: 'বাং',
                         bgColor: clr.whiteColor,
-                        width: 85.w,
+                        width: 64.w,
                         animationDuration: const Duration(milliseconds: 300),
                         onChanged: (bool state) {
                           print('turned ${(state) ? 'yes' : 'no'}');

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lms/src/feature/notes/presentation/screens/note_screen.dart';
 
 import '../../../../core/constants/common_imports.dart';
 import '../../../profile/presentation/screens/profile_screen.dart';
@@ -22,7 +23,7 @@ class _BottomScreenState extends State<BottomScreen> with AppTheme {
   List<Widget> pages = [
     const DashboardScreen(),
     Container(),
-    Container(),
+    const NoteScreen(),
     const ProfileScreen(),
   ];
   @override

@@ -1,4 +1,6 @@
 import 'package:get/route_manager.dart';
+import 'package:lms/src/feature/notes/presentation/bindings/note_binding.dart';
+import 'package:lms/src/feature/notes/presentation/screens/note_screen.dart';
 
 import '../../feature/bottom_bar/presentation/screens/bottom_screen.dart';
 import '../../feature/dashboard/presentation/binding/dashboard_binding.dart';
@@ -31,6 +33,7 @@ class AppRoutes {
   static const String bottomNav = '/bottomNav';
   static const String transcriptVideo = '/transcript_video';
   static const String notification = '/notification';
+  static const String notes = '/notes';
 }
 
 class AppPages {
@@ -89,6 +92,11 @@ class AppPages {
       name: AppRoutes.notification,
       page: () => const NotificationScreen(),
       binding: NotificationBinding(),
+      transition: Transition.rightToLeft,
+    ), GetPage(
+      name: AppRoutes.notes,
+      page: () => const NoteScreen(),
+      binding: NoteBinding(),
       transition: Transition.rightToLeft,
     ),
   ];
