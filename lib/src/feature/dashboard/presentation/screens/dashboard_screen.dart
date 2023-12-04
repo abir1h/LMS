@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:lms/src/feature/ongoing_course/presentation/screens/live_class_screen.dart';
 
 import '../../../../core/routes/app_routes.dart';
 import '../../../landing/presentation/widgets/row_item_template.dart';
@@ -140,7 +141,7 @@ class _DashboardScreenState extends State<DashboardScreen> with AppTheme {
                     ),
                     rightChild: DashboardCard(
                       text1: StringData.dashboardCard4,
-                      onPressed: () {},
+                      onPressed: () {Get.to(LiveClassScreen());},
                       text2: StringData.dashboardCardValue4,
                       borderColor: clr.cardFillColorBlue,
                       primaryColor: clr.cardStrokeColorBlue,
