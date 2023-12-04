@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:lms/src/core/constants/app_theme.dart';
+import 'package:get/get.dart';
 import 'package:lms/src/core/constants/common_imports.dart';
-import 'package:lms/src/core/constants/strings.dart';
+import 'package:lms/src/feature/notes/presentation/screens/note_edit_screen.dart';
 import '../../../../core/common_widgets/custom_app_bar.dart';
 import '../widgets/note_tile.dart';
 
@@ -55,22 +54,24 @@ class _NoteScreenState extends State<NoteScreen> with AppTheme {
           ),
         ),
       ),
-      floatingActionButton:Container(
-        height: 60.h,width: 60.w,
+      floatingActionButton: Container(
+        height: 60.h,
+        width: 60.w,
         padding: EdgeInsets.all(size.r16),
-
         decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.3),
-              spreadRadius: 2,
-              blurRadius: 3,
-              offset: Offset(0, 5), // changes position of shadow
-            ),
-          ],
-          color: clr.whiteColor
-        ),child: SvgPicture.asset(ImageAssets.edit_square,)  ,
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 2,
+                blurRadius: 3,
+                offset: const Offset(0, 5), // changes position of shadow
+              ),
+            ],
+            color: clr.whiteColor),
+        child: SvgPicture.asset(
+          ImageAssets.edit_square,
+        ),
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -98,61 +99,81 @@ class _NoteScreenState extends State<NoteScreen> with AppTheme {
                 )
               ],
             ),
-            const NoteTile(
+            NoteTile(
               noteContent: "HESP LMS",
               title: "Note Title",
               timestamp: 'Today 10:00 am',
               hasDivider: true,
+              onPressed: ()=>Get.to(const NoteEditScreen(content: StringData.noteContent)),
             ),
-            const NoteTile(
+            NoteTile(
               noteContent: "CLMS LMS",
               title: "Note Title",
               timestamp: 'Today 10:00 am',
               hasDivider: true,
-            ), const NoteTile(
+              onPressed: () {},
+            ),
+            NoteTile(
               noteContent: "Sugg LMS",
               title: "Note Title",
               timestamp: 'Today 10:00 am',
               hasDivider: true,
-            ),const NoteTile(
+              onPressed: () {},
+            ),
+            NoteTile(
               noteContent: "Proje LMS",
               title: "Note Title",
               timestamp: 'Today 10:00 am',
               hasDivider: true,
-            ), const NoteTile(
+              onPressed: () {},
+            ),
+            NoteTile(
               noteContent: "HESP LMS",
               title: "Note Title",
               timestamp: 'Today 10:00 am',
               hasDivider: true,
-            ), const NoteTile(
+              onPressed: () {},
+            ),
+            NoteTile(
               noteContent: "HESP LMS",
               title: "Note Title",
               timestamp: 'Today 10:00 am',
               hasDivider: true,
-            ), const NoteTile(
+              onPressed: () {},
+            ),
+            NoteTile(
               noteContent: "HESP LMS",
               title: "Note Title",
               timestamp: 'Today 10:00 am',
               hasDivider: true,
-            ), const NoteTile(
+              onPressed: () {},
+            ),
+            NoteTile(
               noteContent: "HESP LMS",
               title: "Note Title",
               timestamp: 'Today 10:00 am',
               hasDivider: true,
-            ), const NoteTile(
+              onPressed: () {},
+            ),
+            NoteTile(
               noteContent: "HESP LMS",
               title: "Note Title",
               timestamp: 'Today 10:00 am',
               hasDivider: true,
-            ), const NoteTile(
+              onPressed: () {},
+            ),
+            NoteTile(
               noteContent: "HESP LMS",
               title: "Note Title",
               timestamp: 'Today 10:00 am',
               hasDivider: true,
-            ), const NoteTile(
+              onPressed: () {},
+            ),
+            NoteTile(
               noteContent: "HESP LMS",
               title: "Note Title",
               timestamp: 'Today 10:00 am',
+              onPressed: () {},
             ),
           ],
         ),
@@ -160,5 +181,3 @@ class _NoteScreenState extends State<NoteScreen> with AppTheme {
     ));
   }
 }
-
-
