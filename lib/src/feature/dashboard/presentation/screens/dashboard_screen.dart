@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:lms/src/core/utility/app_label.dart';
 
 import '../../../../core/routes/app_routes.dart';
 import '../../../landing/presentation/widgets/row_item_template.dart';
@@ -22,7 +23,8 @@ class DashboardScreen extends StatefulWidget {
   State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen> with AppTheme {
+class _DashboardScreenState extends State<DashboardScreen>
+    with AppTheme, Language {
   final DashboardController dashboardController =
       Get.find<DashboardController>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -36,7 +38,7 @@ class _DashboardScreenState extends State<DashboardScreen> with AppTheme {
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(size.h56),
           child: CustomAppBar(
-            title: StringData.appBarText1,
+            title: label(e: en.appBarText, b: bn.appBarText),
             leadingOnPressed: () {
               _scaffoldKey.currentState!.openDrawer();
             },
@@ -85,7 +87,8 @@ class _DashboardScreenState extends State<DashboardScreen> with AppTheme {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const CustomTextWidgets(text: StringData.runningCourse),
+                    CustomTextWidgets(
+                        text: label(e: en.runningModule, b: bn.runningModule)),
                     Padding(
                       padding: EdgeInsets.only(right: size.w6),
                       child: SvgPicture.asset(ImageAssets.icLockOpenRight),
@@ -98,15 +101,17 @@ class _DashboardScreenState extends State<DashboardScreen> with AppTheme {
                   image: Image.asset("assets/images/image.png"),
                   text1: StringData.cardText1,
                   text2: StringData.cardText2,
-                  text3: StringData.cardText3,
+                  text3:
+                      label(e: "30% ${en.completed}", b: "৩০% ${bn.completed}"),
                   primaryColor: Colors.white,
                 ),
                 SizedBox(height: size.h20),
                 RowItemTemplate(
                     leftChild: DashboardCard(
-                      text1: StringData.dashboardCard1,
+                      title:
+                          label(e: en.ongoingCurriculum, b: bn.runningModule),
                       onPressed: () => Get.toNamed(AppRoutes.ongoingCourse),
-                      text2: StringData.dashboardCardValue1,
+                      subTitle: StringData.dashboardCardValue1,
                       borderColor: clr.cardStrokeColorOrange,
                       primaryColor: clr.cardFillColorOrange,
                       image: SvgPicture.asset(
@@ -115,9 +120,10 @@ class _DashboardScreenState extends State<DashboardScreen> with AppTheme {
                       ),
                     ),
                     rightChild: DashboardCard(
-                      text1: StringData.dashboardCard2,
+                      title: label(
+                          e: en.completedCurriculum, b: bn.completedCurriculum),
                       onPressed: () => Get.toNamed(AppRoutes.profile),
-                      text2: StringData.dashboardCardValue2,
+                      subTitle: StringData.dashboardCardValue2,
                       borderColor: clr.cardStrokeColorGreen,
                       primaryColor: clr.cardFillColorGreen,
                       image: SvgPicture.asset(
@@ -128,9 +134,9 @@ class _DashboardScreenState extends State<DashboardScreen> with AppTheme {
                 SizedBox(height: size.h12),
                 RowItemTemplate(
                     leftChild: DashboardCard(
-                      text1: StringData.dashboardCard3,
+                      title: label(e: en.discussionArea, b: bn.discussionArea),
                       onPressed: () {},
-                      text2: StringData.dashboardCardValue3,
+                      subTitle: StringData.dashboardCardValue3,
                       borderColor: clr.cardStrokeColorPurple,
                       primaryColor: clr.cardFillColorPurple,
                       image: SvgPicture.asset(
@@ -139,9 +145,9 @@ class _DashboardScreenState extends State<DashboardScreen> with AppTheme {
                       ),
                     ),
                     rightChild: DashboardCard(
-                      text1: StringData.dashboardCard4,
+                      title: label(e: en.notifications, b: bn.notifications),
                       onPressed: () {},
-                      text2: StringData.dashboardCardValue4,
+                      subTitle: StringData.dashboardCardValue4,
                       borderColor: clr.cardFillColorBlue,
                       primaryColor: clr.cardStrokeColorBlue,
                       image: SvgPicture.asset(
@@ -150,11 +156,13 @@ class _DashboardScreenState extends State<DashboardScreen> with AppTheme {
                       ),
                     )),
                 SizedBox(height: size.h32),
-                const CustomTextWidgets(text: StringData.karjo),
+                CustomTextWidgets(
+                    text: label(e: en.effectivePeriod, b: bn.effectivePeriod)),
                 SizedBox(height: size.h12),
                 const GraphChart(),
                 SizedBox(height: size.h20),
-                const CustomTextWidgets(text: StringData.noticeBoard),
+                CustomTextWidgets(
+                    text: label(e: en.noticeBoard, b: bn.noticeBoard)),
                 SizedBox(height: size.h12),
                 CustomNoticeCard(
                     leading: Icon(

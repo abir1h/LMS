@@ -4,12 +4,12 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../core/constants/common_imports.dart';
 
 class RecognitionCard extends StatelessWidget with AppTheme {
-  final String title, time, description;
+  final String title, time, fileName;
   const RecognitionCard(
       {Key? key,
       required this.title,
       required this.time,
-      required this.description})
+      required this.fileName})
       : super(key: key);
 
   @override
@@ -56,7 +56,7 @@ class RecognitionCard extends StatelessWidget with AppTheme {
                       width: size.w8,
                     ),
                     Text(
-                      description,
+                      fileName,
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: size.textSmall,

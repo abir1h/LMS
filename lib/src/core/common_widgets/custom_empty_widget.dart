@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../utility/app_label.dart';
 import '../constants/common_imports.dart';
 import 'custom_switch_button.dart';
 
-class CustomEmptyWidget extends StatelessWidget with AppTheme {
+class CustomEmptyWidget extends StatelessWidget with AppTheme, Language {
   final IconData icon;
-  final String title;
+  final String? title;
   final String message;
 
   const CustomEmptyWidget(
       {super.key,
       this.icon = Icons.content_paste_off,
-      this.title = StringData.noFileFoundText,
+      this.title,
       required this.message});
 
   @override
@@ -29,7 +30,8 @@ class CustomEmptyWidget extends StatelessWidget with AppTheme {
                   Icon(icon, size: 100.r, color: clr.iconColorWhiteIce),
                   SizedBox(height: size.h20),
                   Text(
-                    title,
+                    title ??
+                        label(e: en.noFileFoundText, b: bn.noFileFoundText),
                     style: TextStyle(
                         color: clr.blackColor,
                         fontSize: size.textXMedium,
@@ -53,7 +55,7 @@ class CustomEmptyWidget extends StatelessWidget with AppTheme {
                         color: clr.appPrimaryColorGreen,
                         borderRadius: BorderRadius.circular(size.w1 + size.w4)),
                     child: Text(
-                      StringData.backToHomeText,
+                      label(e: en.backToHomeText, b: bn.backToHomeText),
                       style: TextStyle(
                           color: clr.whiteColor,
                           fontSize: size.textSmall,
@@ -68,15 +70,19 @@ class CustomEmptyWidget extends StatelessWidget with AppTheme {
               top: size.h16 - size.h1,
               right: size.w16,
               child: CustomSwitchButton(
-                value: false,
-                textOn: 'English',
+                value: App.currentAppLanguage == AppLanguage.english,
+                textOn: 'EN',
                 textSize: size.textXXSmall,
-                textOff: 'বাংলা',
+                textOff: 'বাং',
                 bgColor: clr.whiteColor,
-                width: 85.w,
+                width: 64.w,
                 animationDuration: const Duration(milliseconds: 300),
                 onChanged: (bool state) {
-                  print('turned ${(state) ? 'yes' : 'no'}');
+                  // App.setAppLanguage(state ? 1 : 0).then((value) {
+                  //   if (mounted) {
+                  //     setState(() {});
+                  //   }
+                  // });
                 },
                 buttonHolder: const Icon(
                   Icons.check,

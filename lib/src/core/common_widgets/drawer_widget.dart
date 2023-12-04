@@ -3,12 +3,10 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../constants/app_theme.dart';
 import 'custom_switch_button.dart';
 import '../utility/app_label.dart';
 import '../../feature/landing/presentation/controllers/landing_controller.dart';
-import '../constants/image_assets.dart';
-import '../constants/strings.dart';
+import '../constants/common_imports.dart';
 
 class DrawerWidget extends StatefulWidget {
   const DrawerWidget({super.key});
@@ -17,7 +15,7 @@ class DrawerWidget extends StatefulWidget {
   State<DrawerWidget> createState() => _DrawerWidgetState();
 }
 
-class _DrawerWidgetState extends State<DrawerWidget> with AppTheme {
+class _DrawerWidgetState extends State<DrawerWidget> with AppTheme, Language {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -43,9 +41,7 @@ class _DrawerWidgetState extends State<DrawerWidget> with AppTheme {
                     SizedBox(width: size.w12),
                     Expanded(
                       child: Text(
-                        label(
-                            e: StringData.userNameTextEn,
-                            b: StringData.userNameTextBn),
+                        label(e: en.userNameText, b: bn.userNameText),
                         style: TextStyle(
                             color: clr.appPrimaryColorGreen,
                             fontSize: size.textXMedium,
@@ -89,56 +85,50 @@ class _DrawerWidgetState extends State<DrawerWidget> with AppTheme {
               Container(height: size.h1, color: clr.cardStrokeColor),
               DrawerLinkWidget(
                 icon: Icons.contact_support,
-                text: label(e: StringData.aboutUsEn, b: StringData.aboutUsBn),
+                text: label(e: en.aboutUs, b: bn.aboutUs),
                 onTap: () {},
               ),
               DrawerLinkWidget(
                 icon: Icons.local_library,
-                text: label(e: StringData.lmsEn, b: StringData.lmsBn),
+                text: label(e: en.lms, b: bn.lms),
                 onTap: () {},
               ),
               DrawerLinkWidget(
                 icon: Icons.auto_stories,
-                text: label(
-                    e: StringData.teachersGuideEn,
-                    b: StringData.teachersGuideBn),
+                text: label(e: en.teachersGuide, b: bn.teachersGuide),
                 onTap: () {},
               ),
               DrawerLinkWidget(
                 svgIcon: ImageAssets.icBook,
-                text: label(e: StringData.eLibraryEn, b: StringData.eLibraryBn),
+                text: label(e: en.eLibrary, b: bn.eLibrary),
                 onTap: () {},
               ),
               DrawerLinkWidget(
                 icon: Icons.assignment,
-                text: label(
-                    e: StringData.formativeAssessmentEn,
-                    b: StringData.formativeAssessmentBn),
+                text:
+                    label(e: en.formativeAssessment, b: bn.formativeAssessment),
                 onTap: () {},
               ),
               DrawerLinkWidget(
                 svgIcon: ImageAssets.icSocialLearning,
                 text: label(
-                    e: StringData.socialLearningPlatformEn,
-                    b: StringData.socialLearningPlatformBn),
+                    e: en.socialLearningPlatform, b: bn.socialLearningPlatform),
                 onTap: () {},
               ),
               DrawerLinkWidget(
                 icon: Icons.play_circle,
-                text: label(e: StringData.tutorialEn, b: StringData.tutorialBn),
+                text: label(e: en.tutorial, b: bn.tutorial),
                 onTap: () {},
               ),
               DrawerLinkWidget(
                 icon: Icons.chat_bubble,
-                text: label(
-                    e: StringData.messageTextEn, b: StringData.messageTextBn),
+                text: label(e: en.messageText, b: bn.messageText),
                 onTap: () {},
               ),
               DrawerLinkWidget(
                 icon: Icons.logout,
                 iconColor: clr.textColorBlack,
-                text: label(
-                    e: StringData.logoutTextEn, b: StringData.logoutTextBn),
+                text: label(e: en.logoutText, b: bn.logoutText),
                 onTap: () {
                   Get.find<LandingController>().logout();
                 },

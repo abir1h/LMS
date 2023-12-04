@@ -20,7 +20,7 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> with AppTheme {
+class _ProfileScreenState extends State<ProfileScreen> with AppTheme, Language {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -34,7 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> with AppTheme {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(size.h56),
         child: CustomAppBar(
-          title: "LMS My Profile",
+          title: label(e: en.profileAppBarText, b: bn.profileAppBarText),
           leadingOnPressed: () {
             _scaffoldKey.currentState!.openDrawer();
           },
@@ -93,9 +93,7 @@ class _ProfileScreenState extends State<ProfileScreen> with AppTheme {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: size.w16),
                       child: Text(
-                        label(
-                            e: StringData.userNameTextEn,
-                            b: StringData.userNameTextBn),
+                        label(e: en.userNameText, b: bn.userNameText),
                         style: TextStyle(
                             color: clr.appPrimaryColorGreen,
                             fontSize: size.textXMedium,
@@ -120,7 +118,7 @@ class _ProfileScreenState extends State<ProfileScreen> with AppTheme {
                     children: [
                       SvgPicture.asset(ImageAssets.icEdit),
                       CustomSwitchButton(
-                        value: false,
+                        value: App.currentAppLanguage == AppLanguage.english,
                         textOn: 'EN',
                         textSize: size.textXXSmall,
                         textOff: 'বাং',
@@ -128,7 +126,11 @@ class _ProfileScreenState extends State<ProfileScreen> with AppTheme {
                         width: 64.w,
                         animationDuration: const Duration(milliseconds: 300),
                         onChanged: (bool state) {
-                          print('turned ${(state) ? 'yes' : 'no'}');
+                          App.setAppLanguage(state ? 1 : 0).then((value) {
+                            if (mounted) {
+                              setState(() {});
+                            }
+                          });
                         },
                         buttonHolder: const Icon(
                           Icons.check,
@@ -164,42 +166,33 @@ class _ProfileScreenState extends State<ProfileScreen> with AppTheme {
                     TitleWithIcon(
                         icon: Icons.account_balance,
                         title: label(
-                            e: StringData.currentOrganizationNameTextEn,
-                            b: StringData.currentOrganizationNameTextBn)),
+                            e: en.currentOrganizationNameText,
+                            b: bn.currentOrganizationNameText)),
                     TitleWithIcon(
                         icon: Icons.beenhere,
                         title: label(
-                            e: StringData.positionNameTextEn,
-                            b: StringData.positionNameTextBn)),
+                            e: en.positionNameText, b: bn.positionNameText)),
                     TitleWithIcon(
                         icon: Icons.badge,
-                        title: label(
-                            e: StringData.regNoTextEn,
-                            b: StringData.regNoTextBn)),
+                        title: label(e: en.regNoText, b: bn.regNoText)),
                     TitleWithIcon(
                         icon: Icons.phone,
                         title: label(
-                            e: StringData.phoneNumberTextEn,
-                            b: StringData.phoneNumberTextBn)),
+                            e: en.phoneNumberText, b: bn.phoneNumberText)),
                     TitleWithIcon(
                         onTap: () {},
                         icon: Icons.email,
-                        title: label(
-                            e: StringData.emailTextEn,
-                            b: StringData.emailTextBn)),
+                        title: label(e: en.emailText, b: bn.emailText)),
                     TitleWithIcon(
                       onTap: () => _scaffoldKey.currentState!.openEndDrawer(),
                       svgIcon: ImageAssets.icEditorChoice,
-                      title: label(
-                          e: StringData.certificateTextEn,
-                          b: StringData.certificateTextBn),
+                      title:
+                          label(e: en.certificateText, b: bn.certificateText),
                       hasTrailing: true,
                     ),
                     TitleWithIcon(
                       icon: Icons.logout,
-                      title: label(
-                          e: StringData.logoutTextEn,
-                          b: StringData.logoutTextBn),
+                      title: label(e: en.logoutText, b: bn.logoutText),
                       onTap: showLogoutPromptDialog,
                       hasBorder: false,
                     ),
@@ -217,11 +210,11 @@ class _ProfileScreenState extends State<ProfileScreen> with AppTheme {
   void showLogoutPromptDialog() {
     CustomDialogWidget.show(
       context: context,
-      title: "আপনি কি লগ আউট করতে চান?",
+      title: label(e: en.logoutWarningText, b: bn.logoutWarningText),
       infoText:
           "আপনার কোর্সগুলো এবং মূল্যায়নের খবরের জন্য আপনার আইডি লগইন থাকা প্রয়োজন।",
-      rightButtonText: "বাতিল করুন",
-      leftButtonText: "প্রস্থান করুন",
+      rightButtonText: label(e: en.cancelText, b: bn.cancelText),
+      leftButtonText: label(e: en.exitText, b: bn.exitText),
     ).then((value) {
       if (value) {
         Get.find<LandingController>().logout();

@@ -6,6 +6,7 @@ import '../constants/strings.dart';
 class CustomScaffold extends StatelessWidget with AppTheme {
   final String title;
   final Color? bgColor;
+  final bool resizeToAvoidBottomInset;
   final WillPopCallback? onBack;
   final VoidCallback? onReload;
   final Widget? actionChild;
@@ -14,6 +15,7 @@ class CustomScaffold extends StatelessWidget with AppTheme {
       {super.key,
       required this.title,
       this.bgColor,
+      this.resizeToAvoidBottomInset = false,
       this.onBack,
       this.onReload,
       this.actionChild,
@@ -23,7 +25,7 @@ class CustomScaffold extends StatelessWidget with AppTheme {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: clr.scaffoldBackgroundColor,
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: resizeToAvoidBottomInset,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

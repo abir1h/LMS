@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:lms/src/core/utility/app_label.dart';
 
 import '../widgets/notification_card.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
 
-class NotificationScreen extends StatelessWidget with AppTheme {
+class NotificationScreen extends StatelessWidget with AppTheme, Language {
   const NotificationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-        title: StringData.notification,
+        title: label(e: en.notification, b: bn.notification),
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(

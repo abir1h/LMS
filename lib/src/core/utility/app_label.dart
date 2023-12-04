@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 ///App Language
@@ -12,10 +11,10 @@ String label({required String e, required String b}) {
 class App {
   App._();
   static App? _app;
-  static App get instance => _app?? (_app = App._());
+  static App get instance => _app ?? (_app = App._());
 
   //App Language
-  static  AppLanguage _appLanguage = AppLanguage.bangla;
+  static AppLanguage _appLanguage = AppLanguage.bangla;
   static AppLanguage get currentAppLanguage => _appLanguage;
 
   ///Set current language
@@ -24,8 +23,7 @@ class App {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setInt("appLanguage", index).then((x) async {
-        _appLanguage =
-        index == 1 ? AppLanguage.english : AppLanguage.bangla;
+        _appLanguage = index == 1 ? AppLanguage.english : AppLanguage.bangla;
         completer.complete(true);
         await getCurrentLanguage();
       }).catchError((x) {
@@ -36,6 +34,7 @@ class App {
     }
     return completer.future;
   }
+
   ///Get current language
   static Future<AppLanguage> getCurrentLanguage() async {
     Completer<AppLanguage> completer = Completer();
@@ -43,7 +42,7 @@ class App {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       int? index = prefs.getInt("appLanguage");
       AppLanguage language =
-      index == 1 ? AppLanguage.english : AppLanguage.bangla;
+          index == 1 ? AppLanguage.english : AppLanguage.bangla;
       _appLanguage = language;
       completer.complete(language);
     } catch (e) {
@@ -52,5 +51,4 @@ class App {
     }
     return completer.future;
   }
-
 }

@@ -5,10 +5,9 @@ import 'package:get/get.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/custom_switch_button.dart';
 import '../../../../core/common_widgets/text_field_widget.dart';
-import '../../../../core/constants/app_theme.dart';
-import '../../../../core/constants/image_assets.dart';
-import '../../../../core/constants/strings.dart';
+import '../../../../core/constants/common_imports.dart';
 import '../../../../core/routes/app_routes.dart';
+import '../../../../core/utility/app_label.dart';
 import '../controllers/authentication_controller.dart';
 
 class AuthenticationScreen extends StatefulWidget {
@@ -19,7 +18,7 @@ class AuthenticationScreen extends StatefulWidget {
 }
 
 class _AuthenticationScreenState extends State<AuthenticationScreen>
-    with AppTheme {
+    with AppTheme, Language {
   final AuthenticationController authenticationController =
       Get.find<AuthenticationController>();
 
@@ -70,7 +69,9 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
                         ),
                         SizedBox(height: size.h2 + size.h24),
                         Text(
-                          StringData.authScreenHeaderText,
+                          label(
+                              e: en.authScreenHeaderText,
+                              b: bn.authScreenHeaderText),
                           style: TextStyle(
                               color: clr.appPrimaryColorGreen,
                               fontSize: size.textXMedium,
@@ -79,7 +80,9 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
                         ),
                         SizedBox(height: size.h12),
                         Text(
-                          StringData.authScreenContentText,
+                          label(
+                              e: en.authScreenContentText,
+                              b: bn.authScreenContentText),
                           style: TextStyle(
                             color: clr.textColorAppleBlack,
                             fontSize: size.textXSmall,
@@ -87,8 +90,11 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
                             fontWeight: FontWeight.w400,
                           ),
                         ),
+                        SizedBox(height: size.h10),
                         Text(
-                          StringData.authScreenContentText2,
+                          label(
+                              e: en.authScreenContentText2,
+                              b: bn.authScreenContentText2),
                           style: TextStyle(
                             color: clr.textColorAppleBlack,
                             fontSize: size.textXSmall,
@@ -96,8 +102,11 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
                             fontWeight: FontWeight.w400,
                           ),
                         ),
+                        SizedBox(height: size.h10),
                         Text(
-                          StringData.authScreenContentText3,
+                          label(
+                              e: en.authScreenContentText3,
+                              b: bn.authScreenContentText3),
                           style: TextStyle(
                             color: clr.textColorAppleBlack,
                             fontSize: size.textXSmall,
@@ -105,82 +114,95 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
                             fontWeight: FontWeight.w400,
                           ),
                         ),
-                        SizedBox(height: size.h32 + size.h4),
-                        Form(
-                            key: _formKey,
-                            child: Column(
-                              children: [
-                                AppTextField(
-                                  hintText: StringData.userNameHintText,
-                                  focusNode:
-                                      authenticationController.userIdFocusNode,
-                                  controller: authenticationController
-                                      .userIdEditingController,
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Enter your PDSID';
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                ),
-                                SizedBox(height: size.h12),
-                                Obx(() => AppTextField(
-                                      hintText: StringData.passwordHintText,
-                                      focusNode: authenticationController
-                                          .passFocusNode,
-                                      controller: authenticationController
-                                          .passwordEditingController,
-                                      obscureText: authenticationController
-                                              .watchPassword.value
-                                          ? true
-                                          : false,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Enter your password';
-                                        }
-                                        return null;
-                                      },
-                                      suffixIcon: GestureDetector(
-                                          onTap: () {
-                                            authenticationController
-                                                .toggleWatchPassword(
-                                                    !authenticationController
-                                                        .watchPassword.value);
-                                          },
-                                          child: Icon(
-                                            authenticationController
-                                                    .watchPassword.value
-                                                ? Icons.visibility_off
-                                                : Icons.visibility,
-                                            color: clr.iconColorHint,
-                                            size: 20.r,
-                                          )),
-                                    )),
-                                SizedBox(height: size.h24),
-                                /*  CustomActionButton(
-                                    title: StringData.loginText,
-                                    controller: authenticationController
-                                        .buttonController,
-                                    onCheck: () => authenticationController
-                                        .validateLoginForeignFormData(
-                                            authenticationController
-                                                .userIdEditingController,
-                                            authenticationController
-                                                .passwordEditingController),
-                                    onSuccess: (e) {},
-                                    tapAction: _sendAuthRequest),*/
-                                CustomButton(
-                                    onTap: () => Get.toNamed(AppRoutes.landing),
-                                    title: 'Login')
-                              ],
-                            )),
+                        SizedBox(height: size.h24),
+                        Text(
+                          label(
+                              e: en.authScreenLoginText,
+                              b: bn.authScreenLoginText),
+                          style: TextStyle(
+                            color: clr.appPrimaryColorGreen,
+                            fontSize: size.textSmall,
+                            fontFamily: StringData.fontFamilyInter,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        SizedBox(height: size.h20),
+                        CustomButton(
+                            onTap: () => Get.toNamed(AppRoutes.landing),
+                            title: label(e: en.loginText, b: bn.loginText))
+                        // Form(
+                        //     key: _formKey,
+                        //     child: Column(
+                        //       children: [
+                        //         AppTextField(
+                        //           hintText: StringData.userNameHintText,
+                        //           focusNode:
+                        //               authenticationController.userIdFocusNode,
+                        //           controller: authenticationController
+                        //               .userIdEditingController,
+                        //           validator: (value) {
+                        //             if (value == null || value.isEmpty) {
+                        //               return 'Enter your PDSID';
+                        //             } else {
+                        //               return null;
+                        //             }
+                        //           },
+                        //         ),
+                        //         SizedBox(height: size.h12),
+                        //         Obx(() => AppTextField(
+                        //               hintText: StringData.passwordHintText,
+                        //               focusNode: authenticationController
+                        //                   .passFocusNode,
+                        //               controller: authenticationController
+                        //                   .passwordEditingController,
+                        //               obscureText: authenticationController
+                        //                       .watchPassword.value
+                        //                   ? true
+                        //                   : false,
+                        //               validator: (value) {
+                        //                 if (value == null || value.isEmpty) {
+                        //                   return 'Enter your password';
+                        //                 }
+                        //                 return null;
+                        //               },
+                        //               suffixIcon: GestureDetector(
+                        //                   onTap: () {
+                        //                     authenticationController
+                        //                         .toggleWatchPassword(
+                        //                             !authenticationController
+                        //                                 .watchPassword.value);
+                        //                   },
+                        //                   child: Icon(
+                        //                     authenticationController
+                        //                             .watchPassword.value
+                        //                         ? Icons.visibility_off
+                        //                         : Icons.visibility,
+                        //                     color: clr.iconColorHint,
+                        //                     size: 20.r,
+                        //                   )),
+                        //             )),
+                        //         SizedBox(height: size.h24),
+                        //         /*  CustomActionButton(
+                        //             title: StringData.loginText,
+                        //             controller: authenticationController
+                        //                 .buttonController,
+                        //             onCheck: () => authenticationController
+                        //                 .validateLoginForeignFormData(
+                        //                     authenticationController
+                        //                         .userIdEditingController,
+                        //                     authenticationController
+                        //                         .passwordEditingController),
+                        //             onSuccess: (e) {},
+                        //             tapAction: _sendAuthRequest),*/
+                        //       ],
+                        //     )),
                       ],
                     ),
                     Column(
                       children: [
                         Text.rich(TextSpan(
-                            text: StringData.copyRightText2,
+                            text: label(
+                                e: en.copyRightText2, b: bn.copyRightText2),
                             style: TextStyle(
                               color: clr.appPrimaryColorGreen,
                               fontSize: size.textXXSmall,
@@ -198,7 +220,8 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
                                 ),
                               ),
                               TextSpan(
-                                text: StringData.copyRightText4,
+                                text: label(
+                                    e: en.copyRightText4, b: bn.copyRightText4),
                                 style: TextStyle(
                                   color: clr.appPrimaryColorGreen,
                                   fontSize: size.textXXSmall,
@@ -216,7 +239,8 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
                                 ),
                               ),
                               TextSpan(
-                                text: StringData.copyRightText5,
+                                text: label(
+                                    e: en.copyRightText5, b: bn.copyRightText5),
                                 style: TextStyle(
                                   color: clr.appPrimaryColorGreen,
                                   fontSize: size.textXXSmall,
@@ -226,7 +250,8 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
                               ),
                             ])),
                         Text.rich(TextSpan(
-                            text: StringData.copyRightText,
+                            text:
+                                label(e: en.copyRightText, b: bn.copyRightText),
                             style: TextStyle(
                               color: clr.textColorAppleBlack,
                               fontWeight: FontWeight.w400,
@@ -244,7 +269,8 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
                                 ),
                               ),
                               TextSpan(
-                                text: StringData.copyRightText3,
+                                text: label(
+                                    e: en.copyRightText3, b: bn.copyRightText3),
                                 style: TextStyle(
                                   color: clr.textColorAppleBlack,
                                   fontSize: size.textXXSmall,
@@ -263,7 +289,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
                 right: 0,
                 top: 16,
                 child: CustomSwitchButton(
-                  value: false,
+                  value: App.currentAppLanguage == AppLanguage.english,
                   textOn: 'EN',
                   textSize: size.textXXSmall,
                   textOff: 'বাং',
@@ -271,7 +297,11 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
                   width: 64.w,
                   animationDuration: const Duration(milliseconds: 300),
                   onChanged: (bool state) {
-                    print('turned ${(state) ? 'yes' : 'no'}');
+                    App.setAppLanguage(state ? 1 : 0).then((value) {
+                      if (mounted) {
+                        setState(() {});
+                      }
+                    });
                   },
                   buttonHolder: const Icon(
                     Icons.check,

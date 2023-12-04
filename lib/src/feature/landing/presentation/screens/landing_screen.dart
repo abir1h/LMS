@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lms/src/core/utility/app_label.dart';
 
 import '../../../../core/routes/app_routes.dart';
 import '../controllers/landing_controller.dart';
@@ -14,7 +15,7 @@ class LandingScreen extends StatefulWidget {
   State<LandingScreen> createState() => _LandingScreenState();
 }
 
-class _LandingScreenState extends State<LandingScreen> with AppTheme {
+class _LandingScreenState extends State<LandingScreen> with AppTheme, Language {
   final LandingController landingController = Get.find<LandingController>();
 
   @override
@@ -24,7 +25,7 @@ class _LandingScreenState extends State<LandingScreen> with AppTheme {
       appBar: AppBar(
         backgroundColor: clr.secondaryBackgroundColor,
         title: Text(
-          StringData.appBarText,
+          label(e: en.appNameText, b: bn.appNameText),
           style: TextStyle(
               color: clr.appPrimaryColorGreen,
               fontSize: size.textXMedium,
@@ -50,29 +51,34 @@ class _LandingScreenState extends State<LandingScreen> with AppTheme {
             RowItemTemplate(
                 leftChild: ModuleCardWidget(
                   image: ImageAssets.imgModule1,
-                  text: StringData.learningManagementSystem,
+                  text: label(
+                      e: en.learningManagementSystem,
+                      b: bn.learningManagementSystem),
                   onTap: () => Get.toNamed(AppRoutes.bottomNav),
                 ),
                 rightChild: ModuleCardWidget(
                   image: ImageAssets.imgModule2,
-                  text: StringData.teachersGuideBn,
+                  text: label(e: en.teachersGuide, b: bn.teachersGuide),
                 )),
             SizedBox(height: size.h16),
             RowItemTemplate(
               leftChild: ModuleCardWidget(
                 image: ImageAssets.imgModule3,
-                text: StringData.eLibraryBn,
+                text: label(e: en.eLibrary, b: bn.eLibrary),
               ),
               rightChild: ModuleCardWidget(
                 image: ImageAssets.imgModule4,
-                text: StringData.formativeAssessmentBn,
+                text:
+                    label(e: en.formativeAssessment, b: bn.formativeAssessment),
               ),
             ),
             SizedBox(height: size.h16),
             RowItemTemplate(
                 leftChild: ModuleCardWidget(
                   image: ImageAssets.imgModule2,
-                  text: StringData.socialLearningPlatformBn,
+                  text: label(
+                      e: en.socialLearningPlatform,
+                      b: bn.socialLearningPlatform),
                 ),
                 rightChild: Container()),
           ],

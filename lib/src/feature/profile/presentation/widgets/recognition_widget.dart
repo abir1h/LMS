@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/utility/app_label.dart';
 import 'recognition_card.dart';
 import '../../../../core/constants/common_imports.dart';
 
-class RecognitionWidget extends StatelessWidget with AppTheme {
+class RecognitionWidget extends StatelessWidget with AppTheme, Language {
   const RecognitionWidget({super.key});
 
   @override
@@ -25,9 +26,9 @@ class RecognitionWidget extends StatelessWidget with AppTheme {
               decoration: BoxDecoration(
                   color: clr.appPrimaryColorGreen,
                   borderRadius:
-                  BorderRadius.only(topLeft: Radius.circular(size.r8))),
+                      BorderRadius.only(topLeft: Radius.circular(size.r8))),
               child: Text(
-                StringData.recognitionText,
+                label(e: en.acknowledgment, b: bn.acknowledgment),
                 style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: size.textSmall,
@@ -41,50 +42,55 @@ class RecognitionWidget extends StatelessWidget with AppTheme {
                   children: [
                     RecognitionCard(
                         title: "নতুন কারিকুলাম বিতরণ ",
-                        description: "স্বীকৃতিপত্র .pdf",
+                        fileName: "স্বীকৃতিপত্র .pdf",
                         time: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩"),
                     RecognitionCard(
                         title: "তথ্য অধিকার",
-                        description: "স্বীকৃতিপত্র .pdf",
+                        fileName: "স্বীকৃতিপত্র .pdf",
                         time: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩"),
                     RecognitionCard(
                         title: "তথ্য অধিকার 2",
-                        description: "স্বীকৃতিপত্র .pdf",
-                        time: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩"), RecognitionCard(
+                        fileName: "স্বীকৃতিপত্র .pdf",
+                        time: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩"),
+                    RecognitionCard(
                         title: "তথ্য অধিকার",
-                        description: "স্বীকৃতিপত্র .pdf",
+                        fileName: "স্বীকৃতিপত্র .pdf",
                         time: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩"),
                     RecognitionCard(
                         title: "তথ্য অধিকার 2",
-                        description: "স্বীকৃতিপত্র .pdf",
-                        time: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩"), RecognitionCard(
+                        fileName: "স্বীকৃতিপত্র .pdf",
+                        time: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩"),
+                    RecognitionCard(
                         title: "তথ্য অধিকার",
-                        description: "স্বীকৃতিপত্র .pdf",
+                        fileName: "স্বীকৃতিপত্র .pdf",
                         time: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩"),
                     RecognitionCard(
                         title: "তথ্য অধিকার 2",
-                        description: "স্বীকৃতিপত্র .pdf",
-                        time: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩"), RecognitionCard(
+                        fileName: "স্বীকৃতিপত্র .pdf",
+                        time: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩"),
+                    RecognitionCard(
                         title: "তথ্য অধিকার",
-                        description: "স্বীকৃতিপত্র .pdf",
+                        fileName: "স্বীকৃতিপত্র .pdf",
                         time: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩"),
                     RecognitionCard(
                         title: "তথ্য অধিকার 2",
-                        description: "স্বীকৃতিপত্র .pdf",
-                        time: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩"), RecognitionCard(
+                        fileName: "স্বীকৃতিপত্র .pdf",
+                        time: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩"),
+                    RecognitionCard(
                         title: "তথ্য অধিকার",
-                        description: "স্বীকৃতিপত্র .pdf",
+                        fileName: "স্বীকৃতিপত্র .pdf",
                         time: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩"),
                     RecognitionCard(
                         title: "তথ্য অধিকার 2",
-                        description: "স্বীকৃতিপত্র .pdf",
-                        time: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩"), RecognitionCard(
+                        fileName: "স্বীকৃতিপত্র .pdf",
+                        time: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩"),
+                    RecognitionCard(
                         title: "তথ্য অধিকার",
-                        description: "স্বীকৃতিপত্র .pdf",
+                        fileName: "স্বীকৃতিপত্র .pdf",
                         time: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩"),
                     RecognitionCard(
                         title: "তথ্য অধিকার 2",
-                        description: "স্বীকৃতিপত্র .pdf",
+                        fileName: "স্বীকৃতিপত্র .pdf",
                         time: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩"),
                   ],
                 ),
