@@ -23,7 +23,7 @@ class CustomScaffold extends StatelessWidget with AppTheme {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: clr.scaffoldBackgroundColor,
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       body: Padding(
         padding: EdgeInsets.only(top: size.h24),
         child: Column(

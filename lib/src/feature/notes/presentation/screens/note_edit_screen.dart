@@ -42,23 +42,21 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
 
   @override
   Widget build(BuildContext context) {
-
     return CustomScaffold(
       title: "Title",
       bgColor: clr.scaffoldBackgroundColor,
       actionChild: Row(
         children: [
           GestureDetector(
-            onTap: (){
+            onTap: () {
               final json = jsonEncode(_controller.document.toDelta().toJson());
 
+              print(_controller.document.toDelta());
+              print(json + '/////');
+              final json2 = jsonDecode(json);
 
-            print(  _controller.document.toDelta());
-            print(  json+'/////');
-            final json2 = jsonDecode(json);
-
-            _controller.document = Document.fromJson(json2);
-            print(_controller.document.toPlainText()+'>>>>>>>>>>>>>>>');
+              _controller.document = Document.fromJson(json2);
+              print(_controller.document.toPlainText() + '>>>>>>>>>>>>>>>');
             },
             child: Icon(
               Icons.edit,
@@ -103,9 +101,13 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
               child: QuillBaseToolbar(
                 configurations: QuillBaseToolbarConfigurations(
                   toolbarSize: 20 * 2,
-                  multiRowsDisplay: false,color: Colors.white,
+                  multiRowsDisplay: false,
+                  color: Colors.white,
                   buttonOptions: const QuillToolbarButtonOptions(
                     base: QuillToolbarBaseButtonOptions(
+                      iconTheme: QuillIconTheme(
+                          iconSelectedColor: Colors.white,
+                          iconUnselectedFillColor: Colors.transparent),
                       globalIconSize: 30,
                     ),
                   ),
@@ -129,7 +131,8 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
                             );
                           },
                         ),
-                      ),  QuillToolbarToggleStyleButton(
+                      ),
+                      QuillToolbarToggleStyleButton(
                         attribute: Attribute.italic,
                         controller: controller,
                         options: QuillToolbarToggleStyleButtonOptions(
@@ -146,7 +149,8 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
                             );
                           },
                         ),
-                      ),QuillToolbarToggleStyleButton(
+                      ),
+                      QuillToolbarToggleStyleButton(
                         attribute: Attribute.underline,
                         controller: controller,
                         options: QuillToolbarToggleStyleButtonOptions(
@@ -164,26 +168,33 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
                           },
                         ),
                       ),
-                      QuillToolbarColorButton(controller: controller, isBackground: true,options: const QuillToolbarColorButtonOptions(
-                        iconData: Icons.text_format,dialogBarrierColor: Colors.white,
-
-                      ),),
+                      QuillToolbarColorButton(
+                        controller: controller,
+                        isBackground: true,
+                        options: const QuillToolbarColorButtonOptions(
+                          iconData: Icons.text_format,
+                          dialogBarrierColor: Colors.white,
+                        ),
+                      ),
                       QuillToolbarSelectAlignmentButton(
                         showLeftAlignment: true,
                         showRightAlignment: true,
                         showJustifyAlignment: true,
                         showCenterAlignment: true,
-
                         controller: controller,
-                        options: const QuillToolbarSelectAlignmentButtonOptions(iconButtonFactor: 2,iconSize: 20,
-
+                        options: const QuillToolbarSelectAlignmentButtonOptions(
+                          iconButtonFactor: 2,
+                          iconSize: 20,
                         ),
                       ),
                     ];
                   },
                 ),
               ),
-            ),SizedBox(height: 20.h,)
+            ),
+            SizedBox(
+              height: 20.h,
+            )
           ],
         ),
       ),
