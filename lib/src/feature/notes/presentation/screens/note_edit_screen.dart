@@ -1,15 +1,10 @@
 import 'dart:convert';
-import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_quill/extensions.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lms/src/core/common_widgets/custom_scaffold.dart';
-import 'package:lms/src/core/constants/app_theme.dart';
 
-import '../../../../core/common_widgets/custom_app_bar.dart';
+import '../../../../core/common_widgets/custom_scaffold.dart';
+import '../../../../core/constants/app_theme.dart';
 
 class NoteEditScreen extends StatefulWidget {
   final String content;
@@ -23,7 +18,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
   final _controller = QuillController.basic();
   final _editorFocusNode = FocusNode();
   final _editorScrollController = ScrollController();
-  var _isReadOnly = false;
+  final _isReadOnly = false;
   @override
   void initState() {
     super.initState();
@@ -43,8 +38,9 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      title: "Title",
+      title: "",
       bgColor: clr.scaffoldBackgroundColor,
+      resizeToAvoidBottomInset: true,
       actionChild: Row(
         children: [
           GestureDetector(
@@ -61,13 +57,12 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
             child: Icon(
               Icons.edit,
               size: size.r24,
+              color: clr.appPrimaryColorGreen,
             ),
           ),
-          SizedBox(
-            width: size.w12,
-          ),
+          SizedBox(width: size.w12),
           Icon(
-            CupertinoIcons.book,
+            Icons.import_contacts,
             size: size.r24,
             color: clr.appPrimaryColorGreen,
           ),
@@ -199,99 +194,6 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
         ),
       ),
     );
-
-    /* CustomScaffold(
-      title: "Title",
-      bgColor: clr.scaffoldBackgroundColor,
-      actionChild: Row(
-        children: [
-          Icon(
-            Icons.edit,
-            size: size.r24,
-          ),
-          SizedBox(
-            width: size.w12,
-          ),
-          Icon(
-            CupertinoIcons.book,
-            size: size.r24,
-            color: clr.appPrimaryColorGreen,
-          ),
-        ],
-      ),
-      child: QuillProvider(
-        configurations: QuillConfigurations(
-          controller: _controller,
-          sharedConfigurations: QuillSharedConfigurations(
-            animationConfigurations: QuillAnimationConfigurations.disableAll(),
-
-          ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-
-            Builder(
-              builder: (context) {
-                return Expanded(
-                  child: Editor(
-                    configurations: QuillEditorConfigurations(
-                      readOnly: _isReadOnly,
-                    ),
-                    scrollController: _editorScrollController,
-                    focusNode: _editorFocusNode,
-                  ),
-                );
-              },
-            ),
-            QuillBaseToolbar(
-              configurations: QuillBaseToolbarConfigurations(
-                toolbarSize: 15 * 2,
-                multiRowsDisplay: false,
-                buttonOptions: const QuillToolbarButtonOptions(
-                  base: QuillToolbarBaseButtonOptions(
-                    globalIconSize: 30,
-                  ),
-                ),
-                childrenBuilder: (context) {
-                  final controller = context.requireQuillController;
-                  return [
-
-
-                    QuillToolbarToggleStyleButton(
-                      attribute: Attribute.bold,
-                      controller: controller,
-                      options: QuillToolbarToggleStyleButtonOptions(
-                        childBuilder: (options, extraOptions) {
-                          if (extraOptions.isToggled) {
-                            return IconButton(
-                              onPressed: extraOptions.onPressed,
-                              icon: Icon(options.iconData),
-                            );
-                          }
-                          return IconButton(
-                            onPressed: extraOptions.onPressed,
-                            icon: Icon(options.iconData),
-                          );
-                        },
-                      ),
-                    ),
-      QuillToolbarSelectAlignmentButton(
-        showLeftAlignment: true,showRightAlignment: true,showJustifyAlignment: true,showCenterAlignment: true,
-        controller: controller, options: QuillToolbarSelectAlignmentButtonOptions(  ),
-
-                    ),
-
-
-
-                  ];
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    )*/
   }
 }
 
@@ -338,12 +240,14 @@ class _EditorState extends State<Editor> {
 }
 
 class RichTextEditor extends StatefulWidget {
+  const RichTextEditor({super.key});
+
   @override
-  _RichTextEditorState createState() => _RichTextEditorState();
+  State<RichTextEditor> createState() => _RichTextEditorState();
 }
 
 class _RichTextEditorState extends State<RichTextEditor> {
-  TextEditingController _textEditingController = TextEditingController();
+  final TextEditingController _textEditingController = TextEditingController();
   bool isBold = false;
   bool isItalic = false;
   bool isUnderline = false;
@@ -401,16 +305,16 @@ class _RichTextEditorState extends State<RichTextEditor> {
                     alignment = value!;
                   });
                 },
-                items: [
-                  const DropdownMenuItem<TextAlign>(
+                items: const [
+                  DropdownMenuItem<TextAlign>(
                     value: TextAlign.left,
                     child: Text('Left'),
                   ),
-                  const DropdownMenuItem<TextAlign>(
+                  DropdownMenuItem<TextAlign>(
                     value: TextAlign.center,
                     child: Text('Center'),
                   ),
-                  const DropdownMenuItem<TextAlign>(
+                  DropdownMenuItem<TextAlign>(
                     value: TextAlign.right,
                     child: Text('Right'),
                   ),

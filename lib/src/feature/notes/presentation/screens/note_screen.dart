@@ -3,8 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/core/constants/common_imports.dart';
-import 'package:lms/src/feature/notes/presentation/screens/note_edit_screen.dart';
+
+import '../../../../core/utility/app_label.dart';
+import '../../../../core/constants/common_imports.dart';
+import 'note_edit_screen.dart';
 import '../../../../core/common_widgets/custom_app_bar.dart';
 import '../widgets/note_tile.dart';
 
@@ -15,21 +17,18 @@ class NoteScreen extends StatefulWidget {
   State<NoteScreen> createState() => _NoteScreenState();
 }
 
-class _NoteScreenState extends State<NoteScreen> with AppTheme {
+class _NoteScreenState extends State<NoteScreen> with AppTheme, Language {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.white, // status bar color
-    ));
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: clr.scaffoldBackgroundColor,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(size.h56),
         child: CustomAppBar(
-          title: "All Notes",
+          title: label(e: en.allNotes, b: bn.allNotes),
           leadingOnPressed: () {
             _scaffoldKey.currentState!.openDrawer();
           },
@@ -55,27 +54,26 @@ class _NoteScreenState extends State<NoteScreen> with AppTheme {
         ),
       ),
       floatingActionButton: Container(
-        height: 60.h,
-        width: 60.w,
         padding: EdgeInsets.all(size.r16),
         decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.3),
-                spreadRadius: 2,
-                blurRadius: 3,
-                offset: const Offset(0, 5), // changes position of shadow
-              ),
-            ],
-            color: clr.whiteColor),
+          shape: BoxShape.circle,
+          color: clr.whiteColor,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              spreadRadius: 2,
+              blurRadius: 3,
+              offset: const Offset(0, 5), // changes position of shadow
+            ),
+          ],
+        ),
         child: SvgPicture.asset(
-          ImageAssets.edit_square,
+          ImageAssets.icEditSquare,
         ),
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        padding: EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h16),
+        padding: EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h12),
         child: Column(
           children: [
             Row(
@@ -83,16 +81,14 @@ class _NoteScreenState extends State<NoteScreen> with AppTheme {
               children: [
                 Icon(
                   Icons.filter_list,
-                  color: clr.placeHolderTextColorGray,
-                  size: size.r12,
+                  color: clr.appPrimaryColorGreen,
+                  size: size.r16,
                 ),
-                SizedBox(
-                  width: size.w12,
-                ),
+                SizedBox(width: size.w8),
                 Text(
                   "Date modified",
                   style: TextStyle(
-                      color: clr.placeHolderTextColorGray,
+                      color: clr.textColorBlack,
                       fontWeight: FontWeight.w400,
                       fontSize: size.textXSmall,
                       fontFamily: StringData.fontFamilyPoppins),
@@ -103,70 +99,61 @@ class _NoteScreenState extends State<NoteScreen> with AppTheme {
               noteContent: "HESP LMS",
               title: "Note Title",
               timestamp: 'Today 10:00 am',
-              hasDivider: true,
-              onPressed: ()=>Get.to(const NoteEditScreen(content: StringData.noteContent)),
+              onPressed: () => Get.to(NoteEditScreen(
+                  content: label(e: en.noteContent, b: bn.noteContent))),
             ),
             NoteTile(
               noteContent: "CLMS LMS",
               title: "Note Title",
               timestamp: 'Today 10:00 am',
-              hasDivider: true,
               onPressed: () {},
             ),
             NoteTile(
               noteContent: "Sugg LMS",
               title: "Note Title",
               timestamp: 'Today 10:00 am',
-              hasDivider: true,
               onPressed: () {},
             ),
             NoteTile(
               noteContent: "Proje LMS",
               title: "Note Title",
               timestamp: 'Today 10:00 am',
-              hasDivider: true,
               onPressed: () {},
             ),
             NoteTile(
               noteContent: "HESP LMS",
               title: "Note Title",
               timestamp: 'Today 10:00 am',
-              hasDivider: true,
               onPressed: () {},
             ),
             NoteTile(
               noteContent: "HESP LMS",
               title: "Note Title",
               timestamp: 'Today 10:00 am',
-              hasDivider: true,
               onPressed: () {},
             ),
             NoteTile(
               noteContent: "HESP LMS",
               title: "Note Title",
               timestamp: 'Today 10:00 am',
-              hasDivider: true,
               onPressed: () {},
             ),
             NoteTile(
               noteContent: "HESP LMS",
               title: "Note Title",
               timestamp: 'Today 10:00 am',
-              hasDivider: true,
               onPressed: () {},
             ),
             NoteTile(
               noteContent: "HESP LMS",
               title: "Note Title",
               timestamp: 'Today 10:00 am',
-              hasDivider: true,
               onPressed: () {},
             ),
             NoteTile(
               noteContent: "HESP LMS",
               title: "Note Title",
               timestamp: 'Today 10:00 am',
-              hasDivider: true,
               onPressed: () {},
             ),
             NoteTile(
@@ -178,6 +165,6 @@ class _NoteScreenState extends State<NoteScreen> with AppTheme {
           ],
         ),
       ),
-    ));
+    );
   }
 }
