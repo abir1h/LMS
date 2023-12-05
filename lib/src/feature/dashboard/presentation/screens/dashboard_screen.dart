@@ -122,7 +122,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                     rightChild: DashboardCard(
                       title: label(
                           e: en.completedCurriculum, b: bn.completedCurriculum),
-                      onPressed: () => Get.toNamed(AppRoutes.profile),
+                      onPressed: () => Get.toNamed(AppRoutes.ongoingCourse),
                       subTitle: StringData.dashboardCardValue2,
                       borderColor: clr.cardStrokeColorGreen,
                       primaryColor: clr.cardFillColorGreen,

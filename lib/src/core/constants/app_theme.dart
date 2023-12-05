@@ -28,6 +28,7 @@ class ThemeColor {
   Color get iconColorWhiteIce => HexColor("D1ECE4");
   Color get iconColorRed => HexColor("F27785");
   Color get iconColorBlack => HexColor("1C1B1F");
+  Color get iconColorSweetRed => HexColor("FF4A5F");
 
   Color get textColorAppleBlack => HexColor("1D1D1F");
   Color get textColorBlack => HexColor("414141");
@@ -46,6 +47,7 @@ class ThemeColor {
   Color get cardFillColorGreen => HexColor("F2FED7");
   Color get cardFillColorPurple => HexColor("F7F2FF");
   Color get cardFillColorBlue => HexColor("E7F6FF");
+  Color get cardFillColorCruise => HexColor("B3E0DD");
 
   Color get clickableLinkColor => HexColor("4A88FF");
   Color get progressBGColor => HexColor("D9D9D9");
@@ -62,8 +64,6 @@ class ThemeColor {
   Color get toastAskColor => HexColor("68B1EF");
   Color get toastAskBackgroundColor => HexColor("E7F6FF");
   Color get backgroundColorMintCream => HexColor("F2FCFA");
-
-
 }
 
 class ThemeSize {
