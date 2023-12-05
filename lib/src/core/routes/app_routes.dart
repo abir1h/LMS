@@ -87,7 +87,7 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.bottomNav,
-      page: () => const BottomScreen(),
+      page: () => const BottomScreen( ),
       binding: BottomBinding(),
       transition: Transition.rightToLeft,
     ),

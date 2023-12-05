@@ -13,7 +13,7 @@ import '../../../dashboard/presentation/controller/dashboard_controller.dart';
 import '../../../dashboard/presentation/screens/dashboard_screen.dart';
 
 class BottomScreen extends StatefulWidget {
-  const BottomScreen({super.key});
+  const BottomScreen({super.key,});
 
   @override
   State<BottomScreen> createState() => _BottomScreenState();
@@ -33,8 +33,16 @@ class _BottomScreenState extends State<BottomScreen> with AppTheme, Language {
   void initState() {
     // TODO: implement initState
     super.initState();
+    setPage();
     Get.put(DashboardController());
     Get.put(CourseController());
+  }
+  setPage(){
+    final  args = Get.arguments??0;
+    print(args);
+    _currentPageIndex=args;
+
+
   }
 
   @override
@@ -42,20 +50,7 @@ class _BottomScreenState extends State<BottomScreen> with AppTheme, Language {
     return Column(
       children: [
         Expanded(
-          child: PageView.builder(
-            controller: _pageController, allowImplicitScrolling: false,
-            scrollBehavior: const ScrollBehavior(),
-            physics: const NeverScrollableScrollPhysics(),
-            onPageChanged: (index) {
-              setState(() {
-                _currentPageIndex = index;
-              });
-            },
-            itemCount: pages.length, // Set the number of pages
-            itemBuilder: (context, index) {
-              return pages[index];
-            },
-          ),
+          child: pages[_currentPageIndex]
         ),
         BottomNavigationBar(
           backgroundColor: Colors.white,
@@ -72,11 +67,7 @@ class _BottomScreenState extends State<BottomScreen> with AppTheme, Language {
           onTap: (index) {
             setState(() {
               _currentPageIndex = index;
-              _pageController.animateToPage(
-                index,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-              );
+
             });
           },
           items: [
