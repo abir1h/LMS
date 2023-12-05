@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:lms/src/feature/notes/presentation/controllers/note_controller.dart';
 
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/app_theme.dart';
@@ -19,13 +21,16 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
   final _editorFocusNode = FocusNode();
   final _editorScrollController = ScrollController();
   final _isReadOnly = false;
+  final controller = Get.put(NoteController());
+
   @override
   void initState() {
     super.initState();
-/*
-    _controller.document = widget.content;
-*/
+    _editorFocusNode.addListener(isActive);
+
+
   }
+  bool isKeyboardOpen = false;
 
   @override
   void dispose() {
@@ -34,40 +39,53 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
     _editorScrollController.dispose();
     super.dispose();
   }
-
+  void isActive(){
+    if(_editorFocusNode.hasFocus){
+      debugPrint("Keyboard is active");
+    }else{
+      debugPrint("Keyboard is not active");
+    }
+  }
   @override
   Widget build(BuildContext context) {
+    MediaQueryData mediaQuery = MediaQuery.of(context);
+    isKeyboardOpen = mediaQuery.viewInsets.bottom > 0.0;
     return CustomScaffold(
       title: "",
       bgColor: clr.scaffoldBackgroundColor,
       resizeToAvoidBottomInset: true,
-      actionChild: Row(
-        children: [
-          GestureDetector(
-            onTap: () {
-              final json = jsonEncode(_controller.document.toDelta().toJson());
+      actionChild: Obx(() => Row(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  /*final json = jsonEncode(_controller.document.toDelta().toJson());
 
               print(_controller.document.toDelta());
               print(json + '/////');
               final json2 = jsonDecode(json);
 
               _controller.document = Document.fromJson(json2);
-              print(_controller.document.toPlainText() + '>>>>>>>>>>>>>>>');
-            },
-            child: Icon(
-              Icons.edit,
-              size: size.r24,
-              color: clr.appPrimaryColorGreen,
-            ),
-          ),
-          SizedBox(width: size.w12),
-          Icon(
-            Icons.import_contacts,
-            size: size.r24,
-            color: clr.appPrimaryColorGreen,
-          ),
-        ],
-      ),
+              print(_controller.document.toPlainText() + '>>>>>>>>>>>>>>>');*/
+                  controller.edit.value
+                      ? controller.edit.value = false
+                      : controller.edit.value = true;
+                },
+                child: Icon(
+                  Icons.edit,
+                  size: size.r24,
+                  color: controller.edit.value == true
+                      ? clr.appPrimaryColorGreen
+                      : clr.iconColorBlack,
+                ),
+              ),
+              SizedBox(width: size.w12),
+              Icon(
+                Icons.import_contacts,
+                size: size.r24,
+                color: clr.appPrimaryColorGreen,
+              ),
+            ],
+          )),
       child: QuillProvider(
         configurations: QuillConfigurations(
           controller: _controller,
@@ -78,20 +96,31 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+
             Builder(
               builder: (context) {
+                print(controller.keybaordFocused.value);
                 return Expanded(
-                  child: Editor(
-                    configurations: QuillEditorConfigurations(
-                      readOnly: _isReadOnly,
+                  child: GestureDetector(
+                    onTap: () {
+                      print('tapped');
+                      isActive();
+                      _editorFocusNode.hasFocus
+                          ? controller.keybaordFocused.value = true
+                          : controller.keybaordFocused.value = false;
+                    },
+                    child: Editor(
+                      configurations: QuillEditorConfigurations(
+                        readOnly: _isReadOnly,
+                      ),
+                      scrollController: _editorScrollController,
+                      focusNode: _editorFocusNode,
                     ),
-                    scrollController: _editorScrollController,
-                    focusNode: _editorFocusNode,
                   ),
                 );
               },
             ),
-            Padding(
+            isKeyboardOpen?Padding(
               padding: const EdgeInsets.all(8.0),
               child: QuillBaseToolbar(
                 configurations: QuillBaseToolbarConfigurations(
@@ -177,7 +206,8 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
                         showJustifyAlignment: true,
                         showCenterAlignment: true,
                         controller: controller,
-                        options: const QuillToolbarSelectAlignmentButtonOptions(
+                        options:
+                        const QuillToolbarSelectAlignmentButtonOptions(
                           iconButtonFactor: 2,
                           iconSize: 20,
                         ),
@@ -186,7 +216,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
                   },
                 ),
               ),
-            ),
+            ):const SizedBox(),
             SizedBox(
               height: 20.h,
             )
