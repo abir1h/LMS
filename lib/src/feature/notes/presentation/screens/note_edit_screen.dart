@@ -1,17 +1,15 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/core/constants/common_imports.dart';
-import 'package:lms/src/core/routes/app_routes.dart';
-import 'package:lms/src/feature/notes/presentation/controllers/note_controller.dart';
-import 'package:lms/src/feature/notes/presentation/models/note_model.dart';
-import 'package:lms/src/feature/notes/presentation/screens/note_details.dart';
-import 'package:lms/src/feature/notes/presentation/screens/note_screen.dart';
 
+import '../../../../core/common_widgets/custom_toasty.dart';
+import '../../../../core/constants/common_imports.dart';
+import '../../../../core/routes/app_routes.dart';
+import '../controllers/note_controller.dart';
+import '../models/note_model.dart';
+import 'note_details.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
-import '../../../../core/constants/app_theme.dart';
 
 class NoteEditScreen extends StatefulWidget {
   final NoteModel? mainModel;
@@ -67,12 +65,13 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
       _isReadOnly = !_isReadOnly;
     });
   }
-  saveData(){
+
+  saveData() {
     if (widget.mainModel == null) {
       int id = controller.noteList.length + 1;
       DateTime now = DateTime.now();
-      var currentTime = DateTime(
-          now.year, now.month, now.day, now.hour, now.minute);
+      var currentTime =
+          DateTime(now.year, now.month, now.day, now.hour, now.minute);
       var newModel = NoteModel(
         id: id,
         time: currentTime.toString(),
@@ -81,6 +80,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
       );
       controller.noteList.add(newModel);
       Get.toNamed(AppRoutes.bottomNav, arguments: 2);
+      CustomToasty.of(context).showSuccess("তালিকা সফলভাবে সংরক্ষণ করা হয়েছে");
     } else {
       DateTime now = DateTime.now();
       var currentTime = DateTime(
@@ -99,48 +99,53 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
 
       // Check if the note with the same ID exists in the list
       int existingIndex = controller.noteList.indexWhere(
-            (note) => note.id == updatedModel.id,
+        (note) => note.id == updatedModel.id,
       );
 
       if (existingIndex != -1) {
         // Replace the existing note with the updated one
         controller.noteList[existingIndex] = updatedModel;
         Get.toNamed(AppRoutes.bottomNav, arguments: 2);
+        CustomToasty.of(context).showSuccess("তালিকা সফলভাবে আপডেট করা হয়েছে");
       } else {
         // If the note with the ID doesn't exist, add it to the list
         controller.noteList.add(updatedModel);
         Get.toNamed(AppRoutes.bottomNav, arguments: 2);
+        CustomToasty.of(context).showSuccess("তালিকা সফলভাবে আপডেট করা হয়েছে");
       }
     }
   }
-  toggleToReadMode(){  if (widget.mainModel == null) {
-    int id = controller.noteList.length + 1;
-    DateTime now = DateTime.now();
-    var currentTime = DateTime(
-        now.year, now.month, now.day, now.hour, now.minute);
-    var newModel = NoteModel(
-      id: id,
-      time: currentTime.toString(),
-      title: titleController.text,
-      description: _controller.document.toDelta().toJson(),
-    );
-    Get.to(() => NoteDetailsScreen(
-      mainModel: newModel,
-    ));
-  } else {
-    DateTime now = DateTime.now();
-    var currentTime = DateTime(
-        now.year, now.month, now.day, now.hour, now.minute);
-    var newModel = NoteModel(
-      id: widget.mainModel?.id!,
-      time: currentTime.toString(),
-      title: titleController.text,
-      description: _controller.document.toDelta().toJson(),
-    );
-    Get.to(() => NoteDetailsScreen(
-      mainModel: newModel,
-    ));
-  }}
+
+  toggleToReadMode() {
+    if (widget.mainModel == null) {
+      int id = controller.noteList.length + 1;
+      DateTime now = DateTime.now();
+      var currentTime =
+          DateTime(now.year, now.month, now.day, now.hour, now.minute);
+      var newModel = NoteModel(
+        id: id,
+        time: currentTime.toString(),
+        title: titleController.text,
+        description: _controller.document.toDelta().toJson(),
+      );
+      Get.to(() => NoteDetailsScreen(
+            mainModel: newModel,
+          ));
+    } else {
+      DateTime now = DateTime.now();
+      var currentTime =
+          DateTime(now.year, now.month, now.day, now.hour, now.minute);
+      var newModel = NoteModel(
+        id: widget.mainModel?.id!,
+        time: currentTime.toString(),
+        title: titleController.text,
+        description: _controller.document.toDelta().toJson(),
+      );
+      Get.to(() => NoteDetailsScreen(
+            mainModel: newModel,
+          ));
+    }
+  }
 
   NoteModel noteModel = NoteModel();
 
@@ -157,7 +162,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
         children: [
           IconButton(
               onPressed: () {
-           saveData();
+                saveData();
               },
               icon: Icon(Icons.check,
                   size: size.r24, color: clr.appPrimaryColorGreen)),
@@ -280,7 +285,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
                                   final buttonBackgroundColor = extraOptions
                                           .isToggled
                                       ? clr
-                                      .placeHolderTextColorGray // Background color when toggled
+                                          .placeHolderTextColorGray // Background color when toggled
                                       : Colors.transparent;
                                   if (extraOptions.isToggled) {
                                     return Container(
@@ -304,9 +309,9 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
                               options: QuillToolbarToggleStyleButtonOptions(
                                 childBuilder: (options, extraOptions) {
                                   final buttonBackgroundColor = extraOptions
-                                      .isToggled
+                                          .isToggled
                                       ? clr
-                                      .placeHolderTextColorGray // Background color when toggled
+                                          .placeHolderTextColorGray // Background color when toggled
                                       : Colors.transparent;
                                   if (extraOptions.isToggled) {
                                     return Container(
@@ -330,9 +335,9 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
                               options: QuillToolbarToggleStyleButtonOptions(
                                 childBuilder: (options, extraOptions) {
                                   final buttonBackgroundColor = extraOptions
-                                      .isToggled
+                                          .isToggled
                                       ? clr
-                                      .placeHolderTextColorGray // Background color when toggled
+                                          .placeHolderTextColorGray // Background color when toggled
                                       : Colors.transparent;
                                   if (extraOptions.isToggled) {
                                     return Container(

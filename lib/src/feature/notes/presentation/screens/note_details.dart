@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/core/common_widgets/custom_button.dart';
-import 'package:lms/src/core/constants/app_theme.dart';
-import 'package:lms/src/feature/notes/presentation/screens/note_edit_screen.dart';
 
+import 'note_edit_screen.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/routes/app_routes.dart';
@@ -24,7 +21,7 @@ class NoteDetailsScreen extends StatefulWidget {
 }
 
 class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
-  String ContentText = '';
+  String contentText = '';
   final controller = Get.put(NoteController());
 
   @override
@@ -39,7 +36,7 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
       if (widget.mainModel!.description != null) {
         final Document doc =
             Document.fromJson(widget.mainModel!.description as List);
-        ContentText = doc.toPlainText();
+        contentText = doc.toPlainText();
       }
     }
   }
@@ -98,7 +95,7 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
               color: clr.cardStrokeColor,
             ),
             Text(
-              ContentText,
+              contentText,
               textAlign: TextAlign.justify,
               style: TextStyle(
                   fontSize: size.textSmall,

@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/core/service/notifier/app_events_notifier.dart';
-import 'package:lms/src/feature/notes/presentation/models/note_model.dart';
-import 'package:lms/src/feature/notes/presentation/screens/note_details.dart';
 
+import '../../../../core/service/notifier/app_events_notifier.dart';
+import 'note_details.dart';
 import '../../../../core/common_widgets/drawer_widget.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../../core/constants/common_imports.dart';
@@ -21,7 +20,8 @@ class NoteScreen extends StatefulWidget {
   State<NoteScreen> createState() => _NoteScreenState();
 }
 
-class _NoteScreenState extends State<NoteScreen> with AppTheme, Language ,AppEventsNotifier{
+class _NoteScreenState extends State<NoteScreen>
+    with AppTheme, Language, AppEventsNotifier {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final List<dynamic> contents = [
     {
@@ -102,7 +102,8 @@ class _NoteScreenState extends State<NoteScreen> with AppTheme, Language ,AppEve
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 PopupMenuButton<int>(
-                  color: clr.whiteColor,surfaceTintColor: clr.whiteColor,
+                  color: clr.whiteColor,
+                  surfaceTintColor: clr.whiteColor,
                   padding: EdgeInsets.only(
                       left: size.h12,
                       right: 40.w,
@@ -120,26 +121,28 @@ class _NoteScreenState extends State<NoteScreen> with AppTheme, Language ,AppEve
                   itemBuilder: (context) => [
                     PopupMenuItem(
                       value: 1,
-                      child: Container(width: 1.sw,
-                        child: Row(                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
+                      child: SizedBox(
+                        width: 1.sw,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               "Title ",
-                              style:selectedValue == 1?TextStyle(
-                                color: clr.appPrimaryColorGreen,
-
-                                fontWeight: FontWeight.w500,
-                                fontFamily: StringData.fontFamilyPoppins,
-                                fontSize: size.textSmall
-                              ):TextStyle(
-                                  color: clr.blackColor,
-
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: StringData.fontFamilyPoppins,
-                                  fontSize: size.textSmall
-                              ),
-                            ),SizedBox(width: size.w8,),
+                              style: selectedValue == 1
+                                  ? TextStyle(
+                                      color: clr.appPrimaryColorGreen,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: StringData.fontFamilyPoppins,
+                                      fontSize: size.textSmall)
+                                  : TextStyle(
+                                      color: clr.blackColor,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: StringData.fontFamilyPoppins,
+                                      fontSize: size.textSmall),
+                            ),
+                            SizedBox(
+                              width: size.w8,
+                            ),
                             if (selectedValue == 1)
                               Icon(
                                 Icons.check,
@@ -156,53 +159,57 @@ class _NoteScreenState extends State<NoteScreen> with AppTheme, Language ,AppEve
                         children: [
                           Text(
                             "Date Created ",
-                            style:selectedValue == 2?TextStyle(
-                                color: clr.appPrimaryColorGreen,
-
-                                fontWeight: FontWeight.w500,
-                                fontFamily: StringData.fontFamilyPoppins,
-                                fontSize: size.textSmall
-                            ):TextStyle(
-                                color: clr.blackColor,
-
-                                fontWeight: FontWeight.w500,
-                                fontFamily: StringData.fontFamilyPoppins,
-                                fontSize: size.textSmall
-                            ),
-                          ),SizedBox(width: size.w8,),
+                            style: selectedValue == 2
+                                ? TextStyle(
+                                    color: clr.appPrimaryColorGreen,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: StringData.fontFamilyPoppins,
+                                    fontSize: size.textSmall)
+                                : TextStyle(
+                                    color: clr.blackColor,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: StringData.fontFamilyPoppins,
+                                    fontSize: size.textSmall),
+                          ),
+                          SizedBox(
+                            width: size.w8,
+                          ),
                           if (selectedValue == 2)
                             Icon(
                               Icons.check,
-                              color: clr.appPrimaryColorGreen,size: size.r24,
+                              color: clr.appPrimaryColorGreen,
+                              size: size.r24,
                             ),
                         ],
                       ),
                     ),
                     PopupMenuItem(
                       value: 3,
-                      child: Row(                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             "Date Modified",
-                            style:selectedValue == 3?TextStyle(
-                                color: clr.appPrimaryColorGreen,
-
-                                fontWeight: FontWeight.w500,
-                                fontFamily: StringData.fontFamilyPoppins,
-                                fontSize: size.textSmall
-                            ):TextStyle(
-                                color: clr.blackColor,
-
-                                fontWeight: FontWeight.w500,
-                                fontFamily: StringData.fontFamilyPoppins,
-                                fontSize: size.textSmall
-                            ),
-                          ),SizedBox(width: size.w8,),
+                            style: selectedValue == 3
+                                ? TextStyle(
+                                    color: clr.appPrimaryColorGreen,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: StringData.fontFamilyPoppins,
+                                    fontSize: size.textSmall)
+                                : TextStyle(
+                                    color: clr.blackColor,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: StringData.fontFamilyPoppins,
+                                    fontSize: size.textSmall),
+                          ),
+                          SizedBox(
+                            width: size.w8,
+                          ),
                           if (selectedValue == 3)
                             Icon(
                               Icons.check,
-                              color: clr.appPrimaryColorGreen,size: size.r24,
+                              color: clr.appPrimaryColorGreen,
+                              size: size.r24,
                             ),
                         ],
                       ),
@@ -242,8 +249,8 @@ class _NoteScreenState extends State<NoteScreen> with AppTheme, Language ,AppEve
                           controller.noteList[index].title.toString().isNotEmpty
                               ? controller.noteList[index].title.toString()[0]
                               : '',
-                      title: controller.noteList[index].title! ?? '',
-                      timestamp: controller.noteList[index].time! ?? "",
+                      title: controller.noteList[index].title!,
+                      timestamp: controller.noteList[index].time!,
                       onPressed: () => Get.to(() => NoteDetailsScreen(
                             mainModel: controller.noteList[index],
                           )),
@@ -258,10 +265,10 @@ class _NoteScreenState extends State<NoteScreen> with AppTheme, Language ,AppEve
 
   @override
   void onEventReceived(EventAction action) {
-    if(action==EventAction.bottomNavAllScreen||action==EventAction.notesScreen){
-      if(mounted){
-        setState(() {
-        });
+    if (action == EventAction.bottomNavAllScreen ||
+        action == EventAction.notesScreen) {
+      if (mounted) {
+        setState(() {});
       }
     }
   }
