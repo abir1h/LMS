@@ -32,6 +32,7 @@ dependencies:
   shimmer: ^3.0.0
   timeago: ^3.6.0
   flutter_quill: ^8.6.4
+  uuid: ^4.2.1
 
 
 dev_dependencies:

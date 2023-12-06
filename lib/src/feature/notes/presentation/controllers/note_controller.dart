@@ -6,6 +6,7 @@ import '../models/note_model.dart';
 
 class NoteController extends GetxController {
   final  edit = false.obs;
+  final  noteIndex="";
   final keybaordFocused = false.obs;
   RxList<NoteModel> noteList=<NoteModel>[].obs;
 

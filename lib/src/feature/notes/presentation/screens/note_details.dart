@@ -13,9 +13,11 @@ import '../controllers/note_controller.dart';
 import '../models/note_model.dart';
 
 class NoteDetailsScreen extends StatefulWidget {
-  final List<dynamic>? content;
-  final String? Title;
-  const NoteDetailsScreen({super.key, this.content, this.Title});
+  final NoteModel? mainModel;
+  const NoteDetailsScreen({
+    super.key,
+    this.mainModel,
+  });
 
   @override
   State<NoteDetailsScreen> createState() => _NoteDetailsScreenState();
@@ -29,8 +31,17 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
   void initState() {
     // TODO: implement initState
     super.initState();
-    final Document doc = Document.fromJson(widget.content as List);
-    ContentText = doc.toPlainText();
+    setData();
+  }
+
+  setData() {
+    if (widget.mainModel != null) {
+      if (widget.mainModel!.description != null) {
+        final Document doc =
+            Document.fromJson(widget.mainModel!.description as List);
+        ContentText = doc.toPlainText();
+      }
+    }
   }
 
   @override
@@ -43,23 +54,27 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
         children: [
           IconButton(
               onPressed: () {
-                DateTime now = DateTime.now();
-                var currentTime = DateTime(
-                    now.year, now.month, now.day, now.hour, now.minute);
+                // Check if the note with the same ID exists in the list
+                int existingIndex = controller.noteList.indexWhere(
+                  (note) => note.id == widget.mainModel?.id!,
+                );
 
-                controller.noteList.add(NoteModel(
-                    time: currentTime.toString(),
-                    title: widget.Title,
-                    description: widget.content));
-                Get.toNamed(AppRoutes.bottomNav, arguments: 2);
+                if (existingIndex != -1) {
+                  // Replace the existing note with the updated one
+                  controller.noteList[existingIndex] = widget.mainModel!;
+                  Get.toNamed(AppRoutes.bottomNav, arguments: 2);
+                } else {
+                  // If the note with the ID doesn't exist, add it to the list
+                  controller.noteList.add(widget.mainModel!);
+                  Get.toNamed(AppRoutes.bottomNav, arguments: 2);
+                }
               },
               icon: Icon(Icons.check,
                   size: size.r24, color: clr.appPrimaryColorGreen)),
           IconButton(
               onPressed: () {
                 Get.to(() => NoteEditScreen(
-                      content: widget.content,
-                      title: widget.Title,
+                      mainModel: widget.mainModel,
                     ));
               },
               icon:
@@ -72,7 +87,7 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              widget.Title!,
+              widget.mainModel!.title!,
               style: TextStyle(
                   fontSize: size.textXMedium,
                   color: clr.textColorAppleBlack,
