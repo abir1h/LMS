@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:lms/src/core/utility/app_label.dart';
 
+import '../screens/live_class_screen.dart';
 import 'course_content_widget.dart';
 import '../../../../core/constants/common_imports.dart';
 
@@ -18,7 +21,7 @@ class ChapterWidget extends StatefulWidget {
   State<ChapterWidget> createState() => _ChapterWidgetState();
 }
 
-class _ChapterWidgetState extends State<ChapterWidget> with AppTheme {
+class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
   bool _isExpanded = false;
 
   _toggle() {
@@ -119,39 +122,42 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme {
               CourseContentWidget(
                 courseIcon: Icons.text_snippet,
                 iconColor: clr.clickableLinkColor,
-                title: "ভূমিকা, অধ্যায়ের বিবরণ",
+                title: label(
+                    e: "Introduction, Chapter Description",
+                    b: "ভূমিকা, অধ্যায়ের বিবরণ"),
                 buttonIcon: Icons.visibility,
               ),
               CourseContentWidget(
                 courseIcon: Icons.smart_display,
                 iconColor: clr.iconColorSweetRed,
-                title: "কোর্সের পরিচিতি",
-                buttonText: "দেখুন",
+                title: label(e: "Course Introduction", b: "কোর্সের পরিচিতি"),
+                buttonText: label(e: en.see, b: bn.see),
                 buttonIcon: Icons.play_circle,
               ),
               CourseContentWidget(
                 courseIcon: Icons.assignment,
                 iconColor: clr.appPrimaryColorGreen,
-                title: "অ্যাসাইনমেন্ট",
+                title: label(e: "Assignment", b: "অ্যাসাইনমেন্ট"),
                 buttonIcon: Icons.visibility,
               ),
               CourseContentWidget(
                 courseIcon: Icons.cast_connected,
                 iconColor: clr.textColorBlack,
-                title: "লাইভ ক্লাস",
-                buttonText: "জয়েন করুন",
+                title: label(e: "Live Class", b: "লাইভ ক্লাস"),
+                buttonText: label(e: en.join, b: bn.join),
                 buttonIcon: Icons.video_call,
+                onTap: () => Get.to(() => const LiveClassScreen()),
               ),
               CourseContentWidget(
                 courseIcon: Icons.help_center,
                 iconColor: clr.textColorAppleBlack,
-                title: "মূল্যায়ন",
+                title: label(e: "Evaluation", b: "মূল্যায়ন"),
                 buttonIcon: Icons.visibility,
               ),
               CourseContentWidget(
                 courseIcon: Icons.assignment,
                 iconColor: clr.appPrimaryColorGreen,
-                title: "অ্যাসাইনমেন্ট",
+                title: label(e: "Assignment", b: "অ্যাসাইনমেন্ট"),
                 buttonIcon: Icons.visibility,
               ),
             ],

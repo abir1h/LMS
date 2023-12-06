@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:lms/src/feature/notes/presentation/models/note_model.dart';
 import 'package:lms/src/feature/notes/presentation/screens/note_details.dart';
 
+import '../../../../core/common_widgets/drawer_widget.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../controllers/note_controller.dart';
@@ -40,6 +41,7 @@ class _NoteScreenState extends State<NoteScreen> with AppTheme, Language {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: clr.scaffoldBackgroundColor,
+      drawer: const DrawerWidget(),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(size.h56),
         child: CustomAppBar(

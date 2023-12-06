@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lms/src/feature/discussion/presentation/screens/discussion_screen.dart';
 
+import '../../../discussion/presentation/screens/discussion_screen.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/common_widgets/custom_expanded_text.dart';
 import '../../../../core/common_widgets/custom_button.dart';
@@ -18,7 +18,7 @@ class TranscriptVideoScreen extends StatefulWidget {
 }
 
 class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
-    with AppTheme {
+    with AppTheme, Language {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +36,9 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                   children: [
                     Expanded(
                       child: Text(
-                        StringData.transcriptTitle1,
+                        label(
+                            e: "Video 1: Course Introduction",
+                            b: "ভিডিও ১: কোর্সের পরিচিতি"),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         style: TextStyle(
@@ -81,7 +83,9 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                 ),
                 SizedBox(height: size.h8),
                 Text(
-                  StringData.transcriptTitle1Description,
+                  label(
+                      e: "Traditional Concepts of Interconnected Formal Education",
+                      b: "আন্তঃসংযুক্ত আনুষ্ঠানিক শিক্ষার ঐতিহ্যগত ধারণা"),
                   style: TextStyle(
                       fontFamily: StringData.fontFamilyPoppins,
                       fontSize: size.textSmall,
@@ -95,7 +99,7 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                     CustomButton(
                       onTap: () {},
                       icon: Icons.add,
-                      title: 'নোট নিন',
+                      title: label(e: en.takeNotes, b: bn.takeNotes),
                       textSize: size.textXXXSmall,
                       horizontalPadding: size.w10,
                       verticalPadding: 6.5.h,
@@ -105,7 +109,7 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                     CustomButton(
                       onTap: onTapDiscussion,
                       icon: Icons.add,
-                      title: 'আলোচনা',
+                      title: label(e: en.discussion, b: bn.discussion),
                       textSize: size.textXXXSmall,
                       horizontalPadding: size.w10,
                       verticalPadding: 6.5.h,
@@ -115,7 +119,7 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                 ),
                 SizedBox(height: size.h16),
                 Text(
-                  StringData.transcriptTitle2,
+                  label(e: en.transcript, b: bn.transcript),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                   style: TextStyle(
@@ -126,7 +130,9 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                 ),
                 SizedBox(height: size.h8),
                 ExpandableText(
-                  text: StringData.transcriptTitle2Description,
+                  text: label(
+                      e: StringData.transcriptTitle2Description,
+                      b: StringData.transcriptTitle2DescriptionBn),
                   style: TextStyle(
                       fontFamily: StringData.fontFamilyPoppins,
                       fontSize: size.textSmall,
@@ -139,7 +145,7 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                   padding: EdgeInsets.symmetric(horizontal: 106.w),
                   child: CustomButton(
                     onTap: () {},
-                    title: ' পরবর্তী',
+                    title: label(e: en.next, b: bn.next),
                     verticalPadding: 2.h,
                     radius: size.w4,
                   ),

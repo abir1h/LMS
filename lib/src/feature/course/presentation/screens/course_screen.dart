@@ -73,16 +73,20 @@ class _CourseScreenState extends State<CourseScreen> with AppTheme, Language {
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
         children: [
-          const CourseWidget(
-            title: "শিক্ষা নীতি ও শিক্ষায় ব্যাবস্থাপনা",
-            description:
-                "শেখার জন্য শিক্ষাদান প্রোগ্রামের হল যারা শিক্ষা দিচ্ছেন, বা যারা শিক্ষা দিতে চান, যে কোনো বিষয়ে, যে কোনো প্রসঙ্গে বিস্তারিত আলোচনা",
+          CourseWidget(
+            title: label(
+                e: "Education Policy and Management in Education",
+                b: "শিক্ষা নীতি ও শিক্ষায় ব্যাবস্থাপনা"),
+            description: label(
+                e: "Teaching for Learning programs are detailed discussions for those who are teaching, or who want to teach, any subject, in any context",
+                b: "শেখার জন্য শিক্ষাদান প্রোগ্রামের হল যারা শিক্ষা দিচ্ছেন, বা যারা শিক্ষা দিতে চান, যে কোনো বিষয়ে, যে কোনো প্রসঙ্গে বিস্তারিত আলোচনা"),
           ),
           SizedBox(height: size.h32),
-          const CourseWidget(
-            title: "তথ্য অধিকার",
-            description:
-                "শেখার জন্য শিক্ষাদান প্রোগ্রামের হল যারা শিক্ষা দিচ্ছেন, বা যারা শিক্ষা দিতে চান, যে কোনো বিষয়ে, যে কোনো প্রসঙ্গে বিস্তারিত আলোচনা",
+          CourseWidget(
+            title: label(e: "Right to Information", b: "তথ্য অধিকার"),
+            description: label(
+                e: "Teaching for Learning programs are detailed discussions for those who are teaching, or who want to teach, any subject, in any context",
+                b: "শেখার জন্য শিক্ষাদান প্রোগ্রামের হল যারা শিক্ষা দিচ্ছেন, বা যারা শিক্ষা দিতে চান, যে কোনো বিষয়ে, যে কোনো প্রসঙ্গে বিস্তারিত আলোচনা"),
           ),
         ],
       ),
@@ -102,7 +106,7 @@ class _CourseScreenState extends State<CourseScreen> with AppTheme, Language {
   }
 }
 
-class CourseWidget extends StatelessWidget with AppTheme {
+class CourseWidget extends StatelessWidget with AppTheme, Language {
   final String title;
   final String description;
   const CourseWidget(
@@ -118,7 +122,8 @@ class CourseWidget extends StatelessWidget with AppTheme {
           fontSize: size.textXMedium,
         ),
         SizedBox(height: size.h16),
-        const CourseText(text: "পাঠ্যসূচীর বর্ণনা"),
+        CourseText(
+            text: label(e: en.curriculumContent, b: bn.curriculumContent)),
         SizedBox(height: size.h10),
         CourseText(
           text: description,
@@ -126,33 +131,43 @@ class CourseWidget extends StatelessWidget with AppTheme {
           fontWeight: FontWeight.w500,
         ),
         SizedBox(height: size.h16),
-        const CourseText(text: "পাঠ্যক্রমের বিষয়বস্তু"),
+        CourseText(
+            text: label(
+                e: en.curriculumDescription, b: bn.curriculumDescription)),
         SizedBox(height: size.h12),
         ListView(
           padding: EdgeInsets.zero,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          children: const [
+          children: [
             ChapterWidget(
-              chapterTitle: "অধ্যায় ১: কারবালা প্রান্তর",
-              chapterCode: "অধ্যায়ের কোড",
+              chapterTitle: label(
+                  e: "Chapter 1: The Desert of Karbala",
+                  b: "অধ্যায় ১: কারবালা প্রান্তর"),
+              chapterCode: label(e: "Chapter Code", b: "অধ্যায়ের কোড"),
               lock: false,
             ),
             ChapterWidget(
-              chapterTitle: "অধ্যায় ২: মানব-কল্যাণ",
-              chapterCode: "অধ্যায়ের কোড",
+              chapterTitle: label(
+                  e: "Chapter 2: Human-Welfare", b: "অধ্যায় ২: মানব-কল্যাণ"),
+              chapterCode: label(e: "Chapter Code", b: "অধ্যায়ের কোড"),
             ),
             ChapterWidget(
-              chapterTitle: "অধ্যায় ৩: কারবালা প্রান্তর",
-              chapterCode: "অধ্যায়ের কোড",
+              chapterTitle: label(
+                  e: "Chapter 3: The Desert of Karbala",
+                  b: "অধ্যায় ৩: কারবালা প্রান্তর"),
+              chapterCode: label(e: "Chapter Code", b: "অধ্যায়ের কোড"),
             ),
             ChapterWidget(
-              chapterTitle: "অধ্যায় ৪: মানব-কল্যাণ",
-              chapterCode: "অধ্যায়ের কোড",
+              chapterTitle: label(
+                  e: "Chapter 4: Human-Welfare", b: "অধ্যায় ৪: মানব-কল্যাণ"),
+              chapterCode: label(e: "Chapter Code", b: "অধ্যায়ের কোড"),
             ),
             ChapterWidget(
-              chapterTitle: "অধ্যায় ৫: জীবযাত্রার বিপুলতা",
-              chapterCode: "অধ্যায়ের কোড",
+              chapterTitle: label(
+                  e: "Chapter 5: The Enormity of Life",
+                  b: "অধ্যায় ৫: জীবযাত্রার বিপুলতা"),
+              chapterCode: label(e: "Chapter Code", b: "অধ্যায়ের কোড"),
             ),
           ],
         )

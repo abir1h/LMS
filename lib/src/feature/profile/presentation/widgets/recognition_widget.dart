@@ -36,62 +36,60 @@ class RecognitionWidget extends StatelessWidget with AppTheme, Language {
                     color: clr.shadeWhiteColor2),
               ),
             ),
-            const Expanded(
+            Expanded(
               child: SingleChildScrollView(
                 child: Column(
                   children: [
                     RecognitionCard(
-                        title: "নতুন কারিকুলাম বিতরণ ",
-                        fileName: "স্বীকৃতিপত্র .pdf",
-                        time: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩"),
+                        title: label(
+                            e: "Distribution of new curriculum",
+                            b: "নতুন কারিকুলাম বিতরণ"),
+                        fileName: "স্বীকৃতিপত্র.pdf",
+                        time: label(
+                            e: "Period 15/11/23 - 30/11/23",
+                            b: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩")),
                     RecognitionCard(
-                        title: "তথ্য অধিকার",
-                        fileName: "স্বীকৃতিপত্র .pdf",
-                        time: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩"),
+                        title:
+                            label(e: "Right to Information", b: "তথ্য অধিকার"),
+                        fileName: "স্বীকৃতিপত্র.pdf",
+                        time: label(
+                            e: "Period 15/11/23 - 30/11/23",
+                            b: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩")),
                     RecognitionCard(
-                        title: "তথ্য অধিকার 2",
-                        fileName: "স্বীকৃতিপত্র .pdf",
-                        time: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩"),
+                        title: label(
+                            e: "Right to Information 2", b: "তথ্য অধিকার 2"),
+                        fileName: "স্বীকৃতিপত্র.pdf",
+                        time: label(
+                            e: "Period 15/11/23 - 30/11/23",
+                            b: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩")),
                     RecognitionCard(
-                        title: "তথ্য অধিকার",
-                        fileName: "স্বীকৃতিপত্র .pdf",
-                        time: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩"),
+                        title:
+                            label(e: "Right to Information", b: "তথ্য অধিকার"),
+                        fileName: "স্বীকৃতিপত্র.pdf",
+                        time: label(
+                            e: "Period 15/11/23 - 30/11/23",
+                            b: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩")),
                     RecognitionCard(
-                        title: "তথ্য অধিকার 2",
-                        fileName: "স্বীকৃতিপত্র .pdf",
-                        time: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩"),
+                        title: label(
+                            e: "Right to Information 2", b: "তথ্য অধিকার 2"),
+                        fileName: "স্বীকৃতিপত্র.pdf",
+                        time: label(
+                            e: "Period 15/11/23 - 30/11/23",
+                            b: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩")),
                     RecognitionCard(
-                        title: "তথ্য অধিকার",
-                        fileName: "স্বীকৃতিপত্র .pdf",
-                        time: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩"),
+                        title:
+                            label(e: "Right to Information", b: "তথ্য অধিকার"),
+                        fileName: "স্বীকৃতিপত্র.pdf",
+                        time: label(
+                            e: "Period 15/11/23 - 30/11/23",
+                            b: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩")),
                     RecognitionCard(
-                        title: "তথ্য অধিকার 2",
-                        fileName: "স্বীকৃতিপত্র .pdf",
-                        time: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩"),
-                    RecognitionCard(
-                        title: "তথ্য অধিকার",
-                        fileName: "স্বীকৃতিপত্র .pdf",
-                        time: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩"),
-                    RecognitionCard(
-                        title: "তথ্য অধিকার 2",
-                        fileName: "স্বীকৃতিপত্র .pdf",
-                        time: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩"),
-                    RecognitionCard(
-                        title: "তথ্য অধিকার",
-                        fileName: "স্বীকৃতিপত্র .pdf",
-                        time: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩"),
-                    RecognitionCard(
-                        title: "তথ্য অধিকার 2",
-                        fileName: "স্বীকৃতিপত্র .pdf",
-                        time: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩"),
-                    RecognitionCard(
-                        title: "তথ্য অধিকার",
-                        fileName: "স্বীকৃতিপত্র .pdf",
-                        time: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩"),
-                    RecognitionCard(
-                        title: "তথ্য অধিকার 2",
-                        fileName: "স্বীকৃতিপত্র .pdf",
-                        time: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩"),
+                        title: label(
+                            e: "Right to Information 2", b: "তথ্য অধিকার 2"),
+                        fileName: "স্বীকৃতিপত্র.pdf",
+                        time: label(
+                            e: "Period 15/11/23 - 30/11/23",
+                            b: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩")),
                   ],
                 ),
               ),

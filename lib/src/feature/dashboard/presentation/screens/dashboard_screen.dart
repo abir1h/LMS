@@ -99,8 +99,10 @@ class _DashboardScreenState extends State<DashboardScreen>
                 CourseCard(
                   onPressed: () => Get.toNamed(AppRoutes.ongoingCourse),
                   image: Image.asset("assets/images/image.png"),
-                  text1: StringData.cardText1,
-                  text2: StringData.cardText2,
+                  text1:
+                      label(e: StringData.cardText1, b: StringData.cardText1Bn),
+                  text2:
+                      label(e: StringData.cardText2, b: StringData.cardText2Bn),
                   text3:
                       label(e: "30% ${en.completed}", b: "৩০% ${bn.completed}"),
                   primaryColor: Colors.white,
@@ -111,7 +113,9 @@ class _DashboardScreenState extends State<DashboardScreen>
                       title:
                           label(e: en.ongoingCurriculum, b: bn.runningModule),
                       onPressed: () => Get.toNamed(AppRoutes.ongoingCourse),
-                      subTitle: StringData.dashboardCardValue1,
+                      subTitle: label(
+                          e: StringData.dashboardCardValue1,
+                          b: StringData.dashboardCardValue1Bn),
                       borderColor: clr.cardStrokeColorOrange,
                       primaryColor: clr.cardFillColorOrange,
                       image: SvgPicture.asset(
@@ -123,7 +127,9 @@ class _DashboardScreenState extends State<DashboardScreen>
                       title: label(
                           e: en.completedCurriculum, b: bn.completedCurriculum),
                       onPressed: () => Get.toNamed(AppRoutes.ongoingCourse),
-                      subTitle: StringData.dashboardCardValue2,
+                      subTitle: label(
+                          e: StringData.dashboardCardValue2,
+                          b: StringData.dashboardCardValue2Bn),
                       borderColor: clr.cardStrokeColorGreen,
                       primaryColor: clr.cardFillColorGreen,
                       image: SvgPicture.asset(
@@ -136,7 +142,9 @@ class _DashboardScreenState extends State<DashboardScreen>
                     leftChild: DashboardCard(
                       title: label(e: en.discussionArea, b: bn.discussionArea),
                       onPressed: () {},
-                      subTitle: StringData.dashboardCardValue3,
+                      subTitle: label(
+                          e: StringData.dashboardCardValue3,
+                          b: StringData.dashboardCardValue3Bn),
                       borderColor: clr.cardStrokeColorPurple,
                       primaryColor: clr.cardFillColorPurple,
                       image: SvgPicture.asset(
@@ -147,7 +155,9 @@ class _DashboardScreenState extends State<DashboardScreen>
                     rightChild: DashboardCard(
                       title: label(e: en.notifications, b: bn.notifications),
                       onPressed: () {},
-                      subTitle: StringData.dashboardCardValue4,
+                      subTitle: label(
+                          e: StringData.dashboardCardValue4,
+                          b: StringData.dashboardCardValue4Bn),
                       borderColor: clr.cardFillColorBlue,
                       primaryColor: clr.cardStrokeColorBlue,
                       image: SvgPicture.asset(
@@ -170,7 +180,17 @@ class _DashboardScreenState extends State<DashboardScreen>
                       color: clr.appPrimaryColorGreen,
                       size: size.r20,
                     ),
-                    title: StringData.notice1),
+                    title:
+                        label(e: StringData.notice1, b: StringData.notice1Bn)),
+                SizedBox(height: size.h12),
+                CustomNoticeCard(
+                    leading: Icon(
+                      Icons.event_available_rounded,
+                      color: clr.iconColorRed,
+                      size: size.r20,
+                    ),
+                    title:
+                        label(e: StringData.notice2, b: StringData.notice2Bn)),
                 SizedBox(height: size.h32),
               ],
             ),

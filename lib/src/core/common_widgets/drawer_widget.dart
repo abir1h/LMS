@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'custom_dialog_widget.dart';
 import 'custom_switch_button.dart';
 import '../utility/app_label.dart';
 import '../../feature/landing/presentation/controllers/landing_controller.dart';
@@ -129,9 +130,7 @@ class _DrawerWidgetState extends State<DrawerWidget> with AppTheme, Language {
                 icon: Icons.logout,
                 iconColor: clr.textColorBlack,
                 text: label(e: en.logoutText, b: bn.logoutText),
-                onTap: () {
-                  Get.find<LandingController>().logout();
-                },
+                onTap: showLogoutPromptDialog,
               ),
               SizedBox(height: size.h64)
             ],
@@ -139,6 +138,22 @@ class _DrawerWidgetState extends State<DrawerWidget> with AppTheme, Language {
         ),
       ),
     );
+  }
+
+  void showLogoutPromptDialog() {
+    CustomDialogWidget.show(
+      context: context,
+      title: label(e: en.logoutWarningText, b: bn.logoutWarningText),
+      infoText: label(
+          e: "Your ID login is required for your courses and assessment news.",
+          b: "আপনার কোর্সগুলো এবং মূল্যায়নের খবরের জন্য আপনার আইডি লগইন থাকা প্রয়োজন।"),
+      rightButtonText: label(e: en.cancelText, b: bn.cancelText),
+      leftButtonText: label(e: en.exitText, b: bn.exitText),
+    ).then((value) {
+      if (value) {
+        Get.find<LandingController>().logout();
+      }
+    });
   }
 }
 

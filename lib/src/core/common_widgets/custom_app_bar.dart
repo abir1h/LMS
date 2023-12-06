@@ -53,6 +53,7 @@ class CustomAppBar extends StatelessWidget with AppTheme {
               color: clr.appPrimaryColorGreen,
             ),
           ),
+          centerTitle: false,
           actions: [
             Padding(
               padding: EdgeInsets.only(
