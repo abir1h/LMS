@@ -32,7 +32,7 @@ class NoteTile extends StatelessWidget with AppTheme {
             Expanded(
               flex: 1,
               child: Container(
-                padding: EdgeInsets.all(size.r8),
+                padding: EdgeInsets.all(size.r12),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(size.r10)),
                   border: Border.all(color: Colors.grey),
