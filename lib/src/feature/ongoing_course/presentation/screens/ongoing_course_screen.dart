@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:lms/src/core/utility/app_label.dart';
 
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
@@ -16,14 +17,14 @@ class OngoingCourseScreen extends StatefulWidget with AppTheme {
 }
 
 class _OngoingCourseScreenState extends State<OngoingCourseScreen>
-    with AppTheme {
+    with AppTheme, Language {
   final OngoingCourseController controller =
       Get.find<OngoingCourseController>();
 
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-        title: "LMS",
+        title: label(e: "LMS", b: "এলএমএস"),
         actionChild: InkWell(
           onTap: () {},
           child: Stack(
@@ -57,7 +58,9 @@ class _OngoingCourseScreenState extends State<OngoingCourseScreen>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "শিখন ক্ষেত্র ১:  শিক্ষা নীতি ও শিক্ষায় ব্যাবস্থাপনা",
+                  label(
+                      e: "Learning Area 1: Educational Policy and Management in Education",
+                      b: "শিখন ক্ষেত্র ১:  শিক্ষা নীতি ও শিক্ষায় ব্যাবস্থাপনা"),
                   style: TextStyle(
                       color: clr.appPrimaryColorGreen,
                       fontSize: size.textSmall,
@@ -66,7 +69,9 @@ class _OngoingCourseScreenState extends State<OngoingCourseScreen>
                 ),
                 SizedBox(height: size.h8),
                 Text(
-                  "কোর্স শুরুর তারিখ: ৫ই জানুয়ারী",
+                  label(
+                      e: "Course Start Date: 5th January",
+                      b: "কোর্স শুরুর তারিখ: ৫ই জানুয়ারী"),
                   style: TextStyle(
                       color: clr.textColorAppleBlack,
                       fontSize: size.textXXSmall,
@@ -80,7 +85,9 @@ class _OngoingCourseScreenState extends State<OngoingCourseScreen>
                   children: [
                     Expanded(
                       child: Text(
-                        "শিখন ক্ষেত্র ১: শিক্ষা",
+                        label(
+                            e: "Learning Area 1: Education",
+                            b: "শিখন ক্ষেত্র ১: শিক্ষা"),
                         style: TextStyle(
                             color: clr.appPrimaryColorGreen,
                             fontSize: size.textSmall,
@@ -102,27 +109,30 @@ class _OngoingCourseScreenState extends State<OngoingCourseScreen>
                   children: [
                     ContentWidget(
                       iconType: "video",
-                      text1: "ভিডিও ১:",
-                      text2: "কোর্সের পরিচিতি",
+                      text1: label(e: "Video 1:", b: "ভিডিও ১:"),
+                      text2:
+                          label(e: "Course Introduction", b: "কোর্সের পরিচিতি"),
                       onTap: () => Get.toNamed(AppRoutes.transcriptVideo),
                     ),
                     ContentWidget(
                       iconType: "video",
-                      text1: "ভিডিও ১:",
-                      text2: "কোর্সের পরিচিতি",
+                      text1: label(e: "Video 1:", b: "ভিডিও ১:"),
+                      text2:
+                          label(e: "Course Introduction", b: "কোর্সের পরিচিতি"),
                       onTap: () => Get.toNamed(AppRoutes.transcriptVideo),
                     ),
                     ContentWidget(
                       iconType: "video",
-                      text1: "ভিডিও ১:",
-                      text2: "কোর্সের পরিচিতি",
+                      text1: label(e: "Video 1:", b: "ভিডিও ১:"),
+                      text2:
+                          label(e: "Course Introduction", b: "কোর্সের পরিচিতি"),
                       onTap: () => Get.toNamed(AppRoutes.transcriptVideo),
                     ),
                     const ContentWidget(),
-                    const ContentWidget(
+                    ContentWidget(
                       iconType: "quiz",
-                      text1: "কুইজ:",
-                      text2: "কুইজ শিরোনাম",
+                      text1: label(e: "Quiz:", b: "কুইজ:"),
+                      text2: label(e: "Quiz Title", b: "কুইজ শিরোনাম"),
                     ),
                   ],
                 ),
@@ -131,7 +141,9 @@ class _OngoingCourseScreenState extends State<OngoingCourseScreen>
                   children: [
                     Expanded(
                       child: Text(
-                        "শিখন ক্ষেত্র ২: শিক্ষানীতি ও শিক্ষা ব্যবস্থা...",
+                        label(
+                            e: "Learning Area 2: Education Policy and Education System...",
+                            b: "শিখন ক্ষেত্র ২: শিক্ষানীতি ও শিক্ষা ব্যবস্থা..."),
                         style: TextStyle(
                             color: clr.textColorBlack,
                             fontSize: size.textSmall,
@@ -154,32 +166,35 @@ class _OngoingCourseScreenState extends State<OngoingCourseScreen>
                   padding: EdgeInsets.zero,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  children: const [
-                    ContentWidget(),
+                  children: [
+                    const ContentWidget(),
                     ContentWidget(
                       iconType: "video",
-                      text1: "ভিডিও ১:",
-                      text2: "কোর্সের পরিচিতি",
+                      text1: label(e: "Video 1:", b: "ভিডিও ১:"),
+                      text2:
+                          label(e: "Course Introduction", b: "কোর্সের পরিচিতি"),
                     ),
                     ContentWidget(
                       iconType: "quiz",
-                      text1: "কুইজ:",
-                      text2: "কুইজ শিরোনাম",
+                      text1: label(e: "Quiz:", b: "কুইজ:"),
+                      text2: label(e: "Quiz Title", b: "কুইজ শিরোনাম"),
                     ),
                     ContentWidget(
                       iconType: "quiz",
-                      text1: "কুইজ:",
-                      text2: "কুইজ শিরোনাম",
+                      text1: label(e: "Quiz:", b: "কুইজ:"),
+                      text2: label(e: "Quiz Title", b: "কুইজ শিরোনাম"),
                     ),
                     ContentWidget(
                       iconType: "video",
-                      text1: "ভিডিও ১:",
-                      text2: "কোর্সের পরিচিতি",
+                      text1: label(e: "Video 1:", b: "ভিডিও ১:"),
+                      text2:
+                          label(e: "Course Introduction", b: "কোর্সের পরিচিতি"),
                     ),
                     ContentWidget(
                       iconType: "video",
-                      text1: "ভিডিও ১:",
-                      text2: "কোর্সের পরিচিতি",
+                      text1: label(e: "Video 1:", b: "ভিডিও ১:"),
+                      text2:
+                          label(e: "Course Introduction", b: "কোর্সের পরিচিতি"),
                     ),
                   ],
                 ),
@@ -188,7 +203,9 @@ class _OngoingCourseScreenState extends State<OngoingCourseScreen>
                   children: [
                     Expanded(
                       child: Text(
-                        "শিখন ক্ষেত্র ১: শিক্ষা মনোবিজ্ঞান",
+                        label(
+                            e: "Learning Area 1: Educational Psychology",
+                            b: "শিখন ক্ষেত্র ১: শিক্ষা মনোবিজ্ঞান"),
                         style: TextStyle(
                             color: clr.textColorBlack,
                             fontSize: size.textSmall,
@@ -267,7 +284,7 @@ class ContentWidget extends StatelessWidget with AppTheme {
             Expanded(
               flex: 25,
               child: Text(
-                text1 ?? "রিডিং:",
+                text1 ?? label(e: "Reading:", b: "রিডিং:"),
                 style: TextStyle(
                     color: clr.textColorAppleBlack,
                     fontSize: size.textXSmall,
@@ -280,7 +297,8 @@ class ContentWidget extends StatelessWidget with AppTheme {
             Expanded(
               flex: 60,
               child: Text(
-                text2 ?? "পড়ার উপাদানের নাম",
+                text2 ??
+                    label(e: "Reading Element Name", b: "পড়ার উপাদানের নাম"),
                 style: TextStyle(
                     color: clr.textColorBlack,
                     fontSize: size.textXSmall,

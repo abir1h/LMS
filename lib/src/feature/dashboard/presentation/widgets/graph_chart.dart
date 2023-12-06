@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lms/src/core/utility/app_label.dart';
 
 import '../../../../core/constants/common_imports.dart';
 
@@ -45,7 +46,7 @@ class _GraphChartState extends State<GraphChart> with AppTheme {
         text = Column(
           children: [
             verticalLine(),
-            Text('সপ্তাহ ১', style: style),
+            Text(label(e: 'Week 1', b: 'সপ্তাহ ১'), style: style),
           ],
         );
         break;
@@ -53,7 +54,7 @@ class _GraphChartState extends State<GraphChart> with AppTheme {
         text = Column(
           children: [
             verticalLine(),
-            Text('সপ্তাহ ২', style: style),
+            Text(label(e: 'Week 2', b: 'সপ্তাহ ২'), style: style),
           ],
         );
         break;
@@ -61,7 +62,7 @@ class _GraphChartState extends State<GraphChart> with AppTheme {
         text = Column(
           children: [
             verticalLine(),
-            Text('সপ্তাহ ৩', style: style),
+            Text(label(e: 'Week 3', b: 'সপ্তাহ ৩'), style: style),
           ],
         );
         break;
@@ -69,7 +70,7 @@ class _GraphChartState extends State<GraphChart> with AppTheme {
         text = Column(
           children: [
             verticalLine(),
-            Text('সপ্তাহ ৪', style: style),
+            Text(label(e: 'Week 4', b: 'সপ্তাহ ৪'), style: style),
           ],
         );
         break;
@@ -77,7 +78,7 @@ class _GraphChartState extends State<GraphChart> with AppTheme {
         text = Column(
           children: [
             verticalLine(),
-            Text('সপ্তাহ 5', style: style),
+            Text(label(e: 'Week 5', b: 'সপ্তাহ ৫'), style: style),
           ],
         );
         break;
@@ -126,18 +127,18 @@ class _GraphChartState extends State<GraphChart> with AppTheme {
     String text;
     switch (value.toInt()) {
       case 0:
-        text = '০%';
+        text = label(e: "0%", b: '০%');
         break;
       case 1:
-        text = '২৫%';
+        text = label(e: "25%", b: '২৫%');
         break;
       case 2:
-        text = '৫০%';
+        text = label(e: "50%", b: '৫০%');
         break;
       case 3:
-        text = '৭৫%';
+        text = label(e: "75%", b: '৭৫%');
       case 4:
-        text = '১০০%';
+        text = label(e: "100%", b: '১০০%');
         break;
       default:
         return Container();

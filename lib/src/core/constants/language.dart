@@ -9,7 +9,7 @@ class LanguageEn {
   static LanguageEn get instance => _instance ?? (_instance = LanguageEn._());
 
   String appNameText = "CLMS";
-  String appBarText = "LMS";
+  String appBarText = "LMS Home";
 
   String splashScreenText = "Welcome To CLMS";
   String authScreenHeaderText = "About HSEP";
@@ -55,12 +55,13 @@ class LanguageEn {
   String messageText = "Message";
 
   String profileAppBarText = "LMS My Profile";
-  String userNameText = "User Name";
-  String phoneNumberText = "Phone Number";
-  String emailText = "Email";
-  String regNoText = "Reg.No";
-  String currentOrganizationNameText = "Name of the working organization";
-  String positionNameText = "Your Title";
+  String userNameText = "Sheikh Sabbir Ahmed"; //"User Name";
+  String phoneNumberText = "+0123456789"; //"Phone Number";
+  String emailText = "sheikhsabbir@gmail.com"; //"Email";
+  String regNoText = "2016810150"; //"Reg.No";
+  String currentOrganizationNameText =
+      "Dhaka College"; //"Name of the working organization";
+  String positionNameText = "Professor"; //"Your Title";
   String certificateText = "Certificate";
   String acknowledgment = "Acknowledgment";
 
@@ -75,6 +76,19 @@ class LanguageEn {
   String noticeBoard = "Notice Board";
 
   String courseText = "Course";
+  String curriculumDescription = "Curriculum Description";
+  String curriculumContent = "Curriculum Content";
+  String check = "Check";
+  String see = "See";
+  String join = "Join";
+
+  String takeNotes = "Take Notes";
+  String discussion = "Discussion";
+  String transcript = "Transcript";
+  String next = "Next";
+  String seeMore = " See More";
+  String seeLess = " See Less";
+
   String allNotes = "All Notes";
   String noteContent =
       "জীবের মধ্যে সবচেয়ে সম্পূর্ণতা মানুষের। কিন্তু সবচেয়ে অসম্পূর্ণ হয়ে সে জন্মগ্রহণ করে। বাঘ ভালুক তার জীবনযাত্রার পনেরো- আনা মূলধন নিয়ে আসে প্রকৃতির মালখানা থেকে। জীবরঙ্গভূমিতে মানুষ এসে দেখা দেয় দুই শূন্য হাতে মুঠো বেঁধে মানুষ আসবার পূর্বেই জীবসৃষ্টিযজ্ঞে প্রকৃতির ভূরিব্যয়ের পালা শেষ হয়ে এসেছে। বিপুল মাংস, কঠিন বর্ম, প্রকাণ্ড লেজ নিয়ে জলে স্থলে পৃথুল দেহের যে অমিতাচার প্রবল হয়ে উঠেছিল তাতে ধরিত্রীকে দিলে ক্লান্ত করে। প্রমাণ হল আতিশয্যের পরাভব অনিবার্য। পরীক্ষায় এটাও স্থির হয়ে গেল যে, প্রশ্রয়ের পরিমাণ যত বেশি হয় দুর্বলতার বোঝাও তত দুর্বহ হয়ে ওঠে। নূতন পর্বে প্রকৃতি যথাসম্ভব মানুষের বরাদ্দ কম করে দিয়ে নিজে রইল নেপথ্যে।        মানুষকে দেখতে হল খুব ছোটো, কিন্তু সেটা একটা কৌশল মাত্র। এবারকার জীবযাত্রার পালায় বিপুলতাকে করা হল বহুলতায় পরিণত। মহাকায় জন্তু ছিল প্রকাণ্ড একলা, মানুষ হল দূরপ্রসারিত অনেক।";
@@ -86,7 +100,7 @@ class LanguageBn {
   static LanguageBn get instance => _instance ?? (_instance = LanguageBn._());
 
   String appNameText = "সিএলএমএস";
-  String appBarText = "এলএমএস";
+  String appBarText = "এলএমএস হোম";
 
   String authScreenHeaderText = "HSEP সম্পর্কে";
   String authScreenContentText =
@@ -131,12 +145,12 @@ class LanguageBn {
   String messageText = "বার্তা";
 
   String profileAppBarText = "এলএমএস আমার প্রোফাইল";
-  String userNameText = "ব্যবহারকারীর নাম";
-  String phoneNumberText = "ফোন নম্বর";
-  String emailText = "ইমেইল";
-  String regNoText = "রেজিঃ নং";
-  String currentOrganizationNameText = "কর্মরত প্রতিষ্ঠানের নাম";
-  String positionNameText = "আপনার পদবী";
+  String userNameText = "শেখ সাব্বির আহমেদ"; //"ব্যবহারকারীর নাম";
+  String phoneNumberText = "+০১২৩৪৫৬৭৮৯০"; //"ফোন নম্বর";
+  String emailText = "sheikhsabbir@gmail.com"; //"ইমেইল";
+  String regNoText = "২০১৬৮১০১৫০"; //"রেজিঃ নং";
+  String currentOrganizationNameText = "ঢাকা কলেজ"; //"কর্মরত প্রতিষ্ঠানের নাম";
+  String positionNameText = "অধ্যাপক"; //"আপনার পদবী";
   String certificateText = "সনদপত্র";
   String acknowledgment = "স্বীকৃতিপত্র";
 
@@ -151,6 +165,19 @@ class LanguageBn {
   String noticeBoard = "নোটিশবোর্ড";
 
   String courseText = "কোর্স";
+  String curriculumDescription = "পাঠ্যসূচীর বর্ণনা";
+  String curriculumContent = "পাঠ্যক্রমের বিষয়বস্তু";
+  String check = "চেক করুন";
+  String see = "দেখুন";
+  String join = "জয়েন করুন";
+
+  String takeNotes = "নোট নিন";
+  String discussion = "আলোচনা";
+  String transcript = "প্রতিলিপি";
+  String next = "পরবর্তী";
+  String seeMore = " আরো দেখুন";
+  String seeLess = " সংক্ষিপ্ত করুন";
+
   String allNotes = "অল নোটস";
-  String noteContent ="";
+  String noteContent = "";
 }
