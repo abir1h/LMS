@@ -41,7 +41,6 @@ class Application extends StatelessWidget with AppTheme {
             ),
             initialRoute: AppRoutes.splash,
             getPages: AppPages.pages,
-            builder: EasyLoading.init(),
           );
         });
   }

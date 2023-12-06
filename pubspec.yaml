@@ -33,6 +33,9 @@ dependencies:
   timeago: ^3.6.0
   flutter_quill: ^8.6.4
 
+  firebase_core: ^2.24.0
+  firebase_messaging: ^14.7.6
+  flutter_local_notifications: ^10.0.0
 
 dev_dependencies:
   flutter_test:
