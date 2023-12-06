@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:lms/src/core/service/notifier/app_events_notifier.dart';
 import 'package:lms/src/core/utility/app_label.dart';
 
 import '../../../../core/routes/app_routes.dart';
@@ -24,7 +25,7 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen>
-    with AppTheme, Language {
+    with AppTheme, Language ,AppEventsNotifier{
   final DashboardController dashboardController =
       Get.find<DashboardController>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -196,5 +197,15 @@ class _DashboardScreenState extends State<DashboardScreen>
             ),
           ),
         ));
+  }
+
+  @override
+  void onEventReceived(EventAction action) {
+    if(action==EventAction.bottomNavAllScreen||action==EventAction.dashBoardScreen){
+      if(mounted){
+        setState(() {
+        });
+      }
+    }
   }
 }

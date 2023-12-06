@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lms/src/core/service/notifier/app_events_notifier.dart';
 import 'package:lms/src/feature/course/presentation/controllers/course_controller.dart';
 import 'package:lms/src/feature/course/presentation/screens/course_screen.dart';
 
@@ -19,7 +20,7 @@ class BottomScreen extends StatefulWidget {
   State<BottomScreen> createState() => _BottomScreenState();
 }
 
-class _BottomScreenState extends State<BottomScreen> with AppTheme, Language {
+class _BottomScreenState extends State<BottomScreen> with AppTheme, Language,AppEventsNotifier {
   final PageController _pageController = PageController();
   int _currentPageIndex = 0;
 
@@ -109,5 +110,15 @@ class _BottomScreenState extends State<BottomScreen> with AppTheme, Language {
   void dispose() {
     _pageController.dispose();
     super.dispose();
+  }
+
+  @override
+  void onEventReceived(EventAction action) {
+    if(action==EventAction.bottomNavBar){
+      if(mounted){
+        setState(() {
+        });
+      }
+    }
   }
 }

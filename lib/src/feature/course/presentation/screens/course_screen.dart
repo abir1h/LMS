@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lms/src/core/service/notifier/app_events_notifier.dart';
 
 import '../../../../core/common_widgets/custom_app_bar.dart';
 import '../../../../core/common_widgets/drawer_widget.dart';
@@ -17,7 +18,7 @@ class CourseScreen extends StatefulWidget with AppTheme {
   State<CourseScreen> createState() => _CourseScreenState();
 }
 
-class _CourseScreenState extends State<CourseScreen> with AppTheme, Language {
+class _CourseScreenState extends State<CourseScreen> with AppTheme, Language ,AppEventsNotifier{
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final CourseController controller = Get.find<CourseController>();
 
@@ -103,6 +104,16 @@ class _CourseScreenState extends State<CourseScreen> with AppTheme, Language {
       //   },
       // ),
     );
+  }
+
+  @override
+  void onEventReceived(EventAction action) {
+    if(action==EventAction.bottomNavAllScreen||action==EventAction.coursesScreen){
+      if(mounted){
+        setState(() {
+        });
+      }
+    }
   }
 }
 

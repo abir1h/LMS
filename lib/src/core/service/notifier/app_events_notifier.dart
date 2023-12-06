@@ -28,12 +28,13 @@ abstract class _EventHandler{
 }
 
 enum EventAction {
+  bottomNavAllScreen,
   dashBoardScreen,
   coursesScreen,
   notesScreen,
   profileScreen,
   onGoingCoursesScreen,
-
+  bottomNavBar
 
 }
 

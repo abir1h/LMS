@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:lms/src/core/service/notifier/app_events_notifier.dart';
 
 import '../../../../core/common_widgets/custom_dialog_widget.dart';
 import '../../../../core/common_widgets/custom_switch_button.dart';
@@ -20,7 +21,7 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> with AppTheme, Language {
+class _ProfileScreenState extends State<ProfileScreen> with AppTheme, Language,AppEventsNotifier {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -130,6 +131,7 @@ class _ProfileScreenState extends State<ProfileScreen> with AppTheme, Language {
                             if (mounted) {
                               setState(() {});
                             }
+                            AppEventsNotifier.notify(EventAction.bottomNavBar);
                           });
                         },
                         buttonHolder: const Icon(
@@ -220,6 +222,16 @@ class _ProfileScreenState extends State<ProfileScreen> with AppTheme, Language {
         Get.find<LandingController>().logout();
       }
     });
+  }
+
+  @override
+  void onEventReceived(EventAction action) {
+    if(action==EventAction.bottomNavAllScreen||action==EventAction.profileScreen){
+      if(mounted){
+        setState(() {
+        });
+      }
+    }
   }
 }
 

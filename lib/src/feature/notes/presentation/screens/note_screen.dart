@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:lms/src/core/service/notifier/app_events_notifier.dart';
 import 'package:lms/src/feature/notes/presentation/models/note_model.dart';
 import 'package:lms/src/feature/notes/presentation/screens/note_details.dart';
 
@@ -20,7 +21,7 @@ class NoteScreen extends StatefulWidget {
   State<NoteScreen> createState() => _NoteScreenState();
 }
 
-class _NoteScreenState extends State<NoteScreen> with AppTheme, Language {
+class _NoteScreenState extends State<NoteScreen> with AppTheme, Language ,AppEventsNotifier{
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final List<dynamic> contents = [
     {
@@ -253,5 +254,15 @@ class _NoteScreenState extends State<NoteScreen> with AppTheme, Language {
         ),
       ),
     );
+  }
+
+  @override
+  void onEventReceived(EventAction action) {
+    if(action==EventAction.bottomNavAllScreen||action==EventAction.notesScreen){
+      if(mounted){
+        setState(() {
+        });
+      }
+    }
   }
 }

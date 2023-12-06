@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
+import 'package:lms/src/core/service/notifier/app_events_notifier.dart';
 import '../constants/app_theme.dart';
 import '../constants/strings.dart';
+import '../utility/app_label.dart';
 
 class CustomSwitchButton extends StatefulWidget {
   @required
@@ -42,7 +43,7 @@ class CustomSwitchButton extends StatefulWidget {
 }
 
 class _RollingSwitchState extends State<CustomSwitchButton>
-    with SingleTickerProviderStateMixin, AppTheme {
+    with SingleTickerProviderStateMixin, AppTheme,AppEventsNotifier implements App {
   /// Late declarations
   late AnimationController animationController;
   late Animation<double> animation;
@@ -197,6 +198,20 @@ class _RollingSwitchState extends State<CustomSwitchButton>
 
       widget.onChanged(turnState);
     });
+  }
+
+  @override
+  void onEventReceived(EventAction action) {
+    if(mounted){setState(() {
+     if( App.currentAppLanguage==AppLanguage.english){
+       animationController.forward();
+       turnState=true;
+     }else{
+       animationController.reverse();
+       turnState=false;
+     }
+    });
+    }
   }
 }
 

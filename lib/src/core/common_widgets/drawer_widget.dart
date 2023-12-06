@@ -2,6 +2,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lms/src/core/service/notifier/app_events_notifier.dart';
 
 import 'custom_dialog_widget.dart';
 import 'custom_switch_button.dart';
@@ -71,6 +72,8 @@ class _DrawerWidgetState extends State<DrawerWidget> with AppTheme, Language {
                       if (mounted) {
                         setState(() {});
                       }
+                      AppEventsNotifier.notify(EventAction.bottomNavAllScreen);
+                      AppEventsNotifier.notify(EventAction.bottomNavBar);
                     });
                   },
                   buttonHolder: const Icon(

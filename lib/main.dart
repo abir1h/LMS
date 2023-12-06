@@ -7,11 +7,11 @@ import 'src/feature/app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  // await Firebase.initializeApp();
   setup();
   await initLocalServices();
   await App.getCurrentLanguage();
   ///Init notification
-  NotificationClient.instance.preInit();
+  // NotificationClient.instance.preInit();
   runApp(const Application());
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lms/src/core/service/notifier/app_events_notifier.dart';
 
 import '../../../discussion/presentation/screens/discussion_screen.dart';
 import '../../../../core/constants/common_imports.dart';
@@ -68,6 +69,9 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                             if (mounted) {
                               setState(() {});
                             }
+                            AppEventsNotifier.notify(EventAction.onGoingCoursesScreen);
+                            AppEventsNotifier.notify(EventAction.dashBoardScreen);
+                            AppEventsNotifier.notify(EventAction.bottomNavBar);
                           });
                         },
                         buttonHolder: const Icon(
