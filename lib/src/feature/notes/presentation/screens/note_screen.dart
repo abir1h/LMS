@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:lms/src/feature/notes/presentation/models/note_model.dart';
+import 'package:lms/src/feature/notes/presentation/screens/note_details.dart';
 
 import '../../../../core/utility/app_label.dart';
 import '../../../../core/constants/common_imports.dart';
+import '../controllers/note_controller.dart';
 import 'note_edit_screen.dart';
 import '../../../../core/common_widgets/custom_app_bar.dart';
 import '../widgets/note_tile.dart';
@@ -17,6 +20,19 @@ class NoteScreen extends StatefulWidget {
 
 class _NoteScreenState extends State<NoteScreen> with AppTheme, Language {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final List<dynamic> contents = [
+    {
+      "insert":
+          "প্রযুক্তি বিশ্বজুড়ে মানুষের কাছে শিক্ষা দেওয়ার পদ্ধতিকে বদলে দিয়েছে আমরা এখন একটি আন্তঃসংযুক্ত বিশ্বে বাস করি যেখানে আনুষ্ঠানিক শিক্ষার ঐতিহ্যগত ধারণা, একটি একক শারীরিক অবস্থানে সংঘটিত হওয়া. প্রযুক্তি বিশ্বজুড়ে মানুষের কাছে শিক্ষা দেওয়ার পদ্ধতিকে বদলে দিয়েছে আমরা এখন একটি আন্তঃসংযুক্ত বিশ্বে বাস করি যেখানে আনুষ্ঠানিক শিক্ষার ঐতিহ্যগত ধারণা, একটি একক শারীরিক অবস্থানে সংঘটিত হওয়া | প্রযুক্তি বিশ্বজুড়ে মানুষের কাছে শিক্ষা দেওয়ার পদ্ধতিকে বদলে দিয়েছে আমরা এখন একটি আন্তঃসংযুক্ত বিশ্বে বাস করি যেখানে আনুষ্ঠানিক শিক্ষার ঐতিহ্যগত ধারণা, একটি একক শারীরিক অবস্থানে সংঘটিত হওয়া."
+    },
+    {
+      "attributes": {"code-block": true},
+      "insert": "\n\n\n"
+    },
+    {"insert": "\n"}
+  ];
+
+  final controller = Get.put(NoteController());
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +52,10 @@ class _NoteScreenState extends State<NoteScreen> with AppTheme, Language {
           primaryColor: Colors.white,
           toolbarHeight: size.h56,
           trailingOnPressed: () {},
-          trailing: GestureDetector(
-            onTap: () {},
-            child: Icon(
-              Icons.search,
-              color: clr.appPrimaryColorGreen,
-              size: size.r24,
-            ),
+          trailing: Icon(
+            Icons.search,
+            color: clr.appPrimaryColorGreen,
+            size: size.r24,
           ),
           leading: Icon(
             Icons.menu,
@@ -51,22 +64,27 @@ class _NoteScreenState extends State<NoteScreen> with AppTheme, Language {
           ),
         ),
       ),
-      floatingActionButton: Container(
-        padding: EdgeInsets.all(size.r16),
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: clr.whiteColor,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.3),
-              spreadRadius: 2,
-              blurRadius: 3,
-              offset: const Offset(0, 5), // changes position of shadow
-            ),
-          ],
-        ),
-        child: SvgPicture.asset(
-          ImageAssets.icEditSquare,
+      floatingActionButton: GestureDetector(
+        onTap: () {
+          Get.to(const NoteEditScreen());
+        },
+        child: Container(
+          padding: EdgeInsets.all(size.r16),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: clr.whiteColor,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 2,
+                blurRadius: 3,
+                offset: const Offset(0, 5), // changes position of shadow
+              ),
+            ],
+          ),
+          child: SvgPicture.asset(
+            ImageAssets.icEditSquare,
+          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -93,72 +111,24 @@ class _NoteScreenState extends State<NoteScreen> with AppTheme, Language {
                 )
               ],
             ),
-            NoteTile(
-              noteContent: "HESP LMS",
-              title: "Note Title",
-              timestamp: 'Today 10:00 am',
-              onPressed: () => Get.to(NoteEditScreen(
-                  content: label(e: en.noteContent, b: bn.noteContent))),
-            ),
-            NoteTile(
-              noteContent: "CLMS LMS",
-              title: "Note Title",
-              timestamp: 'Today 10:00 am',
-              onPressed: () {},
-            ),
-            NoteTile(
-              noteContent: "Sugg LMS",
-              title: "Note Title",
-              timestamp: 'Today 10:00 am',
-              onPressed: () {},
-            ),
-            NoteTile(
-              noteContent: "Proje LMS",
-              title: "Note Title",
-              timestamp: 'Today 10:00 am',
-              onPressed: () {},
-            ),
-            NoteTile(
-              noteContent: "HESP LMS",
-              title: "Note Title",
-              timestamp: 'Today 10:00 am',
-              onPressed: () {},
-            ),
-            NoteTile(
-              noteContent: "HESP LMS",
-              title: "Note Title",
-              timestamp: 'Today 10:00 am',
-              onPressed: () {},
-            ),
-            NoteTile(
-              noteContent: "HESP LMS",
-              title: "Note Title",
-              timestamp: 'Today 10:00 am',
-              onPressed: () {},
-            ),
-            NoteTile(
-              noteContent: "HESP LMS",
-              title: "Note Title",
-              timestamp: 'Today 10:00 am',
-              onPressed: () {},
-            ),
-            NoteTile(
-              noteContent: "HESP LMS",
-              title: "Note Title",
-              timestamp: 'Today 10:00 am',
-              onPressed: () {},
-            ),
-            NoteTile(
-              noteContent: "HESP LMS",
-              title: "Note Title",
-              timestamp: 'Today 10:00 am',
-              onPressed: () {},
-            ),
-            NoteTile(
-              noteContent: "HESP LMS",
-              title: "Note Title",
-              timestamp: 'Today 10:00 am',
-              onPressed: () {},
+            Obx(
+              () => ListView.builder(
+                  itemCount: controller.noteList.length,
+                  shrinkWrap: true,
+                  itemBuilder: (_, index) {
+                    return NoteTile(
+                      noteContent:
+                          controller.noteList[index].title.toString().isNotEmpty
+                              ? controller.noteList[index].title.toString()[0]
+                              : '',
+                      title: controller.noteList[index].title! ?? '',
+                      timestamp: controller.noteList[index].time! ?? "",
+                      onPressed: () => Get.to(NoteDetailsScreen(
+                        content: controller.noteList[index].description!,
+                        Title: controller.noteList[index].title!,
+                      )),
+                    );
+                  }),
             ),
           ],
         ),

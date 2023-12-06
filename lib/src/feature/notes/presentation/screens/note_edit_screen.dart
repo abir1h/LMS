@@ -2,13 +2,21 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:lms/src/core/constants/common_imports.dart';
+import 'package:lms/src/core/routes/app_routes.dart';
+import 'package:lms/src/feature/notes/presentation/controllers/note_controller.dart';
+import 'package:lms/src/feature/notes/presentation/models/note_model.dart';
+import 'package:lms/src/feature/notes/presentation/screens/note_details.dart';
+import 'package:lms/src/feature/notes/presentation/screens/note_screen.dart';
 
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/app_theme.dart';
 
 class NoteEditScreen extends StatefulWidget {
-  final String content;
-  const NoteEditScreen({super.key, required this.content});
+  final List<dynamic>? content;
+  final String? title;
+  const NoteEditScreen({super.key, this.content, this.title});
 
   @override
   State<NoteEditScreen> createState() => _NoteEditScreenState();
@@ -18,14 +26,25 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
   final _controller = QuillController.basic();
   final _editorFocusNode = FocusNode();
   final _editorScrollController = ScrollController();
-  final _isReadOnly = false;
+  var _isReadOnly = false;
+  final controller = Get.put(NoteController());
+  TextEditingController titleController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
-/*
-    _controller.document = widget.content;
-*/
+    setContent();
   }
+
+  setContent() {
+    if (widget.content != null) {
+      final Document doc = Document.fromJson(widget.content as List);
+      _controller.document = doc;
+      titleController.text = widget.title!;
+    }
+  }
+
+  bool isKeyboardOpen = false;
 
   @override
   void dispose() {
@@ -35,37 +54,46 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
     super.dispose();
   }
 
+  void toggleEditor() {
+    setState(() {
+      _isReadOnly = !_isReadOnly;
+    });
+  }
+
+  NoteModel noteModel = NoteModel();
+
   @override
   Widget build(BuildContext context) {
+    MediaQueryData mediaQuery = MediaQuery.of(context);
+    isKeyboardOpen = mediaQuery.viewInsets.bottom > 0.0;
+
     return CustomScaffold(
       title: "",
       bgColor: clr.scaffoldBackgroundColor,
       resizeToAvoidBottomInset: true,
       actionChild: Row(
         children: [
-          GestureDetector(
-            onTap: () {
-              final json = jsonEncode(_controller.document.toDelta().toJson());
+          IconButton(
+              onPressed: () {
+                DateTime now = DateTime.now();
+                var currentTime = DateTime(
+                    now.year, now.month, now.day, now.hour, now.minute);
 
-              print(_controller.document.toDelta());
-              print(json + '/////');
-              final json2 = jsonDecode(json);
-
-              _controller.document = Document.fromJson(json2);
-              print(_controller.document.toPlainText() + '>>>>>>>>>>>>>>>');
-            },
-            child: Icon(
-              Icons.edit,
-              size: size.r24,
-              color: clr.appPrimaryColorGreen,
-            ),
-          ),
-          SizedBox(width: size.w12),
-          Icon(
-            Icons.import_contacts,
-            size: size.r24,
-            color: clr.appPrimaryColorGreen,
-          ),
+                controller.noteList.add(NoteModel(
+                    time: currentTime.toString(),
+                    title: titleController.text,
+                    description: _controller.document.toDelta().toJson()));
+                Get.toNamed(AppRoutes.bottomNav, arguments: 2);
+              },
+              icon: Icon(Icons.check,
+                  size: size.r24, color: clr.appPrimaryColorGreen)),
+          IconButton(
+              onPressed: () => Get.to(NoteDetailsScreen(
+                    content: _controller.document.toDelta().toJson(),
+                    Title: titleController.text,
+                  )),
+              icon: Icon(Icons.import_contacts,
+                  size: size.r24, color: clr.iconColorBlack)),
         ],
       ),
       child: QuillProvider(
@@ -78,115 +106,175 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            Padding(
+              padding: EdgeInsets.only(left: size.w16, right: size.w16),
+              child: TextField(
+                controller: titleController,
+                style: TextStyle(
+                    fontSize: size.textXMedium,
+                    color: clr.blackColor,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: StringData.fontFamilyPoppins),
+                decoration: InputDecoration(
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                        color: clr.boxStrokeColor,
+                        width: 1.w), // Customize border color
+                  ),
+                  border: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                        color: clr.boxStrokeColor,
+                        width: 1.w), // Customize border color
+                  ),
+                  hintText: "Title",
+                  hintStyle: TextStyle(
+                      fontSize: size.textXMedium,
+                      color: clr.placeHolderTextColorGray,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: StringData.fontFamilyPoppins),
+                ),
+              ),
+            ),
             Builder(
               builder: (context) {
                 return Expanded(
-                  child: Editor(
-                    configurations: QuillEditorConfigurations(
-                      readOnly: _isReadOnly,
+                  child: InkWell(
+                    onDoubleTap: () {},
+                    child: QuillEditor(
+                      scrollController: _editorScrollController,
+                      focusNode: _editorFocusNode,
+                      configurations: QuillEditorConfigurations(
+                        readOnly: _isReadOnly,
+                        customStyles: DefaultStyles(
+                          code: DefaultTextBlockStyle(
+                            TextStyle(
+                                fontSize: size.textSmall,
+                                color: clr.textColorAppleBlack,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: StringData.fontFamilyPoppins),
+                            const VerticalSpacing(16, 0),
+                            const VerticalSpacing(0, 0),
+                            null,
+                          ),
+                          placeHolder: DefaultTextBlockStyle(
+                            TextStyle(
+                                fontSize: size.textXXSmall,
+                                color: clr.placeHolderTextColorGray,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: StringData.fontFamilyPoppins),
+                            const VerticalSpacing(16, 0),
+                            const VerticalSpacing(0, 0),
+                            null,
+                          ),
+                        ),
+                        scrollable: true,
+                        placeholder: 'Note...',
+                        padding: const EdgeInsets.all(16),
+                      ),
                     ),
-                    scrollController: _editorScrollController,
-                    focusNode: _editorFocusNode,
                   ),
                 );
               },
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: QuillBaseToolbar(
-                configurations: QuillBaseToolbarConfigurations(
-                  toolbarSize: 20 * 2,
-                  multiRowsDisplay: false,
-                  color: Colors.white,
-                  buttonOptions: const QuillToolbarButtonOptions(
-                    base: QuillToolbarBaseButtonOptions(
-                      iconTheme: QuillIconTheme(
-                          iconSelectedColor: Colors.white,
-                          iconUnselectedFillColor: Colors.transparent),
-                      globalIconSize: 30,
+            isKeyboardOpen
+                ? Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: QuillBaseToolbar(
+                      configurations: QuillBaseToolbarConfigurations(
+                        toolbarSize: 20 * 2,
+                        multiRowsDisplay: false,
+                        color: Colors.white,
+                        buttonOptions: const QuillToolbarButtonOptions(
+                          base: QuillToolbarBaseButtonOptions(
+                            iconTheme: QuillIconTheme(
+                                iconSelectedColor: Colors.white,
+                                iconUnselectedFillColor: Colors.transparent),
+                            globalIconSize: 30,
+                          ),
+                        ),
+                        childrenBuilder: (context) {
+                          final controller = context.requireQuillController;
+                          return [
+                            QuillToolbarToggleStyleButton(
+                              attribute: Attribute.bold,
+                              controller: controller,
+                              options: QuillToolbarToggleStyleButtonOptions(
+                                childBuilder: (options, extraOptions) {
+                                  if (extraOptions.isToggled) {
+                                    return IconButton(
+                                      onPressed: extraOptions.onPressed,
+                                      icon: Icon(options.iconData),
+                                    );
+                                  }
+                                  return IconButton(
+                                    onPressed: extraOptions.onPressed,
+                                    icon: Icon(options.iconData),
+                                  );
+                                },
+                              ),
+                            ),
+                            QuillToolbarToggleStyleButton(
+                              attribute: Attribute.italic,
+                              controller: controller,
+                              options: QuillToolbarToggleStyleButtonOptions(
+                                childBuilder: (options, extraOptions) {
+                                  if (extraOptions.isToggled) {
+                                    return IconButton(
+                                      onPressed: extraOptions.onPressed,
+                                      icon: Icon(options.iconData),
+                                    );
+                                  }
+                                  return IconButton(
+                                    onPressed: extraOptions.onPressed,
+                                    icon: Icon(options.iconData),
+                                  );
+                                },
+                              ),
+                            ),
+                            QuillToolbarToggleStyleButton(
+                              attribute: Attribute.underline,
+                              controller: controller,
+                              options: QuillToolbarToggleStyleButtonOptions(
+                                childBuilder: (options, extraOptions) {
+                                  if (extraOptions.isToggled) {
+                                    return IconButton(
+                                      onPressed: extraOptions.onPressed,
+                                      icon: Icon(options.iconData),
+                                    );
+                                  }
+                                  return IconButton(
+                                    onPressed: extraOptions.onPressed,
+                                    icon: Icon(options.iconData),
+                                  );
+                                },
+                              ),
+                            ),
+                            QuillToolbarColorButton(
+                              controller: controller,
+                              isBackground: true,
+                              options: const QuillToolbarColorButtonOptions(
+                                iconData: Icons.text_format,
+                                dialogBarrierColor: Colors.white,
+                              ),
+                            ),
+                            QuillToolbarSelectAlignmentButton(
+                              showLeftAlignment: true,
+                              showRightAlignment: true,
+                              showJustifyAlignment: true,
+                              showCenterAlignment: true,
+                              controller: controller,
+                              options:
+                                  const QuillToolbarSelectAlignmentButtonOptions(
+                                iconButtonFactor: 2,
+                                iconSize: 20,
+                              ),
+                            ),
+                          ];
+                        },
+                      ),
                     ),
-                  ),
-                  childrenBuilder: (context) {
-                    final controller = context.requireQuillController;
-                    return [
-                      QuillToolbarToggleStyleButton(
-                        attribute: Attribute.bold,
-                        controller: controller,
-                        options: QuillToolbarToggleStyleButtonOptions(
-                          childBuilder: (options, extraOptions) {
-                            if (extraOptions.isToggled) {
-                              return IconButton(
-                                onPressed: extraOptions.onPressed,
-                                icon: Icon(options.iconData),
-                              );
-                            }
-                            return IconButton(
-                              onPressed: extraOptions.onPressed,
-                              icon: Icon(options.iconData),
-                            );
-                          },
-                        ),
-                      ),
-                      QuillToolbarToggleStyleButton(
-                        attribute: Attribute.italic,
-                        controller: controller,
-                        options: QuillToolbarToggleStyleButtonOptions(
-                          childBuilder: (options, extraOptions) {
-                            if (extraOptions.isToggled) {
-                              return IconButton(
-                                onPressed: extraOptions.onPressed,
-                                icon: Icon(options.iconData),
-                              );
-                            }
-                            return IconButton(
-                              onPressed: extraOptions.onPressed,
-                              icon: Icon(options.iconData),
-                            );
-                          },
-                        ),
-                      ),
-                      QuillToolbarToggleStyleButton(
-                        attribute: Attribute.underline,
-                        controller: controller,
-                        options: QuillToolbarToggleStyleButtonOptions(
-                          childBuilder: (options, extraOptions) {
-                            if (extraOptions.isToggled) {
-                              return IconButton(
-                                onPressed: extraOptions.onPressed,
-                                icon: Icon(options.iconData),
-                              );
-                            }
-                            return IconButton(
-                              onPressed: extraOptions.onPressed,
-                              icon: Icon(options.iconData),
-                            );
-                          },
-                        ),
-                      ),
-                      QuillToolbarColorButton(
-                        controller: controller,
-                        isBackground: true,
-                        options: const QuillToolbarColorButtonOptions(
-                          iconData: Icons.text_format,
-                          dialogBarrierColor: Colors.white,
-                        ),
-                      ),
-                      QuillToolbarSelectAlignmentButton(
-                        showLeftAlignment: true,
-                        showRightAlignment: true,
-                        showJustifyAlignment: true,
-                        showCenterAlignment: true,
-                        controller: controller,
-                        options: const QuillToolbarSelectAlignmentButtonOptions(
-                          iconButtonFactor: 2,
-                          iconSize: 20,
-                        ),
-                      ),
-                    ];
-                  },
-                ),
-              ),
-            ),
+                  )
+                : const SizedBox(),
             SizedBox(
               height: 20.h,
             )
@@ -194,172 +282,5 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
         ),
       ),
     );
-  }
-}
-
-class Editor extends StatefulWidget {
-  const Editor(
-      {super.key,
-      required this.configurations,
-      required this.scrollController,
-      required this.focusNode});
-  final QuillEditorConfigurations configurations;
-  final ScrollController scrollController;
-  final FocusNode focusNode;
-  @override
-  State<Editor> createState() => _EditorState();
-}
-
-class _EditorState extends State<Editor> {
-  @override
-  Widget build(BuildContext context) {
-    return QuillEditor(
-      scrollController: widget.scrollController,
-      focusNode: widget.focusNode,
-      configurations: widget.configurations.copyWith(
-        customStyles: const DefaultStyles(
-          h1: DefaultTextBlockStyle(
-            TextStyle(
-              fontSize: 32,
-              height: 1.15,
-              color: Colors.black87,
-              fontWeight: FontWeight.w300,
-            ),
-            VerticalSpacing(16, 0),
-            VerticalSpacing(0, 0),
-            null,
-          ),
-          sizeSmall: TextStyle(fontSize: 9),
-        ),
-        scrollable: true,
-        placeholder: 'Start writting your notes...',
-        padding: const EdgeInsets.all(16),
-      ),
-    );
-  }
-}
-
-class RichTextEditor extends StatefulWidget {
-  const RichTextEditor({super.key});
-
-  @override
-  State<RichTextEditor> createState() => _RichTextEditorState();
-}
-
-class _RichTextEditorState extends State<RichTextEditor> {
-  final TextEditingController _textEditingController = TextEditingController();
-  bool isBold = false;
-  bool isItalic = false;
-  bool isUnderline = false;
-  bool isHighlighted = false;
-  TextAlign alignment = TextAlign.left;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              IconButton(
-                onPressed: () {
-                  setState(() {
-                    isBold = !isBold;
-                  });
-                },
-                icon: const Icon(Icons.format_bold),
-                color: isBold ? Colors.blue : null,
-              ),
-              IconButton(
-                onPressed: () {
-                  setState(() {
-                    isItalic = !isItalic;
-                  });
-                },
-                icon: const Icon(Icons.format_italic),
-                color: isItalic ? Colors.blue : null,
-              ),
-              IconButton(
-                onPressed: () {
-                  setState(() {
-                    isUnderline = !isUnderline;
-                  });
-                },
-                icon: const Icon(Icons.format_underline),
-                color: isUnderline ? Colors.blue : null,
-              ),
-              IconButton(
-                onPressed: () {
-                  setState(() {
-                    isHighlighted = !isHighlighted;
-                  });
-                },
-                icon: const Icon(Icons.highlight),
-                color: isHighlighted ? Colors.yellow : null,
-              ),
-              DropdownButton<TextAlign>(
-                value: alignment,
-                onChanged: (TextAlign? value) {
-                  setState(() {
-                    alignment = value!;
-                  });
-                },
-                items: const [
-                  DropdownMenuItem<TextAlign>(
-                    value: TextAlign.left,
-                    child: Text('Left'),
-                  ),
-                  DropdownMenuItem<TextAlign>(
-                    value: TextAlign.center,
-                    child: Text('Center'),
-                  ),
-                  DropdownMenuItem<TextAlign>(
-                    value: TextAlign.right,
-                    child: Text('Right'),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          const SizedBox(height: 16.0),
-          SelectableText.rich(
-            TextSpan(
-              text: _textEditingController.text,
-              style: TextStyle(
-                fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-                fontStyle: isItalic ? FontStyle.italic : FontStyle.normal,
-                decoration: isUnderline
-                    ? TextDecoration.underline
-                    : TextDecoration.none,
-                backgroundColor: isHighlighted ? Colors.yellow : null,
-              ),
-            ),
-            textAlign: alignment,
-            onTap: () {
-              // Handle text selection or tapping
-            },
-          ),
-          const SizedBox(height: 16.0),
-          TextField(
-            controller: _textEditingController,
-            maxLines: null,
-            onChanged: (text) {
-              // Handle text changes
-            },
-            decoration: const InputDecoration(
-              labelText: 'Enter your text',
-              border: OutlineInputBorder(),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  @override
-  void dispose() {
-    _textEditingController.dispose();
-    super.dispose();
   }
 }

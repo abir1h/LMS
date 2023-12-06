@@ -54,7 +54,7 @@ class _LandingScreenState extends State<LandingScreen> with AppTheme, Language {
                   text: label(
                       e: en.learningManagementSystem,
                       b: bn.learningManagementSystem),
-                  onTap: () => Get.toNamed(AppRoutes.bottomNav),
+                  onTap: () => Get.toNamed(AppRoutes.bottomNav,),
                 ),
                 rightChild: ModuleCardWidget(
                   image: ImageAssets.imgModule2,
