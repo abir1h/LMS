@@ -65,7 +65,7 @@ class CourseContentWidget extends StatelessWidget with AppTheme {
             Expanded(
               flex: 3,
               child: GestureDetector(
-                onTap: () => Get.to(const LiveClassScreen()),
+                onTap: () => Get.to(() => const LiveClassScreen()),
                 child: Container(
                   padding: EdgeInsets.symmetric(
                       horizontal: size.w8, vertical: size.h8),

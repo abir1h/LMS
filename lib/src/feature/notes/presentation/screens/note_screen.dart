@@ -66,7 +66,7 @@ class _NoteScreenState extends State<NoteScreen> with AppTheme, Language {
       ),
       floatingActionButton: GestureDetector(
         onTap: () {
-          Get.to(const NoteEditScreen());
+          Get.to(() => const NoteEditScreen());
         },
         child: Container(
           padding: EdgeInsets.all(size.r16),
@@ -123,10 +123,10 @@ class _NoteScreenState extends State<NoteScreen> with AppTheme, Language {
                               : '',
                       title: controller.noteList[index].title! ?? '',
                       timestamp: controller.noteList[index].time! ?? "",
-                      onPressed: () => Get.to(NoteDetailsScreen(
-                        content: controller.noteList[index].description!,
-                        Title: controller.noteList[index].title!,
-                      )),
+                      onPressed: () => Get.to(() => NoteDetailsScreen(
+                            content: controller.noteList[index].description!,
+                            Title: controller.noteList[index].title!,
+                          )),
                     );
                   }),
             ),

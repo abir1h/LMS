@@ -88,7 +88,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
               icon: Icon(Icons.check,
                   size: size.r24, color: clr.appPrimaryColorGreen)),
           IconButton(
-              onPressed: () => Get.to(NoteDetailsScreen(
+              onPressed: () => Get.to(() => NoteDetailsScreen(
                     content: _controller.document.toDelta().toJson(),
                     Title: titleController.text,
                   )),

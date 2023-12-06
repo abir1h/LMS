@@ -47,7 +47,6 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
                 var currentTime = DateTime(
                     now.year, now.month, now.day, now.hour, now.minute);
 
-
                 controller.noteList.add(NoteModel(
                     time: currentTime.toString(),
                     title: widget.Title,
@@ -56,20 +55,20 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
               },
               icon: Icon(Icons.check,
                   size: size.r24, color: clr.appPrimaryColorGreen)),
-
           IconButton(
               onPressed: () {
-                Get.to(NoteEditScreen(content:widget.content,title: widget.Title,));
+                Get.to(() => NoteEditScreen(
+                      content: widget.content,
+                      title: widget.Title,
+                    ));
               },
-              icon: Icon(Icons.edit,
-                  size: size.r24, color: clr.iconColorBlack)),
-
-
+              icon:
+                  Icon(Icons.edit, size: size.r24, color: clr.iconColorBlack)),
         ],
       ),
       child: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(
-            vertical: size.h12, horizontal: size.h16),        child: Column(
+        padding: EdgeInsets.symmetric(vertical: size.h12, horizontal: size.h16),
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
@@ -80,7 +79,9 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
                   fontWeight: FontWeight.w600,
                   fontFamily: StringData.fontFamilyPoppins),
             ),
-            Divider(color: clr.cardStrokeColor,),
+            Divider(
+              color: clr.cardStrokeColor,
+            ),
             Text(
               ContentText,
               textAlign: TextAlign.justify,
