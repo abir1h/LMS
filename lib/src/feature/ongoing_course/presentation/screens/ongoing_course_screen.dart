@@ -24,7 +24,14 @@ class _OngoingCourseScreenState extends State<OngoingCourseScreen>
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-        title: label(e: "LMS", b: "এলএমএস"),
+        title: controller.screenName.value == "running"
+            ? label(e: en.ongoingModule, b: bn.ongoingModule)
+            : controller.screenName.value == "ongoing"
+                ? label(e: en.ongoingCurriculum, b: bn.ongoingModule)
+                : controller.screenName.value == "completed"
+                    ? label(
+                        e: en.completedCurriculum, b: bn.completedCurriculum)
+                    : label(e: "LMS", b: "এলএমএস"),
         actionChild: InkWell(
           onTap: () {},
           child: Stack(
@@ -97,7 +104,10 @@ class _OngoingCourseScreenState extends State<OngoingCourseScreen>
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    SvgPicture.asset(ImageAssets.icLockOpenRight)
+                    controller.screenName.value == "completed"
+                        ? Icon(Icons.check_circle,
+                            color: clr.appPrimaryColorGreen)
+                        : SvgPicture.asset(ImageAssets.icLockOpenRight)
                   ],
                 ),
                 SizedBox(height: size.h12),
@@ -153,11 +163,14 @@ class _OngoingCourseScreenState extends State<OngoingCourseScreen>
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    Icon(
-                      Icons.lock,
-                      color: clr.textColorBlack,
-                      size: size.r24,
-                    )
+                    controller.screenName.value == "completed"
+                        ? Icon(Icons.check_circle,
+                            color: clr.appPrimaryColorGreen)
+                        : Icon(
+                            Icons.lock,
+                            color: clr.textColorBlack,
+                            size: size.r24,
+                          )
                   ],
                 ),
                 SizedBox(height: size.h12),
@@ -215,11 +228,14 @@ class _OngoingCourseScreenState extends State<OngoingCourseScreen>
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    Icon(
-                      Icons.check_circle_sharp,
-                      color: clr.appPrimaryColorGreen,
-                      size: size.r24,
-                    )
+                    controller.screenName.value == "completed"
+                        ? Icon(Icons.check_circle,
+                            color: clr.appPrimaryColorGreen)
+                        : Icon(
+                            Icons.check_circle_sharp,
+                            color: clr.appPrimaryColorGreen,
+                            size: size.r24,
+                          )
                   ],
                 ),
                 SizedBox(height: size.h12),
