@@ -72,6 +72,7 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                             AppEventsNotifier.notify(EventAction.onGoingCoursesScreen);
                             AppEventsNotifier.notify(EventAction.dashBoardScreen);
                             AppEventsNotifier.notify(EventAction.bottomNavBar);
+                            AppEventsNotifier.notify(EventAction.coursesScreen);
                           });
                         },
                         buttonHolder: const Icon(
