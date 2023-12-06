@@ -1,6 +1,11 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/config/notification_client.dart';
+import '../../../../core/config/push_notification.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../controllers/landing_controller.dart';
 import '../widgets/module_card_widget.dart';
@@ -16,6 +21,22 @@ class LandingScreen extends StatefulWidget {
 
 class _LandingScreenState extends State<LandingScreen> with AppTheme {
   final LandingController landingController = Get.find<LandingController>();
+
+  ///Service configurations
+  @override
+  void initState() {
+    ///Init notification and firebase
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      PushNotification.instance.init();
+      NotificationClient.instance.startListening(onNotificationClicked,_onNotificationReceived).then(_onFCMTokenUpdate).catchError((_){});
+    });
+  }
+  @override
+  void dispose() {
+    NotificationClient.instance.stopListening();
+    PushNotification.instance.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,4 +101,31 @@ class _LandingScreenState extends State<LandingScreen> with AppTheme {
       ),
     );
   }
+  ///Push Notification Section
+  void _onFCMTokenUpdate(String? token)async {
+    print(token);
+  }
+
+  void onNotificationClicked(NotificationEntity notification, {bool isFromTray = true})async{
+    try{
+      ///Is notification clicked from system tray then wait some time to finish loading
+      if(isFromTray) await Future.delayed(const Duration(milliseconds: 500));
+
+
+      ///Mark notification as seen
+      _markNotificationAsSeen(notification);
+    }
+    catch (error){
+      debugPrint(error.toString());
+    }
+  }
+  void _onNotificationReceived(NotificationEntity notification)async{
+
+
+  }
+  void _markNotificationAsSeen(NotificationEntity notification) {
+
+
+  }
+
 }

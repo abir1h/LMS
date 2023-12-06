@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "298008715510",
+    "project_id": "clms-lms-app",
+    "storage_bucket": "clms-lms-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:298008715510:android:edcec8695cd72d340b4cd7",
+        "android_client_info": {
+          "package_name": "com.hsep.lms"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCt7AFv3-I2-JJXDJJ9AxIouXu575A7Sqc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
