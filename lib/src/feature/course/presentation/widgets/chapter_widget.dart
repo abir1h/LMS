@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lms/src/core/utility/app_label.dart';
+import 'package:lms/src/feature/transcript_video/presentaion/screens/transcript_video_screen.dart';
 
 import '../screens/live_class_screen.dart';
 import 'course_content_widget.dart';
@@ -133,6 +134,7 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                 title: label(e: "Course Introduction", b: "কোর্সের পরিচিতি"),
                 buttonText: label(e: en.see, b: bn.see),
                 buttonIcon: Icons.play_circle,
+                onTap: () => Get.to(() => const TranscriptVideoScreen()),
               ),
               CourseContentWidget(
                 courseIcon: Icons.assignment,

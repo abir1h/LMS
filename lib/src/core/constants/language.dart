@@ -65,7 +65,7 @@ class LanguageEn {
   String certificateText = "Certificate";
   String acknowledgment = "Acknowledgment";
 
-  String runningModule = "Running Module";
+  String ongoingModule = "Ongoing Module";
   String completed = "Completed";
   String ongoingCurriculum = "Ongoing Curriculum";
   String completedCurriculum = "Completed curriculum";
@@ -154,7 +154,7 @@ class LanguageBn {
   String certificateText = "সনদপত্র";
   String acknowledgment = "স্বীকৃতিপত্র";
 
-  String runningModule = "চলমান মডিউল";
+  String ongoingModule = "চলমান মডিউল";
   String completed = "সম্পন্ন";
   String ongoingCurriculum = "চলমান পাঠ্যক্রম";
   String completedCurriculum = "সম্পন্ন পাঠ্যক্রম";

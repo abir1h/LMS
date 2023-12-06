@@ -89,7 +89,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomTextWidgets(
-                        text: label(e: en.runningModule, b: bn.runningModule)),
+                        text: label(e: en.ongoingModule, b: bn.ongoingModule)),
                     Padding(
                       padding: EdgeInsets.only(right: size.w6),
                       child: SvgPicture.asset(ImageAssets.icLockOpenRight),
@@ -98,7 +98,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                 ),
                 SizedBox(height: 15.h),
                 CourseCard(
-                  onPressed: () => Get.toNamed(AppRoutes.ongoingCourse),
+                  onPressed: () => Get.toNamed(AppRoutes.ongoingCourse,
+                      arguments: "running"),
                   image: Image.asset("assets/images/image.png"),
                   text1:
                       label(e: StringData.cardText1, b: StringData.cardText1Bn),
@@ -112,8 +113,9 @@ class _DashboardScreenState extends State<DashboardScreen>
                 RowItemTemplate(
                     leftChild: DashboardCard(
                       title:
-                          label(e: en.ongoingCurriculum, b: bn.runningModule),
-                      onPressed: () => Get.toNamed(AppRoutes.ongoingCourse),
+                          label(e: en.ongoingCurriculum, b: bn.ongoingModule),
+                      onPressed: () => Get.toNamed(AppRoutes.ongoingCourse,
+                          arguments: "ongoing"),
                       subTitle: label(
                           e: StringData.dashboardCardValue1,
                           b: StringData.dashboardCardValue1Bn),
@@ -127,7 +129,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                     rightChild: DashboardCard(
                       title: label(
                           e: en.completedCurriculum, b: bn.completedCurriculum),
-                      onPressed: () => Get.toNamed(AppRoutes.ongoingCourse),
+                      onPressed: () => Get.toNamed(AppRoutes.ongoingCourse,
+                          arguments: "completed"),
                       subTitle: label(
                           e: StringData.dashboardCardValue2,
                           b: StringData.dashboardCardValue2Bn),
