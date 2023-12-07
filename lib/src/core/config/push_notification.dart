@@ -3,6 +3,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
+import 'package:lms/src/core/routes/app_routes.dart';
 
 class PushNotification{
   PushNotification._();
@@ -29,13 +31,13 @@ class PushNotification{
       requestSoundPermission: false,
     );
     const InitializationSettings initializationSettings = InitializationSettings(android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
-    // await _flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: _onSelectNotification).then((initialized){
-    //   _initialized = initialized??false;
-    //   if(_initialized){
-    //     _requestNotificationPermissions();
-    //     // _onAppLaunchedFromNotification();
-    //   }
-    // }).catchError((_){});
+    await _flutterLocalNotificationsPlugin.initialize(initializationSettings, onDidReceiveNotificationResponse: _onSelectNotification,onDidReceiveBackgroundNotificationResponse: _onSelectNotification).then((initialized){
+      _initialized = initialized??false;
+      if(_initialized){
+        _requestNotificationPermissions();
+        // _onAppLaunchedFromNotification();
+      }
+    }).catchError((_){});
     // await _flutterLocalNotificationsPlugin.initialize(initializationSettings).then((initialized){
     //   _initialized = initialized??false;
     //   if(_initialized){
@@ -78,16 +80,18 @@ class PushNotification{
   //   }).catchError((_){});
   // }
   ///On notification clicked, if it has payload, navigate to screen
-  void _onSelectNotification(String? payload) async {
-    if(payload != null && payload.isNotEmpty){
-      _navigateToScreen(payload);
-    }
+  void _onSelectNotification(NotificationResponse? payload) async {
+    print("Select Notifications");
+
+    // if(payload != null){
+      _navigateToScreen(payload.toString());
+    // }
   }
 
   ///Unwrap the payload and navigate to specific screen
   void _navigateToScreen(String payload){
     if(!_onAppLaunceFromNotificationStreamController.isClosed){
-      _onAppLaunceFromNotificationStreamController.sink.add(jsonDecode(payload));
+      _onAppLaunceFromNotificationStreamController.sink.add({"tushar":"tushar"});
     }
   }
 
