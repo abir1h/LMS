@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 
 import '../../feature/bottom_bar/presentation/screens/bottom_screen.dart';
@@ -25,6 +26,8 @@ import '../../feature/transcript_video/presentaion/screens/transcript_video_scre
 
 class AppRoutes {
   AppRoutes._();
+
+  static GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
   static const String splash = '/splash';
   static const String authenticate = '/authenticate';
