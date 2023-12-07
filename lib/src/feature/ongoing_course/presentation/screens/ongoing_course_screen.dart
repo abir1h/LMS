@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/core/service/notifier/app_events_notifier.dart';
-import 'package:lms/src/core/utility/app_label.dart';
 
+import '../../../../core/service/notifier/app_events_notifier.dart';
+import '../../../../core/utility/app_label.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/routes/app_routes.dart';
@@ -18,7 +18,7 @@ class OngoingCourseScreen extends StatefulWidget with AppTheme {
 }
 
 class _OngoingCourseScreenState extends State<OngoingCourseScreen>
-    with AppTheme, Language ,AppEventsNotifier{
+    with AppTheme, Language, AppEventsNotifier {
   final OngoingCourseController controller =
       Get.find<OngoingCourseController>();
 
@@ -258,10 +258,9 @@ class _OngoingCourseScreenState extends State<OngoingCourseScreen>
 
   @override
   void onEventReceived(EventAction action) {
-    if(action==EventAction.onGoingCoursesScreen){
-      if(mounted){
-        setState(() {
-        });
+    if (action == EventAction.onGoingCoursesScreen) {
+      if (mounted) {
+        setState(() {});
       }
     }
   }

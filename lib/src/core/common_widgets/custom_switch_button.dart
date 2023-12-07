@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:lms/src/core/service/notifier/app_events_notifier.dart';
+
+import '../service/notifier/app_events_notifier.dart';
 import '../constants/app_theme.dart';
 import '../constants/strings.dart';
 import '../utility/app_label.dart';
@@ -43,7 +44,8 @@ class CustomSwitchButton extends StatefulWidget {
 }
 
 class _RollingSwitchState extends State<CustomSwitchButton>
-    with SingleTickerProviderStateMixin, AppTheme,AppEventsNotifier implements App {
+    with SingleTickerProviderStateMixin, AppTheme, AppEventsNotifier
+    implements App {
   /// Late declarations
   late AnimationController animationController;
   late Animation<double> animation;
@@ -85,7 +87,8 @@ class _RollingSwitchState extends State<CustomSwitchButton>
 
   @override
   Widget build(BuildContext context) {
-    Color? transitionColor = Color.lerp(widget.bgColor,clr.appSecondaryColorFlagRed, value);
+    Color? transitionColor =
+        Color.lerp(widget.bgColor, clr.appSecondaryColorFlagRed, value);
     var style = TextStyle(
         color: clr.appPrimaryColorGreen,
         fontWeight: FontWeight.w400,
@@ -150,7 +153,7 @@ class _RollingSwitchState extends State<CustomSwitchButton>
                   height: 20,
                   child: Text(
                     widget.textOn,
-                    style:  TextStyle(
+                    style: TextStyle(
                         color: clr.whiteColor,
                         fontWeight: FontWeight.w400,
                         fontFamily: StringData.fontFamilyRoboto,
@@ -163,21 +166,24 @@ class _RollingSwitchState extends State<CustomSwitchButton>
               offset: isRTL(context)
                   ? Offset((-widget.width + 45) * value, 0)
                   : Offset((widget.width - 45) * value, 0),
-              child:  turnState==true?Container(
-                height: 20,
-                width: 30,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle, color: clr.whiteColor),
-                child: widget.buttonHolder,
-              ):Container(
-                height: 20,
-                width: 30,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle, color: clr.appPrimaryColorGreen),
-                child: widget.buttonHolder,
-              ),
+              child: turnState == true
+                  ? Container(
+                      height: 20,
+                      width: 30,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle, color: clr.whiteColor),
+                      child: widget.buttonHolder,
+                    )
+                  : Container(
+                      height: 20,
+                      width: 30,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: clr.appPrimaryColorGreen),
+                      child: widget.buttonHolder,
+                    ),
             )
           ],
         ),
@@ -202,15 +208,16 @@ class _RollingSwitchState extends State<CustomSwitchButton>
 
   @override
   void onEventReceived(EventAction action) {
-    if(mounted){setState(() {
-     if( App.currentAppLanguage==AppLanguage.english){
-       animationController.forward();
-       turnState=true;
-     }else{
-       animationController.reverse();
-       turnState=false;
-     }
-    });
+    if (mounted) {
+      setState(() {
+        if (App.currentAppLanguage == AppLanguage.english) {
+          animationController.forward();
+          turnState = true;
+        } else {
+          animationController.reverse();
+          turnState = false;
+        }
+      });
     }
   }
 }

@@ -29,6 +29,7 @@ class ThemeColor {
   Color get iconColorRed => HexColor("F27785");
   Color get iconColorBlack => HexColor("1C1B1F");
   Color get iconColorSweetRed => HexColor("FF4A5F");
+  Color get iconColorDimGrey => HexColor("6B6A6A");
 
   Color get textColorAppleBlack => HexColor("1D1D1F");
   Color get textColorBlack => HexColor("414141");

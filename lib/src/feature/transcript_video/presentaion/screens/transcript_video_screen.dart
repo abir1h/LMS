@@ -1,14 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lms/src/core/service/notifier/app_events_notifier.dart';
+import 'package:get/get.dart';
 
+import '../../../../core/service/notifier/app_events_notifier.dart';
 import '../../../discussion/presentation/screens/discussion_screen.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/common_widgets/custom_expanded_text.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/custom_switch_button.dart';
 import '../../../../core/utility/app_label.dart';
+import '../../../notes/presentation/screens/note_edit_screen.dart';
 import '../widgets/youtube_player.dart';
 
 class TranscriptVideoScreen extends StatefulWidget {
@@ -69,10 +71,14 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                             if (mounted) {
                               setState(() {});
                             }
-                            AppEventsNotifier.notify(EventAction.onGoingCoursesScreen);
-                            AppEventsNotifier.notify(EventAction.dashBoardScreen);
+                            AppEventsNotifier.notify(
+                                EventAction.courseDetailsScreen);
+                            AppEventsNotifier.notify(
+                                EventAction.onGoingCoursesScreen);
+                            AppEventsNotifier.notify(
+                                EventAction.dashBoardScreen);
                             AppEventsNotifier.notify(EventAction.bottomNavBar);
-                            AppEventsNotifier.notify(EventAction.coursesScreen);
+                            AppEventsNotifier.notify(EventAction.graphChart);
                           });
                         },
                         buttonHolder: const Icon(
@@ -102,7 +108,7 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     CustomButton(
-                      onTap: () {},
+                      onTap: () => Get.to(() => const NoteEditScreen()),
                       icon: Icons.add,
                       title: label(e: en.takeNotes, b: bn.takeNotes),
                       textSize: size.textXXXSmall,
@@ -112,7 +118,8 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                     ),
                     SizedBox(width: size.w16),
                     CustomButton(
-                      onTap: onTapDiscussion,
+                      // onTap: onTapDiscussion,
+                      onTap: () {},
                       icon: Icons.add,
                       title: label(e: en.discussion, b: bn.discussion),
                       textSize: size.textXXXSmall,

@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/core/service/notifier/app_events_notifier.dart';
-import 'package:lms/src/core/utility/app_label.dart';
 
+import '../../../../core/service/notifier/app_events_notifier.dart';
+import '../../../../core/utility/app_label.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../../landing/presentation/widgets/row_item_template.dart';
 import '../../../../core/common_widgets/drawer_widget.dart';
 import '../widgets/custom_notice_card.dart';
 import '../controller/dashboard_controller.dart';
 import '../../../../core/common_widgets/custom_app_bar.dart';
-import '../widgets/course_card.dart';
+import '../widgets/running_course_card.dart';
 import '../widgets/custom_text_widget.dart';
 import '../widgets/dashboard_card.dart';
 import '../widgets/graph_chart.dart';
@@ -25,7 +25,7 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen>
-    with AppTheme, Language ,AppEventsNotifier{
+    with AppTheme, Language, AppEventsNotifier {
   final DashboardController dashboardController =
       Get.find<DashboardController>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -97,9 +97,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                   ],
                 ),
                 SizedBox(height: 15.h),
-                CourseCard(
-                  onPressed: () => Get.toNamed(AppRoutes.ongoingCourse,
-                      arguments: "running"),
+                RunningCourseCard(
+                  onPressed: () => Get.toNamed(AppRoutes.transcriptVideo),
                   image: Image.asset("assets/images/image.png"),
                   text1:
                       label(e: StringData.cardText1, b: StringData.cardText1Bn),
@@ -157,7 +156,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                       ),
                     ),
                     rightChild: DashboardCard(
-                      title: label(e: en.notifications, b: bn.notifications),
+                      title: label(
+                          e: en.upcomingCurriculum, b: bn.upcomingCurriculum),
                       onPressed: () {},
                       subTitle: label(
                           e: StringData.dashboardCardValue4,
@@ -204,10 +204,10 @@ class _DashboardScreenState extends State<DashboardScreen>
 
   @override
   void onEventReceived(EventAction action) {
-    if(action==EventAction.bottomNavAllScreen||action==EventAction.dashBoardScreen){
-      if(mounted){
-        setState(() {
-        });
+    if (action == EventAction.bottomNavAllScreen ||
+        action == EventAction.dashBoardScreen) {
+      if (mounted) {
+        setState(() {});
       }
     }
   }

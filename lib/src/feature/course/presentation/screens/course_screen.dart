@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/core/service/notifier/app_events_notifier.dart';
 
 import '../../../../core/common_widgets/custom_app_bar.dart';
 import '../../../../core/common_widgets/drawer_widget.dart';
-import '../../../../core/constants/common_imports.dart';
 import '../../../../core/routes/app_routes.dart';
+import '../../../../core/service/notifier/app_events_notifier.dart';
 import '../../../../core/utility/app_label.dart';
 import '../controllers/course_controller.dart';
-import '../widgets/chapter_widget.dart';
+import '../../../../core/constants/common_imports.dart';
+import '../widgets/course_card.dart';
 
-class CourseScreen extends StatefulWidget with AppTheme {
+class CourseScreen extends StatefulWidget {
   const CourseScreen({super.key});
 
   @override
   State<CourseScreen> createState() => _CourseScreenState();
 }
 
-class _CourseScreenState extends State<CourseScreen> with AppTheme, Language ,AppEventsNotifier{
+class _CourseScreenState extends State<CourseScreen>
+    with AppTheme, Language, AppEventsNotifier {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final CourseController controller = Get.find<CourseController>();
 
@@ -69,160 +70,99 @@ class _CourseScreenState extends State<CourseScreen> with AppTheme, Language ,Ap
           ),
         ),
       ),
-      body: ListView(
-        padding: EdgeInsets.symmetric(vertical: size.h12),
-        shrinkWrap: true,
+      body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        children: [
-          CourseWidget(
-            title: label(
-                e: "Education Policy and Management in Education",
-                b: "শিক্ষা নীতি ও শিক্ষায় ব্যাবস্থাপনা"),
-            description: label(
-                e: "Teaching for Learning programs are detailed discussions for those who are teaching, or who want to teach, any subject, in any context",
-                b: "শেখার জন্য শিক্ষাদান প্রোগ্রামের হল যারা শিক্ষা দিচ্ছেন, বা যারা শিক্ষা দিতে চান, যে কোনো বিষয়ে, যে কোনো প্রসঙ্গে বিস্তারিত আলোচনা"),
-          ),
-          SizedBox(height: size.h32),
-          CourseWidget(
-            title: label(e: "Right to Information", b: "তথ্য অধিকার"),
-            description: label(
-                e: "Teaching for Learning programs are detailed discussions for those who are teaching, or who want to teach, any subject, in any context",
-                b: "শেখার জন্য শিক্ষাদান প্রোগ্রামের হল যারা শিক্ষা দিচ্ছেন, বা যারা শিক্ষা দিতে চান, যে কোনো বিষয়ে, যে কোনো প্রসঙ্গে বিস্তারিত আলোচনা"),
-          ),
-        ],
+        padding: EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              label(e: "Current Course", b: "চলমান কোর্স"),
+              style: TextStyle(
+                  color: clr.appPrimaryColorGreen,
+                  fontSize: size.textXMedium,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: StringData.fontFamilyRoboto),
+            ),
+            SizedBox(height: size.h8),
+            CourseCard(
+              onTap: () => Get.toNamed(AppRoutes.courseDetails),
+              title: label(
+                  e: "Education policy and management in education",
+                  b: "শিক্ষা নীতি ও শিক্ষায় ব্যাবস্থাপনা"),
+              titleFontSize: size.textXMedium,
+              code: label(e: "Course Code : 5568", b: "কোর্সের কোড : ৫৫৬৮"),
+              time: label(
+                  e: "Duration : 12/06/2023 - 17/03/2024",
+                  b: "সময়কাল : ১২/০৬/২০২৩ - ১৭/০৩/২০২৪"),
+              statusValue: .1,
+              status: label(e: "10% ${en.completed}", b: "১০% ${bn.completed}"),
+            ),
+            SizedBox(height: size.h12),
+            Divider(height: 1, color: clr.boxStrokeColor),
+            SizedBox(height: size.h12),
+            Text(
+              label(e: "Other Courses", b: "অন্যান্য কোর্সসমূহ"),
+              style: TextStyle(
+                  color: clr.appPrimaryColorGreen,
+                  fontSize: size.textXMedium,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: StringData.fontFamilyPoppins),
+            ),
+            SizedBox(height: size.h8),
+            CourseCard(
+              onTap: () =>
+                  Get.toNamed(AppRoutes.courseDetails, arguments: "lock"),
+              title: label(
+                  e: "Development of Bengali language", b: "বাংলা ভাষার বিকাশ"),
+              iconData: Icons.lock,
+              iconColor: clr.iconColorDimGrey,
+              code: label(e: "Course Code : 1568", b: "কোর্সের কোড : ১৫৬৮"),
+              time: label(
+                  e: "Duration : 01/01/2024 - 06/04/2024",
+                  b: "সময়কাল : ০১/০১/২০২৪ - ০৬/০৪/২০২৪"),
+              statusValue: 0.0,
+              status: label(e: "Will Begin", b: "শুরু হবে"),
+            ),
+            SizedBox(height: size.h12),
+            CourseCard(
+              onTap: () => Get.toNamed(AppRoutes.courseDetails),
+              title: label(e: "Right to Information", b: "তথ্য অধিকার"),
+              iconData: Icons.check_circle,
+              code: label(e: "Course Code : 1568", b: "কোর্সের কোড : ১৫৬৮"),
+              time: label(
+                  e: "Duration : 12/01/2023 - 17/03/2023",
+                  b: "সময়কাল : ১২/০১/২০২৩ - ১৭/০৩/২০২৩ "),
+              statusValue: 1,
+              status: label(e: "Completed", b: "সম্পন্ন হয়েছে"),
+            ),
+            SizedBox(height: size.h12),
+            CourseCard(
+              onTap: () => Get.toNamed(AppRoutes.courseDetails),
+              title: label(
+                  e: "Education policy and management in education",
+                  b: "শিক্ষা নীতি ও শিক্ষায় ব্যাবস্থাপনা"),
+              iconData: Icons.check_circle,
+              code: label(e: "Course Code : 1568", b: "কোর্সের কোড : ১৫৬৮"),
+              time: label(
+                  e: "Duration : 12/01/2023 - 17/03/2023",
+                  b: "সময়কাল : ১২/০১/২০২৩ - ১৭/০৩/২০২৩ "),
+              statusValue: 1,
+              status: label(e: "Completed", b: "সম্পন্ন হয়েছে"),
+            ),
+          ],
+        ),
       ),
-      // body: ListView.separated(
-      //   shrinkWrap: true,
-      //   physics: const BouncingScrollPhysics(),
-      //   itemCount: 3,
-      //   padding: EdgeInsets.symmetric(vertical: size.h12),
-      //   itemBuilder: (context, index) {
-      //     return const CourseWidget();
-      //   },
-      //   separatorBuilder: (context, index) {
-      //     return SizedBox(height: size.h32);
-      //   },
-      // ),
     );
   }
 
   @override
   void onEventReceived(EventAction action) {
-    if(action==EventAction.bottomNavAllScreen||action==EventAction.coursesScreen){
-      if(mounted){
-        setState(() {
-        });
+    if (action == EventAction.bottomNavAllScreen ||
+        action == EventAction.coursesScreen) {
+      if (mounted) {
+        setState(() {});
       }
     }
-  }
-}
-
-class CourseWidget extends StatelessWidget with AppTheme, Language {
-  final String title;
-  final String description;
-  const CourseWidget(
-      {super.key, required this.title, required this.description});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        CourseText(
-          text: title,
-          fontSize: size.textXMedium,
-        ),
-        SizedBox(height: size.h16),
-        CourseText(
-            text: label(e: en.curriculumContent, b: bn.curriculumContent)),
-        SizedBox(height: size.h10),
-        CourseText(
-          text: description,
-          textColor: clr.textColorAppleBlack,
-          fontWeight: FontWeight.w500,
-        ),
-        SizedBox(height: size.h16),
-        CourseText(
-            text: label(
-                e: en.curriculumDescription, b: bn.curriculumDescription)),
-        SizedBox(height: size.h12),
-        ListView(
-          padding: EdgeInsets.zero,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          children: [
-            ChapterWidget(
-              chapterTitle: label(
-                  e: "Chapter 1: The Desert of Karbala",
-                  b: "অধ্যায় ১: কারবালা প্রান্তর"),
-              chapterCode: label(e: "Chapter Code", b: "অধ্যায়ের কোড"),
-              lock: false,
-            ),
-            ChapterWidget(
-              chapterTitle: label(
-                  e: "Chapter 2: Human-Welfare", b: "অধ্যায় ২: মানব-কল্যাণ"),
-              chapterCode: label(e: "Chapter Code", b: "অধ্যায়ের কোড"),
-            ),
-            ChapterWidget(
-              chapterTitle: label(
-                  e: "Chapter 3: The Desert of Karbala",
-                  b: "অধ্যায় ৩: কারবালা প্রান্তর"),
-              chapterCode: label(e: "Chapter Code", b: "অধ্যায়ের কোড"),
-            ),
-            ChapterWidget(
-              chapterTitle: label(
-                  e: "Chapter 4: Human-Welfare", b: "অধ্যায় ৪: মানব-কল্যাণ"),
-              chapterCode: label(e: "Chapter Code", b: "অধ্যায়ের কোড"),
-            ),
-            ChapterWidget(
-              chapterTitle: label(
-                  e: "Chapter 5: The Enormity of Life",
-                  b: "অধ্যায় ৫: জীবযাত্রার বিপুলতা"),
-              chapterCode: label(e: "Chapter Code", b: "অধ্যায়ের কোড"),
-            ),
-          ],
-        )
-        // ListView.builder(
-        //   padding: EdgeInsets.zero,
-        //   shrinkWrap: true,
-        //   physics: const NeverScrollableScrollPhysics(),
-        //   itemCount: 4,
-        //   itemBuilder: (context, index) {
-        //     return const ChapterWidget(
-        //       chapterTitle: "অধ্যায় ১: কারবালা প্রান্তর",
-        //       chapterCode: "অধ্যায়ের কোড",
-        //     );
-        //   },
-        // ),
-      ],
-    );
-  }
-}
-
-class CourseText extends StatelessWidget with AppTheme {
-  final String text;
-  final Color? textColor;
-  final double? fontSize;
-  final FontWeight? fontWeight;
-  const CourseText(
-      {super.key,
-      required this.text,
-      this.textColor,
-      this.fontSize,
-      this.fontWeight});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: size.w16),
-      child: Text(
-        text,
-        style: TextStyle(
-            color: textColor ?? clr.appPrimaryColorGreen,
-            fontSize: fontSize ?? size.textSmall,
-            fontWeight: fontWeight ?? FontWeight.w600,
-            fontFamily: StringData.fontFamilyPoppins),
-      ),
-    );
   }
 }

@@ -1,10 +1,8 @@
 import 'dart:async';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/core/utility/app_label.dart';
 
+import '../../../../core/utility/app_label.dart';
 import '../../../../core/config/notification_client.dart';
 import '../../../../core/config/push_notification.dart';
 import '../../../../core/routes/app_routes.dart';
@@ -26,12 +24,18 @@ class _LandingScreenState extends State<LandingScreen> with AppTheme, Language {
   ///Service configurations
   @override
   void initState() {
+    super.initState();
+
     ///Init notification and firebase
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       PushNotification.instance.init();
-      NotificationClient.instance.startListening(onNotificationClicked,_onNotificationReceived).then(_onFCMTokenUpdate).catchError((_){});
+      NotificationClient.instance
+          .startListening(onNotificationClicked, _onNotificationReceived)
+          .then(_onFCMTokenUpdate)
+          .catchError((_) {});
     });
   }
+
   @override
   void dispose() {
     NotificationClient.instance.stopListening();
@@ -75,7 +79,9 @@ class _LandingScreenState extends State<LandingScreen> with AppTheme, Language {
                   text: label(
                       e: en.learningManagementSystem,
                       b: bn.learningManagementSystem),
-                  onTap: () => Get.toNamed(AppRoutes.bottomNav,),
+                  onTap: () => Get.toNamed(
+                    AppRoutes.bottomNav,
+                  ),
                 ),
                 rightChild: ModuleCardWidget(
                   image: ImageAssets.imgModule2,
@@ -107,31 +113,25 @@ class _LandingScreenState extends State<LandingScreen> with AppTheme, Language {
       ),
     );
   }
+
   ///Push Notification Section
-  void _onFCMTokenUpdate(String? token)async {
+  void _onFCMTokenUpdate(String? token) async {
     print(token);
   }
 
-  void onNotificationClicked(NotificationEntity notification, {bool isFromTray = true})async{
-    try{
+  void onNotificationClicked(NotificationEntity notification,
+      {bool isFromTray = true}) async {
+    try {
       ///Is notification clicked from system tray then wait some time to finish loading
-      if(isFromTray) await Future.delayed(const Duration(milliseconds: 500));
-
+      if (isFromTray) await Future.delayed(const Duration(milliseconds: 500));
 
       ///Mark notification as seen
       _markNotificationAsSeen(notification);
-    }
-    catch (error){
+    } catch (error) {
       debugPrint(error.toString());
     }
   }
-  void _onNotificationReceived(NotificationEntity notification)async{
 
-
-  }
-  void _markNotificationAsSeen(NotificationEntity notification) {
-
-
-  }
-
+  void _onNotificationReceived(NotificationEntity notification) async {}
+  void _markNotificationAsSeen(NotificationEntity notification) {}
 }

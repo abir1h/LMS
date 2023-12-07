@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lms/src/core/service/notifier/app_events_notifier.dart';
 import 'package:lms/src/core/utility/app_label.dart';
 
 import '../../../../core/constants/common_imports.dart';
@@ -12,7 +13,8 @@ class GraphChart extends StatefulWidget {
   State<GraphChart> createState() => _GraphChartState();
 }
 
-class _GraphChartState extends State<GraphChart> with AppTheme {
+class _GraphChartState extends State<GraphChart>
+    with AppTheme, AppEventsNotifier {
   double maxX = 5.0;
   double maxY = 4.0;
   List<FlSpot> dynamicData = [
@@ -225,5 +227,14 @@ class _GraphChartState extends State<GraphChart> with AppTheme {
         ),
       ],
     );
+  }
+
+  @override
+  void onEventReceived(EventAction action) {
+    if (action == EventAction.graphChart) {
+      if (mounted) {
+        setState(() {});
+      }
+    }
   }
 }

@@ -70,12 +70,13 @@ class LanguageEn {
   String ongoingCurriculum = "Ongoing Curriculum";
   String completedCurriculum = "Completed curriculum";
   String discussionArea = "Discussion area";
-  String notifications = "Notifications";
+  String upcomingCurriculum = "Upcoming Curriculum";
   String notification = "Notification";
   String effectivePeriod = "Effective Period";
   String noticeBoard = "Notice Board";
 
   String courseText = "Course";
+  String courseDetailsText = "Course Details";
   String curriculumDescription = "Curriculum Description";
   String curriculumContent = "Curriculum Content";
   String check = "Check";
@@ -88,6 +89,9 @@ class LanguageEn {
   String next = "Next";
   String seeMore = " See More";
   String seeLess = " See Less";
+
+  String liveClass = "Live Class";
+  String joinClass = "Join The Class";
 
   String allNotes = "All Notes";
   String noteContent =
@@ -159,12 +163,13 @@ class LanguageBn {
   String ongoingCurriculum = "চলমান পাঠ্যক্রম";
   String completedCurriculum = "সম্পন্ন পাঠ্যক্রম";
   String discussionArea = "আলোচনা ক্ষেত্র";
-  String notifications = "বিজ্ঞপ্তি সমূহ";
+  String upcomingCurriculum = "আসন্ন পাঠ্যক্রম";
   String notification = "বিজ্ঞপ্তি";
   String effectivePeriod = "কার্যকম সময়কাল";
   String noticeBoard = "নোটিশবোর্ড";
 
   String courseText = "কোর্স";
+  String courseDetailsText = "কোর্সের বিস্তারিত";
   String curriculumDescription = "পাঠ্যসূচীর বর্ণনা";
   String curriculumContent = "পাঠ্যক্রমের বিষয়বস্তু";
   String check = "চেক করুন";
@@ -177,6 +182,9 @@ class LanguageBn {
   String next = "পরবর্তী";
   String seeMore = " আরো দেখুন";
   String seeLess = " সংক্ষিপ্ত করুন";
+
+  String liveClass = "লাইভ ক্লাস";
+  String joinClass = "ক্লাসে জয়েন করুন";
 
   String allNotes = "অল নোটস";
   String noteContent = "";

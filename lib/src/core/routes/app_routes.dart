@@ -1,8 +1,9 @@
 import 'package:get/route_manager.dart';
+import 'package:lms/src/feature/course/presentation/screens/course_screen.dart';
 
 import '../../feature/bottom_bar/presentation/screens/bottom_screen.dart';
 import '../../feature/course/presentation/bindings/course_binding.dart';
-import '../../feature/course/presentation/screens/course_screen.dart';
+import '../../feature/course/presentation/screens/course_details_screen.dart';
 import '../../feature/dashboard/presentation/binding/dashboard_binding.dart';
 import '../../feature/dashboard/presentation/screens/dashboard_screen.dart';
 import '../../feature/notes/presentation/bindings/note_binding.dart';
@@ -31,6 +32,7 @@ class AppRoutes {
   static const String landing = '/landing';
   static const String dashboard = '/dashboard';
   static const String course = '/course';
+  static const String courseDetails = '/course_details';
   static const String profile = '/profile';
   static const String ongoingCourse = '/ongoingCourse';
   static const String bottomNav = '/bottomNav';
@@ -74,6 +76,12 @@ class AppPages {
       transition: Transition.rightToLeft,
     ),
     GetPage(
+      name: AppRoutes.courseDetails,
+      page: () => const CourseDetailsScreen(),
+      binding: CourseBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
       name: AppRoutes.profile,
       page: () => const ProfileScreen(),
       binding: ProfileBinding(),
@@ -87,7 +95,7 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.bottomNav,
-      page: () => const BottomScreen( ),
+      page: () => const BottomScreen(),
       binding: BottomBinding(),
       transition: Transition.rightToLeft,
     ),

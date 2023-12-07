@@ -32,12 +32,12 @@ class StringData {
 
   static const String dashboardCardValue1 = "1";
   static const String dashboardCardValue2 = "1";
-  static const String dashboardCardValue3 = "400";
-  static const String dashboardCardValue4 = "400";
+  static const String dashboardCardValue3 = "0";
+  static const String dashboardCardValue4 = "0";
   static const String dashboardCardValue1Bn = "১";
   static const String dashboardCardValue2Bn = "১";
-  static const String dashboardCardValue3Bn = "৪০০";
-  static const String dashboardCardValue4Bn = "৪০০";
+  static const String dashboardCardValue3Bn = "০";
+  static const String dashboardCardValue4Bn = "০";
 
   static const String notice1 =
       "Shiny new batch is going to start, the curriculum will be conducted by Teachers Training College, Dhaka";
