@@ -28,7 +28,7 @@ class _OngoingCourseScreenState extends State<OngoingCourseScreen>
         title: controller.screenName.value == "running"
             ? label(e: en.ongoingModule, b: bn.ongoingModule)
             : controller.screenName.value == "ongoing"
-                ? label(e: en.ongoingCurriculum, b: bn.ongoingModule)
+                ? label(e: en.ongoingCurriculum, b: bn.ongoingCurriculum)
                 : controller.screenName.value == "completed"
                     ? label(
                         e: en.completedCurriculum, b: bn.completedCurriculum)

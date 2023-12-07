@@ -68,7 +68,7 @@ class RunningCourseCard extends StatelessWidget with AppTheme {
                     ),
                     SizedBox(height: size.h12),
                     LinearProgressIndicator(
-                      value: .3,
+                      value: .1,
                       color: clr.appPrimaryColorGreen,
                       backgroundColor: clr.progressBGColor,
                       valueColor: AlwaysStoppedAnimation<Color>(

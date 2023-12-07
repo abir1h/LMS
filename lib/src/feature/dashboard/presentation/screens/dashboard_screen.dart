@@ -98,21 +98,22 @@ class _DashboardScreenState extends State<DashboardScreen>
                 ),
                 SizedBox(height: 15.h),
                 RunningCourseCard(
-                  onPressed: () => Get.toNamed(AppRoutes.transcriptVideo),
+                  onPressed: () => Get.toNamed(AppRoutes.ongoingCourse,
+                      arguments: "running"),
                   image: Image.asset("assets/images/image.png"),
                   text1:
                       label(e: StringData.cardText1, b: StringData.cardText1Bn),
                   text2:
                       label(e: StringData.cardText2, b: StringData.cardText2Bn),
                   text3:
-                      label(e: "30% ${en.completed}", b: "৩০% ${bn.completed}"),
+                      label(e: "10% ${en.completed}", b: "১০% ${bn.completed}"),
                   primaryColor: Colors.white,
                 ),
                 SizedBox(height: size.h20),
                 RowItemTemplate(
                     leftChild: DashboardCard(
-                      title:
-                          label(e: en.ongoingCurriculum, b: bn.ongoingModule),
+                      title: label(
+                          e: en.ongoingCurriculum, b: bn.ongoingCurriculum),
                       onPressed: () => Get.toNamed(AppRoutes.ongoingCourse,
                           arguments: "ongoing"),
                       subTitle: label(
