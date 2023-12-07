@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/constants/common_imports.dart';
 
-class CourseCard extends StatelessWidget with AppTheme {
-  const CourseCard({
+class RunningCourseCard extends StatelessWidget with AppTheme {
+  const RunningCourseCard({
     super.key,
     required this.image,
     required this.onPressed,

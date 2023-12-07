@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/core/service/notifier/app_events_notifier.dart';
 
+import '../../../../core/service/notifier/app_events_notifier.dart';
 import '../../../../core/common_widgets/custom_dialog_widget.dart';
 import '../../../../core/common_widgets/custom_switch_button.dart';
 import '../../../../core/common_widgets/drawer_widget.dart';
@@ -21,7 +21,8 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> with AppTheme, Language,AppEventsNotifier {
+class _ProfileScreenState extends State<ProfileScreen>
+    with AppTheme, Language, AppEventsNotifier {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -213,8 +214,9 @@ class _ProfileScreenState extends State<ProfileScreen> with AppTheme, Language,A
     CustomDialogWidget.show(
       context: context,
       title: label(e: en.logoutWarningText, b: bn.logoutWarningText),
-      infoText:
-          "আপনার কোর্সগুলো এবং মূল্যায়নের খবরের জন্য আপনার আইডি লগইন থাকা প্রয়োজন।",
+      infoText: label(
+          e: "Your ID login is required for your courses and assessment news.",
+          b: "আপনার কোর্সগুলো এবং মূল্যায়নের খবরের জন্য আপনার আইডি লগইন থাকা প্রয়োজন।"),
       rightButtonText: label(e: en.cancelText, b: bn.cancelText),
       leftButtonText: label(e: en.exitText, b: bn.exitText),
     ).then((value) {
@@ -226,10 +228,10 @@ class _ProfileScreenState extends State<ProfileScreen> with AppTheme, Language,A
 
   @override
   void onEventReceived(EventAction action) {
-    if(action==EventAction.bottomNavAllScreen||action==EventAction.profileScreen){
-      if(mounted){
-        setState(() {
-        });
+    if (action == EventAction.bottomNavAllScreen ||
+        action == EventAction.profileScreen) {
+      if (mounted) {
+        setState(() {});
       }
     }
   }

@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/core/service/notifier/app_events_notifier.dart';
-import 'package:lms/src/feature/course/presentation/controllers/course_controller.dart';
-import 'package:lms/src/feature/course/presentation/screens/course_screen.dart';
 
+import '../../../../core/service/notifier/app_events_notifier.dart';
+import '../../../course/presentation/controllers/course_controller.dart';
+import '../../../course/presentation/screens/course_screen.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../notes/presentation/screens/note_screen.dart';
 import '../../../../core/constants/common_imports.dart';
@@ -14,13 +14,16 @@ import '../../../dashboard/presentation/controller/dashboard_controller.dart';
 import '../../../dashboard/presentation/screens/dashboard_screen.dart';
 
 class BottomScreen extends StatefulWidget {
-  const BottomScreen({super.key,});
+  const BottomScreen({
+    super.key,
+  });
 
   @override
   State<BottomScreen> createState() => _BottomScreenState();
 }
 
-class _BottomScreenState extends State<BottomScreen> with AppTheme, Language,AppEventsNotifier {
+class _BottomScreenState extends State<BottomScreen>
+    with AppTheme, Language, AppEventsNotifier {
   final PageController _pageController = PageController();
   int _currentPageIndex = 0;
 
@@ -38,21 +41,18 @@ class _BottomScreenState extends State<BottomScreen> with AppTheme, Language,App
     Get.put(DashboardController());
     Get.put(CourseController());
   }
-  setPage(){
-    final  args = Get.arguments??0;
+
+  setPage() {
+    final args = Get.arguments ?? 0;
     print(args);
-    _currentPageIndex=args;
-
-
+    _currentPageIndex = args;
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Expanded(
-          child: pages[_currentPageIndex]
-        ),
+        Expanded(child: pages[_currentPageIndex]),
         BottomNavigationBar(
           backgroundColor: Colors.white,
           currentIndex: _currentPageIndex,
@@ -68,7 +68,6 @@ class _BottomScreenState extends State<BottomScreen> with AppTheme, Language,App
           onTap: (index) {
             setState(() {
               _currentPageIndex = index;
-
             });
           },
           items: [
@@ -114,10 +113,9 @@ class _BottomScreenState extends State<BottomScreen> with AppTheme, Language,App
 
   @override
   void onEventReceived(EventAction action) {
-    if(action==EventAction.bottomNavBar){
-      if(mounted){
-        setState(() {
-        });
+    if (action == EventAction.bottomNavBar) {
+      if (mounted) {
+        setState(() {});
       }
     }
   }

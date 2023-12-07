@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+
 import '../models/note_model.dart';
 
 class NoteController extends GetxController {
