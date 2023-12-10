@@ -52,6 +52,8 @@ class _CustomYoutubePlayerState extends State<CustomYoutubePlayer>
         SystemChrome.setPreferredOrientations([
           DeviceOrientation.portraitUp,
         ]);
+        SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+
         return;
       },
       child: OrientationBuilder(
@@ -86,7 +88,7 @@ class _CustomYoutubePlayerState extends State<CustomYoutubePlayer>
                           left: size.w16,
                           child: InkWell(
                             onTap: () {
-                              Get.back();
+                              Navigator.pop(context);
                             },
                             child: Icon(
                               Icons.arrow_back,

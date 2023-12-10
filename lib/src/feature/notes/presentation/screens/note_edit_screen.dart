@@ -60,58 +60,59 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
     super.dispose();
   }
 
-  void toggleEditor() {
-    setState(() {
-      _isReadOnly = !_isReadOnly;
-    });
-  }
+
 
   saveData() {
-    if (widget.mainModel == null) {
-      int id = controller.noteList.length + 1;
-      DateTime now = DateTime.now();
-      var currentTime =
-          DateTime(now.year, now.month, now.day, now.hour, now.minute);
-      var newModel = NoteModel(
-        id: id,
-        time: currentTime.toString(),
-        title: titleController.text,
-        description: _controller.document.toDelta().toJson(),
-      );
-      controller.noteList.add(newModel);
-      Get.toNamed(AppRoutes.bottomNav, arguments: 2);
-      CustomToasty.of(context).showSuccess("তালিকা সফলভাবে সংরক্ষণ করা হয়েছে");
-    } else {
-      DateTime now = DateTime.now();
-      var currentTime = DateTime(
-        now.year,
-        now.month,
-        now.day,
-        now.hour,
-        now.minute,
-      );
-      var updatedModel = NoteModel(
-        id: widget.mainModel?.id!,
-        time: currentTime.toString(),
-        title: titleController.text,
-        description: _controller.document.toDelta().toJson(),
-      );
-
-      // Check if the note with the same ID exists in the list
-      int existingIndex = controller.noteList.indexWhere(
-        (note) => note.id == updatedModel.id,
-      );
-
-      if (existingIndex != -1) {
-        // Replace the existing note with the updated one
-        controller.noteList[existingIndex] = updatedModel;
+    if(titleController.text.isEmpty && _controller.document.isEmpty()){
+      Get.back();
+    }else{
+      if (widget.mainModel == null) {
+        int id = controller.noteList.length + 1;
+        DateTime now = DateTime.now();
+        var currentTime =
+        DateTime(now.year, now.month, now.day, now.hour, now.minute);
+        var newModel = NoteModel(
+          id: id,
+          time: currentTime.toString(),
+          title: titleController.text,
+          description: _controller.document.toDelta().toJson(),
+        );
+        controller.noteList.add(newModel);
         Get.toNamed(AppRoutes.bottomNav, arguments: 2);
-        CustomToasty.of(context).showSuccess("তালিকা সফলভাবে আপডেট করা হয়েছে");
-      } else {
-        // If the note with the ID doesn't exist, add it to the list
-        controller.noteList.add(updatedModel);
-        Get.toNamed(AppRoutes.bottomNav, arguments: 2);
-        CustomToasty.of(context).showSuccess("তালিকা সফলভাবে আপডেট করা হয়েছে");
+        CustomToasty.of(context).showSuccess("তালিকা সফলভাবে সংরক্ষণ করা হয়েছে");
+      }
+      else {
+        DateTime now = DateTime.now();
+        var currentTime = DateTime(
+          now.year,
+          now.month,
+          now.day,
+          now.hour,
+          now.minute,
+        );
+        var updatedModel = NoteModel(
+          id: widget.mainModel?.id!,
+          time: currentTime.toString(),
+          title: titleController.text,
+          description: _controller.document.toDelta().toJson(),
+        );
+
+        // Check if the note with the same ID exists in the list
+        int existingIndex = controller.noteList.indexWhere(
+              (note) => note.id == updatedModel.id,
+        );
+
+        if (existingIndex != -1) {
+          // Replace the existing note with the updated one
+          controller.noteList[existingIndex] = updatedModel;
+          Get.toNamed(AppRoutes.bottomNav, arguments: 2);
+          CustomToasty.of(context).showSuccess("তালিকা সফলভাবে আপডেট করা হয়েছে");
+        } else {
+          // If the note with the ID doesn't exist, add it to the list
+          controller.noteList.add(updatedModel);
+          Get.toNamed(AppRoutes.bottomNav, arguments: 2);
+          CustomToasty.of(context).showSuccess("তালিকা সফলভাবে আপডেট করা হয়েছে");
+        }
       }
     }
   }
@@ -158,6 +159,9 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
       title: "",
       bgColor: clr.scaffoldBackgroundColor,
       resizeToAvoidBottomInset: true,
+      leadingBack:()=>saveData(),
+
+
       actionChild: Row(
         children: [
           IconButton(
