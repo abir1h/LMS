@@ -57,7 +57,9 @@ class _RootScreenState extends State<RootScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      backgroundColor: clr.scaffoldBackgroundColor,
+      backgroundColor: _currentPageIndex == 3
+          ? clr.iconColorWhiteIce
+          : clr.scaffoldBackgroundColor,
       drawer: const DrawerWidget(),
       endDrawer: const RecognitionWidget(),
       endDrawerEnableOpenDragGesture: false,
