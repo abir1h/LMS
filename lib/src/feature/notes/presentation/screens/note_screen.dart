@@ -248,8 +248,8 @@ class _NoteScreenState extends State<NoteScreen>
                       noteContent:
                           controller.noteList[index].title.toString().isNotEmpty
                               ? controller.noteList[index].title.toString()[0]
-                              : '',
-                      title: controller.noteList[index].title!,
+                              : 'N',
+                      title: controller.noteList[index].title!.toString().isNotEmpty?controller.noteList[index].title!:"New Note",
                       timestamp: controller.noteList[index].time!,
                       onPressed: () => Get.to(() => NoteDetailsScreen(
                             mainModel: controller.noteList[index],
