@@ -134,6 +134,7 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                 title: label(e: "Course Introduction", b: "কোর্সের পরিচিতি"),
                 buttonText: label(e: en.see, b: bn.see),
                 buttonIcon: Icons.play_circle,
+                status: true,
                 onTap: () => Get.to(() => const TranscriptVideoScreen()),
               ),
               CourseContentWidget(
@@ -148,6 +149,7 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                 title: label(e: "Live Class", b: "লাইভ ক্লাস"),
                 buttonText: label(e: en.join, b: bn.join),
                 buttonIcon: Icons.video_call,
+                status: true,
                 onTap: () => Get.to(() => const LiveClassScreen()),
               ),
               CourseContentWidget(

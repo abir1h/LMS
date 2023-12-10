@@ -98,8 +98,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                 ),
                 SizedBox(height: 15.h),
                 RunningCourseCard(
-                  onPressed: () => Get.toNamed(AppRoutes.ongoingCourse,
-                      arguments: "running"),
+                  onPressed: () => Get.toNamed(AppRoutes.courseDetails,
+                      arguments: ""),
                   image: Image.asset("assets/images/image.png"),
                   text1:
                       label(e: StringData.cardText1, b: StringData.cardText1Bn),
@@ -114,8 +114,10 @@ class _DashboardScreenState extends State<DashboardScreen>
                     leftChild: DashboardCard(
                       title: label(
                           e: en.ongoingCurriculum, b: bn.ongoingCurriculum),
-                      onPressed: () => Get.toNamed(AppRoutes.ongoingCourse,
-                          arguments: "ongoing"),
+                      // onPressed: () => Get.toNamed(AppRoutes.ongoingCourse,
+                      //     arguments: "ongoing"),
+                      onPressed: () => Get.toNamed(AppRoutes.courseDetails,
+                          arguments: ""),
                       subTitle: label(
                           e: StringData.dashboardCardValue1,
                           b: StringData.dashboardCardValue1Bn),
@@ -129,8 +131,9 @@ class _DashboardScreenState extends State<DashboardScreen>
                     rightChild: DashboardCard(
                       title: label(
                           e: en.completedCurriculum, b: bn.completedCurriculum),
-                      onPressed: () => Get.toNamed(AppRoutes.ongoingCourse,
-                          arguments: "completed"),
+                      onPressed: (){},
+                      // onPressed: () => Get.toNamed(AppRoutes.ongoingCourse,
+                      //     arguments: "completed"),
                       subTitle: label(
                           e: StringData.dashboardCardValue2,
                           b: StringData.dashboardCardValue2Bn),

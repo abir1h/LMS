@@ -31,11 +31,11 @@ class StringData {
       "শিখন ক্ষেত্র ১ :  শিক্ষা নীতি ও শিক্ষায় ব্যাবস্থাপনা (শিনী)";
 
   static const String dashboardCardValue1 = "1";
-  static const String dashboardCardValue2 = "1";
+  static const String dashboardCardValue2 = "0";
   static const String dashboardCardValue3 = "0";
   static const String dashboardCardValue4 = "0";
   static const String dashboardCardValue1Bn = "১";
-  static const String dashboardCardValue2Bn = "১";
+  static const String dashboardCardValue2Bn = "০";
   static const String dashboardCardValue3Bn = "০";
   static const String dashboardCardValue4Bn = "০";
 
