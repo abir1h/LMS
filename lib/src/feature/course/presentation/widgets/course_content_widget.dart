@@ -10,7 +10,7 @@ class CourseContentWidget extends StatelessWidget with AppTheme, Language {
   final String? buttonText;
   final IconData buttonIcon;
   final VoidCallback? onTap;
-  final bool status ;
+  final bool status;
   const CourseContentWidget(
       {Key? key,
       required this.courseIcon,
@@ -18,7 +18,8 @@ class CourseContentWidget extends StatelessWidget with AppTheme, Language {
       required this.title,
       this.buttonText,
       required this.buttonIcon,
-      this.onTap,  this.status=false})
+      this.onTap,
+      this.status = false})
       : super(key: key);
 
   @override
@@ -43,7 +44,7 @@ class CourseContentWidget extends StatelessWidget with AppTheme, Language {
           ),
           // SizedBox(width: size.w12),
           Expanded(
-            flex: 4,
+            flex: 3,
             child: Text(
               title,
               style: TextStyle(
@@ -64,7 +65,9 @@ class CourseContentWidget extends StatelessWidget with AppTheme, Language {
                 padding: EdgeInsets.symmetric(
                     horizontal: size.w8, vertical: size.h8),
                 decoration: BoxDecoration(
-                    color: status?clr.cardFillColorCruise:clr.greyColor.withOpacity(.4),
+                    color: status
+                        ? clr.cardFillColorCruise
+                        : clr.greyColor.withOpacity(.4),
                     borderRadius: BorderRadius.circular(size.r4)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

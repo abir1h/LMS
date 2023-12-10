@@ -27,6 +27,139 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   @override
   Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Stack(
+          children: [
+            Center(
+              child: Column(
+                children: [
+                  SizedBox(height: size.h20),
+                  Container(
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: clr.cardStrokeColor)),
+                    child: Image.asset(
+                      ImageAssets.imgEmptyProfile2,
+                      width: size.w4 + size.w56,
+                    ),
+                  ),
+                  SizedBox(height: size.h12),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: size.w16),
+                    child: Text(
+                      label(e: en.userNameText, b: bn.userNameText),
+                      style: TextStyle(
+                          color: clr.appPrimaryColorGreen,
+                          fontSize: size.textXMedium,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: StringData.fontFamilyRoboto),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  SizedBox(height: size.h24)
+                ],
+              ),
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: EdgeInsets.only(
+                    left: size.w24, right: size.w16, top: size.h16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    // SvgPicture.asset(ImageAssets.icEdit),
+                    CustomSwitchButton(
+                      value: App.currentAppLanguage == AppLanguage.english,
+                      textOn: 'EN',
+                      textSize: size.textXXSmall,
+                      textOff: 'বাং',
+                      bgColor: clr.whiteColor,
+                      width: 64.w,
+                      animationDuration: const Duration(milliseconds: 300),
+                      onChanged: (bool state) {
+                        App.setAppLanguage(state ? 1 : 0).then((value) {
+                          if (mounted) {
+                            setState(() {});
+                          }
+                          AppEventsNotifier.notify(EventAction.bottomNavBar);
+                        });
+                      },
+                      buttonHolder: const Icon(
+                        Icons.check,
+                        color: Colors.transparent,
+                      ),
+                      onTap: () {},
+                      onDoubleTap: () {},
+                      onSwipe: () {},
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+        Expanded(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: size.w16),
+            decoration: BoxDecoration(
+                color: clr.scaffoldBackgroundColor,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(size.w40),
+                  topRight: Radius.circular(size.w40),
+                ),
+                border: Border(
+                    top: BorderSide(color: clr.cardStrokeColor),
+                    right: BorderSide(color: clr.cardStrokeColor))),
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  SizedBox(height: size.h40),
+                  TitleWithIcon(
+                      icon: Icons.account_balance,
+                      title: label(
+                          e: en.currentOrganizationNameText,
+                          b: bn.currentOrganizationNameText)),
+                  TitleWithIcon(
+                      icon: Icons.beenhere,
+                      title: label(
+                          e: en.positionNameText, b: bn.positionNameText)),
+                  TitleWithIcon(
+                      icon: Icons.badge,
+                      title: label(e: en.regNoText, b: bn.regNoText)),
+                  TitleWithIcon(
+                      icon: Icons.phone,
+                      title:
+                          label(e: en.phoneNumberText, b: bn.phoneNumberText)),
+                  TitleWithIcon(
+                      onTap: () {},
+                      icon: Icons.email,
+                      title: label(e: en.emailText, b: bn.emailText)),
+                  TitleWithIcon(
+                    onTap: () => Scaffold.of(context).openEndDrawer(),
+                    svgIcon: ImageAssets.icEditorChoice,
+                    title: label(e: en.certificateText, b: bn.certificateText),
+                    hasTrailing: true,
+                  ),
+                  TitleWithIcon(
+                    icon: Icons.logout,
+                    title: label(e: en.logoutText, b: bn.logoutText),
+                    onTap: showLogoutPromptDialog,
+                    hasBorder: false,
+                  ),
+                  SizedBox(height: size.h40),
+                ],
+              ),
+            ),
+          ),
+        )
+      ],
+    );
+    //region old profile screen
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: clr.iconColorWhiteIce,
@@ -208,6 +341,7 @@ class _ProfileScreenState extends State<ProfileScreen>
         ],
       ),
     );
+    //endregion
   }
 
   void showLogoutPromptDialog() {

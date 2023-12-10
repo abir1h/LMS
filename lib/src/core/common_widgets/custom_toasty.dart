@@ -216,7 +216,7 @@ class __ToastState extends State<_Toast>
       _color=clr.toastWarningColor;
       _icon = Icons.warning;
     } else if (widget.type == "ask") {
-      _colorBackground =  clr.toastAskBackgroundColor;
+      _colorBackground =  clr.cardFillColorBlue;
       _color=clr.toastAskColor;
       _icon = Icons.help;
     }else {

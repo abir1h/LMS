@@ -7,7 +7,7 @@ class CourseCard extends StatelessWidget with AppTheme {
   final String title, code, time, status;
   final double? titleFontSize;
   final IconData? iconData;
-  final Color? iconColor;
+  final Color? bgColor, borderColor, iconColor;
   final double statusValue;
   final VoidCallback? onTap;
   const CourseCard({
@@ -18,6 +18,8 @@ class CourseCard extends StatelessWidget with AppTheme {
     required this.status,
     this.titleFontSize,
     this.iconData,
+    this.bgColor,
+    this.borderColor,
     this.iconColor,
     required this.statusValue,
     required this.onTap,
@@ -30,8 +32,11 @@ class CourseCard extends StatelessWidget with AppTheme {
       child: Container(
           width: 1.sw,
           decoration: BoxDecoration(
+              color: bgColor ?? clr.cardFillColorGreen,
               borderRadius: BorderRadius.circular(size.w8),
-              border: Border.all(color: clr.cardStrokeColor, width: size.w1)),
+              border: Border.all(
+                  color: borderColor ?? clr.cardStrokeColorGreen,
+                  width: size.w1)),
           padding:
               EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h12),
           child: Column(
@@ -86,9 +91,8 @@ class CourseCard extends StatelessWidget with AppTheme {
                 value: statusValue,
                 color: clr.appPrimaryColorGreen,
                 backgroundColor: clr.progressBGColor,
-                valueColor: AlwaysStoppedAnimation<Color>(
-                  clr.appPrimaryColorGreen,
-                ),
+                valueColor:
+                    AlwaysStoppedAnimation<Color>(clr.appPrimaryColorGreen),
                 borderRadius: BorderRadius.circular(size.w6),
                 minHeight: size.h8,
               ),

@@ -172,15 +172,17 @@ class _LiveClassScreenState extends State<LiveClassScreen>
                         size: size.r20,
                       ),
                       SizedBox(width: size.w8),
-                      Text(
-                        label(e: "10.30 am", b: "সকাল ১০.৩০"),
-                        style: TextStyle(
-                            color: clr.blackColor,
-                            fontSize: size.textSmall,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: StringData.fontFamilyPoppins),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
+                      Expanded(
+                        child: Text(
+                          label(e: "10.30 am", b: "সকাল ১০.৩০"),
+                          style: TextStyle(
+                              color: clr.blackColor,
+                              fontSize: size.textSmall,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: StringData.fontFamilyPoppins),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                     ],
                   ),

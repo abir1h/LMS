@@ -32,6 +32,131 @@ class _DashboardScreenState extends State<DashboardScreen>
 
   @override
   Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CustomTextWidgets(
+                    text: label(e: en.ongoingModule, b: bn.ongoingModule)),
+                Padding(
+                  padding: EdgeInsets.only(right: size.w6),
+                  child: Icon(
+                    Icons.arrow_forward,
+                    size: size.r24,
+                    color: clr.appPrimaryColorGreen,
+                  ),
+                )
+              ],
+            ),
+            SizedBox(height: 15.h),
+            RunningCourseCard(
+              onPressed: () => Get.toNamed(AppRoutes.transcriptVideo),
+              image: Image.asset("assets/images/image.png"),
+              text1: label(e: StringData.cardText1, b: StringData.cardText1Bn),
+              text2: label(e: StringData.cardText2, b: StringData.cardText2Bn),
+              text3: label(e: "10% ${en.completed}", b: "১০% ${bn.completed}"),
+              primaryColor: Colors.white,
+            ),
+            SizedBox(height: size.h20),
+            RowItemTemplate(
+                leftChild: DashboardCard(
+                  title:
+                      label(e: en.ongoingCurriculum, b: bn.ongoingCurriculum),
+                  // onPressed: () => Get.toNamed(AppRoutes.ongoingCourse,
+                  //     arguments: "ongoing"),
+                  onPressed: () =>
+                      Get.toNamed(AppRoutes.courseDetails, arguments: ""),
+                  subTitle: label(
+                      e: StringData.dashboardCardValue1,
+                      b: StringData.dashboardCardValue1Bn),
+                  borderColor: clr.cardStrokeColorOrange,
+                  primaryColor: clr.cardFillColorOrange,
+                  image: SvgPicture.asset(
+                    ImageAssets.imgTraineeCard1,
+                    height: size.h32,
+                  ),
+                ),
+                rightChild: DashboardCard(
+                  title: label(
+                      e: en.completedCurriculum, b: bn.completedCurriculum),
+                  onPressed: () =>
+                      Get.toNamed(AppRoutes.courseList, arguments: "completed"),
+                  subTitle: label(
+                      e: StringData.dashboardCardValue2,
+                      b: StringData.dashboardCardValue2Bn),
+                  borderColor: clr.cardStrokeColorGreen,
+                  primaryColor: clr.cardFillColorGreen,
+                  image: SvgPicture.asset(
+                    ImageAssets.imgTraineeCard1,
+                    height: size.h32,
+                  ),
+                )),
+            SizedBox(height: size.h12),
+            RowItemTemplate(
+                leftChild: DashboardCard(
+                  title:
+                      label(e: en.upcomingCurriculum, b: bn.upcomingCurriculum),
+                  onPressed: () =>
+                      Get.toNamed(AppRoutes.courseList, arguments: "upcoming"),
+                  subTitle: label(
+                      e: StringData.dashboardCardValue3,
+                      b: StringData.dashboardCardValue3Bn),
+                  borderColor: clr.cardStrokeColorPurple,
+                  primaryColor: clr.cardFillColorPurple,
+                  image: SvgPicture.asset(
+                    ImageAssets.imgTraineeCard3,
+                    height: size.h32,
+                  ),
+                ),
+                rightChild: DashboardCard(
+                  title: label(e: en.discussionArea, b: bn.discussionArea),
+                  onPressed: () {},
+                  subTitle: label(
+                      e: StringData.dashboardCardValue4,
+                      b: StringData.dashboardCardValue4Bn),
+                  borderColor: clr.cardFillColorBlue,
+                  primaryColor: clr.cardStrokeColorBlue,
+                  image: SvgPicture.asset(
+                    ImageAssets.imgTraineeCard3,
+                    height: size.h32,
+                  ),
+                )),
+            SizedBox(height: size.h32),
+            CustomTextWidgets(
+                text: label(e: en.effectivePeriod, b: bn.effectivePeriod)),
+            SizedBox(height: size.h12),
+            const GraphChart(),
+            SizedBox(height: size.h20),
+            CustomTextWidgets(
+                text: label(e: en.noticeBoard, b: bn.noticeBoard)),
+            SizedBox(height: size.h12),
+            CustomNoticeCard(
+                leading: Icon(
+                  Icons.auto_stories,
+                  color: clr.appPrimaryColorGreen,
+                  size: size.r20,
+                ),
+                title: label(e: StringData.notice1, b: StringData.notice1Bn)),
+            SizedBox(height: size.h12),
+            CustomNoticeCard(
+                leading: Icon(
+                  Icons.event_available_rounded,
+                  color: clr.iconColorRed,
+                  size: size.r20,
+                ),
+                title: label(e: StringData.notice2, b: StringData.notice2Bn)),
+            SizedBox(height: size.h32),
+          ],
+        ),
+      ),
+    );
+    //region old dashboard screen
     return Scaffold(
         key: _scaffoldKey,
         backgroundColor: clr.scaffoldBackgroundColor,
@@ -147,7 +272,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                 SizedBox(height: size.h12),
                 RowItemTemplate(
                     leftChild: DashboardCard(
-                      title: label(e: en.discussionArea, b: bn.discussionArea),
+                      title: label(
+                          e: en.upcomingCurriculum, b: bn.upcomingCurriculum),
                       onPressed: () {},
                       subTitle: label(
                           e: StringData.dashboardCardValue3,
@@ -160,8 +286,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                       ),
                     ),
                     rightChild: DashboardCard(
-                      title: label(
-                          e: en.upcomingCurriculum, b: bn.upcomingCurriculum),
+                      title: label(e: en.discussionArea, b: bn.discussionArea),
                       onPressed: () {},
                       subTitle: label(
                           e: StringData.dashboardCardValue4,
@@ -204,6 +329,7 @@ class _DashboardScreenState extends State<DashboardScreen>
             ),
           ),
         ));
+    //endregion
   }
 
   @override

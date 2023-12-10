@@ -121,23 +121,27 @@ class CourseWidget extends StatelessWidget with AppTheme, Language {
               chapterTitle: label(
                   e: "Chapter 2: Human-Welfare", b: "অধ্যায় ২: মানব-কল্যাণ"),
               chapterCode: label(e: "Chapter Code", b: "অধ্যায়ের কোড"),
+              lock: status,
             ),
             ChapterWidget(
               chapterTitle: label(
                   e: "Chapter 3: The Desert of Karbala",
                   b: "অধ্যায় ৩: কারবালা প্রান্তর"),
               chapterCode: label(e: "Chapter Code", b: "অধ্যায়ের কোড"),
+              lock: status,
             ),
             ChapterWidget(
               chapterTitle: label(
                   e: "Chapter 4: Human-Welfare", b: "অধ্যায় ৪: মানব-কল্যাণ"),
               chapterCode: label(e: "Chapter Code", b: "অধ্যায়ের কোড"),
+              lock: status,
             ),
             ChapterWidget(
               chapterTitle: label(
                   e: "Chapter 5: The Enormity of Life",
                   b: "অধ্যায় ৫: জীবযাত্রার বিপুলতা"),
               chapterCode: label(e: "Chapter Code", b: "অধ্যায়ের কোড"),
+              lock: status,
             ),
           ],
         )
