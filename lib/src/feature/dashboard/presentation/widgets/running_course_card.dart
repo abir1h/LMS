@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/constants/common_imports.dart';
+import '../../../../core/utility/app_label.dart';
+import 'custom_text_widget.dart';
 
-class RunningCourseCard extends StatelessWidget with AppTheme {
+class RunningCourseCard extends StatelessWidget with AppTheme, Language {
   const RunningCourseCard({
     super.key,
     required this.image,
@@ -25,72 +27,92 @@ class RunningCourseCard extends StatelessWidget with AppTheme {
       child: Container(
           width: 1.sw,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(size.w8),
-          ),
+              borderRadius: BorderRadius.circular(size.w8),
+              border: Border.all(color: clr.boxStrokeColor, width: size.w1)),
           padding: EdgeInsets.only(
-              left: size.w4, right: size.w1 + size.w12, bottom: size.h4),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+              left: size.w4,
+              right: size.w1 + size.w12,
+              top: size.h8,
+              bottom: size.h4),
+          child: Column(
             children: [
-              image,
-              SizedBox(width: size.w20),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: size.w12, vertical: size.h6),
-                      decoration: BoxDecoration(
-                        color: clr.cardStrokeColor,
-                        borderRadius: BorderRadius.circular(size.w4),
-                      ),
-                      child: Text(
-                        text1,
-                        style: TextStyle(
-                            color: clr.textColorAppleBlack,
-                            fontSize: size.textXXSmall,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: StringData.fontFamilyPoppins),
-                      ),
-                    ),
-                    SizedBox(height: size.h8),
-                    Text(
-                      text2,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontFamily: StringData.fontFamilyPoppins,
-                          fontSize: size.textSmall,
-                          fontWeight: FontWeight.w500,
-                          color: clr.appPrimaryColorGreen),
-                    ),
-                    SizedBox(height: size.h12),
-                    LinearProgressIndicator(
-                      value: .1,
-                      color: clr.appPrimaryColorGreen,
-                      backgroundColor: clr.progressBGColor,
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        clr.appPrimaryColorGreen,
-                      ),
-                      borderRadius: BorderRadius.circular(size.w6),
-                      minHeight: size.h8,
-                    ),
-                    SizedBox(height: size.h8),
-                    Text(
-                      text3,
-                      style: TextStyle(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomTextWidgets(
+                      text: label(e: en.ongoingModule, b: bn.ongoingModule)),
+                  Icon(
+                    Icons.arrow_forward,
+                    size: size.r24,
+                    color: clr.appPrimaryColorGreen,
+                  )
+                ],
+              ),
+              SizedBox(height: 15.h),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  image,
+                  SizedBox(width: size.w20),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: size.w12, vertical: size.h6),
+                          decoration: BoxDecoration(
+                            color: clr.cardStrokeColor,
+                            borderRadius: BorderRadius.circular(size.w4),
+                          ),
+                          child: Text(
+                            text1,
+                            style: TextStyle(
+                                color: clr.textColorAppleBlack,
+                                fontSize: size.textXXSmall,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: StringData.fontFamilyPoppins),
+                          ),
+                        ),
+                        SizedBox(height: size.h8),
+                        Text(
+                          text2,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontFamily: StringData.fontFamilyPoppins,
+                              fontSize: size.textSmall,
+                              fontWeight: FontWeight.w500,
+                              color: clr.appPrimaryColorGreen),
+                        ),
+                        SizedBox(height: size.h12),
+                        LinearProgressIndicator(
+                          value: .1,
                           color: clr.appPrimaryColorGreen,
-                          fontSize: size.textXXSmall,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: StringData.fontFamilyPoppins),
+                          backgroundColor: clr.progressBGColor,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            clr.appPrimaryColorGreen,
+                          ),
+                          borderRadius: BorderRadius.circular(size.w6),
+                          minHeight: size.h8,
+                        ),
+                        SizedBox(height: size.h8),
+                        Text(
+                          text3,
+                          style: TextStyle(
+                              color: clr.appPrimaryColorGreen,
+                              fontSize: size.textXXSmall,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: StringData.fontFamilyPoppins),
+                        ),
+                        SizedBox(height: size.h6),
+                        // Add more Text widgets as needed
+                      ],
                     ),
-                    SizedBox(height: size.h6),
-                    // Add more Text widgets as needed
-                  ],
-                ),
-              )
+                  )
+                ],
+              ),
             ],
           )),
     );

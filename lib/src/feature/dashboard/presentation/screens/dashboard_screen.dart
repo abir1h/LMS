@@ -35,26 +35,10 @@ class _DashboardScreenState extends State<DashboardScreen>
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h24),
+        padding: EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomTextWidgets(
-                    text: label(e: en.ongoingModule, b: bn.ongoingModule)),
-                Padding(
-                  padding: EdgeInsets.only(right: size.w6),
-                  child: Icon(
-                    Icons.arrow_forward,
-                    size: size.r24,
-                    color: clr.appPrimaryColorGreen,
-                  ),
-                )
-              ],
-            ),
-            SizedBox(height: 15.h),
             RunningCourseCard(
               onPressed: () => Get.toNamed(AppRoutes.transcriptVideo),
               image: Image.asset("assets/images/image.png"),
