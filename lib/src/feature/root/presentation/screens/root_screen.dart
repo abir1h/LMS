@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/common_widgets/custom_app_bar.dart';
@@ -10,6 +11,7 @@ import '../../../../core/service/notifier/app_events_notifier.dart';
 import '../../../course/presentation/controllers/course_controller.dart';
 import '../../../course/presentation/screens/course_screen.dart';
 import '../../../../core/utility/app_label.dart';
+import '../../../notes/presentation/screens/note_edit_screen.dart';
 import '../../../notes/presentation/screens/note_screen.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../profile/presentation/screens/profile_screen.dart';
@@ -169,6 +171,31 @@ class _RootScreenState extends State<RootScreen>
           ),
         ],
       ),
+      floatingActionButton: _currentPageIndex == 2
+          ? GestureDetector(
+              onTap: () {
+                Get.to(() => const NoteEditScreen());
+              },
+              child: Container(
+                padding: EdgeInsets.all(size.r16),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: clr.whiteColor,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.3),
+                      spreadRadius: 2,
+                      blurRadius: 3,
+                      offset: const Offset(0, 5), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: SvgPicture.asset(
+                  ImageAssets.icEditSquare,
+                ),
+              ),
+            )
+          : null,
     );
     //region old
     return Column(
