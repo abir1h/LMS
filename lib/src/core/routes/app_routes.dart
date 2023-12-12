@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:lms/src/feature/course/presentation/screens/course_list_screen.dart';
 import 'package:lms/src/feature/course/presentation/screens/course_screen.dart';
+import 'package:lms/src/feature/discussion/presentation/binding/discussion_binding.dart';
+import 'package:lms/src/feature/discussion/presentation/screens/discussion_list_screen.dart';
+import 'package:lms/src/feature/discussion/presentation/screens/discussion_screen.dart';
 
 import '../../feature/course/presentation/bindings/course_binding.dart';
 import '../../feature/course/presentation/screens/course_details_screen.dart';
@@ -44,6 +47,8 @@ class AppRoutes {
   static const String transcriptVideo = '/transcript_video';
   static const String notification = '/notification';
   static const String notes = '/notes';
+  static const String discussion = '/discussion';
+  static const String discussionList = '/discussionList';
 }
 
 class AppPages {
@@ -126,6 +131,18 @@ class AppPages {
       name: AppRoutes.notes,
       page: () => const NoteScreen(),
       binding: NoteBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: AppRoutes.discussion,
+      page: () => const DiscussionScreen(),
+      binding: DiscussionBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: AppRoutes.discussionList,
+      page: () => const DiscussionListScreen(),
+      binding: DiscussionBinding(),
       transition: Transition.rightToLeft,
     ),
   ];

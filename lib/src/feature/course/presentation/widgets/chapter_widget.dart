@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:lms/src/core/routes/app_routes.dart';
 import 'package:lms/src/core/utility/app_label.dart';
+import 'package:lms/src/feature/discussion/presentation/screens/discussion_screen.dart';
 import 'package:lms/src/feature/transcript_video/presentaion/screens/transcript_video_screen.dart';
 
 import '../screens/live_class_screen.dart';
@@ -49,7 +51,7 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
             padding:
                 EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h8),
             decoration: BoxDecoration(
-                color: Colors.transparent,
+                color: clr.backgroundColorMintCream,
                 border: Border(
                     bottom: BorderSide(
                         color: _isExpanded
@@ -159,10 +161,12 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                 buttonIcon: Icons.visibility,
               ),
               CourseContentWidget(
-                courseIcon: Icons.assignment,
+                courseIcon: Icons.add_comment,
                 iconColor: clr.appPrimaryColorGreen,
-                title: label(e: "Assignment", b: "অ্যাসাইনমেন্ট"),
+                title: label(e: en.discussion, b: bn.discussion),
                 buttonIcon: Icons.visibility,
+                onTap: () => Get.toNamed(AppRoutes.discussion),
+                status: true,
               ),
             ],
           )

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:lms/src/core/constants/common_imports.dart';
+import 'package:get/route_manager.dart';
+import 'package:lms/src/core/routes/app_routes.dart';
 
+import '../../../../core/common_widgets/custom_scaffold.dart';
+import '../../../../core/constants/common_imports.dart';
 import '../../../../core/common_widgets/custom_card_tile.dart';
 import '../../../../core/common_widgets/text_field_widget.dart';
-import '../../../../core/constants/app_theme.dart';
+import '../../../../core/utility/app_label.dart';
 
 class DiscussionScreen extends StatefulWidget {
   const DiscussionScreen({super.key});
@@ -14,10 +15,11 @@ class DiscussionScreen extends StatefulWidget {
   State<DiscussionScreen> createState() => _DiscussionScreenState();
 }
 
-class _DiscussionScreenState extends State<DiscussionScreen> with AppTheme {
+class _DiscussionScreenState extends State<DiscussionScreen>
+    with AppTheme, Language {
   TextEditingController controller = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  FocusNode _focusNode = FocusNode();
+  final FocusNode _focusNode = FocusNode();
 
   @override
   void dispose() {
@@ -27,7 +29,60 @@ class _DiscussionScreenState extends State<DiscussionScreen> with AppTheme {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return CustomScaffold(
+        title: label(e: en.discussion, b: bn.discussion),
+        child: ListView(
+          padding: EdgeInsets.zero,
+          shrinkWrap: true,
+          physics: const BouncingScrollPhysics(),
+          children: [
+            DiscussionTile(
+              iconData: Icons.groups,
+              iconColor: clr.appPrimaryColorGreen,
+              title: label(e: en.allDiscussion, b: bn.allDiscussion),
+              onTap: () => Get.toNamed(AppRoutes.discussionList,
+                  arguments: label(e: en.discussion, b: bn.discussion)),
+            ),
+            DiscussionTile(
+              iconData: Icons.text_snippet,
+              iconColor: clr.clickableLinkColor,
+              title: label(
+                  e: "Introduction, Chapter Description",
+                  b: "ভূমিকা, অধ্যায়ের বিবরণ"),
+              onTap: () => Get.toNamed(AppRoutes.discussionList,
+                  arguments: label(
+                      e: "Introduction, Chapter Description",
+                      b: "ভূমিকা, অধ্যায়ের বিবরণ")),
+            ),
+            DiscussionTile(
+              iconData: Icons.smart_display,
+              iconColor: clr.iconColorSweetRed,
+              title: label(
+                  e: "Video 1: Course Introduction",
+                  b: "ভিডিও ১: কোর্সের পরিচিতি"),
+            ),
+            DiscussionTile(
+              iconData: Icons.cast_connected,
+              iconColor: clr.textColorBlack,
+              title: label(e: "Live Class", b: "লাইভ ক্লাস"),
+            ),
+            DiscussionTile(
+              iconData: Icons.smart_display,
+              iconColor: clr.iconColorSweetRed,
+              title: label(
+                  e: "Video 2: Learning Experience",
+                  b: "ভিডিও ২: শিখন-অভিজ্ঞতা"),
+            ),
+            DiscussionTile(
+              iconData: Icons.smart_display,
+              iconColor: clr.iconColorSweetRed,
+              title: label(
+                  e: "Video 3: Traditional concepts",
+                  b: "ভিডিও ৩: ঐতিহ্যগত ধারণা"),
+            ),
+          ],
+        ));
+    /*return SafeArea(
       child: GestureDetector(
         onTap: () {
           Navigator.of(context).pop();
@@ -184,7 +239,7 @@ class _DiscussionScreenState extends State<DiscussionScreen> with AppTheme {
           ),
         ),
       ),
-    );
+    );*/
   }
 
   Widget commentTile({bool? hasReply = false}) {
@@ -273,6 +328,55 @@ class _DiscussionScreenState extends State<DiscussionScreen> with AppTheme {
           ),
         )
       ],
+    );
+  }
+}
+
+class DiscussionTile extends StatelessWidget with AppTheme {
+  final IconData iconData;
+  final Color iconColor;
+  final String title;
+  final VoidCallback? onTap;
+  const DiscussionTile({
+    super.key,
+    required this.iconData,
+    required this.iconColor,
+    required this.title,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h24),
+        decoration: BoxDecoration(
+            border:
+                Border(bottom: BorderSide(color: clr.dividerStrokeColorGrey))),
+        child: Row(
+          children: [
+            Icon(
+              iconData,
+              color: iconColor,
+              size: size.r24,
+            ),
+            SizedBox(width: size.w16),
+            Expanded(
+              child: Text(
+                title,
+                style: TextStyle(
+                    color: clr.textColorAppleBlack,
+                    fontSize: size.textSmall,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: StringData.fontFamilyPoppins),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
