@@ -412,20 +412,29 @@ class _NoteScreenState extends State<NoteScreen>
               () => ListView.builder(
                   itemCount: controller.noteList.length,
                   shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (_, index) {
                     return NoteTile(
                       noteContent:
                           controller.noteList[index].title.toString().isNotEmpty
                               ? controller.noteList[index].title.toString()[0]
                               : 'N',
-                      title: controller.noteList[index].title!.toString().isNotEmpty?controller.noteList[index].title!:"New Note",
+                      title: controller.noteList[index].title!
+                              .toString()
+                              .isNotEmpty
+                          ? controller.noteList[index].title!
+                          : "New Note",
                       timestamp: controller.noteList[index].time!,
+                      reference: controller.noteList[index].reference,
                       onPressed: () => Get.to(() => NoteDetailsScreen(
                             mainModel: controller.noteList[index],
                           )),
                     );
                   }),
             ),
+            SizedBox(
+              height: 200.h,
+            )
           ],
         ),
       ),
