@@ -198,6 +198,7 @@ class _NoteScreenState extends State<NoteScreen>
                             : '',
                     title: controller.noteList[index].title!,
                     timestamp: controller.noteList[index].time!,
+                    reference: controller.noteList[index].reference,
                     onPressed: () => Get.to(() => NoteDetailsScreen(
                           mainModel: controller.noteList[index],
                         )),
