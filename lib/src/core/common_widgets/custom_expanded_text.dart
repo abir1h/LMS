@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lms/src/core/constants/common_imports.dart';
-import 'package:lms/src/core/utility/app_label.dart';
 
-import '../constants/app_theme.dart';
+import '../constants/common_imports.dart';
+import '../utility/app_label.dart';
 
 class ExpandableText extends StatefulWidget {
   final String text;
