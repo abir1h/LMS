@@ -82,6 +82,7 @@ class LanguageEn {
   String check = "Check";
   String see = "See";
   String join = "Join";
+  String details = "Details";
 
   String takeNotes = "Take Notes";
   String discussion = "Discussion";
@@ -177,6 +178,7 @@ class LanguageBn {
   String check = "চেক করুন";
   String see = "দেখুন";
   String join = "জয়েন করুন";
+  String details = "বিস্তারিত";
 
   String takeNotes = "নোট নিন";
   String discussion = "আলোচনা";

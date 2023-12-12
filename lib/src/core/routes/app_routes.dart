@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:lms/src/feature/course/presentation/screens/course_list_screen.dart';
 import 'package:lms/src/feature/course/presentation/screens/course_screen.dart';
+import 'package:lms/src/feature/course/presentation/screens/introduction_screen.dart';
 import 'package:lms/src/feature/discussion/presentation/binding/discussion_binding.dart';
 import 'package:lms/src/feature/discussion/presentation/screens/discussion_list_screen.dart';
 import 'package:lms/src/feature/discussion/presentation/screens/discussion_screen.dart';
@@ -49,6 +50,7 @@ class AppRoutes {
   static const String notes = '/notes';
   static const String discussion = '/discussion';
   static const String discussionList = '/discussionList';
+  static const String introduction = '/introduction';
 }
 
 class AppPages {
@@ -143,6 +145,12 @@ class AppPages {
       name: AppRoutes.discussionList,
       page: () => const DiscussionListScreen(),
       binding: DiscussionBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: AppRoutes.introduction,
+      page: () => const IntroductionScreen(),
+      binding: CourseBinding(),
       transition: Transition.rightToLeft,
     ),
   ];

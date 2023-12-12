@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lms/src/core/routes/app_routes.dart';
 import 'package:lms/src/core/utility/app_label.dart';
+import 'package:lms/src/feature/course/presentation/screens/introduction_screen.dart';
 import 'package:lms/src/feature/discussion/presentation/screens/discussion_screen.dart';
 import 'package:lms/src/feature/transcript_video/presentaion/screens/transcript_video_screen.dart';
 
@@ -129,6 +130,11 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                     e: "Introduction, Chapter Description",
                     b: "ভূমিকা, অধ্যায়ের বিবরণ"),
                 buttonIcon: Icons.visibility,
+                status: true,
+                onTap: () => Get.toNamed(AppRoutes.introduction,
+                    arguments: label(
+                        e: "Introduction, Chapter Description",
+                        b: "ভূমিকা, অধ্যায়ের বিবরণ")),
               ),
               CourseContentWidget(
                 courseIcon: Icons.smart_display,
@@ -165,8 +171,8 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                 iconColor: clr.appPrimaryColorGreen,
                 title: label(e: en.discussion, b: bn.discussion),
                 buttonIcon: Icons.visibility,
-                onTap: () => Get.toNamed(AppRoutes.discussion),
                 status: true,
+                onTap: () => Get.toNamed(AppRoutes.discussion),
               ),
             ],
           )
