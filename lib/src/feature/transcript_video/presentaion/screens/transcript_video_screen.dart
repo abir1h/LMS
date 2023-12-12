@@ -108,7 +108,7 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     CustomButton(
-                      onTap: () => Get.to(() => const NoteEditScreen()),
+                      onTap: () => Get.to(() => const NoteEditScreen(ref: "টপিক নেইম : ভিডিও ২ | শিক্ষাগত প্রয়োগ মানব-কল্যাণ ধারণা.",)),
                       icon: Icons.add,
                       title: label(e: en.takeNotes, b: bn.takeNotes),
                       textSize: size.textXXXSmall,

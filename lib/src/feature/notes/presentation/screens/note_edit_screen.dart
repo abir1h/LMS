@@ -13,10 +13,11 @@ import '../../../../core/common_widgets/custom_scaffold.dart';
 
 class NoteEditScreen extends StatefulWidget {
   final NoteModel? mainModel;
+  final String? ref;
 
   const NoteEditScreen({
     super.key,
-    this.mainModel,
+    this.mainModel, this.ref,
   });
 
   @override
@@ -76,6 +77,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
           time: currentTime.toString(),
           title: titleController.text,
           description: _controller.document.toDelta().toJson(),
+          reference: widget.ref
         );
         controller.noteList.add(newModel);
         Get.toNamed(AppRoutes.bottomNav, arguments: 2);
@@ -95,6 +97,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
           time: currentTime.toString(),
           title: titleController.text,
           description: _controller.document.toDelta().toJson(),
+          reference: widget.ref
         );
 
         // Check if the note with the same ID exists in the list
