@@ -40,7 +40,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         shape: BoxShape.circle,
                         border: Border.all(color: clr.cardStrokeColor)),
                     child: Image.asset(
-                      ImageAssets.imgEmptyProfile2,
+                      ImageAssets.imgEmptyProfile,
                       width: size.w4 + size.w56,
                     ),
                   ),
@@ -220,7 +220,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           shape: BoxShape.circle,
                           border: Border.all(color: clr.cardStrokeColor)),
                       child: Image.asset(
-                        ImageAssets.imgEmptyProfile2,
+                        ImageAssets.imgEmptyProfile,
                         width: size.w4 + size.w56,
                       ),
                     ),
