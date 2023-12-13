@@ -72,6 +72,7 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
               onPressed: () {
                 Get.to(() => NoteEditScreen(
                       mainModel: widget.mainModel,
+                      ref: widget.mainModel!.reference,
                     ));
               },
               icon:
@@ -83,6 +84,28 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            widget.mainModel!.reference != null
+                ? Row(
+                    children: [
+                      Expanded(
+                          child: Text(
+                        widget.mainModel!.reference.toString(),
+                        style: TextStyle(
+                            color: clr.appPrimaryColorGreen,
+                            fontSize: size.textSmall,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: StringData.fontFamilyPoppins),
+                      )),
+                      Icon(
+                        Icons.arrow_forward,
+                        color: clr.appPrimaryColorGreen,
+                      )
+                    ],
+                  )
+                : const SizedBox(),
+            SizedBox(
+              height: size.h10,
+            ),
             Text(
               widget.mainModel!.title!,
               style: TextStyle(

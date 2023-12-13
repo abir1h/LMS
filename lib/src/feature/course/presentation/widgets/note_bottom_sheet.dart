@@ -6,33 +6,33 @@ import 'package:get/get.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/routes/app_routes.dart';
-import '../controllers/note_controller.dart';
-import '../models/note_model.dart';
-import 'note_details.dart';
-import '../../../../core/common_widgets/custom_scaffold.dart';
+import '../../../../core/utility/app_label.dart';
+import '../../../notes/presentation/controllers/note_controller.dart';
+import '../../../notes/presentation/models/note_model.dart';
 
-class NoteEditScreen extends StatefulWidget {
+class NoteBottomSheet extends StatefulWidget {
   final NoteModel? mainModel;
+
   final String? ref;
 
-  const NoteEditScreen({
+  const NoteBottomSheet({
     super.key,
     this.mainModel,
     this.ref,
   });
 
   @override
-  State<NoteEditScreen> createState() => _NoteEditScreenState();
+  State<NoteBottomSheet> createState() => _NoteBottomSheetState();
 }
 
-class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
+class _NoteBottomSheetState extends State<NoteBottomSheet>
+    with AppTheme, Language {
   final _controller = QuillController.basic();
   final _editorFocusNode = FocusNode();
   final _editorScrollController = ScrollController();
   var _isReadOnly = false;
   final controller = Get.put(NoteController());
   TextEditingController titleController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
@@ -78,7 +78,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
             description: _controller.document.toDelta().toJson(),
             reference: widget.ref);
         controller.noteList.add(newModel);
-        Get.toNamed(AppRoutes.bottomNav, arguments: 2);
+        Get.back();
         CustomToasty.of(context)
             .showSuccess("তালিকা সফলভাবে সংরক্ষণ করা হয়েছে");
       } else {
@@ -105,13 +105,15 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
         if (existingIndex != -1) {
           // Replace the existing note with the updated one
           controller.noteList[existingIndex] = updatedModel;
-          Get.toNamed(AppRoutes.bottomNav, arguments: 2);
+          Get.back();
+
           CustomToasty.of(context)
               .showSuccess("তালিকা সফলভাবে আপডেট করা হয়েছে");
         } else {
           // If the note with the ID doesn't exist, add it to the list
           controller.noteList.add(updatedModel);
-          Get.toNamed(AppRoutes.bottomNav, arguments: 2);
+          Get.back();
+
           CustomToasty.of(context)
               .showSuccess("তালিকা সফলভাবে আপডেট করা হয়েছে");
         }
@@ -119,92 +121,69 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
     }
   }
 
-  toggleToReadMode() {
-    if (widget.mainModel == null) {
-      int id = controller.noteList.length + 1;
-      DateTime now = DateTime.now();
-      var currentTime =
-          DateTime(now.year, now.month, now.day, now.hour, now.minute);
-      var newModel = NoteModel(
-        id: id,
-        time: currentTime.toString(),
-        title: titleController.text,
-        description: _controller.document.toDelta().toJson(),
-      );
-      Get.to(() => NoteDetailsScreen(
-            mainModel: newModel,
-          ));
-    } else {
-      DateTime now = DateTime.now();
-      var currentTime =
-          DateTime(now.year, now.month, now.day, now.hour, now.minute);
-      var newModel = NoteModel(
-        id: widget.mainModel?.id!,
-        time: currentTime.toString(),
-        title: titleController.text,
-        reference: widget.mainModel!.reference,
-        description: _controller.document.toDelta().toJson(),
-      );
-      Get.to(() => NoteDetailsScreen(
-            mainModel: newModel,
-          ));
-    }
-  }
-
-  NoteModel noteModel = NoteModel();
-
   @override
-  Widget build(BuildContext context) {
-    MediaQueryData mediaQuery = MediaQuery.of(context);
-    isKeyboardOpen = mediaQuery.viewInsets.bottom > 0.0;
-
-    return CustomScaffold(
-      title: "",
-      bgColor: clr.scaffoldBackgroundColor,
-      resizeToAvoidBottomInset: true,
-      leadingBack: () => saveData(),
-      actionChild: Row(
-        children: [
-          IconButton(
-              onPressed: () {
-                saveData();
-              },
-              icon: Icon(Icons.check,
-                  size: size.r24, color: clr.appPrimaryColorGreen)),
-          IconButton(
-              onPressed: () {
-                if (titleController.text.isNotEmpty &&
-                    _controller.document.toPlainText().isNotEmpty) {
-                  toggleToReadMode();
-                }
-              },
-              icon: Icon(Icons.import_contacts,
-                  size: size.r24, color: clr.iconColorBlack)),
-        ],
-      ),
-      child: QuillProvider(
-        configurations: QuillConfigurations(
-          controller: _controller,
-          sharedConfigurations: QuillSharedConfigurations(
-            animationConfigurations: QuillAnimationConfigurations.disableAll(),
-          ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              height: 12.h,
+  Widget build(BuildContext context) { MediaQueryData mediaQuery = MediaQuery.of(context);
+  isKeyboardOpen = mediaQuery.viewInsets.bottom > 0.0;
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).pop();
+      },
+      child: Scaffold(
+        backgroundColor:Colors.transparent,
+        body: Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            width: double.infinity,
+            margin: EdgeInsets.only(top: 180.h),
+            padding: EdgeInsets.only(
+               top:size.h10 ,right:size.w16),
+            decoration: BoxDecoration(
+              color: clr.whiteColor,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(size.w12),
+                topRight: Radius.circular(size.w12),
+              ),
             ),
-            Padding(
-              padding: EdgeInsets.only(left: size.w16, right: size.w16),
+            child:  QuillProvider(
+              configurations: QuillConfigurations(
+                controller: _controller,
+                sharedConfigurations: QuillSharedConfigurations(
+                  animationConfigurations: QuillAnimationConfigurations.disableAll(),
+                ),
+              ),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  widget.mainModel != null
-                      ? widget.mainModel!.reference != null
-                          ? Row(
-                              children: [
-                                Expanded(
-                                    child: Text(
+                  Row(mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      GestureDetector(
+                        onTap: (){
+                          saveData();
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(size.r10),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.rectangle,
+
+                            borderRadius: BorderRadius.circular(size.r8),color: clr.appPrimaryColorGreen
+                          ), child: Icon(Icons.check,color: clr.whiteColor,),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 12.h,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: size.w16, right: size.w16),
+                    child: Column(
+                      children: [
+                 /*       widget.mainModel != null
+                            ? widget.mainModel!.reference != null
+                            ? Row(
+                          children: [
+                            Expanded(
+                                child: Text(
                                   widget.mainModel!.reference.toString(),
                                   style: TextStyle(
                                       color: clr.appPrimaryColorGreen,
@@ -212,82 +191,82 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
                                       fontWeight: FontWeight.w600,
                                       fontFamily: StringData.fontFamilyPoppins),
                                 )),
-                              ],
-                            )
-                          : SizedBox()
-                      : SizedBox(),
-                  TextField(
-                    controller: titleController,
-                    style: TextStyle(
-                        fontSize: size.textXMedium,
-                        color: clr.blackColor,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: StringData.fontFamilyPoppins),
-                    decoration: InputDecoration(
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                            color: clr.boxStrokeColor,
-                            width: 1.w), // Customize border color
-                      ),
-                      border: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                            color: clr.boxStrokeColor,
-                            width: 1.w), // Customize border color
-                      ),
-                      hintText: "Title",
-                      hintStyle: TextStyle(
-                          fontSize: size.textXMedium,
-                          color: clr.placeHolderTextColorGray,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: StringData.fontFamilyPoppins),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Builder(
-              builder: (context) {
-                return Expanded(
-                  child: InkWell(
-                    onDoubleTap: () {},
-                    child: QuillEditor(
-                      scrollController: _editorScrollController,
-                      focusNode: _editorFocusNode,
-                      configurations: QuillEditorConfigurations(
-                        readOnly: _isReadOnly,
-                        customStyles: DefaultStyles(
-                          code: DefaultTextBlockStyle(
-                            TextStyle(
-                                fontSize: size.textSmall,
-                                color: clr.textColorAppleBlack,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: StringData.fontFamilyPoppins),
-                            const VerticalSpacing(16, 0),
-                            const VerticalSpacing(0, 0),
-                            null,
-                          ),
-                          placeHolder: DefaultTextBlockStyle(
-                            TextStyle(
-                                fontSize: size.textXXSmall,
+                          ],
+                        )
+                            : SizedBox()
+                            : SizedBox(),*/
+                        TextField(
+                          controller: titleController,
+                          style: TextStyle(
+                              fontSize: size.textXMedium,
+                              color: clr.blackColor,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: StringData.fontFamilyPoppins),
+                          decoration: InputDecoration(
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: clr.boxStrokeColor,
+                                  width: 1.w), // Customize border color
+                            ),
+                            border: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: clr.boxStrokeColor,
+                                  width: 1.w), // Customize border color
+                            ),
+                            hintText: "Title",
+                            hintStyle: TextStyle(
+                                fontSize: size.textXMedium,
                                 color: clr.placeHolderTextColorGray,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: StringData.fontFamilyPoppins),
-                            const VerticalSpacing(16, 0),
-                            const VerticalSpacing(0, 0),
-                            null,
                           ),
                         ),
-                        scrollable: true,
-                        placeholder: 'Note...',
-                        padding: const EdgeInsets.all(16),
-                      ),
+                      ],
                     ),
                   ),
-                );
-              },
-            ),
-            isKeyboardOpen
-                ? Padding(
+                  Builder(
+                    builder: (context) {
+                      return Expanded(
+                        child: InkWell(
+                          onDoubleTap: () {},
+                          child: QuillEditor(
+                            scrollController: _editorScrollController,
+                            focusNode: _editorFocusNode,
+                            configurations: QuillEditorConfigurations(
+                              readOnly: _isReadOnly,
+                              customStyles: DefaultStyles(
+                                code: DefaultTextBlockStyle(
+                                  TextStyle(
+                                      fontSize: size.textSmall,
+                                      color: clr.textColorAppleBlack,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: StringData.fontFamilyPoppins),
+                                  const VerticalSpacing(16, 0),
+                                  const VerticalSpacing(0, 0),
+                                  null,
+                                ),
+                                placeHolder: DefaultTextBlockStyle(
+                                  TextStyle(
+                                      fontSize: size.textXXSmall,
+                                      color: clr.placeHolderTextColorGray,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: StringData.fontFamilyPoppins),
+                                  const VerticalSpacing(16, 0),
+                                  const VerticalSpacing(0, 0),
+                                  null,
+                                ),
+                              ),
+                              scrollable: true,
+                              placeholder: 'Note...',
+                              padding: const EdgeInsets.all(16),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  isKeyboardOpen
+                      ? Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: QuillBaseToolbar(
                       configurations: QuillBaseToolbarConfigurations(
@@ -312,25 +291,25 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
                                 iconTheme: QuillIconTheme(
                                     iconSelectedColor: clr.appPrimaryColorGreen,
                                     iconUnselectedFillColor:
-                                        Colors.transparent),
+                                    Colors.transparent),
                                 childBuilder: (options, extraOptions) {
                                   final buttonBackgroundColor = extraOptions
-                                          .isToggled
+                                      .isToggled
                                       ? clr
-                                          .placeHolderTextColorGray // Background color when toggled
+                                      .appPrimaryColorGreen // Background color when toggled
                                       : Colors.transparent;
                                   if (extraOptions.isToggled) {
                                     return Container(
                                       color: buttonBackgroundColor,
                                       child: IconButton(
                                         onPressed: extraOptions.onPressed,
-                                        icon: Icon(options.iconData),
+                                        icon: Icon(options.iconData,color: Colors.white,),
                                       ),
                                     );
                                   }
                                   return IconButton(
                                     onPressed: extraOptions.onPressed,
-                                    icon: Icon(options.iconData),
+                                    icon: Icon(options.iconData,),
                                   );
                                 },
                               ),
@@ -341,16 +320,16 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
                               options: QuillToolbarToggleStyleButtonOptions(
                                 childBuilder: (options, extraOptions) {
                                   final buttonBackgroundColor = extraOptions
-                                          .isToggled
+                                      .isToggled
                                       ? clr
-                                          .placeHolderTextColorGray // Background color when toggled
+                                      .appPrimaryColorGreen // Background color when toggled
                                       : Colors.transparent;
                                   if (extraOptions.isToggled) {
                                     return Container(
                                       color: buttonBackgroundColor,
                                       child: IconButton(
                                         onPressed: extraOptions.onPressed,
-                                        icon: Icon(options.iconData),
+                                        icon: Icon(options.iconData,color: Colors.white,),
                                       ),
                                     );
                                   }
@@ -367,16 +346,16 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
                               options: QuillToolbarToggleStyleButtonOptions(
                                 childBuilder: (options, extraOptions) {
                                   final buttonBackgroundColor = extraOptions
-                                          .isToggled
+                                      .isToggled
                                       ? clr
-                                          .placeHolderTextColorGray // Background color when toggled
+                                      .appPrimaryColorGreen // Background color when toggled
                                       : Colors.transparent;
                                   if (extraOptions.isToggled) {
                                     return Container(
                                       color: buttonBackgroundColor,
                                       child: IconButton(
                                         onPressed: extraOptions.onPressed,
-                                        icon: Icon(options.iconData),
+                                        icon: Icon(options.iconData,color: Colors.white,),
                                       ),
                                     );
                                   }
@@ -402,7 +381,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
                               showCenterAlignment: true,
                               controller: controller,
                               options:
-                                  const QuillToolbarSelectAlignmentButtonOptions(
+                              const QuillToolbarSelectAlignmentButtonOptions(
                                 iconButtonFactor: 2,
                                 iconSize: 20,
                               ),
@@ -412,11 +391,12 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
                       ),
                     ),
                   )
-                : const SizedBox(),
-            SizedBox(
-              height: 20.h,
-            )
-          ],
+                      : const SizedBox(),
+
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );

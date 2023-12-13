@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -190,13 +191,16 @@ class _NoteScreenState extends State<NoteScreen>
             () => ListView.builder(
                 itemCount: controller.noteList.length,
                 shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (_, index) {
                   return NoteTile(
                     noteContent:
-                        controller.noteList[index].title.toString().isNotEmpty
-                            ? controller.noteList[index].title.toString()[0]
-                            : '',
-                    title: controller.noteList[index].title!,
+                    controller.noteList[index].title.toString().isNotEmpty
+                        ? controller.noteList[index].title.toString()
+                        : controller.noteList[index].description!=null?Document.fromJson(controller.noteList[index].description as List).toPlainText():"New Note",
+                    title: controller.noteList[index].title.toString().isNotEmpty
+                        ? controller.noteList[index].title.toString()
+                        : controller.noteList[index].description!=null?Document.fromJson(controller.noteList[index].description as List).toPlainText():"New Note",
                     timestamp: controller.noteList[index].time!,
                     reference: controller.noteList[index].reference,
                     onPressed: () => Get.to(() => NoteDetailsScreen(
@@ -205,6 +209,7 @@ class _NoteScreenState extends State<NoteScreen>
                   );
                 }),
           ),
+          SizedBox(height: 200.h,)
         ],
       ),
     );
