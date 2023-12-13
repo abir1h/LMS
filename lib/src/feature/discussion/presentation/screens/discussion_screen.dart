@@ -40,8 +40,7 @@ class _DiscussionScreenState extends State<DiscussionScreen>
               iconData: Icons.groups,
               iconColor: clr.appPrimaryColorGreen,
               title: label(e: en.allDiscussion, b: bn.allDiscussion),
-              onTap: () => Get.toNamed(AppRoutes.discussionList,
-                  arguments: label(e: en.discussion, b: bn.discussion)),
+              onTap: () => Get.toNamed(AppRoutes.discussionList),
             ),
             DiscussionTile(
               iconData: Icons.text_snippet,
@@ -49,10 +48,7 @@ class _DiscussionScreenState extends State<DiscussionScreen>
               title: label(
                   e: "Introduction, Chapter Description",
                   b: "ভূমিকা, অধ্যায়ের বিবরণ"),
-              onTap: () => Get.toNamed(AppRoutes.discussionList,
-                  arguments: label(
-                      e: "Introduction, Chapter Description",
-                      b: "ভূমিকা, অধ্যায়ের বিবরণ")),
+              onTap: () => Get.toNamed(AppRoutes.introduction),
             ),
             DiscussionTile(
               iconData: Icons.smart_display,

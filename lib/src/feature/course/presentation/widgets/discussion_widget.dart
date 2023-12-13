@@ -1,57 +1,84 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-import '../controller/discussion_list_controller.dart';
-import '../../../../core/common_widgets/custom_scaffold.dart';
+import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
+import '../../../discussion/presentation/screens/create_discussion.dart';
 
-class DiscussionListScreen extends StatefulWidget {
-  const DiscussionListScreen({super.key});
+class DiscussionWidget extends StatefulWidget {
+  const DiscussionWidget({super.key});
 
   @override
-  State<DiscussionListScreen> createState() => _DiscussionListScreenState();
+  State<DiscussionWidget> createState() => _DiscussionWidgetState();
 }
 
-class _DiscussionListScreenState extends State<DiscussionListScreen>
+class _DiscussionWidgetState extends State<DiscussionWidget>
     with AppTheme, Language {
-  final DiscussionListController controller =
-      Get.find<DiscussionListController>();
-
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(
-        title: label(e: en.discussion, b: bn.discussion),
-        child: ListView(
-          padding: EdgeInsets.zero,
-          shrinkWrap: true,
+    return Stack(
+      children: [
+        SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          children: [
-            DiscussionCard(
-              title: label(
-                  e: "Eligibility of Students", b: "শিক্ষার্থীদের যোগ্যতা"),
-              topicName: label(
-                  e: "Topic Name : Video 2 | Human-welfare concepts in educational applications.",
-                  b: "টপিক নেইম : ভিডিও ২ | শিক্ষাগত প্রয়োগ মানব-কল্যাণ ধারণা."),
-              totalDiscussion: label(e: "3 in Total", b: "মোট ৩ টি"),
-              time: label(
-                  e: "Date: 20 November 2023", b: "তারিখ: ২০ নভেম্বর ২০২৩"),
-            ),
-          ],
-        ));
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              DiscussionWidgetTile(
+                title: label(
+                    e: "Eligibility of Students",
+                    b: "শিক্ষার্থীদের যোগ্যতাশিক্ষার্থীদের যোগ্যতা ফিজিওলজি হল একটি সমন্বিত বিজ্ঞান"),
+                totalDiscussion: label(e: "3 in Total", b: "মোট ৩ টি"),
+                time: label(
+                    e: "Date: 20 November 2023", b: "তারিখ: ২০ নভেম্বর ২০২৩"),
+              ),
+              DiscussionWidgetTile(
+                title: label(
+                    e: "Eligibility of Students", b: "শিক্ষার্থীদের যোগ্যতা"),
+                totalDiscussion: label(e: "3 in Total", b: "মোট ৩ টি"),
+                time: label(
+                    e: "Date: 20 November 2023", b: "তারিখ: ২০ নভেম্বর ২০২৩"),
+              ),
+              DiscussionWidgetTile(
+                title: label(
+                    e: "Eligibility of Students", b: "শিক্ষার্থীদের যোগ্যতা"),
+                totalDiscussion: label(e: "3 in Total", b: "মোট ৩ টি"),
+                time: label(
+                    e: "Date: 20 November 2023", b: "তারিখ: ২০ নভেম্বর ২০২৩"),
+              ),
+              SizedBox(height: size.h64)
+            ],
+          ),
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: CustomButton(
+            onTap: onTapCreateDiscussion,
+            icon: Icons.add_comment,
+            radius: 0.0,
+            title: label(e: en.newDiscussion, b: bn.newDiscussion),
+          ),
+        )
+      ],
+    );
+  }
+
+  void onTapCreateDiscussion() {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (context) => const CreateDiscussion(),
+    );
   }
 }
 
-class DiscussionCard extends StatelessWidget with AppTheme {
+class DiscussionWidgetTile extends StatelessWidget with AppTheme {
   final String title;
-  final String topicName;
   final String totalDiscussion;
   final String time;
   final VoidCallback? onTap;
-  const DiscussionCard({
+  const DiscussionWidgetTile({
     super.key,
     required this.title,
-    required this.topicName,
     required this.totalDiscussion,
     required this.time,
     this.onTap,
@@ -63,7 +90,7 @@ class DiscussionCard extends StatelessWidget with AppTheme {
       onTap: onTap,
       child: Container(
         padding: EdgeInsets.only(
-            left: size.w16, right: size.w16, top: size.h8, bottom: size.h4),
+            left: size.w16, right: size.w16, top: size.h8, bottom: size.h6),
         decoration: BoxDecoration(
             border:
                 Border(bottom: BorderSide(color: clr.dividerStrokeColorGrey))),
@@ -72,7 +99,7 @@ class DiscussionCard extends StatelessWidget with AppTheme {
           children: [
             Icon(
               Icons.mode_comment,
-              color: clr.iconColorHint,
+              color: clr.appPrimaryColorGreen,
               size: size.r24,
             ),
             SizedBox(width: size.w8),
@@ -80,40 +107,17 @@ class DiscussionCard extends StatelessWidget with AppTheme {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          title,
-                          style: TextStyle(
-                              color: clr.textColorAppleBlack,
-                              fontSize: size.textSmall,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: StringData.fontFamilyPoppins),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      SizedBox(width: size.w28),
-                      Icon(
-                        Icons.arrow_forward,
-                        color: clr.appPrimaryColorGreen,
-                        size: size.r24,
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: size.h6),
                   Text(
-                    topicName,
+                    title,
                     style: TextStyle(
-                        color: clr.appPrimaryColorGreen,
-                        fontSize: size.textXSmall,
-                        fontWeight: FontWeight.w400,
+                        color: clr.textColorAppleBlack,
+                        fontSize: size.textSmall,
+                        fontWeight: FontWeight.w500,
                         fontFamily: StringData.fontFamilyPoppins),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  SizedBox(height: size.h4),
+                  SizedBox(height: size.h6),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [

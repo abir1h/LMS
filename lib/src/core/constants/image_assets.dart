@@ -3,7 +3,6 @@ class ImageAssets {
 
   //:::::::::::::::::: IMAGE SETS ::::::::::::::::::
   static String get imgEmptyProfile => 'user_profile'.png;
-  static String get imgEmptyProfile2 => 'user_profile_2'.png;
   static String get icLogo => 'Hero_logo'.png;
   static String get imgPlaceholder => 'placeholder'.png;
 
