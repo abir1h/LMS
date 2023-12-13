@@ -3,9 +3,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lms/src/core/common_widgets/custom_button.dart';
 import 'package:lms/src/core/utility/app_label.dart';
+import 'package:lms/src/feature/notes/presentation/models/note_model.dart';
 
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
+import '../../../notes/presentation/controllers/note_controller.dart';
+import '../../../notes/presentation/screens/note_details.dart';
 import '../../../notes/presentation/screens/note_edit_screen.dart';
 import '../controllers/introduction_controller.dart';
 
@@ -137,8 +140,15 @@ class _IntroductionScreenState extends State<IntroductionScreen>
   }
 }
 
-class NoteWidget extends StatelessWidget with AppTheme {
+class NoteWidget extends StatefulWidget {
   const NoteWidget({super.key});
+
+  @override
+  State<NoteWidget> createState() => _NoteWidgetState();
+}
+
+class _NoteWidgetState extends State<NoteWidget> with AppTheme {
+  final controller = Get.put(NoteController());
 
   @override
   Widget build(BuildContext context) {
@@ -149,21 +159,28 @@ class NoteWidget extends StatelessWidget with AppTheme {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              NoteWidgetTile(
-                  noteContent: "শিক্ষার্থীদের যোগ্যতা",
-                  title: "শিক্ষার্থীদের যোগ্যতা",
-                  timestamp: "তারিখ: ১৬ নভেম্বর ২০২৩",
-                  onPressed: () {}),
-              NoteWidgetTile(
-                  noteContent: "শিক্ষার্থীদের যোগ্যতা",
-                  title: "শিক্ষার্থীদের যোগ্যতা",
-                  timestamp: "তারিখ: ১৬ নভেম্বর ২০২৩",
-                  onPressed: () {}),
-              NoteWidgetTile(
-                  noteContent: "শিক্ষার্থীদের যোগ্যতা",
-                  title: "শিক্ষার্থীদের যোগ্যতা",
-                  timestamp: "তারিখ: ১৬ নভেম্বর ২০২৩",
-                  onPressed: () {}),
+              Obx(
+                    () => ListView.builder(
+                    itemCount: controller.noteList.length,
+                    shrinkWrap: true,
+                    itemBuilder: (_, index) {
+                      return NoteWidgetTile(
+                        noteContent:
+                        controller.noteList[index].title.toString().isNotEmpty
+                            ? controller.noteList[index].title.toString()
+                            : '',
+                        title: controller.noteList[index].title!,
+                        timestamp: controller.noteList[index].time!,
+
+                        onPressed: () => Get.to(() => NoteDetailsScreen(
+                          mainModel: controller.noteList[index],
+
+                        )),
+                      );
+                    }),
+              ),
+
+
               SizedBox(height: size.h64)
             ],
           ),
@@ -172,7 +189,10 @@ class NoteWidget extends StatelessWidget with AppTheme {
           bottom: size.h20,
           right: size.w16,
           child: GestureDetector(
-            onTap: () => Get.to(() => const NoteEditScreen()),
+            onTap: () => Get.to(() =>  NoteEditScreen(mainModel: NoteModel(
+              reference: "টপিক নেইম : ভিডিও ২ | শিক্ষাগত প্রয়োগ মানব-কল্যাণ ধারণা.",id: controller.noteList.length+1,
+
+            ),)),
             child: Container(
               padding: EdgeInsets.all(size.r16),
               decoration: BoxDecoration(
@@ -203,6 +223,7 @@ class NoteWidgetTile extends StatelessWidget with AppTheme {
   final String title;
   final String timestamp;
   final VoidCallback onPressed;
+
   const NoteWidgetTile(
       {super.key,
       required this.noteContent,
@@ -259,7 +280,7 @@ class NoteWidgetTile extends StatelessWidget with AppTheme {
                       fontSize: size.textSmall,
                       fontFamily: StringData.fontFamilyPoppins,
                     ),
-                    maxLines: 1,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(height: size.h8),

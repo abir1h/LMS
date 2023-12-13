@@ -17,7 +17,8 @@ class NoteEditScreen extends StatefulWidget {
 
   const NoteEditScreen({
     super.key,
-    this.mainModel, this.ref,
+    this.mainModel,
+    this.ref,
   });
 
   @override
@@ -61,29 +62,26 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
     super.dispose();
   }
 
-
-
   saveData() {
-    if(titleController.text.isEmpty && _controller.document.isEmpty()){
+    if (titleController.text.isEmpty && _controller.document.isEmpty()) {
       Get.back();
-    }else{
+    } else {
       if (widget.mainModel == null) {
         int id = controller.noteList.length + 1;
         DateTime now = DateTime.now();
         var currentTime =
-        DateTime(now.year, now.month, now.day, now.hour, now.minute);
+            DateTime(now.year, now.month, now.day, now.hour, now.minute);
         var newModel = NoteModel(
-          id: id,
-          time: currentTime.toString(),
-          title: titleController.text,
-          description: _controller.document.toDelta().toJson(),
-          reference: widget.ref
-        );
+            id: id,
+            time: currentTime.toString(),
+            title: titleController.text,
+            description: _controller.document.toDelta().toJson(),
+            reference: widget.ref);
         controller.noteList.add(newModel);
         Get.toNamed(AppRoutes.bottomNav, arguments: 2);
-        CustomToasty.of(context).showSuccess("তালিকা সফলভাবে সংরক্ষণ করা হয়েছে");
-      }
-      else {
+        CustomToasty.of(context)
+            .showSuccess("তালিকা সফলভাবে সংরক্ষণ করা হয়েছে");
+      } else {
         DateTime now = DateTime.now();
         var currentTime = DateTime(
           now.year,
@@ -93,28 +91,29 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
           now.minute,
         );
         var updatedModel = NoteModel(
-          id: widget.mainModel?.id!,
-          time: currentTime.toString(),
-          title: titleController.text,
-          description: _controller.document.toDelta().toJson(),
-          reference: widget.ref
-        );
+            id: widget.mainModel?.id!,
+            time: currentTime.toString(),
+            title: titleController.text,
+            description: _controller.document.toDelta().toJson(),
+            reference: widget.ref);
 
         // Check if the note with the same ID exists in the list
         int existingIndex = controller.noteList.indexWhere(
-              (note) => note.id == updatedModel.id,
+          (note) => note.id == updatedModel.id,
         );
 
         if (existingIndex != -1) {
           // Replace the existing note with the updated one
           controller.noteList[existingIndex] = updatedModel;
           Get.toNamed(AppRoutes.bottomNav, arguments: 2);
-          CustomToasty.of(context).showSuccess("তালিকা সফলভাবে আপডেট করা হয়েছে");
+          CustomToasty.of(context)
+              .showSuccess("তালিকা সফলভাবে আপডেট করা হয়েছে");
         } else {
           // If the note with the ID doesn't exist, add it to the list
           controller.noteList.add(updatedModel);
           Get.toNamed(AppRoutes.bottomNav, arguments: 2);
-          CustomToasty.of(context).showSuccess("তালিকা সফলভাবে আপডেট করা হয়েছে");
+          CustomToasty.of(context)
+              .showSuccess("তালিকা সফলভাবে আপডেট করা হয়েছে");
         }
       }
     }
@@ -143,6 +142,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
         id: widget.mainModel?.id!,
         time: currentTime.toString(),
         title: titleController.text,
+        reference: widget.mainModel!.reference,
         description: _controller.document.toDelta().toJson(),
       );
       Get.to(() => NoteDetailsScreen(
@@ -162,9 +162,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
       title: "",
       bgColor: clr.scaffoldBackgroundColor,
       resizeToAvoidBottomInset: true,
-      leadingBack:()=>saveData(),
-
-
+      leadingBack: () => saveData(),
       actionChild: Row(
         children: [
           IconButton(
@@ -175,7 +173,10 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
                   size: size.r24, color: clr.appPrimaryColorGreen)),
           IconButton(
               onPressed: () {
-                toggleToReadMode();
+                if (titleController.text.isNotEmpty &&
+                    _controller.document.toPlainText().isNotEmpty) {
+                  toggleToReadMode();
+                }
               },
               icon: Icon(Icons.import_contacts,
                   size: size.r24, color: clr.iconColorBlack)),
@@ -191,33 +192,57 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            SizedBox(
+              height: 12.h,
+            ),
             Padding(
               padding: EdgeInsets.only(left: size.w16, right: size.w16),
-              child: TextField(
-                controller: titleController,
-                style: TextStyle(
-                    fontSize: size.textXMedium,
-                    color: clr.blackColor,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: StringData.fontFamilyPoppins),
-                decoration: InputDecoration(
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                        color: clr.boxStrokeColor,
-                        width: 1.w), // Customize border color
+              child: Column(
+                children: [
+                  widget.mainModel != null
+                      ? widget.mainModel!.reference != null
+                          ? Row(
+                              children: [
+                                Expanded(
+                                    child: Text(
+                                  widget.mainModel!.reference.toString(),
+                                  style: TextStyle(
+                                      color: clr.appPrimaryColorGreen,
+                                      fontSize: size.textSmall,
+                                      fontWeight: FontWeight.w600,
+                                      fontFamily: StringData.fontFamilyPoppins),
+                                )),
+                              ],
+                            )
+                          : SizedBox()
+                      : SizedBox(),
+                  TextField(
+                    controller: titleController,
+                    style: TextStyle(
+                        fontSize: size.textXMedium,
+                        color: clr.blackColor,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: StringData.fontFamilyPoppins),
+                    decoration: InputDecoration(
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color: clr.boxStrokeColor,
+                            width: 1.w), // Customize border color
+                      ),
+                      border: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color: clr.boxStrokeColor,
+                            width: 1.w), // Customize border color
+                      ),
+                      hintText: "Title",
+                      hintStyle: TextStyle(
+                          fontSize: size.textXMedium,
+                          color: clr.placeHolderTextColorGray,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: StringData.fontFamilyPoppins),
+                    ),
                   ),
-                  border: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                        color: clr.boxStrokeColor,
-                        width: 1.w), // Customize border color
-                  ),
-                  hintText: "Title",
-                  hintStyle: TextStyle(
-                      fontSize: size.textXMedium,
-                      color: clr.placeHolderTextColorGray,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: StringData.fontFamilyPoppins),
-                ),
+                ],
               ),
             ),
             Builder(

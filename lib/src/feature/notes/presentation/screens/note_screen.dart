@@ -190,6 +190,7 @@ class _NoteScreenState extends State<NoteScreen>
             () => ListView.builder(
                 itemCount: controller.noteList.length,
                 shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (_, index) {
                   return NoteTile(
                     noteContent:
@@ -205,6 +206,7 @@ class _NoteScreenState extends State<NoteScreen>
                   );
                 }),
           ),
+          SizedBox(height: 200.h,)
         ],
       ),
     );
