@@ -12,6 +12,7 @@ import '../../../notes/presentation/models/note_model.dart';
 
 class NoteBottomSheet extends StatefulWidget {
   final NoteModel? mainModel;
+
   final String? ref;
 
   const NoteBottomSheet({
@@ -77,7 +78,7 @@ class _NoteBottomSheetState extends State<NoteBottomSheet>
             description: _controller.document.toDelta().toJson(),
             reference: widget.ref);
         controller.noteList.add(newModel);
-        Get.toNamed(AppRoutes.bottomNav, arguments: 2);
+        Get.back();
         CustomToasty.of(context)
             .showSuccess("তালিকা সফলভাবে সংরক্ষণ করা হয়েছে");
       } else {
@@ -104,13 +105,15 @@ class _NoteBottomSheetState extends State<NoteBottomSheet>
         if (existingIndex != -1) {
           // Replace the existing note with the updated one
           controller.noteList[existingIndex] = updatedModel;
-          Get.toNamed(AppRoutes.bottomNav, arguments: 2);
+          Get.back();
+
           CustomToasty.of(context)
               .showSuccess("তালিকা সফলভাবে আপডেট করা হয়েছে");
         } else {
           // If the note with the ID doesn't exist, add it to the list
           controller.noteList.add(updatedModel);
-          Get.toNamed(AppRoutes.bottomNav, arguments: 2);
+          Get.back();
+
           CustomToasty.of(context)
               .showSuccess("তালিকা সফলভাবে আপডেট করা হয়েছে");
         }
@@ -153,13 +156,18 @@ class _NoteBottomSheetState extends State<NoteBottomSheet>
                 children: [
                   Row(mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Container(
-                        padding: EdgeInsets.all(size.r10),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.rectangle,
+                      GestureDetector(
+                        onTap: (){
+                          saveData();
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(size.r10),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.rectangle,
 
-                          borderRadius: BorderRadius.circular(size.r8),color: clr.appPrimaryColorGreen
-                        ), child: Icon(Icons.check,color: clr.whiteColor,),
+                            borderRadius: BorderRadius.circular(size.r8),color: clr.appPrimaryColorGreen
+                          ), child: Icon(Icons.check,color: clr.whiteColor,),
+                        ),
                       ),
                     ],
                   ),

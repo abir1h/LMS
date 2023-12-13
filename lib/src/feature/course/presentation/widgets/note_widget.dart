@@ -38,7 +38,7 @@ class _NoteWidgetState extends State<NoteWidget>  with AppTheme{
               Obx(
                     () => ListView.builder(
                     itemCount: controller.noteList.length,
-                    shrinkWrap: true,
+                    shrinkWrap: true,physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (_, index) {
                       return NoteWidgetTile(
                         noteContent:
@@ -56,7 +56,7 @@ class _NoteWidgetState extends State<NoteWidget>  with AppTheme{
                       );
                     }),
               ),
-              SizedBox(height: 100.h)
+              SizedBox(height: 300.h)
             ],
           ),
         ),
