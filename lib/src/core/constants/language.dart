@@ -100,6 +100,12 @@ class LanguageEn {
   String discussion = "Discussion";
   String allDiscussion = "View All Discussions";
   String newDiscussion = "New Discussion";
+  String detailedDiscussion = "Detailed Discussion";
+  String yourOpinion = "Your Opinion";
+  String discussionTitle = "Discussion Title";
+  String writeHere = "Write here";
+  String publishTheDiscussion = "Publish The Discussion";
+  String writeYourOpinion = "Write Your Opinion";
 }
 
 class LanguageBn {
@@ -196,4 +202,10 @@ class LanguageBn {
   String discussion = "আলোচনা";
   String allDiscussion = "সকল আলোচনা দেখুন";
   String newDiscussion = "নতুন আলোচনা";
+  String detailedDiscussion = "বিস্তারিত আলোচনা";
+  String yourOpinion = "আপনার মতামত";
+  String discussionTitle = "আলোচনার শিরোনাম";
+  String writeHere = "এখানে লিখুন";
+  String publishTheDiscussion = "আলোচনা প্রকাশ করুন";
+  String writeYourOpinion = "আপনার মতামত লিখুন";
 }

@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/constants/common_imports.dart';
+import '../../../../core/routes/app_routes.dart';
 import '../../../../core/utility/app_label.dart';
-import '../../../discussion/presentation/screens/create_discussion.dart';
+import '../../../discussion/presentation/screens/discussion_bottom_sheet.dart';
 
 class DiscussionWidget extends StatefulWidget {
   const DiscussionWidget({super.key});
@@ -31,6 +33,7 @@ class _DiscussionWidgetState extends State<DiscussionWidget>
                 totalDiscussion: label(e: "3 in Total", b: "মোট ৩ টি"),
                 time: label(
                     e: "Date: 20 November 2023", b: "তারিখ: ২০ নভেম্বর ২০২৩"),
+                onTap: () => Get.toNamed(AppRoutes.detailedDiscussion),
               ),
               DiscussionWidgetTile(
                 title: label(
@@ -66,7 +69,7 @@ class _DiscussionWidgetState extends State<DiscussionWidget>
   void onTapCreateDiscussion() {
     showCupertinoModalPopup(
       context: context,
-      builder: (context) => const CreateDiscussion(),
+      builder: (context) => const DiscussionBottomSheet(),
     );
   }
 }

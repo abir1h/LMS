@@ -187,7 +187,10 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                             ),
                           ),
                           SizedBox(height: size.h16),
-                          const TabSectionWidget()
+                          TabSectionWidget(
+                            tabTitle1:
+                                label(e: en.transcript, b: bn.transcript),
+                          )
                         ],
                       );
                       // return SingleChildScrollView(

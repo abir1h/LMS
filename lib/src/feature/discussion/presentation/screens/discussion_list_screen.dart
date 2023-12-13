@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/routes/app_routes.dart';
 import '../controller/discussion_list_controller.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
@@ -36,6 +37,7 @@ class _DiscussionListScreenState extends State<DiscussionListScreen>
               totalDiscussion: label(e: "3 in Total", b: "মোট ৩ টি"),
               time: label(
                   e: "Date: 20 November 2023", b: "তারিখ: ২০ নভেম্বর ২০২৩"),
+              onTap: () => Get.toNamed(AppRoutes.detailedDiscussion),
             ),
           ],
         ));

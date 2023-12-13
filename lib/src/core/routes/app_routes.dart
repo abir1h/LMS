@@ -4,6 +4,7 @@ import 'package:lms/src/feature/course/presentation/screens/course_list_screen.d
 import 'package:lms/src/feature/course/presentation/screens/course_screen.dart';
 import 'package:lms/src/feature/course/presentation/screens/introduction_screen.dart';
 import 'package:lms/src/feature/discussion/presentation/binding/discussion_binding.dart';
+import 'package:lms/src/feature/discussion/presentation/screens/detailed_discussion.dart';
 import 'package:lms/src/feature/discussion/presentation/screens/discussion_list_screen.dart';
 import 'package:lms/src/feature/discussion/presentation/screens/discussion_screen.dart';
 
@@ -50,6 +51,7 @@ class AppRoutes {
   static const String notes = '/notes';
   static const String discussion = '/discussion';
   static const String discussionList = '/discussionList';
+  static const String detailedDiscussion = '/detailedDiscussion';
   static const String introduction = '/introduction';
 }
 
@@ -144,6 +146,12 @@ class AppPages {
     GetPage(
       name: AppRoutes.discussionList,
       page: () => const DiscussionListScreen(),
+      binding: DiscussionBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: AppRoutes.detailedDiscussion,
+      page: () => const DetailedDiscussion(),
       binding: DiscussionBinding(),
       transition: Transition.rightToLeft,
     ),

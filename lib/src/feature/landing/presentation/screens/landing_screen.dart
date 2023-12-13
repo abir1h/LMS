@@ -1,11 +1,8 @@
-import 'dart:async';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/core/utility/app_label.dart';
-import 'package:lms/src/feature/notification/presentation/screens/notification_screen.dart';
 
+import '../../../../core/utility/app_label.dart';
+import '../../../notification/presentation/screens/notification_screen.dart';
 import '../../../../core/config/app_event_widget.dart';
 import '../../../../core/config/notification_clicked_notifier.dart';
 import '../../../../core/config/notification_client.dart';
@@ -29,12 +26,17 @@ class _LandingScreenState extends State<LandingScreen> with AppTheme, Language {
   ///Service configurations
   @override
   void initState() {
+    super.initState();
     ///Init notification and firebase
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       PushNotification.instance.init();
-      NotificationClient.instance.startListening(onNotificationClicked,_onNotificationReceived).then(_onFCMTokenUpdate).catchError((_){});
+      NotificationClient.instance
+          .startListening(onNotificationClicked, _onNotificationReceived)
+          .then(_onFCMTokenUpdate)
+          .catchError((_) {});
     });
   }
+
   @override
   void dispose() {
     NotificationClient.instance.stopListening();

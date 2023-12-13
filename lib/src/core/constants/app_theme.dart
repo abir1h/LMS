@@ -64,6 +64,8 @@ class ThemeColor {
   Color get toastErrorBackgroundColor => HexColor("FFE6E9");
   Color get toastAskColor => HexColor("68B1EF");
   Color get backgroundColorMintCream => HexColor("F2FCFA");
+  Color get placeHolderDeselectGray => HexColor("959596");
+
 }
 
 class ThemeSize {

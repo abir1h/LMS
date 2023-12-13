@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/feature/course/presentation/controllers/course_list_controller.dart';
 
+import '../controllers/course_list_controller.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/routes/app_routes.dart';

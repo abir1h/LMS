@@ -60,10 +60,10 @@ class _TabSectionWidgetState extends State<TabSectionWidget>
                   text:
                       widget.tabTitle1 ?? label(e: en.details, b: bn.details)),
               Tab(
-                  text: widget.tabTitle1 ??
+                  text: widget.tabTitle2 ??
                       label(e: en.notesText, b: bn.notesText)),
               Tab(
-                  text: widget.tabTitle1 ??
+                  text: widget.tabTitle3 ??
                       label(e: en.discussion, b: bn.discussion)),
             ],
           ),

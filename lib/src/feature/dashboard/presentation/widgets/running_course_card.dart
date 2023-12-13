@@ -10,7 +10,6 @@ class RunningCourseCard extends StatelessWidget with AppTheme, Language {
     super.key,
     required this.image,
     required this.onPressed,
-    this.primaryColor,
     required this.text1,
     required this.text2,
     required this.text3,
@@ -18,7 +17,6 @@ class RunningCourseCard extends StatelessWidget with AppTheme, Language {
   final String text1, text2, text3;
   final Widget image;
   final Function() onPressed;
-  final Color? primaryColor;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +25,7 @@ class RunningCourseCard extends StatelessWidget with AppTheme, Language {
       child: Container(
           width: 1.sw,
           decoration: BoxDecoration(
+              color: clr.shadeWhiteColor,
               borderRadius: BorderRadius.circular(size.w8),
               border: Border.all(color: clr.boxStrokeColor, width: size.w1)),
           padding: EdgeInsets.only(

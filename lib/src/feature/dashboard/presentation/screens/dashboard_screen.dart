@@ -45,7 +45,6 @@ class _DashboardScreenState extends State<DashboardScreen>
               text1: label(e: StringData.cardText1, b: StringData.cardText1Bn),
               text2: label(e: StringData.cardText2, b: StringData.cardText2Bn),
               text3: label(e: "10% ${en.completed}", b: "১০% ${bn.completed}"),
-              primaryColor: Colors.white,
             ),
             SizedBox(height: size.h20),
             RowItemTemplate(
@@ -216,7 +215,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                       label(e: StringData.cardText2, b: StringData.cardText2Bn),
                   text3:
                       label(e: "10% ${en.completed}", b: "১০% ${bn.completed}"),
-                  primaryColor: Colors.white,
+                  // primaryColor: Colors.white,
                 ),
                 SizedBox(height: size.h20),
                 RowItemTemplate(
