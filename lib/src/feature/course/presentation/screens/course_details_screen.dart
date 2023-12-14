@@ -23,7 +23,9 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      title: label(e: en.courseDetailsText, b: bn.courseDetailsText),
+      title: controller.from.value == "running"
+          ? label(e: "Current Course Details", b: "চলমান কোর্সের বিস্তারিত")
+          : label(e: en.courseDetailsText, b: bn.courseDetailsText),
       child: ListView(
         padding: EdgeInsets.symmetric(vertical: size.h12),
         shrinkWrap: true,
@@ -33,6 +35,9 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
             title: label(
                 e: "Education Policy and Management in Education",
                 b: "শিক্ষা নীতি ও শিক্ষায় ব্যাবস্থাপনা"),
+            courseCode: controller.from.value == "running"
+                ? label(e: "Course Code : 5568", b: "কোর্সের কোড : ৫৫৬৮")
+                : "",
             status: controller.status.value != "lock" ? false : true,
             description: label(
                 e: "Teaching for Learning programs are detailed discussions for those who are teaching, or who want to teach, any subject, in any context",
@@ -74,11 +79,13 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
 
 class CourseWidget extends StatelessWidget with AppTheme, Language {
   final String title;
+  final String courseCode;
   final bool status;
   final String description;
   const CourseWidget(
       {super.key,
       required this.title,
+      required this.courseCode,
       this.status = true,
       required this.description});
 
@@ -92,6 +99,16 @@ class CourseWidget extends StatelessWidget with AppTheme, Language {
           fontSize: size.textXMedium,
         ),
         SizedBox(height: size.h16),
+        if (courseCode.isNotEmpty)
+          Padding(
+            padding: EdgeInsets.only(bottom: size.h10),
+            child: CourseText(
+              text: courseCode,
+              textColor: clr.textColorAppleBlack,
+              fontSize: size.textXSmall,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
         CourseText(
             text: label(
                 e: en.curriculumDescription, b: bn.curriculumDescription)),

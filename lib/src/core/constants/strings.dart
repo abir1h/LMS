@@ -32,11 +32,11 @@ class StringData {
 
   static const String dashboardCardValue1 = "1";
   static const String dashboardCardValue2 = "1";
-  static const String dashboardCardValue3 = "0";
+  static const String dashboardCardValue3 = "1";
   static const String dashboardCardValue4 = "0";
   static const String dashboardCardValue1Bn = "১";
   static const String dashboardCardValue2Bn = "১";
-  static const String dashboardCardValue3Bn = "০";
+  static const String dashboardCardValue3Bn = "১";
   static const String dashboardCardValue4Bn = "০";
 
   static const String notice1 =

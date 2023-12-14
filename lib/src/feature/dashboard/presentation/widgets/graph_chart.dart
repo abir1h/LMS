@@ -198,7 +198,7 @@ class _GraphChartState extends State<GraphChart>
             showTitles: true,
             interval: 1,
             getTitlesWidget: leftTitleWidgets,
-            reservedSize: 42,
+            reservedSize: 50,
           ),
         ),
       ),

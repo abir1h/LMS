@@ -51,7 +51,8 @@ class _CourseListScreenState extends State<CourseListScreen>
               itemBuilder: (context, index) {
                 return controller.screenName.value == "completed"
                     ? CourseCard(
-                        onTap: () => Get.toNamed(AppRoutes.courseDetails),
+                        onTap: () => Get.toNamed(AppRoutes.courseDetails,
+                            arguments: {'from': "", 'status': ""}),
                         title:
                             label(e: "Right to Information", b: "তথ্য অধিকার"),
                         iconData: Icons.check_circle,
@@ -65,7 +66,7 @@ class _CourseListScreenState extends State<CourseListScreen>
                       )
                     : CourseCard(
                         onTap: () => Get.toNamed(AppRoutes.courseDetails,
-                            arguments: "lock"),
+                            arguments: {'from': "", 'status': "lock"}),
                         title: label(
                             e: "Development of Bengali language",
                             b: "বাংলা ভাষার বিকাশ"),
