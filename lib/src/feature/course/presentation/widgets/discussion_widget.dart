@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lms/src/feature/discussion/presentation/controller/discussion_controller.dart';
 
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/utility/app_label.dart';
+import '../../../discussion/presentation/screens/detailed_discussion.dart';
 import '../../../discussion/presentation/screens/discussion_bottom_sheet.dart';
 
 class DiscussionWidget extends StatefulWidget {
@@ -17,16 +19,41 @@ class DiscussionWidget extends StatefulWidget {
 
 class _DiscussionWidgetState extends State<DiscussionWidget>
     with AppTheme, Language {
+  final controller = Get.put(DiscussionController());
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              DiscussionWidgetTile(
+    return GetBuilder<DiscussionController>(builder: (_) {
+      return Stack(
+        children: [
+          SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: controller.discussionList.length,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (_, index) {
+                    return DiscussionWidgetTile(
+                        title: controller.discussionList[index].title!,
+                        totalDiscussion: controller
+                            .discussionList[index].comments !=null?controller
+                            .discussionList[index].comments!.length.toString():"0",
+                        time: controller.discussionList[index].createdAt!,
+
+
+                        /*  title: label(
+                      e: "Eligibility of Students",
+                      b: "শিক্ষার্থীদের যোগ্যতাশিক্ষার্থীদের যোগ্যতা ফিজিওলজি হল একটি সমন্বিত বিজ্ঞান"),
+                  totalDiscussion: label(e: "3 in Total", b: "মোট ৩ টি"),
+                  time: label(
+                      e: "Date: 20 November 2023", b: "তারিখ: ২০ নভেম্বর ২০২৩"),*/
+                        onTap: () => Get.to(DetailedDiscussion(mainModel: controller.discussionList[index],))
+                    );
+                  },
+                ),
+                /* DiscussionWidgetTile(
                 title: label(
                     e: "Eligibility of Students",
                     b: "শিক্ষার্থীদের যোগ্যতাশিক্ষার্থীদের যোগ্যতা ফিজিওলজি হল একটি সমন্বিত বিজ্ঞান"),
@@ -48,22 +75,23 @@ class _DiscussionWidgetState extends State<DiscussionWidget>
                 totalDiscussion: label(e: "3 in Total", b: "মোট ৩ টি"),
                 time: label(
                     e: "Date: 20 November 2023", b: "তারিখ: ২০ নভেম্বর ২০২৩"),
-              ),
-              SizedBox(height: size.h64)
-            ],
+              ),*/
+                SizedBox(height: size.h64)
+              ],
+            ),
           ),
-        ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: CustomButton(
-            onTap: onTapCreateDiscussion,
-            icon: Icons.add_comment,
-            radius: 0.0,
-            title: label(e: en.newDiscussion, b: bn.newDiscussion),
-          ),
-        )
-      ],
-    );
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: CustomButton(
+              onTap: onTapCreateDiscussion,
+              icon: Icons.add_comment,
+              radius: 0.0,
+              title: label(e: en.newDiscussion, b: bn.newDiscussion),
+            ),
+          )
+        ],
+      );
+    });
   }
 
   void onTapCreateDiscussion() {
@@ -125,7 +153,25 @@ class DiscussionWidgetTile extends StatelessWidget with AppTheme {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
+                        "মোট ",
+                        style: TextStyle(
+                            color: clr.placeHolderTextColorGray,
+                            fontSize: size.textXXSmall,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: StringData.fontFamilyPoppins),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),  Text(
                         totalDiscussion,
+                        style: TextStyle(
+                            color: clr.placeHolderTextColorGray,
+                            fontSize: size.textXXSmall,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: StringData.fontFamilyPoppins),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),  Text(
+                        " টি",
                         style: TextStyle(
                             color: clr.placeHolderTextColorGray,
                             fontSize: size.textXXSmall,
@@ -136,6 +182,15 @@ class DiscussionWidgetTile extends StatelessWidget with AppTheme {
                       ),
                       Text(
                         " | ",
+                        style: TextStyle(
+                            color: clr.placeHolderTextColorGray,
+                            fontSize: size.textXXSmall,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: StringData.fontFamilyPoppins),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ), Text(
+                        "তারিখ: ",
                         style: TextStyle(
                             color: clr.placeHolderTextColorGray,
                             fontSize: size.textXXSmall,
