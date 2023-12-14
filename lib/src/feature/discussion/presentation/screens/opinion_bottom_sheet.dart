@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:lms/src/feature/discussion/models/comment_model.dart';
 
 import '../../../../core/utility/app_label.dart';
 import '../../../../core/common_widgets/text_field_widget.dart';
 import '../../../../core/constants/common_imports.dart';
+import '../../models/discusion_model.dart';
+import '../controller/discussion_controller.dart';
 
 class OpinionBottomSheet extends StatefulWidget {
-  const OpinionBottomSheet({super.key});
+  final DiscussionModel? masterModel;
+  const OpinionBottomSheet({super.key, this.masterModel});
 
   @override
   State<OpinionBottomSheet> createState() => _OpinionBottomSheetState();
@@ -15,6 +20,7 @@ class _OpinionBottomSheetState extends State<OpinionBottomSheet>
     with AppTheme, Language {
   TextEditingController titleController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+  final controller = Get.put(DiscussionController());
 
   @override
   void initState() {
@@ -65,21 +71,23 @@ class _OpinionBottomSheetState extends State<OpinionBottomSheet>
                           label(e: en.writeYourOpinion, b: bn.writeYourOpinion),
                       controller: titleController,
                       onTaped: () {
-                        _scrollController.animateTo(
-                          0.0,
-                          duration: const Duration(milliseconds: 200),
-                          curve: Curves.easeInOut,
-                        );
+
                       }),
                 ),
                 SizedBox(width: size.w4),
                 InkWell(
                   onTap: () {
-                    _scrollController.animateTo(
-                      0.0,
-                      duration: const Duration(milliseconds: 200),
-                      curve: Curves.easeInOut,
-                    );
+
+
+                    controller.addComment(widget.masterModel!,CommentModel(
+                      commentId: widget.masterModel!.comments!.length + 1,
+                      userName: "ব্যবহারকারীর নাম",
+                      avatar: ImageAssets.imgEmptyProfile,
+                      comment: titleController.text,
+                      likeCount: 0,
+                      createdAt: "২০ নভেম্বর ২০২৩",
+                    ));
+                    Get.back();
                   },
                   child: Icon(
                     Icons.send,
