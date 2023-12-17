@@ -46,8 +46,8 @@ class _DiscussionBottomSheetState extends State<DiscussionBottomSheet>
             child: Container(
               width: double.infinity,
               margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-              padding:
-              EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h12),
+              padding: EdgeInsets.symmetric(
+                  horizontal: size.w16, vertical: size.h12),
               decoration: BoxDecoration(
                 color: clr.shadeWhiteColor2,
                 borderRadius: BorderRadius.only(
@@ -61,7 +61,7 @@ class _DiscussionBottomSheetState extends State<DiscussionBottomSheet>
                   children: [
                     AppTextField(
                       hintText:
-                      label(e: en.discussionTitle, b: bn.discussionTitle),
+                          label(e: en.discussionTitle, b: bn.discussionTitle),
                       controller: titleController,
                     ),
                     SizedBox(height: size.h8),
@@ -88,13 +88,13 @@ class _DiscussionBottomSheetState extends State<DiscussionBottomSheet>
                           borderSide: BorderSide(
                               color: clr.appPrimaryColorGreen, width: size.w1),
                           borderRadius:
-                          BorderRadius.all(Radius.circular(size.w8)),
+                              BorderRadius.all(Radius.circular(size.w8)),
                         ),
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                                 color: clr.boxStrokeColor, width: size.w1),
                             borderRadius:
-                            BorderRadius.all(Radius.circular(size.w8))),
+                                BorderRadius.all(Radius.circular(size.w8))),
                       ),
                     ),
                     SizedBox(height: size.h16),
@@ -103,8 +103,8 @@ class _DiscussionBottomSheetState extends State<DiscussionBottomSheet>
                         if (titleController.text.isNotEmpty &&
                             discussionController.text.isNotEmpty) {
                           DateTime now = DateTime.now();
-                          var currentTime = DateTime(
-                              now.year, now.month, now.day, now.hour, now.minute);
+                          var currentTime = DateTime(now.year, now.month,
+                              now.day, now.hour, now.minute);
 
                           DiscussionModel saveDiscussion = DiscussionModel(
                             discussionId: 1,
@@ -118,9 +118,10 @@ class _DiscussionBottomSheetState extends State<DiscussionBottomSheet>
                         }
                       },
                       title: label(
-                          e: en.publishTheDiscussion, b: bn.publishTheDiscussion),
+                          e: en.publishTheDiscussion,
+                          b: bn.publishTheDiscussion),
                       bgColor: (titleController.text.isNotEmpty &&
-                          discussionController.text.isNotEmpty)
+                              discussionController.text.isNotEmpty)
                           ? clr.appPrimaryColorGreen
                           : clr.placeHolderDeselectGray,
                     )
