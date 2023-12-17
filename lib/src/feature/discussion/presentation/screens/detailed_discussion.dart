@@ -65,8 +65,7 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
                                     b: "শিক্ষার্থীদের যোগ্যতা ফিজিওলজি হল একটি সমন্বিত বিজ্ঞান যা প্রতিটি অঙ্গ এবং অঙ্গ সিস্টেমের কাজ এবং জীবনের রক্ষণাবেক্ষণে তাদের মিথস্ক্রিয়া বিবেচনা করে।")*/
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
-                                      fontFamily:
-                                      StringData.fontFamilyPoppins,
+                                      fontFamily: StringData.fontFamilyPoppins,
                                       fontSize: size.textSmall,
                                       color: clr.textColorAppleBlack),
                                 ),
@@ -81,21 +80,21 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
                                           fontSize: size.textXXSmall,
                                           fontWeight: FontWeight.w500,
                                           fontFamily:
-                                          StringData.fontFamilyPoppins),
+                                              StringData.fontFamilyPoppins),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                     Text(
                                       widget.mainModel!.comments != null
                                           ? widget.mainModel!.comments!.length
-                                          .toString()
+                                              .toString()
                                           : "0",
                                       style: TextStyle(
                                           color: clr.placeHolderTextColorGray,
                                           fontSize: size.textXXSmall,
                                           fontWeight: FontWeight.w500,
                                           fontFamily:
-                                          StringData.fontFamilyPoppins),
+                                              StringData.fontFamilyPoppins),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                     ),
@@ -106,7 +105,7 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
                                           fontSize: size.textXXSmall,
                                           fontWeight: FontWeight.w500,
                                           fontFamily:
-                                          StringData.fontFamilyPoppins),
+                                              StringData.fontFamilyPoppins),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                     ),
@@ -117,7 +116,7 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
                                           fontSize: size.textXXSmall,
                                           fontWeight: FontWeight.w500,
                                           fontFamily:
-                                          StringData.fontFamilyPoppins),
+                                              StringData.fontFamilyPoppins),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                     ),
@@ -128,7 +127,7 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
                                           fontSize: size.textXXSmall,
                                           fontWeight: FontWeight.w500,
                                           fontFamily:
-                                          StringData.fontFamilyPoppins),
+                                              StringData.fontFamilyPoppins),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                     ),
@@ -139,7 +138,7 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
                                           fontSize: size.textXXSmall,
                                           fontWeight: FontWeight.w500,
                                           fontFamily:
-                                          StringData.fontFamilyPoppins),
+                                              StringData.fontFamilyPoppins),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                     ),
@@ -153,24 +152,29 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
                     ),
                     ListView.builder(
                       itemBuilder: (_, index) {
-                        return CommentTile(commentModel: widget.mainModel!.comments![index],);
+                        return CommentTile(
+                          commentModel: widget.mainModel!.comments![index],
+                        );
                       },
                       itemCount: widget.mainModel!.comments!.length,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                     ),
-                    SizedBox(height: 100.h,)
-
+                    SizedBox(
+                      height: 100.h,
+                    )
                   ],
-                ),),
+                ),
+              ),
               Positioned(
                 bottom: size.h20,
                 right: size.w16,
                 child: CustomButton(
-                  onTap: (){
+                  onTap: () {
                     showCupertinoModalPopup(
                       context: context,
-                      builder: (context) =>  OpinionBottomSheet(masterModel: widget.mainModel),
+                      builder: (context) =>
+                          OpinionBottomSheet(masterModel: widget.mainModel),
                     );
                   },
                   icon: Icons.add_comment,
@@ -195,12 +199,11 @@ class CommentTile extends StatelessWidget with AppTheme, Language {
   final CommentModel? commentModel;
   const CommentTile({super.key, this.commentModel});
 
-
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(DiscussionController());
 
-  return Container(
+    return Container(
       padding: EdgeInsets.only(
           left: size.w48, top: size.h8, right: size.w16, bottom: size.h16),
       decoration: BoxDecoration(
@@ -251,9 +254,7 @@ class CommentTile extends StatelessWidget with AppTheme, Language {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               GestureDetector(
-                onTap: (){
-
-                },
+                onTap: () {},
                 child: Icon(
                   Icons.thumb_up,
                   color: clr.placeHolderTextColorGray,

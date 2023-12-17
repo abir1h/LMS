@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/routes/app_routes.dart';
+import '../controller/discussion_controller.dart';
 import '../controller/discussion_list_controller.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
+import 'detailed_discussion.dart';
 
 class DiscussionListScreen extends StatefulWidget {
   const DiscussionListScreen({super.key});
@@ -16,31 +18,56 @@ class DiscussionListScreen extends StatefulWidget {
 
 class _DiscussionListScreenState extends State<DiscussionListScreen>
     with AppTheme, Language {
-  final DiscussionListController controller =
-      Get.find<DiscussionListController>();
+  final DiscussionController controller = Get.find<DiscussionController>();
 
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-        title: label(e: en.discussion, b: bn.discussion),
-        child: ListView(
-          padding: EdgeInsets.zero,
+      title: label(e: en.discussion, b: bn.discussion),
+      child: GetBuilder<DiscussionController>(builder: (_) {
+        return ListView.builder(
           shrinkWrap: true,
-          physics: const BouncingScrollPhysics(),
-          children: [
-            DiscussionCard(
-              title: label(
-                  e: "Eligibility of Students", b: "শিক্ষার্থীদের যোগ্যতা"),
-              topicName: label(
-                  e: "Topic Name : Video 2 | Human-welfare concepts in educational applications.",
-                  b: "টপিক নেইম : ভিডিও ২ | শিক্ষাগত প্রয়োগ মানব-কল্যাণ ধারণা."),
-              totalDiscussion: label(e: "3 in Total", b: "মোট ৩ টি"),
-              time: label(
-                  e: "Date: 20 November 2023", b: "তারিখ: ২০ নভেম্বর ২০২৩"),
-              onTap: () => Get.toNamed(AppRoutes.detailedDiscussion),
-            ),
-          ],
-        ));
+          itemCount: controller.discussionList.length,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (_, index) {
+            return DiscussionCard(
+                title: controller.discussionList[index].title!,
+                topicName: label(
+                    e:
+                        "Topic Name : Video 2 | Human-welfare concepts in educational applications.",
+                    b:
+                        "টপিক নেইম : ভিডিও ২ | শিক্ষাগত প্রয়োগ মানব-কল্যাণ ধারণা."),
+                totalDiscussion:
+                    controller.discussionList[index].comments != null
+                        ? controller.discussionList[index].comments!.length
+                            .toString()
+                        : "0",
+                time: controller.discussionList[index].createdAt!,
+                onTap: () => Get.to(DetailedDiscussion(
+                      mainModel: controller.discussionList[index],
+                    )));
+          },
+        );
+      }),
+      // child: ListView(
+      //   padding: EdgeInsets.zero,
+      //   shrinkWrap: true,
+      //   physics: const BouncingScrollPhysics(),
+      //   children: [
+      //     DiscussionCard(
+      //       title:
+      //           label(e: "Eligibility of Students", b: "শিক্ষার্থীদের যোগ্যতা"),
+      //       topicName: label(
+      //           e: "Topic Name : Video 2 | Human-welfare concepts in educational applications.",
+      //           b: "টপিক নেইম : ভিডিও ২ | শিক্ষাগত প্রয়োগ মানব-কল্যাণ ধারণা."),
+      //       totalDiscussion: label(e: "3 in Total", b: "মোট ৩ টি"),
+      //       time:
+      //           label(e: "Date: 20 November 2023", b: "তারিখ: ২০ নভেম্বর ২০২৩"),
+      //       onTap: () => Get.toNamed(AppRoutes.detailedDiscussion),
+      //     ),
+      //   ],
+      // ),
+    );
   }
 }
 
@@ -120,6 +147,16 @@ class DiscussionCard extends StatelessWidget with AppTheme {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
+                        "মোট ",
+                        style: TextStyle(
+                            color: clr.placeHolderTextColorGray,
+                            fontSize: size.textXXSmall,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: StringData.fontFamilyPoppins),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
                         totalDiscussion,
                         style: TextStyle(
                             color: clr.placeHolderTextColorGray,
@@ -130,7 +167,27 @@ class DiscussionCard extends StatelessWidget with AppTheme {
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
+                        " টি",
+                        style: TextStyle(
+                            color: clr.placeHolderTextColorGray,
+                            fontSize: size.textXXSmall,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: StringData.fontFamilyPoppins),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
                         " | ",
+                        style: TextStyle(
+                            color: clr.placeHolderTextColorGray,
+                            fontSize: size.textXXSmall,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: StringData.fontFamilyPoppins),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        "তারিখ: ",
                         style: TextStyle(
                             color: clr.placeHolderTextColorGray,
                             fontSize: size.textXXSmall,

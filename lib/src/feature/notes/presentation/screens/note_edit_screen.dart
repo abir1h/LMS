@@ -178,8 +178,8 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
                   toggleToReadMode();
                 }
               },
-              icon: Icon(Icons.import_contacts,
-                  size: size.r24, color: clr.iconColorBlack)),
+              icon: Icon(Icons.visibility,
+                  size: size.r24, color: clr.iconColorDimGrey)),
         ],
       ),
       child: QuillProvider(

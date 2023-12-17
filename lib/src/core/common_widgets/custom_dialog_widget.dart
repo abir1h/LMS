@@ -44,8 +44,7 @@ mixin CustomDialogWidget {
                           SizedBox(height: ThemeSize.instance.h10),
                           Icon(Icons.logout,
                               size: 32.r,
-                              color:
-                                  ThemeColor.instance.appSecondaryColorFlagRed),
+                              color: ThemeColor.instance.appPrimaryColorGreen),
                           SizedBox(height: ThemeSize.instance.h12),
                           Text(
                             title,

@@ -25,60 +25,30 @@ class _DiscussionWidgetState extends State<DiscussionWidget>
     return GetBuilder<DiscussionController>(builder: (_) {
       return Stack(
         children: [
-          SingleChildScrollView(
+          ListView.builder(
+            shrinkWrap: true,
+            itemCount: controller.discussionList.length,
             physics: const BouncingScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: controller.discussionList.length,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (_, index) {
-                    return DiscussionWidgetTile(
-                        title: controller.discussionList[index].title!,
-                        totalDiscussion: controller
-                            .discussionList[index].comments !=null?controller
-                            .discussionList[index].comments!.length.toString():"0",
-                        time: controller.discussionList[index].createdAt!,
+            itemBuilder: (_, index) {
+              return DiscussionWidgetTile(
+                  title: controller.discussionList[index].title!,
+                  totalDiscussion:
+                      controller.discussionList[index].comments != null
+                          ? controller.discussionList[index].comments!.length
+                              .toString()
+                          : "0",
+                  time: controller.discussionList[index].createdAt!,
 
-
-                        /*  title: label(
+                  /*  title: label(
                       e: "Eligibility of Students",
                       b: "শিক্ষার্থীদের যোগ্যতাশিক্ষার্থীদের যোগ্যতা ফিজিওলজি হল একটি সমন্বিত বিজ্ঞান"),
                   totalDiscussion: label(e: "3 in Total", b: "মোট ৩ টি"),
                   time: label(
                       e: "Date: 20 November 2023", b: "তারিখ: ২০ নভেম্বর ২০২৩"),*/
-                        onTap: () => Get.to(DetailedDiscussion(mainModel: controller.discussionList[index],))
-                    );
-                  },
-                ),
-                /* DiscussionWidgetTile(
-                title: label(
-                    e: "Eligibility of Students",
-                    b: "শিক্ষার্থীদের যোগ্যতাশিক্ষার্থীদের যোগ্যতা ফিজিওলজি হল একটি সমন্বিত বিজ্ঞান"),
-                totalDiscussion: label(e: "3 in Total", b: "মোট ৩ টি"),
-                time: label(
-                    e: "Date: 20 November 2023", b: "তারিখ: ২০ নভেম্বর ২০২৩"),
-                onTap: () => Get.toNamed(AppRoutes.detailedDiscussion),
-              ),
-              DiscussionWidgetTile(
-                title: label(
-                    e: "Eligibility of Students", b: "শিক্ষার্থীদের যোগ্যতা"),
-                totalDiscussion: label(e: "3 in Total", b: "মোট ৩ টি"),
-                time: label(
-                    e: "Date: 20 November 2023", b: "তারিখ: ২০ নভেম্বর ২০২৩"),
-              ),
-              DiscussionWidgetTile(
-                title: label(
-                    e: "Eligibility of Students", b: "শিক্ষার্থীদের যোগ্যতা"),
-                totalDiscussion: label(e: "3 in Total", b: "মোট ৩ টি"),
-                time: label(
-                    e: "Date: 20 November 2023", b: "তারিখ: ২০ নভেম্বর ২০২৩"),
-              ),*/
-                SizedBox(height: size.h64)
-              ],
-            ),
+                  onTap: () => Get.to(DetailedDiscussion(
+                        mainModel: controller.discussionList[index],
+                      )));
+            },
           ),
           Align(
             alignment: Alignment.bottomCenter,
@@ -161,7 +131,8 @@ class DiscussionWidgetTile extends StatelessWidget with AppTheme {
                             fontFamily: StringData.fontFamilyPoppins),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                      ),  Text(
+                      ),
+                      Text(
                         totalDiscussion,
                         style: TextStyle(
                             color: clr.placeHolderTextColorGray,
@@ -170,7 +141,8 @@ class DiscussionWidgetTile extends StatelessWidget with AppTheme {
                             fontFamily: StringData.fontFamilyPoppins),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                      ),  Text(
+                      ),
+                      Text(
                         " টি",
                         style: TextStyle(
                             color: clr.placeHolderTextColorGray,
@@ -189,7 +161,8 @@ class DiscussionWidgetTile extends StatelessWidget with AppTheme {
                             fontFamily: StringData.fontFamilyPoppins),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                      ), Text(
+                      ),
+                      Text(
                         "তারিখ: ",
                         style: TextStyle(
                             color: clr.placeHolderTextColorGray,
