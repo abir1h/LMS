@@ -106,6 +106,8 @@ class LanguageEn {
   String writeHere = "Write here";
   String publishTheDiscussion = "Publish The Discussion";
   String writeYourOpinion = "Write Your Opinion";
+
+  String assignment = "Assignment";
 }
 
 class LanguageBn {
@@ -208,4 +210,6 @@ class LanguageBn {
   String writeHere = "এখানে লিখুন";
   String publishTheDiscussion = "আলোচনা প্রকাশ করুন";
   String writeYourOpinion = "আপনার মতামত লিখুন";
+
+  String assignment = "অ্যাসাইনমেন্ট";
 }

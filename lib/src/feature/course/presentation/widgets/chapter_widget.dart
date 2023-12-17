@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/core/routes/app_routes.dart';
-import 'package:lms/src/core/utility/app_label.dart';
-import 'package:lms/src/feature/course/presentation/screens/introduction_screen.dart';
-import 'package:lms/src/feature/discussion/presentation/screens/discussion_screen.dart';
-import 'package:lms/src/feature/transcript_video/presentaion/screens/transcript_video_screen.dart';
 
+import '../../../../core/routes/app_routes.dart';
+import '../../../../core/utility/app_label.dart';
+import '../screens/assignment_screen.dart';
+import '../../../transcript_video/presentaion/screens/transcript_video_screen.dart';
 import '../screens/live_class_screen.dart';
 import 'course_content_widget.dart';
 import '../../../../core/constants/common_imports.dart';
@@ -150,6 +149,8 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                 iconColor: clr.appPrimaryColorGreen,
                 title: label(e: "Assignment", b: "অ্যাসাইনমেন্ট"),
                 buttonIcon: Icons.visibility,
+                status: true,
+                onTap: () => Get.to(() => const AssignmentScreen()),
               ),
               CourseContentWidget(
                 courseIcon: Icons.cast_connected,
