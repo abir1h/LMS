@@ -29,7 +29,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
   final _controller = QuillController.basic();
   final _editorFocusNode = FocusNode();
   final _editorScrollController = ScrollController();
-  var _isReadOnly = false;
+  final _isReadOnly = false;
   final controller = Get.put(NoteController());
   TextEditingController titleController = TextEditingController();
 
@@ -214,8 +214,8 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
                                 )),
                               ],
                             )
-                          : SizedBox()
-                      : SizedBox(),
+                          : const SizedBox()
+                      : const SizedBox(),
                   TextField(
                     controller: titleController,
                     style: TextStyle(

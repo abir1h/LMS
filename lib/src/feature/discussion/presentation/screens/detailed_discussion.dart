@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/feature/discussion/models/comment_model.dart';
-import 'package:lms/src/feature/discussion/models/discusion_model.dart';
 
+import '../../models/comment_model.dart';
+import '../../models/discusion_model.dart';
 import '../controller/discussion_controller.dart';
 import 'opinion_bottom_sheet.dart';
 import '../../../../core/common_widgets/custom_button.dart';
@@ -201,8 +201,6 @@ class CommentTile extends StatelessWidget with AppTheme, Language {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(DiscussionController());
-
     return Container(
       padding: EdgeInsets.only(
           left: size.w48, top: size.h8, right: size.w16, bottom: size.h16),

@@ -4,12 +4,10 @@ import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/feature/course/presentation/widgets/note_bottom_sheet.dart';
 
+import 'note_bottom_sheet.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../notes/presentation/controllers/note_controller.dart';
-import '../../../notes/presentation/screens/note_details.dart';
-import '../../../notes/presentation/screens/note_edit_screen.dart';
 
 class NoteWidget extends StatefulWidget {
   const NoteWidget({super.key});
@@ -18,7 +16,7 @@ class NoteWidget extends StatefulWidget {
   State<NoteWidget> createState() => _NoteWidgetState();
 }
 
-class _NoteWidgetState extends State<NoteWidget>  with AppTheme{
+class _NoteWidgetState extends State<NoteWidget> with AppTheme {
   final controller = Get.put(NoteController());
   void onTapCreateDiscussion() {
     showCupertinoModalPopup(
@@ -26,44 +24,47 @@ class _NoteWidgetState extends State<NoteWidget>  with AppTheme{
       builder: (context) => const NoteBottomSheet(),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Obx(
-                    () => ListView.builder(
-                    itemCount: controller.noteList.length,
-                    shrinkWrap: true,physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (_, index) {
-                      return NoteWidgetTile(
-                        noteContent:
-                        controller.noteList[index].title.toString().isNotEmpty
-                            ? controller.noteList[index].title.toString()
-                            : controller.noteList[index].description!=null?Document.fromJson(controller.noteList[index].description as List).toPlainText():"New Note",
-                        title:     controller.noteList[index].title.toString().isNotEmpty
-                            ? controller.noteList[index].title.toString()
-                            : controller.noteList[index].description!=null?Document.fromJson(controller.noteList[index].description as List).toPlainText():"New Note",
-                        timestamp: controller.noteList[index].time!,
-                        onPressed: () => showCupertinoModalPopup(
-                          context: context,
-                          builder: (context) =>  NoteBottomSheet(mainModel: controller.noteList[index]),
-                        ),
-                      );
-                    }),
-              ),
-              SizedBox(height: 300.h)
-            ],
-          ),
+        Obx(
+          () => ListView.builder(
+              shrinkWrap: true,
+              itemCount: controller.noteList.length,
+              physics: const BouncingScrollPhysics(),
+              padding: EdgeInsets.only(bottom: size.h64 * 2),
+              itemBuilder: (_, index) {
+                return NoteWidgetTile(
+                  noteContent:
+                      controller.noteList[index].title.toString().isNotEmpty
+                          ? controller.noteList[index].title.toString()
+                          : controller.noteList[index].description != null
+                              ? Document.fromJson(controller
+                                      .noteList[index].description as List)
+                                  .toPlainText()
+                              : "New Note",
+                  title: controller.noteList[index].title.toString().isNotEmpty
+                      ? controller.noteList[index].title.toString()
+                      : controller.noteList[index].description != null
+                          ? Document.fromJson(controller
+                                  .noteList[index].description as List)
+                              .toPlainText()
+                          : "New Note",
+                  timestamp: controller.noteList[index].time!,
+                  onPressed: () => showCupertinoModalPopup(
+                    context: context,
+                    builder: (context) =>
+                        NoteBottomSheet(mainModel: controller.noteList[index]),
+                  ),
+                );
+              }),
         ),
         Align(
           alignment: Alignment.bottomCenter,
           child: GestureDetector(
-            onTap: () =>  showCupertinoModalPopup(
+            onTap: () => showCupertinoModalPopup(
               context: context,
               builder: (context) => const NoteBottomSheet(),
             ),
@@ -72,13 +73,7 @@ class _NoteWidgetState extends State<NoteWidget>  with AppTheme{
               decoration: BoxDecoration(
                   color: clr.whiteColor,
                   border: Border(
-                      top: BorderSide(
-                          color: clr.boxStrokeColor,
-                          width: 1.w
-                      )
-                  )
-              ),
-
+                      top: BorderSide(color: clr.boxStrokeColor, width: 1.w))),
               padding: EdgeInsets.all(size.r16),
               child: Row(
                 children: [
@@ -92,7 +87,8 @@ class _NoteWidgetState extends State<NoteWidget>  with AppTheme{
                           color: Colors.grey.withOpacity(0.3),
                           spreadRadius: 2,
                           blurRadius: 3,
-                          offset: const Offset(0, 5), // changes position of shadow
+                          offset:
+                              const Offset(0, 5), // changes position of shadow
                         ),
                       ],
                     ),
@@ -100,19 +96,27 @@ class _NoteWidgetState extends State<NoteWidget>  with AppTheme{
                       ImageAssets.icEditSquare,
                     ),
                   ),
-                  SizedBox(width: size.w8,),
+                  SizedBox(
+                    width: size.w8,
+                  ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.only(left:14.w,top: 10,bottom: 10 ,),
+                      padding: EdgeInsets.only(
+                        left: 14.w,
+                        top: 10,
+                        bottom: 10,
+                      ),
                       decoration: BoxDecoration(
                           color: clr.shadeWhiteColor2,
                           borderRadius: BorderRadius.circular(size.r8),
-                          border: Border.all(color: clr.boxStrokeColor)
-
-                      ),child: Text("নোটস নিন",style: TextStyle(
-                        fontWeight: FontWeight.w400,color: clr.placeHolderTextColorGray,
-                        fontSize: size.textSmall
-                    ),),
+                          border: Border.all(color: clr.boxStrokeColor)),
+                      child: Text(
+                        "নোটস নিন",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            color: clr.placeHolderTextColorGray,
+                            fontSize: size.textSmall),
+                      ),
                     ),
                   )
                 ],

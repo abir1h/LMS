@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/feature/discussion/models/discusion_model.dart';
 
+import '../../models/discusion_model.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/text_field_widget.dart';
 import '../../../../core/constants/common_imports.dart';
@@ -102,10 +102,6 @@ class _DiscussionBottomSheetState extends State<DiscussionBottomSheet>
                       onTap: () {
                         if (titleController.text.isNotEmpty &&
                             discussionController.text.isNotEmpty) {
-                          DateTime now = DateTime.now();
-                          var currentTime = DateTime(now.year, now.month,
-                              now.day, now.hour, now.minute);
-
                           DiscussionModel saveDiscussion = DiscussionModel(
                             discussionId: 1,
                             title: titleController.text,

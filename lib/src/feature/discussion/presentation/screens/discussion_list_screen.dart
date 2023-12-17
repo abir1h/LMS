@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../core/routes/app_routes.dart';
 import '../controller/discussion_controller.dart';
-import '../controller/discussion_list_controller.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
@@ -28,7 +26,8 @@ class _DiscussionListScreenState extends State<DiscussionListScreen>
         return ListView.builder(
           shrinkWrap: true,
           itemCount: controller.discussionList.length,
-          physics: const NeverScrollableScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
+          padding: EdgeInsets.only(bottom: size.h64),
           itemBuilder: (_, index) {
             return DiscussionCard(
                 title: controller.discussionList[index].title!,

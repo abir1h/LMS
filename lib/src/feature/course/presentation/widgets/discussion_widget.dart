@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/feature/discussion/presentation/controller/discussion_controller.dart';
 
+import '../../../discussion/presentation/controller/discussion_controller.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/constants/common_imports.dart';
-import '../../../../core/routes/app_routes.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../discussion/presentation/screens/detailed_discussion.dart';
 import '../../../discussion/presentation/screens/discussion_bottom_sheet.dart';
@@ -29,6 +28,7 @@ class _DiscussionWidgetState extends State<DiscussionWidget>
             shrinkWrap: true,
             itemCount: controller.discussionList.length,
             physics: const BouncingScrollPhysics(),
+            padding: EdgeInsets.only(bottom: size.h64 * 2),
             itemBuilder: (_, index) {
               return DiscussionWidgetTile(
                   title: controller.discussionList[index].title!,

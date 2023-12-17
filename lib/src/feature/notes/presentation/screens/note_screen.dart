@@ -39,7 +39,6 @@ class _NoteScreenState extends State<NoteScreen>
       padding: EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h12),
       child: Column(
         children: [
-          // Variable to store the selected value
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -180,7 +179,6 @@ class _NoteScreenState extends State<NoteScreen>
               ),
             ],
           ),
-
           Obx(
             () => ListView.builder(
                 itemCount: controller.noteList.length,
@@ -212,9 +210,7 @@ class _NoteScreenState extends State<NoteScreen>
                   );
                 }),
           ),
-          SizedBox(
-            height: 200.h,
-          )
+          SizedBox(height: size.h64)
         ],
       ),
     );

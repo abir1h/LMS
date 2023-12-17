@@ -23,6 +23,7 @@ class ChapterDetailsWidget extends StatelessWidget with AppTheme {
                 fontFamily: StringData.fontFamilyPoppins),
             textAlign: TextAlign.justify,
           ),
+          SizedBox(height: size.h64)
         ],
       ),
     );
