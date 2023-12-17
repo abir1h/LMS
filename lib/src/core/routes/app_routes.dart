@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
-import 'package:lms/src/feature/course/presentation/screens/course_list_screen.dart';
-import 'package:lms/src/feature/course/presentation/screens/course_screen.dart';
-import 'package:lms/src/feature/course/presentation/screens/introduction_screen.dart';
-import 'package:lms/src/feature/discussion/presentation/binding/discussion_binding.dart';
-import 'package:lms/src/feature/discussion/presentation/screens/detailed_discussion.dart';
-import 'package:lms/src/feature/discussion/presentation/screens/discussion_list_screen.dart';
-import 'package:lms/src/feature/discussion/presentation/screens/discussion_screen.dart';
+import '../../feature/course/presentation/screens/course_list_screen.dart';
+import '../../feature/course/presentation/screens/course_screen.dart';
+import '../../feature/course/presentation/screens/introduction_screen.dart';
+import '../../feature/discussion/presentation/binding/discussion_binding.dart';
+import '../../feature/discussion/presentation/screens/detailed_discussion.dart';
+import '../../feature/discussion/presentation/screens/discussion_list_screen.dart';
+import '../../feature/discussion/presentation/screens/discussion_screen.dart';
 
 import '../../feature/course/presentation/bindings/course_binding.dart';
 import '../../feature/course/presentation/screens/course_details_screen.dart';

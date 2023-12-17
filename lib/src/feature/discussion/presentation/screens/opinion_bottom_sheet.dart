@@ -70,23 +70,21 @@ class _OpinionBottomSheetState extends State<OpinionBottomSheet>
                       hintText:
                           label(e: en.writeYourOpinion, b: bn.writeYourOpinion),
                       controller: titleController,
-                      onTaped: () {
-
-                      }),
+                      onTaped: () {}),
                 ),
                 SizedBox(width: size.w4),
                 InkWell(
                   onTap: () {
-
-
-                    controller.addComment(widget.masterModel!,CommentModel(
-                      commentId: widget.masterModel!.comments!.length + 1,
-                      userName: "ব্যবহারকারীর নাম",
-                      avatar: ImageAssets.imgEmptyProfile,
-                      comment: titleController.text,
-                      likeCount: 0,
-                      createdAt: "২০ নভেম্বর ২০২৩",
-                    ));
+                    controller.addComment(
+                        widget.masterModel!,
+                        CommentModel(
+                          commentId: widget.masterModel!.comments!.length + 1,
+                          userName: "ব্যবহারকারীর নাম",
+                          avatar: ImageAssets.imgEmptyProfile,
+                          comment: titleController.text,
+                          likeCount: 0,
+                          createdAt: "২০ নভেম্বর ২০২৩",
+                        ));
                     Get.back();
                   },
                   child: Icon(
