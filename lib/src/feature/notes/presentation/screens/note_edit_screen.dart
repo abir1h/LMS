@@ -3,6 +3,7 @@ import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/common_widgets/app_dropdown_widget.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/routes/app_routes.dart';
@@ -13,12 +14,10 @@ import '../../../../core/common_widgets/custom_scaffold.dart';
 
 class NoteEditScreen extends StatefulWidget {
   final NoteModel? mainModel;
-  final String? ref;
 
   const NoteEditScreen({
     super.key,
     this.mainModel,
-    this.ref,
   });
 
   @override
@@ -32,6 +31,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
   final _isReadOnly = false;
   final controller = Get.put(NoteController());
   TextEditingController titleController = TextEditingController();
+  String? refVlaue="টপিক সিলেক্ট করুন";
 
   @override
   void initState() {
@@ -48,6 +48,12 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
       }
       if (widget.mainModel!.title != null) {
         titleController.text = widget.mainModel!.title!;
+      }
+      if (widget.mainModel!.reference != null) {
+        refVlaue = widget.mainModel!.reference!;
+       /* setState(() {
+print(refVlaue);
+        });*/
       }
     }
   }
@@ -76,7 +82,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
             time: currentTime.toString(),
             title: titleController.text,
             description: _controller.document.toDelta().toJson(),
-            reference: widget.ref);
+            reference: widget.mainModel!.reference);
         controller.noteList.add(newModel);
         Get.toNamed(AppRoutes.bottomNav, arguments: 2);
         CustomToasty.of(context)
@@ -95,7 +101,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
             time: currentTime.toString(),
             title: titleController.text,
             description: _controller.document.toDelta().toJson(),
-            reference: widget.ref);
+            reference: widget.mainModel!.reference);
 
         // Check if the note with the same ID exists in the list
         int existingIndex = controller.noteList.indexWhere(
@@ -126,11 +132,11 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
       var currentTime =
           DateTime(now.year, now.month, now.day, now.hour, now.minute);
       var newModel = NoteModel(
-        id: id,
-        time: currentTime.toString(),
-        title: titleController.text,
-        description: _controller.document.toDelta().toJson(),
-      );
+          id: id,
+          time: currentTime.toString(),
+          title: titleController.text,
+          description: _controller.document.toDelta().toJson(),
+          reference: refVlaue);
       Get.to(() => NoteDetailsScreen(
             mainModel: newModel,
           ));
@@ -199,23 +205,15 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
               padding: EdgeInsets.only(left: size.w16, right: size.w16),
               child: Column(
                 children: [
-                  widget.mainModel != null
-                      ? widget.mainModel!.reference != null
-                          ? Row(
-                              children: [
-                                Expanded(
-                                    child: Text(
-                                  widget.mainModel!.reference.toString(),
-                                  style: TextStyle(
-                                      color: clr.appPrimaryColorGreen,
-                                      fontSize: size.textSmall,
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: StringData.fontFamilyPoppins),
-                                )),
-                              ],
-                            )
-                          : const SizedBox()
-                      : const SizedBox(),
+                  SelectorDropDownList(
+                    onGenerateTitle: (x) => x,
+                    onLoadData: controller.getDropDown,
+                    onSelected: (v) {
+                      refVlaue = v;
+                    },
+                    hintText: refVlaue.toString(),
+                  ),
+
                   TextField(
                     controller: titleController,
                     style: TextStyle(

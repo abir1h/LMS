@@ -23,6 +23,7 @@ class ThemeColor {
   Color get shadeWhiteColor2 => HexColor("FEFFFF");
   Color get blackColor => HexColor("000000");
   Color get greyColor => HexColor("B6B6B6");
+  Color get dropdownHintColorGrey => HexColor("959596");
   Color get strokeToggleColor => HexColor("CBE1A9");
   Color get iconColorHint => HexColor("797979");
   Color get iconColorWhiteIce => HexColor("D1ECE4");
