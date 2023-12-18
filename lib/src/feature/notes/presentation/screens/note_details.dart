@@ -72,7 +72,7 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
               onPressed: () {
                 Get.to(() => NoteEditScreen(
                       mainModel: widget.mainModel,
-                      ref: widget.mainModel!.reference,
+
                     ));
               },
               icon:

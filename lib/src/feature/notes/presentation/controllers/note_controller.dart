@@ -6,6 +6,17 @@ class NoteController extends GetxController {
   final edit = false.obs;
   final noteIndex = "";
   final keyboardFocused = false.obs;
+  final selectedTopic = ''.obs;
+  List<String> topicList = [
+    "টপিক নেইম : ভিডিও ২ | শিক্ষাগত প্রয়োগ মানব-কল্যাণ ধারণা.",
+        "টপিক নেইম : ভিডিও 3 | শিক্ষাগত প্রয়োগ মানব-কল্যাণ ধারণা.",
+        "টপিক নেইম : ভিডিও 4 | শিক্ষাগত প্রয়োগ মানব-কল্যাণ ধারণা."
+  ];
+
+  Future<List<String>> getDropDown() async {
+    return topicList;
+  }
+
   RxList<NoteModel> noteList = <NoteModel>[
     NoteModel(
         id: 1,
