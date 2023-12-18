@@ -10,6 +10,7 @@ class ImageAssets {
   static String get imgModule2 => 'Illustrator_Module_2'.png;
   static String get imgModule3 => 'Illustrator_Module_3'.png;
   static String get imgModule4 => 'Illustrator_Module_4'.png;
+  static String get imgAssignment => 'assignment'.png;
 
   static String get imgTraineeCard1 => 'trainee_card'.svg;
   static String get imgTraineeCard2 => 'trainee_card2'.svg;

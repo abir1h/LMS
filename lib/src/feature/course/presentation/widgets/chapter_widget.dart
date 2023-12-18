@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/utility/app_label.dart';
-import '../screens/assignment_screen.dart';
+import '../screens/course_assignment_screen.dart';
 import '../../../transcript_video/presentaion/screens/transcript_video_screen.dart';
-import '../screens/live_class_screen.dart';
+import '../screens/course_live_class_screen.dart';
 import 'course_content_widget.dart';
 import '../../../../core/constants/common_imports.dart';
 
@@ -150,7 +150,7 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                 title: label(e: "Assignment", b: "অ্যাসাইনমেন্ট"),
                 buttonIcon: Icons.visibility,
                 status: true,
-                onTap: () => Get.to(() => const AssignmentScreen()),
+                onTap: () => Get.to(() => const CourseAssignmentScreen()),
               ),
               CourseContentWidget(
                 courseIcon: Icons.cast_connected,
@@ -159,7 +159,7 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                 buttonText: label(e: en.join, b: bn.join),
                 buttonIcon: Icons.video_call,
                 status: true,
-                onTap: () => Get.to(() => const LiveClassScreen()),
+                onTap: () => Get.to(() => const CourseLiveClassScreen()),
               ),
               CourseContentWidget(
                 courseIcon: Icons.help_center,

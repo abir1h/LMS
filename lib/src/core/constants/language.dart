@@ -103,11 +103,18 @@ class LanguageEn {
   String detailedDiscussion = "Detailed Discussion";
   String yourOpinion = "Your Opinion";
   String discussionTitle = "Discussion Title";
-  String writeHere = "Write here";
+  String writeHere = "Write here...";
   String publishTheDiscussion = "Publish The Discussion";
   String writeYourOpinion = "Write Your Opinion";
 
   String assignment = "Assignment";
+  String assignmentInstruction =
+      "Please look at the picture below and answer the following questions.";
+  String answerTheFollowingQuestions = "Answer the following questions.";
+  String uploadTheFile = "Upload the file";
+  String or = "Or";
+  String submit = "Submit";
+  String saveAsDraft = "Save As Draft";
 }
 
 class LanguageBn {
@@ -207,9 +214,16 @@ class LanguageBn {
   String detailedDiscussion = "বিস্তারিত আলোচনা";
   String yourOpinion = "আপনার মতামত";
   String discussionTitle = "আলোচনার শিরোনাম";
-  String writeHere = "এখানে লিখুন";
+  String writeHere = "এখানে লিখুন...";
   String publishTheDiscussion = "আলোচনা প্রকাশ করুন";
   String writeYourOpinion = "আপনার মতামত লিখুন";
 
   String assignment = "অ্যাসাইনমেন্ট";
+  String assignmentInstruction =
+      "অনুগ্রহ করে নিচের ছবিটি দেখুন এবং নিম্নলিখিত প্রশ্নের উত্তর দিন।";
+  String answerTheFollowingQuestions = "নিচের প্রশ্নগুলোর উত্তর দিন.";
+  String uploadTheFile = "ফাইল আপলোড করুন";
+  String or = "অথবা";
+  String submit = "সাবমিট";
+  String saveAsDraft = "সেভ এস ড্রাফট";
 }

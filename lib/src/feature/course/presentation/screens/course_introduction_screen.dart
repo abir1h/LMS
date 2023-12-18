@@ -7,14 +7,14 @@ import '../../../../core/constants/common_imports.dart';
 import '../controllers/introduction_controller.dart';
 import '../widgets/tab_section_widget.dart';
 
-class IntroductionScreen extends StatefulWidget {
-  const IntroductionScreen({super.key});
+class CourseIntroductionScreen extends StatefulWidget {
+  const CourseIntroductionScreen({super.key});
 
   @override
-  State<IntroductionScreen> createState() => _IntroductionScreenState();
+  State<CourseIntroductionScreen> createState() => _CourseIntroductionScreenState();
 }
 
-class _IntroductionScreenState extends State<IntroductionScreen>
+class _CourseIntroductionScreenState extends State<CourseIntroductionScreen>
     with AppTheme, Language {
   final IntroductionController controller = Get.find<IntroductionController>();
 

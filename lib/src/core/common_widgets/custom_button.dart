@@ -5,9 +5,10 @@ import '../constants/strings.dart';
 
 class CustomButton extends StatelessWidget with AppTheme {
   final VoidCallback onTap;
-  final Color? bgColor;
+  final Color? bgColor, borderColor;
   final IconData? icon;
   final String title;
+  final Color? textColor;
   final double? textSize;
   final double? horizontalPadding;
   final double? verticalPadding;
@@ -17,8 +18,10 @@ class CustomButton extends StatelessWidget with AppTheme {
       {super.key,
       required this.onTap,
       this.bgColor,
+      this.borderColor,
       this.icon,
       required this.title,
+      this.textColor,
       this.textSize,
       this.horizontalPadding,
       this.verticalPadding,
@@ -43,7 +46,8 @@ class CustomButton extends StatelessWidget with AppTheme {
               color: bgColor ?? clr.appPrimaryColorGreen,
               borderRadius: BorderRadius.circular(radius ?? size.w10),
               border: Border.all(
-                  color: bgColor ?? clr.appPrimaryColorGreen, width: size.w1)),
+                  color: borderColor ?? clr.appPrimaryColorGreen,
+                  width: size.w1)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -59,7 +63,7 @@ class CustomButton extends StatelessWidget with AppTheme {
               Text(
                 title,
                 style: TextStyle(
-                    color: clr.shadeWhiteColor2,
+                    color: textColor ?? clr.shadeWhiteColor2,
                     fontSize: textSize ?? size.textSmall,
                     fontWeight: FontWeight.w500,
                     fontFamily: StringData.fontFamilyPoppins),

@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:lms/src/feature/assignment/presentation/screens/assignment_screen.dart';
 
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
 
-class AssignmentScreen extends StatefulWidget {
-  const AssignmentScreen({super.key});
+class CourseAssignmentScreen extends StatefulWidget {
+  const CourseAssignmentScreen({super.key});
 
   @override
-  State<AssignmentScreen> createState() => _AssignmentScreenState();
+  State<CourseAssignmentScreen> createState() => _CourseAssignmentScreenState();
 }
 
-class _AssignmentScreenState extends State<AssignmentScreen>
+class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
     with AppTheme, Language {
   @override
   Widget build(BuildContext context) {
@@ -191,7 +193,7 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: size.w10),
                     child: CustomButton(
-                      onTap: () {},
+                      onTap: () => Get.to(const AssignmentScreen()),
                       title: label(e: en.loginText, b: bn.loginText),
                       radius: size.r4,
                     ),

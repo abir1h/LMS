@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lms/src/core/utility/app_label.dart';
-import 'package:lms/src/feature/course/presentation/widgets/tab_section_widget.dart';
 
+import '../../../../core/utility/app_label.dart';
+import '../widgets/tab_section_widget.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
 
-class LiveClassScreen extends StatefulWidget {
-  const LiveClassScreen({super.key});
+class CourseLiveClassScreen extends StatefulWidget {
+  const CourseLiveClassScreen({super.key});
 
   @override
-  State<LiveClassScreen> createState() => _LiveClassScreenState();
+  State<CourseLiveClassScreen> createState() => _CourseLiveClassScreenState();
 }
 
-class _LiveClassScreenState extends State<LiveClassScreen>
+class _CourseLiveClassScreenState extends State<CourseLiveClassScreen>
     with AppTheme, Language {
   @override
   Widget build(BuildContext context) {

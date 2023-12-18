@@ -6,7 +6,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../../../../core/common_widgets/custom_switch_button.dart';
 import '../../../../core/service/notifier/app_events_notifier.dart';
 import '../../../../core/utility/app_label.dart';
-import '../../../course/presentation/screens/introduction_screen.dart';
+import '../../../course/presentation/screens/course_introduction_screen.dart';
 import '../../../course/presentation/widgets/tab_section_widget.dart';
 import '../../../discussion/presentation/screens/discussion_screen.dart';
 import '../../../../core/constants/common_imports.dart';
