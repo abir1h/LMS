@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'package:file_picker/file_picker.dart';
+import 'package:get/get.dart';
+import 'package:lms/src/core/common_widgets/custom_button.dart';
+import 'package:lms/src/feature/assignment/presentation/controllers/assignment_controller.dart';
 import '../widgets/assignment_bottom_sheet.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
@@ -15,6 +19,8 @@ class AssignmentScreen extends StatefulWidget {
 
 class _AssignmentScreenState extends State<AssignmentScreen>
     with AppTheme, Language {
+  final controller = Get.put(AssignmentController());
+
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
@@ -105,37 +111,67 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                     fontFamily: StringData.fontFamilyPoppins),
               ),
               SizedBox(height: size.h12),
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(
-                    horizontal: size.w16, vertical: size.h12),
-                decoration: BoxDecoration(
-                  color: clr.whiteColor,
-                  borderRadius: BorderRadius.circular(size.r8),
-                  border: Border.all(color: clr.boxStrokeColor, width: size.w1),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        "",
-                        style: TextStyle(
-                            color: clr.placeHolderTextColorGray,
-                            fontSize: size.textSmall,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: StringData.fontFamilyPoppins),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
+              Obx(
+                () => CustomFilePicker(
+                  onFilePicked: (filePath) {
+                    print('Selected file: $filePath');
+                    controller.filename.value = filePath.toString();
+
+                    // Handle the selected file path as needed
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(
+                        horizontal: size.w16, vertical: size.h12),
+                    decoration: BoxDecoration(
+                      color: clr.whiteColor,
+                      borderRadius: BorderRadius.circular(size.r8),
+                      border:
+                          Border.all(color: clr.boxStrokeColor, width: size.w1),
                     ),
-                    Icon(
-                      Icons.attach_file,
-                      color: clr.iconColorHint,
-                      size: size.r24,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            controller.getShortenedFileName(
+                                controller.filename.value),
+                            style: TextStyle(
+                                color: clr.appPrimaryColorGreen,
+                                fontSize: size.textSmall,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: StringData.fontFamilyPoppins),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        controller.filename.value != ''
+                            ? IconButton(
+                                onPressed: () {
+                                  controller.filename.value = '';
+                                },
+                                icon: Icon(
+                                  Icons.close,
+                                  color: clr.appPrimaryColorGreen,
+                                ))
+                            : SizedBox(),
+                        Icon(
+                          Icons.attach_file,
+                          color: clr.iconColorHint,
+                          size: size.r24,
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
+              SizedBox(height: size.h12),
+             Obx(() =>  Row(
+               mainAxisAlignment: MainAxisAlignment.end,
+               children: [
+                 CustomButton(onTap: (){}  , title: "আপলোড",bgColor: controller.filename.value==''?clr.greyColor:clr.appPrimaryColorGreen,borderColor: Colors.transparent,verticalPadding: size.h4,)
+               ],
+             ))
+
             ],
           ),
         ));
@@ -146,5 +182,38 @@ class _AssignmentScreenState extends State<AssignmentScreen>
       context: context,
       builder: (context) => const AssignmentBottomSheet(),
     );
+  }
+}
+
+class CustomFilePicker extends StatefulWidget {
+  final Function(String) onFilePicked;
+  final Widget child;
+
+  CustomFilePicker({required this.onFilePicked, required this.child});
+
+  @override
+  _CustomFilePickerState createState() => _CustomFilePickerState();
+}
+
+class _CustomFilePickerState extends State<CustomFilePicker> {
+  void _pickFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      String filePath = result.files.single.path!;
+      widget.onFilePicked(filePath);
+    } else {
+      // User canceled the file picking
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+        onTap: () {
+          print("tapped");
+          _pickFile();
+        },
+        child: widget.child);
   }
 }
