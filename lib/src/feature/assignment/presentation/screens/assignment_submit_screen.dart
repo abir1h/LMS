@@ -1,9 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lms/src/core/common_widgets/custom_button.dart';
-import 'package:lms/src/core/utility/app_label.dart';
+import 'package:get/get.dart';
 
+import '../../../../core/common_widgets/custom_button.dart';
+import '../../../../core/utility/app_label.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
+import '../widgets/assignment_bottom_sheet.dart';
 
 class AssignmentSubmitScreen extends StatefulWidget {
   const AssignmentSubmitScreen({super.key});
@@ -19,12 +22,7 @@ class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
     return CustomScaffold(
         title: "",
         actionChild: InkWell(
-            onTap: () {
-              // Get.to(() => NoteEditScreen(
-              //   mainModel: widget.mainModel,
-              //   ref: widget.mainModel!.reference,
-              // ));
-            },
+            onTap: () => onTapWriteHere("submit"),
             child: Icon(Icons.edit,
                 size: size.r24, color: clr.appPrimaryColorGreen)),
         child: SingleChildScrollView(
@@ -79,5 +77,12 @@ class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
             ],
           ),
         ));
+  }
+
+  void onTapWriteHere(String screenName) {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (context) => AssignmentBottomSheet(from: screenName),
+    );
   }
 }

@@ -11,13 +11,13 @@ import '../../../notes/presentation/models/note_model.dart';
 
 class AssignmentBottomSheet extends StatefulWidget {
   final NoteModel? mainModel;
-
   final String? ref;
-
+  final String from;
   const AssignmentBottomSheet({
     super.key,
     this.mainModel,
     this.ref,
+    required this.from,
   });
 
   @override
@@ -160,7 +160,9 @@ class _AssignmentBottomSheetState extends State<AssignmentBottomSheet>
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Get.to(const AssignmentSubmitScreen());
+                          widget.from == "assignmentScreen"
+                              ? Get.to(const AssignmentSubmitScreen())
+                              : Navigator.of(context).pop();
                           // saveData();///Todo
                         },
                         child: Container(

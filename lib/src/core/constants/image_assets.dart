@@ -3,7 +3,7 @@ class ImageAssets {
 
   //:::::::::::::::::: IMAGE SETS ::::::::::::::::::
   static String get imgEmptyProfile => 'user_profile'.png;
-  static String get icLogo => 'Hero_logo'.png;
+  static String get icLogo => 'logo'.png;
   static String get imgPlaceholder => 'placeholder'.png;
 
   static String get imgModule1 => 'Illustrator_Module_1'.png;
@@ -17,10 +17,7 @@ class ImageAssets {
   static String get imgTraineeCard3 => 'trainee_card3'.svg;
   static String get imgTraineeCard4 => 'trainee_card4'.svg;
   static String get imgRunningCourse => 'running_course'.svg;
-  static String get notes => 'Notes'.svg;
-  static String get home => 'home'.svg;
-  static String get courses => 'Courses'.svg;
-  static String get profile => 'Profile'.svg;
+
   static String get icBook => 'book'.svg;
   static String get icSocialLearning => 'social_learning'.svg;
   static String get icLockOpenRight => 'lock_open_right'.svg;
@@ -28,6 +25,8 @@ class ImageAssets {
   static String get icEdit => 'edit'.svg;
   static String get icEditorChoice => 'editor_choice'.svg;
   static String get icEditSquare => 'edit_square'.svg;
+  static String get icAlarm => 'alarm'.svg;
+  static String get icDictionary => 'dictionary'.svg;
 }
 
 extension on String {

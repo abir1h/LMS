@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/core/common_widgets/custom_button.dart';
-import 'package:lms/src/feature/assignment/presentation/controllers/assignment_controller.dart';
+import 'package:lms/src/core/common_widgets/custom_toasty.dart';
+
+import '../../../../core/common_widgets/custom_button.dart';
+import '../controllers/assignment_controller.dart';
 import '../widgets/assignment_bottom_sheet.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
@@ -66,7 +67,7 @@ class _AssignmentScreenState extends State<AssignmentScreen>
               ),
               SizedBox(height: size.h12),
               GestureDetector(
-                onTap: onTapWriteHere,
+                onTap: () => onTapWriteHere("assignmentScreen"),
                 child: Container(
                   width: double.infinity,
                   padding: EdgeInsets.only(
@@ -90,18 +91,19 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                   ),
                 ),
               ),
-              SizedBox(height: size.h12),
-              Center(
-                child: Text(
-                  label(e: en.or, b: bn.or),
-                  style: TextStyle(
-                      color: clr.blackColor,
-                      fontSize: size.textSmall,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: StringData.fontFamilyPoppins),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: size.h12),
+                child: Center(
+                  child: Text(
+                    label(e: en.or, b: bn.or),
+                    style: TextStyle(
+                        color: clr.blackColor,
+                        fontSize: size.textSmall,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: StringData.fontFamilyPoppins),
+                  ),
                 ),
               ),
-              SizedBox(height: size.h12),
               Text(
                 label(e: en.uploadTheFile, b: bn.uploadTheFile),
                 style: TextStyle(
@@ -144,16 +146,17 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        controller.filename.value != ''
-                            ? IconButton(
-                                onPressed: () {
-                                  controller.filename.value = '';
-                                },
-                                icon: Icon(
-                                  Icons.close,
-                                  color: clr.appPrimaryColorGreen,
-                                ))
-                            : SizedBox(),
+                        if (controller.filename.value != '')
+                          InkWell(
+                              onTap: () {
+                                controller.filename.value = '';
+                                controller.isUpload.value = false;
+                              },
+                              child: Icon(
+                                Icons.close,
+                                color: clr.appPrimaryColorGreen,
+                                size: size.r24,
+                              )),
                         Icon(
                           Icons.attach_file,
                           color: clr.iconColorHint,
@@ -164,23 +167,81 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                   ),
                 ),
               ),
-              SizedBox(height: size.h12),
-             Obx(() =>  Row(
-               mainAxisAlignment: MainAxisAlignment.end,
-               children: [
-                 CustomButton(onTap: (){}  , title: "আপলোড",bgColor: controller.filename.value==''?clr.greyColor:clr.appPrimaryColorGreen,borderColor: Colors.transparent,verticalPadding: size.h4,)
-               ],
-             ))
-
+              Obx(() {
+                return controller.isUpload.isFalse
+                    ? Padding(
+                        padding: EdgeInsets.symmetric(vertical: size.h20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            CustomButton(
+                              onTap: () {
+                                if (controller.filename.value != '') {
+                                  controller.isUpload.value = true;
+                                }
+                              },
+                              title: label(e: en.upload, b: bn.upload),
+                              bgColor: controller.filename.value == ''
+                                  ? clr.greyColor
+                                  : clr.appPrimaryColorGreen,
+                              borderColor: Colors.transparent,
+                              radius: size.r8,
+                              verticalPadding: size.h4,
+                            )
+                          ],
+                        ),
+                      )
+                    : const Wrap();
+              }),
+              Obx(() {
+                return controller.isUpload.isTrue
+                    ? Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: size.w20, vertical: size.h48),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: CustomButton(
+                                onTap: () {
+                                  CustomToasty.of(context).showSuccess(
+                                      "সফলভাবে  জমাদান সম্পন্ন হয়েছে");
+                                },
+                                title: label(e: en.submit, b: bn.submit),
+                                radius: size.r4,
+                                verticalPadding: size.h4,
+                                bgColor: clr.scaffoldBackgroundColor,
+                                textColor: clr.appPrimaryColorGreen,
+                                borderColor: clr.appPrimaryColorGreen,
+                              ),
+                            ),
+                            SizedBox(width: size.w16),
+                            Expanded(
+                              child: CustomButton(
+                                onTap: () {
+                                  CustomToasty.of(context).showSuccess(
+                                      "সফলভাবে সংরক্ষণ সম্পন্ন হয়েছে");
+                                },
+                                title:
+                                    label(e: en.saveAsDraft, b: bn.saveAsDraft),
+                                radius: size.r4,
+                                verticalPadding: size.h4,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : const Wrap();
+              })
             ],
           ),
         ));
   }
 
-  void onTapWriteHere() {
+  void onTapWriteHere(String screenName) {
     showCupertinoModalPopup(
       context: context,
-      builder: (context) => const AssignmentBottomSheet(),
+      builder: (context) => AssignmentBottomSheet(from: screenName),
     );
   }
 }
@@ -189,13 +250,24 @@ class CustomFilePicker extends StatefulWidget {
   final Function(String) onFilePicked;
   final Widget child;
 
-  CustomFilePicker({required this.onFilePicked, required this.child});
+  const CustomFilePicker(
+      {super.key, required this.onFilePicked, required this.child});
 
   @override
-  _CustomFilePickerState createState() => _CustomFilePickerState();
+  State<CustomFilePicker> createState() => _CustomFilePickerState();
 }
 
 class _CustomFilePickerState extends State<CustomFilePicker> {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+        onTap: () {
+          print("tapped");
+          _pickFile();
+        },
+        child: widget.child);
+  }
+
   void _pickFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
 
@@ -205,15 +277,5 @@ class _CustomFilePickerState extends State<CustomFilePicker> {
     } else {
       // User canceled the file picking
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () {
-          print("tapped");
-          _pickFile();
-        },
-        child: widget.child);
   }
 }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/feature/assignment/presentation/screens/assignment_screen.dart';
 
+import '../../../assignment/presentation/screens/assignment_screen.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
@@ -99,9 +100,9 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Icon(
-                        Icons.calendar_month_outlined,
-                        color: clr.iconColorBlack,
-                        size: size.r24,
+                        Icons.calendar_month_rounded,
+                        color: clr.iconColorDarkGrey,
+                        size: size.r20,
                       ),
                       SizedBox(width: size.w8),
                       Expanded(
@@ -124,29 +125,25 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(
-                        Icons.schedule,
-                        color: clr.iconColorBlack,
-                        size: size.r24,
+                      SvgPicture.asset(
+                        ImageAssets.icAlarm,
+                        colorFilter: ColorFilter.mode(
+                            clr.iconColorDarkGrey, BlendMode.srcIn),
                       ),
                       SizedBox(width: size.w8),
-                      Expanded(
-                        child: Text(
-                          label(e: "5 pm", b: "বিকেল ৫টা"),
-                          style: TextStyle(
-                              color: clr.blackColor,
-                              fontSize: size.textSmall,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: StringData.fontFamilyPoppins),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                      Text(
+                        label(e: "5 pm", b: "বিকেল ৫টা"),
+                        style: TextStyle(
+                            color: clr.blackColor,
+                            fontSize: size.textSmall,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: StringData.fontFamilyPoppins),
                       ),
-                      SizedBox(width: size.w8),
-                      Icon(
-                        Icons.schedule,
-                        color: clr.iconColorBlack,
-                        size: size.r20,
+                      SizedBox(width: size.w16),
+                      SvgPicture.asset(
+                        ImageAssets.icDictionary,
+                        colorFilter: ColorFilter.mode(
+                            clr.iconColorDarkGrey, BlendMode.srcIn),
                       ),
                       SizedBox(width: size.w8),
                       Expanded(
@@ -168,16 +165,16 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Icon(
-                        Icons.quiz_outlined,
-                        color: clr.iconColorBlack,
-                        size: size.r24,
+                        Icons.quiz,
+                        color: clr.iconColorDarkGrey,
+                        size: size.r20,
                       ),
                       SizedBox(width: size.w8),
                       Expanded(
                         child: Text(
                           label(
-                              e: "Closing Date: 31st January",
-                              b: "সমাপ্তির শেষ তারিখ: ৩১ জানুয়ারী"),
+                              e: "Total Questions: 01",
+                              b: "প্রশ্নের সংখ্যা: ০১"),
                           style: TextStyle(
                               color: clr.blackColor,
                               fontSize: size.textSmall,
