@@ -197,7 +197,7 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                 return controller.isUpload.isTrue
                     ? Padding(
                         padding: EdgeInsets.symmetric(
-                            horizontal: size.w20, vertical: size.h48),
+                            horizontal: size.w16, vertical: size.h48),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

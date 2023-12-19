@@ -97,7 +97,6 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
               child: Column(
                 children: [
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Icon(
                         Icons.calendar_month_rounded,
@@ -123,7 +122,6 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
                   ),
                   SizedBox(height: size.h16),
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SvgPicture.asset(
                         ImageAssets.icAlarm,
@@ -162,7 +160,6 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
                   ),
                   SizedBox(height: size.h16),
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Icon(
                         Icons.quiz,
