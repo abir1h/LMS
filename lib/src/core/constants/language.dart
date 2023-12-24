@@ -226,6 +226,6 @@ class LanguageBn {
   String upload = "আপলোড";
   String uploadTheFile = "ফাইল আপলোড করুন";
   String or = "অথবা";
-  String submit = "সাবমিট";
+  String submit = "জমা দিন";
   String saveAsDraft = "সেভ এস ড্রাফট";
 }

@@ -52,6 +52,7 @@ class ThemeColor {
   Color get cardFillColorPurple => HexColor("F7F2FF");
   Color get cardFillColorBlue => HexColor("E7F6FF");
   Color get cardFillColorCruise => HexColor("B3E0DD");
+  Color get drawerFillColor => HexColor("E6F8F4");
 
   Color get clickableLinkColor => HexColor("4A88FF");
   Color get progressBGColor => HexColor("D9D9D9");
