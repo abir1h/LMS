@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lms/src/core/utility/app_label.dart';
 
+import '../../../../core/utility/app_label.dart';
 import '../../../../core/constants/common_imports.dart';
 
 class CourseContentWidget extends StatelessWidget with AppTheme, Language {
@@ -79,8 +79,6 @@ class CourseContentWidget extends StatelessWidget with AppTheme, Language {
                           fontSize: size.textSmall,
                           fontWeight: FontWeight.w400,
                           fontFamily: StringData.fontFamilyPoppins),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
                     ),
                     SizedBox(width: size.w8),
                     Icon(

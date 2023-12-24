@@ -42,7 +42,6 @@ class _RootScreenState extends State<RootScreen>
   ];
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setPage();
     Get.put(DashboardController());
@@ -197,61 +196,6 @@ class _RootScreenState extends State<RootScreen>
             )
           : null,
     );
-    //region old
-    return Column(
-      children: [
-        Expanded(child: pages[_currentPageIndex]),
-        BottomNavigationBar(
-          backgroundColor: Colors.white,
-          currentIndex: _currentPageIndex,
-          selectedItemColor: clr.appSecondaryColorFlagRed,
-          unselectedItemColor: clr.appPrimaryColorGreen,
-          iconSize: 24.h,
-          selectedLabelStyle: TextStyle(
-              color: clr.appPrimaryColorGreen,
-              fontFamily: StringData.fontFamilyRoboto,
-              fontWeight: FontWeight.w400,
-              fontSize: 12.sp),
-          type: BottomNavigationBarType.fixed,
-          onTap: (index) {
-            setState(() {
-              _currentPageIndex = index;
-            });
-          },
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home_outlined,
-                size: size.r24,
-              ),
-              label: label(e: en.homeText, b: bn.homeText),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.auto_stories,
-                size: size.r24,
-              ),
-              label: label(e: en.coursesText, b: bn.coursesText),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.assignment,
-                size: size.r24,
-              ),
-              label: label(e: en.notesText, b: bn.notesText),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                CupertinoIcons.profile_circled,
-                size: size.r24,
-              ),
-              label: label(e: en.profileText, b: bn.profileText),
-            ),
-          ],
-        ),
-      ],
-    );
-    //endregion
   }
 
   @override

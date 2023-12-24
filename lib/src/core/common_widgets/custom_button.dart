@@ -46,8 +46,7 @@ class CustomButton extends StatelessWidget with AppTheme {
               color: bgColor ?? clr.appPrimaryColorGreen,
               borderRadius: BorderRadius.circular(radius ?? size.w10),
               border: Border.all(
-                  color: borderColor ?? clr.appPrimaryColorGreen,
-                  width: size.w1)),
+                  color: borderColor ?? Colors.transparent, width: size.w1)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

@@ -101,6 +101,7 @@ mixin CustomDialogWidget {
                                                   fontWeight: FontWeight.w500,
                                                   fontFamily: StringData
                                                       .fontFamilyPoppins),
+                                              textAlign: TextAlign.center,
                                             ),
                                           ),
                                         ),
@@ -134,6 +135,7 @@ mixin CustomDialogWidget {
                                             fontWeight: FontWeight.w500,
                                             fontFamily:
                                                 StringData.fontFamilyPoppins),
+                                        textAlign: TextAlign.center,
                                       ),
                                     ),
                                   ),

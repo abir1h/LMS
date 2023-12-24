@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/core/common_widgets/custom_toasty.dart';
 
+import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../controllers/assignment_controller.dart';
 import '../widgets/assignment_bottom_sheet.dart';
