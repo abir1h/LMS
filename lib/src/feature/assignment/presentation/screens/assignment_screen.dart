@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/common_widgets/custom_toasty.dart';
@@ -10,6 +9,7 @@ import '../widgets/assignment_bottom_sheet.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
+import '../widgets/custom_file_picker.dart';
 
 class AssignmentScreen extends StatefulWidget {
   const AssignmentScreen({super.key});
@@ -243,39 +243,5 @@ class _AssignmentScreenState extends State<AssignmentScreen>
       context: context,
       builder: (context) => AssignmentBottomSheet(from: screenName),
     );
-  }
-}
-
-class CustomFilePicker extends StatefulWidget {
-  final Function(String) onFilePicked;
-  final Widget child;
-
-  const CustomFilePicker(
-      {super.key, required this.onFilePicked, required this.child});
-
-  @override
-  State<CustomFilePicker> createState() => _CustomFilePickerState();
-}
-
-class _CustomFilePickerState extends State<CustomFilePicker> {
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () {
-          print("tapped");
-          _pickFile();
-        },
-        child: widget.child);
-  }
-
-  void _pickFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-
-    if (result != null) {
-      String filePath = result.files.single.path!;
-      widget.onFilePicked(filePath);
-    } else {
-      // User canceled the file picking
-    }
   }
 }
