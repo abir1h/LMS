@@ -1,17 +1,14 @@
-import 'package:flutter/cupertino.dart';
-
 class BlankModel {
-  int? fillIntheGapModelId;
+  int? fillInTheGapModelId;
   String? title;
   String? description;
   String? blank1;
   String? blank2;
 
-
-  BlankModel({
-     this.fillIntheGapModelId,
-     this.title,
-     this.blank1,
-     this.blank2,this.description
-  });
+  BlankModel(
+      {this.fillInTheGapModelId,
+      this.title,
+      this.blank1,
+      this.blank2,
+      this.description});
 }

@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:lms/src/feature/assessment/presentation/screens/assessment_quiz_screen.dart';
 
-import '../../../assignment/presentation/screens/assignment_screen.dart';
 import '../../../../core/common_widgets/custom_button.dart';
-import '../../../../core/utility/app_label.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
+import '../../../../core/utility/app_label.dart';
 
-class CourseAssignmentScreen extends StatefulWidget {
-  const CourseAssignmentScreen({super.key});
+class AssessmentScreen extends StatefulWidget {
+  final VoidCallback onTap;
+  const AssessmentScreen({super.key, required this.onTap});
 
   @override
-  State<CourseAssignmentScreen> createState() => _CourseAssignmentScreenState();
+  State<AssessmentScreen> createState() => _AssessmentScreenState();
 }
 
-class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
+class _AssessmentScreenState extends State<AssessmentScreen>
     with AppTheme, Language {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-        title: label(e: en.assignment, b: bn.assignment),
+        title: label(e: en.assessment, b: bn.assessment),
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
@@ -48,9 +49,7 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: size.w16),
                 child: Text(
-                  label(
-                      e: "Brief Description of The Assignment",
-                      b: "অ্যাসাইনমেন্ট সংক্ষিপ্ত বর্ণনা"),
+                  label(e: en.assessment, b: bn.assessment),
                   style: TextStyle(
                       color: clr.textColorAppleBlack,
                       fontSize: size.textSmall,
@@ -76,9 +75,7 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: size.w16),
                 child: Text(
-                  label(
-                      e: "Assignment Instructions",
-                      b: "অ্যাসাইনমেন্ট নির্দেশাবলী"),
+                  label(e: en.instructions, b: bn.instructions),
                   style: TextStyle(
                       color: clr.textColorAppleBlack,
                       fontSize: size.textSmall,
@@ -109,8 +106,8 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
                         Expanded(
                           child: Text(
                             label(
-                                e: "Closing Date: 31st January",
-                                b: "সমাপ্তির শেষ তারিখ: ৩১ জানুয়ারী"),
+                                e: "Last date for submission: 31 January",
+                                b: "জমাদানের শেষ তারিখ: ৩১ জানুয়ারী"),
                             style: TextStyle(
                                 color: clr.blackColor,
                                 fontSize: size.textSmall,
@@ -132,7 +129,7 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
                         ),
                         SizedBox(width: size.w8),
                         Text(
-                          label(e: "5 pm", b: "বিকেল ৫টা"),
+                          label(e: "Time: 30 minutes", b: "সময়ঃ ৩০ মিনিট"),
                           style: TextStyle(
                               color: clr.blackColor,
                               fontSize: size.textSmall,
@@ -148,7 +145,7 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
                         SizedBox(width: size.w8),
                         Expanded(
                           child: Text(
-                            label(e: "Word range: 200", b: "শব্দ পরিসীমা: ২০০"),
+                            label(e: "Marks: 25", b: "মার্কস : ২৫"),
                             style: TextStyle(
                                 color: clr.blackColor,
                                 fontSize: size.textSmall,
@@ -172,8 +169,8 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
                         Expanded(
                           child: Text(
                             label(
-                                e: "Total Questions: 01",
-                                b: "প্রশ্নের সংখ্যা: ০১"),
+                                e: "Total Questions: 10",
+                                b: "প্রশ্নের সংখ্যা: ১০"),
                             style: TextStyle(
                                 color: clr.blackColor,
                                 fontSize: size.textSmall,
@@ -189,7 +186,7 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: size.w10),
                       child: CustomButton(
-                        onTap: () => Get.to(const AssignmentScreen()),
+                        onTap: widget.onTap,
                         title: label(e: en.loginText, b: bn.loginText),
                         radius: size.r4,
                       ),

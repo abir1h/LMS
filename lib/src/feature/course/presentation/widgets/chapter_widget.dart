@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lms/src/feature/assessment/presentation/screens/assessment_quiz_screen.dart';
+import 'package:lms/src/feature/assessment/presentation/screens/assessment_screen.dart';
 
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/utility/app_label.dart';
@@ -192,14 +193,19 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                 title: label(e: "Quiz", b: "কুইজ"),
                 buttonIcon: Icons.visibility,
                 status: true,
-                onTap: () => Get.to(() => const AssessmentQuizScreen()),
+                onTap: () => Get.to(() => AssessmentScreen(
+                      onTap: () => Get.to(const AssessmentQuizScreen()),
+                    )),
               ),
               CourseContentWidget(
-                onTap: () => Get.to(const FillInTheBlankScreen()),
-                courseIcon: Icons.help_center,
-                iconColor: clr.textColorAppleBlack,
+                courseIcon: Icons.add_comment,
+                iconColor: clr.appPrimaryColorGreen,
                 title: label(e: "Fill in the gaps", b: "শূন্যস্থান পূরণ "),
                 buttonIcon: Icons.visibility,
+                status: true,
+                onTap: () => Get.to(() => AssessmentScreen(
+                      onTap: () => Get.to(const FillInTheBlankScreen()),
+                    )),
               ),
               CourseContentWidget(
                 courseIcon: Icons.add_comment,

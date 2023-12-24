@@ -116,6 +116,9 @@ class LanguageEn {
   String or = "Or";
   String submit = "Submit";
   String saveAsDraft = "Save As Draft";
+
+  String assessment = "Assessment";
+  String instructions = "Instructions";
 }
 
 class LanguageBn {
@@ -228,4 +231,7 @@ class LanguageBn {
   String or = "অথবা";
   String submit = "জমা দিন";
   String saveAsDraft = "সেভ এস ড্রাফট";
+
+  String assessment = "মূল্যায়ন";
+  String instructions = "নির্দেশাবলী";
 }

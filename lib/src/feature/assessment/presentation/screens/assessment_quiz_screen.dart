@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lms/src/core/common_widgets/custom_button.dart';
+import 'package:get/get.dart';
 
+import '../models/quiz_model.dart';
+import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
+import '../controllers/assessment_controller.dart';
 
 class AssessmentQuizScreen extends StatefulWidget {
   const AssessmentQuizScreen({super.key});
@@ -15,6 +17,8 @@ class AssessmentQuizScreen extends StatefulWidget {
 
 class _AssessmentQuizScreenState extends State<AssessmentQuizScreen>
     with AppTheme, Language {
+  final controller = Get.put(AssessmentController());
+
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
@@ -37,24 +41,25 @@ class _AssessmentQuizScreenState extends State<AssessmentQuizScreen>
                     fontFamily: StringData.fontFamilyPoppins),
               ),
               SizedBox(height: size.h16),
-              ListView.separated(
-                shrinkWrap: true,
-                itemCount: 5,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return QuestionWidget(
-                    questionNo: "${index + 1}",
-                    questionText:
-                        "শেখার জন্য শিক্ষাদানের প্রযুক্তি হল তাদের শিক্ষা, বা যারা শিক্ষা দিতে চান, যে কোনো বিষয়ে, যে কোনো সময়?",
-                    child: MCQAnswerWidget(
-                        // data: data,
-                        ),
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return SizedBox(height: size.h20);
-                },
-              ),
+              GetBuilder<AssessmentController>(
+                  builder: (_) => ListView.separated(
+                        shrinkWrap: true,
+                        itemCount: controller.questions.length,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return QuestionWidget(
+                            questionNo: "${index + 1}",
+                            questionText:
+                                controller.questions[index].questionText,
+                            child: MCQAnswerWidget(
+                              data: controller.questions[index],
+                            ),
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return SizedBox(height: size.h20);
+                        },
+                      )),
               SizedBox(height: size.h16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -158,10 +163,10 @@ class QuestionWidget extends StatelessWidget with AppTheme {
 
 ///MCQ Section
 class MCQAnswerWidget extends StatefulWidget {
-  // final Questions data;
+  final QuestionsEntity data;
   const MCQAnswerWidget({
     Key? key,
-    // required this.data,
+    required this.data,
   }) : super(key: key);
 
   @override
@@ -176,80 +181,36 @@ class _MCQAnswerWidgetState extends State<MCQAnswerWidget> with AppTheme {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         MCQAnswerOptionWidget(
-          value: "উত্তর বিকল্প ১",
-          isSelected: false,
+          value: widget.data.option1,
+          isSelected: widget.data.userAnswer1,
           onTap: () => setState(() {
-            true;
+            widget.data.userAnswer1 = !widget.data.userAnswer1;
           }),
         ),
         SizedBox(height: size.h12),
         MCQAnswerOptionWidget(
-          value: "উত্তর বিকল্প ২",
-          isSelected: false,
+          value: widget.data.option2,
+          isSelected: widget.data.userAnswer2,
           onTap: () => setState(() {
-            true;
+            widget.data.userAnswer2 = !widget.data.userAnswer2;
           }),
         ),
         SizedBox(height: size.h12),
         MCQAnswerOptionWidget(
-          value: "উত্তর বিকল্প ৩",
-          isSelected: true,
+          value: widget.data.option3,
+          isSelected: widget.data.userAnswer3,
           onTap: () => setState(() {
-            true;
+            widget.data.userAnswer3 = !widget.data.userAnswer3;
           }),
         ),
         SizedBox(height: size.h12),
         MCQAnswerOptionWidget(
-          value: "উত্তর বিকল্প ৪",
-          isSelected: false,
+          value: widget.data.option4,
+          isSelected: widget.data.userAnswer4,
           onTap: () => setState(() {
-            true;
+            widget.data.userAnswer4 = !widget.data.userAnswer4;
           }),
         ),
-        SizedBox(height: size.h12),
-        MCQAnswerOptionWidget(
-          value: "উত্তর বিকল্প ৫",
-          isSelected: false,
-          onTap: () => setState(() {
-            true;
-          }),
-        ),
-
-        // ///Option 1
-        // MCQAnswerOptionWidget(
-        //   value: widget.data.option1,
-        //   isSelected: widget.data.userAnswer1,
-        //   onTap: () => setState(() {
-        //     widget.data.userAnswer1 = !widget.data.userAnswer1;
-        //   }),
-        // ),
-        //
-        // ///Option 2
-        // MCQAnswerOptionWidget(
-        //   value: widget.data.option2,
-        //   isSelected: widget.data.userAnswer2,
-        //   onTap: () => setState(() {
-        //     widget.data.userAnswer2 = !widget.data.userAnswer2;
-        //   }),
-        // ),
-        //
-        // ///Option 3
-        // MCQAnswerOptionWidget(
-        //   value: widget.data.option3,
-        //   isSelected: widget.data.userAnswer3,
-        //   onTap: () => setState(() {
-        //     widget.data.userAnswer3 = !widget.data.userAnswer3;
-        //   }),
-        // ),
-        //
-        // ///Option 4
-        // MCQAnswerOptionWidget(
-        //   value: widget.data.option4,
-        //   isSelected: widget.data.userAnswer4,
-        //   onTap: () => setState(() {
-        //     widget.data.userAnswer4 = !widget.data.userAnswer4;
-        //   }),
-        // ),
       ],
     );
   }

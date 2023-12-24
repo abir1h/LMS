@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lms/src/core/constants/common_imports.dart';
-import 'package:lms/src/feature/assessment/presentation/models/blank_model.dart';
 
-import '../../../../core/common_widgets/text_field_widget.dart';
+import '../../../../core/constants/common_imports.dart';
+import '../models/blank_model.dart';
 import 'dashed_border.dart';
 
 class BlankCard extends StatefulWidget {
   final BlankModel? mainModel;
-  final ValueChanged<String>? onChangedv1;
-  final ValueChanged<String>? onChangedv2;
+  final ValueChanged<String>? onChangeDv1;
+  final ValueChanged<String>? onChangeDv2;
 
   const BlankCard(
-      {super.key, this.mainModel, this.onChangedv1, this.onChangedv2});
+      {super.key, this.mainModel, this.onChangeDv1, this.onChangeDv2});
 
   @override
   State<BlankCard> createState() => _BlankCardState();
@@ -36,8 +35,7 @@ class _BlankCardState extends State<BlankCard> with AppTheme {
                 text: 'প্রশ্ন ১.',
                 children: <InlineSpan>[
                   TextSpan(
-                    text:
-                        widget.mainModel!.title,
+                    text: widget.mainModel!.title,
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontFamily: StringData.fontFamilyPoppins,
@@ -65,7 +63,7 @@ class _BlankCardState extends State<BlankCard> with AppTheme {
           height: size.h8,
         ),
         TextField(
-          onChanged: widget.onChangedv1,
+          onChanged: widget.onChangeDv1,
           decoration: InputDecoration(
             // isDense: true,
             border: InputBorder.none,
@@ -107,7 +105,7 @@ class _BlankCardState extends State<BlankCard> with AppTheme {
           height: size.h8,
         ),
         TextField(
-          onChanged: widget.onChangedv2,
+          onChanged: widget.onChangeDv2,
           decoration: InputDecoration(
             // isDense: true,
             border: InputBorder.none,
