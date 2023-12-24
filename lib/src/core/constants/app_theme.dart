@@ -44,6 +44,7 @@ class ThemeColor {
   Color get cardStrokeColorPurple => HexColor("E5D9F7");
   Color get cardStrokeColorBlue => HexColor("BEDBED");
   Color get dividerStrokeColorGrey => HexColor("B0B0B0");
+  Color get gapStrokeGrey => HexColor("646464");
 
   Color get fromBoxFillColor => HexColor("FCFFFE");
   Color get cardFillColorOrange => HexColor("FFE9D6");

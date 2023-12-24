@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/utility/app_label.dart';
+import '../../../assessment/presentation/screens/fill_in_the_blank_screen.dart';
 import '../screens/course_assignment_screen.dart';
 import '../../../transcript_video/presentaion/screens/transcript_video_screen.dart';
 import '../screens/course_live_class_screen.dart';
@@ -182,6 +183,13 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                 courseIcon: Icons.help_center,
                 iconColor: clr.textColorAppleBlack,
                 title: label(e: "Evaluation", b: "মূল্যায়ন"),
+                buttonIcon: Icons.visibility,
+              ),
+              CourseContentWidget(
+                onTap: () => Get.to(const FillInTheBlankScreen()),
+                courseIcon: Icons.help_center,
+                iconColor: clr.textColorAppleBlack,
+                title: label(e: "Fill in the gaps", b: "শূন্যস্থান পূরণ "),
                 buttonIcon: Icons.visibility,
               ),
               CourseContentWidget(
