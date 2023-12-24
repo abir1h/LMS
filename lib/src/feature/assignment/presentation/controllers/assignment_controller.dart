@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 class AssignmentController extends GetxController {
   RxString filename=''.obs;
+  RxBool isUpload = false.obs;
 
   @override
   void onInit() {
@@ -14,7 +15,7 @@ class AssignmentController extends GetxController {
 
     String fileName = filePath.split('/').last; // Extract the file name
     return fileName.length > maxFileNameLength
-        ? fileName.substring(0, maxFileNameLength) + '...'
+        ? '${fileName.substring(0, maxFileNameLength)}...'
         : fileName;
   }
 }

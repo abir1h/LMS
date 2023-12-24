@@ -111,6 +111,7 @@ class LanguageEn {
   String assignmentInstruction =
       "Please look at the picture below and answer the following questions.";
   String answerTheFollowingQuestions = "Answer the following questions.";
+  String upload = "Upload";
   String uploadTheFile = "Upload the file";
   String or = "Or";
   String submit = "Submit";
@@ -222,6 +223,7 @@ class LanguageBn {
   String assignmentInstruction =
       "অনুগ্রহ করে নিচের ছবিটি দেখুন এবং নিম্নলিখিত প্রশ্নের উত্তর দিন।";
   String answerTheFollowingQuestions = "নিচের প্রশ্নগুলোর উত্তর দিন.";
+  String upload = "আপলোড";
   String uploadTheFile = "ফাইল আপলোড করুন";
   String or = "অথবা";
   String submit = "সাবমিট";
