@@ -9,6 +9,7 @@ import '../widgets/assignment_bottom_sheet.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
+import '../widgets/custom_file_picker.dart';
 
 class AssignmentScreen extends StatefulWidget {
   const AssignmentScreen({super.key});
@@ -185,35 +186,4 @@ class _AssignmentScreenState extends State<AssignmentScreen>
   }
 }
 
-class CustomFilePicker extends StatefulWidget {
-  final Function(String) onFilePicked;
-  final Widget child;
 
-  CustomFilePicker({required this.onFilePicked, required this.child});
-
-  @override
-  _CustomFilePickerState createState() => _CustomFilePickerState();
-}
-
-class _CustomFilePickerState extends State<CustomFilePicker> {
-  void _pickFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-
-    if (result != null) {
-      String filePath = result.files.single.path!;
-      widget.onFilePicked(filePath);
-    } else {
-      // User canceled the file picking
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () {
-          print("tapped");
-          _pickFile();
-        },
-        child: widget.child);
-  }
-}
