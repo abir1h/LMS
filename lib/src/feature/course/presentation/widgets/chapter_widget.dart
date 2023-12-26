@@ -187,51 +187,51 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                 iconColor: clr.appPrimaryColorGreen,
                 title: label(e: "Quiz", b: "কুইজ"),
                 buttonIcon: Icons.visibility,
-                status: true,
-                onTap: () => Get.to(() => CourseAssessmentScreen(
-                      onTap: () => Get.to(const AssessmentQuizScreen()),
-                    )),
+                // status: true,
+                // onTap: () => Get.to(() => CourseAssessmentScreen(
+                //       onTap: () => Get.to(const AssessmentQuizScreen()),
+                //     )),
               ),
               CourseContentWidget(
                 courseIcon: Icons.add_comment,
                 iconColor: clr.appPrimaryColorGreen,
                 title: label(e: "Matching", b: "ম্যাচিং"),
                 buttonIcon: Icons.visibility,
-                status: true,
-                onTap: () => Get.to(() => CourseAssessmentScreen(
-                      onTap: () => Get.to(const AssessmentMatchingScreen()),
-                    )),
+                // status: true,
+                // onTap: () => Get.to(() => CourseAssessmentScreen(
+                //       onTap: () => Get.to(const AssessmentMatchingScreen()),
+                //     )),
               ),
               CourseContentWidget(
                 courseIcon: Icons.add_comment,
                 iconColor: clr.appPrimaryColorGreen,
                 title: label(e: "True False", b: "সত্য মিথ্যা"),
                 buttonIcon: Icons.visibility,
-                status: true,
-                onTap: () => Get.to(() => CourseAssessmentScreen(
-                      onTap: () => Get.to(const AssessmentTrueFalseScreen()),
-                    )),
+                // status: true,
+                // onTap: () => Get.to(() => CourseAssessmentScreen(
+                //       onTap: () => Get.to(const AssessmentTrueFalseScreen()),
+                //     )),
               ),
               CourseContentWidget(
                 courseIcon: Icons.add_comment,
                 iconColor: clr.appPrimaryColorGreen,
                 title: label(e: "Fill in the gaps", b: "শূন্যস্থান পূরণ"),
                 buttonIcon: Icons.visibility,
-                status: true,
-                onTap: () => Get.to(() => CourseAssessmentScreen(
-                      onTap: () =>
-                          Get.to(const AssessmentFillInTheBlankScreen()),
-                    )),
+                // status: true,
+                // onTap: () => Get.to(() => CourseAssessmentScreen(
+                //       onTap: () =>
+                //           Get.to(const AssessmentFillInTheBlankScreen()),
+                //     )),
               ),
               CourseContentWidget(
                 courseIcon: Icons.add_comment,
                 iconColor: clr.appPrimaryColorGreen,
                 title: label(e: "One word answer", b: "এক কথায় উত্তর"),
                 buttonIcon: Icons.visibility,
-                status: true,
-                onTap: () => Get.to(() => CourseAssessmentScreen(
-                      onTap: () => Get.to(const AssessmentAnsInOneWordScreen()),
-                    )),
+                // status: true,
+                // onTap: () => Get.to(() => CourseAssessmentScreen(
+                //       onTap: () => Get.to(const AssessmentAnsInOneWordScreen()),
+                //     )),
               ),
               CourseContentWidget(
                 courseIcon: Icons.add_comment,
