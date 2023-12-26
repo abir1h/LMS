@@ -8,14 +8,14 @@ import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/utility/app_label.dart';
 import '../widgets/blank_card.dart';
 
-class FillInTheBlankScreen extends StatefulWidget {
-  const FillInTheBlankScreen({super.key});
+class AssessmentFillInTheBlankScreen extends StatefulWidget {
+  const AssessmentFillInTheBlankScreen({super.key});
 
   @override
-  State<FillInTheBlankScreen> createState() => _FillInTheBlankScreenState();
+  State<AssessmentFillInTheBlankScreen> createState() => _AssessmentFillInTheBlankScreenState();
 }
 
-class _FillInTheBlankScreenState extends State<FillInTheBlankScreen>
+class _AssessmentFillInTheBlankScreenState extends State<AssessmentFillInTheBlankScreen>
     with AppTheme, Language {
   final controller = Get.put(AssessmentController());
 

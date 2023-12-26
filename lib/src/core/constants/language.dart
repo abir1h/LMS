@@ -119,6 +119,11 @@ class LanguageEn {
 
   String assessment = "Assessment";
   String instructions = "Instructions";
+  String trueText = "True";
+  String falseText = "False";
+  String writeOneWordAnswer = "Write the answer in one word:";
+  String dropHere = "Drop Here";
+  String dragAnOption = "Drag an option";
 }
 
 class LanguageBn {
@@ -234,4 +239,9 @@ class LanguageBn {
 
   String assessment = "মূল্যায়ন";
   String instructions = "নির্দেশাবলী";
+  String trueText = "সত্য";
+  String falseText = "মিথ্যা";
+  String writeOneWordAnswer = "এক কথায় উত্তর লিখুন:";
+  String dropHere = "এখানে ড্রপ করুন";
+  String dragAnOption = "একটি বিকল্প টেনে আনুন";
 }

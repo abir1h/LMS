@@ -35,9 +35,11 @@ class ThemeColor {
 
   Color get textColorAppleBlack => HexColor("1D1D1F");
   Color get textColorBlack => HexColor("414141");
+  Color get textColorGray=> HexColor("A8A8A8");
   Color get placeHolderTextColorGray => HexColor("9F9F9F");
 
   Color get boxStrokeColor => HexColor("DFDFDF");
+  Color get boxStrokeColorSilver => HexColor("C0C0C0");
   Color get cardStrokeColor => HexColor("B6DED4");
   Color get cardStrokeColorOrange => HexColor("FDC89B");
   Color get cardStrokeColorGreen => HexColor("B7D37A");

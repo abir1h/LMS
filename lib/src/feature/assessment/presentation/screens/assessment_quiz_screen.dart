@@ -7,6 +7,7 @@ import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
 import '../controllers/assessment_controller.dart';
+import '../widgets/question_widget.dart';
 
 class AssessmentQuizScreen extends StatefulWidget {
   const AssessmentQuizScreen({super.key});
@@ -76,83 +77,6 @@ class _AssessmentQuizScreenState extends State<AssessmentQuizScreen>
             ],
           ),
         ));
-  }
-}
-
-///QuestionList
-class QuestionListWidget<T> extends StatefulWidget {
-  final List<T> items;
-  final Widget Function(BuildContext context, T data, int index) builder;
-  const QuestionListWidget(
-      {Key? key, required this.items, required this.builder})
-      : super(key: key);
-
-  @override
-  State<QuestionListWidget<T>> createState() => _QuestionListWidgetState<T>();
-}
-
-class _QuestionListWidgetState<T> extends State<QuestionListWidget<T>>
-    with AppTheme {
-  @override
-  Widget build(BuildContext context) {
-    return ListView.separated(
-      shrinkWrap: true,
-      itemCount: widget.items.length,
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) =>
-          widget.builder(context, widget.items[index], index),
-      separatorBuilder: (context, index) {
-        return SizedBox(height: size.h20);
-      },
-    );
-  }
-}
-
-///Question Title
-class QuestionWidget extends StatelessWidget with AppTheme {
-  final String questionText;
-  final Widget child;
-  final String questionNo;
-  const QuestionWidget(
-      {Key? key,
-      required this.questionText,
-      required this.child,
-      required this.questionNo})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text.rich(TextSpan(
-            text: label(
-                e: "Question ${questionNo.trim()}. ",
-                b: "প্রশ্ন ${questionNo.trim()}. "),
-            style: TextStyle(
-              color: clr.blackColor,
-              fontSize: size.textSmall,
-              fontWeight: FontWeight.w700,
-              fontFamily: StringData.fontFamilyPoppins,
-            ),
-            children: [
-              TextSpan(
-                text: questionText.trim(),
-                style: TextStyle(
-                  color: clr.blackColor,
-                  fontSize: size.textSmall,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: StringData.fontFamilyPoppins,
-                ),
-              ),
-            ])),
-        SizedBox(height: size.h10),
-        Flexible(
-          child: child,
-        ),
-      ],
-    );
   }
 }
 

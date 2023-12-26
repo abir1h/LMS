@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/feature/assessment/presentation/screens/assessment_quiz_screen.dart';
-import 'package:lms/src/feature/assessment/presentation/screens/assessment_screen.dart';
+import 'package:lms/src/feature/assessment/presentation/screens/assessment_answer_in_one_word_screen.dart';
+import 'package:lms/src/feature/assessment/presentation/screens/assessment_matching_screen.dart';
+import 'package:lms/src/feature/assessment/presentation/screens/assessment_true_false_screen.dart';
 
+import '../../../assessment/presentation/screens/assessment_quiz_screen.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/utility/app_label.dart';
-import '../../../assessment/presentation/screens/fill_in_the_blank_screen.dart';
+import '../../../assessment/presentation/screens/assessment_fill_in_the_blank_screen.dart';
+import '../screens/course_assessment_screen.dart';
 import '../screens/course_assignment_screen.dart';
 import '../../../transcript_video/presentaion/screens/transcript_video_screen.dart';
 import '../screens/course_live_class_screen.dart';
@@ -185,18 +188,49 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                 title: label(e: "Quiz", b: "কুইজ"),
                 buttonIcon: Icons.visibility,
                 status: true,
-                onTap: () => Get.to(() => AssessmentScreen(
+                onTap: () => Get.to(() => CourseAssessmentScreen(
                       onTap: () => Get.to(const AssessmentQuizScreen()),
                     )),
               ),
               CourseContentWidget(
                 courseIcon: Icons.add_comment,
                 iconColor: clr.appPrimaryColorGreen,
-                title: label(e: "Fill in the gaps", b: "শূন্যস্থান পূরণ "),
+                title: label(e: "Matching", b: "ম্যাচিং"),
                 buttonIcon: Icons.visibility,
                 status: true,
-                onTap: () => Get.to(() => AssessmentScreen(
-                      onTap: () => Get.to(const FillInTheBlankScreen()),
+                onTap: () => Get.to(() => CourseAssessmentScreen(
+                      onTap: () => Get.to(const AssessmentMatchingScreen()),
+                    )),
+              ),
+              CourseContentWidget(
+                courseIcon: Icons.add_comment,
+                iconColor: clr.appPrimaryColorGreen,
+                title: label(e: "True False", b: "সত্য মিথ্যা"),
+                buttonIcon: Icons.visibility,
+                status: true,
+                onTap: () => Get.to(() => CourseAssessmentScreen(
+                      onTap: () => Get.to(const AssessmentTrueFalseScreen()),
+                    )),
+              ),
+              CourseContentWidget(
+                courseIcon: Icons.add_comment,
+                iconColor: clr.appPrimaryColorGreen,
+                title: label(e: "Fill in the gaps", b: "শূন্যস্থান পূরণ"),
+                buttonIcon: Icons.visibility,
+                status: true,
+                onTap: () => Get.to(() => CourseAssessmentScreen(
+                      onTap: () =>
+                          Get.to(const AssessmentFillInTheBlankScreen()),
+                    )),
+              ),
+              CourseContentWidget(
+                courseIcon: Icons.add_comment,
+                iconColor: clr.appPrimaryColorGreen,
+                title: label(e: "One word answer", b: "এক কথায় উত্তর"),
+                buttonIcon: Icons.visibility,
+                status: true,
+                onTap: () => Get.to(() => CourseAssessmentScreen(
+                      onTap: () => Get.to(const AssessmentAnsInOneWordScreen()),
                     )),
               ),
               CourseContentWidget(
