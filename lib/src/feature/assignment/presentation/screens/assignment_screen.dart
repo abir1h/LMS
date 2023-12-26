@@ -66,31 +66,33 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                     fontFamily: StringData.fontFamilyPoppins),
               ),
               SizedBox(height: size.h12),
-              GestureDetector(
-                onTap: () => onTapWriteHere("assignmentScreen"),
-                child: Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.only(
-                      left: size.w16,
-                      right: size.w16,
-                      top: size.h12,
-                      bottom: size.h44),
-                  decoration: BoxDecoration(
-                    color: clr.whiteColor,
-                    borderRadius: BorderRadius.circular(size.r8),
-                    border:
-                        Border.all(color: clr.boxStrokeColor, width: size.w1),
+              GetBuilder<AssignmentController>(builder: (_) {
+                return GestureDetector(
+                  onTap: () => onTapWriteHere("assignmentScreen"),
+                  child: Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.only(
+                        left: size.w16,
+                        right: size.w16,
+                        top: size.h12,
+                        bottom: size.h44),
+                    decoration: BoxDecoration(
+                      color: clr.whiteColor,
+                      borderRadius: BorderRadius.circular(size.r8),
+                      border:
+                          Border.all(color: clr.boxStrokeColor, width: size.w1),
+                    ),
+                    child: Text(
+                      controller.data!= ''?controller.data:label(e: en.writeHere, b: bn.writeHere),
+                      style: TextStyle(
+                          color: clr.placeHolderTextColorGray,
+                          fontSize: size.textSmall,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: StringData.fontFamilyPoppins),
+                    ),
                   ),
-                  child: Text(
-                    label(e: en.writeHere, b: bn.writeHere),
-                    style: TextStyle(
-                        color: clr.placeHolderTextColorGray,
-                        fontSize: size.textSmall,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: StringData.fontFamilyPoppins),
-                  ),
-                ),
-              ),
+                );
+              }),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: size.h12),
                 child: Center(

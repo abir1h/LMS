@@ -82,7 +82,7 @@ print(refVlaue);
             time: currentTime.toString(),
             title: titleController.text,
             description: _controller.document.toDelta().toJson(),
-            reference: widget.mainModel!.reference);
+            reference: refVlaue!="টপিক সিলেক্ট করুন"?refVlaue:'');
         controller.noteList.add(newModel);
         Get.toNamed(AppRoutes.bottomNav, arguments: 2);
         CustomToasty.of(context)

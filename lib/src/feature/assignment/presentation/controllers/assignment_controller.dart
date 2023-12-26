@@ -1,14 +1,29 @@
 import 'package:get/get.dart';
+import 'package:lms/src/feature/assignment/presentation/models/assignment_model.dart';
 
 class AssignmentController extends GetxController {
-  RxString filename=''.obs;
+  RxString filename = ''.obs;
   RxBool isUpload = false.obs;
+
+  String data = '';
+  setContentToText(AssignmentModel mainModel) {
+    data = mainModel.content!.toPlainText();
+    update();
+  }
+
+  AssignmentModel? assignmentModel;
+  setContent(AssignmentModel data) {
+    assignmentModel = data;
+
+    update();
+  }
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
   }
+
   getShortenedFileName(String filePath) {
     // Set the maximum length for the displayed file name
     const int maxFileNameLength = 20;
