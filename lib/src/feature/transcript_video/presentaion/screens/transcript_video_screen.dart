@@ -148,7 +148,7 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                                         if (mounted) {
                                           setState(() {});
                                         }
-                                        AppEventsNotifier.notify(
+                                        /*AppEventsNotifier.notify(
                                             EventAction.courseDetailsScreen);
                                         AppEventsNotifier.notify(
                                             EventAction.onGoingCoursesScreen);
@@ -157,7 +157,7 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                                         AppEventsNotifier.notify(
                                             EventAction.bottomNavBar);
                                         AppEventsNotifier.notify(
-                                            EventAction.graphChart);
+                                            EventAction.graphChart);*/
                                       });
                                     },
                                     buttonHolder: const Icon(

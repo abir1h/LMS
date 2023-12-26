@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
+import '../../../course/presentation/screens/course_assignment_screen.dart';
 import '../widgets/assignment_bottom_sheet.dart';
 
 class AssignmentSubmitScreen extends StatefulWidget {
@@ -52,7 +55,9 @@ class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
                   children: [
                     Expanded(
                       child: CustomButton(
-                        onTap: () {},
+                        onTap: () {
+                          Get.off(() => const CourseAssignmentScreen());
+                        },
                         title: label(e: en.submit, b: bn.submit),
                         radius: size.r4,
                         verticalPadding: size.h4,
@@ -64,7 +69,10 @@ class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
                     SizedBox(width: size.w16),
                     Expanded(
                       child: CustomButton(
-                        onTap: () {},
+                        onTap: () {
+                          CustomToasty.of(context)
+                              .showSuccess("সফলভাবে সংরক্ষণ সম্পন্ন হয়েছে ");
+                        },
                         title: label(e: en.saveAsDraft, b: bn.saveAsDraft),
                         radius: size.r4,
                         verticalPadding: size.h4,

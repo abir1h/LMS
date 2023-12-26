@@ -102,12 +102,7 @@ class _QuestionListWidgetState<T> extends State<QuestionListWidget<T>>
       itemBuilder: (context, index) =>
           widget.builder(context, widget.items[index], index),
       separatorBuilder: (context, index) {
-        return Container(
-          height: size.h1,
-          margin: EdgeInsets.only(left: size.w56, right: size.h20),
-          width: double.maxFinite,
-          color: clr.dividerStrokeColorGrey,
-        );
+        return SizedBox(height: size.h20);
       },
     );
   }

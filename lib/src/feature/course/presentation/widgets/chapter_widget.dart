@@ -155,14 +155,6 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                 status: true,
                 onTap: () => Get.to(() => const CourseAssignmentScreen()),
               ),
-              CourseContentWidget(
-                courseIcon: Icons.assignment,
-                iconColor: clr.appPrimaryColorGreen,
-                title: label(e: "Assignment 2", b: "অ্যাসাইনমেন্ট"),
-                buttonIcon: Icons.visibility,
-                status: true,
-                onTap: () => Get.to(() => const CourseAssignmentScreen()),
-              ),
               // CourseContentWidget(
               //   courseIcon: Icons.assignment,
               //   iconColor: clr.appPrimaryColorGreen,
