@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/feature/assignment/presentation/controllers/assignment_controller.dart';
-import 'package:lms/src/feature/assignment/presentation/models/assignment_model.dart';
 
+import '../controllers/assignment_controller.dart';
+import '../models/assignment_model.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/utility/app_label.dart';
@@ -49,72 +48,68 @@ class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
             child: Icon(Icons.edit,
                 size: size.r24, color: clr.appPrimaryColorGreen)),
         child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          padding:
-              EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h16),
-          child: GetBuilder<AssignmentController>(builder: (_) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  controller.data,
-                  style: TextStyle(
-                      color: clr.textColorAppleBlack,
-                      fontSize: size.textSmall,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: StringData.fontFamilyPoppins),
-                  textAlign: TextAlign.justify,
-                ),
-                SizedBox(height: size.h56),
-                Divider(color: clr.boxStrokeColor),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: size.w16, vertical: size.h24),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: CustomButton(
-                          onTap: () {
-                            Get.off(() => const CourseAssignmentScreen());
-                          },
-                          title: label(e: en.submit, b: bn.submit),
-                          radius: size.r4,
-                          verticalPadding: size.h4,
-                          bgColor: clr.scaffoldBackgroundColor,
-                          textColor: clr.appPrimaryColorGreen,
-                          borderColor: clr.appPrimaryColorGreen,
-                        ),
-                      ),
-                      SizedBox(width: size.w16),
-                      Expanded(
-                        child: CustomButton(
-                          onTap: () {
-                            CustomToasty.of(context)
-                                .showSuccess("সফলভাবে সংরক্ষণ সম্পন্ন হয়েছে ");
-                          },
-                          title: label(e: en.saveAsDraft, b: bn.saveAsDraft),
-                          radius: size.r4,
-                          verticalPadding: size.h4,
-                        ),
-                      ),
-                    ],
+            physics: const BouncingScrollPhysics(),
+            padding:
+                EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h16),
+            child: GetBuilder<AssignmentController>(builder: (_) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    controller.data,
+                    style: TextStyle(
+                        color: clr.textColorAppleBlack,
+                        fontSize: size.textSmall,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: StringData.fontFamilyPoppins),
+                    textAlign: TextAlign.justify,
                   ),
-                )
-              ],
-            );
-          })
-        ));
+                  SizedBox(height: size.h56),
+                  Divider(color: clr.boxStrokeColor),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: size.w16, vertical: size.h24),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: CustomButton(
+                            onTap: () {
+                              Get.off(() => const CourseAssignmentScreen());
+                            },
+                            title: label(e: en.submit, b: bn.submit),
+                            radius: size.r4,
+                            verticalPadding: size.h4,
+                            bgColor: clr.scaffoldBackgroundColor,
+                            textColor: clr.appPrimaryColorGreen,
+                            borderColor: clr.appPrimaryColorGreen,
+                          ),
+                        ),
+                        SizedBox(width: size.w16),
+                        Expanded(
+                          child: CustomButton(
+                            onTap: () {
+                              CustomToasty.of(context).showSuccess(
+                                  "সফলভাবে সংরক্ষণ সম্পন্ন হয়েছে ");
+                            },
+                            title: label(e: en.saveAsDraft, b: bn.saveAsDraft),
+                            radius: size.r4,
+                            verticalPadding: size.h4,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              );
+            })));
   }
 
   void onTapWriteHere(String screenName) {
-
-
     showCupertinoModalPopup(
       context: context,
       builder: (context) =>
           AssignmentBottomSheet(from: screenName, mainModel: widget.mainModel),
     );
-
   }
 }
