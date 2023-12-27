@@ -6,12 +6,14 @@ import '../../../../core/utility/app_label.dart';
 class QuestionWidget extends StatelessWidget with AppTheme {
   final String questionNo;
   final String questionText;
+  final String questionImage;
   final String questionDescription;
   final Widget child;
   const QuestionWidget({
     Key? key,
     required this.questionNo,
     required this.questionText,
+    this.questionImage = "",
     this.questionDescription = "",
     required this.child,
   }) : super(key: key);
@@ -43,6 +45,11 @@ class QuestionWidget extends StatelessWidget with AppTheme {
                 ),
               ),
             ])),
+        if (questionImage.isNotEmpty)
+          Padding(
+            padding: EdgeInsets.only(top: size.h4),
+            child: Center(child: Image.asset(questionImage)),
+          ),
         if (questionDescription.isNotEmpty)
           Padding(
             padding: EdgeInsets.only(top: size.h4),

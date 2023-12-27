@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:lms/src/core/constants/common_imports.dart';
 
 import '../models/blank_model.dart';
 import '../models/quiz_model.dart';
@@ -92,6 +93,31 @@ class AssessmentController extends GetxController {
       option2Image: "",
       option3Image: "",
       option4Image: "",
+      option5Image: "",
+      userAnswer1: true,
+      userAnswer2: false,
+      userAnswer3: false,
+      userAnswer4: false,
+      userAnswer5: false,
+      answer1: true,
+      answer2: false,
+      answer3: false,
+      answer4: false,
+      answer5: false,
+    ),
+    QuestionsEntity(
+      id: 0,
+      questionText: "নিচের চিত্রে পর্যায়ক্রম অনুসারে যে চিত্রটি আসবে সেটি নির্বাচন করুন",
+      questionImage: ImageAssets.imgQuestion,
+      option1: "",
+      option2: "",
+      option3: "",
+      option4: "",
+      option5: "",
+      option1Image: ImageAssets.imgOption1,
+      option2Image: ImageAssets.imgOption2,
+      option3Image: ImageAssets.imgOption3,
+      option4Image: ImageAssets.imgOption3,
       option5Image: "",
       userAnswer1: true,
       userAnswer2: false,

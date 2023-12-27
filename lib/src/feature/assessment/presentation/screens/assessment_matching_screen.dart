@@ -67,17 +67,6 @@ class _AssessmentMatchingScreenState extends State<AssessmentMatchingScreen>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                label(
-                    e: "Please read the question and write the correct answer in one word.",
-                    b: "অনুগ্রহ করে প্রশ্নটি পড়ুন এবং সঠিক উত্তরটি এক কথায় লিখুন।"),
-                style: TextStyle(
-                    color: clr.iconColorDarkGrey,
-                    fontSize: size.textSmall,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: StringData.fontFamilyPoppins),
-              ),
-              SizedBox(height: size.h16),
               ListView.separated(
                 shrinkWrap: true,
                 itemCount: matchingQuestions.length,

@@ -52,6 +52,8 @@ class _AssessmentQuizScreenState extends State<AssessmentQuizScreen>
                             questionNo: "${index + 1}",
                             questionText:
                                 controller.questions[index].questionText,
+                            questionImage:
+                                controller.questions[index].questionImage,
                             child: MCQAnswerWidget(
                               data: controller.questions[index],
                             ),
@@ -101,6 +103,7 @@ class _MCQAnswerWidgetState extends State<MCQAnswerWidget> with AppTheme {
       children: [
         MCQAnswerOptionWidget(
           value: widget.data.option1,
+          imageValue: widget.data.option1Image,
           isSelected: widget.data.userAnswer1,
           onTap: () => setState(() {
             widget.data.userAnswer1 = !widget.data.userAnswer1;
@@ -109,6 +112,7 @@ class _MCQAnswerWidgetState extends State<MCQAnswerWidget> with AppTheme {
         SizedBox(height: size.h12),
         MCQAnswerOptionWidget(
           value: widget.data.option2,
+          imageValue: widget.data.option2Image,
           isSelected: widget.data.userAnswer2,
           onTap: () => setState(() {
             widget.data.userAnswer2 = !widget.data.userAnswer2;
@@ -117,6 +121,7 @@ class _MCQAnswerWidgetState extends State<MCQAnswerWidget> with AppTheme {
         SizedBox(height: size.h12),
         MCQAnswerOptionWidget(
           value: widget.data.option3,
+          imageValue: widget.data.option3Image,
           isSelected: widget.data.userAnswer3,
           onTap: () => setState(() {
             widget.data.userAnswer3 = !widget.data.userAnswer3;
@@ -125,6 +130,7 @@ class _MCQAnswerWidgetState extends State<MCQAnswerWidget> with AppTheme {
         SizedBox(height: size.h12),
         MCQAnswerOptionWidget(
           value: widget.data.option4,
+          imageValue: widget.data.option4Image,
           isSelected: widget.data.userAnswer4,
           onTap: () => setState(() {
             widget.data.userAnswer4 = !widget.data.userAnswer4;
@@ -138,11 +144,13 @@ class _MCQAnswerWidgetState extends State<MCQAnswerWidget> with AppTheme {
 ///MCQ Options
 class MCQAnswerOptionWidget extends StatefulWidget {
   final String value;
+  final String imageValue;
   final bool isSelected;
   final VoidCallback onTap;
   const MCQAnswerOptionWidget(
       {Key? key,
       required this.value,
+      required this.imageValue,
       required this.isSelected,
       required this.onTap})
       : super(key: key);
@@ -176,16 +184,18 @@ class _MCQAnswerOptionWidgetState extends State<MCQAnswerOptionWidget>
                   : clr.boxStrokeColor,
             ),
             SizedBox(width: size.w24),
-            Expanded(
-              child: Text(
-                widget.value,
-                style: TextStyle(
-                    color: clr.blackColor,
-                    fontSize: size.textSmall,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: StringData.fontFamilyPoppins),
+            if (widget.imageValue.isNotEmpty) Image.asset(widget.imageValue),
+            if (widget.value.isNotEmpty)
+              Expanded(
+                child: Text(
+                  widget.value,
+                  style: TextStyle(
+                      color: clr.blackColor,
+                      fontSize: size.textSmall,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: StringData.fontFamilyPoppins),
+                ),
               ),
-            ),
           ],
         ),
       ),
