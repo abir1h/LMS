@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lms/src/feature/assessment/presentation/screens/assessment_answer_in_one_word_screen.dart';
 import 'package:lms/src/feature/assessment/presentation/screens/assessment_matching_screen.dart';
+import 'package:lms/src/feature/assessment/presentation/screens/assessment_screen.dart';
 import 'package:lms/src/feature/assessment/presentation/screens/assessment_true_false_screen.dart';
 
 import '../../../assessment/presentation/screens/assessment_quiz_screen.dart';
@@ -181,6 +182,10 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                 iconColor: clr.textColorAppleBlack,
                 title: label(e: "Evaluation", b: "মূল্যায়ন"),
                 buttonIcon: Icons.visibility,
+                status: true,
+                onTap: () => Get.to(() => CourseAssessmentScreen(
+                  onTap: () => Get.to(const AssessmentScreen()),
+                )),
               ),
               CourseContentWidget(
                 courseIcon: Icons.add_comment,
