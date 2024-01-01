@@ -12,11 +12,12 @@ class AssessmentFillInTheBlankScreen extends StatefulWidget {
   const AssessmentFillInTheBlankScreen({super.key});
 
   @override
-  State<AssessmentFillInTheBlankScreen> createState() => _AssessmentFillInTheBlankScreenState();
+  State<AssessmentFillInTheBlankScreen> createState() =>
+      _AssessmentFillInTheBlankScreenState();
 }
 
-class _AssessmentFillInTheBlankScreenState extends State<AssessmentFillInTheBlankScreen>
-    with AppTheme, Language {
+class _AssessmentFillInTheBlankScreenState
+    extends State<AssessmentFillInTheBlankScreen> with AppTheme, Language {
   final controller = Get.put(AssessmentController());
 
   @override
@@ -27,6 +28,7 @@ class _AssessmentFillInTheBlankScreenState extends State<AssessmentFillInTheBlan
         resizeToAvoidBottomInset: true,
         child: GetBuilder<AssessmentController>(builder: (_) {
           return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             padding:
                 EdgeInsets.symmetric(horizontal: size.h16, vertical: size.w16),
             child: Column(

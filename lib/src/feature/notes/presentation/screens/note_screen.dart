@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../core/service/notifier/app_events_notifier.dart';
 import 'note_details.dart';
@@ -179,6 +180,7 @@ class _NoteScreenState extends State<NoteScreen>
               ),
             ],
           ),
+          SizedBox(height: size.h12),
           Obx(
             () => ListView.builder(
                 itemCount: controller.noteList.length,
@@ -202,7 +204,8 @@ class _NoteScreenState extends State<NoteScreen>
                                         .noteList[index].description as List)
                                     .toPlainText()
                                 : "New Note",
-                    timestamp: controller.noteList[index].time!,
+                    timestamp: DateFormat('dd MMMM yyyy').format(
+                        DateTime.parse(controller.noteList[index].time!)),
                     reference: controller.noteList[index].reference,
                     onPressed: () => Get.to(() => NoteDetailsScreen(
                           mainModel: controller.noteList[index],

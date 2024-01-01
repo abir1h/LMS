@@ -75,6 +75,8 @@ class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
                         Expanded(
                           child: CustomButton(
                             onTap: () {
+                              CustomToasty.of(context)
+                                  .showSuccess("সফলভাবে  জমাদান সম্পন্ন হয়েছে");
                               Get.off(() => const CourseAssignmentScreen());
                             },
                             title: label(e: en.submit, b: bn.submit),

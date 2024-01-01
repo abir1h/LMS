@@ -13,14 +13,15 @@ class NoteTile extends StatelessWidget with AppTheme {
       required this.noteContent,
       required this.title,
       required this.timestamp,
-      required this.onPressed, this.reference});
+      required this.onPressed,
+      this.reference});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: size.h16),
+        padding: EdgeInsets.symmetric(vertical: size.h8),
         decoration: BoxDecoration(
             border: Border(
                 bottom: BorderSide(
@@ -68,16 +69,23 @@ class NoteTile extends StatelessWidget with AppTheme {
                     overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(height: size.h4),
-                  reference!=null?Text(reference.toString(),style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: size.textXSmall,fontFamily: StringData.fontFamilyPoppins,
-                    color: clr.appPrimaryColorGreen
-                  ),):const SizedBox(),
+                  reference != null
+                      ? Text(
+                          reference.toString(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: size.textXSmall,
+                              fontFamily: StringData.fontFamilyPoppins,
+                              color: clr.appPrimaryColorGreen),
+                        )
+                      : const SizedBox(),
                   Row(
-                    mainAxisAlignment: reference!=null?MainAxisAlignment.end:MainAxisAlignment.start,
+                    mainAxisAlignment: reference != null
+                        ? MainAxisAlignment.end
+                        : MainAxisAlignment.start,
                     children: [
                       Text(
-                        timestamp,
+                        "তারিখ: $timestamp",
                         style: TextStyle(
                           color: clr.placeHolderTextColorGray,
                           fontWeight: FontWeight.w400,

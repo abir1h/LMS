@@ -5,11 +5,5 @@ class NoteModel {
   String? reference;
   List<dynamic>? description;
 
-  NoteModel({
-     this.title,
-     this.time,
-     this.description,
-    this.id,
-    this.reference
-  });
+  NoteModel({this.title, this.time, this.description, this.id, this.reference});
 }

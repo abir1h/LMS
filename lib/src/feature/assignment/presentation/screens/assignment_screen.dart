@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/common_widgets/custom_button.dart';
+import '../../../course/presentation/screens/course_assignment_screen.dart';
 import '../controllers/assignment_controller.dart';
 import '../widgets/assignment_bottom_sheet.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
@@ -83,7 +84,9 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                           Border.all(color: clr.boxStrokeColor, width: size.w1),
                     ),
                     child: Text(
-                      controller.data!= ''?controller.data:label(e: en.writeHere, b: bn.writeHere),
+                      controller.data != ''
+                          ? controller.data
+                          : label(e: en.writeHere, b: bn.writeHere),
                       style: TextStyle(
                           color: clr.placeHolderTextColorGray,
                           fontSize: size.textSmall,
@@ -208,6 +211,7 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                                 onTap: () {
                                   CustomToasty.of(context).showSuccess(
                                       "সফলভাবে  জমাদান সম্পন্ন হয়েছে");
+                                  Get.off(() => const CourseAssignmentScreen());
                                 },
                                 title: label(e: en.submit, b: bn.submit),
                                 radius: size.r4,

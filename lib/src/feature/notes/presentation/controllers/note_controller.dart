@@ -9,8 +9,8 @@ class NoteController extends GetxController {
   final selectedTopic = ''.obs;
   List<String> topicList = [
     "টপিক নেইম : ভিডিও ২ | শিক্ষাগত প্রয়োগ মানব-কল্যাণ ধারণা.",
-        "টপিক নেইম : ভিডিও 3 | শিক্ষাগত প্রয়োগ মানব-কল্যাণ ধারণা.",
-        "টপিক নেইম : ভিডিও 4 | শিক্ষাগত প্রয়োগ মানব-কল্যাণ ধারণা."
+    "টপিক নেইম : ভিডিও 3 | শিক্ষাগত প্রয়োগ মানব-কল্যাণ ধারণা.",
+    "টপিক নেইম : ভিডিও 4 | শিক্ষাগত প্রয়োগ মানব-কল্যাণ ধারণা."
   ];
 
   Future<List<String>> getDropDown() async {
@@ -33,7 +33,7 @@ class NoteController extends GetxController {
           },
           {"insert": "\n"}
         ],
-        time: "12-06-2023"),
+        time: "2023-12-06"),
     NoteModel(
         id: 2,
         title: "আন্তঃসংযুক্ত আনুষ্ঠানিক শিক্ষার ঐতিহ্যগত ধারণা",
@@ -49,7 +49,7 @@ class NoteController extends GetxController {
           },
           {"insert": "\n"}
         ],
-        time: "12-06-2023"),
+        time: "2023-12-06"),
     NoteModel(
         id: 3,
         title: "শিক্ষার্থীদের যোগ্যতা",
@@ -65,7 +65,7 @@ class NoteController extends GetxController {
           },
           {"insert": "\n"}
         ],
-        time: "12-06-2023"),
+        time: "2023-12-06"),
     NoteModel(
         id: 4,
         title: "শিক্ষার্থীদের যোগ্যতা",
@@ -81,6 +81,6 @@ class NoteController extends GetxController {
           },
           {"insert": "\n"}
         ],
-        time: "12-06-2023"),
+        time: "2023-12-06"),
   ].obs;
 }
