@@ -1,7 +1,9 @@
 class MatchingQuestions {
   List<MatchingLeftSide> leftSides;
   List<MatchingRightSide> rightSides;
+  String questionTitle;
   MatchingQuestions({
+    required this.questionTitle,
     required this.leftSides,
     required this.rightSides,
   });
