@@ -28,7 +28,7 @@ class _CourseListScreenState extends State<CourseListScreen>
           : controller.screenName.value == "upcoming"
               ? label(e: en.upcomingCurriculum, b: bn.upcomingCurriculum)
               : "",
-      child: SingleChildScrollView(
+      body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         padding: EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h12),
         child: Column(

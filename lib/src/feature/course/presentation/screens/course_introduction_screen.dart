@@ -22,7 +22,7 @@ class _CourseIntroductionScreenState extends State<CourseIntroductionScreen>
   Widget build(BuildContext context) {
     return CustomScaffold(
         title: controller.screenName.value,
-        child: Column(
+        body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: size.h12),

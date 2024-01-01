@@ -79,7 +79,7 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
                   Icon(Icons.edit, size: size.r24, color: clr.iconColorBlack)),
         ],
       ),
-      child: SingleChildScrollView(
+      body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(vertical: size.h12, horizontal: size.h16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

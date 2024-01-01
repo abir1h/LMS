@@ -4,12 +4,17 @@ import '../../../../core/constants/common_imports.dart';
 
 class WrittenTextFieldWidget extends StatelessWidget with AppTheme {
   final ValueChanged<String>? onChanged;
-  const WrittenTextFieldWidget({super.key, this.onChanged});
+  final int minLines;
+  final int maxLines;
+  const WrittenTextFieldWidget(
+      {super.key, this.onChanged, this.minLines = 1, this.maxLines = 1});
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       onChanged: onChanged,
+      minLines: minLines,
+      maxLines: maxLines,
       decoration: InputDecoration(
         // isDense: true,
         border: InputBorder.none,
@@ -22,7 +27,8 @@ class WrittenTextFieldWidget extends StatelessWidget with AppTheme {
             borderSide: BorderSide(color: clr.boxStrokeColor, width: size.w1),
             borderRadius: BorderRadius.all(Radius.circular(size.w8))),
         hintText: "",
-        contentPadding: EdgeInsets.symmetric(horizontal: size.w12),
+        contentPadding:
+            EdgeInsets.symmetric(horizontal: size.w12, vertical: size.h12),
         hintStyle: TextStyle(
             color: clr.placeHolderTextColorGray,
             fontSize: size.textSmall,

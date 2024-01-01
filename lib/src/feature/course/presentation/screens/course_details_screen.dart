@@ -26,7 +26,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
       title: controller.from.value == "running"
           ? label(e: "Current Course Details", b: "চলমান কোর্সের বিস্তারিত")
           : label(e: en.courseDetailsText, b: bn.courseDetailsText),
-      child: ListView(
+      body: ListView(
         padding: EdgeInsets.symmetric(vertical: size.h12),
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),

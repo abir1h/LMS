@@ -1,28 +1,26 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lms/src/feature/assessment/presentation/widgets/question_widget.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../widgets/descriptive_answer_widget.dart';
+import '../../../../core/common_widgets/custom_button.dart';
+import '../widgets/matching_answer_widget.dart';
+import '../widgets/one_word_answer_widget.dart';
+import '../widgets/question_widget.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
 import '../models/blank_model.dart';
 import '../models/matching_question.dart';
 import '../models/quiz_model.dart';
-import '../widgets/blank_card.dart';
+import '../widgets/fill_in_the_gap_answer_widget.dart';
 import '../widgets/question_list_widget.dart';
 import '../widgets/time_digit_widget.dart';
-import 'assessment_answer_in_one_word_screen.dart';
-import 'assessment_matching_screen.dart';
+import '../widgets/true_false_answer_widget.dart';
 import 'assessment_quiz_screen.dart';
-import 'assessment_true_false_screen.dart';
 
 class AssessmentScreen extends StatefulWidget {
-  const AssessmentScreen({
-    super.key,
-  });
+  const AssessmentScreen({super.key});
 
   @override
   State<AssessmentScreen> createState() => _AssessmentScreenState();
@@ -31,7 +29,7 @@ class AssessmentScreen extends StatefulWidget {
 class _AssessmentScreenState extends State<AssessmentScreen>
     with AppTheme, Language {
   final BehaviorSubject<Duration> timerStreamController = BehaviorSubject();
-  final Stream<DataState> pageStateStreamController = Stream.empty();
+  final Stream<DataState> pageStateStreamController = const Stream.empty();
 
   List<Question> questions = [
     Question(
@@ -70,7 +68,7 @@ class _AssessmentScreenState extends State<AssessmentScreen>
           title:
               "অনুগ্রহ করেবাক্য গুলো পড়ুন এবং শূন্যস্থানের জন্য সঠিক উত্তরটি লিখুন।",
           description:
-              "রবীন্দ্রনাথ ঠাকুর  _____  উপন্যাসের উপর নভেল পুরস্কার লাভ করেন এবং তিনি _____ সালে এটি অর্জন করেন|"),
+              "রবীন্দ্রনাথ ঠাকুর  _____  উপন্যাসের উপর নভেল পুরস্কার লাভ করেন এবং তিনি  _____  সালে এটি অর্জন করেন|"),
     ),
     Question(
       type: QuestionType.fig,
@@ -79,13 +77,12 @@ class _AssessmentScreenState extends State<AssessmentScreen>
           title:
               "অনুগ্রহ করেবাক্য গুলো পড়ুন এবং শূন্যস্থানের জন্য সঠিক উত্তরটি লিখুন।",
           description:
-              "রবীন্দ্রনাথ ঠাকুর  _____  উপন্যাসের উপর নভেল পুরস্কার লাভ করেন এবং তিনি _____ সালে এটি অর্জন করেন|"),
+              "রবীন্দ্রনাথ ঠাকুর  _____  উপন্যাসের উপর নভেল পুরস্কার লাভ করেন এবং তিনি _____  সালে এটি অর্জন করেন|"),
     ),
     Question(
         type: QuestionType.matching,
         data: MatchingQuestions(
-          questionTitle:
-          "সঠিক উত্তর ম্যাচিং:",
+          questionTitle: "সঠিক উত্তর ম্যাচিং:",
           leftSides: [
             MatchingLeftSide(
                 id: 1,
@@ -131,6 +128,10 @@ class _AssessmentScreenState extends State<AssessmentScreen>
       type: QuestionType.oneWordAnswer,
       data: "",
     ),
+    Question(
+      type: QuestionType.written,
+      data: "",
+    ),
   ];
   @override
   Widget build(BuildContext context) {
@@ -143,10 +144,11 @@ class _AssessmentScreenState extends State<AssessmentScreen>
             return true;
           },
         ),
-        child: SingleChildScrollView(
+        resizeToAvoidBottomInset: true,
+        body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           padding:
-              EdgeInsets.symmetric(horizontal: size.w20, vertical: size.h16),
+              EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -161,71 +163,73 @@ class _AssessmentScreenState extends State<AssessmentScreen>
                           data: questions[index].data,
                         ),
                       );
-                    } else if (data.type == QuestionType.matching){
+                    } else if (data.type == QuestionType.matching) {
                       return QuestionWidget(
                         questionNo: "${index + 1}",
                         questionText: questions[index].data.questionTitle,
-                        child:MatchingAnswerWidget(
+                        child: MatchingAnswerWidget(
                           data: questions[index].data,
                         ),
                       );
-                    }else if (data.type == QuestionType.fig){
-                       return BlankCard(
-                        mainModel:  questions[index].data,
-                        onChangeDv1: (v) {
-                          // controller.qusList[index].blank1 = v;
-                        },
-                        onChangeDv2: (v) {
-                          // controller.qusList[index].blank2 = v;
-                        },
+                    } else if (data.type == QuestionType.fig) {
+                      return QuestionWidget(
+                        questionNo: "${index + 1}",
+                        questionText: questions[index].data.title,
+                        child: FillInTheGapAnswerWidget(
+                          mainModel: questions[index].data,
+                          onChangeDv1: (v) {
+                            // controller.qusList[index].blank1 = v;
+                          },
+                          onChangeDv2: (v) {
+                            // controller.qusList[index].blank2 = v;
+                          },
+                        ),
                       );
-                    }else if (data.type == QuestionType.trueFalse){
+                    } else if (data.type == QuestionType.trueFalse) {
                       return QuestionWidget(
                         questionNo: "${index + 1}",
                         questionText: "বাংলাদেশের জাতীয় ফল কাঁঠাল",
-                        child:  const TrueFalseAnswerWidget(
-                        ),
+                        child: const TrueFalseAnswerWidget(),
                       );
-                    }else if(data.type == QuestionType.oneWordAnswer){
-                     return QuestionWidget(
+                    } else if (data.type == QuestionType.oneWordAnswer) {
+                      return QuestionWidget(
                         questionNo: "${index + 1}",
-                        questionText: "বাংলাদেশের জাতীয় ফল কাঁঠাল",
+                        questionText:
+                            "রবীন্দ্রনাথ ঠাকুর কোথায় জন্ম গ্রহণ করেন?",
                         questionDescription:
-                        "(পারিবারিক প্রেক্ষাপট রবীন্দ্রনাথ ঠাকুরের জন্ম পারিবারিক বাসভবনে যা কলকাতায় অবস্থিত ছিল)",
-                        child: const FillInTheGapAnswerWidget(
-                          // data: controller.questions[index],
-                        ),
+                            "(পারিবারিক প্রেক্ষাপট রবীন্দ্রনাথ ঠাকুরের জন্ম পারিবারিক বাসভবনে যা কলকাতায় অবস্থিত ছিল)",
+                        child: const OneWordAnswerWidget(
+                            // data: controller.questions[index],
+                            ),
                       );
-                    }else {
-                     return Text("Written");
+                    } else if (data.type == QuestionType.written) {
+                      return QuestionWidget(
+                        questionNo: "${index + 1}",
+                        questionText:
+                            "আপনি গঠনমূলক মূল্যায়ন সিস্টেম সম্পর্কে কি জানেন?",
+                        child: const DescriptiveAnswerWidget(
+                            // data: controller.questions[index],
+                            ),
+                      );
+                    } else {
+                      return const Text("Written");
                     }
                     // return Text(data[index].name);
                   }),
-              // ListView.builder(
-              //   shrinkWrap: true,
-              //   itemCount: 4,
-              //   physics: const NeverScrollableScrollPhysics(),
-              //   itemBuilder: (context, index) {
-              //     if(questions[index].type==QuestionType.mcq){
-              //       return QuestionWidget(
-              //         questionNo: "${index + 1}",
-              //         questionText:
-              //         questions[index].data.questionText,
-              //         child: MCQAnswerWidget(
-              //           data: questions[index].data,
-              //         ),
-              //       );
-              //     }else{
-              //       Container(color: Colors.black,
-              //       height: 100,
-              //         width: 100,
-              //       );
-              //     }
-              //   },
-              //   // separatorBuilder: (context, index) {
-              //   //   return SizedBox(height: size.h20);
-              //   // },
-              // )
+              SizedBox(height: size.h16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  CustomButton(
+                    onTap: () {},
+                    title: label(e: en.submit, b: bn.submit),
+                    horizontalPadding: size.w20,
+                    verticalPadding: size.h4,
+                    radius: size.r4,
+                  ),
+                ],
+              ),
+              SizedBox(height: size.h64),
             ],
           ),
         ));

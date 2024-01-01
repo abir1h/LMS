@@ -28,7 +28,7 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
   Widget build(BuildContext context) {
     return CustomScaffold(
         title: label(e: en.detailedDiscussion, b: bn.detailedDiscussion),
-        child: GetBuilder<DiscussionController>(builder: (_) {
+        body: GetBuilder<DiscussionController>(builder: (_) {
           return Stack(
             children: [
               SingleChildScrollView(

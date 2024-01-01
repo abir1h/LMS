@@ -22,7 +22,7 @@ class _DiscussionListScreenState extends State<DiscussionListScreen>
   Widget build(BuildContext context) {
     return CustomScaffold(
       title: label(e: en.discussion, b: bn.discussion),
-      child: GetBuilder<DiscussionController>(builder: (_) {
+      body: GetBuilder<DiscussionController>(builder: (_) {
         return ListView.builder(
           shrinkWrap: true,
           itemCount: controller.discussionList.length,

@@ -47,7 +47,7 @@ class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
             onTap: () => onTapWriteHere("submit"),
             child: Icon(Icons.edit,
                 size: size.r24, color: clr.appPrimaryColorGreen)),
-        child: SingleChildScrollView(
+        body: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             padding:
                 EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h16),

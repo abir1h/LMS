@@ -6,7 +6,8 @@ import '../controllers/assessment_controller.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/utility/app_label.dart';
-import '../widgets/blank_card.dart';
+import '../widgets/fill_in_the_gap_answer_widget.dart';
+import '../widgets/question_widget.dart';
 
 class AssessmentFillInTheBlankScreen extends StatefulWidget {
   const AssessmentFillInTheBlankScreen({super.key});
@@ -26,7 +27,7 @@ class _AssessmentFillInTheBlankScreenState
         title: label(e: "Assessment", b: "মূল্যায়ন"),
         bgColor: clr.scaffoldBackgroundColor,
         resizeToAvoidBottomInset: true,
-        child: GetBuilder<AssessmentController>(builder: (_) {
+        body: GetBuilder<AssessmentController>(builder: (_) {
           return SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             padding:
@@ -38,16 +39,21 @@ class _AssessmentFillInTheBlankScreenState
                     itemCount: controller.qusList.length,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (_, index) {
-                      return BlankCard(
-                        mainModel: controller.qusList[index],
-                        onChangeDv1: (v) {
-                          controller.qusList[index].blank1 = v;
-                        },
-                        onChangeDv2: (v) {
-                          controller.qusList[index].blank2 = v;
-                        },
+                      return QuestionWidget(
+                        questionNo: "${index + 1}",
+                        questionText: controller.qusList[index].title!,
+                        child: FillInTheGapAnswerWidget(
+                          mainModel: controller.qusList[index],
+                          onChangeDv1: (v) {
+                            controller.qusList[index].blank1 = v;
+                          },
+                          onChangeDv2: (v) {
+                            controller.qusList[index].blank2 = v;
+                          },
+                        ),
                       );
                     }),
+                SizedBox(height: size.h16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [

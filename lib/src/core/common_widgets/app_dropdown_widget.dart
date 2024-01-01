@@ -5,12 +5,12 @@ import '../constants/app_theme.dart';
 import 'popup_widget.dart';
 
 
-class SelectorDropDownList<T> extends StatefulWidget {
+class AppDropDownWidget<T> extends StatefulWidget {
   final Future<List<T>> Function() onLoadData;
   final String Function(T item) onGenerateTitle;
   final void Function(T item) onSelected;
   final String hintText;
-  const SelectorDropDownList({
+  const AppDropDownWidget({
     Key? key,
     required this.onLoadData,
     required this.onSelected,
@@ -19,11 +19,11 @@ class SelectorDropDownList<T> extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<SelectorDropDownList<T>> createState() =>
-      _SelectorDropDownListState<T>();
+  State<AppDropDownWidget<T>> createState() =>
+      _AppDropDownWidgetState<T>();
 }
 
-class _SelectorDropDownListState<T> extends State<SelectorDropDownList<T>>
+class _AppDropDownWidgetState<T> extends State<AppDropDownWidget<T>>
     with AppTheme {
   T? _selectedItem;
 

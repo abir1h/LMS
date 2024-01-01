@@ -32,7 +32,8 @@ class _NoteScreenState extends State<NoteScreen>
   ];
 
   final controller = Get.put(NoteController());
-  int? selectedValue;
+  int selectedValue = 3;
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -55,7 +56,6 @@ class _NoteScreenState extends State<NoteScreen>
                     borderRadius: BorderRadius.circular(size.r8)),
                 position: PopupMenuPosition.under,
                 onSelected: (int value) {
-                  // Set the selected value when a menu item is selected
                   setState(() {
                     selectedValue = value;
                   });
@@ -69,7 +69,7 @@ class _NoteScreenState extends State<NoteScreen>
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Title ",
+                            "Title",
                             style: selectedValue == 1
                                 ? TextStyle(
                                     color: clr.appPrimaryColorGreen,
@@ -82,9 +82,7 @@ class _NoteScreenState extends State<NoteScreen>
                                     fontFamily: StringData.fontFamilyPoppins,
                                     fontSize: size.textSmall),
                           ),
-                          SizedBox(
-                            width: size.w8,
-                          ),
+                          SizedBox(width: size.w8),
                           if (selectedValue == 1)
                             Icon(
                               Icons.check,
@@ -100,7 +98,7 @@ class _NoteScreenState extends State<NoteScreen>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Date Created ",
+                          "Date Created",
                           style: selectedValue == 2
                               ? TextStyle(
                                   color: clr.appPrimaryColorGreen,
@@ -113,9 +111,7 @@ class _NoteScreenState extends State<NoteScreen>
                                   fontFamily: StringData.fontFamilyPoppins,
                                   fontSize: size.textSmall),
                         ),
-                        SizedBox(
-                          width: size.w8,
-                        ),
+                        SizedBox(width: size.w8),
                         if (selectedValue == 2)
                           Icon(
                             Icons.check,
@@ -144,9 +140,7 @@ class _NoteScreenState extends State<NoteScreen>
                                   fontFamily: StringData.fontFamilyPoppins,
                                   fontSize: size.textSmall),
                         ),
-                        SizedBox(
-                          width: size.w8,
-                        ),
+                        SizedBox(width: size.w8),
                         if (selectedValue == 3)
                           Icon(
                             Icons.check,
@@ -157,25 +151,32 @@ class _NoteScreenState extends State<NoteScreen>
                     ),
                   ),
                 ],
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Icon(
-                      Icons.filter_list,
-                      color: clr.appPrimaryColorGreen,
-                      size: size.r16,
-                    ),
-                    SizedBox(width: size.w8),
-                    Text(
-                      "Date modified",
-                      style: TextStyle(
-                        color: clr.textColorBlack,
-                        fontWeight: FontWeight.w400,
-                        fontSize: size.textXSmall,
-                        fontFamily: StringData.fontFamilyPoppins,
+                child: Padding(
+                  padding: EdgeInsets.only(right: size.w4),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Icon(
+                        Icons.filter_list,
+                        color: clr.appPrimaryColorGreen,
+                        size: size.r16,
                       ),
-                    )
-                  ],
+                      SizedBox(width: size.w8),
+                      Text(
+                        selectedValue == 1
+                            ? "Title"
+                            : selectedValue == 2
+                                ? "Date Created"
+                                : "Date modified",
+                        style: TextStyle(
+                          color: clr.textColorBlack,
+                          fontWeight: FontWeight.w400,
+                          fontSize: size.textXSmall,
+                          fontFamily: StringData.fontFamilyPoppins,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ],

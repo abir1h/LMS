@@ -1,32 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/constants/app_theme.dart';
+
+import '../../../../core/constants/common_imports.dart';
 
 class TimeDigitWidget<T> extends StatefulWidget {
   final Stream<Duration> timerStream;
   final Stream<DataState<T>> examStateStream;
   final bool Function(DataState<T>? snapshot) isExamRunning;
-  const TimeDigitWidget({Key? key,required this.timerStream,required this.examStateStream,required this.isExamRunning }) : super(key: key);
+  const TimeDigitWidget(
+      {Key? key,
+      required this.timerStream,
+      required this.examStateStream,
+      required this.isExamRunning})
+      : super(key: key);
 
   @override
-  _TimeDigitWidgetState<T> createState() => _TimeDigitWidgetState<T>();
+  State<TimeDigitWidget<T>> createState() => _TimeDigitWidgetState<T>();
 }
-class _TimeDigitWidgetState<T> extends State<TimeDigitWidget<T>> with AppTheme{
+
+class _TimeDigitWidgetState<T> extends State<TimeDigitWidget<T>> with AppTheme {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<DataState<T>>(
         stream: widget.examStateStream,
         builder: (context, snapshot) {
-          if(widget.isExamRunning(snapshot.data)) {
+          if (widget.isExamRunning(snapshot.data)) {
             return Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: 2.w,
-                vertical: 2.w,
-              ),
+              padding:
+                  EdgeInsets.symmetric(horizontal: size.w12, vertical: size.h6),
               decoration: BoxDecoration(
-                color: clr.whiteColor,
-                borderRadius: BorderRadius.circular(size.h4),
-              ),
+                  color: clr.whiteColor,
+                  borderRadius: BorderRadius.circular(size.h4),
+                  border:
+                      Border.all(color: clr.toastSuccessColor, width: size.r1)),
               child: StreamBuilder<Duration>(
                   initialData: const Duration(),
                   stream: widget.timerStream,
@@ -43,66 +48,63 @@ class _TimeDigitWidgetState<T> extends State<TimeDigitWidget<T>> with AppTheme{
                     var secLsb = sec % 10;
                     return Row(
                       children: [
-                        if(minMMsb > 0)_buildDigitBox(minMMsb),
-                        if(minMMsb > 0)SizedBox(width: 2.w,),
+                        if (minMMsb > 0) _buildDigitBox(minMMsb),
+                        if (minMMsb > 0) SizedBox(width: size.w2),
                         _buildDigitBox(minMsb),
-                        SizedBox(width: 2.w,),
+                        SizedBox(width: size.w2),
                         _buildDigitBox(minLsb),
-                        SizedBox(width: 2.w,),
+                        SizedBox(width: size.w2),
                         _buildDigitSeparatorBox(":"),
-                        SizedBox(width: 2.w,),
+                        SizedBox(width: size.w2),
                         _buildDigitBox(secMsb),
-                        SizedBox(width: 2.w,),
+                        SizedBox(width: size.w2),
                         _buildDigitBox(secLsb),
                       ],
                     );
-                  }
-              ),
+                  }),
             );
-          }
-          else{
+          } else {
             return const Offstage();
           }
-        }
-    );
+        });
   }
 
-
-  Widget _buildDigitBox(int value){
+  Widget _buildDigitBox(int value) {
     return Container(
-      height: size.h24,
-      width: size.w20,
+      padding: EdgeInsets.symmetric(horizontal: size.w4, vertical: size.h2),
       decoration: BoxDecoration(
         color: clr.appPrimaryColorGreen,
-        borderRadius: BorderRadius.circular(2.w),
+        borderRadius: BorderRadius.circular(size.w2),
       ),
       child: FittedBox(
         child: Text(
           value.toString(),
           style: TextStyle(
-            fontSize: 100,
+            fontSize: size.textLarge,
             color: clr.whiteColor,
-            height: 1.1,
+            fontWeight: FontWeight.w400,
+            fontFamily: StringData.fontFamilyRoboto,
           ),
         ),
       ),
     );
   }
-  Widget _buildDigitSeparatorBox(String value){
+
+  Widget _buildDigitSeparatorBox(String value) {
     return Container(
-      height: size.h24,
-      width: size.w20,
+      padding: EdgeInsets.symmetric(horizontal: size.w4, vertical: size.h2),
       decoration: BoxDecoration(
         color: clr.appPrimaryColorGreen,
-        borderRadius: BorderRadius.circular(2.w),
+        borderRadius: BorderRadius.circular(size.w2),
       ),
       child: FittedBox(
         child: Text(
           value,
           style: TextStyle(
-            fontSize: 100,
+            fontSize: size.textLarge,
             color: clr.whiteColor,
-            height: 1,
+            fontWeight: FontWeight.w400,
+            fontFamily: StringData.fontFamilyRoboto,
           ),
         ),
       ),
@@ -110,4 +112,4 @@ class _TimeDigitWidgetState<T> extends State<TimeDigitWidget<T>> with AppTheme{
   }
 }
 
-abstract class DataState<T>{}
+abstract class DataState<T> {}

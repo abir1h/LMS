@@ -21,7 +21,7 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
   Widget build(BuildContext context) {
     return CustomScaffold(
         title: label(e: en.assignment, b: bn.assignment),
-        child: SingleChildScrollView(
+        body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

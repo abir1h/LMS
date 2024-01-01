@@ -12,7 +12,7 @@ class CustomScaffold extends StatelessWidget with AppTheme {
   final VoidCallback? onReload;
   final VoidCallback? leadingBack;
   final Widget? actionChild;
-  final Widget child;
+  final Widget body;
   const CustomScaffold(
       {super.key,
       required this.title,
@@ -21,7 +21,7 @@ class CustomScaffold extends StatelessWidget with AppTheme {
       this.onBack,
       this.onReload,
       this.actionChild,
-      required this.child,
+      required this.body,
       this.leadingBack});
 
   @override
@@ -114,7 +114,7 @@ class CustomScaffold extends StatelessWidget with AppTheme {
                   decoration: BoxDecoration(
                     color: bgColor ?? clr.scaffoldBackgroundColor,
                   ),
-                  child: child,
+                  child: body,
                 ),
               ),
             ],

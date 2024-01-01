@@ -57,7 +57,7 @@ class _OngoingCourseScreenState extends State<OngoingCourseScreen>
             ],
           ),
         ),
-        child: SingleChildScrollView(
+        body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Padding(
             padding:

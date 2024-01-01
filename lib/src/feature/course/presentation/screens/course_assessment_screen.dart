@@ -22,7 +22,7 @@ class _CourseAssessmentScreenState extends State<CourseAssessmentScreen>
   Widget build(BuildContext context) {
     return CustomScaffold(
         title: label(e: en.assessment, b: bn.assessment),
-        child: SingleChildScrollView(
+        body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

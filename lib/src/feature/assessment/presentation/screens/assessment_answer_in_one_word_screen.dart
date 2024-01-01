@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../widgets/written_text_field_widget.dart';
+import '../widgets/one_word_answer_widget.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
@@ -25,7 +25,7 @@ class _AssessmentAnsInOneWordScreenState
   Widget build(BuildContext context) {
     return CustomScaffold(
         title: label(e: "Quiz", b: "কুইজ"),
-        child: SingleChildScrollView(
+        body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           padding:
               EdgeInsets.symmetric(horizontal: size.w20, vertical: size.h16),
@@ -53,7 +53,7 @@ class _AssessmentAnsInOneWordScreenState
                     questionText: "বাংলাদেশের জাতীয় ফল কাঁঠাল",
                     questionDescription:
                         "(পারিবারিক প্রেক্ষাপট রবীন্দ্রনাথ ঠাকুরের জন্ম পারিবারিক বাসভবনে যা কলকাতায় অবস্থিত ছিল)",
-                    child: const FillInTheGapAnswerWidget(
+                    child: const OneWordAnswerWidget(
                         // data: controller.questions[index],
                         ),
                   );
@@ -78,54 +78,5 @@ class _AssessmentAnsInOneWordScreenState
             ],
           ),
         ));
-  }
-}
-
-///Fill in the gap section
-class FillInTheGapAnswerWidget extends StatefulWidget {
-  // final FillInTheGapQuestion data;
-  const FillInTheGapAnswerWidget({
-    Key? key,
-    // required this.data,
-  }) : super(key: key);
-
-  @override
-  State<FillInTheGapAnswerWidget> createState() =>
-      _FillInTheGapAnswerWidgetState();
-}
-
-class _FillInTheGapAnswerWidgetState extends State<FillInTheGapAnswerWidget>
-    with AppTheme, Language {
-  late final TextEditingController _controller;
-
-  @override
-  void initState() {
-    // _controller = TextEditingController(text: widget.data.writtenAnswer);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    // _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label(e: en.writeOneWordAnswer, b: bn.writeOneWordAnswer),
-          style: TextStyle(
-              fontWeight: FontWeight.w400,
-              fontSize: size.textSmall,
-              color: clr.blackColor,
-              fontFamily: StringData.fontFamilyRoboto),
-        ),
-        SizedBox(height: size.h8),
-        const WrittenTextFieldWidget(),
-      ],
-    );
   }
 }

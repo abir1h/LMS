@@ -12,7 +12,7 @@ class NotificationScreen extends StatelessWidget with AppTheme, Language {
   Widget build(BuildContext context) {
     return CustomScaffold(
         title: label(e: en.notification, b: bn.notification),
-        child: SingleChildScrollView(
+        body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [

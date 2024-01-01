@@ -27,7 +27,7 @@ class _AssignmentScreenState extends State<AssignmentScreen>
   Widget build(BuildContext context) {
     return CustomScaffold(
         title: "",
-        child: SingleChildScrollView(
+        body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           padding:
               EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h16),

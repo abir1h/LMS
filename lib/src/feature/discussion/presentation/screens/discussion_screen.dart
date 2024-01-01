@@ -19,7 +19,7 @@ class _DiscussionScreenState extends State<DiscussionScreen>
   Widget build(BuildContext context) {
     return CustomScaffold(
         title: label(e: en.discussion, b: bn.discussion),
-        child: ListView(
+        body: ListView(
           padding: EdgeInsets.zero,
           shrinkWrap: true,
           physics: const BouncingScrollPhysics(),

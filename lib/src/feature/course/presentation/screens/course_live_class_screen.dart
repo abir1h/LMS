@@ -44,7 +44,7 @@ class _CourseLiveClassScreenState extends State<CourseLiveClassScreen>
           ],
         ),
       ),
-      child: Column(
+      body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(

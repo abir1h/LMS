@@ -188,7 +188,7 @@ print(refVlaue);
                   size: size.r24, color: clr.iconColorDimGrey)),
         ],
       ),
-      child: QuillProvider(
+      body: QuillProvider(
         configurations: QuillConfigurations(
           controller: _controller,
           sharedConfigurations: QuillSharedConfigurations(
@@ -205,7 +205,7 @@ print(refVlaue);
               padding: EdgeInsets.only(left: size.w16, right: size.w16),
               child: Column(
                 children: [
-                  SelectorDropDownList(
+                  AppDropDownWidget(
                     onGenerateTitle: (x) => x,
                     onLoadData: controller.getDropDown,
                     onSelected: (v) {

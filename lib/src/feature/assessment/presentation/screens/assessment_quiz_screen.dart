@@ -24,7 +24,7 @@ class _AssessmentQuizScreenState extends State<AssessmentQuizScreen>
   Widget build(BuildContext context) {
     return CustomScaffold(
         title: label(e: "Quiz", b: "কুইজ"),
-        child: SingleChildScrollView(
+        body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           padding:
               EdgeInsets.symmetric(horizontal: size.w20, vertical: size.h16),
