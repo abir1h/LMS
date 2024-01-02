@@ -20,6 +20,7 @@ class _CourseLiveClassScreenState extends State<CourseLiveClassScreen>
   Widget build(BuildContext context) {
     return CustomScaffold(
       title: label(e: en.liveClass, b: bn.liveClass),
+      bgColor: clr.whiteColor,
       // actionChild: InkWell(
       //   onTap: () {},
       //   child: Stack(

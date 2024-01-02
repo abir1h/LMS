@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
+import 'package:lms/src/feature/transcript_video/presentaion/screens/transcript_video_screen.dart';
 
 import 'note_edit_screen.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
@@ -72,7 +73,6 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
               onPressed: () {
                 Get.to(() => NoteEditScreen(
                       mainModel: widget.mainModel,
-
                     ));
               },
               icon:
@@ -85,22 +85,26 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             widget.mainModel!.reference != null
-                ? Row(
-                    children: [
-                      Expanded(
-                          child: Text(
-                        widget.mainModel!.reference.toString(),
-                        style: TextStyle(
-                            color: clr.appPrimaryColorGreen,
-                            fontSize: size.textSmall,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: StringData.fontFamilyPoppins),
-                      )),
-                      Icon(
-                        Icons.arrow_forward,
-                        color: clr.appPrimaryColorGreen,
-                      )
-                    ],
+                ? InkWell(
+                    onTap: () => Get.to(const TranscriptVideoScreen()),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                            child: Text(
+                          widget.mainModel!.reference.toString(),
+                          style: TextStyle(
+                              color: clr.appPrimaryColorGreen,
+                              fontSize: size.textSmall,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: StringData.fontFamilyPoppins),
+                        )),
+                        Icon(
+                          Icons.arrow_forward,
+                          color: clr.appPrimaryColorGreen,
+                        )
+                      ],
+                    ),
                   )
                 : const SizedBox(),
             SizedBox(

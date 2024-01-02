@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../constants/app_theme.dart';
 
-class CustomToasty with AppTheme{
+class CustomToasty with AppTheme {
   OverlayState? _overlayState;
   static OverlayEntry? _uiLockOverlayEntry;
   static bool _isUiLocked = false;
@@ -29,10 +29,12 @@ class CustomToasty with AppTheme{
       {Duration duration = const Duration(milliseconds: 3000)}) {
     _showToast(message, duration, "warning");
   }
+
   showAsk(String message,
       {Duration duration = const Duration(milliseconds: 3000)}) {
     _showToast(message, duration, "ask");
   }
+
   showError(
       {String message = "Couldn't connect to the server.",
       Duration duration = const Duration(milliseconds: 3000)}) {
@@ -81,7 +83,7 @@ class CustomToasty with AppTheme{
                           height: 42.w,
                           width: 42.w,
                           child: CircularProgressIndicator(
-                            valueColor:  AlwaysStoppedAnimation(
+                            valueColor: AlwaysStoppedAnimation(
                               clr.appPrimaryColorGreen,
                             ),
                             strokeWidth: 2.w,
@@ -208,20 +210,20 @@ class __ToastState extends State<_Toast>
 
     // color and icon initialization;
     if (widget.type == "success") {
-      _colorBackground =  clr.toastSuccessBackgroundColor;
-      _color=clr.toastSuccessColor;
+      _colorBackground = clr.toastSuccessBackgroundColor;
+      _color = clr.toastSuccessColor;
       _icon = Icons.check_circle;
     } else if (widget.type == "warning") {
-      _colorBackground =  clr.toastWarningBackgroundColor;
-      _color=clr.toastWarningColor;
+      _colorBackground = clr.toastWarningBackgroundColor;
+      _color = clr.toastWarningColor;
       _icon = Icons.warning;
     } else if (widget.type == "ask") {
-      _colorBackground =  clr.cardFillColorBlue;
-      _color=clr.toastAskColor;
+      _colorBackground = clr.cardFillColorBlue;
+      _color = clr.toastAskColor;
       _icon = Icons.help;
-    }else {
-      _colorBackground =  clr.toastErrorBackgroundColor;
-      _color=clr.toastErrorColor;
+    } else {
+      _colorBackground = clr.toastErrorBackgroundColor;
+      _color = clr.toastErrorColor;
       _icon = Icons.error;
     }
 
@@ -251,75 +253,76 @@ class __ToastState extends State<_Toast>
     var screen = MediaQuery.of(context);
     return Positioned(
       left: 0,
-      bottom: size.h64,
+      top: size.h40,
       child: AnimatedBuilder(
         animation: _animationController,
         builder: (context, Widget? child) {
           return FractionalTranslation(
-            translation: Offset(_offsetAnimation.value,0),
+            translation: Offset(_offsetAnimation.value, 0),
             child: child,
           );
         },
         child: Material(
-          color: Colors.transparent,
-          child: Row(children: [
-            Container(
-              width: size.h10,
-              padding:  EdgeInsets.only(
-                  bottom: size.h12+1.h,
-                  top:  size.h12),
-              decoration: BoxDecoration(
-                color: _color,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(size.h8,),
-                  bottomLeft:  Radius.circular(size.h8,)
-                )
-              ),
-              child: Text("",
-                style: TextStyle(
-                  fontSize: size.textSmall,
-                  color: clr.textColorBlack,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-            Container(
-              width: screen.size.width,
-              padding: EdgeInsets.only(
-                  right: size.w16,
-                  bottom: size.h12,
-                  top:  size.h12),
-              decoration: BoxDecoration(
-                  color: _colorBackground,
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(width: size.w8),
-                  Icon(
-                    _icon,
-                    color: _color,
-                    size: size.r20,
-                  ),
-                  SizedBox(width: size.w8),
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 1.h),
-                      child: Text(
-                        widget.message,
-                        style: TextStyle(
-                          fontSize: size.textSmall,
-                          color: clr.textColorBlack,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+            color: Colors.transparent,
+            child: Row(
+              children: [
+                Container(
+                  width: size.h10,
+                  padding:
+                      EdgeInsets.only(bottom: size.h12 + 1.h, top: size.h12),
+                  decoration: BoxDecoration(
+                      color: _color,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(
+                            size.h8,
+                          ),
+                          bottomLeft: Radius.circular(
+                            size.h8,
+                          ))),
+                  child: Text(
+                    "",
+                    style: TextStyle(
+                      fontSize: size.textSmall,
+                      color: clr.textColorBlack,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
-                ],
-              ),
-            ),
-          ],)
-        ),
+                ),
+                Container(
+                  width: screen.size.width,
+                  padding: EdgeInsets.only(
+                      right: size.w16, bottom: size.h12, top: size.h12),
+                  decoration: BoxDecoration(
+                    color: _colorBackground,
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(width: size.w8),
+                      Icon(
+                        _icon,
+                        color: _color,
+                        size: size.r20,
+                      ),
+                      SizedBox(width: size.w8),
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 1.h),
+                          child: Text(
+                            widget.message,
+                            style: TextStyle(
+                              fontSize: size.textSmall,
+                              color: clr.textColorBlack,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            )),
       ),
     );
   }

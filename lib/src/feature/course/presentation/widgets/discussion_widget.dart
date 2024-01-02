@@ -93,6 +93,7 @@ class DiscussionWidgetTile extends StatelessWidget with AppTheme {
         padding: EdgeInsets.only(
             left: size.w16, right: size.w16, top: size.h8, bottom: size.h6),
         decoration: BoxDecoration(
+            color: clr.scaffoldBackgroundColor,
             border:
                 Border(bottom: BorderSide(color: clr.dividerStrokeColorGrey))),
         child: Row(

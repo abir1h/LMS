@@ -28,6 +28,7 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
   Widget build(BuildContext context) {
     return CustomScaffold(
         title: label(e: en.detailedDiscussion, b: bn.detailedDiscussion),
+        bgColor: clr.whiteColor,
         body: GetBuilder<DiscussionController>(builder: (_) {
           return Stack(
             children: [
@@ -43,6 +44,7 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
                           right: size.w16,
                           bottom: size.h10),
                       decoration: BoxDecoration(
+                          color: clr.scaffoldBackgroundColor,
                           border: Border(
                               bottom: BorderSide(
                                   color: clr.placeHolderTextColorGray))),
