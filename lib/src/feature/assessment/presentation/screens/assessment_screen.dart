@@ -49,7 +49,7 @@ class _AssessmentScreenState extends State<AssessmentScreen>
         option3Image: "",
         option4Image: "",
         option5Image: "",
-        userAnswer1: true,
+        userAnswer1: false,
         userAnswer2: false,
         userAnswer3: false,
         userAnswer4: false,
