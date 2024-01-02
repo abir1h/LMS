@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/feature/transcript_video/presentaion/screens/transcript_video_screen.dart';
 
+import '../../../transcript_video/presentaion/screens/transcript_video_screen.dart';
 import '../../../../core/common_widgets/quil_text_viewer.dart';
 import 'note_edit_screen.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
@@ -39,7 +39,7 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
       if (widget.mainModel!.description != null) {
         final Document doc =
             Document.fromJson(widget.mainModel!.description as List);
-        _controller.document=doc;
+        _controller.document = doc;
         contentText = doc.toPlainText();
       }
     }
@@ -88,23 +88,26 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             widget.mainModel!.reference != "টপিক সিলেক্ট করুন"
-                ? Row(
-              children: [
-                Expanded(
-                    child: Text(
-                      widget.mainModel!.reference.toString(),
-                      style: TextStyle(
+                ? InkWell(
+                    onTap: () => Get.to(const TranscriptVideoScreen()),
+                    child: Row(
+                      children: [
+                        Expanded(
+                            child: Text(
+                          widget.mainModel!.reference.toString(),
+                          style: TextStyle(
+                              color: clr.appPrimaryColorGreen,
+                              fontSize: size.textSmall,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: StringData.fontFamilyPoppins),
+                        )),
+                        Icon(
+                          Icons.arrow_forward,
                           color: clr.appPrimaryColorGreen,
-                          fontSize: size.textSmall,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: StringData.fontFamilyPoppins),
-                    )),
-                Icon(
-                  Icons.arrow_forward,
-                  color: clr.appPrimaryColorGreen,
-                )
-              ],
-            )
+                        )
+                      ],
+                    ),
+                  )
                 : const SizedBox(),
             SizedBox(
               height: size.h10,
@@ -120,9 +123,9 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
             Divider(
               color: clr.cardStrokeColor,
             ),
-            QuilTextViewer(controller: _controller,)
-
-
+            QuilTextViewer(
+              controller: _controller,
+            )
           ],
         ),
       ),

@@ -127,8 +127,8 @@ class _AssignmentBottomSheetState extends State<AssignmentBottomSheet>
           child: Container(
             width: double.infinity,
             margin: EdgeInsets.only(top: mediaQuery.padding.top * 3),
-            padding: EdgeInsets.only(
-                top: size.h10, right: size.w16, left: size.w20),
+            padding:
+                EdgeInsets.only(top: size.h10, right: size.w16, left: size.w20),
             decoration: BoxDecoration(
               color: clr.whiteColor,
               borderRadius: BorderRadius.only(
@@ -152,13 +152,10 @@ class _AssignmentBottomSheetState extends State<AssignmentBottomSheet>
                     children: [
                       GestureDetector(
                         onTap: () {
-                          assignmentController.setContentToText(
-                              AssignmentModel(
-                                  assignmentId: 0,
-                                  content: _controller.document));
+                          assignmentController.setContentToText(AssignmentModel(
+                              assignmentId: 0, content: _controller.document));
                           assignmentController.setContent(AssignmentModel(
-                              assignmentId: 0,
-                              content: _controller.document));
+                              assignmentId: 0, content: _controller.document));
 
                           if (widget.from == "assignmentScreen") {
                             Navigator.of(context).pop();
@@ -205,8 +202,7 @@ class _AssignmentBottomSheetState extends State<AssignmentBottomSheet>
                                       fontSize: size.textSmall,
                                       color: clr.textColorAppleBlack,
                                       fontWeight: FontWeight.w500,
-                                      fontFamily:
-                                          StringData.fontFamilyPoppins),
+                                      fontFamily: StringData.fontFamilyPoppins),
                                   const VerticalSpacing(16, 0),
                                   const VerticalSpacing(0, 0),
                                   null,
@@ -216,8 +212,7 @@ class _AssignmentBottomSheetState extends State<AssignmentBottomSheet>
                                       fontSize: size.textSmall,
                                       color: clr.placeHolderTextColorGray,
                                       fontWeight: FontWeight.w500,
-                                      fontFamily:
-                                          StringData.fontFamilyPoppins),
+                                      fontFamily: StringData.fontFamilyPoppins),
                                   const VerticalSpacing(16, 0),
                                   const VerticalSpacing(0, 0),
                                   null,
@@ -264,17 +259,16 @@ class _AssignmentBottomSheetState extends State<AssignmentBottomSheet>
                                           iconUnselectedFillColor:
                                               Colors.transparent),
                                       childBuilder: (options, extraOptions) {
-                                        final buttonBackgroundColor =
-                                            extraOptions.isToggled
-                                                ? clr
-                                                    .appPrimaryColorGreen // Background color when toggled
-                                                : Colors.transparent;
+                                        final buttonBackgroundColor = extraOptions
+                                                .isToggled
+                                            ? clr
+                                                .appPrimaryColorGreen // Background color when toggled
+                                            : Colors.transparent;
                                         if (extraOptions.isToggled) {
                                           return Container(
                                             color: buttonBackgroundColor,
                                             child: IconButton(
-                                              onPressed:
-                                                  extraOptions.onPressed,
+                                              onPressed: extraOptions.onPressed,
                                               icon: Icon(
                                                 options.iconData,
                                                 color: Colors.white,
@@ -297,17 +291,16 @@ class _AssignmentBottomSheetState extends State<AssignmentBottomSheet>
                                     options:
                                         QuillToolbarToggleStyleButtonOptions(
                                       childBuilder: (options, extraOptions) {
-                                        final buttonBackgroundColor =
-                                            extraOptions.isToggled
-                                                ? clr
-                                                    .appPrimaryColorGreen // Background color when toggled
-                                                : Colors.transparent;
+                                        final buttonBackgroundColor = extraOptions
+                                                .isToggled
+                                            ? clr
+                                                .appPrimaryColorGreen // Background color when toggled
+                                            : Colors.transparent;
                                         if (extraOptions.isToggled) {
                                           return Container(
                                             color: buttonBackgroundColor,
                                             child: IconButton(
-                                              onPressed:
-                                                  extraOptions.onPressed,
+                                              onPressed: extraOptions.onPressed,
                                               icon: Icon(
                                                 options.iconData,
                                                 color: Colors.white,
@@ -328,17 +321,16 @@ class _AssignmentBottomSheetState extends State<AssignmentBottomSheet>
                                     options:
                                         QuillToolbarToggleStyleButtonOptions(
                                       childBuilder: (options, extraOptions) {
-                                        final buttonBackgroundColor =
-                                            extraOptions.isToggled
-                                                ? clr
-                                                    .appPrimaryColorGreen // Background color when toggled
-                                                : Colors.transparent;
+                                        final buttonBackgroundColor = extraOptions
+                                                .isToggled
+                                            ? clr
+                                                .appPrimaryColorGreen // Background color when toggled
+                                            : Colors.transparent;
                                         if (extraOptions.isToggled) {
                                           return Container(
                                             color: buttonBackgroundColor,
                                             child: IconButton(
-                                              onPressed:
-                                                  extraOptions.onPressed,
+                                              onPressed: extraOptions.onPressed,
                                               icon: Icon(
                                                 options.iconData,
                                                 color: Colors.white,
