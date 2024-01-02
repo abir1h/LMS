@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
 
 import '../controllers/assignment_controller.dart';
 import '../models/assignment_model.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/common_widgets/custom_button.dart';
+import '../../../../core/common_widgets/quil_text_viewer.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
@@ -23,6 +25,7 @@ class AssignmentSubmitScreen extends StatefulWidget {
 class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
     with AppTheme, Language {
   final controller = Get.put(AssignmentController());
+  final _controller = QuillController.basic();
 
   String data = '';
   @override
@@ -34,6 +37,7 @@ class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
   setContent() {
     if (widget.mainModel != null) {
       if (widget.mainModel!.content != null) {
+        _controller.document = widget.mainModel!.content!;
         data = widget.mainModel!.content!.toPlainText();
       }
     }
@@ -55,14 +59,8 @@ class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    controller.data,
-                    style: TextStyle(
-                        color: clr.textColorAppleBlack,
-                        fontSize: size.textSmall,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: StringData.fontFamilyPoppins),
-                    textAlign: TextAlign.justify,
+                  QuilTextViewer(
+                    controller: _controller,
                   ),
                   SizedBox(height: size.h56),
                   Divider(color: clr.boxStrokeColor),
@@ -75,8 +73,6 @@ class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
                         Expanded(
                           child: CustomButton(
                             onTap: () {
-                              CustomToasty.of(context)
-                                  .showSuccess("সফলভাবে  জমাদান সম্পন্ন হয়েছে");
                               Get.off(() => const CourseAssignmentScreen());
                             },
                             title: label(e: en.submit, b: bn.submit),

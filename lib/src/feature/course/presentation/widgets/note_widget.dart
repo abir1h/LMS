@@ -65,7 +65,7 @@ class _NoteWidgetState extends State<NoteWidget> with AppTheme {
           alignment: Alignment.bottomCenter,
           child: GestureDetector(
             onTap: () => showCupertinoModalPopup(
-              context: context,
+              context: context,barrierDismissible: false,
               builder: (context) => const NoteBottomSheet(),
             ),
             child: Container(

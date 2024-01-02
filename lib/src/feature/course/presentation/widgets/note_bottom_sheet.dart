@@ -391,7 +391,7 @@ class _NoteBottomSheetState extends State<NoteBottomSheet>
                                   ),
                                   QuillToolbarColorButton(
                                     controller: controller,
-                                    isBackground: true,
+                                    isBackground: false,
                                     options:
                                         const QuillToolbarColorButtonOptions(
                                       iconData: Icons.text_format,
