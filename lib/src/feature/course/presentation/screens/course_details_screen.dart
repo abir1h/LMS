@@ -50,6 +50,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
             description: label(
                 e: "Teaching for Learning programs are detailed discussions for those who are teaching, or who want to teach, any subject, in any context",
                 b: "শেখার জন্য শিক্ষাদান প্রোগ্রামের হল যারা শিক্ষা দিচ্ছেন, বা যারা শিক্ষা দিতে চান, যে কোনো বিষয়ে, যে কোনো প্রসঙ্গে বিস্তারিত আলোচনা"),
+            from: controller.from.value,
           ),
           SizedBox(height: size.h32),
           // CourseWidget(
@@ -90,12 +91,14 @@ class CourseWidget extends StatelessWidget with AppTheme, Language {
   final String courseCode;
   final ChapterType chapterType;
   final String description;
+  final String from;
   const CourseWidget(
       {super.key,
       required this.title,
       required this.courseCode,
       required this.chapterType,
-      required this.description});
+      required this.description,
+      required this.from});
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +146,7 @@ class CourseWidget extends StatelessWidget with AppTheme, Language {
                   e: "Chapter 1: The Desert of Karbala",
                   b: "অধ্যায় ১: কারবালা প্রান্তর"),
               chapterCode: label(e: "Chapter Code", b: "অধ্যায়ের কোড"),
-              chapterType: chapterType,
+              chapterType: from == "running" ? ChapterType.done : chapterType,
             ),
             ChapterWidget(
               chapterTitle: label(
@@ -156,20 +159,20 @@ class CourseWidget extends StatelessWidget with AppTheme, Language {
                   e: "Chapter 3: The Desert of Karbala",
                   b: "অধ্যায় ৩: কারবালা প্রান্তর"),
               chapterCode: label(e: "Chapter Code", b: "অধ্যায়ের কোড"),
-              chapterType: chapterType,
+              chapterType: from == "running" ? ChapterType.lock : chapterType,
             ),
             ChapterWidget(
               chapterTitle: label(
                   e: "Chapter 4: Human-Welfare", b: "অধ্যায় ৪: মানব-কল্যাণ"),
               chapterCode: label(e: "Chapter Code", b: "অধ্যায়ের কোড"),
-              chapterType: chapterType,
+              chapterType: from == "running" ? ChapterType.lock : chapterType,
             ),
             ChapterWidget(
               chapterTitle: label(
                   e: "Chapter 5: The Enormity of Life",
                   b: "অধ্যায় ৫: জীবযাত্রার বিপুলতা"),
               chapterCode: label(e: "Chapter Code", b: "অধ্যায়ের কোড"),
-              chapterType: chapterType,
+              chapterType: from == "running" ? ChapterType.lock : chapterType,
             ),
           ],
         )
