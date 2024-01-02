@@ -71,7 +71,7 @@ class _TimeDigitWidgetState<T> extends State<TimeDigitWidget<T>> with AppTheme {
 
   Widget _buildDigitBox(int value) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: size.w4, vertical: size.h2),
+      padding: EdgeInsets.symmetric(horizontal: size.w6),
       decoration: BoxDecoration(
         color: clr.appPrimaryColorGreen,
         borderRadius: BorderRadius.circular(size.w2),
@@ -92,7 +92,7 @@ class _TimeDigitWidgetState<T> extends State<TimeDigitWidget<T>> with AppTheme {
 
   Widget _buildDigitSeparatorBox(String value) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: size.w4, vertical: size.h2),
+      padding: EdgeInsets.symmetric(horizontal: size.w6),
       decoration: BoxDecoration(
         color: clr.appPrimaryColorGreen,
         borderRadius: BorderRadius.circular(size.w2),

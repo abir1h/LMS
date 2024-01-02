@@ -88,7 +88,9 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                           ? controller.data
                           : label(e: en.writeHere, b: bn.writeHere),
                       style: TextStyle(
-                          color: clr.placeHolderTextColorGray,
+                          color: controller.data == ''
+                              ? clr.placeHolderTextColorGray
+                              : clr.textColorAppleBlack,
                           fontSize: size.textSmall,
                           fontWeight: FontWeight.w500,
                           fontFamily: StringData.fontFamilyPoppins),
