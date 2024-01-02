@@ -24,8 +24,12 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
   Widget build(BuildContext context) {
     return CustomScaffold(
       title: controller.from.value == "running"
-          ? label(e: "Current Course Details", b: "চলমান কোর্সের বিস্তারিত")
-          : label(e: en.courseDetailsText, b: bn.courseDetailsText),
+          ? label(e: "Current Course Details", b: "চলমান অধিবেশনের বিস্তারিত")
+          : controller.from.value == "completed"
+              ? label(
+                  e: "Completed Course Details",
+                  b: "সম্পন্ন অধিবেশনের বিস্তারিত")
+              : label(e: en.courseDetailsText, b: bn.courseDetailsText),
       body: ListView(
         padding: EdgeInsets.symmetric(vertical: size.h12),
         shrinkWrap: true,
@@ -36,7 +40,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
                 e: "Education Policy and Management in Education",
                 b: "শিক্ষা নীতি ও শিক্ষায় ব্যাবস্থাপনা"),
             courseCode: controller.from.value == "running"
-                ? label(e: "Course Code : 5568", b: "কোর্সের কোড : ৫৫৬৮")
+                ? label(e: "Course Code : 5568", b: "অধিবেশনের কোড : ৫৫৬৮")
                 : "",
             status: controller.status.value != "lock" ? false : true,
             description: label(
@@ -110,8 +114,9 @@ class CourseWidget extends StatelessWidget with AppTheme, Language {
             ),
           ),
         CourseText(
-            text: label(
-                e: en.curriculumDescription, b: bn.curriculumDescription)),
+          text: label(e: en.curriculumDescription, b: bn.curriculumDescription),
+          textColor: clr.textColorBlack,
+        ),
         SizedBox(height: size.h10),
         CourseText(
           text: description,
@@ -120,7 +125,9 @@ class CourseWidget extends StatelessWidget with AppTheme, Language {
         ),
         SizedBox(height: size.h16),
         CourseText(
-            text: label(e: en.curriculumContent, b: bn.curriculumContent)),
+          text: label(e: en.curriculumContent, b: bn.curriculumContent),
+          textColor: clr.textColorBlack,
+        ),
         SizedBox(height: size.h12),
         ListView(
           padding: EdgeInsets.zero,

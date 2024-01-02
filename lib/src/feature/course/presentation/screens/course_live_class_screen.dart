@@ -20,30 +20,30 @@ class _CourseLiveClassScreenState extends State<CourseLiveClassScreen>
   Widget build(BuildContext context) {
     return CustomScaffold(
       title: label(e: en.liveClass, b: bn.liveClass),
-      actionChild: InkWell(
-        onTap: () {},
-        child: Stack(
-          children: [
-            Icon(
-              Icons.notifications,
-              color: clr.appPrimaryColorGreen,
-              size: size.r24,
-            ),
-            Positioned(
-              right: -1,
-              top: 2.w,
-              child: Container(
-                width: size.w12,
-                height: size.h12,
-                decoration: BoxDecoration(
-                    color: clr.appPrimaryColorGreen,
-                    shape: BoxShape.circle,
-                    border: Border.all(color: clr.whiteColor)),
-              ),
-            ),
-          ],
-        ),
-      ),
+      // actionChild: InkWell(
+      //   onTap: () {},
+      //   child: Stack(
+      //     children: [
+      //       Icon(
+      //         Icons.notifications,
+      //         color: clr.appPrimaryColorGreen,
+      //         size: size.r24,
+      //       ),
+      //       Positioned(
+      //         right: -1,
+      //         top: 2.w,
+      //         child: Container(
+      //           width: size.w12,
+      //           height: size.h12,
+      //           decoration: BoxDecoration(
+      //               color: clr.appPrimaryColorGreen,
+      //               shape: BoxShape.circle,
+      //               border: Border.all(color: clr.whiteColor)),
+      //         ),
+      //       ),
+      //     ],
+      //   ),
+      // ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

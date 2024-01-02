@@ -47,8 +47,10 @@ class _DashboardScreenState extends State<DashboardScreen>
                 leftChild: DashboardCard(
                   title:
                       label(e: en.ongoingCurriculum, b: bn.ongoingCurriculum),
-                  onPressed: () => Get.toNamed(AppRoutes.courseDetails,
-                      arguments: {'from': "", 'status': ""}),
+                  onPressed: () =>
+                      Get.toNamed(AppRoutes.courseList, arguments: "running"),
+                  // onPressed: () => Get.toNamed(AppRoutes.courseDetails,
+                  //     arguments: {'from': "running", 'status': ""}),
                   subTitle: label(
                       e: StringData.dashboardCardValue1,
                       b: StringData.dashboardCardValue1Bn),
@@ -84,8 +86,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                   subTitle: label(
                       e: StringData.dashboardCardValue3,
                       b: StringData.dashboardCardValue3Bn),
-                  borderColor: clr.cardStrokeColorPurple,
-                  primaryColor: clr.cardFillColorPurple,
+                  borderColor: clr.cardFillColorBlue,
+                  primaryColor: clr.cardStrokeColorBlue,
                   image: SvgPicture.asset(
                     ImageAssets.imgTraineeCard3,
                     height: size.h32,
@@ -97,8 +99,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                   subTitle: label(
                       e: StringData.dashboardCardValue4,
                       b: StringData.dashboardCardValue4Bn),
-                  borderColor: clr.cardFillColorBlue,
-                  primaryColor: clr.cardStrokeColorBlue,
+                  borderColor: clr.cardStrokeColorPurple,
+                  primaryColor: clr.cardFillColorPurple,
                   image: SvgPicture.asset(
                     ImageAssets.imgTraineeCard3,
                     height: size.h32,

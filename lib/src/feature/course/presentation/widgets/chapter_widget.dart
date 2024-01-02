@@ -82,6 +82,12 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                     color: clr.textColorBlack,
                     size: size.r20,
                   ),
+                // if (widget.lock)
+                //   Icon(
+                //     Icons.check_circle,
+                //     color: clr.appPrimaryColorGreen,
+                //     size: size.r20,
+                //   ),
                 SizedBox(width: size.w28),
                 Expanded(
                   child: Column(
@@ -90,9 +96,7 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                       Text(
                         widget.chapterTitle,
                         style: TextStyle(
-                            color: _isExpanded
-                                ? clr.appPrimaryColorGreen
-                                : clr.textColorAppleBlack,
+                            color: clr.appPrimaryColorGreen,
                             fontSize: size.textSmall,
                             fontWeight: FontWeight.w600,
                             fontFamily: StringData.fontFamilyPoppins),

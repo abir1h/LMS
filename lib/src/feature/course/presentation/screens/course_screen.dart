@@ -28,7 +28,7 @@ class _CourseScreenState extends State<CourseScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            label(e: "Current Course", b: "চলমান কোর্স"),
+            label(e: en.ongoingCurriculum, b: bn.ongoingCurriculum),
             style: TextStyle(
                 color: clr.appPrimaryColorGreen,
                 fontSize: size.textXMedium,
@@ -43,7 +43,7 @@ class _CourseScreenState extends State<CourseScreen>
                 e: "Education policy and management in education",
                 b: "শিক্ষা নীতি ও শিক্ষায় ব্যাবস্থাপনা"),
             titleFontSize: size.textXMedium,
-            code: label(e: "Course Code : 5568", b: "কোর্সের কোড : ৫৫৬৮"),
+            code: label(e: "Course Code : 5568", b: "অধিবেশনের কোড : ৫৫৬৮"),
             time: label(
                 e: "Duration : 12/06/2023 - 17/03/2024",
                 b: "সময়কাল : ১২/০৬/২০২৩ - ১৭/০৩/২০২৪"),
@@ -60,7 +60,7 @@ class _CourseScreenState extends State<CourseScreen>
           ),
           SizedBox(height: size.h16),
           Text(
-            label(e: "Other Courses", b: "অন্যান্য কোর্সসমূহ"),
+            label(e: "Other Courses", b: "অন্যান্য অধিবেশনসমূহ"),
             style: TextStyle(
                 color: clr.appPrimaryColorGreen,
                 fontSize: size.textXMedium,
@@ -69,13 +69,14 @@ class _CourseScreenState extends State<CourseScreen>
           ),
           SizedBox(height: size.h8),
           CourseCard(
-            onTap: () => Get.toNamed(AppRoutes.courseDetails,
-                arguments: {'from': "", 'status': "lock"}),
+            // onTap: () => Get.toNamed(AppRoutes.courseDetails,
+            //     arguments: {'from': "", 'status': "lock"}),
+            onTap: () {},
             title: label(
                 e: "Development of Bengali language", b: "বাংলা ভাষার বিকাশ"),
             iconData: Icons.lock,
             iconColor: clr.iconColorDimGrey,
-            code: label(e: "Course Code : 1568", b: "কোর্সের কোড : ১৫৬৮"),
+            code: label(e: "Course Code : 1568", b: "অধিবেশনের কোড : ১৫৬৮"),
             time: label(
                 e: "Duration : 01/01/2024 - 06/04/2024",
                 b: "সময়কাল : ০১/০১/২০২৪ - ০৬/০৪/২০২৪"),
@@ -87,10 +88,10 @@ class _CourseScreenState extends State<CourseScreen>
           SizedBox(height: size.h12),
           CourseCard(
             onTap: () => Get.toNamed(AppRoutes.courseDetails,
-                arguments: {'from': "", 'status': ""}),
+                arguments: {'from': "completed", 'status': ""}),
             title: label(e: "Right to Information", b: "তথ্য অধিকার"),
             iconData: Icons.check_circle,
-            code: label(e: "Course Code : 1568", b: "কোর্সের কোড : ১৫৬৮"),
+            code: label(e: "Course Code : 1568", b: "অধিবেশনের কোড : ১৫৬৮"),
             time: label(
                 e: "Duration : 12/01/2023 - 17/03/2023",
                 b: "সময়কাল : ১২/০১/২০২৩ - ১৭/০৩/২০২৩ "),
@@ -100,12 +101,12 @@ class _CourseScreenState extends State<CourseScreen>
           SizedBox(height: size.h12),
           CourseCard(
             onTap: () => Get.toNamed(AppRoutes.courseDetails,
-                arguments: {'from': "", 'status': "lock"}),
+                arguments: {'from': "completed", 'status': "lock"}),
             title: label(
                 e: "Education policy and management in education",
                 b: "শিক্ষা নীতি ও শিক্ষায় ব্যাবস্থাপনা"),
             iconData: Icons.check_circle,
-            code: label(e: "Course Code : 1568", b: "কোর্সের কোড : ১৫৬৮"),
+            code: label(e: "Course Code : 1568", b: "অধিবেশনের কোড : ১৫৬৮"),
             time: label(
                 e: "Duration : 12/01/2023 - 17/03/2023",
                 b: "সময়কাল : ১২/০১/২০২৩ - ১৭/০৩/২০২৩ "),

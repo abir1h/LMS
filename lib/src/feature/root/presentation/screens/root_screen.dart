@@ -70,7 +70,7 @@ class _RootScreenState extends State<RootScreen>
           title: _currentPageIndex == 0
               ? label(e: en.appBarText, b: bn.appBarText)
               : _currentPageIndex == 1
-                  ? label(e: en.courseText, b: bn.courseText)
+                  ? label(e: en.coursesText, b: bn.coursesText)
                   : _currentPageIndex == 2
                       ? label(e: en.allNotes, b: bn.allNotes)
                       : label(e: en.profileAppBarText, b: bn.profileAppBarText),
