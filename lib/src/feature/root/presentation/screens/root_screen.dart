@@ -142,28 +142,34 @@ class _RootScreenState extends State<RootScreen>
         items: [
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.home_outlined,
+              _currentPageIndex == 0 ? Icons.home_outlined : Icons.home,
               size: size.r24,
             ),
             label: label(e: en.homeText, b: bn.homeText),
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.auto_stories,
+              _currentPageIndex == 1
+                  ? Icons.auto_stories_outlined
+                  : Icons.auto_stories,
               size: size.r24,
             ),
             label: label(e: en.coursesText, b: bn.coursesText),
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.assignment,
+              _currentPageIndex == 2
+                  ? Icons.assignment_outlined
+                  : Icons.assignment,
               size: size.r24,
             ),
             label: label(e: en.notesText, b: bn.notesText),
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              CupertinoIcons.profile_circled,
+              _currentPageIndex == 3
+                  ? Icons.account_circle_outlined
+                  : CupertinoIcons.profile_circled,
               size: size.r24,
             ),
             label: label(e: en.profileText, b: bn.profileText),

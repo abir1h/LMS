@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/feature/assignment/presentation/models/assignment_model.dart';
 
+import '../models/assignment_model.dart';
 import '../../../../core/utility/app_label.dart';
 import '../controllers/assignment_controller.dart';
 import '../screens/assignment_submit_screen.dart';
-import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/constants/common_imports.dart';
-import '../../../notes/presentation/controllers/note_controller.dart';
-import '../../../notes/presentation/models/note_model.dart';
 
 class AssignmentBottomSheet extends StatefulWidget {
   final AssignmentModel? mainModel;
@@ -53,6 +50,15 @@ class _AssignmentBottomSheetState extends State<AssignmentBottomSheet>
     _editorFocusNode.dispose();
     _editorScrollController.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    _controller.addListener(() {
+      setState(() {});
+    });
   }
 
   /* saveData() {
@@ -175,7 +181,9 @@ class _AssignmentBottomSheetState extends State<AssignmentBottomSheet>
                           decoration: BoxDecoration(
                               shape: BoxShape.rectangle,
                               borderRadius: BorderRadius.circular(size.r8),
-                              color: clr.appPrimaryColorGreen),
+                              color: _controller.document.isEmpty()
+                                  ? clr.placeHolderTextColorGray
+                                  : clr.appPrimaryColorGreen),
                           child: Icon(
                             Icons.check,
                             color: clr.whiteColor,

@@ -58,7 +58,7 @@ class _CourseListScreenState extends State<CourseListScreen>
                 return controller.screenName.value == "running"
                     ? CourseCard(
                         onTap: () => Get.toNamed(AppRoutes.courseDetails,
-                            arguments: {'from': "running", 'status': ""}),
+                            arguments: {'from': "running", 'status': "open"}),
                         title:
                             label(e: "Right to Information", b: "তথ্য অধিকার"),
                         code: label(
@@ -74,7 +74,10 @@ class _CourseListScreenState extends State<CourseListScreen>
                     : controller.screenName.value == "completed"
                         ? CourseCard(
                             onTap: () => Get.toNamed(AppRoutes.courseDetails,
-                                arguments: {'from': "completed", 'status': ""}),
+                                arguments: {
+                                  'from': "completed",
+                                  'status': "done"
+                                }),
                             title: label(
                                 e: "Right to Information", b: "তথ্য অধিকার"),
                             iconData: Icons.check_circle,

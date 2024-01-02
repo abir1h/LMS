@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/feature/assessment/presentation/screens/assessment_answer_in_one_word_screen.dart';
-import 'package:lms/src/feature/assessment/presentation/screens/assessment_matching_screen.dart';
-import 'package:lms/src/feature/assessment/presentation/screens/assessment_screen.dart';
-import 'package:lms/src/feature/assessment/presentation/screens/assessment_true_false_screen.dart';
 
+import '../../../assessment/presentation/screens/assessment_answer_in_one_word_screen.dart';
+import '../../../assessment/presentation/screens/assessment_matching_screen.dart';
+import '../../../assessment/presentation/screens/assessment_screen.dart';
+import '../../../assessment/presentation/screens/assessment_true_false_screen.dart';
 import '../../../assessment/presentation/screens/assessment_quiz_screen.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/utility/app_label.dart';
@@ -20,12 +20,12 @@ import '../../../../core/constants/common_imports.dart';
 class ChapterWidget extends StatefulWidget {
   final String chapterTitle;
   final String chapterCode;
-  final bool lock;
+  final ChapterType chapterType;
   const ChapterWidget(
       {super.key,
       required this.chapterTitle,
       required this.chapterCode,
-      this.lock = true});
+      this.chapterType = ChapterType.lock});
 
   @override
   State<ChapterWidget> createState() => _ChapterWidgetState();
@@ -50,7 +50,7 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
       children: [
         GestureDetector(
           onTap: () {
-            if (!widget.lock) {
+            if (widget.chapterType != ChapterType.lock) {
               _toggle();
             }
           },
@@ -67,27 +67,24 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                if (!widget.lock)
+                if (widget.chapterType == ChapterType.done)
+                  Icon(
+                    Icons.check_circle,
+                    color: clr.appPrimaryColorGreen,
+                    size: size.r20,
+                  ),
+                if (widget.chapterType == ChapterType.open)
                   SvgPicture.asset(
                     ImageAssets.icLockOpenRight,
                     colorFilter: ColorFilter.mode(
-                        _isExpanded
-                            ? clr.appPrimaryColorGreen
-                            : clr.textColorBlack,
-                        BlendMode.srcIn),
+                        clr.appPrimaryColorGreen, BlendMode.srcIn),
                   ),
-                if (widget.lock)
+                if (widget.chapterType == ChapterType.lock)
                   Icon(
                     Icons.lock,
                     color: clr.textColorBlack,
                     size: size.r20,
                   ),
-                // if (widget.lock)
-                //   Icon(
-                //     Icons.check_circle,
-                //     color: clr.appPrimaryColorGreen,
-                //     size: size.r20,
-                //   ),
                 SizedBox(width: size.w28),
                 Expanded(
                   child: Column(
@@ -269,3 +266,5 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
     );
   }
 }
+
+enum ChapterType { done, open, lock }

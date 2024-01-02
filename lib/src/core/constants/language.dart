@@ -77,6 +77,8 @@ class LanguageEn {
 
   String courseText = "Course";
   String courseDetailsText = "Course Details";
+  String ongoingCourseDetailsText = "Ongoing Course Details";
+  String completedCourseDetailsText = "Completed Course Details";
   String curriculumDescription = "Curriculum Description";
   String curriculumContent = "Curriculum Content";
   String check = "Check";
@@ -198,6 +200,8 @@ class LanguageBn {
 
   String courseText = "কোর্স";
   String courseDetailsText = "অধিবেশনের বিস্তারিত";
+  String ongoingCourseDetailsText = "চলমান অধিবেশনের বিস্তারিত";
+  String completedCourseDetailsText = "সম্পন্ন অধিবেশনের বিস্তারিত";
   String curriculumDescription = "পাঠ্যসূচীর বর্ণনা";
   String curriculumContent = "পাঠ্যক্রমের বিষয়বস্তু";
   String check = "চেক করুন";
