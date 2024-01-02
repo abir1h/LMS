@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../constants/app_theme.dart';
+import '../constants/common_imports.dart';
+import '../utility/app_label.dart';
 
 class ExpandableText extends StatefulWidget {
   final String text;
@@ -17,7 +18,8 @@ class ExpandableText extends StatefulWidget {
   State<ExpandableText> createState() => _ExpandableTextState();
 }
 
-class _ExpandableTextState extends State<ExpandableText> with AppTheme {
+class _ExpandableTextState extends State<ExpandableText>
+    with AppTheme, Language {
   bool isFoldable = false;
   bool isFolded = true;
 
@@ -43,7 +45,7 @@ class _ExpandableTextState extends State<ExpandableText> with AppTheme {
               child: GestureDetector(
                 onTap: _showMore,
                 child: Text(
-                  " আরো দেখুন",
+                  label(e: en.seeMore, b: bn.seeMore),
                   style: widget.style.copyWith(
                       color: clr.appPrimaryColorGreen,
                       fontSize: size.textXSmall),
@@ -55,7 +57,7 @@ class _ExpandableTextState extends State<ExpandableText> with AppTheme {
               child: GestureDetector(
                 onTap: _showLess,
                 child: Text(
-                  " সংক্ষিপ্ত করুন",
+                  label(e: en.seeLess, b: bn.seeLess),
                   style: widget.style.copyWith(
                       color: clr.appPrimaryColorGreen,
                       fontSize: size.textXSmall),

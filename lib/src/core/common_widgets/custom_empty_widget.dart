@@ -1,64 +1,99 @@
-import '../constants/common_imports.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CustomEmptyWidget extends StatelessWidget with AppTheme {
+import '../utility/app_label.dart';
+import '../constants/common_imports.dart';
+import 'custom_switch_button.dart';
+
+class CustomEmptyWidget extends StatelessWidget with AppTheme, Language {
   final IconData icon;
-  final String title;
+  final String? title;
   final String message;
 
   const CustomEmptyWidget(
       {super.key,
       this.icon = Icons.content_paste_off,
-      this.title = StringData.noFileFoundText,
+      this.title,
       required this.message});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.maxFinite,
-      height: double.maxFinite,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: size.w24, vertical: size.h24),
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(icon, size: 100.r, color: clr.iconColorWhiteIce),
-              SizedBox(height: size.h20),
-              Text(
-                title,
-                style: TextStyle(
-                    color: clr.blackColor,
-                    fontSize: size.textXMedium,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: StringData.fontFamilyPoppins),
+    return Scaffold(
+      backgroundColor: clr.scaffoldBackgroundColor,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(icon, size: 100.r, color: clr.iconColorWhiteIce),
+                  SizedBox(height: size.h20),
+                  Text(
+                    title ??
+                        label(e: en.noFileFoundText, b: bn.noFileFoundText),
+                    style: TextStyle(
+                        color: clr.blackColor,
+                        fontSize: size.textXMedium,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: StringData.fontFamilyPoppins),
+                  ),
+                  SizedBox(height: size.h12),
+                  Text(
+                    message,
+                    style: TextStyle(
+                        color: clr.textColorBlack,
+                        fontSize: size.textSmall,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: StringData.fontFamilyPoppins),
+                  ),
+                  SizedBox(height: size.h4 + size.h32),
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: size.w32, vertical: size.h8),
+                    decoration: BoxDecoration(
+                        color: clr.appPrimaryColorGreen,
+                        borderRadius: BorderRadius.circular(size.w1 + size.w4)),
+                    child: Text(
+                      label(e: en.backToHomeText, b: bn.backToHomeText),
+                      style: TextStyle(
+                          color: clr.whiteColor,
+                          fontSize: size.textSmall,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: StringData.fontFamilyPoppins),
+                    ),
+                  )
+                ],
               ),
-              SizedBox(height: size.h12),
-              Text(
-                message,
-                style: TextStyle(
-                    color: clr.textColorBlack,
-                    fontSize: size.textSmall,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: StringData.fontFamilyPoppins),
-              ),
-              SizedBox(height: size.h4 + size.h32),
-              Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: size.w32, vertical: size.h8),
-                decoration: BoxDecoration(
-                    color: clr.appPrimaryColorGreen,
-                    borderRadius: BorderRadius.circular(size.w1 + size.w4)),
-                child: Text(
-                  StringData.backToHomeText,
-                  style: TextStyle(
-                      color: clr.whiteColor,
-                      fontSize: size.textSmall,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: StringData.fontFamilyPoppins),
+            ),
+            Positioned(
+              top: size.h16 - size.h1,
+              right: size.w16,
+              child: CustomSwitchButton(
+                value: App.currentAppLanguage == AppLanguage.english,
+                textOn: 'EN',
+                textSize: size.textXXSmall,
+                textOff: 'বাং',
+                bgColor: clr.whiteColor,
+                width: 64.w,
+                animationDuration: const Duration(milliseconds: 300),
+                onChanged: (bool state) {
+                  // App.setAppLanguage(state ? 1 : 0).then((value) {
+                  //   if (mounted) {
+                  //     setState(() {});
+                  //   }
+                  // });
+                },
+                buttonHolder: const Icon(
+                  Icons.check,
+                  color: Colors.transparent,
                 ),
-              )
-            ],
-          ),
+                onTap: () {},
+                onDoubleTap: () {},
+                onSwipe: () {},
+              ),
+            )
+          ],
         ),
       ),
     );

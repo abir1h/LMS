@@ -1,9 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/constants/common_imports.dart';
 
 class DashboardCard extends StatelessWidget with AppTheme {
-  final String text1, text2;
+  final String title, subTitle;
   final Color? primaryColor;
   final Color? borderColor;
   final Widget? image;
@@ -13,8 +14,8 @@ class DashboardCard extends StatelessWidget with AppTheme {
       this.primaryColor,
       this.image,
       required this.onPressed,
-      required this.text1,
-      required this.text2,
+      required this.title,
+      required this.subTitle,
       this.borderColor = Colors.white});
 
   @override
@@ -34,7 +35,7 @@ class DashboardCard extends StatelessWidget with AppTheme {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              text1,
+              title,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
@@ -49,7 +50,7 @@ class DashboardCard extends StatelessWidget with AppTheme {
               children: [
                 Expanded(
                   child: Text(
-                    text2,
+                    subTitle,
                     style: TextStyle(
                         color: clr.textColorAppleBlack,
                         fontSize: size.textXMedium,

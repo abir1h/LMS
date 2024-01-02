@@ -3,8 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-import '../../../../core/constants/common_imports.dart';
-
+import '../../../../core/constants/app_theme.dart';
 
 class CustomYoutubePlayer extends StatefulWidget {
   final String videoUrl;
@@ -22,7 +21,6 @@ class _CustomYoutubePlayerState extends State<CustomYoutubePlayer>
   YoutubePlayerController? _controller;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _controller = YoutubePlayerController(
       initialVideoId: widget.videoUrl,
@@ -53,6 +51,8 @@ class _CustomYoutubePlayerState extends State<CustomYoutubePlayer>
         SystemChrome.setPreferredOrientations([
           DeviceOrientation.portraitUp,
         ]);
+        SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+
         return;
       },
       child: OrientationBuilder(
@@ -87,7 +87,7 @@ class _CustomYoutubePlayerState extends State<CustomYoutubePlayer>
                           left: size.w16,
                           child: InkWell(
                             onTap: () {
-                              Get.back();
+                              Navigator.pop(context);
                             },
                             child: Icon(
                               Icons.arrow_back,

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import '../constants/image_assets.dart';
 import 'package:flutter/material.dart';
+
+import '../constants/common_imports.dart';
 
 class CustomImageWidget extends StatelessWidget {
   final String image;

@@ -1,4 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lms/src/core/service/notifier/app_events_notifier.dart';
+import 'package:lms/src/core/utility/app_label.dart';
 
 import '../../../../core/constants/common_imports.dart';
 
@@ -9,7 +13,8 @@ class GraphChart extends StatefulWidget {
   State<GraphChart> createState() => _GraphChartState();
 }
 
-class _GraphChartState extends State<GraphChart> with AppTheme {
+class _GraphChartState extends State<GraphChart>
+    with AppTheme, AppEventsNotifier {
   double maxX = 5.0;
   double maxY = 4.0;
   List<FlSpot> dynamicData = [
@@ -42,71 +47,47 @@ class _GraphChartState extends State<GraphChart> with AppTheme {
       case 1:
         text = Column(
           children: [
-            Container(
-              color: clr.textColorAppleBlack,
-              height: 9.h,
-              width: 1.w,
-            ),
-            Text('সপ্তাহ ১', style: style),
+            verticalLine(),
+            Text(label(e: 'Week 1', b: 'সপ্তাহ ১'), style: style),
           ],
         );
         break;
       case 2:
         text = Column(
           children: [
-            Container(
-              color: clr.textColorAppleBlack,
-              height: 9.h,
-              width: 1.w,
-            ),
-            Text('সপ্তাহ ২', style: style),
+            verticalLine(),
+            Text(label(e: 'Week 2', b: 'সপ্তাহ ২'), style: style),
           ],
         );
         break;
       case 3:
         text = Column(
           children: [
-            Container(
-              color: clr.textColorAppleBlack,
-              height: 9.h,
-              width: 1.w,
-            ),
-            Text('সপ্তাহ ৩', style: style),
+            verticalLine(),
+            Text(label(e: 'Week 3', b: 'সপ্তাহ ৩'), style: style),
           ],
         );
         break;
       case 4:
         text = Column(
           children: [
-            Container(
-              color: clr.textColorAppleBlack,
-              height: 9.h,
-              width: 1.w,
-            ),
-            Text('সপ্তাহ ৪', style: style),
+            verticalLine(),
+            Text(label(e: 'Week 4', b: 'সপ্তাহ ৪'), style: style),
           ],
         );
         break;
       case 5:
         text = Column(
           children: [
-            Container(
-              color: clr.textColorAppleBlack,
-              height: 9.h,
-              width: 1.w,
-            ),
-            Text('সপ্তাহ 5', style: style),
+            verticalLine(),
+            Text(label(e: 'Week 5', b: 'সপ্তাহ ৫'), style: style),
           ],
         );
         break;
       case 6:
         text = Column(
           children: [
-            Container(
-              color: clr.textColorAppleBlack,
-              height: 9.h,
-              width: 1.w,
-            ),
+            verticalLine(),
             Text('সপ্তাহ 6', style: style),
           ],
         );
@@ -114,11 +95,7 @@ class _GraphChartState extends State<GraphChart> with AppTheme {
       case 7:
         text = Column(
           children: [
-            Container(
-              color: clr.textColorAppleBlack,
-              height: 8.h,
-              width: 1.w,
-            ),
+            verticalLine(),
             Text('সপ্তাহ 7', style: style),
           ],
         );
@@ -126,11 +103,7 @@ class _GraphChartState extends State<GraphChart> with AppTheme {
       case 8:
         text = Column(
           children: [
-            Container(
-              color: clr.textColorAppleBlack,
-              height: 8.h,
-              width: 1.w,
-            ),
+            verticalLine(),
             Text('সপ্তাহ 8', style: style),
           ],
         );
@@ -156,24 +129,32 @@ class _GraphChartState extends State<GraphChart> with AppTheme {
     String text;
     switch (value.toInt()) {
       case 0:
-        text = '০%';
+        text = label(e: "0%", b: '০%');
         break;
       case 1:
-        text = '২৫%';
+        text = label(e: "25%", b: '২৫%');
         break;
       case 2:
-        text = '৫০%';
+        text = label(e: "50%", b: '৫০%');
         break;
       case 3:
-        text = '৭৫%';
+        text = label(e: "75%", b: '৭৫%');
       case 4:
-        text = '১০০%';
+        text = label(e: "100%", b: '১০০%');
         break;
       default:
         return Container();
     }
 
     return Text(text, style: style, textAlign: TextAlign.left);
+  }
+
+  Widget verticalLine() {
+    return Container(
+      color: clr.textColorAppleBlack,
+      height: 9.h,
+      width: 1.w,
+    );
   }
 
   LineChartData mainData() {
@@ -217,7 +198,7 @@ class _GraphChartState extends State<GraphChart> with AppTheme {
             showTitles: true,
             interval: 1,
             getTitlesWidget: leftTitleWidgets,
-            reservedSize: 42,
+            reservedSize: 50,
           ),
         ),
       ),
@@ -246,5 +227,14 @@ class _GraphChartState extends State<GraphChart> with AppTheme {
         ),
       ],
     );
+  }
+
+  @override
+  void onEventReceived(EventAction action) {
+    if (action == EventAction.graphChart) {
+      if (mounted) {
+        setState(() {});
+      }
+    }
   }
 }

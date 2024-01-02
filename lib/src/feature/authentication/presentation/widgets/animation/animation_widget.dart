@@ -46,7 +46,7 @@ class _AnimationWidgetState extends State<AnimationWidget>
   Widget build(BuildContext context) {
     return SizedBox(
         width: MediaQuery.of(context).size.width * widthAnimation.value,
-        height: size.h42-size.h2,
+        height: size.h42 - size.h2,
         child: widget.child);
   }
 }

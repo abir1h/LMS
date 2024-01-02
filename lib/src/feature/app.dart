@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -36,11 +35,11 @@ class Application extends StatelessWidget with AppTheme {
                   .copyWith(primary: clr.appPrimaryColorGreen),
               scaffoldBackgroundColor: clr.scaffoldBackgroundColor,
               dividerColor: Colors.transparent,
-              fontFamily: StringData.fontFamilyPoppins,
+              fontFamily: StringData.fontFamilyPoppins,canvasColor: Colors.transparent
+
             ),
             initialRoute: AppRoutes.splash,
             getPages: AppPages.pages,
-            builder: EasyLoading.init(),
           );
         });
   }

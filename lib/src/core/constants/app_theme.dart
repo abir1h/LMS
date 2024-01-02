@@ -23,27 +23,38 @@ class ThemeColor {
   Color get shadeWhiteColor2 => HexColor("FEFFFF");
   Color get blackColor => HexColor("000000");
   Color get greyColor => HexColor("B6B6B6");
+  Color get dropdownHintColorGrey => HexColor("959596");
   Color get strokeToggleColor => HexColor("CBE1A9");
   Color get iconColorHint => HexColor("797979");
   Color get iconColorWhiteIce => HexColor("D1ECE4");
   Color get iconColorRed => HexColor("F27785");
+  Color get iconColorBlack => HexColor("1C1B1F");
+  Color get iconColorSweetRed => HexColor("FF4A5F");
+  Color get iconColorDimGrey => HexColor("6B6A6A");
+  Color get iconColorDarkGrey => HexColor("656565");
 
   Color get textColorAppleBlack => HexColor("1D1D1F");
   Color get textColorBlack => HexColor("414141");
+  Color get textColorGray=> HexColor("A8A8A8");
   Color get placeHolderTextColorGray => HexColor("9F9F9F");
 
   Color get boxStrokeColor => HexColor("DFDFDF");
+  Color get boxStrokeColorSilver => HexColor("C0C0C0");
   Color get cardStrokeColor => HexColor("B6DED4");
   Color get cardStrokeColorOrange => HexColor("FDC89B");
   Color get cardStrokeColorGreen => HexColor("B7D37A");
   Color get cardStrokeColorPurple => HexColor("E5D9F7");
   Color get cardStrokeColorBlue => HexColor("BEDBED");
+  Color get dividerStrokeColorGrey => HexColor("B0B0B0");
+  Color get gapStrokeGrey => HexColor("646464");
 
   Color get fromBoxFillColor => HexColor("FCFFFE");
   Color get cardFillColorOrange => HexColor("FFE9D6");
   Color get cardFillColorGreen => HexColor("F2FED7");
   Color get cardFillColorPurple => HexColor("F7F2FF");
   Color get cardFillColorBlue => HexColor("E7F6FF");
+  Color get cardFillColorCruise => HexColor("B3E0DD");
+  Color get drawerFillColor => HexColor("E6F8F4");
 
   Color get clickableLinkColor => HexColor("4A88FF");
   Color get progressBGColor => HexColor("D9D9D9");
@@ -58,9 +69,8 @@ class ThemeColor {
   Color get toastErrorColor => HexColor("FF8E6A");
   Color get toastErrorBackgroundColor => HexColor("FFE6E9");
   Color get toastAskColor => HexColor("68B1EF");
-  Color get toastAskBackgroundColor => HexColor("E7F6FF");
-
-
+  Color get backgroundColorMintCream => HexColor("F2FCFA");
+  Color get placeHolderDeselectGray => HexColor("959596");
 }
 
 class ThemeSize {

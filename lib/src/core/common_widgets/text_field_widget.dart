@@ -66,6 +66,7 @@ class AppTextField extends StatefulWidget {
   final FocusNode? focusNode;
   final TextInputType keyboardType;
   final bool autoMaxLine;
+  final VoidCallback? onTaped;
   final FormFieldValidator<String>? validator;
 
   const AppTextField(
@@ -78,7 +79,7 @@ class AppTextField extends StatefulWidget {
       this.suffixIcon,
       this.keyboardType = TextInputType.text,
       this.autoMaxLine = false,
-      this.validator})
+      this.validator, this.onTaped})
       : super(key: key);
 
   @override
@@ -122,6 +123,7 @@ class _AppTextFieldState extends State<AppTextField> with AppTheme {
           ),
       child: Center(
         child: TextFormField(
+          onTap: widget.onTaped,
           readOnly: widget.readOnly,
           controller: widget.controller,
           focusNode: focusNode,

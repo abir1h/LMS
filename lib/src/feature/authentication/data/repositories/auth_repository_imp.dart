@@ -8,7 +8,8 @@ class AuthRepositoryImp extends AuthRepository {
   AuthRepositoryImp({required this.authRemoteDataSource});
 
   @override
-  Future<AuthResponseEntity> userLogin(String pdsID, String password) async{
-    return (await authRemoteDataSource.userLoginAction(pdsID, password)).toAuthResponseEntity;
+  Future<AuthResponseEntity> userLogin(String pdsID, String password) async {
+    return (await authRemoteDataSource.userLoginAction(pdsID, password))
+        .toAuthResponseEntity;
   }
 }

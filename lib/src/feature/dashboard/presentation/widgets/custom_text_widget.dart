@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import '../../../../core/constants/common_imports.dart';
 
 class CustomTextWidgets extends StatelessWidget with AppTheme {

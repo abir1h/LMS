@@ -1,11 +1,14 @@
-import '../constants/app_theme.dart';
 import 'package:flutter/material.dart';
+
+import '../constants/app_theme.dart';
 import '../constants/strings.dart';
 
 class CustomButton extends StatelessWidget with AppTheme {
   final VoidCallback onTap;
+  final Color? bgColor, borderColor;
   final IconData? icon;
   final String title;
+  final Color? textColor;
   final double? textSize;
   final double? horizontalPadding;
   final double? verticalPadding;
@@ -14,8 +17,11 @@ class CustomButton extends StatelessWidget with AppTheme {
   const CustomButton(
       {super.key,
       required this.onTap,
+      this.bgColor,
+      this.borderColor,
       this.icon,
       required this.title,
+      this.textColor,
       this.textSize,
       this.horizontalPadding,
       this.verticalPadding,
@@ -35,13 +41,12 @@ class CustomButton extends StatelessWidget with AppTheme {
           padding: EdgeInsets.symmetric(
               horizontal: horizontalPadding ?? size.w16,
               vertical: verticalPadding ?? size.h10),
-          // height: size.h40,
           width: expanded ? double.maxFinite : null,
           decoration: BoxDecoration(
-              color: clr.appPrimaryColorGreen,
+              color: bgColor ?? clr.appPrimaryColorGreen,
               borderRadius: BorderRadius.circular(radius ?? size.w10),
-              border:
-                  Border.all(color: clr.appPrimaryColorGreen, width: size.w1)),
+              border: Border.all(
+                  color: borderColor ?? Colors.transparent, width: size.w1)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -57,7 +62,7 @@ class CustomButton extends StatelessWidget with AppTheme {
               Text(
                 title,
                 style: TextStyle(
-                    color: clr.shadeWhiteColor2,
+                    color: textColor ?? clr.shadeWhiteColor2,
                     fontSize: textSize ?? size.textSmall,
                     fontWeight: FontWeight.w500,
                     fontFamily: StringData.fontFamilyPoppins),

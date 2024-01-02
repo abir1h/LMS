@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constants/common_imports.dart';
+import '../constants/app_theme.dart';
 
 class CustomCardTile extends StatelessWidget with AppTheme {
   final double? height;

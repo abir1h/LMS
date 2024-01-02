@@ -1,221 +1,187 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
+import '../controllers/profile_controller.dart';
+import '../../../../core/service/notifier/app_events_notifier.dart';
 import '../../../../core/common_widgets/custom_dialog_widget.dart';
 import '../../../../core/common_widgets/custom_switch_button.dart';
-import '../../../../core/common_widgets/drawer_widget.dart';
 import '../../../../core/constants/common_imports.dart';
-import '../../../../core/common_widgets/custom_app_bar.dart';
-import '../../../../core/routes/app_routes.dart';
+import '../../../landing/presentation/controllers/landing_controller.dart';
 import '../../../../core/utility/app_label.dart';
 
-class ProfileScreen extends StatefulWidget with AppTheme {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> with AppTheme {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+class _ProfileScreenState extends State<ProfileScreen>
+    with AppTheme, Language, AppEventsNotifier {
+  final ProfileController controller = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      backgroundColor: clr.iconColorWhiteIce,
-      drawer: const DrawerWidget(),
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(size.h56),
-        child: CustomAppBar(
-          title: "LMS My Profile",
-          leadingOnPressed: () {
-            _scaffoldKey.currentState!.openDrawer();
-          },
-          hasDivider: true,
-          hasMenu: true,
-          automaticallyImplyLeading: false,
-          primaryColor: Colors.white,
-          toolbarHeight: size.h56,
-          trailingOnPressed: () {},
-          trailing: Stack(
-            children: [
-              Icon(
-                Icons.notifications,
-                color: clr.appPrimaryColorGreen,
-                size: size.r24,
-              ),
-              Positioned(
-                right: -1,
-                top: 2.w,
-                child: Container(
-                  width: size.w12,
-                  height: size.h12,
-                  decoration: BoxDecoration(
-                      color: clr.appPrimaryColorGreen,
-                      shape: BoxShape.circle,
-                      border: Border.all(color: clr.whiteColor)),
-                ),
-              ),
-            ],
-          ),
-          leading: Icon(
-            Icons.menu,
-            color: clr.appPrimaryColorGreen,
-            size: size.r24,
-          ),
-        ),
-      ),
-      body: Column(
-        children: [
-          Stack(
-            children: [
-              Center(
-                child: Column(
-                  children: [
-                    SizedBox(height: size.h20),
-                    Container(
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(color: clr.cardStrokeColor)),
-                      child: Image.asset(
-                        ImageAssets.imgEmptyProfile2,
-                        width: size.w4 + size.w56,
-                      ),
+    return Column(
+      children: [
+        Stack(
+          children: [
+            Center(
+              child: Column(
+                children: [
+                  SizedBox(height: size.h20),
+                  Container(
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: clr.cardStrokeColor)),
+                    child: Image.asset(
+                      ImageAssets.imgEmptyProfile,
+                      width: size.w4 + size.w56,
                     ),
-                    SizedBox(height: size.h12),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: size.w16),
-                      child: Text(
-                        label(
-                            e: StringData.userNameTextEn,
-                            b: StringData.userNameTextBn),
-                        style: TextStyle(
-                            color: clr.appPrimaryColorGreen,
-                            fontSize: size.textXMedium,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: StringData.fontFamilyRoboto),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    SizedBox(height: size.h24)
-                  ],
-                ),
-              ),
-              Align(
-                alignment: Alignment.topCenter,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                      left: size.w24, right: size.w16, top: size.h16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SvgPicture.asset(ImageAssets.icEdit),
-                      CustomSwitchButton(
-                        value: false,
-                        textOn: 'English',
-                        textSize: size.textXXSmall,
-                        textOff: 'বাংলা',
-                        bgColor: clr.whiteColor,
-                        width: 85.w,
-                        animationDuration: const Duration(milliseconds: 300),
-                        onChanged: (bool state) {
-                          print('turned ${(state) ? 'yes' : 'no'}');
-                        },
-                        buttonHolder: const Icon(
-                          Icons.check,
-                          color: Colors.transparent,
-                        ),
-                        onTap: () {},
-                        onDoubleTap: () {},
-                        onSwipe: () {},
-                      ),
-                    ],
                   ),
-                ),
-              ),
-            ],
-          ),
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: size.w16),
-              decoration: BoxDecoration(
-                  color: clr.scaffoldBackgroundColor,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(size.w40),
-                    topRight: Radius.circular(size.w40),
+                  SizedBox(height: size.h12),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: size.w16),
+                    child: Text(
+                      label(e: en.userNameText, b: bn.userNameText),
+                      style: TextStyle(
+                          color: clr.appPrimaryColorGreen,
+                          fontSize: size.textXMedium,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: StringData.fontFamilyRoboto),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                  border: Border(
-                      top: BorderSide(color: clr.cardStrokeColor),
-                      right: BorderSide(color: clr.cardStrokeColor))),
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Column(
+                  SizedBox(height: size.h24)
+                ],
+              ),
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: EdgeInsets.only(
+                    left: size.w24, right: size.w16, top: size.h16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    SizedBox(height: size.h40),
-                    TitleWithIcon(
-                        icon: Icons.account_balance,
-                        title: label(
-                            e: StringData.currentOrganizationNameTextEn,
-                            b: StringData.currentOrganizationNameTextBn)),
-                    TitleWithIcon(
-                        icon: Icons.beenhere,
-                        title: label(
-                            e: StringData.positionNameTextEn,
-                            b: StringData.positionNameTextBn)),
-                    TitleWithIcon(
-                        icon: Icons.badge,
-                        title: label(
-                            e: StringData.regNoTextEn,
-                            b: StringData.regNoTextBn)),
-                    TitleWithIcon(
-                        icon: Icons.phone,
-                        title: label(
-                            e: StringData.phoneNumberTextEn,
-                            b: StringData.phoneNumberTextBn)),
-                    TitleWithIcon(
-                        icon: Icons.email,
-                        title: label(
-                            e: StringData.emailTextEn,
-                            b: StringData.emailTextBn)),
-                    TitleWithIcon(
-                      onTap: () => Get.toNamed(AppRoutes.certificate),
-                      svgIcon: ImageAssets.icEditorChoice,
-                      title: label(
-                          e: StringData.certificateTextEn,
-                          b: StringData.certificateTextBn),
-                      hasTrailing: true,
+                    // SvgPicture.asset(ImageAssets.icEdit),
+                    CustomSwitchButton(
+                      value: App.currentAppLanguage == AppLanguage.english,
+                      textOn: 'EN',
+                      textSize: size.textXXSmall,
+                      textOff: 'বাং',
+                      bgColor: clr.whiteColor,
+                      width: 64.w,
+                      animationDuration: const Duration(milliseconds: 300),
+                      onChanged: (bool state) {
+                        App.setAppLanguage(state ? 1 : 0).then((value) {
+                          if (mounted) {
+                            setState(() {});
+                          }
+                          AppEventsNotifier.notify(EventAction.bottomNavBar);
+                        });
+                      },
+                      buttonHolder: const Icon(
+                        Icons.check,
+                        color: Colors.transparent,
+                      ),
+                      onTap: () {},
+                      onDoubleTap: () {},
+                      onSwipe: () {},
                     ),
-                    TitleWithIcon(
-                      icon: Icons.logout,
-                      title: label(
-                          e: StringData.logoutTextEn,
-                          b: StringData.logoutTextBn),
-                      onTap: showLogoutPromptDialog,
-                      hasBorder: false,
-                    ),
-                    SizedBox(height: size.h40),
                   ],
                 ),
               ),
             ),
-          )
-        ],
-      ),
+          ],
+        ),
+        Expanded(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: size.w16),
+            decoration: BoxDecoration(
+                color: clr.scaffoldBackgroundColor,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(size.w40),
+                  topRight: Radius.circular(size.w40),
+                ),
+                border: Border(
+                    top: BorderSide(color: clr.cardStrokeColor),
+                    right: BorderSide(color: clr.cardStrokeColor))),
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  SizedBox(height: size.h40),
+                  TitleWithIcon(
+                      icon: Icons.account_balance,
+                      title: label(
+                          e: en.currentOrganizationNameText,
+                          b: bn.currentOrganizationNameText)),
+                  TitleWithIcon(
+                      icon: Icons.beenhere,
+                      title: label(
+                          e: en.positionNameText, b: bn.positionNameText)),
+                  TitleWithIcon(
+                      icon: Icons.badge,
+                      title: label(e: en.regNoText, b: bn.regNoText)),
+                  TitleWithIcon(
+                      icon: Icons.phone,
+                      title:
+                          label(e: en.phoneNumberText, b: bn.phoneNumberText)),
+                  TitleWithIcon(
+                      onTap: () {},
+                      icon: Icons.email,
+                      title: label(e: en.emailText, b: bn.emailText)),
+                  TitleWithIcon(
+                    onTap: () => Scaffold.of(context).openEndDrawer(),
+                    svgIcon: ImageAssets.icEditorChoice,
+                    title: label(e: en.certificateText, b: bn.certificateText),
+                    hasTrailing: true,
+                  ),
+                  TitleWithIcon(
+                    icon: Icons.logout,
+                    title: label(e: en.logoutText, b: bn.logoutText),
+                    onTap: showLogoutPromptDialog,
+                    hasBorder: false,
+                  ),
+                  SizedBox(height: size.h40),
+                ],
+              ),
+            ),
+          ),
+        )
+      ],
     );
   }
 
   void showLogoutPromptDialog() {
     CustomDialogWidget.show(
       context: context,
-      title: "আপনি কি লগ আউট করতে চান?",
-      infoText:
-          "আপনার কোর্সগুলো এবং মূল্যায়নের খবরের জন্য আপনার আইডি লগইন থাকা প্রয়োজন।",
-      rightButtonText: "বাতিল করুন",
-      leftButtonText: "প্রস্থান করুন",
-    );
+      title: label(e: en.logoutWarningText, b: bn.logoutWarningText),
+      infoText: label(
+          e: "Your ID login is required for your courses and assessment news.",
+          b: "আপনার কোর্সগুলো এবং মূল্যায়নের খবরের জন্য আপনার আইডি লগইন থাকা প্রয়োজন।"),
+      rightButtonText: label(e: en.cancelText, b: bn.cancelText),
+      leftButtonText: label(e: en.exitText, b: bn.exitText),
+    ).then((value) {
+      if (value) {
+        Get.find<LandingController>().logout();
+      }
+    });
+  }
+
+  @override
+  void onEventReceived(EventAction action) {
+    if (action == EventAction.bottomNavAllScreen ||
+        action == EventAction.profileScreen) {
+      if (mounted) {
+        setState(() {});
+      }
+    }
   }
 }
 
