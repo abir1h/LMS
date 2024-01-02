@@ -69,7 +69,7 @@ class NoteTile extends StatelessWidget with AppTheme {
                     overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(height: size.h4),
-                  reference != null
+                  reference != "টপিক সিলেক্ট করুন"
                       ? Text(
                           reference.toString(),
                           style: TextStyle(
