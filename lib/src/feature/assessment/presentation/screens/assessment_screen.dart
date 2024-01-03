@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../../../../core/common_widgets/custom_toasty.dart';
 import '../widgets/descriptive_answer_widget.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../widgets/matching_answer_widget.dart';
@@ -141,13 +143,15 @@ class _AssessmentScreenState extends State<AssessmentScreen>
     super.initState();
     timerStreamController.add(const Duration(minutes: 45));
     _examTimer = Timer.periodic(const Duration(seconds: 1), _onTimerTick);
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {_onTimerTick(_examTimer);});
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _onTimerTick(_examTimer);
+    });
   }
+
   void _onTimerTick(Timer timer) {
     var remaining = timerStreamController.value - const Duration(seconds: 1);
     timerStreamController.add(remaining);
-    }
-
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -237,7 +241,11 @@ class _AssessmentScreenState extends State<AssessmentScreen>
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   CustomButton(
-                    onTap: () {},
+                    onTap: () {
+                      CustomToasty.of(context)
+                          .showSuccess("সফলভাবে  জমাদান সম্পন্ন হয়েছে");
+                      Get.back();
+                    },
                     title: label(e: en.submit, b: bn.submit),
                     horizontalPadding: size.w20,
                     verticalPadding: size.h4,

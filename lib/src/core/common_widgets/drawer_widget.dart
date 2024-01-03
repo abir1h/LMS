@@ -36,9 +36,17 @@ class _DrawerWidgetState extends State<DrawerWidget> with AppTheme, Language {
                     left: size.w16, top: size.h32, right: size.w16),
                 child: Row(
                   children: [
-                    Image.asset(
-                      ImageAssets.imgEmptyProfile,
-                      height: size.h32,
+                    Container(
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                              color: clr.cardStrokeColor, width: size.w1)),
+                      child: CircleAvatar(
+                        radius: 24.r,
+                        backgroundImage: AssetImage(
+                          ImageAssets.imgProfile,
+                        ),
+                      ),
                     ),
                     SizedBox(width: size.w12),
                     Expanded(

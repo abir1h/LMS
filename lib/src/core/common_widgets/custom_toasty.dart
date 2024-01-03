@@ -258,7 +258,7 @@ class __ToastState extends State<_Toast>
         animation: _animationController,
         builder: (context, Widget? child) {
           return FractionalTranslation(
-            translation: Offset(_offsetAnimation.value, 0),
+            translation: Offset(0, _offsetAnimation.value),
             child: child,
           );
         },

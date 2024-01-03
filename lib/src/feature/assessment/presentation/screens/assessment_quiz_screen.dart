@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/common_widgets/custom_toasty.dart';
 import '../models/quiz_model.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
@@ -68,7 +69,11 @@ class _AssessmentQuizScreenState extends State<AssessmentQuizScreen>
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   CustomButton(
-                    onTap: () {},
+                    onTap: () {
+                      CustomToasty.of(context)
+                          .showSuccess("সফলভাবে  জমাদান সম্পন্ন হয়েছে");
+                      Get.back();
+                    },
                     title: label(e: en.submit, b: bn.submit),
                     horizontalPadding: size.w20,
                     verticalPadding: size.h4,
@@ -107,9 +112,15 @@ class _MCQAnswerWidgetState extends State<MCQAnswerWidget> with AppTheme {
           isSelected: widget.data.userAnswer1,
           onTap: () => setState(() {
             widget.data.userAnswer1 = !widget.data.userAnswer1;
-            widget.data.userAnswer2?widget.data.userAnswer2=!widget.data.userAnswer2:widget.data.userAnswer2;
-            widget.data.userAnswer3?widget.data.userAnswer3=!widget.data.userAnswer3:widget.data.userAnswer3;
-            widget.data.userAnswer4?widget.data.userAnswer4=!widget.data.userAnswer4:widget.data.userAnswer4;
+            widget.data.userAnswer2
+                ? widget.data.userAnswer2 = !widget.data.userAnswer2
+                : widget.data.userAnswer2;
+            widget.data.userAnswer3
+                ? widget.data.userAnswer3 = !widget.data.userAnswer3
+                : widget.data.userAnswer3;
+            widget.data.userAnswer4
+                ? widget.data.userAnswer4 = !widget.data.userAnswer4
+                : widget.data.userAnswer4;
           }),
         ),
         SizedBox(height: size.h12),
@@ -119,9 +130,15 @@ class _MCQAnswerWidgetState extends State<MCQAnswerWidget> with AppTheme {
           isSelected: widget.data.userAnswer2,
           onTap: () => setState(() {
             widget.data.userAnswer2 = !widget.data.userAnswer2;
-            widget.data.userAnswer1?widget.data.userAnswer1=!widget.data.userAnswer1:widget.data.userAnswer1;
-            widget.data.userAnswer3?widget.data.userAnswer3=!widget.data.userAnswer3:widget.data.userAnswer3;
-            widget.data.userAnswer4?widget.data.userAnswer4=!widget.data.userAnswer4:widget.data.userAnswer4;
+            widget.data.userAnswer1
+                ? widget.data.userAnswer1 = !widget.data.userAnswer1
+                : widget.data.userAnswer1;
+            widget.data.userAnswer3
+                ? widget.data.userAnswer3 = !widget.data.userAnswer3
+                : widget.data.userAnswer3;
+            widget.data.userAnswer4
+                ? widget.data.userAnswer4 = !widget.data.userAnswer4
+                : widget.data.userAnswer4;
           }),
         ),
         SizedBox(height: size.h12),
@@ -131,9 +148,15 @@ class _MCQAnswerWidgetState extends State<MCQAnswerWidget> with AppTheme {
           isSelected: widget.data.userAnswer3,
           onTap: () => setState(() {
             widget.data.userAnswer3 = !widget.data.userAnswer3;
-            widget.data.userAnswer1?widget.data.userAnswer1=!widget.data.userAnswer1:widget.data.userAnswer1;
-            widget.data.userAnswer2?widget.data.userAnswer2=!widget.data.userAnswer2:widget.data.userAnswer2;
-            widget.data.userAnswer4?widget.data.userAnswer4=!widget.data.userAnswer4:widget.data.userAnswer4;
+            widget.data.userAnswer1
+                ? widget.data.userAnswer1 = !widget.data.userAnswer1
+                : widget.data.userAnswer1;
+            widget.data.userAnswer2
+                ? widget.data.userAnswer2 = !widget.data.userAnswer2
+                : widget.data.userAnswer2;
+            widget.data.userAnswer4
+                ? widget.data.userAnswer4 = !widget.data.userAnswer4
+                : widget.data.userAnswer4;
           }),
         ),
         SizedBox(height: size.h12),
@@ -143,9 +166,15 @@ class _MCQAnswerWidgetState extends State<MCQAnswerWidget> with AppTheme {
           isSelected: widget.data.userAnswer4,
           onTap: () => setState(() {
             widget.data.userAnswer4 = !widget.data.userAnswer4;
-            widget.data.userAnswer1?widget.data.userAnswer1=!widget.data.userAnswer1:widget.data.userAnswer1;
-            widget.data.userAnswer2?widget.data.userAnswer2=!widget.data.userAnswer2:widget.data.userAnswer2;
-            widget.data.userAnswer3?widget.data.userAnswer3=!widget.data.userAnswer3:widget.data.userAnswer3;
+            widget.data.userAnswer1
+                ? widget.data.userAnswer1 = !widget.data.userAnswer1
+                : widget.data.userAnswer1;
+            widget.data.userAnswer2
+                ? widget.data.userAnswer2 = !widget.data.userAnswer2
+                : widget.data.userAnswer2;
+            widget.data.userAnswer3
+                ? widget.data.userAnswer3 = !widget.data.userAnswer3
+                : widget.data.userAnswer3;
           }),
         ),
       ],

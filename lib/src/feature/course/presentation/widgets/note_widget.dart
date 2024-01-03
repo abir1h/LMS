@@ -4,13 +4,15 @@ import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import 'note_bottom_sheet.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../notes/presentation/controllers/note_controller.dart';
 
 class NoteWidget extends StatefulWidget {
-  const NoteWidget({super.key});
+  final ScrollPhysics? physics;
+  const NoteWidget({super.key, this.physics});
 
   @override
   State<NoteWidget> createState() => _NoteWidgetState();
@@ -33,7 +35,7 @@ class _NoteWidgetState extends State<NoteWidget> with AppTheme {
           () => ListView.builder(
               shrinkWrap: true,
               itemCount: controller.noteList.length,
-              physics: const BouncingScrollPhysics(),
+              physics: widget.physics ?? const BouncingScrollPhysics(),
               padding: EdgeInsets.only(bottom: size.h64 * 2),
               itemBuilder: (_, index) {
                 return NoteWidgetTile(
@@ -52,7 +54,8 @@ class _NoteWidgetState extends State<NoteWidget> with AppTheme {
                                   .noteList[index].description as List)
                               .toPlainText()
                           : "New Note",
-                  timestamp: controller.noteList[index].time!,
+                  timestamp: DateFormat('dd MMMM yyyy')
+                      .format(DateTime.parse(controller.noteList[index].time!)),
                   onPressed: () => showCupertinoModalPopup(
                     context: context,
                     builder: (context) =>
@@ -65,7 +68,8 @@ class _NoteWidgetState extends State<NoteWidget> with AppTheme {
           alignment: Alignment.bottomCenter,
           child: GestureDetector(
             onTap: () => showCupertinoModalPopup(
-              context: context,barrierDismissible: false,
+              context: context,
+              barrierDismissible: false,
               builder: (context) => const NoteBottomSheet(),
             ),
             child: Container(
@@ -148,18 +152,18 @@ class NoteWidgetTile extends StatelessWidget with AppTheme {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h8),
         decoration: BoxDecoration(
-          color: clr.scaffoldBackgroundColor,
+            color: clr.scaffoldBackgroundColor,
             border: Border(
                 bottom: BorderSide(
-          width: size.w1,
-          color: clr.boxStrokeColor,
-        ))),
+              width: size.w1,
+              color: clr.boxStrokeColor,
+            ))),
         child: Row(
           children: [
             Expanded(
               flex: 1,
               child: Container(
-                padding: EdgeInsets.all(size.r12),
+                padding: EdgeInsets.all(size.r8),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(size.r10)),
                   border: Border.all(color: Colors.grey),
@@ -199,7 +203,7 @@ class NoteWidgetTile extends StatelessWidget with AppTheme {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        timestamp,
+                        "তারিখ: $timestamp",
                         style: TextStyle(
                           color: clr.placeHolderTextColorGray,
                           fontWeight: FontWeight.w400,

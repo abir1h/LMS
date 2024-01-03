@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../controllers/assessment_controller.dart';
 import '../../../../core/common_widgets/custom_button.dart';
@@ -58,7 +59,11 @@ class _AssessmentFillInTheBlankScreenState
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     CustomButton(
-                      onTap: () {},
+                      onTap: () {
+                        CustomToasty.of(context)
+                            .showSuccess("সফলভাবে  জমাদান সম্পন্ন হয়েছে");
+                        Get.back();
+                      },
                       title: label(e: en.submit, b: bn.submit),
                       radius: size.r4,
                       verticalPadding: size.h4,
