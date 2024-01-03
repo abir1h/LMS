@@ -56,7 +56,7 @@ class _AssessmentScreenState extends State<AssessmentScreen>
         userAnswer3: false,
         userAnswer4: false,
         userAnswer5: false,
-        answer1: true,
+        answer1: false,
         answer2: false,
         answer3: false,
         answer4: false,
