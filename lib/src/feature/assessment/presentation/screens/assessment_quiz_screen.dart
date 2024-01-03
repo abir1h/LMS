@@ -107,6 +107,9 @@ class _MCQAnswerWidgetState extends State<MCQAnswerWidget> with AppTheme {
           isSelected: widget.data.userAnswer1,
           onTap: () => setState(() {
             widget.data.userAnswer1 = !widget.data.userAnswer1;
+            widget.data.userAnswer2?widget.data.userAnswer2=!widget.data.userAnswer2:widget.data.userAnswer2;
+            widget.data.userAnswer3?widget.data.userAnswer3=!widget.data.userAnswer3:widget.data.userAnswer3;
+            widget.data.userAnswer4?widget.data.userAnswer4=!widget.data.userAnswer4:widget.data.userAnswer4;
           }),
         ),
         SizedBox(height: size.h12),
@@ -116,6 +119,9 @@ class _MCQAnswerWidgetState extends State<MCQAnswerWidget> with AppTheme {
           isSelected: widget.data.userAnswer2,
           onTap: () => setState(() {
             widget.data.userAnswer2 = !widget.data.userAnswer2;
+            widget.data.userAnswer1?widget.data.userAnswer1=!widget.data.userAnswer1:widget.data.userAnswer1;
+            widget.data.userAnswer3?widget.data.userAnswer3=!widget.data.userAnswer3:widget.data.userAnswer3;
+            widget.data.userAnswer4?widget.data.userAnswer4=!widget.data.userAnswer4:widget.data.userAnswer4;
           }),
         ),
         SizedBox(height: size.h12),
@@ -125,6 +131,9 @@ class _MCQAnswerWidgetState extends State<MCQAnswerWidget> with AppTheme {
           isSelected: widget.data.userAnswer3,
           onTap: () => setState(() {
             widget.data.userAnswer3 = !widget.data.userAnswer3;
+            widget.data.userAnswer1?widget.data.userAnswer1=!widget.data.userAnswer1:widget.data.userAnswer1;
+            widget.data.userAnswer2?widget.data.userAnswer2=!widget.data.userAnswer2:widget.data.userAnswer2;
+            widget.data.userAnswer4?widget.data.userAnswer4=!widget.data.userAnswer4:widget.data.userAnswer4;
           }),
         ),
         SizedBox(height: size.h12),
@@ -134,6 +143,9 @@ class _MCQAnswerWidgetState extends State<MCQAnswerWidget> with AppTheme {
           isSelected: widget.data.userAnswer4,
           onTap: () => setState(() {
             widget.data.userAnswer4 = !widget.data.userAnswer4;
+            widget.data.userAnswer1?widget.data.userAnswer1=!widget.data.userAnswer1:widget.data.userAnswer1;
+            widget.data.userAnswer2?widget.data.userAnswer2=!widget.data.userAnswer2:widget.data.userAnswer2;
+            widget.data.userAnswer3?widget.data.userAnswer3=!widget.data.userAnswer3:widget.data.userAnswer3;
           }),
         ),
       ],

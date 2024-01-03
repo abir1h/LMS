@@ -35,6 +35,7 @@ class NoteTile extends StatelessWidget with AppTheme {
               child: Container(
                 padding: EdgeInsets.all(size.r12),
                 decoration: BoxDecoration(
+                  color: clr.shadeWhiteColor,
                   borderRadius: BorderRadius.all(Radius.circular(size.r10)),
                   border: Border.all(color: Colors.grey),
                 ),
@@ -69,7 +70,7 @@ class NoteTile extends StatelessWidget with AppTheme {
                     overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(height: size.h4),
-                  reference != null
+                  reference != "টপিক সিলেক্ট করুন"
                       ? Text(
                           reference.toString(),
                           style: TextStyle(

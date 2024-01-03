@@ -38,6 +38,7 @@ class RecognitionWidget extends StatelessWidget with AppTheme, Language {
             ),
             Expanded(
               child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
                 child: Column(
                   children: [
                     RecognitionCard(

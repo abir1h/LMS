@@ -31,7 +31,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
   final _isReadOnly = false;
   final controller = Get.put(NoteController());
   TextEditingController titleController = TextEditingController();
-  String? refVlaue = "টপিক সিলেক্ট করুন";
+  String refVlaue = "টপিক সিলেক্ট করুন";
 
   @override
   void initState() {
@@ -82,7 +82,9 @@ print(refVlaue);
             time: currentTime.toString(),
             title: titleController.text,
             description: _controller.document.toDelta().toJson(),
-            reference: refVlaue != "টপিক সিলেক্ট করুন" ? refVlaue : '');
+            reference: refVlaue != "টপিক সিলেক্ট করুন"
+                ? refVlaue
+                : 'টপিক সিলেক্ট করুন');
         controller.noteList.add(newModel);
         Get.toNamed(AppRoutes.bottomNav, arguments: 2);
         CustomToasty.of(context)
@@ -210,6 +212,9 @@ print(refVlaue);
                     onLoadData: controller.getDropDown,
                     onSelected: (v) {
                       refVlaue = v;
+                      if (widget.mainModel != null) {
+                        widget.mainModel!.reference = refVlaue;
+                      }
                     },
                     hintText: refVlaue.toString(),
                   ),

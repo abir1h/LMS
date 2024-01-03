@@ -45,6 +45,7 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
+      backgroundColor: clr.whiteColor,
       body: SafeArea(
         top: MediaQuery.of(context).orientation == Orientation.portrait,
         child: Stack(

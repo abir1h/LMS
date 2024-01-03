@@ -26,7 +26,7 @@ class _TimeDigitWidgetState<T> extends State<TimeDigitWidget<T>> with AppTheme {
           if (widget.isExamRunning(snapshot.data)) {
             return Container(
               padding:
-                  EdgeInsets.symmetric(horizontal: size.w12, vertical: size.h6),
+                  EdgeInsets.symmetric(horizontal: size.w6, vertical: size.h6),
               decoration: BoxDecoration(
                   color: clr.whiteColor,
                   borderRadius: BorderRadius.circular(size.h4),
@@ -71,7 +71,7 @@ class _TimeDigitWidgetState<T> extends State<TimeDigitWidget<T>> with AppTheme {
 
   Widget _buildDigitBox(int value) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: size.w4, vertical: size.h2),
+      padding: EdgeInsets.symmetric(horizontal: size.w6),
       decoration: BoxDecoration(
         color: clr.appPrimaryColorGreen,
         borderRadius: BorderRadius.circular(size.w2),
@@ -92,7 +92,7 @@ class _TimeDigitWidgetState<T> extends State<TimeDigitWidget<T>> with AppTheme {
 
   Widget _buildDigitSeparatorBox(String value) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: size.w4, vertical: size.h2),
+      padding: EdgeInsets.symmetric(horizontal: size.w6),
       decoration: BoxDecoration(
         color: clr.appPrimaryColorGreen,
         borderRadius: BorderRadius.circular(size.w2),

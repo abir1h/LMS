@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
 
+import '../../../transcript_video/presentaion/screens/transcript_video_screen.dart';
+import '../../../../core/common_widgets/quil_text_viewer.dart';
 import 'note_edit_screen.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
@@ -23,6 +25,7 @@ class NoteDetailsScreen extends StatefulWidget {
 class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
   String contentText = '';
   final controller = Get.put(NoteController());
+  final _controller = QuillController.basic();
 
   @override
   void initState() {
@@ -36,6 +39,7 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
       if (widget.mainModel!.description != null) {
         final Document doc =
             Document.fromJson(widget.mainModel!.description as List);
+        _controller.document = doc;
         contentText = doc.toPlainText();
       }
     }
@@ -72,7 +76,6 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
               onPressed: () {
                 Get.to(() => NoteEditScreen(
                       mainModel: widget.mainModel,
-
                     ));
               },
               icon:
@@ -84,23 +87,26 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            widget.mainModel!.reference != null
-                ? Row(
-                    children: [
-                      Expanded(
-                          child: Text(
-                        widget.mainModel!.reference.toString(),
-                        style: TextStyle(
-                            color: clr.appPrimaryColorGreen,
-                            fontSize: size.textSmall,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: StringData.fontFamilyPoppins),
-                      )),
-                      Icon(
-                        Icons.arrow_forward,
-                        color: clr.appPrimaryColorGreen,
-                      )
-                    ],
+            widget.mainModel!.reference != "টপিক সিলেক্ট করুন"
+                ? InkWell(
+                    onTap: () => Get.to(const TranscriptVideoScreen()),
+                    child: Row(
+                      children: [
+                        Expanded(
+                            child: Text(
+                          widget.mainModel!.reference.toString(),
+                          style: TextStyle(
+                              color: clr.appPrimaryColorGreen,
+                              fontSize: size.textSmall,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: StringData.fontFamilyPoppins),
+                        )),
+                        Icon(
+                          Icons.arrow_forward,
+                          color: clr.appPrimaryColorGreen,
+                        )
+                      ],
+                    ),
                   )
                 : const SizedBox(),
             SizedBox(
@@ -117,15 +123,9 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
             Divider(
               color: clr.cardStrokeColor,
             ),
-            Text(
-              contentText,
-              textAlign: TextAlign.justify,
-              style: TextStyle(
-                  fontSize: size.textSmall,
-                  color: clr.textColorAppleBlack,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: StringData.fontFamilyPoppins),
-            ),
+            QuilTextViewer(
+              controller: _controller,
+            )
           ],
         ),
       ),

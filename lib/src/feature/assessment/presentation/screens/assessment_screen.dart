@@ -49,7 +49,7 @@ class _AssessmentScreenState extends State<AssessmentScreen>
         option3Image: "",
         option4Image: "",
         option5Image: "",
-        userAnswer1: true,
+        userAnswer1: false,
         userAnswer2: false,
         userAnswer3: false,
         userAnswer4: false,
@@ -133,6 +133,22 @@ class _AssessmentScreenState extends State<AssessmentScreen>
       data: "",
     ),
   ];
+  late Timer _examTimer;
+  var remaining;
+
+  @override
+  void initState() {
+    super.initState();
+    timerStreamController.add(const Duration(minutes: 45));
+    _examTimer = Timer.periodic(const Duration(seconds: 1), _onTimerTick);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {_onTimerTick(_examTimer);});
+  }
+  void _onTimerTick(Timer timer) {
+    var remaining = timerStreamController.value - const Duration(seconds: 1);
+    timerStreamController.add(remaining);
+    }
+
+
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(

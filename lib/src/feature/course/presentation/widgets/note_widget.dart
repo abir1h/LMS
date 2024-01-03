@@ -65,7 +65,7 @@ class _NoteWidgetState extends State<NoteWidget> with AppTheme {
           alignment: Alignment.bottomCenter,
           child: GestureDetector(
             onTap: () => showCupertinoModalPopup(
-              context: context,
+              context: context,barrierDismissible: false,
               builder: (context) => const NoteBottomSheet(),
             ),
             child: Container(
@@ -148,6 +148,7 @@ class NoteWidgetTile extends StatelessWidget with AppTheme {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h8),
         decoration: BoxDecoration(
+          color: clr.scaffoldBackgroundColor,
             border: Border(
                 bottom: BorderSide(
           width: size.w1,

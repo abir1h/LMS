@@ -77,6 +77,8 @@ class LanguageEn {
 
   String courseText = "Course";
   String courseDetailsText = "Course Details";
+  String ongoingCourseDetailsText = "Ongoing Course Details";
+  String completedCourseDetailsText = "Completed Course Details";
   String curriculumDescription = "Curriculum Description";
   String curriculumContent = "Curriculum Content";
   String check = "Check";
@@ -188,16 +190,18 @@ class LanguageBn {
 
   String ongoingModule = "চলমান মডিউল";
   String completed = "সম্পন্ন";
-  String ongoingCurriculum = "চলমান পাঠ্যক্রম";
-  String completedCurriculum = "সম্পন্ন পাঠ্যক্রম";
+  String ongoingCurriculum = "চলমান অধিবেশন";
+  String completedCurriculum = "সম্পন্ন অধিবেশন";
   String discussionArea = "আলোচনা ক্ষেত্র";
-  String upcomingCurriculum = "আসন্ন পাঠ্যক্রম";
+  String upcomingCurriculum = "আসন্ন অধিবেশন";
   String notification = "বিজ্ঞপ্তি";
   String effectivePeriod = "কার্যকম সময়কাল";
   String noticeBoard = "নোটিশবোর্ড";
 
   String courseText = "কোর্স";
-  String courseDetailsText = "কোর্সের বিস্তারিত";
+  String courseDetailsText = "অধিবেশনের বিস্তারিত";
+  String ongoingCourseDetailsText = "চলমান অধিবেশনের বিস্তারিত";
+  String completedCourseDetailsText = "সম্পন্ন অধিবেশনের বিস্তারিত";
   String curriculumDescription = "পাঠ্যসূচীর বর্ণনা";
   String curriculumContent = "পাঠ্যক্রমের বিষয়বস্তু";
   String check = "চেক করুন";
