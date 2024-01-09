@@ -393,8 +393,11 @@ class _AssessmentSingleQuestionScreenState
   Future<bool> _onBackPress() {
     // if (_isExamRunning) {
       return CustomDialogWidget.show(
-        title: "Are you Sure?",
+        title: label(e: "Are you Sure?", b: "আপনি কি নিশ্চিত?"),
+        icon: Icons.question_mark_sharp,
         context: context,
+        leftButtonText: label(e: "Cancel", b: "বাতিল"),
+        rightButtonText: label(e: "Yes", b: "হ্যাঁ"),
         infoText: label(
             e: "Do you really want to exit? Your quiz progress will be lost.",
             b: "আপনি কি সত্যিই প্রস্থান করতে চান? আপনার কুইজের অগ্রগতি নষ্ট হবে।"),
