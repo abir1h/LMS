@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../feature/app.dart';
 import '../service/notifier/app_events_notifier.dart';
 import 'custom_dialog_widget.dart';
 import 'custom_switch_button.dart';
@@ -18,6 +20,9 @@ class DrawerWidget extends StatefulWidget {
 }
 
 class _DrawerWidgetState extends State<DrawerWidget> with AppTheme, Language {
+  final GrayscaleController grayscaleController =
+  Get.put(GrayscaleController());
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -130,6 +135,26 @@ class _DrawerWidgetState extends State<DrawerWidget> with AppTheme, Language {
                 text: label(e: en.messageText, b: bn.messageText),
                 onTap: () {},
               ),
+             Obx(() =>  ListTile(
+
+                 leading: Icon(Icons.accessible),
+                 title: Text( label(
+                     e: "Accessibility",
+                     b: "এক্সেসিবিলিটি")),
+                 trailing:   SizedBox(
+                     width: 40.sp,
+                     height: 40.sp,
+                     child: FittedBox(
+                       child: CupertinoSwitch(
+                         applyTheme: true,
+                         value: grayscaleController.isGrayscale.value,
+                         onChanged: (v){
+                             grayscaleController.toggleGrayscale();
+                         },
+                         activeColor: clr.appPrimaryColorGreen,
+                       ),
+                     ))),),
+              Divider(thickness: 1,color: clr.cardStrokeColor,),
               DrawerLinkWidget(
                 icon: Icons.logout,
                 iconColor: clr.textColorBlack,
