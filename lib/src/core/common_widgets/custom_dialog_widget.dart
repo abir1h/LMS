@@ -13,6 +13,7 @@ mixin CustomDialogWidget {
     String rightButtonText = "Yes",
     String leftButtonText = "Cancel",
     bool singleButton = false,
+    IconData icon=Icons.logout
   }) {
     Completer<bool> completer = Completer();
     showCupertinoModalPopup(
@@ -42,7 +43,7 @@ mixin CustomDialogWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           SizedBox(height: ThemeSize.instance.h10),
-                          Icon(Icons.logout,
+                          Icon(icon,
                               size: 32.r,
                               color: ThemeColor.instance.appPrimaryColorGreen),
                           SizedBox(height: ThemeSize.instance.h12),
