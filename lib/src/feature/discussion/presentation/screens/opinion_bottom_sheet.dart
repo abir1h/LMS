@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lms/src/feature/discussion/models/comment_model.dart';
 
@@ -60,9 +61,24 @@ class _OpinionBottomSheetState extends State<OpinionBottomSheet>
             ),
             child: Row(
               children: [
-                Image.asset(
-                  ImageAssets.imgEmptyProfile,
-                  height: size.h28,
+                Container(
+                  padding: EdgeInsets.all(size.r10),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: clr.whiteColor,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.3),
+                        spreadRadius: 2,
+                        blurRadius: 3,
+                        offset:
+                            const Offset(0, 5), // changes position of shadow
+                      ),
+                    ],
+                  ),
+                  child: SvgPicture.asset(
+                    ImageAssets.icEditSquare,
+                  ),
                 ),
                 SizedBox(width: size.w8),
                 Expanded(

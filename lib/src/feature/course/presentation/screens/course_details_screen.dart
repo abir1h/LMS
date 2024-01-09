@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/core/common_widgets/custom_button.dart';
 
+import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/service/notifier/app_events_notifier.dart';
 import '../controllers/course_details_controller.dart';
@@ -32,48 +32,47 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
                   e: en.completedCourseDetailsText,
                   b: bn.completedCourseDetailsText)
               : label(e: en.courseDetailsText, b: bn.courseDetailsText),
-      body: ListView(
-        padding: EdgeInsets.symmetric(vertical: size.h12),
-        shrinkWrap: true,
-        physics: const BouncingScrollPhysics(),
+      body: Stack(
         children: [
-          CourseWidget(
-            title: label(
-                e: "Education Policy and Management in Education",
-                b: "শিক্ষা নীতি ও শিক্ষায় ব্যাবস্থাপনা"),
-            courseCode:
-                label(e: "Course Code : 1568", b: "অধিবেশনের কোড : ১৫৬৮"),
-            chapterType: controller.status.value == "done"
-                ? ChapterType.done
-                : controller.status.value == "open"
-                    ? ChapterType.open
-                    : ChapterType.lock,
-            description: label(
-                e: "Teaching for Learning programs are detailed discussions for those who are teaching, or who want to teach, any subject, in any context",
-                b: "শেখার জন্য শিক্ষাদান প্রোগ্রামের হল যারা শিক্ষা দিচ্ছেন, বা যারা শিক্ষা দিতে চান, যে কোনো বিষয়ে, যে কোনো প্রসঙ্গে বিস্তারিত আলোচনা"),
-            from: controller.from.value,
+          SingleChildScrollView(
+            padding: EdgeInsets.symmetric(vertical: size.h12),
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                CourseWidget(
+                  title: label(
+                      e: "Education Policy and Management in Education",
+                      b: "শিক্ষা নীতি ও শিক্ষায় ব্যাবস্থাপনা"),
+                  courseCode:
+                      label(e: "Course Code : 1568", b: "অধিবেশনের কোড : ১৫৬৮"),
+                  chapterType: controller.status.value == "done"
+                      ? ChapterType.done
+                      : controller.status.value == "open"
+                          ? ChapterType.open
+                          : ChapterType.lock,
+                  description: label(
+                      e: "Teaching for Learning programs are detailed discussions for those who are teaching, or who want to teach, any subject, in any context",
+                      b: "শেখার জন্য শিক্ষাদান প্রোগ্রামের হল যারা শিক্ষা দিচ্ছেন, বা যারা শিক্ষা দিতে চান, যে কোনো বিষয়ে, যে কোনো প্রসঙ্গে বিস্তারিত আলোচনা"),
+                  from: controller.from.value,
+                ),
+                SizedBox(height: size.h32),
+              ],
+            ),
           ),
-          SizedBox(height: size.h32),
-          // CourseWidget(
-          //   title: label(e: "Right to Information", b: "তথ্য অধিকার"),
-          //   description: label(
-          //       e: "Teaching for Learning programs are detailed discussions for those who are teaching, or who want to teach, any subject, in any context",
-          //       b: "শেখার জন্য শিক্ষাদান প্রোগ্রামের হল যারা শিক্ষা দিচ্ছেন, বা যারা শিক্ষা দিতে চান, যে কোনো বিষয়ে, যে কোনো প্রসঙ্গে বিস্তারিত আলোচনা"),
-          // ),
+          if (controller.from.value == "upcoming")
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: size.w16),
+                child: CustomButton(
+                  onTap: () {},
+                  title: "Enroll",
+                  radius: size.w24,
+                ),
+              ),
+            ),
         ],
       ),
-      // body: ListView.separated(
-      //   shrinkWrap: true,
-      //   physics: const BouncingScrollPhysics(),
-      //   itemCount: 3,
-      //   padding: EdgeInsets.symmetric(vertical: size.h12),
-      //   itemBuilder: (context, index) {
-      //     return const CourseWidget();
-      //   },
-      //   separatorBuilder: (context, index) {
-      //     return SizedBox(height: size.h32);
-      //   },
-      // ),
     );
   }
 
@@ -106,21 +105,6 @@ class CourseWidget extends StatelessWidget with AppTheme, Language {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (from == "upcoming")
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(right: size.w16, bottom: size.h16),
-                child: CustomButton(
-                  onTap: () {},
-                  title: "Enroll",
-                  horizontalPadding: size.w24,
-                  radius: size.r24,
-                ),
-              ),
-            ],
-          ),
         CourseText(
           text: title,
           fontSize: size.textXMedium,
@@ -164,12 +148,14 @@ class CourseWidget extends StatelessWidget with AppTheme, Language {
               chapterCode: label(e: "Chapter Code", b: "অধ্যায়ের কোড"),
               chapterType: from == "running" ? ChapterType.done : chapterType,
             ),
+            SizedBox(height: size.h8),
             ChapterWidget(
               chapterTitle: label(
                   e: "Chapter 2: Human-Welfare", b: "অধ্যায় ২: মানব-কল্যাণ"),
               chapterCode: label(e: "Chapter Code", b: "অধ্যায়ের কোড"),
               chapterType: chapterType,
             ),
+            SizedBox(height: size.h8),
             ChapterWidget(
               chapterTitle: label(
                   e: "Chapter 3: The Desert of Karbala",
@@ -177,12 +163,14 @@ class CourseWidget extends StatelessWidget with AppTheme, Language {
               chapterCode: label(e: "Chapter Code", b: "অধ্যায়ের কোড"),
               chapterType: from == "running" ? ChapterType.lock : chapterType,
             ),
+            SizedBox(height: size.h8),
             ChapterWidget(
               chapterTitle: label(
                   e: "Chapter 4: Human-Welfare", b: "অধ্যায় ৪: মানব-কল্যাণ"),
               chapterCode: label(e: "Chapter Code", b: "অধ্যায়ের কোড"),
               chapterType: from == "running" ? ChapterType.lock : chapterType,
             ),
+            SizedBox(height: size.h8),
             ChapterWidget(
               chapterTitle: label(
                   e: "Chapter 5: The Enormity of Life",

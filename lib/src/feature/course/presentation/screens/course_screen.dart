@@ -49,7 +49,7 @@ class _CourseScreenState extends State<CourseScreen>
                 b: "সময়কাল : ১২/০৬/২০২৩ - ১৭/০৩/২০২৪"),
             statusValue: .1,
             status: label(e: "10% ${en.completed}", b: "১০% ${bn.completed}"),
-            bgColor: clr.toastWarningBackgroundColor,
+            bgColor: clr.cardFillColorOrange,
             borderColor: clr.cardStrokeColorOrange,
           ),
           SizedBox(height: size.h16),

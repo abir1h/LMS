@@ -53,6 +53,7 @@ class LanguageEn {
   String lms = "Learning Management System";
   String tutorial = "Tutorial";
   String messageText = "Message";
+  String accessibilityText = "Accessibility";
 
   String profileAppBarText = "LMS My Profile";
   String userNameText = "Mynul Islam"; //"User Name";
@@ -179,6 +180,7 @@ class LanguageBn {
   String lms = "লার্নিং ম্যানেজমেন্ট সিস্টেম";
   String tutorial = "টিউটোরিয়াল";
   String messageText = "বার্তা";
+  String accessibilityText = "এক্সেসিবিলিটি";
 
   String profileAppBarText = "এলএমএস আমার প্রোফাইল";
   String userNameText = "মাইনুল ইসলাম"; //"ব্যবহারকারীর নাম";
@@ -205,7 +207,7 @@ class LanguageBn {
   String ongoingCourseDetailsText = "চলমান অধিবেশনের বিস্তারিত";
   String completedCourseDetailsText = "সম্পন্ন অধিবেশনের বিস্তারিত";
   String curriculumDescription = "পাঠ্যসূচীর বর্ণনা";
-  String curriculumContent = "পাঠ্যক্রমের বিষয়বস্তু";
+  String curriculumContent = "অধিবেশনের বিষয়বস্তু";
   String check = "চেক করুন";
   String see = "দেখুন";
   String join = "জয়েন করুন";

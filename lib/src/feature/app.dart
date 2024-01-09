@@ -22,7 +22,7 @@ class Application extends StatelessWidget with AppTheme {
       ),
     );
     final GrayscaleController grayscaleController =
-    Get.put(GrayscaleController());
+        Get.put(GrayscaleController());
 
     return ScreenUtilInit(
         designSize: const Size(375, 812),
@@ -30,29 +30,46 @@ class Application extends StatelessWidget with AppTheme {
         splitScreenMode: true,
         builder: (context, child) {
           return Obx(() => ColorFiltered(
-           colorFilter: grayscaleController.isGrayscale.value? const ColorFilter.matrix(<double>[
-             0.2126, 0.7152, 0.0722, 0, 0,
-             0.2126, 0.7152, 0.0722, 0, 0,
-             0.2126, 0.7152, 0.0722, 0, 0,
-             0,      0,      0,      1, 0,
-           ]):const ColorFilter.mode(
-               Colors.transparent, BlendMode.srcOver),
-            child: GetMaterialApp(
-              title: 'CLMS',
-              debugShowCheckedModeBanner: false,
-              useInheritedMediaQuery: true,
-              theme: ThemeData(
-                  colorScheme: ColorScheme.fromSwatch()
-                      .copyWith(primary: clr.appPrimaryColorGreen),
-                  scaffoldBackgroundColor: clr.scaffoldBackgroundColor,
-                  dividerColor: Colors.transparent,
-                  fontFamily: StringData.fontFamilyPoppins,canvasColor: Colors.transparent
-
-              ),
-              initialRoute: AppRoutes.splash,
-              getPages: AppPages.pages,
-            ),
-          ));
+                colorFilter: grayscaleController.isGrayscale.value
+                    ? const ColorFilter.matrix(<double>[
+                        0.2126,
+                        0.7152,
+                        0.0722,
+                        0,
+                        0,
+                        0.2126,
+                        0.7152,
+                        0.0722,
+                        0,
+                        0,
+                        0.2126,
+                        0.7152,
+                        0.0722,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        1,
+                        0,
+                      ])
+                    : const ColorFilter.mode(
+                        Colors.transparent, BlendMode.srcOver),
+                child: GetMaterialApp(
+                  title: 'CLMS',
+                  debugShowCheckedModeBanner: false,
+                  useInheritedMediaQuery: true,
+                  theme: ThemeData(
+                      colorScheme: ColorScheme.fromSwatch()
+                          .copyWith(primary: clr.appPrimaryColorGreen),
+                      scaffoldBackgroundColor: clr.scaffoldBackgroundColor,
+                      dividerColor: Colors.transparent,
+                      fontFamily: StringData.fontFamilyPoppins,
+                      canvasColor: Colors.transparent),
+                  initialRoute: AppRoutes.splash,
+                  getPages: AppPages.pages,
+                ),
+              ));
         });
   }
 }

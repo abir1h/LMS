@@ -21,7 +21,7 @@ class DrawerWidget extends StatefulWidget {
 
 class _DrawerWidgetState extends State<DrawerWidget> with AppTheme, Language {
   final GrayscaleController grayscaleController =
-  Get.put(GrayscaleController());
+      Get.put(GrayscaleController());
 
   @override
   Widget build(BuildContext context) {
@@ -143,26 +143,26 @@ class _DrawerWidgetState extends State<DrawerWidget> with AppTheme, Language {
                 text: label(e: en.messageText, b: bn.messageText),
                 onTap: () {},
               ),
-             Obx(() =>  ListTile(
-
-                 leading: Icon(Icons.accessible),
-                 title: Text( label(
-                     e: "Accessibility",
-                     b: "এক্সেসিবিলিটি")),
-                 trailing:   SizedBox(
-                     width: 40.sp,
-                     height: 40.sp,
-                     child: FittedBox(
-                       child: CupertinoSwitch(
-                         applyTheme: true,
-                         value: grayscaleController.isGrayscale.value,
-                         onChanged: (v){
-                             grayscaleController.toggleGrayscale();
-                         },
-                         activeColor: clr.appPrimaryColorGreen,
-                       ),
-                     ))),),
-              Divider(thickness: 1,color: clr.cardStrokeColor,),
+              DrawerLinkWidget(
+                icon: Icons.accessible,
+                text: label(e: en.accessibilityText, b: bn.accessibilityText),
+                onTap: () {},
+                widget: Obx(
+                  () => SizedBox(
+                      width: 40.sp,
+                      height: 40.sp,
+                      child: FittedBox(
+                        child: CupertinoSwitch(
+                          applyTheme: true,
+                          value: grayscaleController.isGrayscale.value,
+                          onChanged: (v) {
+                            grayscaleController.toggleGrayscale();
+                          },
+                          activeColor: clr.appPrimaryColorGreen,
+                        ),
+                      )),
+                ),
+              ),
               DrawerLinkWidget(
                 icon: Icons.logout,
                 iconColor: clr.textColorBlack,
@@ -199,6 +199,7 @@ class DrawerLinkWidget extends StatelessWidget with AppTheme {
   final Color? iconColor;
   final String? svgIcon;
   final String text;
+  final Widget? widget;
   final VoidCallback onTap;
   const DrawerLinkWidget({
     Key? key,
@@ -206,6 +207,7 @@ class DrawerLinkWidget extends StatelessWidget with AppTheme {
     this.iconColor,
     this.svgIcon,
     required this.text,
+    this.widget,
     required this.onTap,
   }) : super(key: key);
 
@@ -251,6 +253,7 @@ class DrawerLinkWidget extends StatelessWidget with AppTheme {
                     fontWeight: FontWeight.w500,
                   )),
             ),
+            if (widget != null) widget!
           ],
         ),
       ),

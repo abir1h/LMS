@@ -58,12 +58,20 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
             padding:
                 EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h8),
             decoration: BoxDecoration(
-                color: clr.backgroundColorMintCream,
-                border: Border(
-                    bottom: BorderSide(
-                        color: _isExpanded
-                            ? clr.placeHolderTextColorGray
-                            : clr.boxStrokeColor))),
+              color: clr.backgroundColorGreenCyan,
+              border: Border(
+                  top: BorderSide(
+                      color: _isExpanded ? clr.greyColor : Colors.transparent),
+                  bottom: BorderSide(
+                      color: _isExpanded ? clr.greyColor : clr.boxStrokeColor)),
+              boxShadow: [
+                BoxShadow(
+                  color: clr.blackColor.withOpacity(.2),
+                  blurRadius: size.r4,
+                  offset: Offset(0.0, size.h2),
+                ),
+              ],
+            ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [

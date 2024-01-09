@@ -10,23 +10,44 @@ class ChapterDetailsWidget extends StatelessWidget with AppTheme {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: physics ?? const BouncingScrollPhysics(),
-      padding: EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            description,
-            style: TextStyle(
-                color: clr.textColorBlack,
-                fontSize: size.textSmall,
-                fontWeight: FontWeight.w400,
-                fontFamily: StringData.fontFamilyPoppins),
-            textAlign: TextAlign.justify,
+    return Container(
+      margin: EdgeInsets.only(left: size.w16, right: size.w16, top: size.h12),
+      padding: EdgeInsets.only(left: size.w6, right: size.w6, top: size.h6),
+      decoration: BoxDecoration(
+        color: clr.shadeWhiteColor2,
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(size.r4),
+            topRight: Radius.circular(size.r4)),
+        border: Border(
+            right: BorderSide(color: clr.cardStrokeColor, width: size.r1),
+            left: BorderSide(color: clr.cardStrokeColor, width: size.r1),
+            top: BorderSide(color: clr.cardStrokeColor, width: size.r1)),
+        boxShadow: [
+          BoxShadow(
+            color: clr.blackColor.withOpacity(.2),
+            blurRadius: size.r4,
+            offset: Offset(0.0, size.h2),
           ),
-          SizedBox(height: size.h64)
         ],
+      ),
+      child: SingleChildScrollView(
+        physics: physics ?? const BouncingScrollPhysics(),
+        // padding: EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              description,
+              style: TextStyle(
+                  color: clr.textColorBlack,
+                  fontSize: size.textSmall,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: StringData.fontFamilyPoppins),
+              textAlign: TextAlign.justify,
+            ),
+            SizedBox(height: size.h64)
+          ],
+        ),
       ),
     );
   }

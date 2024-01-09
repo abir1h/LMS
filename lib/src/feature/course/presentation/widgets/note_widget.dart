@@ -82,7 +82,7 @@ class _NoteWidgetState extends State<NoteWidget> with AppTheme {
               child: Row(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(size.r16),
+                    padding: EdgeInsets.all(size.r10),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: clr.whiteColor,
@@ -152,11 +152,11 @@ class NoteWidgetTile extends StatelessWidget with AppTheme {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h8),
         decoration: BoxDecoration(
-            color: clr.scaffoldBackgroundColor,
+            color: clr.cardFillColorAliceBlue,
             border: Border(
                 bottom: BorderSide(
               width: size.w1,
-              color: clr.boxStrokeColor,
+              color: clr.progressBGColor,
             ))),
         child: Row(
           children: [

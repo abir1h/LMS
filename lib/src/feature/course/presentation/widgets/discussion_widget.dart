@@ -88,8 +88,8 @@ class DiscussionWidgetTile extends StatelessWidget with AppTheme {
             left: size.w16, right: size.w16, top: size.h8, bottom: size.h6),
         decoration: BoxDecoration(
             color: clr.scaffoldBackgroundColor,
-            border:
-                Border(bottom: BorderSide(color: clr.dividerStrokeColorGrey))),
+            border: Border(
+                bottom: BorderSide(color: clr.placeHolderTextColorGray))),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
