@@ -437,21 +437,24 @@ class _AssessmentSingleQuestionScreenState
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Center(
-                  child: StreamBuilder<String>(
-                    initialData:
-                        "${label(e: "Question", b: "প্রশ্ন")}: 1 / ${questions.length}",
-                    stream: _questionNumberTextStream.stream,
-                    builder: (context, snapshot) {
-                      return Text(
-                        snapshot.data!,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          color: Colors.black54,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      );
-                    },
+                Container(
+                  color: clr.whiteColor,
+                  child: Center(
+                    child: StreamBuilder<String>(
+                      initialData:
+                          "${label(e: "Question", b: "প্রশ্ন")}: ${ "${replaceEnglishNumberWithBangla("1")}/${replaceEnglishNumberWithBangla(questions.length.toString())}"}",
+                      stream: _questionNumberTextStream.stream,
+                      builder: (context, snapshot) {
+                        return Text(
+                          snapshot.data!,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            color: Colors.black54,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
                 // ListView.builder(
@@ -489,12 +492,15 @@ class _AssessmentSingleQuestionScreenState
                                   onTap: () {
                                     _onPreviousButtonTap();
                                   },
-                                  title: "Previous")
+                                  title: label(e: "Previous", b: "পূর্ববর্তী"))
                               : const Offstage(),
                           const Spacer(),
                           CustomButton(
                               onTap: () {
                                 _onNextTap();
+                                if(snapshot.data!["next"]=="Submit"){
+                                  _showModal();
+                                }
                               },
                               title: snapshot.data!["next"])
                         ],
@@ -539,7 +545,8 @@ class _AssessmentSingleQuestionScreenState
                                         alignment: Alignment.center,
                                         child: snapshot.data != index
                                             ? Text(
-                                                "${index + 1}",
+                                            label(e: "${index + 1}", b: replaceEnglishNumberWithBangla("${index + 1}")),
+                                                // "${index + 1}",
                                                 style: TextStyle(
                                                     color:
                                                         clr.textColorAppleBlack,
@@ -554,8 +561,8 @@ class _AssessmentSingleQuestionScreenState
                                                     shape: BoxShape.circle),
                                                 padding:
                                                     EdgeInsets.all(size.h12),
-                                                child: Text(
-                                                  "${index + 1}",
+                                                child: Text(label(e: "${index + 1}", b: replaceEnglishNumberWithBangla("${index + 1}")),
+                                                  // "${index + 1}",
                                                   style: TextStyle(
                                                       color: clr.whiteColor,
                                                       fontSize: size.textMedium,
@@ -590,10 +597,9 @@ class _AssessmentSingleQuestionScreenState
                                               Icons.arrow_back_ios_new)),
                                     )
                                     : const Offstage(),
-                                Spacer(),
+                                const Spacer(),
                                 snapshot.data!["next"] != false
                                     ? GestureDetector(
-
                                   onTap:(){
                                     _scrollController.animateTo(_scrollController.position.pixels+150, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
                                   },    child: Container(
@@ -622,15 +628,15 @@ class _AssessmentSingleQuestionScreenState
     _scrollController.animateTo(index*32, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
     _pageSelectedIndexStream.sink.add(index);
     _questionNumberTextStream.add(
-        "${label(e: "Question", b: "প্রশ্ন")}: ${index + 1} / ${questions.length}");
+        "${label(e: "Question", b: "প্রশ্ন")}: ${replaceEnglishNumberWithBangla("${index + 1}")} / ${replaceEnglishNumberWithBangla(questions.length.toString())}");
     if (index == questions.length - 1) {
       _buttonTextStream.add({
-        "next": "Submit",
+        "next": label(e: "Submit", b: "সাবমিট"),
         "previous": index == 0 ? false : true,
       });
     } else {
       _buttonTextStream.add({
-        "next": "Next",
+        "next": label(e: "Next", b: "পরবর্তী"),
         "previous": index == 0 ? false : true,
       });
     }
@@ -646,5 +652,18 @@ class _AssessmentSingleQuestionScreenState
   _onPreviousButtonTap() {
     _questionPagerController.previousPage(
         duration: const Duration(milliseconds: 300), curve: Curves.ease);
+  }
+
+  void _showModal() {
+  CustomDialogWidget.show(
+      title: label(e: "Are you Sure?", b: "আপনি কি নিশ্চিত?"),
+      icon: Icons.question_mark_sharp,
+      context: context,
+      leftButtonText: label(e: "Cancel", b: "বাতিল"),
+      rightButtonText: label(e: "Submit", b: "সাবমিট"),
+      infoText: label(
+          e: "Do you want to submit your assessment answer sheet?",
+          b: "আপনি কি আপনার মূল্যায়নের উত্তরপত্র জমা দিতে চান ?"),
+    ).then((value) => value);
   }
 }
