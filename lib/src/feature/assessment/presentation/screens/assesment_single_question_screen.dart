@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
+import 'package:lms/src/core/common_widgets/custom_dialog_widget.dart';
 import 'package:rxdart/rxdart.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
@@ -38,7 +39,14 @@ class _AssessmentSingleQuestionScreenState
   final Stream<DataState> pageStateStreamController = const Stream.empty();
   final StreamController<String> _questionNumberTextStream =
       StreamController.broadcast();
-  late ScrollController _scrollController;
+  final StreamController<Map<String, dynamic>> _buttonTextStream =
+      StreamController.broadcast();
+  final StreamController<Map<String, dynamic>> _pageArrowButtonStream =
+      StreamController.broadcast();
+  final StreamController<int> _pageSelectedIndexStream =
+      StreamController.broadcast();
+
+  final ScrollController _scrollController = ScrollController();
 
   List<Question> questions = [
     Question(
@@ -354,6 +362,27 @@ class _AssessmentSingleQuestionScreenState
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _onTimerTick(_examTimer);
     });
+    _scrollController.addListener(_scrollValue);
+  }
+
+  _scrollValue() {
+    if (_scrollController.position.pixels == 0.0) {
+      _pageArrowButtonStream.add({
+        "next": true,
+        "previous": false,
+      });
+    } else if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
+      _pageArrowButtonStream.add({
+        "next": false,
+        "previous": true,
+      });
+    } else {
+      _pageArrowButtonStream.add({
+        "next": true,
+        "previous": true,
+      });
+    }
   }
 
   void _onTimerTick(Timer timer) {
@@ -361,10 +390,33 @@ class _AssessmentSingleQuestionScreenState
     timerStreamController.add(remaining);
   }
 
+  Future<bool> _onBackPress() {
+    // if (_isExamRunning) {
+      return CustomDialogWidget.show(
+        title: "Are you Sure?",
+        context: context,
+        infoText: label(
+            e: "Do you really want to exit? Your quiz progress will be lost.",
+            b: "আপনি কি সত্যিই প্রস্থান করতে চান? আপনার কুইজের অগ্রগতি নষ্ট হবে।"),
+      ).then((value) => value);
+    // } else {
+    //   return Future.value(false);
+    // }
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
         title: label(e: en.assessment, b: bn.assessment),
+        onBack:_onBackPress,
+        leadingBack: (){
+          _onBackPress().then((value){
+            if(!value){
+              Navigator.pop(context);
+            }else{
+            }
+          });
+        },
         actionChild: TimeDigitWidget(
           timerStream: timerStreamController,
           examStateStream: pageStateStreamController,
@@ -376,105 +428,220 @@ class _AssessmentSingleQuestionScreenState
         body: SizedBox(
           width: double.maxFinite,
           height: double.maxFinite,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Center(
-                child: StreamBuilder<String>(
-                  initialData: "",
-                  stream: _questionNumberTextStream.stream,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: size.w16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Center(
+                  child: StreamBuilder<String>(
+                    initialData:
+                        "${label(e: "Question", b: "প্রশ্ন")}: 1 / ${questions.length}",
+                    stream: _questionNumberTextStream.stream,
+                    builder: (context, snapshot) {
+                      return Text(
+                        snapshot.data!,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                // ListView.builder(
+                //     shrinkWrap: true,
+                //     itemCount: questions.length,
+                //     scrollDirection:Axis.horizontal,
+                //     physics: const BouncingScrollPhysics(),
+                //     padding: EdgeInsets.only(bottom: size.h64 * 2),
+                //     itemBuilder: (_, index) {
+                //       GestureDetector(
+                //         child: Container(
+                //           color: Colors.red,
+                //           child: Text("$index",style: TextStyle(color: Colors.black),),
+                //         ),
+                //       );
+                //     }),
+                QuestionAnswerPanel(
+                  controller: _questionPagerController,
+                  questions: questions,
+                  onQuestionChanged: _onQuestionChanged,
+                ),
+                StreamBuilder<Map<String, dynamic>>(
+                  initialData: const {
+                    "next": "Next",
+                    "previous": false,
+                  },
+                  stream: _buttonTextStream.stream,
                   builder: (context, snapshot) {
-                    return Text(
-                      snapshot.data!,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        color: Colors.black54,
-                        fontWeight: FontWeight.w700,
+                    return Container(
+                      color: clr.whiteColor,
+                      child: Row(
+                        children: [
+                          snapshot.data!["previous"] != false
+                              ? CustomButton(
+                                  onTap: () {
+                                    _onPreviousButtonTap();
+                                  },
+                                  title: "Previous")
+                              : const Offstage(),
+                          const Spacer(),
+                          CustomButton(
+                              onTap: () {
+                                _onNextTap();
+                              },
+                              title: snapshot.data!["next"])
+                        ],
                       ),
                     );
                   },
                 ),
-              ),
-              // ListView.builder(
-              //     shrinkWrap: true,
-              //     itemCount: questions.length,
-              //     scrollDirection:Axis.horizontal,
-              //     physics: const BouncingScrollPhysics(),
-              //     padding: EdgeInsets.only(bottom: size.h64 * 2),
-              //     itemBuilder: (_, index) {
-              //       GestureDetector(
-              //         child: Container(
-              //           color: Colors.red,
-              //           child: Text("$index",style: TextStyle(color: Colors.black),),
-              //         ),
-              //       );
-              //     }),
-              QuestionAnswerPanel(
-                controller: _questionPagerController,
-                questions: questions,
-                onQuestionChanged: _onQuestionChanged,
-              ),
-              Container(
-                  height: size.h48,
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: size.h24),
-                        child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: questions.length,
-                            scrollDirection: Axis.horizontal,
-                            physics: const BouncingScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  _questionPagerController.animateToPage(index,
-                                      duration:
-                                          const Duration(milliseconds: 500),
-                                      curve: Curves.ease);
+                Container(
+                  height: size.h6,
+                  color: clr.whiteColor,
+                ),
+                SizedBox(
+                    height: size.h48,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        Container(
+                          color: clr.whiteColor
+                          ,padding: EdgeInsets.symmetric(horizontal: size.h24),
+                          child: StreamBuilder<int>(
+                            initialData: 0,
+                            stream: _pageSelectedIndexStream.stream,
+                            builder: (context, snapshot) {
+                              return ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: questions.length,
+                                  controller: _scrollController,
+                                  scrollDirection: Axis.horizontal,
+                                  physics: const ClampingScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        _questionPagerController.animateToPage(
+                                            index,
+                                            duration: const Duration(
+                                                milliseconds: 500),
+                                            curve: Curves.ease);
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: size.h12),
+                                        alignment: Alignment.center,
+                                        child: snapshot.data != index
+                                            ? Text(
+                                                "${index + 1}",
+                                                style: TextStyle(
+                                                    color:
+                                                        clr.textColorAppleBlack,
+                                                    fontSize: size.textMedium,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              )
+                                            : Container(
+                                                decoration: BoxDecoration(
+                                                    color: clr
+                                                        .appPrimaryColorGreen,
+                                                    shape: BoxShape.circle),
+                                                padding:
+                                                    EdgeInsets.all(size.h12),
+                                                child: Text(
+                                                  "${index + 1}",
+                                                  style: TextStyle(
+                                                      color: clr.whiteColor,
+                                                      fontSize: size.textMedium,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                              ),
+                                      ),
+                                    );
+                                  });
+                            },
+                          ),
+                        ),
+                        StreamBuilder<Map<String, dynamic>>(
+                          initialData: const {
+                            "next": true,
+                            "previous": false,
+                          },
+                          stream: _pageArrowButtonStream.stream,
+                          builder: (context, snapshot) {
+                            return Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                snapshot.data!["previous"] != false
+                                    ? GestureDetector(onTap:(){
+                                  _scrollController.animateTo(_scrollController.position.pixels-150, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
                                 },
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: size.h12),
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    "${index + 1}",
-                                    style: TextStyle(
-                                        color: clr.textColorAppleBlack,
-                                        fontSize: size.textMedium,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                ),
-                              );
-                            }),
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                              decoration: BoxDecoration(color: clr.whiteColor),
-                              child: const Icon(Icons.arrow_back_ios_new)),
-                          Spacer(),
-                          Container(
-                              decoration: BoxDecoration(color: clr.whiteColor),
-                              child: const Icon(Icons.arrow_forward_ios)),
-                        ],
-                      )
-                    ],
-                  )),
-              SizedBox(height: size.h24),
-            ],
+                                      child: Container(
+                                          decoration: BoxDecoration(
+                                              color: clr.whiteColor),
+                                          child: const Icon(
+                                              Icons.arrow_back_ios_new)),
+                                    )
+                                    : const Offstage(),
+                                Spacer(),
+                                snapshot.data!["next"] != false
+                                    ? GestureDetector(
+
+                                  onTap:(){
+                                    _scrollController.animateTo(_scrollController.position.pixels+150, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+                                  },    child: Container(
+                                          decoration: BoxDecoration(
+                                              color: clr.whiteColor),
+                                          child:
+                                              const Icon(Icons.arrow_forward_ios)),
+                                    )
+                                    : const Offstage(),
+                              ],
+                            );
+                          },
+                        ),
+                      ],
+                    )),
+                Container(height: size.h24,
+                color: clr.whiteColor,
+                ),
+              ],
+            ),
           ),
         ));
   }
 
   _onQuestionChanged(int index) {
+    _scrollController.animateTo(index*32, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+    _pageSelectedIndexStream.sink.add(index);
     _questionNumberTextStream.add(
         "${label(e: "Question", b: "প্রশ্ন")}: ${index + 1} / ${questions.length}");
     if (index == questions.length - 1) {
+      _buttonTextStream.add({
+        "next": "Submit",
+        "previous": index == 0 ? false : true,
+      });
+    } else {
+      _buttonTextStream.add({
+        "next": "Next",
+        "previous": index == 0 ? false : true,
+      });
+    }
+  }
+
+  _onNextTap() {
+    if (_questionPagerController.page?.floor() != questions.length - 1) {
+      _questionPagerController.nextPage(
+          duration: const Duration(milliseconds: 300), curve: Curves.ease);
     } else {}
   }
 
+  _onPreviousButtonTap() {
+    _questionPagerController.previousPage(
+        duration: const Duration(milliseconds: 300), curve: Curves.ease);
+  }
 }

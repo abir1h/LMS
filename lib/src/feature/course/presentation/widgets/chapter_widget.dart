@@ -192,7 +192,7 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
               CourseContentWidget(
                 courseIcon: Icons.help_center,
                 iconColor: clr.textColorAppleBlack,
-                title: label(e: "Evaluation Single Question", b: "মূল্যায়ন Single Question"),
+                title: label(e: "Evaluation 2", b: "মূল্যায়ন ২"),
                 buttonIcon: Icons.visibility,
                 status: true,
                 onTap: () => Get.to(() => CourseAssessmentScreen(

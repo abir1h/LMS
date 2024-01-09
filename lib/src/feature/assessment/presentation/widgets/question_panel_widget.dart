@@ -32,10 +32,8 @@ class _QuestionAnswerPanelState extends State<QuestionAnswerPanel>
       child: Center(
         child: Container(
           height: double.infinity,
-          width: MediaQuery.of(context).size.width - 32,
           color: Colors.white,
           margin: const EdgeInsets.only(top: 8),
-          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
           child: PageView.builder(
             controller: widget.controller,
             itemCount: widget.questions.length,
