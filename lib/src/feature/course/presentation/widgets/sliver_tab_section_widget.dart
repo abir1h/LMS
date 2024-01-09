@@ -46,7 +46,8 @@ class _SliverTabSectionWidgetState extends State<SliverTabSectionWidget>
           pinned: true,
           floating: true,
           automaticallyImplyLeading: false,
-          title: TabBar.secondary(
+          surfaceTintColor: clr.whiteColor,
+          flexibleSpace: TabBar.secondary(
             controller: _tabController,
             labelStyle: TextStyle(
                 color: clr.appPrimaryColorGreen,

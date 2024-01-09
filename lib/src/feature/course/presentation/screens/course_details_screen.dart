@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lms/src/core/common_widgets/custom_button.dart';
 
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/service/notifier/app_events_notifier.dart';
@@ -105,6 +106,21 @@ class CourseWidget extends StatelessWidget with AppTheme, Language {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        if (from == "upcoming")
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(right: size.w16, bottom: size.h16),
+                child: CustomButton(
+                  onTap: () {},
+                  title: "Enroll",
+                  horizontalPadding: size.w24,
+                  radius: size.r24,
+                ),
+              ),
+            ],
+          ),
         CourseText(
           text: title,
           fontSize: size.textXMedium,

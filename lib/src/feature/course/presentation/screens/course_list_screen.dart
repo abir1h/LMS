@@ -91,7 +91,8 @@ class _CourseListScreenState extends State<CourseListScreen>
                             status: label(e: "Completed", b: "সম্পন্ন হয়েছে"),
                           )
                         : CourseCard(
-                            onTap: () {},
+                            onTap: () => Get.toNamed(AppRoutes.courseDetails,
+                                arguments: {'from': "upcoming", 'status': ""}),
                             title: label(
                                 e: "Development of Bengali language",
                                 b: "বাংলা ভাষার বিকাশ"),
