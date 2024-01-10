@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../feature/app.dart';
 import '../service/notifier/app_events_notifier.dart';
 import 'custom_dialog_widget.dart';
 import 'custom_switch_button.dart';
@@ -18,6 +20,9 @@ class DrawerWidget extends StatefulWidget {
 }
 
 class _DrawerWidgetState extends State<DrawerWidget> with AppTheme, Language {
+  final GrayscaleController grayscaleController =
+      Get.put(GrayscaleController());
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -36,9 +41,17 @@ class _DrawerWidgetState extends State<DrawerWidget> with AppTheme, Language {
                     left: size.w16, top: size.h32, right: size.w16),
                 child: Row(
                   children: [
-                    Image.asset(
-                      ImageAssets.imgEmptyProfile,
-                      height: size.h32,
+                    Container(
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                              color: clr.cardStrokeColor, width: size.w1)),
+                      child: CircleAvatar(
+                        radius: 24.r,
+                        backgroundImage: AssetImage(
+                          ImageAssets.imgProfile,
+                        ),
+                      ),
                     ),
                     SizedBox(width: size.w12),
                     Expanded(
@@ -131,6 +144,26 @@ class _DrawerWidgetState extends State<DrawerWidget> with AppTheme, Language {
                 onTap: () {},
               ),
               DrawerLinkWidget(
+                icon: Icons.accessible,
+                text: label(e: en.accessibilityText, b: bn.accessibilityText),
+                onTap: () {},
+                widget: Obx(
+                  () => SizedBox(
+                      width: 40.sp,
+                      height: 40.sp,
+                      child: FittedBox(
+                        child: CupertinoSwitch(
+                          applyTheme: true,
+                          value: grayscaleController.isGrayscale.value,
+                          onChanged: (v) {
+                            grayscaleController.toggleGrayscale();
+                          },
+                          activeColor: clr.appPrimaryColorGreen,
+                        ),
+                      )),
+                ),
+              ),
+              DrawerLinkWidget(
                 icon: Icons.logout,
                 iconColor: clr.textColorBlack,
                 text: label(e: en.logoutText, b: bn.logoutText),
@@ -166,6 +199,7 @@ class DrawerLinkWidget extends StatelessWidget with AppTheme {
   final Color? iconColor;
   final String? svgIcon;
   final String text;
+  final Widget? widget;
   final VoidCallback onTap;
   const DrawerLinkWidget({
     Key? key,
@@ -173,6 +207,7 @@ class DrawerLinkWidget extends StatelessWidget with AppTheme {
     this.iconColor,
     this.svgIcon,
     required this.text,
+    this.widget,
     required this.onTap,
   }) : super(key: key);
 
@@ -218,6 +253,7 @@ class DrawerLinkWidget extends StatelessWidget with AppTheme {
                     fontWeight: FontWeight.w500,
                   )),
             ),
+            if (widget != null) widget!
           ],
         ),
       ),

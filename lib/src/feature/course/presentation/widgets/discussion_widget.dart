@@ -10,7 +10,8 @@ import '../../../discussion/presentation/screens/detailed_discussion.dart';
 import '../../../discussion/presentation/screens/discussion_bottom_sheet.dart';
 
 class DiscussionWidget extends StatefulWidget {
-  const DiscussionWidget({super.key});
+  final ScrollPhysics? physics;
+  const DiscussionWidget({super.key, this.physics});
 
   @override
   State<DiscussionWidget> createState() => _DiscussionWidgetState();
@@ -27,7 +28,7 @@ class _DiscussionWidgetState extends State<DiscussionWidget>
           ListView.builder(
             shrinkWrap: true,
             itemCount: controller.discussionList.length,
-            physics: const BouncingScrollPhysics(),
+            physics: widget.physics ?? const BouncingScrollPhysics(),
             padding: EdgeInsets.only(bottom: size.h64 * 2),
             itemBuilder: (_, index) {
               return DiscussionWidgetTile(
@@ -38,13 +39,6 @@ class _DiscussionWidgetState extends State<DiscussionWidget>
                               .toString()
                           : "0",
                   time: controller.discussionList[index].createdAt!,
-
-                  /*  title: label(
-                      e: "Eligibility of Students",
-                      b: "শিক্ষার্থীদের যোগ্যতাশিক্ষার্থীদের যোগ্যতা ফিজিওলজি হল একটি সমন্বিত বিজ্ঞান"),
-                  totalDiscussion: label(e: "3 in Total", b: "মোট ৩ টি"),
-                  time: label(
-                      e: "Date: 20 November 2023", b: "তারিখ: ২০ নভেম্বর ২০২৩"),*/
                   onTap: () => Get.to(DetailedDiscussion(
                         mainModel: controller.discussionList[index],
                       )));
@@ -94,8 +88,8 @@ class DiscussionWidgetTile extends StatelessWidget with AppTheme {
             left: size.w16, right: size.w16, top: size.h8, bottom: size.h6),
         decoration: BoxDecoration(
             color: clr.scaffoldBackgroundColor,
-            border:
-                Border(bottom: BorderSide(color: clr.dividerStrokeColorGrey))),
+            border: Border(
+                bottom: BorderSide(color: clr.placeHolderTextColorGray))),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

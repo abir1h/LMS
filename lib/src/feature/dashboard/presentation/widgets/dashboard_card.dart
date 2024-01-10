@@ -5,18 +5,21 @@ import '../../../../core/constants/common_imports.dart';
 
 class DashboardCard extends StatelessWidget with AppTheme {
   final String title, subTitle;
+  final Color? titleColor;
   final Color? primaryColor;
   final Color? borderColor;
   final Widget? image;
   final Function() onPressed;
-  const DashboardCard(
-      {super.key,
-      this.primaryColor,
-      this.image,
-      required this.onPressed,
-      required this.title,
-      required this.subTitle,
-      this.borderColor = Colors.white});
+  const DashboardCard({
+    super.key,
+    required this.title,
+    required this.subTitle,
+    this.titleColor,
+    this.primaryColor,
+    this.borderColor = Colors.white,
+    this.image,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +30,17 @@ class DashboardCard extends StatelessWidget with AppTheme {
         padding: EdgeInsets.only(
             left: size.w16, top: size.h12, bottom: size.h10, right: size.w16),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(size.w8),
-            color: primaryColor,
-            border: Border.all(color: borderColor!)),
+          borderRadius: BorderRadius.circular(size.w8),
+          color: primaryColor,
+          border: Border.all(color: borderColor!),
+          boxShadow: [
+            BoxShadow(
+              color: clr.blackColor.withOpacity(.2),
+              blurRadius: size.r8,
+              offset: Offset(0.0, size.h2),
+            ),
+          ],
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -39,7 +50,7 @@ class DashboardCard extends StatelessWidget with AppTheme {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                  color: clr.textColorAppleBlack,
+                  color: titleColor ?? clr.textColorAppleBlack,
                   fontSize: size.textSmall,
                   fontWeight: FontWeight.w500,
                   fontFamily: StringData.fontFamilyPoppins),

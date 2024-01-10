@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
+import '../../../assessment/presentation/screens/assesment_single_question_screen.dart';
 import '../../../assessment/presentation/screens/assessment_answer_in_one_word_screen.dart';
 import '../../../assessment/presentation/screens/assessment_matching_screen.dart';
 import '../../../assessment/presentation/screens/assessment_screen.dart';
@@ -58,12 +59,20 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
             padding:
                 EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h8),
             decoration: BoxDecoration(
-                color: clr.backgroundColorMintCream,
-                border: Border(
-                    bottom: BorderSide(
-                        color: _isExpanded
-                            ? clr.placeHolderTextColorGray
-                            : clr.boxStrokeColor))),
+              color: clr.backgroundColorGreenCyan,
+              border: Border(
+                  top: BorderSide(
+                      color: _isExpanded ? clr.greyColor : Colors.transparent),
+                  bottom: BorderSide(
+                      color: _isExpanded ? clr.greyColor : clr.boxStrokeColor)),
+              boxShadow: [
+                BoxShadow(
+                  color: clr.blackColor.withOpacity(.2),
+                  blurRadius: size.r4,
+                  offset: Offset(0.0, size.h2),
+                ),
+              ],
+            ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -187,6 +196,16 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                 onTap: () => Get.to(() => CourseAssessmentScreen(
                       onTap: () => Get.to(const AssessmentScreen()),
                     )),
+              ),
+              CourseContentWidget(
+                courseIcon: Icons.help_center,
+                iconColor: clr.textColorAppleBlack,
+                title: label(e: "Evaluation 2", b: "মূল্যায়ন ২"),
+                buttonIcon: Icons.visibility,
+                status: true,
+                onTap: () => Get.to(() => CourseAssessmentScreen(
+                  onTap: () => Get.to(const AssessmentSingleQuestionScreen()),
+                )),
               ),
               CourseContentWidget(
                 courseIcon: Icons.add_comment,

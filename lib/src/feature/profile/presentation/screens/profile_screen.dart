@@ -35,10 +35,13 @@ class _ProfileScreenState extends State<ProfileScreen>
                   Container(
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        border: Border.all(color: clr.cardStrokeColor)),
-                    child: Image.asset(
-                      ImageAssets.imgEmptyProfile,
-                      width: size.w4 + size.w56,
+                        border: Border.all(
+                            color: clr.cardStrokeColor, width: size.w1)),
+                    child: CircleAvatar(
+                      radius: 45.r,
+                      backgroundImage: AssetImage(
+                        ImageAssets.imgProfile,
+                      ),
                     ),
                   ),
                   SizedBox(height: size.h12),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/common_widgets/custom_toasty.dart';
 import '../widgets/one_word_answer_widget.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
@@ -67,7 +68,11 @@ class _AssessmentAnsInOneWordScreenState
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   CustomButton(
-                    onTap: () {},
+                    onTap: () {
+                      CustomToasty.of(context)
+                          .showSuccess("সফলভাবে  জমাদান সম্পন্ন হয়েছে");
+                      Get.back();
+                    },
                     title: label(e: en.submit, b: bn.submit),
                     horizontalPadding: size.w20,
                     verticalPadding: size.h4,

@@ -32,11 +32,18 @@ class CourseCard extends StatelessWidget with AppTheme {
       child: Container(
           width: 1.sw,
           decoration: BoxDecoration(
-              color: bgColor ?? clr.cardFillColorGreen,
-              borderRadius: BorderRadius.circular(size.w8),
-              border: Border.all(
-                  color: borderColor ?? clr.cardStrokeColorGreen,
-                  width: size.w1)),
+            color: bgColor ?? clr.cardFillColorGreen,
+            borderRadius: BorderRadius.circular(size.w8),
+            border: Border.all(
+                color: borderColor ?? clr.cardStrokeColorGreen, width: size.w1),
+            boxShadow: [
+              BoxShadow(
+                color: clr.blackColor.withOpacity(.2),
+                blurRadius: size.r8,
+                offset: Offset(0.0, size.h2),
+              ),
+            ],
+          ),
           padding:
               EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h12),
           child: Column(

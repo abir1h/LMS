@@ -53,11 +53,12 @@ class LanguageEn {
   String lms = "Learning Management System";
   String tutorial = "Tutorial";
   String messageText = "Message";
+  String accessibilityText = "Accessibility";
 
   String profileAppBarText = "LMS My Profile";
-  String userNameText = "Sheikh Sabbir Ahmed"; //"User Name";
+  String userNameText = "Mynul Islam"; //"User Name";
   String phoneNumberText = "+0123456789"; //"Phone Number";
-  String emailText = "sheikhsabbir@gmail.com"; //"Email";
+  String emailText = "mynulislam@gmail.com"; //"Email";
   String regNoText = "2016810150"; //"Reg.No";
   String currentOrganizationNameText =
       "Dhaka College"; //"Name of the working organization";
@@ -108,6 +109,8 @@ class LanguageEn {
   String writeHere = "Write here...";
   String publishTheDiscussion = "Publish The Discussion";
   String writeYourOpinion = "Write Your Opinion";
+
+  String getStarted = "Get Started";
 
   String assignment = "Assignment";
   String assignmentInstruction =
@@ -177,11 +180,12 @@ class LanguageBn {
   String lms = "লার্নিং ম্যানেজমেন্ট সিস্টেম";
   String tutorial = "টিউটোরিয়াল";
   String messageText = "বার্তা";
+  String accessibilityText = "এক্সেসিবিলিটি";
 
   String profileAppBarText = "এলএমএস আমার প্রোফাইল";
-  String userNameText = "শেখ সাব্বির আহমেদ"; //"ব্যবহারকারীর নাম";
+  String userNameText = "মাইনুল ইসলাম"; //"ব্যবহারকারীর নাম";
   String phoneNumberText = "+০১২৩৪৫৬৭৮৯০"; //"ফোন নম্বর";
-  String emailText = "sheikhsabbir@gmail.com"; //"ইমেইল";
+  String emailText = "mynulislam@gmail.com"; //"ইমেইল";
   String regNoText = "২০১৬৮১০১৫০"; //"রেজিঃ নং";
   String currentOrganizationNameText = "ঢাকা কলেজ"; //"কর্মরত প্রতিষ্ঠানের নাম";
   String positionNameText = "অধ্যাপক"; //"আপনার পদবী";
@@ -203,7 +207,7 @@ class LanguageBn {
   String ongoingCourseDetailsText = "চলমান অধিবেশনের বিস্তারিত";
   String completedCourseDetailsText = "সম্পন্ন অধিবেশনের বিস্তারিত";
   String curriculumDescription = "পাঠ্যসূচীর বর্ণনা";
-  String curriculumContent = "পাঠ্যক্রমের বিষয়বস্তু";
+  String curriculumContent = "অধিবেশনের বিষয়বস্তু";
   String check = "চেক করুন";
   String see = "দেখুন";
   String join = "জয়েন করুন";
@@ -230,6 +234,8 @@ class LanguageBn {
   String writeHere = "এখানে লিখুন...";
   String publishTheDiscussion = "আলোচনা প্রকাশ করুন";
   String writeYourOpinion = "আপনার মতামত লিখুন";
+
+  String getStarted = "শুরু করুন";
 
   String assignment = "অ্যাসাইনমেন্ট";
   String assignmentInstruction =

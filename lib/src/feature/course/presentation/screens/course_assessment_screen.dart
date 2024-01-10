@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
-import 'package:lms/src/feature/assessment/presentation/screens/assessment_quiz_screen.dart';
 
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
@@ -187,7 +185,7 @@ class _CourseAssessmentScreenState extends State<CourseAssessmentScreen>
                       padding: EdgeInsets.symmetric(horizontal: size.w10),
                       child: CustomButton(
                         onTap: widget.onTap,
-                        title: label(e: en.loginText, b: bn.loginText),
+                        title: label(e: en.getStarted, b: bn.getStarted),
                         radius: size.r4,
                       ),
                     )

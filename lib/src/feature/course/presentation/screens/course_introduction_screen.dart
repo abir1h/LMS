@@ -5,13 +5,14 @@ import '../../../../core/utility/app_label.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../controllers/introduction_controller.dart';
-import '../widgets/tab_section_widget.dart';
+import '../widgets/sliver_tab_section_widget.dart';
 
 class CourseIntroductionScreen extends StatefulWidget {
   const CourseIntroductionScreen({super.key});
 
   @override
-  State<CourseIntroductionScreen> createState() => _CourseIntroductionScreenState();
+  State<CourseIntroductionScreen> createState() =>
+      _CourseIntroductionScreenState();
 }
 
 class _CourseIntroductionScreenState extends State<CourseIntroductionScreen>
@@ -21,9 +22,10 @@ class _CourseIntroductionScreenState extends State<CourseIntroductionScreen>
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-        title: controller.screenName.value,
-        bgColor: clr.whiteColor,
-        body: Column(
+      title: controller.screenName.value,
+      bgColor: clr.whiteColor,
+      body: SliverTabSectionWidget(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: size.h12),
@@ -45,10 +47,26 @@ class _CourseIntroductionScreenState extends State<CourseIntroductionScreen>
                     ),
                   ),
                   SizedBox(width: size.w10),
-                  Icon(
-                    Icons.save_alt,
-                    color: clr.appPrimaryColorGreen,
-                    size: size.r24,
+                  Container(
+                    padding: EdgeInsets.all(size.r1),
+                    decoration: BoxDecoration(
+                      color: clr.whiteColor,
+                      borderRadius: BorderRadius.circular(size.r4),
+                      border: Border.all(
+                          color: clr.cardStrokeColor, width: size.r1),
+                      boxShadow: [
+                        BoxShadow(
+                          color: clr.blackColor.withOpacity(.2),
+                          blurRadius: size.r4,
+                          offset: Offset(0.0, size.h2),
+                        ),
+                      ],
+                    ),
+                    child: Icon(
+                      Icons.save_alt,
+                      color: clr.appPrimaryColorGreen,
+                      size: size.r24,
+                    ),
                   ),
                 ],
               ),
@@ -80,8 +98,9 @@ class _CourseIntroductionScreenState extends State<CourseIntroductionScreen>
               ),
             ),
             SizedBox(height: size.h16),
-            const TabSectionWidget()
           ],
-        ));
+        ),
+      ),
+    );
   }
 }

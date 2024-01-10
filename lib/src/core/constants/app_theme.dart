@@ -35,25 +35,26 @@ class ThemeColor {
 
   Color get textColorAppleBlack => HexColor("1D1D1F");
   Color get textColorBlack => HexColor("414141");
-  Color get textColorGray=> HexColor("A8A8A8");
+  Color get textColorGray => HexColor("A8A8A8");
   Color get placeHolderTextColorGray => HexColor("9F9F9F");
 
   Color get boxStrokeColor => HexColor("DFDFDF");
   Color get boxStrokeColorSilver => HexColor("C0C0C0");
   Color get cardStrokeColor => HexColor("B6DED4");
-  Color get cardStrokeColorOrange => HexColor("FDC89B");
+  Color get cardStrokeColorOrange => HexColor("E4AF81");
   Color get cardStrokeColorGreen => HexColor("B7D37A");
-  Color get cardStrokeColorPurple => HexColor("E5D9F7");
-  Color get cardStrokeColorBlue => HexColor("BEDBED");
+  Color get cardStrokeColorPurple => HexColor("CCBDE2");
+  Color get cardStrokeColorBlue => HexColor("ABCEE3");
   Color get dividerStrokeColorGrey => HexColor("B0B0B0");
   Color get gapStrokeGrey => HexColor("646464");
 
   Color get fromBoxFillColor => HexColor("FCFFFE");
-  Color get cardFillColorOrange => HexColor("FFE9D6");
-  Color get cardFillColorGreen => HexColor("F2FED7");
-  Color get cardFillColorPurple => HexColor("F7F2FF");
-  Color get cardFillColorBlue => HexColor("E7F6FF");
+  Color get cardFillColorOrange => HexColor("FFE7D2");
+  Color get cardFillColorGreen => HexColor("ECFFC2");
+  Color get cardFillColorPurple => HexColor("F1E8FF");
+  Color get cardFillColorBlue => HexColor("D7EEFC");
   Color get cardFillColorCruise => HexColor("B3E0DD");
+  Color get cardFillColorAliceBlue => HexColor("F0FCF9");
   Color get drawerFillColor => HexColor("E6F8F4");
 
   Color get clickableLinkColor => HexColor("4A88FF");
@@ -70,6 +71,7 @@ class ThemeColor {
   Color get toastErrorBackgroundColor => HexColor("FFE6E9");
   Color get toastAskColor => HexColor("68B1EF");
   Color get backgroundColorMintCream => HexColor("F2FCFA");
+  Color get backgroundColorGreenCyan => HexColor("E7FDF8");
   Color get placeHolderDeselectGray => HexColor("959596");
 }
 

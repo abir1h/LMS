@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
+import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
 import '../controllers/assessment_controller.dart';
@@ -65,7 +66,11 @@ class _AssessmentTrueFalseScreenState extends State<AssessmentTrueFalseScreen>
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   CustomButton(
-                    onTap: () {},
+                    onTap: () {
+                      CustomToasty.of(context)
+                          .showSuccess("সফলভাবে  জমাদান সম্পন্ন হয়েছে");
+                      Get.back();
+                    },
                     title: label(e: en.submit, b: bn.submit),
                     horizontalPadding: size.w20,
                     verticalPadding: size.h4,

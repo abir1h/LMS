@@ -81,13 +81,14 @@ class _DashboardScreenState extends State<DashboardScreen>
                 leftChild: DashboardCard(
                   title:
                       label(e: en.upcomingCurriculum, b: bn.upcomingCurriculum),
+                  titleColor: clr.appPrimaryColorGreen,
                   onPressed: () =>
                       Get.toNamed(AppRoutes.courseList, arguments: "upcoming"),
                   subTitle: label(
                       e: StringData.dashboardCardValue3,
                       b: StringData.dashboardCardValue3Bn),
-                  borderColor: clr.cardFillColorBlue,
-                  primaryColor: clr.cardStrokeColorBlue,
+                  borderColor: clr.cardStrokeColorBlue,
+                  primaryColor: clr.cardFillColorBlue,
                   image: SvgPicture.asset(
                     ImageAssets.imgTraineeCard3,
                     height: size.h32,

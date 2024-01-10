@@ -190,7 +190,7 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
                       padding: EdgeInsets.symmetric(horizontal: size.w10),
                       child: CustomButton(
                         onTap: () => Get.to(const AssignmentScreen()),
-                        title: label(e: en.loginText, b: bn.loginText),
+                        title: label(e: en.getStarted, b: bn.getStarted),
                         radius: size.r4,
                       ),
                     )
