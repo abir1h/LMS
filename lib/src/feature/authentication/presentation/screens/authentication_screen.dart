@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lms/src/core/network/api_service.dart';
+import 'package:lms/src/feature/authentication/data/models/login_response_model.dart';
 
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/custom_switch_button.dart';
@@ -9,6 +13,7 @@ import '../../../../core/constants/common_imports.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/utility/app_label.dart';
 import '../controllers/authentication_controller.dart';
+import 'auth_webview_screen.dart';
 
 class AuthenticationScreen extends StatefulWidget {
   const AuthenticationScreen({super.key});
@@ -129,7 +134,18 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
                           ),
                           SizedBox(height: size.h20),
                           CustomButton(
-                              onTap: () => Get.toNamed(AppRoutes.landing),
+                              onTap: () {
+                                ApiService()
+                                    .getRequest(ApiCredential.userLogin)
+                                    .then((value) {
+                                  print(value);
+                                  LoginResponse loginResponse =
+                                      LoginResponse.fromJson(
+                                          json.decode(value));
+                                  Get.to(AuthWebViewScreen(
+                                      webViewLink: loginResponse.data.url));
+                                });
+                              },
                               title: label(e: en.loginText, b: bn.loginText))
                           // Form(
                           //     key: _formKey,
@@ -222,7 +238,8 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
                                 ),
                                 TextSpan(
                                   text: label(
-                                      e: en.copyRightText4, b: bn.copyRightText4),
+                                      e: en.copyRightText4,
+                                      b: bn.copyRightText4),
                                   style: TextStyle(
                                     color: clr.appPrimaryColorGreen,
                                     fontSize: size.textXXSmall,
@@ -241,7 +258,8 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
                                 ),
                                 TextSpan(
                                   text: label(
-                                      e: en.copyRightText5, b: bn.copyRightText5),
+                                      e: en.copyRightText5,
+                                      b: bn.copyRightText5),
                                   style: TextStyle(
                                     color: clr.appPrimaryColorGreen,
                                     fontSize: size.textXXSmall,
@@ -251,8 +269,8 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
                                 ),
                               ])),
                           Text.rich(TextSpan(
-                              text:
-                                  label(e: en.copyRightText, b: bn.copyRightText),
+                              text: label(
+                                  e: en.copyRightText, b: bn.copyRightText),
                               style: TextStyle(
                                 color: clr.textColorAppleBlack,
                                 fontWeight: FontWeight.w400,
@@ -271,7 +289,8 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
                                 ),
                                 TextSpan(
                                   text: label(
-                                      e: en.copyRightText3, b: bn.copyRightText3),
+                                      e: en.copyRightText3,
+                                      b: bn.copyRightText3),
                                   style: TextStyle(
                                     color: clr.textColorAppleBlack,
                                     fontSize: size.textXXSmall,
