@@ -47,8 +47,8 @@ class DashboardCard extends StatelessWidget with AppTheme {
           children: [
             Text(
               title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+              // maxLines: 2,
+              // overflow: TextOverflow.ellipsis,
               style: TextStyle(
                   color: titleColor ?? clr.textColorAppleBlack,
                   fontSize: size.textSmall,

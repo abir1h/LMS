@@ -111,6 +111,8 @@ class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
                                   fontWeight: FontWeight.w600,
                                   fontFamily: StringData.fontFamilyPoppins),
                               textAlign: TextAlign.center,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ))),
                     SizedBox(width: size.w16),
                     Expanded(
@@ -132,6 +134,8 @@ class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
                                 fontWeight: FontWeight.w600,
                                 fontFamily: StringData.fontFamilyPoppins),
                             textAlign: TextAlign.center,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           )),
                     ),
                   ],

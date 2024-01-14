@@ -24,6 +24,13 @@ class CourseContentWidget extends StatelessWidget with AppTheme, Language {
 
   @override
   Widget build(BuildContext context) {
+    final Size buttonTextSize = (TextPainter(
+            text: TextSpan(text: buttonText ?? ""),
+            maxLines: 1,
+            textScaler: MediaQuery.of(context).textScaler,
+            textDirection: TextDirection.ltr)
+          ..layout())
+        .size;
     return Container(
       width: double.infinity,
       padding: EdgeInsets.only(
@@ -44,7 +51,7 @@ class CourseContentWidget extends StatelessWidget with AppTheme, Language {
           ),
           // SizedBox(width: size.w12),
           Expanded(
-            flex: 3,
+            flex: buttonTextSize.width < 80.0 ? 3 : 2,
             child: Text(
               title,
               style: TextStyle(
@@ -58,7 +65,7 @@ class CourseContentWidget extends StatelessWidget with AppTheme, Language {
           ),
           // SizedBox(width: size.w12),
           Expanded(
-            flex: 3,
+            flex: buttonTextSize.width < 80.0 ? 3 : 4,
             child: GestureDetector(
               onTap: onTap,
               child: Container(
@@ -72,13 +79,18 @@ class CourseContentWidget extends StatelessWidget with AppTheme, Language {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      buttonText ?? label(e: en.check, b: bn.check),
-                      style: TextStyle(
-                          color: clr.textColorAppleBlack,
-                          fontSize: size.textSmall,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: StringData.fontFamilyPoppins),
+                    Flexible(
+                      child: Text(
+                        buttonText ?? label(e: en.check, b: bn.check),
+                        style: TextStyle(
+                            color: clr.textColorAppleBlack,
+                            fontSize: size.textSmall,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: StringData.fontFamilyPoppins),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                     SizedBox(width: size.w8),
                     Icon(

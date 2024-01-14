@@ -91,6 +91,17 @@ class ThemeSize {
   double get textXXSmall => 12.sp;
   double get textXXXSmall => 10.sp;
 
+  // double get textXXXLarge => 50.sp;
+  // double get textXXLarge => 42.sp;
+  // double get textXLarge => 32.sp;
+  // double get textLarge => 28.sp;
+  // double get textXMedium => 26.sp;
+  // double get textMedium => 24.sp;
+  // double get textSmall => 22.sp;
+  // double get textXSmall => 20.sp;
+  // double get textXXSmall => 18.sp;
+  // double get textXXXSmall => 16.sp;
+
   double get r1 => 1.r;
   double get r4 => 4.r;
   double get r8 => 8.r;
