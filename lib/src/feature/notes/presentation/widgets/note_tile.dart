@@ -85,13 +85,20 @@ class NoteTile extends StatelessWidget with AppTheme {
                         ? MainAxisAlignment.end
                         : MainAxisAlignment.start,
                     children: [
-                      Text(
-                        "তারিখ: $timestamp",
-                        style: TextStyle(
-                          color: clr.placeHolderTextColorGray,
-                          fontWeight: FontWeight.w400,
-                          fontSize: size.textXXSmall,
-                          fontFamily: StringData.fontFamilyPoppins,
+                      Expanded(
+                        child: Text(
+                          "তারিখ: $timestamp",
+                          style: TextStyle(
+                            color: clr.placeHolderTextColorGray,
+                            fontWeight: FontWeight.w400,
+                            fontSize: size.textXXSmall,
+                            fontFamily: StringData.fontFamilyPoppins,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: reference != null
+                              ? TextAlign.end
+                              : TextAlign.start,
                         ),
                       ),
                     ],

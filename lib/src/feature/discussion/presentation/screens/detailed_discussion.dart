@@ -75,74 +75,31 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
-                                    Text(
-                                      "মোট ",
-                                      style: TextStyle(
-                                          color: clr.placeHolderTextColorGray,
-                                          fontSize: size.textXXSmall,
-                                          fontWeight: FontWeight.w500,
-                                          fontFamily:
-                                              StringData.fontFamilyPoppins),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    Text(
-                                      widget.mainModel!.comments != null
-                                          ? widget.mainModel!.comments!.length
-                                              .toString()
-                                          : "0",
-                                      style: TextStyle(
-                                          color: clr.placeHolderTextColorGray,
-                                          fontSize: size.textXXSmall,
-                                          fontWeight: FontWeight.w500,
-                                          fontFamily:
-                                              StringData.fontFamilyPoppins),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    Text(
-                                      " টি",
-                                      style: TextStyle(
-                                          color: clr.placeHolderTextColorGray,
-                                          fontSize: size.textXXSmall,
-                                          fontWeight: FontWeight.w500,
-                                          fontFamily:
-                                              StringData.fontFamilyPoppins),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    Text(
-                                      " | ",
-                                      style: TextStyle(
-                                          color: clr.placeHolderTextColorGray,
-                                          fontSize: size.textXXSmall,
-                                          fontWeight: FontWeight.w500,
-                                          fontFamily:
-                                              StringData.fontFamilyPoppins),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    Text(
-                                      "তারিখ: ",
-                                      style: TextStyle(
-                                          color: clr.placeHolderTextColorGray,
-                                          fontSize: size.textXXSmall,
-                                          fontWeight: FontWeight.w500,
-                                          fontFamily:
-                                              StringData.fontFamilyPoppins),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    Text(
-                                      widget.mainModel!.createdAt!,
-                                      style: TextStyle(
-                                          color: clr.placeHolderTextColorGray,
-                                          fontSize: size.textXXSmall,
-                                          fontWeight: FontWeight.w500,
-                                          fontFamily:
-                                              StringData.fontFamilyPoppins),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
+                                    Expanded(
+                                      child: Text.rich(
+                                          textAlign: TextAlign.end,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              color:
+                                                  clr.placeHolderTextColorGray,
+                                              fontSize: size.textXXSmall,
+                                              fontWeight: FontWeight.w500,
+                                              fontFamily:
+                                                  StringData.fontFamilyPoppins),
+                                          TextSpan(
+                                              text: label(
+                                                  e: "মোট ${widget.mainModel!.comments != null ? widget.mainModel!.comments!.length.toString() : "0"} টি",
+                                                  b: "মোট ${widget.mainModel!.comments != null ? widget.mainModel!.comments!.length.toString() : "0"} টি"),
+                                              children: [
+                                                const TextSpan(
+                                                  text: " | ",
+                                                ),
+                                                TextSpan(
+                                                  text:
+                                                      "তারিখ: ${widget.mainModel!.createdAt!}",
+                                                ),
+                                              ])),
                                     ),
                                   ],
                                 ),

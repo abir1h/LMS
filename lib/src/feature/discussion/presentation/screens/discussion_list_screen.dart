@@ -145,65 +145,28 @@ class DiscussionCard extends StatelessWidget with AppTheme {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(
-                        "মোট ",
-                        style: TextStyle(
-                            color: clr.placeHolderTextColorGray,
-                            fontSize: size.textXXSmall,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: StringData.fontFamilyPoppins),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      Text(
-                        totalDiscussion,
-                        style: TextStyle(
-                            color: clr.placeHolderTextColorGray,
-                            fontSize: size.textXXSmall,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: StringData.fontFamilyPoppins),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      Text(
-                        " টি",
-                        style: TextStyle(
-                            color: clr.placeHolderTextColorGray,
-                            fontSize: size.textXXSmall,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: StringData.fontFamilyPoppins),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      Text(
-                        " | ",
-                        style: TextStyle(
-                            color: clr.placeHolderTextColorGray,
-                            fontSize: size.textXXSmall,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: StringData.fontFamilyPoppins),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      Text(
-                        "তারিখ: ",
-                        style: TextStyle(
-                            color: clr.placeHolderTextColorGray,
-                            fontSize: size.textXXSmall,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: StringData.fontFamilyPoppins),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      Text(
-                        time,
-                        style: TextStyle(
-                            color: clr.placeHolderTextColorGray,
-                            fontSize: size.textXXSmall,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: StringData.fontFamilyPoppins),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                      Expanded(
+                        child: Text.rich(
+                            textAlign: TextAlign.end,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: clr.placeHolderTextColorGray,
+                                fontSize: size.textXXSmall,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: StringData.fontFamilyPoppins),
+                            TextSpan(
+                                text: label(
+                                    e: "মোট $totalDiscussion টি",
+                                    b: "মোট $totalDiscussion টি"),
+                                children: [
+                                  const TextSpan(
+                                    text: " | ",
+                                  ),
+                                  TextSpan(
+                                    text: "তারিখ: $time",
+                                  ),
+                                ])),
                       ),
                     ],
                   ),

@@ -204,8 +204,9 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                 buttonIcon: Icons.visibility,
                 status: true,
                 onTap: () => Get.to(() => CourseAssessmentScreen(
-                  onTap: () => Get.to(const AssessmentSingleQuestionScreen()),
-                )),
+                      onTap: () =>
+                          Get.to(const AssessmentSingleQuestionScreen()),
+                    )),
               ),
               CourseContentWidget(
                 courseIcon: Icons.add_comment,

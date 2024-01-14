@@ -202,13 +202,18 @@ class NoteWidgetTile extends StatelessWidget with AppTheme {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(
-                        "তারিখ: $timestamp",
-                        style: TextStyle(
-                          color: clr.placeHolderTextColorGray,
-                          fontWeight: FontWeight.w400,
-                          fontSize: size.textXXSmall,
-                          fontFamily: StringData.fontFamilyPoppins,
+                      Expanded(
+                        child: Text(
+                          "তারিখ: $timestamp",
+                          style: TextStyle(
+                            color: clr.placeHolderTextColorGray,
+                            fontWeight: FontWeight.w400,
+                            fontSize: size.textXXSmall,
+                            fontFamily: StringData.fontFamilyPoppins,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.end,
                         ),
                       ),
                     ],
