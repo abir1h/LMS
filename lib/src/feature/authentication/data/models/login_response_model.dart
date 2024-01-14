@@ -1,41 +1,52 @@
 import 'dart:convert';
 
-LoginResponse loginResponseFromJson(String str) => LoginResponse.fromJson(json.decode(str));
+LoginResponse loginResponseFromJson(String str) =>
+    LoginResponse.fromJson(json.decode(str));
 
 String loginResponseToJson(LoginResponse data) => json.encode(data.toJson());
 
 class LoginResponse {
-  Data data;
-  String message;
+  final Data? data;
+  final String? message;
 
   LoginResponse({
-    required this.data,
-    required this.message,
+    this.data,
+    this.message,
   });
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) => LoginResponse(
-    data: Data.fromJson(json["data"]),
-    message: json["message"],
-  );
+        data: json["data"] == null ? null : Data.fromJson(json["data"]),
+        message: json["message"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "data": data.toJson(),
-    "message": message,
-  };
+        "data": data?.toJson(),
+        "message": message,
+      };
 }
 
 class Data {
-  String url;
+  final String? accessToken;
+  final String? refreshToken;
+  final DateTime? expiresAt;
 
   Data({
-    required this.url,
+    this.accessToken,
+    this.refreshToken,
+    this.expiresAt,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-    url: json["url"],
-  );
+        accessToken: json["access_token"],
+        refreshToken: json["refresh_token"],
+        expiresAt: json["expires_at"] == null
+            ? null
+            : DateTime.parse(json["expires_at"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "url": url,
-  };
+        "access_token": accessToken,
+        "refresh_token": refreshToken,
+        "expires_at": expiresAt?.toIso8601String(),
+      };
 }

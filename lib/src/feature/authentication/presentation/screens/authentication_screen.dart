@@ -4,16 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lms/src/core/network/api_service.dart';
-import 'package:lms/src/feature/authentication/data/models/login_response_model.dart';
 
+import '../../../../core/routes/app_routes.dart';
+import '../../data/models/emis_login_response_model.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/custom_switch_button.dart';
-import '../../../../core/common_widgets/text_field_widget.dart';
 import '../../../../core/constants/common_imports.dart';
-import '../../../../core/routes/app_routes.dart';
 import '../../../../core/utility/app_label.dart';
 import '../controllers/authentication_controller.dart';
-import 'auth_webview_screen.dart';
+import 'emis_webview_screen.dart';
 
 class AuthenticationScreen extends StatefulWidget {
   const AuthenticationScreen({super.key});
@@ -138,13 +137,13 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
                                 ApiService()
                                     .getRequest(ApiCredential.userLogin)
                                     .then((value) {
-                                  print(value);
-                                  LoginResponse loginResponse =
-                                      LoginResponse.fromJson(
+                                  EMISLoginResponse loginResponse =
+                                      EMISLoginResponse.fromJson(
                                           json.decode(value));
-                                  Get.to(AuthWebViewScreen(
+                                  Get.to(() => EMISWebViewScreen(
                                       webViewLink: loginResponse.data.url));
                                 });
+                                // Get.toNamed(AppRoutes.landing);
                               },
                               title: label(e: en.loginText, b: bn.loginText))
                           // Form(
