@@ -20,6 +20,12 @@ class _AccessibilityBottomSheetState extends State<AccessibilityBottomSheet>
   final AccessibilityController accessibilityController =
       Get.put(AccessibilityController());
   final localStorage = Get.find<LocalStorageService>();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print(">>>>>>>>>==="+localStorage.getBooleanValue(StringData.textSizeKey).toString());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -131,8 +137,8 @@ class _AccessibilityBottomSheetState extends State<AccessibilityBottomSheet>
                                 accessibilityController.toggleTextSize();
                                 setState(() {
                                   accessibilityController.isTextSize.isTrue
-                                      ? size.accessibilityValueSet(6.0)
-                                      : size.accessibilityValueSet(0.0);
+                                      ? size.accessibilityValueSet(4.0,true)
+                                      : size.accessibilityValueSet(0.0,false);
                                 });
                               },
                               activeColor: clr.appPrimaryColorGreen,

@@ -213,7 +213,7 @@ class _DrawerWidgetState extends State<DrawerWidget> with AppTheme, Language {
     showCupertinoModalPopup(
       context: context,
       builder: (context) => const AccessibilityBottomSheet(),
-    );
+    ).then((value) => setState((){}));
   }
 
   void showLogoutPromptDialog() {

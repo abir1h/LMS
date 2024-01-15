@@ -156,6 +156,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
                           //           controller: authenticationController
                           //               .userIdEditingController,
                           //           validator: (value) {
+                          
                           //             if (value == null || value.isEmpty) {
                           //               return 'Enter your PDSID';
                           //             } else {

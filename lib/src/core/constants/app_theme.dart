@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:lms/src/core/config/local_storage_services.dart';
+import 'package:lms/src/core/constants/common_imports.dart';
 
 import '../utility/color_tools.dart';
 
@@ -75,14 +79,21 @@ class ThemeColor {
   Color get placeHolderDeselectGray => HexColor("959596");
 }
 
+final localStorage = Get.find<LocalStorageService>();
+
+double sizeValue =
+    localStorage.getBooleanValue(StringData.textSizeKey) != null ? localStorage.getBooleanValue(StringData.textSizeKey)==true? 4.0 : 0.0:0.0;
+
 class ThemeSize {
   ThemeSize._();
   static ThemeSize? _instance;
   static ThemeSize get instance => _instance ?? (_instance = ThemeSize._());
+  final localStorage = Get.find<LocalStorageService>();
 
-  double sizeValue = 0.0;
-  accessibilityValueSet(double value) {
+  accessibilityValueSet(double value,bool revert) {
     sizeValue = value;
+      localStorage.storeBooleanValue(StringData.textSizeKey, revert);
+
   }
 
   double get textXXXLarge => 44.sp + sizeValue;

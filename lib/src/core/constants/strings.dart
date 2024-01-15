@@ -8,6 +8,7 @@ class StringData {
   static const String userPermissionKey = "userPermissionKey";
 
   static const String textSizeKey = "textSizeKey";
+  static const String monochromeSizeKey = "monochromeKey";
 
   static const String fontFamilyPoppins = 'Poppins';
   static const String fontFamilyRoboto = 'Roboto';
