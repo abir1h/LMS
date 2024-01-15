@@ -7,6 +7,8 @@ import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/network/api_service.dart';
 import '../../data/models/login_response_model.dart';
 import '../../../../core/routes/app_routes.dart';
+import '../../domain/entities/auth_data_entity.dart';
+import '../services/auth_service.dart';
 
 class EMISWebViewScreen extends StatefulWidget {
   final String webViewLink;
@@ -47,14 +49,18 @@ class _EMISWebViewScreenState extends State<EMISWebViewScreen> {
                 "http://103.209.40.89:81/api/auth/dev/authThroughEmis?")) {
               isLoading = true;
 
-              ApiService()
-                  .getRequest(request.url
-                      .replaceAll("http://103.209.40.89:81/api", "")
-                      .replaceAll("authThroughEmis", "token"))
-                  .then((value) {
-                LoginResponse loginResponse =
-                    LoginResponse.fromJson(json.decode(value));
-                print("access token ${loginResponse.data?.accessToken}");
+              // ApiService()
+              //     .getRequest(request.url
+              //         .replaceAll("http://103.209.40.89:81/api", "")
+              //         .replaceAll("authThroughEmis", "token"))
+              //     .then((value) {
+              //   LoginResponse loginResponse =
+              //       LoginResponse.fromJson(json.decode(value));
+              //   print("access token ${loginResponse.data?.accessToken}");
+              // });
+              AuthService.getToken("101353764", "9U7p2kNngjlmj8gEMyJN35lihhrAimX2IOYzUq7qLAZHsdDhD").then((responseEntity){
+                AuthDataEntity authData = responseEntity.data!;
+                print(authData.accessToken);
               });
               Get.offAndToNamed(AppRoutes.landing);
               return NavigationDecision.prevent;

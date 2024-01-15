@@ -1,4 +1,5 @@
 class AuthDataEntity {
+  final String url;
   final String accessToken;
   final String expiresAt;
   final String refreshToken;
@@ -6,7 +7,8 @@ class AuthDataEntity {
   final List<String> permissions;
 
   AuthDataEntity(
-      {required this.accessToken,
+      {required this.url,
+      required this.accessToken,
       required this.expiresAt,
       required this.refreshToken,
       required this.role,

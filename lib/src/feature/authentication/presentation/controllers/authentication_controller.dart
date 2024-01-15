@@ -50,8 +50,8 @@ class AuthenticationController extends GetxController with AppTheme {
 
   Future<void> loginUserAccount(String userId, String password) async {
     final authorization =
-        await _authenticationUseCase.userLoginUseCase(userId, password);
-    if (authorization.errors == null) {
+        await _authenticationUseCase.getTokenUseCase(userId, password);
+    if (authorization.error == null) {
       buttonController.successTap();
       Future.delayed(const Duration(milliseconds: 800)).then((value) {
         if (authorization.data != null &&

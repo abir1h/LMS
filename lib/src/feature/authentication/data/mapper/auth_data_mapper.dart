@@ -11,6 +11,7 @@ class _AuthDataModelToEntityMapper
   @override
   AuthDataModel fromEntityToModel(AuthDataEntity entity) {
     return AuthDataModel(
+        url: entity.url,
         accessToken: entity.accessToken,
         expiresAt: entity.expiresAt,
         refreshToken: entity.refreshToken,
@@ -21,6 +22,7 @@ class _AuthDataModelToEntityMapper
   @override
   AuthDataEntity toEntityFromModel(AuthDataModel model) {
     return AuthDataEntity(
+        url: model.url,
         accessToken: model.accessToken,
         expiresAt: model.expiresAt,
         refreshToken: model.refreshToken,

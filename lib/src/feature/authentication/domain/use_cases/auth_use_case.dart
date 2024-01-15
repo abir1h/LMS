@@ -1,4 +1,4 @@
-import '../entities/auth_response_entity.dart';
+import '../../../shared/domain/entities/response_entity.dart';
 import '../repositories/auth_repository.dart';
 
 class AuthUseCase {
@@ -6,9 +6,13 @@ class AuthUseCase {
   AuthUseCase({required AuthRepository authRepository})
       : _authRepository = authRepository;
 
-  Future<AuthResponseEntity> userLoginUseCase(
-      String pdsID, String password) async {
-    final response = _authRepository.userLogin(pdsID, password);
+  Future<ResponseEntity> getTokenUseCase(String username, String eMISToken) async {
+    final response = _authRepository.getToken(username, eMISToken);
+    return response;
+  }
+
+  Future<ResponseEntity> getEMISLinkUseCase() async {
+    final response = _authRepository.getEMISLink();
     return response;
   }
 }

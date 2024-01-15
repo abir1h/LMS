@@ -1,5 +1,6 @@
-import '../entities/auth_response_entity.dart';
+import '../../../shared/domain/entities/response_entity.dart';
 
 abstract class AuthRepository {
-  Future<AuthResponseEntity> userLogin(String pdsID, String password);
+  Future<ResponseEntity> getToken(String username, String eMISToken);
+  Future<ResponseEntity> getEMISLink();
 }

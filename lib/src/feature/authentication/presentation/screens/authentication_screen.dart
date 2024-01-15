@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lms/src/core/network/api_service.dart';
+import 'package:lms/src/feature/authentication/data/models/auth_data_model.dart';
+import 'package:lms/src/feature/authentication/domain/entities/auth_data_entity.dart';
+import 'package:lms/src/feature/authentication/presentation/services/auth_service.dart';
 
 import '../../../../core/routes/app_routes.dart';
 import '../../data/models/emis_login_response_model.dart';
@@ -134,15 +137,19 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
                           SizedBox(height: size.h20),
                           CustomButton(
                               onTap: () {
-                                ApiService()
-                                    .getRequest(ApiCredential.userLogin)
-                                    .then((value) {
-                                  EMISLoginResponse loginResponse =
-                                      EMISLoginResponse.fromJson(
-                                          json.decode(value));
+                                AuthService.getEMISLink().then((responseEntity){
                                   Get.to(() => EMISWebViewScreen(
-                                      webViewLink: loginResponse.data.url));
+                                      webViewLink: responseEntity.data.url));
                                 });
+                                // ApiService()
+                                //     .getRequest(ApiCredential.userLogin)
+                                //     .then((value) {
+                                //   EMISLoginResponse loginResponse =
+                                //       EMISLoginResponse.fromJson(
+                                //           json.decode(value));
+                                //   Get.to(() => EMISWebViewScreen(
+                                //       webViewLink: loginResponse.data.url));
+                                // });
                                 // Get.toNamed(AppRoutes.landing);
                               },
                               title: label(e: en.loginText, b: bn.loginText))
