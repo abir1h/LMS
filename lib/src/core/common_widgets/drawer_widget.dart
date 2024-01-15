@@ -142,9 +142,6 @@ class _DrawerWidgetState extends State<DrawerWidget> with AppTheme, Language {
                 icon: Icons.chat_bubble,
                 text: label(e: en.messageText, b: bn.messageText),
                 onTap: () {
-                  setState(() {
-                    size.accessibilityValueSet(6.0);
-                  });
                 },
               ),
               DrawerLinkWidget(
