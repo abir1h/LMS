@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/common_widgets/custom_button.dart';
+import '../../../../core/common_widgets/image_preview.dart';
 import '../../../course/presentation/screens/course_assignment_screen.dart';
 import '../controllers/assignment_controller.dart';
 import '../widgets/assignment_bottom_sheet.dart';
@@ -20,7 +21,7 @@ class AssignmentScreen extends StatefulWidget {
 }
 
 class _AssignmentScreenState extends State<AssignmentScreen>
-    with AppTheme, Language {
+    with AppTheme, Language,ImagePreviewDialog {
   final controller = Get.put(AssignmentController());
 
   @override
@@ -43,7 +44,11 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                     fontFamily: StringData.fontFamilyPoppins),
               ),
               SizedBox(height: size.h16),
-              Center(child: Image.asset(ImageAssets.imgAssignment)),
+              GestureDetector(
+                onTap: (){
+                  ImagePreviewDialog.showImagePreview(context, ImageAssets.imgAssignment);
+                }
+                ,  child: Center(child: Image.asset(ImageAssets.imgAssignment))),
               SizedBox(height: size.h20),
               Text(
                 label(

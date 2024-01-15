@@ -80,16 +80,21 @@ class ThemeSize {
   static ThemeSize? _instance;
   static ThemeSize get instance => _instance ?? (_instance = ThemeSize._());
 
-  double get textXXXLarge => 44.sp;
-  double get textXXLarge => 36.sp;
-  double get textXLarge => 26.sp;
-  double get textLarge => 22.sp;
-  double get textXMedium => 20.sp;
-  double get textMedium => 18.sp;
-  double get textSmall => 16.sp;
-  double get textXSmall => 14.sp;
-  double get textXXSmall => 12.sp;
-  double get textXXXSmall => 10.sp;
+  double sizeValue = 0.0;
+  accessibilityValueSet(double value) {
+    sizeValue = value;
+  }
+
+  double get textXXXLarge => 44.sp + sizeValue;
+  double get textXXLarge => 36.sp + sizeValue;
+  double get textXLarge => 26.sp + sizeValue;
+  double get textLarge => 22.sp + sizeValue;
+  double get textXMedium => 20.sp + sizeValue;
+  double get textMedium => 18.sp + sizeValue;
+  double get textSmall => 16.sp + sizeValue;
+  double get textXSmall => 14.sp + sizeValue;
+  double get textXXSmall => 12.sp + sizeValue;
+  double get textXXXSmall => 10.sp + sizeValue;
 
   // double get textXXXLarge => 50.sp;
   // double get textXXLarge => 42.sp;
