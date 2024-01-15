@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/config/local_storage_services.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
 import '../controllers/accessibility_controller.dart';
@@ -18,6 +19,7 @@ class _AccessibilityBottomSheetState extends State<AccessibilityBottomSheet>
     with AppTheme, Language {
   final AccessibilityController accessibilityController =
       Get.put(AccessibilityController());
+  final localStorage = Get.find<LocalStorageService>();
 
   @override
   Widget build(BuildContext context) {
@@ -117,16 +119,26 @@ class _AccessibilityBottomSheetState extends State<AccessibilityBottomSheet>
                           ),
                         ),
                       ),
-                      SizedBox(
-                        width: size.w40,
-                        height: size.h40,
-                        child: FittedBox(
+                      Obx(
+                        () => SizedBox(
+                          width: size.w40,
+                          height: size.h40,
+                          child: FittedBox(
                             child: CupertinoSwitch(
-                          applyTheme: true,
-                          value: false,
-                          onChanged: (v) {},
-                          activeColor: clr.appPrimaryColorGreen,
-                        )),
+                              applyTheme: true,
+                              value: accessibilityController.isTextSize.value,
+                              onChanged: (v) {
+                                accessibilityController.toggleTextSize();
+                                setState(() {
+                                  accessibilityController.isTextSize.isTrue
+                                      ? size.accessibilityValueSet(6.0)
+                                      : size.accessibilityValueSet(0.0);
+                                });
+                              },
+                              activeColor: clr.appPrimaryColorGreen,
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),
