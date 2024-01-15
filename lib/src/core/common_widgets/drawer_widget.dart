@@ -21,7 +21,8 @@ class DrawerWidget extends StatefulWidget {
   State<DrawerWidget> createState() => _DrawerWidgetState();
 }
 
-class _DrawerWidgetState extends State<DrawerWidget> with AppTheme, Language {
+class _DrawerWidgetState extends State<DrawerWidget>
+    with AppTheme, Language, AppEventsNotifier {
   final AccessibilityController accessibilityController =
       Get.put(AccessibilityController());
 
@@ -143,8 +144,7 @@ class _DrawerWidgetState extends State<DrawerWidget> with AppTheme, Language {
               DrawerLinkWidget(
                 icon: Icons.chat_bubble,
                 text: label(e: en.messageText, b: bn.messageText),
-                onTap: () {
-                },
+                onTap: () {},
               ),
               /*DrawerLinkWidget(
                 icon: Icons.accessible,
@@ -213,7 +213,7 @@ class _DrawerWidgetState extends State<DrawerWidget> with AppTheme, Language {
     showCupertinoModalPopup(
       context: context,
       builder: (context) => const AccessibilityBottomSheet(),
-    ).then((value) => setState((){}));
+    ).then((value) => setState(() {}));
   }
 
   void showLogoutPromptDialog() {
@@ -230,6 +230,15 @@ class _DrawerWidgetState extends State<DrawerWidget> with AppTheme, Language {
         Get.find<LandingController>().logout();
       }
     });
+  }
+
+  @override
+  void onEventReceived(EventAction action) {
+    if (action == EventAction.drawer) {
+      if (mounted) {
+        setState(() {});
+      }
+    }
   }
 }
 

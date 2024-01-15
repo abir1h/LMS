@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../core/config/local_storage_services.dart';
 import '../../../../core/constants/common_imports.dart';
+import '../../../../core/service/notifier/app_events_notifier.dart';
 import '../../../../core/utility/app_label.dart';
 import '../controllers/accessibility_controller.dart';
 
@@ -19,13 +19,6 @@ class _AccessibilityBottomSheetState extends State<AccessibilityBottomSheet>
     with AppTheme, Language {
   final AccessibilityController accessibilityController =
       Get.put(AccessibilityController());
-  final localStorage = Get.find<LocalStorageService>();
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    print(">>>>>>>>>==="+localStorage.getBooleanValue(StringData.textSizeKey).toString());
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +34,7 @@ class _AccessibilityBottomSheetState extends State<AccessibilityBottomSheet>
             width: double.infinity,
             margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
             padding:
-                EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h12),
+                EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h16),
             decoration: BoxDecoration(
               color: clr.shadeWhiteColor2,
               borderRadius: BorderRadius.only(
@@ -54,12 +47,12 @@ class _AccessibilityBottomSheetState extends State<AccessibilityBottomSheet>
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(bottom: size.h10),
+                    padding: EdgeInsets.only(bottom: size.h12),
                     child: Text(
                       label(e: en.accessibilityText, b: bn.accessibilityText),
                       style: TextStyle(
                         color: clr.textColorAppleBlack,
-                        fontSize: size.textSmall,
+                        fontSize: size.textMedium,
                         fontFamily: StringData.fontFamilyPoppins,
                         fontWeight: FontWeight.w500,
                       ),
@@ -104,6 +97,7 @@ class _AccessibilityBottomSheetState extends State<AccessibilityBottomSheet>
                       ),
                     ],
                   ),
+                  SizedBox(height: size.h10),
                   Row(
                     children: [
                       Padding(
@@ -137,9 +131,14 @@ class _AccessibilityBottomSheetState extends State<AccessibilityBottomSheet>
                                 accessibilityController.toggleTextSize();
                                 setState(() {
                                   accessibilityController.isTextSize.isTrue
-                                      ? size.accessibilityValueSet(4.0,true)
-                                      : size.accessibilityValueSet(0.0,false);
+                                      ? size.accessibilityValueSet(6.0, true)
+                                      : size.accessibilityValueSet(0.0, false);
                                 });
+                                AppEventsNotifier.notify(
+                                    EventAction.bottomNavAllScreen);
+                                AppEventsNotifier.notify(
+                                    EventAction.graphChart);
+                                AppEventsNotifier.notify(EventAction.drawer);
                               },
                               activeColor: clr.appPrimaryColorGreen,
                             ),
@@ -148,6 +147,7 @@ class _AccessibilityBottomSheetState extends State<AccessibilityBottomSheet>
                       ),
                     ],
                   ),
+                  SizedBox(height: size.h32),
                 ],
               ),
             ),

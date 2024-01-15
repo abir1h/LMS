@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:lms/src/core/config/local_storage_services.dart';
-import 'package:lms/src/core/constants/common_imports.dart';
 
+import '../config/local_storage_services.dart';
+import 'common_imports.dart';
 import '../utility/color_tools.dart';
 
 mixin AppTheme {
@@ -81,8 +80,11 @@ class ThemeColor {
 
 final localStorage = Get.find<LocalStorageService>();
 
-double sizeValue =
-    localStorage.getBooleanValue(StringData.textSizeKey) != null ? localStorage.getBooleanValue(StringData.textSizeKey)==true? 4.0 : 0.0:0.0;
+double sizeValue = localStorage.getBooleanValue(StringData.textSizeKey) != null
+    ? localStorage.getBooleanValue(StringData.textSizeKey) == true
+        ? 6.0
+        : 0.0
+    : 0.0;
 
 class ThemeSize {
   ThemeSize._();
@@ -90,10 +92,9 @@ class ThemeSize {
   static ThemeSize get instance => _instance ?? (_instance = ThemeSize._());
   final localStorage = Get.find<LocalStorageService>();
 
-  accessibilityValueSet(double value,bool revert) {
+  accessibilityValueSet(double value, bool revert) {
     sizeValue = value;
-      localStorage.storeBooleanValue(StringData.textSizeKey, revert);
-
+    localStorage.storeBooleanValue(StringData.textSizeKey, revert);
   }
 
   double get textXXXLarge => 44.sp + sizeValue;
@@ -106,17 +107,6 @@ class ThemeSize {
   double get textXSmall => 14.sp + sizeValue;
   double get textXXSmall => 12.sp + sizeValue;
   double get textXXXSmall => 10.sp + sizeValue;
-
-  // double get textXXXLarge => 50.sp;
-  // double get textXXLarge => 42.sp;
-  // double get textXLarge => 32.sp;
-  // double get textLarge => 28.sp;
-  // double get textXMedium => 26.sp;
-  // double get textMedium => 24.sp;
-  // double get textSmall => 22.sp;
-  // double get textXSmall => 20.sp;
-  // double get textXXSmall => 18.sp;
-  // double get textXXXSmall => 16.sp;
 
   double get r1 => 1.r;
   double get r4 => 4.r;
