@@ -1,10 +1,10 @@
 class ApiCredential {
   const ApiCredential._();
 
-  static String baseUrl = "https://auth-hsep.bacbonx.com/api/dev";
+  static String baseUrl = "http://103.209.40.89:81/api";
   static String apiKey = "";
 
-  static String userLogin = "/login";
+  static String userLogin = "/auth/dev/emis-link";
   static String userProfile = "/profile";
   static String userDashboard = "/dashboard";
 
