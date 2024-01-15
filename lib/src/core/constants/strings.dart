@@ -3,6 +3,7 @@ class StringData {
 
   static const String accessTokenKey = "accessTokenKey";
   static const String refreshTokenKey = "refreshTokenKey";
+  static const String expiresAt = "expiresAt";
   static const String userRoleKey = "userRoleKey";
   static const String userPermissionKey = "userPermissionKey";
 

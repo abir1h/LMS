@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../../core/common_widgets/custom_scaffold.dart';
+import '../../../../core/config/local_storage_services.dart';
+import '../../../../core/constants/common_imports.dart';
 import '../../../../core/network/api_service.dart';
 import '../../data/models/login_response_model.dart';
 import '../../../../core/routes/app_routes.dart';
@@ -19,6 +21,7 @@ class EMISWebViewScreen extends StatefulWidget {
 class _EMISWebViewScreenState extends State<EMISWebViewScreen> {
   late final WebViewController _controller;
   bool isLoading = true;
+  final localStorage = Get.find<LocalStorageService>();
 
   @override
   void initState() {
@@ -55,6 +58,12 @@ class _EMISWebViewScreenState extends State<EMISWebViewScreen> {
                 LoginResponse loginResponse =
                     LoginResponse.fromJson(json.decode(value));
                 print("access token ${loginResponse.data?.accessToken}");
+                localStorage.storeStringValue(StringData.accessTokenKey,
+                    loginResponse.data!.accessToken!);
+                localStorage.storeStringValue(StringData.refreshTokenKey,
+                    loginResponse.data!.refreshToken!);
+                localStorage.storeStringValue(StringData.expiresAt,
+                    loginResponse.data!.expiresAt.toString());
               });
               Get.offAndToNamed(AppRoutes.landing);
               return NavigationDecision.prevent;

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../core/constants/strings.dart';
 import '../core/routes/app_routes.dart';
 import '../core/constants/app_theme.dart';
+import 'accessibility/presentation/controllers/accessibility_controller.dart';
 
 class Application extends StatelessWidget with AppTheme {
   const Application({super.key});
@@ -21,8 +22,8 @@ class Application extends StatelessWidget with AppTheme {
         statusBarIconBrightness: Brightness.dark,
       ),
     );
-    final GrayscaleController grayscaleController =
-        Get.put(GrayscaleController());
+    final AccessibilityController accessibilityController =
+        Get.put(AccessibilityController());
 
     return ScreenUtilInit(
         designSize: const Size(375, 812),
@@ -30,7 +31,7 @@ class Application extends StatelessWidget with AppTheme {
         splitScreenMode: true,
         builder: (context, child) {
           return Obx(() => ColorFiltered(
-                colorFilter: grayscaleController.isGrayscale.value
+                colorFilter: accessibilityController.isGrayscale.value
                     ? const ColorFilter.matrix(<double>[
                         0.2126,
                         0.7152,
@@ -71,13 +72,5 @@ class Application extends StatelessWidget with AppTheme {
                 ),
               ));
         });
-  }
-}
-
-class GrayscaleController extends GetxController {
-  RxBool isGrayscale = false.obs;
-
-  void toggleGrayscale() {
-    isGrayscale.toggle();
   }
 }

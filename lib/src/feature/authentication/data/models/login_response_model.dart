@@ -36,6 +36,12 @@ class Data {
     this.expiresAt,
   });
 
+  factory Data.empty() => Data(
+        accessToken: "",
+        refreshToken: "",
+        expiresAt: DateTime.now(),
+      );
+
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         accessToken: json["access_token"],
         refreshToken: json["refresh_token"],

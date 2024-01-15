@@ -1,10 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/core/network/api_service.dart';
 
+import '../../../../core/network/api_service.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../data/models/emis_login_response_model.dart';
 import '../../../../core/common_widgets/custom_button.dart';

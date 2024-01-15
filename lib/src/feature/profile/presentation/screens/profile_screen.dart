@@ -20,7 +20,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen>
     with AppTheme, Language, AppEventsNotifier {
-  final ProfileController controller = Get.put(ProfileController());
+  // final ProfileController controller = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {

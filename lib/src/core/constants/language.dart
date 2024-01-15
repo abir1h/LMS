@@ -54,6 +54,8 @@ class LanguageEn {
   String tutorial = "Tutorial";
   String messageText = "Message";
   String accessibilityText = "Accessibility";
+  String monochromeText = "Monochrome";
+  String textSizeText = "Text Size";
 
   String profileAppBarText = "LMS My Profile";
   String userNameText = "Mynul Islam"; //"User Name";
@@ -181,6 +183,8 @@ class LanguageBn {
   String tutorial = "টিউটোরিয়াল";
   String messageText = "বার্তা";
   String accessibilityText = "এক্সেসিবিলিটি";
+  String monochromeText = "মনোক্রোম";
+  String textSizeText = "টেক্সট সাইজ";
 
   String profileAppBarText = "এলএমএস আমার প্রোফাইল";
   String userNameText = "মাইনুল ইসলাম"; //"ব্যবহারকারীর নাম";
