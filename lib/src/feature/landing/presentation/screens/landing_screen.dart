@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lms/src/core/routes/app_route.dart';
 
+import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../notification/presentation/screens/notification_screen.dart';
 import '../../../../core/config/app_event_widget.dart';
@@ -21,12 +23,13 @@ class LandingScreen extends StatefulWidget {
 }
 
 class _LandingScreenState extends State<LandingScreen> with AppTheme, Language {
-  final LandingController landingController = Get.find<LandingController>();
+  final LandingController landingController = Get.put(LandingController());
 
   ///Service configurations
   @override
   void initState() {
     super.initState();
+
     ///Init notification and firebase
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       PushNotification.instance.init();
@@ -91,9 +94,9 @@ class _LandingScreenState extends State<LandingScreen> with AppTheme, Language {
                               text: label(
                                   e: en.learningManagementSystem,
                                   b: bn.learningManagementSystem),
-                              onTap: () => Get.toNamed(
-                                AppRoutes.bottomNav,
-                              ),
+                              onTap: () => Navigator.of(context).pushNamed(
+                                  AppRoute.rootScreen,
+                                  arguments: RootScreenArgs(index: 0)),
                             ),
                             rightChild: ModuleCardWidget(
                               image: ImageAssets.imgModule2,

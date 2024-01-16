@@ -243,8 +243,8 @@ class _AssessmentScreenState extends State<AssessmentScreen>
                   CustomButton(
                     onTap: () {
                       CustomToasty.of(context)
-                          .showSuccess("সফলভাবে  জমাদান সম্পন্ন হয়েছে");
-                      Get.back();
+                          .showSuccess("সফলভাবে জমাদান সম্পন্ন হয়েছে");
+                      Navigator.of(context).pop();
                     },
                     title: label(e: en.submit, b: bn.submit),
                     horizontalPadding: size.w20,

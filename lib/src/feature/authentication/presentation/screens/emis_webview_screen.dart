@@ -7,18 +7,22 @@ import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/config/local_storage_services.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/network/api_service.dart';
+import '../../../../core/routes/app_route.dart';
+import '../../../../core/routes/app_route_args.dart';
 import '../../data/models/login_response_model.dart';
 import '../../../../core/routes/app_routes.dart';
 
 class EMISWebViewScreen extends StatefulWidget {
-  final String webViewLink;
-  const EMISWebViewScreen({super.key, required this.webViewLink});
+  final Object? arguments;
+  // final String webViewLink;
+  const EMISWebViewScreen({super.key, this.arguments});
 
   @override
   State<EMISWebViewScreen> createState() => _EMISWebViewScreenState();
 }
 
 class _EMISWebViewScreenState extends State<EMISWebViewScreen> {
+  late EMISWebViewScreenArgs _screenArgs;
   late final WebViewController _controller;
   bool isLoading = true;
   final localStorage = Get.find<LocalStorageService>();
@@ -26,6 +30,7 @@ class _EMISWebViewScreenState extends State<EMISWebViewScreen> {
   @override
   void initState() {
     super.initState();
+    _screenArgs = widget.arguments as EMISWebViewScreenArgs;
     _controller = WebViewController() // Initialize the WebViewController here
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0x00000000))
@@ -65,7 +70,9 @@ class _EMISWebViewScreenState extends State<EMISWebViewScreen> {
                 localStorage.storeStringValue(StringData.expiresAt,
                     loginResponse.data!.expiresAt.toString());
               });
-              Get.offAndToNamed(AppRoutes.landing);
+              // Get.offAndToNamed(AppRoutes.landing);
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  AppRoute.landingScreen, (x) => false);
               return NavigationDecision.prevent;
             }
             return NavigationDecision.navigate;
@@ -76,7 +83,7 @@ class _EMISWebViewScreenState extends State<EMISWebViewScreen> {
           },
         ),
       )
-      ..loadRequest(Uri.parse(widget.webViewLink));
+      ..loadRequest(Uri.parse(_screenArgs.webViewLink));
   }
 
   @override

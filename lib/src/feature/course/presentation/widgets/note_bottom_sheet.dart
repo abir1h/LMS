@@ -10,13 +10,13 @@ import '../../../notes/presentation/controllers/note_controller.dart';
 import '../../../notes/presentation/models/note_model.dart';
 
 class NoteBottomSheet extends StatefulWidget {
-  final NoteModel? mainModel;
+  final NoteModel? noteModel;
 
   final String? ref;
 
   const NoteBottomSheet({
     super.key,
-    this.mainModel,
+    this.noteModel,
     this.ref,
   });
 
@@ -39,14 +39,14 @@ class _NoteBottomSheetState extends State<NoteBottomSheet>
   }
 
   setContent() {
-    if (widget.mainModel != null) {
-      if (widget.mainModel!.description != null) {
+    if (widget.noteModel != null) {
+      if (widget.noteModel!.description != null) {
         final Document doc =
-            Document.fromJson(widget.mainModel?.description as List);
+            Document.fromJson(widget.noteModel?.description as List);
         _controller.document = doc;
       }
-      if (widget.mainModel!.title != null) {
-        titleController.text = widget.mainModel!.title!;
+      if (widget.noteModel!.title != null) {
+        titleController.text = widget.noteModel!.title!;
       }
     }
   }
@@ -65,7 +65,7 @@ class _NoteBottomSheetState extends State<NoteBottomSheet>
     if (titleController.text.isEmpty && _controller.document.isEmpty()) {
       Get.back();
     } else {
-      if (widget.mainModel == null) {
+      if (widget.noteModel == null) {
         int id = controller.noteList.length + 1;
         DateTime now = DateTime.now();
         var currentTime =
@@ -90,7 +90,7 @@ class _NoteBottomSheetState extends State<NoteBottomSheet>
           now.minute,
         );
         var updatedModel = NoteModel(
-            id: widget.mainModel?.id!,
+            id: widget.noteModel?.id!,
             time: currentTime.toString(),
             title: titleController.text,
             description: _controller.document.toDelta().toJson(),

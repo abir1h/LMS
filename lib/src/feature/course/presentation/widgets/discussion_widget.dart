@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lms/src/core/routes/app_route_args.dart';
 
+import '../../../../core/routes/app_route.dart';
 import '../../../discussion/presentation/controller/discussion_controller.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/constants/common_imports.dart';
@@ -32,16 +34,18 @@ class _DiscussionWidgetState extends State<DiscussionWidget>
             padding: EdgeInsets.only(bottom: size.h64 * 2),
             itemBuilder: (_, index) {
               return DiscussionWidgetTile(
-                  title: controller.discussionList[index].title!,
-                  totalDiscussion:
-                      controller.discussionList[index].comments != null
-                          ? controller.discussionList[index].comments!.length
-                              .toString()
-                          : "0",
-                  time: controller.discussionList[index].createdAt!,
-                  onTap: () => Get.to(DetailedDiscussion(
-                        mainModel: controller.discussionList[index],
-                      )));
+                title: controller.discussionList[index].title!,
+                totalDiscussion:
+                    controller.discussionList[index].comments != null
+                        ? controller.discussionList[index].comments!.length
+                            .toString()
+                        : "0",
+                time: controller.discussionList[index].createdAt!,
+                onTap: () => Navigator.of(context).pushNamed(
+                    AppRoute.detailedDiscussion,
+                    arguments: DetailedDiscussionArgs(
+                        discussionModel: controller.discussionList[index])),
+              );
             },
           ),
           Align(

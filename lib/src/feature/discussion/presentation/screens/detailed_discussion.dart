@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/routes/app_route_args.dart';
 import '../../models/comment_model.dart';
-import '../../models/discusion_model.dart';
+import '../../models/discussion_model.dart';
 import '../controller/discussion_controller.dart';
 import 'opinion_bottom_sheet.dart';
 import '../../../../core/common_widgets/custom_button.dart';
@@ -13,8 +14,9 @@ import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
 
 class DetailedDiscussion extends StatefulWidget {
-  final DiscussionModel? mainModel;
-  const DetailedDiscussion({super.key, this.mainModel});
+  final Object? arguments;
+  // final DiscussionModel? discussionModel;
+  const DetailedDiscussion({super.key, this.arguments});
 
   @override
   State<DetailedDiscussion> createState() => _DetailedDiscussionState();
@@ -23,6 +25,14 @@ class DetailedDiscussion extends StatefulWidget {
 class _DetailedDiscussionState extends State<DetailedDiscussion>
     with AppTheme, Language {
   final controller = Get.put(DiscussionController());
+
+  late DetailedDiscussionArgs _screenArgs;
+
+  @override
+  void initState() {
+    super.initState();
+    _screenArgs = widget.arguments as DetailedDiscussionArgs;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +62,7 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Image.asset(
-                            widget.mainModel!.avatar!,
+                            _screenArgs.discussionModel!.avatar!,
                             height: size.r24,
                           ),
                           SizedBox(width: size.w8),
@@ -61,7 +71,7 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  widget.mainModel!.description!,
+                                  _screenArgs.discussionModel!.description!,
                                   /*    label(
                                     e: "Student Qualifications Physiology is an integrated science that considers the function of each organ and organ system and their interaction in the maintenance of life.",
                                     b: "শিক্ষার্থীদের যোগ্যতা ফিজিওলজি হল একটি সমন্বিত বিজ্ঞান যা প্রতিটি অঙ্গ এবং অঙ্গ সিস্টেমের কাজ এবং জীবনের রক্ষণাবেক্ষণে তাদের মিথস্ক্রিয়া বিবেচনা করে।")*/
@@ -89,15 +99,15 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
                                                   StringData.fontFamilyPoppins),
                                           TextSpan(
                                               text: label(
-                                                  e: "মোট ${widget.mainModel!.comments != null ? widget.mainModel!.comments!.length.toString() : "0"} টি",
-                                                  b: "মোট ${widget.mainModel!.comments != null ? widget.mainModel!.comments!.length.toString() : "0"} টি"),
+                                                  e: "মোট ${_screenArgs.discussionModel!.comments != null ? _screenArgs.discussionModel!.comments!.length.toString() : "0"} টি",
+                                                  b: "মোট ${_screenArgs.discussionModel!.comments != null ? _screenArgs.discussionModel!.comments!.length.toString() : "0"} টি"),
                                               children: [
                                                 const TextSpan(
                                                   text: " | ",
                                                 ),
                                                 TextSpan(
                                                   text:
-                                                      "তারিখ: ${widget.mainModel!.createdAt!}",
+                                                      "তারিখ: ${_screenArgs.discussionModel!.createdAt!}",
                                                 ),
                                               ])),
                                     ),
@@ -112,10 +122,11 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
                     ListView.builder(
                       itemBuilder: (_, index) {
                         return CommentTile(
-                          commentModel: widget.mainModel!.comments![index],
+                          commentModel:
+                              _screenArgs.discussionModel!.comments![index],
                         );
                       },
-                      itemCount: widget.mainModel!.comments!.length,
+                      itemCount: _screenArgs.discussionModel!.comments!.length,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                     ),
@@ -132,8 +143,8 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
                   onTap: () {
                     showCupertinoModalPopup(
                       context: context,
-                      builder: (context) =>
-                          OpinionBottomSheet(masterModel: widget.mainModel),
+                      builder: (context) => OpinionBottomSheet(
+                          masterModel: _screenArgs.discussionModel),
                     );
                   },
                   icon: Icons.add_comment,

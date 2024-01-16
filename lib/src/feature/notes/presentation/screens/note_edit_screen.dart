@@ -6,25 +6,22 @@ import 'package:get/get.dart';
 import '../../../../core/common_widgets/app_dropdown_widget.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/constants/common_imports.dart';
-import '../../../../core/routes/app_routes.dart';
+import '../../../../core/routes/app_route.dart';
+import '../../../../core/routes/app_route_args.dart';
 import '../controllers/note_controller.dart';
 import '../models/note_model.dart';
-import 'note_details.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 
 class NoteEditScreen extends StatefulWidget {
-  final NoteModel? mainModel;
-
-  const NoteEditScreen({
-    super.key,
-    this.mainModel,
-  });
+  final Object? arguments;
+  const NoteEditScreen({super.key, this.arguments});
 
   @override
   State<NoteEditScreen> createState() => _NoteEditScreenState();
 }
 
 class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
+  late NoteDetailsScreenArgs _screenArgs;
   final _controller = QuillController.basic();
   final _editorFocusNode = FocusNode();
   final _editorScrollController = ScrollController();
@@ -36,21 +33,22 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
   @override
   void initState() {
     super.initState();
+    _screenArgs = widget.arguments as NoteDetailsScreenArgs;
     setContent();
   }
 
   setContent() {
-    if (widget.mainModel != null) {
-      if (widget.mainModel!.description != null) {
+    if (_screenArgs.noteModel != null) {
+      if (_screenArgs.noteModel!.description != null) {
         final Document doc =
-            Document.fromJson(widget.mainModel?.description as List);
+            Document.fromJson(_screenArgs.noteModel?.description as List);
         _controller.document = doc;
       }
-      if (widget.mainModel!.title != null) {
-        titleController.text = widget.mainModel!.title!;
+      if (_screenArgs.noteModel!.title != null) {
+        titleController.text = _screenArgs.noteModel!.title!;
       }
-      if (widget.mainModel!.reference != null) {
-        refVlaue = widget.mainModel!.reference!;
+      if (_screenArgs.noteModel!.reference != null) {
+        refVlaue = _screenArgs.noteModel!.reference!;
         /* setState(() {
 print(refVlaue);
         });*/
@@ -72,7 +70,7 @@ print(refVlaue);
     if (titleController.text.isEmpty && _controller.document.isEmpty()) {
       Get.back();
     } else {
-      if (widget.mainModel == null) {
+      if (_screenArgs.noteModel == null) {
         int id = controller.noteList.length + 1;
         DateTime now = DateTime.now();
         var currentTime =
@@ -86,7 +84,8 @@ print(refVlaue);
                 ? refVlaue
                 : 'টপিক সিলেক্ট করুন');
         controller.noteList.add(newModel);
-        Get.toNamed(AppRoutes.bottomNav, arguments: 2);
+        Navigator.of(context).pushNamed(AppRoute.rootScreen,
+            arguments: RootScreenArgs(index: 2));
         CustomToasty.of(context)
             .showSuccess("তালিকা সফলভাবে সংরক্ষণ করা হয়েছে");
       } else {
@@ -99,11 +98,11 @@ print(refVlaue);
           now.minute,
         );
         var updatedModel = NoteModel(
-            id: widget.mainModel?.id!,
+            id: _screenArgs.noteModel?.id!,
             time: currentTime.toString(),
             title: titleController.text,
             description: _controller.document.toDelta().toJson(),
-            reference: widget.mainModel!.reference);
+            reference: _screenArgs.noteModel!.reference);
 
         // Check if the note with the same ID exists in the list
         int existingIndex = controller.noteList.indexWhere(
@@ -113,13 +112,15 @@ print(refVlaue);
         if (existingIndex != -1) {
           // Replace the existing note with the updated one
           controller.noteList[existingIndex] = updatedModel;
-          Get.toNamed(AppRoutes.bottomNav, arguments: 2);
+          Navigator.of(context).pushNamed(AppRoute.rootScreen,
+              arguments: RootScreenArgs(index: 2));
           CustomToasty.of(context)
               .showSuccess("তালিকা সফলভাবে আপডেট করা হয়েছে");
         } else {
           // If the note with the ID doesn't exist, add it to the list
           controller.noteList.add(updatedModel);
-          Get.toNamed(AppRoutes.bottomNav, arguments: 2);
+          Navigator.of(context).pushNamed(AppRoute.rootScreen,
+              arguments: RootScreenArgs(index: 2));
           CustomToasty.of(context)
               .showSuccess("তালিকা সফলভাবে আপডেট করা হয়েছে");
         }
@@ -128,7 +129,7 @@ print(refVlaue);
   }
 
   toggleToReadMode() {
-    if (widget.mainModel == null) {
+    if (_screenArgs.noteModel == null) {
       int id = controller.noteList.length + 1;
       DateTime now = DateTime.now();
       var currentTime =
@@ -139,23 +140,21 @@ print(refVlaue);
           title: titleController.text,
           description: _controller.document.toDelta().toJson(),
           reference: refVlaue);
-      Get.to(() => NoteDetailsScreen(
-            mainModel: newModel,
-          ));
+      Navigator.of(context).pushNamed(AppRoute.noteDetailsScreen,
+          arguments: NoteDetailsScreenArgs(noteModel: newModel));
     } else {
       DateTime now = DateTime.now();
       var currentTime =
           DateTime(now.year, now.month, now.day, now.hour, now.minute);
       var newModel = NoteModel(
-        id: widget.mainModel?.id!,
+        id: _screenArgs.noteModel?.id!,
         time: currentTime.toString(),
         title: titleController.text,
-        reference: widget.mainModel!.reference,
+        reference: _screenArgs.noteModel!.reference,
         description: _controller.document.toDelta().toJson(),
       );
-      Get.to(() => NoteDetailsScreen(
-            mainModel: newModel,
-          ));
+      Navigator.of(context).pushNamed(AppRoute.noteDetailsScreen,
+          arguments: NoteDetailsScreenArgs(noteModel: newModel));
     }
   }
 
@@ -212,8 +211,8 @@ print(refVlaue);
                     onLoadData: controller.getDropDown,
                     onSelected: (v) {
                       refVlaue = v;
-                      if (widget.mainModel != null) {
-                        widget.mainModel!.reference = refVlaue;
+                      if (_screenArgs.noteModel != null) {
+                        _screenArgs.noteModel!.reference = refVlaue;
                       }
                     },
                     hintText: refVlaue.toString(),

@@ -6,7 +6,7 @@ import 'package:lms/src/feature/discussion/models/comment_model.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../../core/common_widgets/text_field_widget.dart';
 import '../../../../core/constants/common_imports.dart';
-import '../../models/discusion_model.dart';
+import '../../models/discussion_model.dart';
 import '../controller/discussion_controller.dart';
 
 class OpinionBottomSheet extends StatefulWidget {

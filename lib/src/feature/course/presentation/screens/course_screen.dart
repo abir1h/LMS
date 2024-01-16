@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-import '../../../../core/routes/app_routes.dart';
+import '../../../../core/routes/app_route.dart';
+import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/service/notifier/app_events_notifier.dart';
 import '../../../../core/utility/app_label.dart';
-import '../controllers/course_controller.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../widgets/course_card.dart';
 
@@ -17,8 +16,6 @@ class CourseScreen extends StatefulWidget {
 
 class _CourseScreenState extends State<CourseScreen>
     with AppTheme, Language, AppEventsNotifier {
-  final CourseController controller = Get.find<CourseController>();
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -37,8 +34,10 @@ class _CourseScreenState extends State<CourseScreen>
           ),
           SizedBox(height: size.h8),
           CourseCard(
-            onTap: () => Get.toNamed(AppRoutes.courseDetails,
-                arguments: {'from': "running", 'status': "open"}),
+            onTap: () => Navigator.of(context).pushNamed(
+                AppRoute.courseDetailsScreen,
+                arguments: CourseDetailsScreenArgs(
+                    curriculumType: "running", status: "open")),
             title: label(
                 e: "Education policy and management in education",
                 b: "শিক্ষা নীতি ও শিক্ষায় ব্যাবস্থাপনা"),
@@ -69,8 +68,10 @@ class _CourseScreenState extends State<CourseScreen>
           ),
           SizedBox(height: size.h8),
           CourseCard(
-            onTap: () => Get.toNamed(AppRoutes.courseDetails,
-                arguments: {'from': "upcoming", 'status': ""}),
+            onTap: () => Navigator.of(context).pushNamed(
+                AppRoute.courseDetailsScreen,
+                arguments: CourseDetailsScreenArgs(
+                    curriculumType: "upcoming", status: "")),
             title: label(
                 e: "Development of Bengali language", b: "বাংলা ভাষার বিকাশ"),
             iconData: Icons.lock,
@@ -86,8 +87,10 @@ class _CourseScreenState extends State<CourseScreen>
           ),
           SizedBox(height: size.h12),
           CourseCard(
-            onTap: () => Get.toNamed(AppRoutes.courseDetails,
-                arguments: {'from': "completed", 'status': "done"}),
+            onTap: () => Navigator.of(context).pushNamed(
+                AppRoute.courseDetailsScreen,
+                arguments: CourseDetailsScreenArgs(
+                    curriculumType: "completed", status: "done")),
             title: label(e: "Right to Information", b: "তথ্য অধিকার"),
             iconData: Icons.check_circle,
             code: label(e: "Course Code : 1568", b: "অধিবেশনের কোড : ১৫৬৮"),
@@ -99,8 +102,10 @@ class _CourseScreenState extends State<CourseScreen>
           ),
           SizedBox(height: size.h12),
           CourseCard(
-            onTap: () => Get.toNamed(AppRoutes.courseDetails,
-                arguments: {'from': "completed", 'status': "done"}),
+            onTap: () => Navigator.of(context).pushNamed(
+                AppRoute.courseDetailsScreen,
+                arguments: CourseDetailsScreenArgs(
+                    curriculumType: "completed", status: "done")),
             title: label(
                 e: "Education policy and management in education",
                 b: "শিক্ষা নীতি ও শিক্ষায় ব্যাবস্থাপনা"),

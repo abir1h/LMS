@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lms/src/core/routes/app_route.dart';
 
 import '../core/constants/strings.dart';
 import '../core/routes/app_routes.dart';
@@ -67,8 +68,10 @@ class Application extends StatelessWidget with AppTheme {
                       dividerColor: Colors.transparent,
                       fontFamily: StringData.fontFamilyPoppins,
                       canvasColor: Colors.transparent),
-                  initialRoute: AppRoutes.splash,
-                  getPages: AppPages.pages,
+                  // initialRoute: AppRoutes.splash,
+                  // getPages: AppPages.pages,
+                  navigatorKey: AppRoute.navigatorKey,
+                  onGenerateRoute: RouteGenerator.generate,
                 ),
               ));
         });

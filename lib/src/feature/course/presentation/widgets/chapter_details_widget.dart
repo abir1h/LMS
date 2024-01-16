@@ -32,7 +32,6 @@ class ChapterDetailsWidget extends StatelessWidget with AppTheme {
       ),
       child: SingleChildScrollView(
         physics: physics ?? const BouncingScrollPhysics(),
-        // padding: EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

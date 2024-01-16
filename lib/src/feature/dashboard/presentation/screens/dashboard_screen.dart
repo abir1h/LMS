@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:lms/src/core/routes/app_route.dart';
+import 'package:lms/src/core/routes/app_route_args.dart';
 
 import '../../../../core/service/notifier/app_events_notifier.dart';
 import '../../../../core/utility/app_label.dart';
@@ -24,7 +26,7 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen>
     with AppTheme, Language, AppEventsNotifier {
   final DashboardController dashboardController =
-      Get.find<DashboardController>();
+      Get.put(DashboardController());
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,8 @@ class _DashboardScreenState extends State<DashboardScreen>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             RunningCourseCard(
-              onPressed: () => Get.toNamed(AppRoutes.transcriptVideo),
+              onPressed: () => Navigator.of(context)
+                  .pushNamed(AppRoute.transcriptVideoScreen),
               image: Image.asset("assets/images/image.png"),
               text1: label(e: StringData.cardText1, b: StringData.cardText1Bn),
               text2: label(e: StringData.cardText2, b: StringData.cardText2Bn),
@@ -47,10 +50,11 @@ class _DashboardScreenState extends State<DashboardScreen>
                 leftChild: DashboardCard(
                   title:
                       label(e: en.ongoingCurriculum, b: bn.ongoingCurriculum),
-                  onPressed: () =>
-                      Get.toNamed(AppRoutes.courseList, arguments: "running"),
-                  // onPressed: () => Get.toNamed(AppRoutes.courseDetails,
-                  //     arguments: {'from': "running", 'status': ""}),
+                  onPressed: () => Navigator.of(context).pushNamed(
+                      AppRoute.courseListScreen,
+                      arguments: CourseListScreenArgs(curriculumType: "running")),
+                  // onPressed: () =>
+                  //     Get.toNamed(AppRoutes.courseList, arguments: "running"),
                   subTitle: label(
                       e: StringData.dashboardCardValue1,
                       b: StringData.dashboardCardValue1Bn),
@@ -64,8 +68,11 @@ class _DashboardScreenState extends State<DashboardScreen>
                 rightChild: DashboardCard(
                   title: label(
                       e: en.completedCurriculum, b: bn.completedCurriculum),
-                  onPressed: () =>
-                      Get.toNamed(AppRoutes.courseList, arguments: "completed"),
+                  onPressed: () => Navigator.of(context).pushNamed(
+                      AppRoute.courseListScreen,
+                      arguments: CourseListScreenArgs(curriculumType: "completed")),
+                  // onPressed: () =>
+                  //     Get.toNamed(AppRoutes.courseList, arguments: "completed"),
                   subTitle: label(
                       e: StringData.dashboardCardValue2,
                       b: StringData.dashboardCardValue2Bn),
@@ -82,8 +89,11 @@ class _DashboardScreenState extends State<DashboardScreen>
                   title:
                       label(e: en.upcomingCurriculum, b: bn.upcomingCurriculum),
                   titleColor: clr.appPrimaryColorGreen,
-                  onPressed: () =>
-                      Get.toNamed(AppRoutes.courseList, arguments: "upcoming"),
+                  onPressed: () => Navigator.of(context).pushNamed(
+                      AppRoute.courseListScreen,
+                      arguments: CourseListScreenArgs(curriculumType: "upcoming")),
+                  // onPressed: () =>
+                  //     Get.toNamed(AppRoutes.courseList, arguments: "upcoming"),
                   subTitle: label(
                       e: StringData.dashboardCardValue3,
                       b: StringData.dashboardCardValue3Bn),

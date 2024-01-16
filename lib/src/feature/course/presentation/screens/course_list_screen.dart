@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-import '../controllers/course_list_controller.dart';
+import '../../../../core/routes/app_route.dart';
+import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
-import '../../../../core/routes/app_routes.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
 import '../widgets/course_card.dart';
 
 class CourseListScreen extends StatefulWidget {
-  const CourseListScreen({super.key});
+  final Object? arguments;
+  const CourseListScreen({super.key, this.arguments});
 
   @override
   State<CourseListScreen> createState() => _CourseListScreenState();
@@ -18,16 +18,22 @@ class CourseListScreen extends StatefulWidget {
 
 class _CourseListScreenState extends State<CourseListScreen>
     with AppTheme, Language {
-  final CourseListController controller = Get.find<CourseListController>();
+  late CourseListScreenArgs _screenArgs;
+
+  @override
+  void initState() {
+    super.initState();
+    _screenArgs = widget.arguments as CourseListScreenArgs;
+  }
 
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      title: controller.screenName.value == "running"
+      title: _screenArgs.curriculumType == "running"
           ? label(e: en.ongoingCurriculum, b: bn.ongoingCurriculum)
-          : controller.screenName.value == "completed"
+          : _screenArgs.curriculumType == "completed"
               ? label(e: en.completedCurriculum, b: bn.completedCurriculum)
-              : controller.screenName.value == "upcoming"
+              : _screenArgs.curriculumType == "upcoming"
                   ? label(e: en.upcomingCurriculum, b: bn.upcomingCurriculum)
                   : "",
       body: SingleChildScrollView(
@@ -37,13 +43,13 @@ class _CourseListScreenState extends State<CourseListScreen>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomTextWidgets(
-                text: controller.screenName.value == "running"
+                text: _screenArgs.curriculumType == "running"
                     ? label(e: en.ongoingCurriculum, b: bn.ongoingCurriculum)
-                    : controller.screenName.value == "completed"
+                    : _screenArgs.curriculumType == "completed"
                         ? label(
                             e: en.completedCurriculum,
                             b: bn.completedCurriculum)
-                        : controller.screenName.value == "upcoming"
+                        : _screenArgs.curriculumType == "upcoming"
                             ? label(
                                 e: en.upcomingCurriculum,
                                 b: bn.upcomingCurriculum)
@@ -52,13 +58,16 @@ class _CourseListScreenState extends State<CourseListScreen>
             ListView.separated(
               shrinkWrap: true,
               physics: const BouncingScrollPhysics(),
-              itemCount: controller.screenName.value == "running" ? 1 : 5,
+              itemCount: _screenArgs.curriculumType == "running" ? 1 : 5,
               padding: EdgeInsets.zero,
               itemBuilder: (context, index) {
-                return controller.screenName.value == "running"
+                return _screenArgs.curriculumType == "running"
                     ? CourseCard(
-                        onTap: () => Get.toNamed(AppRoutes.courseDetails,
-                            arguments: {'from': "running", 'status': "open"}),
+                        onTap: () => Navigator.of(context).pushNamed(
+                            AppRoute.courseDetailsScreen,
+                            arguments: CourseDetailsScreenArgs(
+                                curriculumType: _screenArgs.curriculumType,
+                                status: "open")),
                         title:
                             label(e: "Right to Information", b: "তথ্য অধিকার"),
                         code: label(
@@ -71,13 +80,13 @@ class _CourseListScreenState extends State<CourseListScreen>
                         bgColor: clr.cardFillColorOrange,
                         borderColor: clr.cardStrokeColorOrange,
                       )
-                    : controller.screenName.value == "completed"
+                    : _screenArgs.curriculumType == "completed"
                         ? CourseCard(
-                            onTap: () => Get.toNamed(AppRoutes.courseDetails,
-                                arguments: {
-                                  'from': "completed",
-                                  'status': "done"
-                                }),
+                            onTap: () => Navigator.of(context).pushNamed(
+                                AppRoute.courseDetailsScreen,
+                                arguments: CourseDetailsScreenArgs(
+                                    curriculumType: _screenArgs.curriculumType,
+                                    status: "done")),
                             title: label(
                                 e: "Right to Information", b: "তথ্য অধিকার"),
                             iconData: Icons.check_circle,
@@ -91,8 +100,11 @@ class _CourseListScreenState extends State<CourseListScreen>
                             status: label(e: "Completed", b: "সম্পন্ন হয়েছে"),
                           )
                         : CourseCard(
-                            onTap: () => Get.toNamed(AppRoutes.courseDetails,
-                                arguments: {'from': "upcoming", 'status': ""}),
+                            onTap: () => Navigator.of(context).pushNamed(
+                                AppRoute.courseDetailsScreen,
+                                arguments: CourseDetailsScreenArgs(
+                                    curriculumType: _screenArgs.curriculumType,
+                                    status: "")),
                             title: label(
                                 e: "Development of Bengali language",
                                 b: "বাংলা ভাষার বিকাশ"),
@@ -115,14 +127,14 @@ class _CourseListScreenState extends State<CourseListScreen>
               },
             ),
             SizedBox(height: size.h16),
-            if (controller.screenName.value == "running")
+            if (_screenArgs.curriculumType == "running")
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: size.w8),
                 child: Divider(
                     height: size.h1, color: clr.placeHolderTextColorGray),
               ),
             SizedBox(height: size.h16),
-            if (controller.screenName.value == "running")
+            if (_screenArgs.curriculumType == "running")
               Text(
                 label(
                     e: "Other Ongoing Courses",
@@ -134,7 +146,7 @@ class _CourseListScreenState extends State<CourseListScreen>
                     fontFamily: StringData.fontFamilyPoppins),
               ),
             SizedBox(height: size.h8),
-            if (controller.screenName.value == "running")
+            if (_screenArgs.curriculumType == "running")
               ListView.separated(
                 shrinkWrap: true,
                 physics: const BouncingScrollPhysics(),
@@ -142,8 +154,11 @@ class _CourseListScreenState extends State<CourseListScreen>
                 padding: EdgeInsets.zero,
                 itemBuilder: (context, index) {
                   return CourseCard(
-                    onTap: () => Get.toNamed(AppRoutes.courseDetails,
-                        arguments: {'from': "running", 'status': ""}),
+                    onTap: () => Navigator.of(context).pushNamed(
+                        AppRoute.courseDetailsScreen,
+                        arguments: CourseDetailsScreenArgs(
+                            curriculumType: _screenArgs.curriculumType,
+                            status: "open")),
                     title: label(e: "Right to Information", b: "তথ্য অধিকার"),
                     code: label(
                         e: "Course Code : 1568", b: "অধিবেশনের কোড : ১৫৬৮"),

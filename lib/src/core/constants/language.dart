@@ -88,6 +88,7 @@ class LanguageEn {
   String see = "See";
   String join = "Join";
   String details = "Details";
+  String enroll = "Enroll";
 
   String takeNotes = "Take Notes";
   String transcript = "Transcript";
@@ -216,6 +217,7 @@ class LanguageBn {
   String see = "দেখুন";
   String join = "জয়েন করুন";
   String details = "বিস্তারিত";
+  String enroll = "এনরোল";
 
   String takeNotes = "নোট নিন";
   String transcript = "প্রতিলিপি";

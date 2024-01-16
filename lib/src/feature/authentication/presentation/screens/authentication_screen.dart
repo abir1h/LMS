@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/network/api_service.dart';
+import '../../../../core/routes/app_route.dart';
+import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../data/models/emis_login_response_model.dart';
 import '../../../../core/common_widgets/custom_button.dart';
@@ -139,8 +141,12 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
                                   EMISLoginResponse loginResponse =
                                       EMISLoginResponse.fromJson(
                                           json.decode(value));
-                                  Get.to(() => EMISWebViewScreen(
-                                      webViewLink: loginResponse.data.url));
+                                  Navigator.of(context).pushNamed(
+                                      AppRoute.eMISWebViewScreen,
+                                      arguments: EMISWebViewScreenArgs(
+                                          webViewLink: loginResponse.data.url));
+                                  // Get.to(() => EMISWebViewScreen(
+                                  //     webViewLink: loginResponse.data.url));
                                 });
                                 // Get.toNamed(AppRoutes.landing);
                               },
@@ -156,7 +162,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
                           //           controller: authenticationController
                           //               .userIdEditingController,
                           //           validator: (value) {
-                          
+
                           //             if (value == null || value.isEmpty) {
                           //               return 'Enter your PDSID';
                           //             } else {

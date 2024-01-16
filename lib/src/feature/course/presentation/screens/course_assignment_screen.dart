@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/routes/app_route.dart';
 import '../../../assignment/presentation/screens/assignment_screen.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/utility/app_label.dart';
@@ -189,7 +190,8 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: size.w10),
                       child: CustomButton(
-                        onTap: () => Get.to(const AssignmentScreen()),
+                        onTap: () => Navigator.of(context)
+                            .pushNamed(AppRoute.assignmentScreen),
                         title: label(e: en.getStarted, b: bn.getStarted),
                         radius: size.r4,
                       ),
