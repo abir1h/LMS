@@ -1,30 +1,29 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../../core/common_widgets/custom_scaffold.dart';
-import '../../../../core/network/api_service.dart';
-import '../../data/models/login_response_model.dart';
-import '../../../../core/routes/app_routes.dart';
+import '../../../../core/routes/app_route.dart';
+import '../../../../core/routes/app_route_args.dart';
 import '../../domain/entities/auth_data_entity.dart';
 import '../services/auth_service.dart';
 
 class EMISWebViewScreen extends StatefulWidget {
-  final String webViewLink;
-  const EMISWebViewScreen({super.key, required this.webViewLink});
+  final Object? arguments;
+  const EMISWebViewScreen({super.key, this.arguments});
 
   @override
   State<EMISWebViewScreen> createState() => _EMISWebViewScreenState();
 }
 
 class _EMISWebViewScreenState extends State<EMISWebViewScreen> {
+  late EMISWebViewScreenArgs _screenArgs;
   late final WebViewController _controller;
   bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
+    _screenArgs = widget.arguments as EMISWebViewScreenArgs;
     _controller = WebViewController() // Initialize the WebViewController here
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0x00000000))
@@ -58,11 +57,14 @@ class _EMISWebViewScreenState extends State<EMISWebViewScreen> {
               //       LoginResponse.fromJson(json.decode(value));
               //   print("access token ${loginResponse.data?.accessToken}");
               // });
-              AuthService.getToken("101353764", "9U7p2kNngjlmj8gEMyJN35lihhrAimX2IOYzUq7qLAZHsdDhD").then((responseEntity){
+              AuthService.getToken("101353764",
+                      "9U7p2kNngjlmj8gEMyJN35lihhrAimX2IOYzUq7qLAZHsdDhD")
+                  .then((responseEntity) {
                 AuthDataEntity authData = responseEntity.data!;
                 print(authData.accessToken);
               });
-              Get.offAndToNamed(AppRoutes.landing);
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  AppRoute.landingScreen, (x) => false);
               return NavigationDecision.prevent;
             }
             return NavigationDecision.navigate;
@@ -73,7 +75,7 @@ class _EMISWebViewScreenState extends State<EMISWebViewScreen> {
           },
         ),
       )
-      ..loadRequest(Uri.parse(widget.webViewLink));
+      ..loadRequest(Uri.parse(_screenArgs.webViewLink));
   }
 
   @override

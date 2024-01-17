@@ -1,21 +1,15 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/core/network/api_service.dart';
-import 'package:lms/src/feature/authentication/data/models/auth_data_model.dart';
-import 'package:lms/src/feature/authentication/domain/entities/auth_data_entity.dart';
-import 'package:lms/src/feature/authentication/presentation/services/auth_service.dart';
 
-import '../../../../core/routes/app_routes.dart';
-import '../../data/models/emis_login_response_model.dart';
+import '../services/auth_service.dart';
+import '../../../../core/routes/app_route.dart';
+import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/custom_switch_button.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
 import '../controllers/authentication_controller.dart';
-import 'emis_webview_screen.dart';
 
 class AuthenticationScreen extends StatefulWidget {
   const AuthenticationScreen({super.key});
@@ -137,9 +131,15 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
                           SizedBox(height: size.h20),
                           CustomButton(
                               onTap: () {
-                                AuthService.getEMISLink().then((responseEntity){
-                                  Get.to(() => EMISWebViewScreen(
-                                      webViewLink: responseEntity.data.url));
+                                AuthService.getEMISLink()
+                                    .then((responseEntity) {
+                                  Navigator.of(context).pushNamed(
+                                      AppRoute.eMISWebViewScreen,
+                                      arguments: EMISWebViewScreenArgs(
+                                          webViewLink:
+                                              responseEntity.data.url));
+                                  // Get.to(() => EMISWebViewScreen(
+                                  //     webViewLink: responseEntity.data.url));
                                 });
                                 // ApiService()
                                 //     .getRequest(ApiCredential.userLogin)
