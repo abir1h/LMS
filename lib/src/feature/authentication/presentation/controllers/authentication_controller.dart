@@ -15,7 +15,7 @@ class AuthenticationController extends GetxController with AppTheme {
   AuthenticationController(this._authenticationUseCase);
   final AuthUseCase _authenticationUseCase;
 
-  final localStorage = Get.find<LocalStorageService>();
+  final localStorage = Get.find<LocalStorageServiceWithGetX>();
   final isLogged = false.obs;
   final watchPassword = true.obs;
 

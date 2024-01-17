@@ -6,21 +6,26 @@ import '../../../../core/constants/common_imports.dart';
 import '../../../../core/routes/app_route.dart';
 
 class LandingController extends GetxController {
-  final localStorage = Get.find<LocalStorageService>();
-
   RxBool isLogged = false.obs;
 
   @override
   void onInit() {
-    isLogged.value =
-        localStorage.getStringValue(StringData.accessTokenKey) != null;
+    localStorage();
     super.onInit();
   }
 
-  void logout() {
-    localStorage.clearAllValues();
+  localStorage() async {
+    LocalStorageService localStorageService =
+        await LocalStorageService.getInstance();
+    isLogged.value =
+        localStorageService.getStringValue(StringData.accessTokenKey) != null;
+  }
+
+  void logout() async {
+    LocalStorageService localStorageService =
+        await LocalStorageService.getInstance();
+    localStorageService.clearAllValues();
     isLogged(false);
-    // Get.offAllNamed(AppRoutes.authenticate);
     Navigator.of(AppRoute.navigatorKey.currentContext!)
         .pushNamedAndRemoveUntil(AppRoute.authenticationScreen, (x) => false);
   }

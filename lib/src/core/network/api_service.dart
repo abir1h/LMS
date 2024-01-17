@@ -11,6 +11,7 @@ import 'http_client.dart';
 class ApiService {
   final BaseHttpClient _baseClient = locator.get<BaseHttpClient>();
 
+
   Future<dynamic> getRequest(String url) async {
     appPrint('url ${ApiCredential.baseUrl + url}');
     try {

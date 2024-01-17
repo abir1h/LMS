@@ -7,7 +7,7 @@ import '../../../../core/constants/common_imports.dart';
 import '../../../../core/routes/app_route.dart';
 
 class SplashController extends GetxController {
-  final localStorage = Get.find<LocalStorageService>();
+  final localStorage = Get.find<LocalStorageServiceWithGetX>();
   final isLogged = false.obs;
 
   @override

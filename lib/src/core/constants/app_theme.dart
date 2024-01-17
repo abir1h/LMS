@@ -78,7 +78,7 @@ class ThemeColor {
   Color get placeHolderDeselectGray => HexColor("959596");
 }
 
-final localStorage = Get.find<LocalStorageService>();
+final localStorage = Get.find<LocalStorageServiceWithGetX>();
 
 double sizeValue = localStorage.getBooleanValue(StringData.textSizeKey) != null
     ? localStorage.getBooleanValue(StringData.textSizeKey) == true
@@ -90,7 +90,7 @@ class ThemeSize {
   ThemeSize._();
   static ThemeSize? _instance;
   static ThemeSize get instance => _instance ?? (_instance = ThemeSize._());
-  final localStorage = Get.find<LocalStorageService>();
+  final localStorage = Get.find<LocalStorageServiceWithGetX>();
 
   accessibilityValueSet(double value, bool revert) {
     sizeValue = value;

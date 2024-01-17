@@ -34,5 +34,6 @@ void setup() {
 }
 
 initLocalServices() async {
-  await Get.putAsync(() => LocalStorageService.initialize());
+  await Get.putAsync(() => LocalStorageServiceWithGetX.initialize());
+  // await Get.putAsync(() => LocalStorageService.initialize());
 }

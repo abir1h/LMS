@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:lms/src/feature/profile/domain/entities/profile_data_entity.dart';
+import 'package:lms/src/feature/profile/presentation/service/profile_service.dart';
 
 import '../../../../core/service/notifier/app_events_notifier.dart';
 import '../../../../core/common_widgets/custom_dialog_widget.dart';
@@ -19,7 +21,19 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen>
     with AppTheme, Language, AppEventsNotifier {
-  // final ProfileController controller = Get.put(ProfileController());
+  ProfileDataEntity? profileDataEntity;
+
+  @override
+  void initState() {
+    super.initState();
+    getProfile();
+  }
+
+  void getProfile() {
+    ProfileService.getProfileInformation().then((value) {
+      profileDataEntity = value.data;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,4 @@
-import '../entities/profile_response_entity.dart';
+import '../../../shared/domain/entities/response_entity.dart';
 import '../repositories/profile_repository.dart';
 
 class ProfileUseCase {
@@ -6,7 +6,7 @@ class ProfileUseCase {
   ProfileUseCase({required ProfileRepository profileRepository})
       : _profileRepository = profileRepository;
 
-  Future<ProfileResponseEntity> userProfileInformationUseCase() async {
+  Future<ResponseEntity> userProfileInformationUseCase() async {
     final response = _profileRepository.userProfileInformation();
     return response;
   }

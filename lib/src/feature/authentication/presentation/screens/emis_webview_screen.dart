@@ -19,6 +19,8 @@ class _EMISWebViewScreenState extends State<EMISWebViewScreen> {
   late EMISWebViewScreenArgs _screenArgs;
   late final WebViewController _controller;
   bool isLoading = true;
+  String username = "";
+  String token = "";
 
   @override
   void initState() {
@@ -48,34 +50,30 @@ class _EMISWebViewScreenState extends State<EMISWebViewScreen> {
                 "http://103.209.40.89:81/api/auth/dev/authThroughEmis?")) {
               isLoading = true;
 
-              // ApiService()
-              //     .getRequest(request.url
-              //         .replaceAll("http://103.209.40.89:81/api", "")
-              //         .replaceAll("authThroughEmis", "token"))
-              //     .then((value) {
-              //   LoginResponse loginResponse =
-              //       LoginResponse.fromJson(json.decode(value));
-              //   print("access token ${loginResponse.data?.accessToken}");
-              // });
-              AuthService.getToken("101353764",
-                      "9U7p2kNngjlmj8gEMyJN35lihhrAimX2IOYzUq7qLAZHsdDhD")
-                  .then((responseEntity) {
+              getUsernameToken(request.url);
+
+              AuthService.getToken(username, token).then((responseEntity) {
                 AuthDataEntity authData = responseEntity.data!;
                 print(authData.accessToken);
               });
+
               Navigator.of(context).pushNamedAndRemoveUntil(
                   AppRoute.landingScreen, (x) => false);
               return NavigationDecision.prevent;
             }
             return NavigationDecision.navigate;
-            // if (request.url.startsWith(widget.webViewLink)) {
-            //   return NavigationDecision.prevent;
-            // }
-            // return NavigationDecision.navigate;
           },
         ),
       )
       ..loadRequest(Uri.parse(_screenArgs.webViewLink));
+  }
+
+  void getUsernameToken(String url) {
+    Uri uri = Uri.parse(url);
+    Map<String, String> queryParams = uri.queryParameters;
+
+    username = queryParams['username'] ?? "";
+    token = queryParams['token'] ?? "";
   }
 
   @override

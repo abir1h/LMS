@@ -3,10 +3,9 @@ import 'package:get/get.dart';
 
 import '../constants/common_imports.dart';
 import '../config/local_storage_services.dart';
-import '../constants/urls.dart';
 
 class BaseHttpClient {
-  final localStorage = Get.find<LocalStorageService>();
+  final localStorage = Get.find<LocalStorageServiceWithGetX>();
   final _client = Dio();
 
   static String get baseURL {
@@ -24,9 +23,9 @@ class BaseHttpClient {
   Dio get authenticatedClient {
     final httpClient = client;
     String? token = localStorage.getStringValue(StringData.accessTokenKey);
-    if(token == null){
+    if (token == null) {
       return httpClient;
-    }else{
+    } else {
       httpClient.options.headers = {
         'Accept': 'application/json',
         'Authorization': "Bearer $token"

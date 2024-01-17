@@ -13,7 +13,7 @@ class AccessibilityController extends GetxController with AppTheme {
   }
 
   setTextSwitch() {
-    final localStorage = Get.find<LocalStorageService>();
+    final localStorage = Get.find<LocalStorageServiceWithGetX>();
 
     if (localStorage.getBooleanValue(StringData.monochromeKey) != null) {
       isGrayscale.value =
