@@ -6,9 +6,9 @@ class ServerResponse {
   ServerResponse({required this.message, this.data, this.errors});
 
   factory ServerResponse.fromJson(Map<String, dynamic> json) => ServerResponse(
-    message: json['message'] ?? "",
-    data: json['data'],
-    errors: json['errors'] == null ? [] : List<Map<String, String>>.from(json["errors"].map((x) => x))
-  );
+      message: json['message'] ?? "",
+      data: json['data'],
+      errors: json['errors'] == null
+          ? []
+          : List<Map<String, String>>.from(json["errors"].map((x) => x)));
 }
-

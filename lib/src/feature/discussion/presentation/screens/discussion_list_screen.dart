@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/routes/app_route.dart';
+import '../../../../core/routes/app_route_args.dart';
 import '../controller/discussion_controller.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
-import 'detailed_discussion.dart';
 
 class DiscussionListScreen extends StatefulWidget {
   const DiscussionListScreen({super.key});
@@ -16,7 +17,7 @@ class DiscussionListScreen extends StatefulWidget {
 
 class _DiscussionListScreenState extends State<DiscussionListScreen>
     with AppTheme, Language {
-  final DiscussionController controller = Get.find<DiscussionController>();
+  final DiscussionController controller = Get.put(DiscussionController());
 
   @override
   Widget build(BuildContext context) {
@@ -30,21 +31,19 @@ class _DiscussionListScreenState extends State<DiscussionListScreen>
           padding: EdgeInsets.only(bottom: size.h64),
           itemBuilder: (_, index) {
             return DiscussionCard(
-                title: controller.discussionList[index].title!,
-                topicName: label(
-                    e:
-                        "Topic Name : Video 2 | Human-welfare concepts in educational applications.",
-                    b:
-                        "টপিক নেইম : ভিডিও ২ | শিক্ষাগত প্রয়োগ মানব-কল্যাণ ধারণা."),
-                totalDiscussion:
-                    controller.discussionList[index].comments != null
-                        ? controller.discussionList[index].comments!.length
-                            .toString()
-                        : "0",
-                time: controller.discussionList[index].createdAt!,
-                onTap: () => Get.to(DetailedDiscussion(
-                      mainModel: controller.discussionList[index],
-                    )));
+              title: controller.discussionList[index].title!,
+              topicName: label(
+                  e: "Topic Name : Video 2 | Human-welfare concepts in educational applications.",
+                  b: "টপিক নেইম : ভিডিও ২ | শিক্ষাগত প্রয়োগ মানব-কল্যাণ ধারণা."),
+              totalDiscussion: controller.discussionList[index].comments != null
+                  ? controller.discussionList[index].comments!.length.toString()
+                  : "0",
+              time: controller.discussionList[index].createdAt!,
+              onTap: () => Navigator.of(context).pushNamed(
+                  AppRoute.detailedDiscussion,
+                  arguments: DetailedDiscussionArgs(
+                      discussionModel: controller.discussionList[index])),
+            );
           },
         );
       }),

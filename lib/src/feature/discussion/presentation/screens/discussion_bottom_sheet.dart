@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../models/discusion_model.dart';
+import '../../models/discussion_model.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/text_field_widget.dart';
 import '../../../../core/constants/common_imports.dart';

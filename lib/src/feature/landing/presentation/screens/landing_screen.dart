@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/routes/app_route.dart';
+import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/utility/app_label.dart';
-import '../../../notification/presentation/screens/notification_screen.dart';
 import '../../../../core/config/app_event_widget.dart';
 import '../../../../core/config/notification_clicked_notifier.dart';
 import '../../../../core/config/notification_client.dart';
 import '../../../../core/config/push_notification.dart';
-import '../../../../core/routes/app_routes.dart';
 import '../controllers/landing_controller.dart';
 import '../widgets/module_card_widget.dart';
 import '../widgets/row_item_template.dart';
@@ -21,12 +21,13 @@ class LandingScreen extends StatefulWidget {
 }
 
 class _LandingScreenState extends State<LandingScreen> with AppTheme, Language {
-  final LandingController landingController = Get.find<LandingController>();
+  final LandingController landingController = Get.put(LandingController());
 
   ///Service configurations
   @override
   void initState() {
     super.initState();
+
     ///Init notification and firebase
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       PushNotification.instance.init();
@@ -91,9 +92,9 @@ class _LandingScreenState extends State<LandingScreen> with AppTheme, Language {
                               text: label(
                                   e: en.learningManagementSystem,
                                   b: bn.learningManagementSystem),
-                              onTap: () => Get.toNamed(
-                                AppRoutes.bottomNav,
-                              ),
+                              onTap: () => Navigator.of(context).pushNamed(
+                                  AppRoute.rootScreen,
+                                  arguments: RootScreenArgs(index: 0)),
                             ),
                             rightChild: ModuleCardWidget(
                               image: ImageAssets.imgModule2,
@@ -146,8 +147,7 @@ class _LandingScreenState extends State<LandingScreen> with AppTheme, Language {
     // catch (error){
     //   debugPrint(error.toString());
     // }
-    Navigator.of(AppRoutes.navigatorKey.currentContext!).push(
-        MaterialPageRoute(builder: (context) => const NotificationScreen()));
+    Navigator.of(context).pushNamed(AppRoute.notificationScreen);
   }
 
   void _onNotificationReceived(NotificationEntity notification) async {}

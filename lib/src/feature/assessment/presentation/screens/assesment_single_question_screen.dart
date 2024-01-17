@@ -1,28 +1,17 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:get/get.dart';
-import 'package:lms/src/core/common_widgets/custom_dialog_widget.dart';
 import 'package:rxdart/rxdart.dart';
+
+import '../../../../core/common_widgets/custom_dialog_widget.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
-import '../../../../core/common_widgets/custom_toasty.dart';
-import '../../../../core/constants/app_theme.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
 import '../models/blank_model.dart';
 import '../models/matching_question.dart';
 import '../models/quiz_model.dart';
-import '../widgets/descriptive_answer_widget.dart';
-import '../widgets/fill_in_the_gap_answer_widget.dart';
-import '../widgets/matching_answer_widget.dart';
-import '../widgets/one_word_answer_widget.dart';
-import '../widgets/question_list_widget.dart';
 import '../widgets/question_panel_widget.dart';
-import '../widgets/question_widget.dart';
 import '../widgets/time_digit_widget.dart';
-import '../widgets/true_false_answer_widget.dart';
-import 'assessment_quiz_screen.dart';
 import 'assessment_screen.dart';
 
 class AssessmentSingleQuestionScreen extends StatefulWidget {
@@ -392,16 +381,16 @@ class _AssessmentSingleQuestionScreenState
 
   Future<bool> _onBackPress() {
     // if (_isExamRunning) {
-      return CustomDialogWidget.show(
-        title: label(e: "Are you Sure?", b: "আপনি কি নিশ্চিত?"),
-        icon: Icons.question_mark_sharp,
-        context: context,
-        leftButtonText: label(e: "Cancel", b: "বাতিল"),
-        rightButtonText: label(e: "Yes", b: "হ্যাঁ"),
-        infoText: label(
-            e: "Do you really want to exit? Your quiz progress will be lost.",
-            b: "আপনি কি সত্যিই প্রস্থান করতে চান? আপনার কুইজের অগ্রগতি নষ্ট হবে।"),
-      ).then((value) => value);
+    return CustomDialogWidget.show(
+      title: label(e: "Are you Sure?", b: "আপনি কি নিশ্চিত?"),
+      icon: Icons.question_mark_sharp,
+      context: context,
+      leftButtonText: label(e: "Cancel", b: "বাতিল"),
+      rightButtonText: label(e: "Yes", b: "হ্যাঁ"),
+      infoText: label(
+          e: "Do you really want to exit? Your quiz progress will be lost.",
+          b: "আপনি কি সত্যিই প্রস্থান করতে চান? আপনার কুইজের অগ্রগতি নষ্ট হবে।"),
+    ).then((value) => value);
     // } else {
     //   return Future.value(false);
     // }
@@ -411,13 +400,12 @@ class _AssessmentSingleQuestionScreenState
   Widget build(BuildContext context) {
     return CustomScaffold(
         title: label(e: en.assessment, b: bn.assessment),
-        onBack:_onBackPress,
-        leadingBack: (){
-          _onBackPress().then((value){
-            if(!value){
+        onBack: _onBackPress,
+        leadingBack: () {
+          _onBackPress().then((value) {
+            if (!value) {
               Navigator.pop(context);
-            }else{
-            }
+            } else {}
           });
         },
         actionChild: TimeDigitWidget(
@@ -437,21 +425,24 @@ class _AssessmentSingleQuestionScreenState
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Center(
-                  child: StreamBuilder<String>(
-                    initialData:
-                        "${label(e: "Question", b: "প্রশ্ন")}: 1 / ${questions.length}",
-                    stream: _questionNumberTextStream.stream,
-                    builder: (context, snapshot) {
-                      return Text(
-                        snapshot.data!,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          color: Colors.black54,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      );
-                    },
+                Container(
+                  color: clr.whiteColor,
+                  child: Center(
+                    child: StreamBuilder<String>(
+                      initialData:
+                          "${label(e: "Question", b: "প্রশ্ন")}: ${"${replaceEnglishNumberWithBangla("1")}/${replaceEnglishNumberWithBangla(questions.length.toString())}"}",
+                      stream: _questionNumberTextStream.stream,
+                      builder: (context, snapshot) {
+                        return Text(
+                          snapshot.data!,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            color: Colors.black54,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
                 // ListView.builder(
@@ -489,12 +480,15 @@ class _AssessmentSingleQuestionScreenState
                                   onTap: () {
                                     _onPreviousButtonTap();
                                   },
-                                  title: "Previous")
+                                  title: label(e: "Previous", b: "পূর্ববর্তী"))
                               : const Offstage(),
                           const Spacer(),
                           CustomButton(
                               onTap: () {
                                 _onNextTap();
+                                if (snapshot.data!["next"] == "Submit") {
+                                  _showModal();
+                                }
                               },
                               title: snapshot.data!["next"])
                         ],
@@ -512,8 +506,8 @@ class _AssessmentSingleQuestionScreenState
                       fit: StackFit.expand,
                       children: [
                         Container(
-                          color: clr.whiteColor
-                          ,padding: EdgeInsets.symmetric(horizontal: size.h24),
+                          color: clr.whiteColor,
+                          padding: EdgeInsets.symmetric(horizontal: size.h24),
                           child: StreamBuilder<int>(
                             initialData: 0,
                             stream: _pageSelectedIndexStream.stream,
@@ -539,7 +533,11 @@ class _AssessmentSingleQuestionScreenState
                                         alignment: Alignment.center,
                                         child: snapshot.data != index
                                             ? Text(
-                                                "${index + 1}",
+                                                label(
+                                                    e: "${index + 1}",
+                                                    b: replaceEnglishNumberWithBangla(
+                                                        "${index + 1}")),
+                                                // "${index + 1}",
                                                 style: TextStyle(
                                                     color:
                                                         clr.textColorAppleBlack,
@@ -555,7 +553,11 @@ class _AssessmentSingleQuestionScreenState
                                                 padding:
                                                     EdgeInsets.all(size.h12),
                                                 child: Text(
-                                                  "${index + 1}",
+                                                  label(
+                                                      e: "${index + 1}",
+                                                      b: replaceEnglishNumberWithBangla(
+                                                          "${index + 1}")),
+                                                  // "${index + 1}",
                                                   style: TextStyle(
                                                       color: clr.whiteColor,
                                                       fontSize: size.textMedium,
@@ -580,28 +582,41 @@ class _AssessmentSingleQuestionScreenState
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 snapshot.data!["previous"] != false
-                                    ? GestureDetector(onTap:(){
-                                  _scrollController.animateTo(_scrollController.position.pixels-150, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
-                                },
-                                      child: Container(
-                                          decoration: BoxDecoration(
-                                              color: clr.whiteColor),
-                                          child: const Icon(
-                                              Icons.arrow_back_ios_new)),
-                                    )
+                                    ? GestureDetector(
+                                        onTap: () {
+                                          _scrollController.animateTo(
+                                              _scrollController
+                                                      .position.pixels -
+                                                  150,
+                                              duration: const Duration(
+                                                  milliseconds: 300),
+                                              curve: Curves.easeIn);
+                                        },
+                                        child: Container(
+                                            decoration: BoxDecoration(
+                                                color: clr.whiteColor),
+                                            child: const Icon(
+                                                Icons.arrow_back_ios_new)),
+                                      )
                                     : const Offstage(),
-                                Spacer(),
+                                const Spacer(),
                                 snapshot.data!["next"] != false
                                     ? GestureDetector(
-
-                                  onTap:(){
-                                    _scrollController.animateTo(_scrollController.position.pixels+150, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
-                                  },    child: Container(
-                                          decoration: BoxDecoration(
-                                              color: clr.whiteColor),
-                                          child:
-                                              const Icon(Icons.arrow_forward_ios)),
-                                    )
+                                        onTap: () {
+                                          _scrollController.animateTo(
+                                              _scrollController
+                                                      .position.pixels +
+                                                  150,
+                                              duration: const Duration(
+                                                  milliseconds: 300),
+                                              curve: Curves.easeIn);
+                                        },
+                                        child: Container(
+                                            decoration: BoxDecoration(
+                                                color: clr.whiteColor),
+                                            child: const Icon(
+                                                Icons.arrow_forward_ios)),
+                                      )
                                     : const Offstage(),
                               ],
                             );
@@ -609,8 +624,9 @@ class _AssessmentSingleQuestionScreenState
                         ),
                       ],
                     )),
-                Container(height: size.h24,
-                color: clr.whiteColor,
+                Container(
+                  height: size.h24,
+                  color: clr.whiteColor,
                 ),
               ],
             ),
@@ -619,18 +635,19 @@ class _AssessmentSingleQuestionScreenState
   }
 
   _onQuestionChanged(int index) {
-    _scrollController.animateTo(index*32, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+    _scrollController.animateTo(index * 32,
+        duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
     _pageSelectedIndexStream.sink.add(index);
     _questionNumberTextStream.add(
-        "${label(e: "Question", b: "প্রশ্ন")}: ${index + 1} / ${questions.length}");
+        "${label(e: "Question", b: "প্রশ্ন")}: ${replaceEnglishNumberWithBangla("${index + 1}")} / ${replaceEnglishNumberWithBangla(questions.length.toString())}");
     if (index == questions.length - 1) {
       _buttonTextStream.add({
-        "next": "Submit",
+        "next": label(e: "Submit", b: "সাবমিট"),
         "previous": index == 0 ? false : true,
       });
     } else {
       _buttonTextStream.add({
-        "next": "Next",
+        "next": label(e: "Next", b: "পরবর্তী"),
         "previous": index == 0 ? false : true,
       });
     }
@@ -646,5 +663,18 @@ class _AssessmentSingleQuestionScreenState
   _onPreviousButtonTap() {
     _questionPagerController.previousPage(
         duration: const Duration(milliseconds: 300), curve: Curves.ease);
+  }
+
+  void _showModal() {
+    CustomDialogWidget.show(
+      title: label(e: "Are you Sure?", b: "আপনি কি নিশ্চিত?"),
+      icon: Icons.question_mark_sharp,
+      context: context,
+      leftButtonText: label(e: "Cancel", b: "বাতিল"),
+      rightButtonText: label(e: "Submit", b: "সাবমিট"),
+      infoText: label(
+          e: "Do you want to submit your assessment answer sheet?",
+          b: "আপনি কি আপনার মূল্যায়নের উত্তরপত্র জমা দিতে চান ?"),
+    ).then((value) => value);
   }
 }

@@ -6,15 +6,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../constants/common_imports.dart';
 
 mixin CustomDialogWidget {
-  static Future<bool> show({
-    required BuildContext context,
-    required String infoText,
-    String title = "Are You Sure?",
-    String rightButtonText = "Yes",
-    String leftButtonText = "Cancel",
-    bool singleButton = false,
-    IconData icon=Icons.logout
-  }) {
+  static Future<bool> show(
+      {required BuildContext context,
+      required String infoText,
+      String title = "Are You Sure?",
+      String rightButtonText = "Yes",
+      String leftButtonText = "Cancel",
+      bool singleButton = false,
+      IconData icon = Icons.logout}) {
     Completer<bool> completer = Completer();
     showCupertinoModalPopup(
       context: context,

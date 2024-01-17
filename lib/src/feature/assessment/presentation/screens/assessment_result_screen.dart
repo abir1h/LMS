@@ -1,28 +1,25 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:lms/src/core/common_widgets/custom_button.dart';
 import 'package:lms/src/core/constants/app_theme.dart';
 
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/utility/app_label.dart';
-import 'mcq_explanation_screen.dart';
 
-class AssesmentResultScreen extends StatefulWidget {
-  const AssesmentResultScreen({super.key});
+class AssessmentResultScreen extends StatefulWidget {
+  const AssessmentResultScreen({super.key});
 
   @override
-  State<AssesmentResultScreen> createState() => _AssesmentResultScreenState();
+  State<AssessmentResultScreen> createState() => _AssessmentResultScreenState();
 }
 
-class _AssesmentResultScreenState extends State<AssesmentResultScreen>
+class _AssessmentResultScreenState extends State<AssessmentResultScreen>
     with AppTheme {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
         title: label(e: "Result Details", b: "ফলাফলের বিস্তারিত"),
         body: Padding(
-          padding:  EdgeInsets.symmetric(horizontal: size.w16),
+          padding: EdgeInsets.symmetric(horizontal: size.w16),
           child: Stack(
             fit: StackFit.expand,
             children: [
@@ -33,7 +30,7 @@ class _AssesmentResultScreenState extends State<AssesmentResultScreen>
                     Row(
                       children: [
                         Padding(
-                          padding:  EdgeInsets.all(size.h42),
+                          padding: EdgeInsets.all(size.h42),
                           child: SizedBox(
                             height: size.h64,
                             width: size.h64,
@@ -49,12 +46,14 @@ class _AssesmentResultScreenState extends State<AssesmentResultScreen>
                             ),
                           ),
                         ),
-                       const Column(
-                          crossAxisAlignment:CrossAxisAlignment.start,children: [
-                          Text("Correct - 40"),
-                          Text("Not Answered - 20"),
-                          Text("Wrong - 40")
-                        ],)
+                        const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Correct - 40"),
+                            Text("Not Answered - 20"),
+                            Text("Wrong - 40")
+                          ],
+                        )
                       ],
                     ),
                     Padding(
@@ -65,27 +64,28 @@ class _AssesmentResultScreenState extends State<AssesmentResultScreen>
                           Icon(
                             Icons.select_all,
                             color: Colors.white,
-                            size: 24,
+                            size: size.r24,
                           ),
                           Text(
                             label(b: "উত্তর সংক্ষিপ্তসার", e: "Answer Summary"),
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: size.textXMedium,
                               fontWeight: FontWeight.w700,
                             ),
                             textAlign: TextAlign.center,
                           ),
-                          Spacer(),
+                          const Spacer(),
                         ],
                       ),
                     ),
 
                     //Answer summary containers
                     AnswerSummaryContainer(
-                       bodyText: label(b: "মোট প্রশ্ন: ", e: "Total Question: "),
-                        bodyResultNumber:100,
-                        bodyIcon:  Icons.question_mark_sharp,
-                        containerColor:Colors.blue[50]!,
+                        bodyText:
+                            label(b: "মোট প্রশ্ন: ", e: "Total Question: "),
+                        bodyResultNumber: 100,
+                        bodyIcon: Icons.question_mark_sharp,
+                        containerColor: Colors.blue[50]!,
                         txtColor: Colors.blue),
 
                     const SizedBox(
@@ -93,9 +93,10 @@ class _AssesmentResultScreenState extends State<AssesmentResultScreen>
                     ),
 
                     AnswerSummaryContainer(
-                        bodyText:  label(b: "সঠিক উত্তর: ", e: "Correct Answer: "),
-                        bodyResultNumber :40,
-                        bodyIcon:  Icons.check,
+                        bodyText:
+                            label(b: "সঠিক উত্তর: ", e: "Correct Answer: "),
+                        bodyResultNumber: 40,
+                        bodyIcon: Icons.check,
                         containerColor: Colors.blue[50]!,
                         txtColor: Colors.blue),
 
@@ -105,7 +106,7 @@ class _AssesmentResultScreenState extends State<AssesmentResultScreen>
 
                     AnswerSummaryContainer(
                         bodyText: label(b: "ভুল উত্তর: ", e: "Wrong Answer: "),
-                        bodyResultNumber :40,
+                        bodyResultNumber: 40,
                         bodyIcon: Icons.close,
                         containerColor: Colors.blue[50]!,
                         txtColor: Colors.blue),
@@ -115,9 +116,9 @@ class _AssesmentResultScreenState extends State<AssesmentResultScreen>
                     ),
 
                     AnswerSummaryContainer(
-                        bodyText:label(e: "Unanswered: ", b: "অনুত্তরিত: "),
-                        bodyResultNumber :20,
-                        bodyIcon:  Icons.adjust_rounded,
+                        bodyText: label(e: "Unanswered: ", b: "অনুত্তরিত: "),
+                        bodyResultNumber: 20,
+                        bodyIcon: Icons.adjust_rounded,
                         containerColor: Colors.blue[50]!,
                         txtColor: Colors.blue),
 
@@ -186,17 +187,23 @@ class _AssesmentResultScreenState extends State<AssesmentResultScreen>
     });
   }
 }
+
 class AnswerSummaryContainer extends StatelessWidget {
-final  String bodyText;
-final  int bodyResultNumber;
-final    IconData bodyIcon;
-final   Color containerColor;
-final    Color txtColor;
-  const AnswerSummaryContainer({super.key, required this.bodyText, required this.bodyResultNumber, required this.bodyIcon, required this.containerColor, required this.txtColor});
+  final String bodyText;
+  final int bodyResultNumber;
+  final IconData bodyIcon;
+  final Color containerColor;
+  final Color txtColor;
+  const AnswerSummaryContainer(
+      {super.key,
+      required this.bodyText,
+      required this.bodyResultNumber,
+      required this.bodyIcon,
+      required this.containerColor,
+      required this.txtColor});
   @override
   Widget build(BuildContext context) {
     return Container(
-
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 12),
       decoration: BoxDecoration(
@@ -236,7 +243,7 @@ final    Color txtColor;
               fontSize: 17,
             ),
           ),
-          Spacer(),
+          const Spacer(),
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
             child: Text(
@@ -250,4 +257,3 @@ final    Color txtColor;
     );
   }
 }
-

@@ -1,23 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/routes/app_route.dart';
+import '../../../../core/routes/app_route_args.dart';
 import '../controllers/assignment_controller.dart';
-import '../models/assignment_model.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
-import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/quil_text_viewer.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
-import '../../../course/presentation/screens/course_assignment_screen.dart';
 import '../widgets/assignment_bottom_sheet.dart';
 
 class AssignmentSubmitScreen extends StatefulWidget {
-  final AssignmentModel? mainModel;
-  const AssignmentSubmitScreen({super.key, this.mainModel});
+  // final AssignmentModel? mainModel;
+  final Object? arguments;
+  const AssignmentSubmitScreen({super.key, this.arguments});
 
   @override
   State<AssignmentSubmitScreen> createState() => _AssignmentSubmitScreenState();
@@ -25,21 +24,24 @@ class AssignmentSubmitScreen extends StatefulWidget {
 
 class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
     with AppTheme, Language {
+  late AssignmentSubmitScreenArgs _screenArgs;
+
   final controller = Get.put(AssignmentController());
   final _controller = QuillController.basic();
 
   String data = '';
   @override
   void initState() {
-    setContent();
     super.initState();
+    _screenArgs = widget.arguments as AssignmentSubmitScreenArgs;
+    setContent();
   }
 
   setContent() {
-    if (widget.mainModel != null) {
-      if (widget.mainModel!.content != null) {
-        _controller.document = widget.mainModel!.content!;
-        data = widget.mainModel!.content!.toPlainText();
+    if (_screenArgs.assignmentModel != null) {
+      if (_screenArgs.assignmentModel!.content != null) {
+        _controller.document = _screenArgs.assignmentModel!.content!;
+        data = _screenArgs.assignmentModel!.content!.toPlainText();
       }
     }
   }
@@ -92,7 +94,8 @@ class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
                             onPressed: () {
                               CustomToasty.of(context)
                                   .showSuccess("সফলভাবে  জমাদান সম্পন্ন হয়েছে");
-                              Get.off(() => const CourseAssignmentScreen());
+                              Navigator.of(context)
+                                  .pushNamed(AppRoute.courseAssignmentScreen);
                             },
                             style: FilledButton.styleFrom(
                               side: BorderSide(
@@ -149,8 +152,8 @@ class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
   void onTapWriteHere(String screenName) {
     showCupertinoModalPopup(
       context: context,
-      builder: (context) =>
-          AssignmentBottomSheet(from: screenName, mainModel: widget.mainModel),
+      builder: (context) => AssignmentBottomSheet(
+          from: screenName, mainModel: _screenArgs.assignmentModel),
     );
   }
 }

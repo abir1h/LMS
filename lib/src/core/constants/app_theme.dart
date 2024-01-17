@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
+import '../config/local_storage_services.dart';
+import 'common_imports.dart';
 import '../utility/color_tools.dart';
 
 mixin AppTheme {
@@ -75,32 +78,35 @@ class ThemeColor {
   Color get placeHolderDeselectGray => HexColor("959596");
 }
 
+final localStorage = Get.find<LocalStorageService>();
+
+double sizeValue = localStorage.getBooleanValue(StringData.textSizeKey) != null
+    ? localStorage.getBooleanValue(StringData.textSizeKey) == true
+        ? 6.0
+        : 0.0
+    : 0.0;
+
 class ThemeSize {
   ThemeSize._();
   static ThemeSize? _instance;
   static ThemeSize get instance => _instance ?? (_instance = ThemeSize._());
+  final localStorage = Get.find<LocalStorageService>();
 
-  double get textXXXLarge => 44.sp;
-  double get textXXLarge => 36.sp;
-  double get textXLarge => 26.sp;
-  double get textLarge => 22.sp;
-  double get textXMedium => 20.sp;
-  double get textMedium => 18.sp;
-  double get textSmall => 16.sp;
-  double get textXSmall => 14.sp;
-  double get textXXSmall => 12.sp;
-  double get textXXXSmall => 10.sp;
+  accessibilityValueSet(double value, bool revert) {
+    sizeValue = value;
+    localStorage.storeBooleanValue(StringData.textSizeKey, revert);
+  }
 
-  // double get textXXXLarge => 50.sp;
-  // double get textXXLarge => 42.sp;
-  // double get textXLarge => 32.sp;
-  // double get textLarge => 28.sp;
-  // double get textXMedium => 26.sp;
-  // double get textMedium => 24.sp;
-  // double get textSmall => 22.sp;
-  // double get textXSmall => 20.sp;
-  // double get textXXSmall => 18.sp;
-  // double get textXXXSmall => 16.sp;
+  double get textXXXLarge => 44.sp + sizeValue;
+  double get textXXLarge => 36.sp + sizeValue;
+  double get textXLarge => 26.sp + sizeValue;
+  double get textLarge => 22.sp + sizeValue;
+  double get textXMedium => 20.sp + sizeValue;
+  double get textMedium => 18.sp + sizeValue;
+  double get textSmall => 16.sp + sizeValue;
+  double get textXSmall => 14.sp + sizeValue;
+  double get textXXSmall => 12.sp + sizeValue;
+  double get textXXXSmall => 10.sp + sizeValue;
 
   double get r1 => 1.r;
   double get r4 => 4.r;

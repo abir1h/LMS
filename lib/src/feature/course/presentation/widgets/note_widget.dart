@@ -59,7 +59,7 @@ class _NoteWidgetState extends State<NoteWidget> with AppTheme {
                   onPressed: () => showCupertinoModalPopup(
                     context: context,
                     builder: (context) =>
-                        NoteBottomSheet(mainModel: controller.noteList[index]),
+                        NoteBottomSheet(noteModel: controller.noteList[index]),
                   ),
                 );
               }),

@@ -4,8 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/routes/app_route_args.dart';
+import '../../../../core/routes/app_route.dart';
 import '../../../../core/service/notifier/app_events_notifier.dart';
-import 'note_details.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../controllers/note_controller.dart';
 import '../widgets/note_tile.dart';
@@ -208,9 +209,10 @@ class _NoteScreenState extends State<NoteScreen>
                     timestamp: DateFormat('dd MMMM yyyy').format(
                         DateTime.parse(controller.noteList[index].time!)),
                     reference: controller.noteList[index].reference,
-                    onPressed: () => Get.to(() => NoteDetailsScreen(
-                          mainModel: controller.noteList[index],
-                        )),
+                    onPressed: () => Navigator.of(context).pushNamed(
+                        AppRoute.noteDetailsScreen,
+                        arguments: NoteDetailsScreenArgs(
+                            noteModel: controller.noteList[index])),
                   );
                 }),
           ),

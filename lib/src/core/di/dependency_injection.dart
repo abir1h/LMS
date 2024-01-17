@@ -17,7 +17,7 @@ import '../network/http_client.dart';
 
 GetIt locator = GetIt.instance;
 
-void setup(){
+void setup() {
   Get.lazyPut(() => AuthUseCase(authRepository: locator.get()));
   Get.lazyPut(() => AuthenticationController(Get.find<AuthUseCase>()));
 
@@ -33,6 +33,6 @@ void setup(){
   );
 }
 
-initLocalServices() async{
+initLocalServices() async {
   await Get.putAsync(() => LocalStorageService.initialize());
 }

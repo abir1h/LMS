@@ -52,3 +52,27 @@ class App {
     return completer.future;
   }
 }
+
+String replaceEnglishNumberWithBangla(String inputString) {
+  Map<String, String> numberMap = {
+    '0': '০',
+    '1': '১',
+    '2': '২',
+    '3': '৩',
+    '4': '৪',
+    '5': '৫',
+    '6': '৬',
+    '7': '৭',
+    '8': '৮',
+    '9': '৯',
+  };
+
+  String result = '';
+  for (int i = 0; i < inputString.length; i++) {
+    String char = inputString[i];
+    String replacement = numberMap[char] ?? char;
+    result += replacement;
+  }
+
+  return result;
+}

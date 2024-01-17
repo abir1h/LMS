@@ -4,11 +4,13 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
+import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/utility/app_label.dart';
 
 class CourseAssessmentScreen extends StatefulWidget {
-  final VoidCallback onTap;
-  const CourseAssessmentScreen({super.key, required this.onTap});
+  // final VoidCallback onTap;
+  final Object? arguments;
+  const CourseAssessmentScreen({super.key, this.arguments});
 
   @override
   State<CourseAssessmentScreen> createState() => _CourseAssessmentScreenState();
@@ -16,6 +18,14 @@ class CourseAssessmentScreen extends StatefulWidget {
 
 class _CourseAssessmentScreenState extends State<CourseAssessmentScreen>
     with AppTheme, Language {
+  late CourseAssessmentScreenArgs _screenArgs;
+
+  @override
+  void initState() {
+    super.initState();
+    _screenArgs = widget.arguments as CourseAssessmentScreenArgs;
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
@@ -184,7 +194,7 @@ class _CourseAssessmentScreenState extends State<CourseAssessmentScreen>
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: size.w10),
                       child: CustomButton(
-                        onTap: widget.onTap,
+                        onTap: _screenArgs.onTap,
                         title: label(e: en.getStarted, b: bn.getStarted),
                         radius: size.r4,
                       ),

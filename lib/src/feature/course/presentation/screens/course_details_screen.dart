@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
+import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/service/notifier/app_events_notifier.dart';
-import '../controllers/course_details_controller.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
 import '../widgets/chapter_widget.dart';
 
 class CourseDetailsScreen extends StatefulWidget with AppTheme {
-  const CourseDetailsScreen({super.key});
+  final Object? arguments;
+  const CourseDetailsScreen({super.key, this.arguments});
 
   @override
   State<CourseDetailsScreen> createState() => _CourseDetailsScreenState();
@@ -18,16 +18,21 @@ class CourseDetailsScreen extends StatefulWidget with AppTheme {
 
 class _CourseDetailsScreenState extends State<CourseDetailsScreen>
     with AppTheme, Language, AppEventsNotifier {
-  final CourseDetailsController controller =
-      Get.find<CourseDetailsController>();
+  late CourseDetailsScreenArgs _screenArgs;
+
+  @override
+  void initState() {
+    super.initState();
+    _screenArgs = widget.arguments as CourseDetailsScreenArgs;
+  }
 
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      title: controller.from.value == "running"
+      title: _screenArgs.curriculumType == "running"
           ? label(
               e: en.ongoingCourseDetailsText, b: bn.ongoingCourseDetailsText)
-          : controller.from.value == "completed"
+          : _screenArgs.curriculumType == "completed"
               ? label(
                   e: en.completedCourseDetailsText,
                   b: bn.completedCourseDetailsText)
@@ -45,28 +50,28 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
                       b: "শিক্ষা নীতি ও শিক্ষায় ব্যাবস্থাপনা"),
                   courseCode:
                       label(e: "Course Code : 1568", b: "অধিবেশনের কোড : ১৫৬৮"),
-                  chapterType: controller.status.value == "done"
+                  chapterType: _screenArgs.status == "done"
                       ? ChapterType.done
-                      : controller.status.value == "open"
+                      : _screenArgs.status == "open"
                           ? ChapterType.open
                           : ChapterType.lock,
                   description: label(
                       e: "Teaching for Learning programs are detailed discussions for those who are teaching, or who want to teach, any subject, in any context",
                       b: "শেখার জন্য শিক্ষাদান প্রোগ্রামের হল যারা শিক্ষা দিচ্ছেন, বা যারা শিক্ষা দিতে চান, যে কোনো বিষয়ে, যে কোনো প্রসঙ্গে বিস্তারিত আলোচনা"),
-                  from: controller.from.value,
+                  curriculumType: _screenArgs.curriculumType,
                 ),
                 SizedBox(height: size.h32),
               ],
             ),
           ),
-          if (controller.from.value == "upcoming")
+          if (_screenArgs.curriculumType == "upcoming")
             Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: size.w16),
                 child: CustomButton(
                   onTap: () {},
-                  title: "Enroll",
+                  title: label(e: en.enroll, b: bn.enroll),
                   radius: size.w24,
                 ),
               ),
@@ -91,14 +96,14 @@ class CourseWidget extends StatelessWidget with AppTheme, Language {
   final String courseCode;
   final ChapterType chapterType;
   final String description;
-  final String from;
+  final String curriculumType;
   const CourseWidget(
       {super.key,
       required this.title,
       required this.courseCode,
       required this.chapterType,
       required this.description,
-      required this.from});
+      required this.curriculumType});
 
   @override
   Widget build(BuildContext context) {
@@ -146,7 +151,8 @@ class CourseWidget extends StatelessWidget with AppTheme, Language {
                   e: "Chapter 1: The Desert of Karbala",
                   b: "অধ্যায় ১: কারবালা প্রান্তর"),
               chapterCode: label(e: "Chapter Code", b: "অধ্যায়ের কোড"),
-              chapterType: from == "running" ? ChapterType.done : chapterType,
+              chapterType:
+                  curriculumType == "running" ? ChapterType.done : chapterType,
             ),
             SizedBox(height: size.h8),
             ChapterWidget(
@@ -161,14 +167,16 @@ class CourseWidget extends StatelessWidget with AppTheme, Language {
                   e: "Chapter 3: The Desert of Karbala",
                   b: "অধ্যায় ৩: কারবালা প্রান্তর"),
               chapterCode: label(e: "Chapter Code", b: "অধ্যায়ের কোড"),
-              chapterType: from == "running" ? ChapterType.lock : chapterType,
+              chapterType:
+                  curriculumType == "running" ? ChapterType.lock : chapterType,
             ),
             SizedBox(height: size.h8),
             ChapterWidget(
               chapterTitle: label(
                   e: "Chapter 4: Human-Welfare", b: "অধ্যায় ৪: মানব-কল্যাণ"),
               chapterCode: label(e: "Chapter Code", b: "অধ্যায়ের কোড"),
-              chapterType: from == "running" ? ChapterType.lock : chapterType,
+              chapterType:
+                  curriculumType == "running" ? ChapterType.lock : chapterType,
             ),
             SizedBox(height: size.h8),
             ChapterWidget(
@@ -176,7 +184,8 @@ class CourseWidget extends StatelessWidget with AppTheme, Language {
                   e: "Chapter 5: The Enormity of Life",
                   b: "অধ্যায় ৫: জীবযাত্রার বিপুলতা"),
               chapterCode: label(e: "Chapter Code", b: "অধ্যায়ের কোড"),
-              chapterType: from == "running" ? ChapterType.lock : chapterType,
+              chapterType:
+                  curriculumType == "running" ? ChapterType.lock : chapterType,
             ),
           ],
         )

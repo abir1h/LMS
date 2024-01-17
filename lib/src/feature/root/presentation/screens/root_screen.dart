@@ -4,14 +4,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/routes/app_route.dart';
 import '../../../../core/common_widgets/custom_app_bar.dart';
 import '../../../../core/common_widgets/drawer_widget.dart';
-import '../../../../core/routes/app_routes.dart';
+import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/service/notifier/app_events_notifier.dart';
 import '../../../course/presentation/controllers/course_controller.dart';
 import '../../../course/presentation/screens/course_screen.dart';
 import '../../../../core/utility/app_label.dart';
-import '../../../notes/presentation/screens/note_edit_screen.dart';
 import '../../../notes/presentation/screens/note_screen.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../profile/presentation/screens/profile_screen.dart';
@@ -20,9 +20,8 @@ import '../../../dashboard/presentation/screens/dashboard_screen.dart';
 import '../../../profile/presentation/widgets/recognition_widget.dart';
 
 class RootScreen extends StatefulWidget {
-  const RootScreen({
-    super.key,
-  });
+  final Object? arguments;
+  const RootScreen({super.key, this.arguments});
 
   @override
   State<RootScreen> createState() => _RootScreenState();
@@ -30,6 +29,8 @@ class RootScreen extends StatefulWidget {
 
 class _RootScreenState extends State<RootScreen>
     with AppTheme, Language, AppEventsNotifier {
+  late RootScreenArgs _screenArgs;
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final PageController _pageController = PageController();
   int _currentPageIndex = 0;
@@ -43,15 +44,14 @@ class _RootScreenState extends State<RootScreen>
   @override
   void initState() {
     super.initState();
+    _screenArgs = widget.arguments as RootScreenArgs;
     setPage();
     Get.put(DashboardController());
     Get.put(CourseController());
   }
 
   setPage() {
-    final args = Get.arguments ?? 0;
-    print(args);
-    _currentPageIndex = args;
+    _currentPageIndex = _screenArgs.index;
   }
 
   @override
@@ -74,18 +74,18 @@ class _RootScreenState extends State<RootScreen>
                   : _currentPageIndex == 2
                       ? label(e: en.allNotes, b: bn.allNotes)
                       : label(e: en.profileAppBarText, b: bn.profileAppBarText),
-          leadingOnPressed: () {
-            _scaffoldKey.currentState!.openDrawer();
-          },
           hasDivider: true,
           hasMenu: true,
           automaticallyImplyLeading: false,
           primaryColor: Colors.white,
           toolbarHeight: size.h56,
-          trailingOnPressed: () {
-            if (_currentPageIndex != 2) {
-              Get.toNamed(AppRoutes.notification);
-            }
+          leading: Icon(
+            Icons.menu,
+            color: clr.appPrimaryColorGreen,
+            size: size.r24,
+          ),
+          leadingOnPressed: () {
+            _scaffoldKey.currentState!.openDrawer();
           },
           trailing: _currentPageIndex == 2
               ? Icon(
@@ -114,11 +114,11 @@ class _RootScreenState extends State<RootScreen>
                     ),
                   ],
                 ),
-          leading: Icon(
-            Icons.menu,
-            color: clr.appPrimaryColorGreen,
-            size: size.r24,
-          ),
+          trailingOnPressed: () {
+            if (_currentPageIndex != 2) {
+              Navigator.of(context).pushNamed(AppRoute.notificationScreen);
+            }
+          },
         ),
       ),
       body: pages[_currentPageIndex],
@@ -179,7 +179,8 @@ class _RootScreenState extends State<RootScreen>
       floatingActionButton: _currentPageIndex == 2
           ? GestureDetector(
               onTap: () {
-                Get.to(() => const NoteEditScreen());
+                Navigator.of(context).pushNamed(AppRoute.noteEditScreen,
+                    arguments: NoteDetailsScreenArgs(noteModel: null));
               },
               child: Container(
                 padding: EdgeInsets.all(size.r16),

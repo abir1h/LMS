@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lms/src/core/constants/common_imports.dart';
 import 'package:lms/src/feature/discussion/models/comment_model.dart';
-import 'package:lms/src/feature/discussion/models/discusion_model.dart';
+import 'package:lms/src/feature/discussion/models/discussion_model.dart';
 
 class DiscussionController extends GetxController {
   final discussionList = <DiscussionModel>[

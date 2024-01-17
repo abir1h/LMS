@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lms/src/core/utility/app_label.dart';
 
+import '../../../../core/utility/app_label.dart';
 import '../widgets/notification_card.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';

@@ -1,9 +1,9 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lms/src/core/service/notifier/app_events_notifier.dart';
-import 'package:lms/src/core/utility/app_label.dart';
 
+import '../../../../core/service/notifier/app_events_notifier.dart';
+import '../../../../core/utility/app_label.dart';
 import '../../../../core/constants/common_imports.dart';
 
 class GraphChart extends StatefulWidget {

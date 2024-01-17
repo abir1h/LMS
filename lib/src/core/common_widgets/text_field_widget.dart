@@ -79,7 +79,8 @@ class AppTextField extends StatefulWidget {
       this.suffixIcon,
       this.keyboardType = TextInputType.text,
       this.autoMaxLine = false,
-      this.validator, this.onTaped})
+      this.validator,
+      this.onTaped})
       : super(key: key);
 
   @override

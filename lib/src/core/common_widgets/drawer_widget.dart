@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../feature/app.dart';
+import '../../feature/accessibility/presentation/controllers/accessibility_controller.dart';
+import '../../feature/accessibility/presentation/screens/accessibility_bottom_sheet.dart';
 import '../service/notifier/app_events_notifier.dart';
 import 'custom_dialog_widget.dart';
 import 'custom_switch_button.dart';
@@ -19,9 +20,10 @@ class DrawerWidget extends StatefulWidget {
   State<DrawerWidget> createState() => _DrawerWidgetState();
 }
 
-class _DrawerWidgetState extends State<DrawerWidget> with AppTheme, Language {
-  final GrayscaleController grayscaleController =
-      Get.put(GrayscaleController());
+class _DrawerWidgetState extends State<DrawerWidget>
+    with AppTheme, Language, AppEventsNotifier {
+  final AccessibilityController accessibilityController =
+      Get.put(AccessibilityController());
 
   @override
   Widget build(BuildContext context) {
@@ -141,11 +143,9 @@ class _DrawerWidgetState extends State<DrawerWidget> with AppTheme, Language {
               DrawerLinkWidget(
                 icon: Icons.chat_bubble,
                 text: label(e: en.messageText, b: bn.messageText),
-                onTap: () {  String modifiedString = replaceEnglishNumberWithBangla("3243465");
-                  print(modifiedString);
-                },
+                onTap: () {},
               ),
-              DrawerLinkWidget(
+              /*DrawerLinkWidget(
                 icon: Icons.accessible,
                 text: label(e: en.accessibilityText, b: bn.accessibilityText),
                 onTap: () {},
@@ -156,14 +156,19 @@ class _DrawerWidgetState extends State<DrawerWidget> with AppTheme, Language {
                       child: FittedBox(
                         child: CupertinoSwitch(
                           applyTheme: true,
-                          value: grayscaleController.isGrayscale.value,
+                          value: accessibilityController.isGrayscale.value,
                           onChanged: (v) {
-                            grayscaleController.toggleGrayscale();
+                            accessibilityController.toggleGrayscale();
                           },
                           activeColor: clr.appPrimaryColorGreen,
                         ),
                       )),
                 ),
+              ),*/
+              DrawerLinkWidget(
+                icon: Icons.accessible,
+                text: label(e: en.accessibilityText, b: bn.accessibilityText),
+                onTap: () => onTapAccessibility(),
               ),
               DrawerLinkWidget(
                 icon: Icons.logout,
@@ -178,6 +183,7 @@ class _DrawerWidgetState extends State<DrawerWidget> with AppTheme, Language {
       ),
     );
   }
+
   String replaceEnglishNumberWithBangla(String inputString) {
     Map<String, String> numberMap = {
       '0': '০',
@@ -202,6 +208,13 @@ class _DrawerWidgetState extends State<DrawerWidget> with AppTheme, Language {
     return result;
   }
 
+  void onTapAccessibility() {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (context) => const AccessibilityBottomSheet(),
+    ).then((value) => setState(() {}));
+  }
+
   void showLogoutPromptDialog() {
     CustomDialogWidget.show(
       context: context,
@@ -216,6 +229,15 @@ class _DrawerWidgetState extends State<DrawerWidget> with AppTheme, Language {
         Get.find<LandingController>().logout();
       }
     });
+  }
+
+  @override
+  void onEventReceived(EventAction action) {
+    if (action == EventAction.drawer) {
+      if (mounted) {
+        setState(() {});
+      }
+    }
   }
 }
 

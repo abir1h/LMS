@@ -32,8 +32,7 @@ class CustomImageWidget extends StatelessWidget {
         //     ),
         //   ),
         // ),
-        placeholder: (context, url) =>
-            Image.asset(ImageAssets.imgPlaceholder),
+        placeholder: (context, url) => Image.asset(ImageAssets.imgPlaceholder),
         errorWidget: (context, url, error) =>
             Image.asset(ImageAssets.imgPlaceholder),
         fit: boxFit,

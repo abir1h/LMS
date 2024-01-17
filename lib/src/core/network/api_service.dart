@@ -43,37 +43,38 @@ class ApiService {
       throw FetchDataException('No Internet connection');
     }
   }
+
   dynamic _returnResponse(Response<dynamic> response) {
-  appPrint("------------------------------");
-  appPrint("Status Code ${response.statusCode}");
-  appPrint("------------------------------");
-  switch (response.statusCode) {
-    case 200:
-      var responseJson = jsonEncode(response.data);
-      return responseJson;
-    case 201:
-      var responseJson = jsonEncode(response.data);
-      return responseJson;
-    case 204:
-      var responseJson = {'status_code': 204};
-      return responseJson;
-    case 400:
-      var responseJson = jsonEncode(response.data);
-      return responseJson;
-    case 401:
-      var responseJson = jsonEncode(response.data);
-      return responseJson;
-    case 403:
-      throw UnauthorisedException(response.data);
-    case 404:
-      var responseJson = jsonEncode(response.data);
-      return responseJson;
-    case 422:
-      throw ValidationException(response.data);
-    case 500:
-    default:
-      throw FetchDataException(
-          'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+    appPrint("------------------------------");
+    appPrint("Status Code ${response.statusCode}");
+    appPrint("------------------------------");
+    switch (response.statusCode) {
+      case 200:
+        var responseJson = jsonEncode(response.data);
+        return responseJson;
+      case 201:
+        var responseJson = jsonEncode(response.data);
+        return responseJson;
+      case 204:
+        var responseJson = {'status_code': 204};
+        return responseJson;
+      case 400:
+        var responseJson = jsonEncode(response.data);
+        return responseJson;
+      case 401:
+        var responseJson = jsonEncode(response.data);
+        return responseJson;
+      case 403:
+        throw UnauthorisedException(response.data);
+      case 404:
+        var responseJson = jsonEncode(response.data);
+        return responseJson;
+      case 422:
+        throw ValidationException(response.data);
+      case 500:
+      default:
+        throw FetchDataException(
+            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
     }
   }
 }

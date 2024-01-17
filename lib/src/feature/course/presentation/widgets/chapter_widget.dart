@@ -2,19 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/routes/app_route.dart';
+import '../../../../core/routes/app_route_args.dart';
 import '../../../assessment/presentation/screens/assesment_single_question_screen.dart';
 import '../../../assessment/presentation/screens/assessment_answer_in_one_word_screen.dart';
 import '../../../assessment/presentation/screens/assessment_matching_screen.dart';
-import '../../../assessment/presentation/screens/assessment_screen.dart';
 import '../../../assessment/presentation/screens/assessment_true_false_screen.dart';
 import '../../../assessment/presentation/screens/assessment_quiz_screen.dart';
-import '../../../../core/routes/app_routes.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../assessment/presentation/screens/assessment_fill_in_the_blank_screen.dart';
-import '../screens/course_assessment_screen.dart';
-import '../screens/course_assignment_screen.dart';
-import '../../../transcript_video/presentaion/screens/transcript_video_screen.dart';
-import '../screens/course_live_class_screen.dart';
 import 'course_content_widget.dart';
 import '../../../../core/constants/common_imports.dart';
 
@@ -147,10 +143,12 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                     b: "ভূমিকা, অধ্যায়ের বিবরণ"),
                 buttonIcon: Icons.visibility,
                 status: true,
-                onTap: () => Get.toNamed(AppRoutes.introduction,
-                    arguments: label(
-                        e: "Introduction, Chapter Description",
-                        b: "ভূমিকা, অধ্যায়ের বিবরণ")),
+                onTap: () => Navigator.of(context).pushNamed(
+                    AppRoute.courseIntroductionScreen,
+                    arguments: CourseIntroductionScreenArgs(
+                        screenTitle: label(
+                            e: "Introduction, Chapter Description",
+                            b: "ভূমিকা, অধ্যায়ের বিবরণ"))),
               ),
               CourseContentWidget(
                 courseIcon: Icons.smart_display,
@@ -159,25 +157,18 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                 buttonText: label(e: en.see, b: bn.see),
                 buttonIcon: Icons.play_circle,
                 status: true,
-                onTap: () => Get.to(() => const TranscriptVideoScreen()),
+                onTap: () => Navigator.of(context)
+                    .pushNamed(AppRoute.transcriptVideoScreen),
               ),
               CourseContentWidget(
                 courseIcon: Icons.assignment,
                 iconColor: clr.appPrimaryColorGreen,
-                title: label(e: "Assignment 1", b: "অ্যাসাইনমেন্ট"),
+                title: label(e: "Assignment", b: "অ্যাসাইনমেন্ট"),
                 buttonIcon: Icons.visibility,
                 status: true,
-                onTap: () => Get.to(() => const CourseAssignmentScreen()),
+                onTap: () => Navigator.of(context)
+                    .pushNamed(AppRoute.courseAssignmentScreen),
               ),
-              // CourseContentWidget(
-              //   courseIcon: Icons.assignment,
-              //   iconColor: clr.appPrimaryColorGreen,
-              //   title: label(e: "Assignment 3", b: "অ্যাসাইনমেন্ট"),
-              //   buttonIcon: Icons.visibility,
-              //   buttonText: "আবার সাবমিট করুন",
-              //   status: true,
-              //   onTap: () => Get.to(() => const CourseAssignmentScreen()),
-              // ),
               CourseContentWidget(
                 courseIcon: Icons.cast_connected,
                 iconColor: clr.textColorBlack,
@@ -185,7 +176,8 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                 buttonText: label(e: en.join, b: bn.join),
                 buttonIcon: Icons.video_call,
                 status: true,
-                onTap: () => Get.to(() => const CourseLiveClassScreen()),
+                onTap: () => Navigator.of(context)
+                    .pushNamed(AppRoute.courseLiveClassScreen),
               ),
               CourseContentWidget(
                 courseIcon: Icons.help_center,
@@ -193,9 +185,11 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                 title: label(e: "Evaluation", b: "মূল্যায়ন"),
                 buttonIcon: Icons.visibility,
                 status: true,
-                onTap: () => Get.to(() => CourseAssessmentScreen(
-                      onTap: () => Get.to(const AssessmentScreen()),
-                    )),
+                onTap: () => Navigator.of(context).pushNamed(
+                    AppRoute.courseAssessmentScreen,
+                    arguments: CourseAssessmentScreenArgs(
+                        onTap: () => Navigator.of(context)
+                            .pushNamed(AppRoute.assessmentScreen))),
               ),
               CourseContentWidget(
                 courseIcon: Icons.help_center,
@@ -203,10 +197,11 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                 title: label(e: "Evaluation 2", b: "মূল্যায়ন ২"),
                 buttonIcon: Icons.visibility,
                 status: true,
-                onTap: () => Get.to(() => CourseAssessmentScreen(
-                      onTap: () =>
-                          Get.to(const AssessmentSingleQuestionScreen()),
-                    )),
+                onTap: () => Navigator.of(context).pushNamed(
+                    AppRoute.courseAssessmentScreen,
+                    arguments: CourseAssessmentScreenArgs(
+                        onTap: () =>
+                            Get.to(const AssessmentSingleQuestionScreen()))),
               ),
               CourseContentWidget(
                 courseIcon: Icons.add_comment,
@@ -214,9 +209,10 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                 title: label(e: "Quiz", b: "কুইজ"),
                 buttonIcon: Icons.visibility,
                 status: true,
-                onTap: () => Get.to(() => CourseAssessmentScreen(
-                      onTap: () => Get.to(const AssessmentQuizScreen()),
-                    )),
+                onTap: () => Navigator.of(context).pushNamed(
+                    AppRoute.courseAssessmentScreen,
+                    arguments: CourseAssessmentScreenArgs(
+                        onTap: () => Get.to(const AssessmentQuizScreen()))),
               ),
               CourseContentWidget(
                 courseIcon: Icons.add_comment,
@@ -224,9 +220,10 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                 title: label(e: "Matching", b: "ম্যাচিং"),
                 buttonIcon: Icons.visibility,
                 status: true,
-                onTap: () => Get.to(() => CourseAssessmentScreen(
-                      onTap: () => Get.to(const AssessmentMatchingScreen()),
-                    )),
+                onTap: () => Navigator.of(context).pushNamed(
+                    AppRoute.courseAssessmentScreen,
+                    arguments: CourseAssessmentScreenArgs(
+                        onTap: () => Get.to(const AssessmentMatchingScreen()))),
               ),
               CourseContentWidget(
                 courseIcon: Icons.add_comment,
@@ -234,9 +231,11 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                 title: label(e: "True False", b: "সত্য মিথ্যা"),
                 buttonIcon: Icons.visibility,
                 status: true,
-                onTap: () => Get.to(() => CourseAssessmentScreen(
-                      onTap: () => Get.to(const AssessmentTrueFalseScreen()),
-                    )),
+                onTap: () => Navigator.of(context).pushNamed(
+                    AppRoute.courseAssessmentScreen,
+                    arguments: CourseAssessmentScreenArgs(
+                        onTap: () =>
+                            Get.to(const AssessmentTrueFalseScreen()))),
               ),
               CourseContentWidget(
                 courseIcon: Icons.add_comment,
@@ -244,10 +243,11 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                 title: label(e: "Fill in the gaps", b: "শূন্যস্থান পূরণ"),
                 buttonIcon: Icons.visibility,
                 status: true,
-                onTap: () => Get.to(() => CourseAssessmentScreen(
-                      onTap: () =>
-                          Get.to(const AssessmentFillInTheBlankScreen()),
-                    )),
+                onTap: () => Navigator.of(context).pushNamed(
+                    AppRoute.courseAssessmentScreen,
+                    arguments: CourseAssessmentScreenArgs(
+                        onTap: () =>
+                            Get.to(const AssessmentFillInTheBlankScreen()))),
               ),
               CourseContentWidget(
                 courseIcon: Icons.add_comment,
@@ -255,9 +255,11 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                 title: label(e: "One word answer", b: "এক কথায় উত্তর"),
                 buttonIcon: Icons.visibility,
                 status: true,
-                onTap: () => Get.to(() => CourseAssessmentScreen(
-                      onTap: () => Get.to(const AssessmentAnsInOneWordScreen()),
-                    )),
+                onTap: () => Navigator.of(context).pushNamed(
+                    AppRoute.courseAssessmentScreen,
+                    arguments: CourseAssessmentScreenArgs(
+                        onTap: () =>
+                            Get.to(const AssessmentAnsInOneWordScreen()))),
               ),
               CourseContentWidget(
                 courseIcon: Icons.add_comment,
@@ -265,7 +267,8 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                 title: label(e: en.discussion, b: bn.discussion),
                 buttonIcon: Icons.visibility,
                 status: true,
-                onTap: () => Get.toNamed(AppRoutes.discussion),
+                onTap: () =>
+                    Navigator.of(context).pushNamed(AppRoute.discussionScreen),
               ),
             ],
           )

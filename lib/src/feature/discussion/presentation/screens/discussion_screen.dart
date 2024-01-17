@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 
-import '../../../../core/routes/app_routes.dart';
+import '../../../../core/routes/app_route.dart';
+import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
@@ -28,7 +28,8 @@ class _DiscussionScreenState extends State<DiscussionScreen>
               iconData: Icons.groups,
               iconColor: clr.appPrimaryColorGreen,
               title: label(e: en.allDiscussion, b: bn.allDiscussion),
-              onTap: () => Get.toNamed(AppRoutes.discussionList),
+              onTap: () => Navigator.of(context)
+                  .pushNamed(AppRoute.discussionListScreen),
             ),
             DiscussionTile(
               iconData: Icons.text_snippet,
@@ -36,10 +37,12 @@ class _DiscussionScreenState extends State<DiscussionScreen>
               title: label(
                   e: "Introduction, Chapter Description",
                   b: "ভূমিকা, অধ্যায়ের বিবরণ"),
-              onTap: () => Get.toNamed(AppRoutes.introduction,
-                  arguments: label(
-                      e: "Introduction, Chapter Description",
-                      b: "ভূমিকা, অধ্যায়ের বিবরণ")),
+              onTap: () => Navigator.of(context).pushNamed(
+                  AppRoute.courseIntroductionScreen,
+                  arguments: CourseIntroductionScreenArgs(
+                      screenTitle: label(
+                          e: "Introduction, Chapter Description",
+                          b: "ভূমিকা, অধ্যায়ের বিবরণ"))),
             ),
             DiscussionTile(
               iconData: Icons.smart_display,
@@ -310,7 +313,7 @@ class _DiscussionScreenState extends State<DiscussionScreen>
                           fontSize: size.textSmall,
                           color: clr.appPrimaryColorGreen),
                     )
-                  : SizedBox(),
+                  : const SizedBox(),
             ],
           ),
         )

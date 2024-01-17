@@ -5,10 +5,11 @@ class CustomFilePicker extends StatefulWidget {
   final Function(String) onFilePicked;
   final Widget child;
 
-  CustomFilePicker({super.key, required this.onFilePicked, required this.child});
+  const CustomFilePicker(
+      {super.key, required this.onFilePicked, required this.child});
 
   @override
-  _CustomFilePickerState createState() => _CustomFilePickerState();
+  State<CustomFilePicker> createState() => _CustomFilePickerState();
 }
 
 class _CustomFilePickerState extends State<CustomFilePicker> {

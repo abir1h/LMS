@@ -9,7 +9,7 @@ import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
 import '../controllers/assessment_controller.dart';
 import '../widgets/question_widget.dart';
-import 'assesment_result_screen.dart';
+import 'assessment_result_screen.dart';
 
 class AssessmentQuizScreen extends StatefulWidget {
   const AssessmentQuizScreen({super.key});
@@ -73,7 +73,7 @@ class _AssessmentQuizScreenState extends State<AssessmentQuizScreen>
                     onTap: () {
                       CustomToasty.of(context)
                           .showSuccess("সফলভাবে  জমাদান সম্পন্ন হয়েছে");
-                      Get.to(const AssesmentResultScreen());
+                      Get.to(const AssessmentResultScreen());
                     },
                     title: label(e: en.submit, b: bn.submit),
                     horizontalPadding: size.w20,

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/common_widgets/image_preview.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
 
-class QuestionWidget extends StatelessWidget with AppTheme {
+class QuestionWidget extends StatelessWidget with AppTheme, ImagePreviewDialog {
   final String questionNo;
   final String questionText;
   final String questionImage;
@@ -48,7 +49,11 @@ class QuestionWidget extends StatelessWidget with AppTheme {
         if (questionImage.isNotEmpty)
           Padding(
             padding: EdgeInsets.only(top: size.h4),
-            child: Center(child: Image.asset(questionImage)),
+            child: GestureDetector(
+                onTap: () {
+                  ImagePreviewDialog.showImagePreview(context, questionImage);
+                },
+                child: Center(child: Image.asset(questionImage))),
           ),
         if (questionDescription.isNotEmpty)
           Padding(

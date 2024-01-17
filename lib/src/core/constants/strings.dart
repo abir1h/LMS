@@ -3,8 +3,12 @@ class StringData {
 
   static const String accessTokenKey = "accessTokenKey";
   static const String refreshTokenKey = "refreshTokenKey";
+  static const String expiresAt = "expiresAt";
   static const String userRoleKey = "userRoleKey";
   static const String userPermissionKey = "userPermissionKey";
+
+  static const String textSizeKey = "textSizeKey";
+  static const String monochromeKey = "monochromeKey";
 
   static const String fontFamilyPoppins = 'Poppins';
   static const String fontFamilyRoboto = 'Roboto';

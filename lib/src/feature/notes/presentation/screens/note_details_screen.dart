@@ -2,43 +2,40 @@ import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
 
-import '../../../transcript_video/presentaion/screens/transcript_video_screen.dart';
+import '../../../../core/routes/app_route.dart';
+import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/common_widgets/quil_text_viewer.dart';
-import 'note_edit_screen.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
-import '../../../../core/routes/app_routes.dart';
 import '../controllers/note_controller.dart';
-import '../models/note_model.dart';
 
 class NoteDetailsScreen extends StatefulWidget {
-  final NoteModel? mainModel;
-  const NoteDetailsScreen({
-    super.key,
-    this.mainModel,
-  });
+  final Object? arguments;
+  const NoteDetailsScreen({super.key, this.arguments});
 
   @override
   State<NoteDetailsScreen> createState() => _NoteDetailsScreenState();
 }
 
 class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
+  late NoteDetailsScreenArgs _screenArgs;
+
   String contentText = '';
   final controller = Get.put(NoteController());
   final _controller = QuillController.basic();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    _screenArgs = widget.arguments as NoteDetailsScreenArgs;
     setData();
   }
 
   setData() {
-    if (widget.mainModel != null) {
-      if (widget.mainModel!.description != null) {
+    if (_screenArgs.noteModel != null) {
+      if (_screenArgs.noteModel!.description != null) {
         final Document doc =
-            Document.fromJson(widget.mainModel!.description as List);
+            Document.fromJson(_screenArgs.noteModel!.description as List);
         _controller.document = doc;
         contentText = doc.toPlainText();
       }
@@ -57,26 +54,29 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
               onPressed: () {
                 // Check if the note with the same ID exists in the list
                 int existingIndex = controller.noteList.indexWhere(
-                  (note) => note.id == widget.mainModel?.id!,
+                  (note) => note.id == _screenArgs.noteModel?.id!,
                 );
 
                 if (existingIndex != -1) {
                   // Replace the existing note with the updated one
-                  controller.noteList[existingIndex] = widget.mainModel!;
-                  Get.toNamed(AppRoutes.bottomNav, arguments: 2);
+                  controller.noteList[existingIndex] = _screenArgs.noteModel!;
+                  Navigator.of(context).pushNamed(AppRoute.rootScreen,
+                      arguments: RootScreenArgs(index: 2));
+                  // Get.toNamed(AppRoutes.bottomNav, arguments: 2);
                 } else {
                   // If the note with the ID doesn't exist, add it to the list
-                  controller.noteList.add(widget.mainModel!);
-                  Get.toNamed(AppRoutes.bottomNav, arguments: 2);
+                  controller.noteList.add(_screenArgs.noteModel!);
+                  Navigator.of(context).pushNamed(AppRoute.rootScreen,
+                      arguments: RootScreenArgs(index: 2));
                 }
               },
               icon: Icon(Icons.check,
                   size: size.r24, color: clr.appPrimaryColorGreen)),
           IconButton(
               onPressed: () {
-                Get.to(() => NoteEditScreen(
-                      mainModel: widget.mainModel,
-                    ));
+                Navigator.of(context).pushNamed(AppRoute.noteEditScreen,
+                    arguments: NoteDetailsScreenArgs(
+                        noteModel: _screenArgs.noteModel));
               },
               icon:
                   Icon(Icons.edit, size: size.r24, color: clr.iconColorBlack)),
@@ -87,14 +87,15 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            widget.mainModel!.reference != "টপিক সিলেক্ট করুন"
+            _screenArgs.noteModel!.reference != "টপিক সিলেক্ট করুন"
                 ? InkWell(
-                    onTap: () => Get.to(const TranscriptVideoScreen()),
+                    onTap: () => Navigator.of(context)
+                        .pushNamed(AppRoute.transcriptVideoScreen),
                     child: Row(
                       children: [
                         Expanded(
                             child: Text(
-                          widget.mainModel!.reference.toString(),
+                          _screenArgs.noteModel!.reference.toString(),
                           style: TextStyle(
                               color: clr.appPrimaryColorGreen,
                               fontSize: size.textSmall,
@@ -113,7 +114,7 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
               height: size.h10,
             ),
             Text(
-              widget.mainModel!.title!,
+              _screenArgs.noteModel!.title!,
               style: TextStyle(
                   fontSize: size.textXMedium,
                   color: clr.textColorAppleBlack,

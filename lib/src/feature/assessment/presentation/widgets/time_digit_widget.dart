@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/utility/app_label.dart';
 import '../../../../core/constants/common_imports.dart';
 
 class TimeDigitWidget<T> extends StatefulWidget {
@@ -78,7 +79,7 @@ class _TimeDigitWidgetState<T> extends State<TimeDigitWidget<T>> with AppTheme {
       ),
       child: FittedBox(
         child: Text(
-          value.toString(),
+          replaceEnglishNumberWithBangla(value.toString()),
           style: TextStyle(
             fontSize: size.textLarge,
             color: clr.whiteColor,

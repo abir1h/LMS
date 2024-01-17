@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/routes/app_route.dart';
+import '../../../../core/routes/app_route_args.dart';
 import '../models/assignment_model.dart';
 import '../../../../core/utility/app_label.dart';
 import '../controllers/assignment_controller.dart';
-import '../screens/assignment_submit_screen.dart';
 import '../../../../core/constants/common_imports.dart';
 
 class AssignmentBottomSheet extends StatefulWidget {
@@ -165,11 +166,17 @@ class _AssignmentBottomSheetState extends State<AssignmentBottomSheet>
 
                           if (widget.from == "assignmentScreen") {
                             Navigator.of(context).pop();
-                            Get.to(() => AssignmentSubmitScreen(
-                                  mainModel: AssignmentModel(
-                                      assignmentId: 0,
-                                      content: _controller.document),
-                                ));
+                            Navigator.of(context).pushNamed(
+                                AppRoute.assignmentSubmitScreen,
+                                arguments: AssignmentSubmitScreenArgs(
+                                    assignmentModel: AssignmentModel(
+                                        assignmentId: 0,
+                                        content: _controller.document)));
+                            // Get.to(() => AssignmentSubmitScreen(
+                            //       mainModel: AssignmentModel(
+                            //           assignmentId: 0,
+                            //           content: _controller.document),
+                            //     ));
                           } else {
                             Navigator.of(context).pop();
                           }
