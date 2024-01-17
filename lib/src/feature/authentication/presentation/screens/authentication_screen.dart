@@ -6,14 +6,12 @@ import 'package:get/get.dart';
 import '../../../../core/network/api_service.dart';
 import '../../../../core/routes/app_route.dart';
 import '../../../../core/routes/app_route_args.dart';
-import '../../../../core/routes/app_routes.dart';
 import '../../data/models/emis_login_response_model.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/custom_switch_button.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
 import '../controllers/authentication_controller.dart';
-import 'emis_webview_screen.dart';
 
 class AuthenticationScreen extends StatefulWidget {
   const AuthenticationScreen({super.key});

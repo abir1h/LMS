@@ -7,7 +7,6 @@ import '../controller/discussion_controller.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
-import 'detailed_discussion.dart';
 
 class DiscussionListScreen extends StatefulWidget {
   const DiscussionListScreen({super.key});

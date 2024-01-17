@@ -12,7 +12,6 @@ import '../../../../core/service/notifier/app_events_notifier.dart';
 import '../../../course/presentation/controllers/course_controller.dart';
 import '../../../course/presentation/screens/course_screen.dart';
 import '../../../../core/utility/app_label.dart';
-import '../../../notes/presentation/screens/note_edit_screen.dart';
 import '../../../notes/presentation/screens/note_screen.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../profile/presentation/screens/profile_screen.dart';
@@ -180,7 +179,8 @@ class _RootScreenState extends State<RootScreen>
       floatingActionButton: _currentPageIndex == 2
           ? GestureDetector(
               onTap: () {
-                Navigator.of(context).pushNamed(AppRoute.noteEditScreen);
+                Navigator.of(context).pushNamed(AppRoute.noteEditScreen,
+                    arguments: NoteDetailsScreenArgs(noteModel: null));
               },
               child: Container(
                 padding: EdgeInsets.all(size.r16),

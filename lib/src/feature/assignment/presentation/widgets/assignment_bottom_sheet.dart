@@ -7,7 +7,6 @@ import '../../../../core/routes/app_route_args.dart';
 import '../models/assignment_model.dart';
 import '../../../../core/utility/app_label.dart';
 import '../controllers/assignment_controller.dart';
-import '../screens/assignment_submit_screen.dart';
 import '../../../../core/constants/common_imports.dart';
 
 class AssignmentBottomSheet extends StatefulWidget {

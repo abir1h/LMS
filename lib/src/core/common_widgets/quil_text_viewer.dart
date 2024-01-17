@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
-import 'package:lms/src/core/constants/app_theme.dart';
 
 import '../constants/common_imports.dart';
+
 class QuilTextViewer extends StatefulWidget {
   final QuillController controller;
   const QuilTextViewer({super.key, required this.controller});
@@ -11,24 +11,23 @@ class QuilTextViewer extends StatefulWidget {
   State<QuilTextViewer> createState() => _QuilTextViewerState();
 }
 
-class _QuilTextViewerState extends State<QuilTextViewer> with AppTheme{
+class _QuilTextViewerState extends State<QuilTextViewer> with AppTheme {
   @override
   Widget build(BuildContext context) {
-    return  QuillProvider(
+    return QuillProvider(
       configurations: QuillConfigurations(
         controller: widget.controller,
         sharedConfigurations: QuillSharedConfigurations(
-          animationConfigurations:
-          QuillAnimationConfigurations.disableAll(),
+          animationConfigurations: QuillAnimationConfigurations.disableAll(),
         ),
       ),
-      child:  Builder(
+      child: Builder(
         builder: (context) {
           return QuillEditor(
-
             scrollController: ScrollController(),
             configurations: QuillEditorConfigurations(
-              readOnly: false,scrollPhysics: NeverScrollableScrollPhysics(),
+              readOnly: false,
+              scrollPhysics: const NeverScrollableScrollPhysics(),
               customStyles: DefaultStyles(
                 code: DefaultTextBlockStyle(
                   TextStyle(

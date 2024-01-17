@@ -6,7 +6,6 @@ import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/image_preview.dart';
 import '../../../../core/routes/app_route.dart';
-import '../../../course/presentation/screens/course_assignment_screen.dart';
 import '../controllers/assignment_controller.dart';
 import '../widgets/assignment_bottom_sheet.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';

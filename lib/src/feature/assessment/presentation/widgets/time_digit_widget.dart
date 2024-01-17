@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lms/src/core/utility/app_label.dart';
 
+import '../../../../core/utility/app_label.dart';
 import '../../../../core/constants/common_imports.dart';
 
 class TimeDigitWidget<T> extends StatefulWidget {

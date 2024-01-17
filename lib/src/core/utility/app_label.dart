@@ -8,7 +8,6 @@ String label({required String e, required String b}) {
   return App.currentAppLanguage == AppLanguage.english ? e : b;
 }
 
-
 class App {
   App._();
   static App? _app;

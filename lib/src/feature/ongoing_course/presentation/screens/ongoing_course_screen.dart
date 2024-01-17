@@ -3,11 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/routes/app_route.dart';
 import '../../../../core/service/notifier/app_events_notifier.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
-import '../../../../core/routes/app_routes.dart';
 import '../controllers/ongoing_course_controller.dart';
 
 class OngoingCourseScreen extends StatefulWidget with AppTheme {
@@ -123,21 +123,24 @@ class _OngoingCourseScreenState extends State<OngoingCourseScreen>
                       text1: label(e: "Video 1:", b: "ভিডিও ১:"),
                       text2:
                           label(e: "Course Introduction", b: "কোর্সের পরিচিতি"),
-                      onTap: () => Get.toNamed(AppRoutes.transcriptVideo),
+                      onTap: () => Navigator.of(context)
+                          .pushNamed(AppRoute.transcriptVideoScreen),
                     ),
                     ContentWidget(
                       iconType: "video",
                       text1: label(e: "Video 1:", b: "ভিডিও ১:"),
                       text2:
                           label(e: "Course Introduction", b: "কোর্সের পরিচিতি"),
-                      onTap: () => Get.toNamed(AppRoutes.transcriptVideo),
+                      onTap: () => Navigator.of(context)
+                          .pushNamed(AppRoute.transcriptVideoScreen),
                     ),
                     ContentWidget(
                       iconType: "video",
                       text1: label(e: "Video 1:", b: "ভিডিও ১:"),
                       text2:
                           label(e: "Course Introduction", b: "কোর্সের পরিচিতি"),
-                      onTap: () => Get.toNamed(AppRoutes.transcriptVideo),
+                      onTap: () => Navigator.of(context)
+                          .pushNamed(AppRoute.transcriptVideoScreen),
                     ),
                     const ContentWidget(),
                     ContentWidget(

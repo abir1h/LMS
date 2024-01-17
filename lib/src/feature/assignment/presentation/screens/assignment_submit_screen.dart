@@ -1,20 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/routes/app_route.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../controllers/assignment_controller.dart';
-import '../models/assignment_model.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
-import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/quil_text_viewer.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
-import '../../../course/presentation/screens/course_assignment_screen.dart';
 import '../widgets/assignment_bottom_sheet.dart';
 
 class AssignmentSubmitScreen extends StatefulWidget {

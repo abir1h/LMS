@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../constants/app_theme.dart';
 import 'popup_widget.dart';
 
-
 class AppDropDownWidget<T> extends StatefulWidget {
   final Future<List<T>> Function() onLoadData;
   final String Function(T item) onGenerateTitle;
@@ -19,8 +18,7 @@ class AppDropDownWidget<T> extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<AppDropDownWidget<T>> createState() =>
-      _AppDropDownWidgetState<T>();
+  State<AppDropDownWidget<T>> createState() => _AppDropDownWidgetState<T>();
 }
 
 class _AppDropDownWidgetState<T> extends State<AppDropDownWidget<T>>
@@ -42,8 +40,7 @@ class _AppDropDownWidgetState<T> extends State<AppDropDownWidget<T>>
         decoration: BoxDecoration(
           color: clr.whiteColor,
           borderRadius: BorderRadius.circular(size.r12),
-          border:
-              Border.all(color: clr.boxStrokeColor, width: 1.w),
+          border: Border.all(color: clr.boxStrokeColor, width: 1.w),
         ),
         child: Row(
           children: [
@@ -60,7 +57,6 @@ class _AppDropDownWidgetState<T> extends State<AppDropDownWidget<T>>
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-
               ),
             ),
             Icon(

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
 
 import '../../../../core/routes/app_route.dart';
-import '../../../assignment/presentation/screens/assignment_screen.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';

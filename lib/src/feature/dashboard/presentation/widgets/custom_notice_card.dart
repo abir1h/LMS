@@ -11,7 +11,7 @@ class CustomNoticeCard extends StatelessWidget with AppTheme {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 1.sw,
       child: Row(
         mainAxisSize: MainAxisSize.max,

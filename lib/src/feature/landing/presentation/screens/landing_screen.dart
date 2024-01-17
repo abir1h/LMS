@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/core/routes/app_route.dart';
 
+import '../../../../core/routes/app_route.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/utility/app_label.dart';
-import '../../../notification/presentation/screens/notification_screen.dart';
 import '../../../../core/config/app_event_widget.dart';
 import '../../../../core/config/notification_clicked_notifier.dart';
 import '../../../../core/config/notification_client.dart';
 import '../../../../core/config/push_notification.dart';
-import '../../../../core/routes/app_routes.dart';
 import '../controllers/landing_controller.dart';
 import '../widgets/module_card_widget.dart';
 import '../widgets/row_item_template.dart';
@@ -149,8 +147,7 @@ class _LandingScreenState extends State<LandingScreen> with AppTheme, Language {
     // catch (error){
     //   debugPrint(error.toString());
     // }
-    Navigator.of(AppRoutes.navigatorKey.currentContext!).push(
-        MaterialPageRoute(builder: (context) => const NotificationScreen()));
+    Navigator.of(context).pushNamed(AppRoute.notificationScreen);
   }
 
   void _onNotificationReceived(NotificationEntity notification) async {}

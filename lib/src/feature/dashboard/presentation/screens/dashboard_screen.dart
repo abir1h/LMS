@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/core/routes/app_route.dart';
-import 'package:lms/src/core/routes/app_route_args.dart';
 
+import '../../../../core/routes/app_route.dart';
+import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/service/notifier/app_events_notifier.dart';
 import '../../../../core/utility/app_label.dart';
-import '../../../../core/routes/app_routes.dart';
 import '../../../landing/presentation/widgets/row_item_template.dart';
 import '../widgets/custom_notice_card.dart';
 import '../controller/dashboard_controller.dart';
@@ -52,7 +51,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                       label(e: en.ongoingCurriculum, b: bn.ongoingCurriculum),
                   onPressed: () => Navigator.of(context).pushNamed(
                       AppRoute.courseListScreen,
-                      arguments: CourseListScreenArgs(curriculumType: "running")),
+                      arguments:
+                          CourseListScreenArgs(curriculumType: "running")),
                   // onPressed: () =>
                   //     Get.toNamed(AppRoutes.courseList, arguments: "running"),
                   subTitle: label(
@@ -70,7 +70,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                       e: en.completedCurriculum, b: bn.completedCurriculum),
                   onPressed: () => Navigator.of(context).pushNamed(
                       AppRoute.courseListScreen,
-                      arguments: CourseListScreenArgs(curriculumType: "completed")),
+                      arguments:
+                          CourseListScreenArgs(curriculumType: "completed")),
                   // onPressed: () =>
                   //     Get.toNamed(AppRoutes.courseList, arguments: "completed"),
                   subTitle: label(
@@ -91,7 +92,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                   titleColor: clr.appPrimaryColorGreen,
                   onPressed: () => Navigator.of(context).pushNamed(
                       AppRoute.courseListScreen,
-                      arguments: CourseListScreenArgs(curriculumType: "upcoming")),
+                      arguments:
+                          CourseListScreenArgs(curriculumType: "upcoming")),
                   // onPressed: () =>
                   //     Get.toNamed(AppRoutes.courseList, arguments: "upcoming"),
                   subTitle: label(

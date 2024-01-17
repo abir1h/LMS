@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lms/src/core/constants/app_theme.dart';
-import 'package:lms/src/feature/assessment/presentation/widgets/question_widget.dart';
-import 'package:lms/src/feature/assessment/presentation/widgets/true_false_answer_widget.dart';
+
+import '../../../../core/constants/app_theme.dart';
+import 'question_widget.dart';
+import 'true_false_answer_widget.dart';
 import '../screens/assessment_quiz_screen.dart';
 import '../screens/assessment_screen.dart';
 import 'descriptive_answer_widget.dart';

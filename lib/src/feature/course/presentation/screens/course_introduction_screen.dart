@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
-import '../controllers/introduction_controller.dart';
 import '../widgets/sliver_tab_section_widget.dart';
 
 class CourseIntroductionScreen extends StatefulWidget {

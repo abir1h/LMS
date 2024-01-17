@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../feature/accessibility/presentation/controllers/accessibility_controller.dart';
 import '../../feature/accessibility/presentation/screens/accessibility_bottom_sheet.dart';
-import '../../feature/app.dart';
 import '../service/notifier/app_events_notifier.dart';
 import 'custom_dialog_widget.dart';
 import 'custom_switch_button.dart';

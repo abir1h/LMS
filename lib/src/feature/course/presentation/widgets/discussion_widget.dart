@@ -1,14 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/core/routes/app_route_args.dart';
 
+import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/routes/app_route.dart';
 import '../../../discussion/presentation/controller/discussion_controller.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
-import '../../../discussion/presentation/screens/detailed_discussion.dart';
 import '../../../discussion/presentation/screens/discussion_bottom_sheet.dart';
 
 class DiscussionWidget extends StatefulWidget {

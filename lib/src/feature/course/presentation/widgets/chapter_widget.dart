@@ -7,16 +7,10 @@ import '../../../../core/routes/app_route_args.dart';
 import '../../../assessment/presentation/screens/assesment_single_question_screen.dart';
 import '../../../assessment/presentation/screens/assessment_answer_in_one_word_screen.dart';
 import '../../../assessment/presentation/screens/assessment_matching_screen.dart';
-import '../../../assessment/presentation/screens/assessment_screen.dart';
 import '../../../assessment/presentation/screens/assessment_true_false_screen.dart';
 import '../../../assessment/presentation/screens/assessment_quiz_screen.dart';
-import '../../../../core/routes/app_routes.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../assessment/presentation/screens/assessment_fill_in_the_blank_screen.dart';
-import '../screens/course_assessment_screen.dart';
-import '../screens/course_assignment_screen.dart';
-import '../../../transcript_video/presentaion/screens/transcript_video_screen.dart';
-import '../screens/course_live_class_screen.dart';
 import 'course_content_widget.dart';
 import '../../../../core/constants/common_imports.dart';
 

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 
 import '../../../../core/routes/app_route.dart';
 import '../../../../core/routes/app_route_args.dart';
-import '../../../../core/routes/app_routes.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
@@ -315,7 +313,7 @@ class _DiscussionScreenState extends State<DiscussionScreen>
                           fontSize: size.textSmall,
                           color: clr.appPrimaryColorGreen),
                     )
-                  : SizedBox(),
+                  : const SizedBox(),
             ],
           ),
         )

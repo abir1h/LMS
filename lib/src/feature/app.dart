@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/core/routes/app_route.dart';
 
+import '../core/routes/app_route.dart';
 import '../core/constants/strings.dart';
-import '../core/routes/app_routes.dart';
 import '../core/constants/app_theme.dart';
 import 'accessibility/presentation/controllers/accessibility_controller.dart';
 

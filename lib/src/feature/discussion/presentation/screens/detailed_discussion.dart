@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 
 import '../../../../core/routes/app_route_args.dart';
 import '../../models/comment_model.dart';
-import '../../models/discussion_model.dart';
 import '../controller/discussion_controller.dart';
 import 'opinion_bottom_sheet.dart';
 import '../../../../core/common_widgets/custom_button.dart';

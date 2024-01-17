@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/service/notifier/app_events_notifier.dart';
-import '../controllers/course_details_controller.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
 import '../widgets/chapter_widget.dart';
@@ -20,9 +18,6 @@ class CourseDetailsScreen extends StatefulWidget with AppTheme {
 
 class _CourseDetailsScreenState extends State<CourseDetailsScreen>
     with AppTheme, Language, AppEventsNotifier {
-  // final CourseDetailsController controller =
-  //     Get.find<CourseDetailsController>();
-
   late CourseDetailsScreenArgs _screenArgs;
 
   @override

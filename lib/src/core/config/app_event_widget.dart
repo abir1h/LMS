@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
-class AppEventSubscriber<T,T2 extends EventNotifier<T>> extends StatefulWidget {
+class AppEventSubscriber<T, T2 extends EventNotifier<T>>
+    extends StatefulWidget {
   final String uniqueKey;
   final T2 controller;
   final T initialData;
@@ -19,19 +20,23 @@ class AppEventSubscriber<T,T2 extends EventNotifier<T>> extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _AppEventSubscriberState<T,T2> createState() => _AppEventSubscriberState<T,T2>();
+  State<AppEventSubscriber<T, T2>> createState() =>
+      _AppEventSubscriberState<T, T2>();
 }
-class _AppEventSubscriberState<T,T2 extends EventNotifier<T>> extends State<AppEventSubscriber<T,T2>> {
+
+class _AppEventSubscriberState<T, T2 extends EventNotifier<T>>
+    extends State<AppEventSubscriber<T, T2>> {
   late StreamSubscription<MapEntry<String, T>> _subscription;
   late T _currentData;
-
 
   @override
   void initState() {
     _currentData = widget.initialData;
-    _subscription = widget.controller._eventController.stream.listen(_onEventReceived);
+    _subscription =
+        widget.controller._eventController.stream.listen(_onEventReceived);
     super.initState();
   }
+
   @override
   void dispose() {
     _subscription.cancel();
@@ -40,11 +45,12 @@ class _AppEventSubscriberState<T,T2 extends EventNotifier<T>> extends State<AppE
 
   @override
   Widget build(BuildContext context) {
-    return widget.builder(context,_currentData);
+    return widget.builder(context, _currentData);
   }
+
   void _onEventReceived(MapEntry<String, T> event) {
-    if(mounted && widget.uniqueKey == event.key){
-      if(widget.willUpdate == null || widget.willUpdate!(event.value)){
+    if (mounted && widget.uniqueKey == event.key) {
+      if (widget.willUpdate == null || widget.willUpdate!(event.value)) {
         setState(() {
           _currentData = event.value;
         });
@@ -53,12 +59,12 @@ class _AppEventSubscriberState<T,T2 extends EventNotifier<T>> extends State<AppE
   }
 }
 
-abstract class EventNotifier<T>{
-  final _eventController = PublishSubject<MapEntry<String,T>>();
+abstract class EventNotifier<T> {
+  final _eventController = PublishSubject<MapEntry<String, T>>();
 
-  void notifyListeners(String uniqueKey,T data){
-    if(!_eventController.isClosed){
-      _eventController.sink.add(MapEntry<String,T>(uniqueKey,data));
+  void notifyListeners(String uniqueKey, T data) {
+    if (!_eventController.isClosed) {
+      _eventController.sink.add(MapEntry<String, T>(uniqueKey, data));
     }
   }
 }
