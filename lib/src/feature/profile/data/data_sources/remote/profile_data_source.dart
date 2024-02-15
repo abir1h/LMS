@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import '../../../../../core/constants/urls.dart';
 import '../../../../../core/network/api_service.dart';
 import '../../../../shared/data/models/response_model.dart';
@@ -13,10 +11,9 @@ class ProfileRemoteDataSourceImp extends ProfileRemoteDataSource {
   @override
   Future<ResponseModel> userProfileInformationAction() async {
     final responseJson =
-        await ApiService().getRequest(ApiCredential.userProfile);
+        await Server.instance.getRequestForAuth(url: ApiCredential.userProfile);
     ResponseModel responseModel = ResponseModel.fromJson(
-        json.decode(responseJson),
-        (dynamic json) => ProfileDataModel.fromJson(json));
+        responseJson, (dynamic json) => ProfileDataModel.fromJson(json));
     return responseModel;
   }
 }

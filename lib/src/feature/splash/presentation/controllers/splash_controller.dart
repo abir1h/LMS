@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../../../core/config/local_storage_services.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/routes/app_route.dart';
+import '../../../../core/service/auth_cache_manager.dart';
 
 class SplashController extends GetxController {
   final localStorage = Get.find<LocalStorageServiceWithGetX>();
@@ -19,7 +20,7 @@ class SplashController extends GetxController {
   }
 
   Future<void> _navigateBasedOnLogin() async {
-    final loggedIn = await _isLoggedIn();
+    final loggedIn = await AuthCacheManager.isUserLoggedIn();
 
     if (loggedIn) {
       // Get.offNamed(AppRoutes.landing);

@@ -1,6 +1,5 @@
-import '../../../../core/config/local_storage_services.dart';
-import '../../../../core/constants/common_imports.dart';
 import '../../../../core/di/dependency_injection.dart';
+import '../../../../core/service/auth_cache_manager.dart';
 import '../../../shared/domain/entities/response_entity.dart';
 import '../../domain/use_cases/auth_use_case.dart';
 
@@ -21,7 +20,7 @@ class AuthService {
     return _authUseCase.getEMISLinkUseCase();
   }
 
-  static storeUserInfo(ResponseEntity responseEntity) async {
+/*  static storeUserInfo(ResponseEntity responseEntity) async {
     LocalStorageService localStorageService =
         await LocalStorageService.getInstance();
     if (responseEntity.data != null) {
@@ -36,6 +35,16 @@ class AuthService {
       if (responseEntity.data?.expiresAt != null) {
         localStorageService.storeStringValue(
             StringData.expiresAt, responseEntity.data!.expiresAt);
+      }
+    }
+  }*/
+  static storeUserInfo(ResponseEntity responseEntity) async {
+    if (responseEntity.data != null) {
+      if (responseEntity.data?.accessToken != null &&
+          responseEntity.data?.refreshToken != null &&
+          responseEntity.data?.expiresAt != null) {
+        AuthCacheManager.storeUserInfo(responseEntity.data?.accessToken,
+            responseEntity.data?.refreshToken, responseEntity.data?.expiresAt);
       }
     }
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../../core/common_widgets/custom_scaffold.dart';
+import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/routes/app_route.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../../domain/entities/auth_data_entity.dart';
@@ -47,7 +48,7 @@ class _EMISWebViewScreenState extends State<EMISWebViewScreen> {
               isLoading = true;
               print(isLoading);
             } else if (request.url.startsWith(
-                "http://103.209.40.89:81/api/auth/dev/authThroughEmis?")) {
+                "http://103.209.40.89:81/api/auth/dev/emis-auth?")) {
               isLoading = true;
 
               getUsernameToken(request.url);
@@ -56,7 +57,7 @@ class _EMISWebViewScreenState extends State<EMISWebViewScreen> {
                 AuthDataEntity authData = responseEntity.data!;
                 print(authData.accessToken);
               });
-
+              CustomToasty.of(context).showSuccess("Login Successfully");
               Navigator.of(context).pushNamedAndRemoveUntil(
                   AppRoute.landingScreen, (x) => false);
               return NavigationDecision.prevent;

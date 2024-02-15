@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import '../../../../shared/data/models/response_model.dart';
 import '../../../../../core/constants/urls.dart';
 import '../../../../../core/network/api_service.dart';
@@ -14,21 +12,19 @@ class AuthRemoteDataSourceImp extends AuthRemoteDataSource {
   @override
   Future<ResponseModel> getTokenAction(
       String username, String eMISToken) async {
-    final responseJson = await ApiService().getRequest(
-        "${ApiCredential.getToken}?username=$username&token=$eMISToken");
+    final responseJson = await Server.instance.getRequestForAuth(
+        url: "${ApiCredential.getToken}?username=$username&token=$eMISToken");
     ResponseModel responseModel = ResponseModel.fromJson(
-        json.decode(responseJson),
-        (dynamic json) => AuthDataModel.fromJson(json));
+        responseJson, (dynamic json) => AuthDataModel.fromJson(json));
     return responseModel;
   }
 
   @override
   Future<ResponseModel> getEMISLinkAction() async {
     final responseJson =
-        await ApiService().getRequest(ApiCredential.getEMISLink);
+        await Server.instance.getRequestForAuth(url: ApiCredential.getEMISLink);
     ResponseModel responseModel = ResponseModel.fromJson(
-        json.decode(responseJson),
-        (dynamic json) => AuthDataModel.fromJson(json));
+        responseJson, (dynamic json) => AuthDataModel.fromJson(json));
     return responseModel;
   }
 }
