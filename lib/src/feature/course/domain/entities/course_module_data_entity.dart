@@ -12,6 +12,8 @@ class CourseModuleDataEntity {
   final String endDate;
   final int sort;
   final bool isModified;
+  final bool isLocked;
+
   final List<CourseContentDataEntity>? courseContents;
 
   const CourseModuleDataEntity({
@@ -24,6 +26,7 @@ class CourseModuleDataEntity {
     required this.endDate,
     required this.sort,
     required this.isModified,
+    required this.isLocked,
     required this.courseContents,
   });
 }

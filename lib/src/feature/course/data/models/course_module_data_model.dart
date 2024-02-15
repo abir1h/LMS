@@ -12,6 +12,7 @@ class CourseModuleDataModel {
   final String endDate;
   final int sort;
   final bool isModified;
+  final bool isLocked;
   final List<CourseContentDataModel>? courseContents;
 
   const CourseModuleDataModel({
@@ -24,7 +25,7 @@ class CourseModuleDataModel {
     required this.endDate,
     required this.sort,
     required this.isModified,
-    required this.courseContents,
+    required this.courseContents,required this.isLocked
   });
 
 
@@ -41,6 +42,7 @@ class CourseModuleDataModel {
     isModified: json["is_modified"]??false,
     courseContents: List<CourseContentDataModel>.from(
         (json["data"] ?? []).map((x) => CourseContentDataModel.fromJson(x))),
+    isLocked: json["is_locked"]??false
   );
 
   Map<String, dynamic> toJson() => {
