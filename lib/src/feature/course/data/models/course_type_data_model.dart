@@ -14,9 +14,7 @@ class CourseTypeDataModel {
     required this.status,
   });
 
-  factory CourseTypeDataModel.fromRawJson(String str) => CourseTypeDataModel.fromJson(json.decode(str));
 
-  String toRawJson() => json.encode(toJson());
 
   factory CourseTypeDataModel.fromJson(Map<String, dynamic> json) => CourseTypeDataModel(
     id: json["id"]??-1,

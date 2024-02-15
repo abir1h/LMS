@@ -17,11 +17,6 @@ class CourseContentDataModel {
     required this.titleBn,
   });
 
-  factory CourseContentDataModel.fromRawJson(String str) =>
-      CourseContentDataModel.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
   factory CourseContentDataModel.fromJson(Map<String, dynamic> json) =>
       CourseContentDataModel(
         contentType: json["content_type"] ?? "",

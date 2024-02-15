@@ -27,9 +27,7 @@ class CourseModuleDataModel {
     required this.courseContents,
   });
 
-  factory CourseModuleDataModel.fromRawJson(String str) => CourseModuleDataModel.fromJson(json.decode(str));
 
-  String toRawJson() => json.encode(toJson());
 
   factory CourseModuleDataModel.fromJson(Map<String, dynamic> json) => CourseModuleDataModel(
     id: json["id"]??-1,
