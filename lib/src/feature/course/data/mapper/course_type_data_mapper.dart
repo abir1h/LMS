@@ -1,6 +1,4 @@
-import '../../domain/entities/course_content_data_entity.dart';
 import '../../domain/entities/course_type_data_entity.dart';
-import '../models/course_content_data_model.dart';
 import '../models/course_type_data_model.dart';
 
 abstract class CourseTypeDataMapper<M, E> {

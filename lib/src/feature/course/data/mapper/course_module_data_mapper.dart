@@ -1,4 +1,4 @@
-import 'package:lms/src/feature/course/data/mapper/course_content_data_mapper.dart';
+import 'course_content_data_mapper.dart';
 
 import '../../domain/entities/course_content_data_entity.dart';
 import '../../domain/entities/course_module_data_entity.dart';

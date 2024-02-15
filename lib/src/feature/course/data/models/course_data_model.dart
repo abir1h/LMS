@@ -1,5 +1,5 @@
-import 'package:lms/src/feature/course/data/models/course_module_data_model.dart';
-import 'package:lms/src/feature/course/data/models/course_type_data_model.dart';
+import 'course_module_data_model.dart';
+import 'course_type_data_model.dart';
 import 'package:meta/meta.dart';
 import 'dart:convert';
 @immutable

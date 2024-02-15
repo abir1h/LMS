@@ -1,4 +1,4 @@
-import 'package:lms/src/feature/course/data/models/course_content_data_model.dart';
+import 'course_content_data_model.dart';
 import 'package:meta/meta.dart';
 import 'dart:convert';
 @immutable
