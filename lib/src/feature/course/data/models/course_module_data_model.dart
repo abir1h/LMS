@@ -1,6 +1,6 @@
 import 'course_content_data_model.dart';
 import 'package:meta/meta.dart';
-import 'dart:convert';
+
 @immutable
 class CourseModuleDataModel {
   final int id;
@@ -41,7 +41,7 @@ class CourseModuleDataModel {
     sort: json["sort"]??-1,
     isModified: json["is_modified"]??false,
     courseContents: List<CourseContentDataModel>.from(
-        (json["data"] ?? []).map((x) => CourseContentDataModel.fromJson(x))),
+        (json["course_contents"] ?? []).map((x) => CourseContentDataModel.fromJson(x))),
     isLocked: json["is_locked"]??false
   );
 
