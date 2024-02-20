@@ -1,12 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
-import 'package:lms/src/feature/profile/domain/entities/profile_data_entity.dart';
-import 'package:lms/src/feature/profile/presentation/service/profile_service.dart';
 
+import '../service/profile_service.dart';
 import '../../../../core/routes/app_route.dart';
 import '../../../../core/service/auth_cache_manager.dart';
 import '../../../../core/service/notifier/app_events_notifier.dart';
@@ -14,6 +10,7 @@ import '../../../../core/common_widgets/custom_dialog_widget.dart';
 import '../../../../core/common_widgets/custom_switch_button.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
+import '../../domain/entities/profile_data_entity.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});

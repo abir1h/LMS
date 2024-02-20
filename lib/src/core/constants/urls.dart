@@ -12,4 +12,7 @@ class ApiCredential {
 
   static String userDashboard = "/dashboard";
   static String getCourse = "/courses";
+
+  static String getDiscussion = "/discussions";
+  static String getDiscussionComments = "/discussion-comments";
 }

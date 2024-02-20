@@ -11,16 +11,14 @@ class CourseContentDataModel {
   final bool isCompleted;
   final String lastWatchTime;
 
-
-  const CourseContentDataModel( {
-    required this.contentType,
-    required this.contentId,
-    required this.sort,
-    required this.titleEn,
-    required this.titleBn,
-    required this.isCompleted,
-    required this.lastWatchTime
-  });
+  const CourseContentDataModel(
+      {required this.contentType,
+      required this.contentId,
+      required this.sort,
+      required this.titleEn,
+      required this.titleBn,
+      required this.isCompleted,
+      required this.lastWatchTime});
 
   factory CourseContentDataModel.fromJson(Map<String, dynamic> json) =>
       CourseContentDataModel(
@@ -28,7 +26,9 @@ class CourseContentDataModel {
         contentId: json["content_id"] ?? -1,
         sort: json["sort"] ?? -1,
         titleEn: json["title_en"] ?? "",
-        titleBn: json["title_bn"] ?? "", isCompleted: json["is_completed"]??false, lastWatchTime:json["last_watch_time"]??"",
+        titleBn: json["title_bn"] ?? "",
+        isCompleted: json["is_completed"] ?? false,
+        lastWatchTime: json["last_watch_time"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {
