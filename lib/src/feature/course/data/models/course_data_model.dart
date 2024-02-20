@@ -1,3 +1,6 @@
+import 'package:flutter/cupertino.dart';
+
+@immutable
 class CourseDataModel {
   final int id;
   final String code;
@@ -10,7 +13,7 @@ class CourseDataModel {
   final int circularStatus;
   final int courseProgress;
 
-  CourseDataModel({
+  const CourseDataModel({
     required this.id,
     required this.code,
     required this.nameEn,
