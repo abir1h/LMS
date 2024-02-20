@@ -1,5 +1,4 @@
-import 'package:meta/meta.dart';
-import 'dart:convert';
+import 'package:flutter/foundation.dart';
 
 @immutable
 class CourseContentDataModel {

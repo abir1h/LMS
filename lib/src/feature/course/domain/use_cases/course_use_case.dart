@@ -10,6 +10,7 @@ class CourseUseCase {
     final response = _courseRepository.getCourses();
     return response;
   }
+
   Future<ResponseEntity> getCourseDetailsUseCase(int courseId) async {
     final response = _courseRepository.getCourseDetails(courseId);
     return response;

@@ -1,5 +1,6 @@
+import 'package:flutter/foundation.dart';
+
 import 'course_content_data_model.dart';
-import 'package:meta/meta.dart';
 
 @immutable
 class CourseModuleDataModel {
