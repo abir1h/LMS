@@ -17,7 +17,7 @@ class AllCourseDataModelToEntityMapper
       courses: List<CourseDataEntity>.from(entity.courses)
           .map((entity) => entity.toCourseDataModel)
           .toList(),
-      running: List<CourseDataEntity>.from(entity.courses)
+      running: List<CourseDataEntity>.from(entity.running)
           .map((entity) => entity.toCourseDataModel)
           .toList(),
     );
@@ -29,7 +29,7 @@ class AllCourseDataModelToEntityMapper
       courses: List<CourseDataModel>.from(model.courses)
           .map((model) => model.toCourseDataEntity)
           .toList(),
-      running: List<CourseDataModel>.from(model.courses)
+      running: List<CourseDataModel>.from(model.running)
           .map((model) => model.toCourseDataEntity)
           .toList(),
     );

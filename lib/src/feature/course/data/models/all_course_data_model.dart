@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'course_data_model.dart';
-import 'package:lms/src/feature/course/domain/entities/course_data_entity.dart';
 
 @immutable
 class AllCourseDataModel {

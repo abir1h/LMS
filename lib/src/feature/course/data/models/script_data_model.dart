@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
 @immutable
 class ScriptDataModel {
@@ -26,29 +26,30 @@ class ScriptDataModel {
     required this.status,
   });
 
-  factory ScriptDataModel.fromJson(Map<String, dynamic> json) => ScriptDataModel(
-    id: json["id"]??-1,
-    courseId: json["course_id"]??-1,
-    courseModuleId: json["course_module_id"]??-1,
-    titleEn: json["title_en"]??"",
-    titleBn: json["title_bn"]??"",
-    descriptionEn: json["description_en"]??"",
-    descriptionBn: json["description_bn"]??"",
-    file: json["file"]??"",
-    readingTime: json["reading_time"]??-1,
-    status: json["status"]??-1,
-  );
+  factory ScriptDataModel.fromJson(Map<String, dynamic> json) =>
+      ScriptDataModel(
+        id: json["id"] ?? -1,
+        courseId: json["course_id"] ?? -1,
+        courseModuleId: json["course_module_id"] ?? -1,
+        titleEn: json["title_en"] ?? "",
+        titleBn: json["title_bn"] ?? "",
+        descriptionEn: json["description_en"] ?? "",
+        descriptionBn: json["description_bn"] ?? "",
+        file: json["file"] ?? "",
+        readingTime: json["reading_time"] ?? -1,
+        status: json["status"] ?? -1,
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "course_id": courseId,
-    "course_module_id": courseModuleId,
-    "title_en": titleEn,
-    "title_bn": titleBn,
-    "description_en": descriptionEn,
-    "description_bn": descriptionBn,
-    "file": file,
-    "reading_time": readingTime,
-    "status": status,
-  };
+        "id": id,
+        "course_id": courseId,
+        "course_module_id": courseModuleId,
+        "title_en": titleEn,
+        "title_bn": titleBn,
+        "description_en": descriptionEn,
+        "description_bn": descriptionBn,
+        "file": file,
+        "reading_time": readingTime,
+        "status": status,
+      };
 }

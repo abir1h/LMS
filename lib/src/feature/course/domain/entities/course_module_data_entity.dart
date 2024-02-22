@@ -1,6 +1,4 @@
-import 'package:lms/src/feature/course/domain/entities/course_content_data_entity.dart';
-
-import '../../data/models/course_content_data_model.dart';
+import 'course_content_data_entity.dart';
 
 class CourseModuleDataEntity {
   final int id;

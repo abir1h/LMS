@@ -1,5 +1,4 @@
 import 'course_content_data_mapper.dart';
-
 import '../../domain/entities/course_content_data_entity.dart';
 import '../../domain/entities/course_module_data_entity.dart';
 import '../models/course_content_data_model.dart';

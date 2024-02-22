@@ -9,4 +9,5 @@ class CourseTypeDataEntity {
     required this.nameEn,
     required this.nameBn,
     required this.status,
-  });}
+  });
+}

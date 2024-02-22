@@ -39,8 +39,8 @@ class CourseDetailsDataModel {
         courseType: json['course_type'] != null
             ? CourseTypeDataModel.fromJson(json['course_type'])
             : null,
-        courseModules: json["children"] != null
-            ? List<CourseModuleDataModel>.from((json["children"])
+        courseModules: json["course_modules"] != null
+            ? List<CourseModuleDataModel>.from((json["course_modules"])
                 .map((x) => CourseModuleDataModel.fromJson(x)))
             : [],
       );
