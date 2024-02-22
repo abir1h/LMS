@@ -2,10 +2,7 @@ import 'option_data_mapper.dart';
 import 'question_type_data_mapper.dart';
 import '../models/Option_data_model.dart';
 import '../../domain/entities/option_data_entity.dart';
-
-import '../../domain/entities/Question_data_entity.dart';
 import '../../domain/entities/question_data_entity.dart';
-import '../models/Question_data_model.dart';
 import '../models/question_data_model.dart';
 
 abstract class QuestionDataMapper<M, E> {
