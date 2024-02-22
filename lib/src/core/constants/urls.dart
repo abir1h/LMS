@@ -15,4 +15,5 @@ class ApiCredential {
 
   static String getDiscussion = "/discussions";
   static String getDiscussionComments = "/discussion-comments";
+  static String getAssessment = "/assessment";
 }

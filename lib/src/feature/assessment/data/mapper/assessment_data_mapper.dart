@@ -1,20 +1,19 @@
 import 'question_data_mapper.dart';
 import '../models/question_data_model.dart';
 import '../../domain/entities/question_data_entity.dart';
+import '../../domain/entities/assessment_data_entity.dart';
+import '../models/assessment_data_model.dart';
 
-import '../../domain/entities/assesment_data_entity.dart';
-import '../models/assesment_details_data_model.dart';
-
-abstract class AssesmentDataMapper<M, E> {
+abstract class AssessmentDataMapper<M, E> {
   M fromEntityToModel(E entity);
   E toEntityFromModel(M model);
 }
 
-class AssesmentDataModelToEntityMapper
-    extends AssesmentDataMapper<AssesmentDataModel, AssesmentDataEntity> {
+class AssessmentDataModelToEntityMapper
+    extends AssessmentDataMapper<AssessmentDataModel, AssessmentDataEntity> {
   @override
-  AssesmentDataModel fromEntityToModel(AssesmentDataEntity entity) {
-    return AssesmentDataModel(
+  AssessmentDataModel fromEntityToModel(AssessmentDataEntity entity) {
+    return AssessmentDataModel(
         id: entity.id,
         courseId: entity.courseId,
         courseModuleId: entity.courseModuleId,
@@ -32,8 +31,8 @@ class AssesmentDataModelToEntityMapper
   }
 
   @override
-  AssesmentDataEntity toEntityFromModel(AssesmentDataModel model) {
-    return AssesmentDataEntity(
+  AssessmentDataEntity toEntityFromModel(AssessmentDataModel model) {
+    return AssessmentDataEntity(
         id: model.id,
         courseId: model.courseId,
         courseModuleId: model.courseModuleId,
@@ -51,12 +50,12 @@ class AssesmentDataModelToEntityMapper
   }
 }
 
-extension AssesmentDataModelExt on AssesmentDataModel {
-  AssesmentDataEntity get toAssesmentDataEntity =>
-      AssesmentDataModelToEntityMapper().toEntityFromModel(this);
+extension AssesmentDataModelExt on AssessmentDataModel {
+  AssessmentDataEntity get toAssessmentDataEntity =>
+      AssessmentDataModelToEntityMapper().toEntityFromModel(this);
 }
 
-extension AssesmentDataEntityExt on AssesmentDataEntity {
-  AssesmentDataModel get toAssesmentDataModel =>
-      AssesmentDataModelToEntityMapper().fromEntityToModel(this);
+extension AssesmentDataEntityExt on AssessmentDataEntity {
+  AssessmentDataModel get toAssessmentDataModel =>
+      AssessmentDataModelToEntityMapper().fromEntityToModel(this);
 }

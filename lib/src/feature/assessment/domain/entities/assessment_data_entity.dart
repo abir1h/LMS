@@ -1,6 +1,6 @@
 import 'question_data_entity.dart';
 
-class AssesmentDataEntity {
+class AssessmentDataEntity {
   final int id;
   final int courseId;
   final int courseModuleId;
@@ -14,7 +14,7 @@ class AssesmentDataEntity {
   final int isCertificationAssessment;
   final List<QuestionDataEntity> questions;
 
-  const AssesmentDataEntity({
+  const AssessmentDataEntity({
     required this.id,
     required this.courseId,
     required this.courseModuleId,

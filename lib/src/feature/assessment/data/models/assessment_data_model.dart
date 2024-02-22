@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'question_data_model.dart';
 
 @immutable
-class AssesmentDataModel {
+class AssessmentDataModel {
   final int id;
   final int courseId;
   final int courseModuleId;
@@ -16,7 +16,7 @@ class AssesmentDataModel {
   final int isCertificationAssessment;
   final List<QuestionDataModel> questions;
 
-  const AssesmentDataModel({
+  const AssessmentDataModel({
     required this.id,
     required this.courseId,
     required this.courseModuleId,
@@ -31,8 +31,8 @@ class AssesmentDataModel {
     required this.questions,
   });
 
-  factory AssesmentDataModel.fromJson(Map<String, dynamic> json) =>
-      AssesmentDataModel(
+  factory AssessmentDataModel.fromJson(Map<String, dynamic> json) =>
+      AssessmentDataModel(
         id: json["id"] ?? -1,
         courseId: json["course_id"] ?? -1,
         courseModuleId: json["course_module_id"] ?? -1,
@@ -41,7 +41,7 @@ class AssesmentDataModel {
         totalMark: json["total_mark"] ?? -1,
         passMark: json["pass_mark"] ?? -1,
         totalTime: json["total_time"] ?? -1,
-        tries: json["tries"] ?? -1,
+        tries: json["tries"] ?? "",
         isHorizontal: json["is_horizontal"] ?? -1,
         isCertificationAssessment: json["is_certification_assessment"] ?? false,
         questions: json["questions"] != null
@@ -62,7 +62,7 @@ class AssesmentDataModel {
         "tries": tries,
         "is_horizontal": isHorizontal,
         "is_certification_assessment": isCertificationAssessment,
-        "questions": List<QuestionDataModel>.from(questions.map((x) => x.toJson())),
+        "questions":
+            List<QuestionDataModel>.from(questions.map((x) => x.toJson())),
       };
 }
-

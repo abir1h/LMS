@@ -1,6 +1,4 @@
-import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'Option_data_model.dart';
 import 'question_type_data_model.dart';
 
@@ -34,18 +32,18 @@ class QuestionDataModel {
 
   factory QuestionDataModel.fromJson(Map<String, dynamic> json) =>
       QuestionDataModel(
-        id: json["id"],
-        courseId: json["course_id"],
-        courseAssessmentId: json["course_assessment_id"],
-        question: json["question"],
-        questionImg: json["question_img"],
-        supportingNotesEn: json["supporting_notes_en"],
-        mark: json["mark"],
-        negativeMark: json["negative_mark"],
+        id: json["id"] ?? -1,
+        courseId: json["course_id"] ?? -1,
+        courseAssessmentId: json["course_assessment_id"] ?? -1,
+        question: json["question"] ?? "",
+        questionImg: json["question_img"] ?? "",
+        supportingNotesEn: json["supporting_notes_en"] ?? "",
+        mark: json["mark"] ?? "",
+        negativeMark: json["negative_mark"] ?? "",
         questionType: json['question_type'] != null
             ? QuestionTypeDataModel.fromJson(json['question_type'])
             : null,
-        typeId: json["type_id"],
+        typeId: json["type_id"] ?? -1,
         options: json["options"] != null
             ? List<OptionDataModel>.from(
                 (json["options"]).map((x) => OptionDataModel.fromJson(x)))
