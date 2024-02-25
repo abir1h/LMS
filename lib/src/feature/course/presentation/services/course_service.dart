@@ -6,15 +6,14 @@ import '../../../shared/domain/entities/response_entity.dart';
 mixin class CourseService {
   CourseService._();
   final CourseUseCase _courseUseCase = CourseUseCase(
-      courseRepository:
-      CourseRepositoryImp(courseRemoteDataSource: CourseRemoteDataSourceImp()));
+      courseRepository: CourseRepositoryImp(
+          courseRemoteDataSource: CourseRemoteDataSourceImp()));
 
-  Future<ResponseEntity> getCourses() async {
-    return _courseUseCase.getCoursesUseCase();
+  Future<ResponseEntity> getCourses(String courseStatus) async {
+    return _courseUseCase.getCoursesUseCase(courseStatus);
   }
 
   Future<ResponseEntity> getCourseDetails(int courseId) async {
     return _courseUseCase.getCourseDetailsUseCase(courseId);
   }
-
 }

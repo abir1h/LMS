@@ -16,8 +16,8 @@ class AssignmentDataEntity {
   final String submissionType;
   final bool isGroupAssignments;
   final int status;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+  final String createdAt;
+  final String updatedAt;
   final String deletedAt;
 
   const AssignmentDataEntity({
@@ -41,4 +41,5 @@ class AssignmentDataEntity {
     required this.createdAt,
     required this.updatedAt,
     required this.deletedAt,
-  });}
+  });
+}

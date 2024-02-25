@@ -12,8 +12,17 @@ class ApiCredential {
 
   static String userDashboard = "/dashboard";
   static String getCourse = "/courses";
+  static String getScript = "/scripts";
+  static String getBlendedClass = "/blended-classes";
+  static String getVideo = "/videos";
 
   static String getDiscussion = "/discussions";
   static String getDiscussionComments = "/discussion-comments";
+  static String getComments = "/comments";
+
   static String getAssessment = "/assessment";
+  static String getAssignment = "/assignments";
+
+  static String getNotes = "/notes";
+  static String getNotesByContent = "/notes-by-content";
 }

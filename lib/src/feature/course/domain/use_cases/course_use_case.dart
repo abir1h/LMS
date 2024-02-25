@@ -6,13 +6,28 @@ class CourseUseCase {
   CourseUseCase({required CourseRepository courseRepository})
       : _courseRepository = courseRepository;
 
-  Future<ResponseEntity> getCoursesUseCase() async {
-    final response = _courseRepository.getCourses();
+  Future<ResponseEntity> getCoursesUseCase(String courseStatus) async {
+    final response = _courseRepository.getCourses(courseStatus);
     return response;
   }
 
   Future<ResponseEntity> getCourseDetailsUseCase(int courseId) async {
     final response = _courseRepository.getCourseDetails(courseId);
+    return response;
+  }
+
+  Future<ResponseEntity> getScriptDetailsUseCase(int courseContentId) async {
+    final response = _courseRepository.getScriptDetails(courseContentId);
+    return response;
+  }
+
+  Future<ResponseEntity> getBlendedClassUseCase(int courseContentId) async {
+    final response = _courseRepository.getBlendedClass(courseContentId);
+    return response;
+  }
+
+  Future<ResponseEntity> getVideoDetailsUseCase(int courseContentId) async {
+    final response = _courseRepository.getVideoDetails(courseContentId);
     return response;
   }
 }

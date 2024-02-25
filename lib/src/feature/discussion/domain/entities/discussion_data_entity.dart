@@ -1,3 +1,4 @@
+import '../../../notes/domain/entities/content_data_entity.dart';
 import 'user_data_entity.dart';
 
 class DiscussionDataEntity {
@@ -11,6 +12,7 @@ class DiscussionDataEntity {
   final String status;
   final String createdAt;
   final String updatedAt;
+  final ContentDataEntity content;
   final UserDataEntity user;
 
   DiscussionDataEntity({
@@ -24,6 +26,7 @@ class DiscussionDataEntity {
     required this.status,
     required this.createdAt,
     required this.updatedAt,
+    required this.content,
     required this.user,
   });
 }

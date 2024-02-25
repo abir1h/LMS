@@ -1,3 +1,5 @@
+import 'package:lms/src/feature/notes/data/mapper/content_data_mapper.dart';
+
 import '../../domain/entities/note_data_entity.dart';
 import '../models/note_data_model.dart';
 
@@ -11,6 +13,7 @@ class NoteDataModelToEntityMapper
   @override
   NoteDataModel fromEntityToModel(NoteDataEntity entity) {
     return NoteDataModel(
+        id: entity.id,
         courseModuleId: entity.courseModuleId,
         contentId: entity.contentId,
         contentType: entity.contentType,
@@ -18,12 +21,14 @@ class NoteDataModelToEntityMapper
         description: entity.description,
         createdBy: entity.createdBy,
         status: entity.status,
-        createdAt: entity.createdAt);
+        createdAt: entity.createdAt,
+        content: entity.content.toContentDataModel);
   }
 
   @override
   NoteDataEntity toEntityFromModel(NoteDataModel model) {
     return NoteDataEntity(
+        id: model.id,
         courseModuleId: model.courseModuleId,
         contentId: model.contentId,
         contentType: model.contentType,
@@ -31,7 +36,8 @@ class NoteDataModelToEntityMapper
         description: model.description,
         createdBy: model.createdBy,
         status: model.status,
-        createdAt: model.createdAt);
+        createdAt: model.createdAt,
+        content: model.content!.toContentDataEntity);
   }
 }
 

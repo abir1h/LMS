@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 
+import '../../../notes/data/models/content_data_model.dart';
 import 'user_data_model.dart';
 
 @immutable
@@ -14,6 +15,7 @@ class DiscussionDataModel {
   final String status;
   final String createdAt;
   final String updatedAt;
+  final ContentDataModel? content;
   final UserDataModel? user;
 
   const DiscussionDataModel({
@@ -27,6 +29,7 @@ class DiscussionDataModel {
     required this.status,
     required this.createdAt,
     required this.updatedAt,
+    this.content,
     this.user,
   });
 
@@ -42,6 +45,9 @@ class DiscussionDataModel {
         status: json["status"] ?? "",
         createdAt: json["created_at"] ?? "",
         updatedAt: json["updated_at"] ?? "",
+        content: json['content'] != null
+            ? ContentDataModel.fromJson(json['content'])
+            : null,
         user:
             json['user'] != null ? UserDataModel.fromJson(json['user']) : null,
       );
@@ -57,6 +63,7 @@ class DiscussionDataModel {
         "status": status,
         "created_at": createdAt,
         "updated_at": updatedAt,
+        "content": content!.toJson(),
         "user": user!.toJson(),
       };
   static List<DiscussionDataModel> listFromJson(List<dynamic> json) {

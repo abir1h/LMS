@@ -1,4 +1,12 @@
+import 'package:lms/src/feature/course/data/mapper/blended_class_data_mapper.dart';
+
+import '../../domain/entities/blended_class_data_entity.dart';
+import '../mapper/video_data_mapper.dart';
+import '../../domain/entities/video_data_entity.dart';
+import '../mapper/script_data_mapper.dart';
+import '../../domain/entities/script_data_entity.dart';
 import '../mapper/course_details_data_mapper.dart';
+import '../models/blended_class_data_model.dart';
 import '../models/course_details_data_model.dart';
 import '../../domain/entities/course_details_data_entity.dart';
 import '../mapper/all_course_data_mapper.dart';
@@ -9,15 +17,17 @@ import '../../../shared/data/mapper/response_mapper.dart';
 import '../../../shared/data/models/response_model.dart';
 import '../../domain/repositories/course_repository.dart';
 import '../data_sources/remote/course_data_source.dart';
+import '../models/script_data_model.dart';
+import '../models/video_data_model.dart';
 
 class CourseRepositoryImp extends CourseRepository {
   final CourseRemoteDataSource courseRemoteDataSource;
   CourseRepositoryImp({required this.courseRemoteDataSource});
 
   @override
-  Future<ResponseEntity> getCourses() async {
+  Future<ResponseEntity> getCourses(String courseStatus) async {
     ResponseModel responseModel =
-        (await courseRemoteDataSource.getCoursesAction());
+        (await courseRemoteDataSource.getCoursesAction(courseStatus));
     return ResponseModelToEntityMapper<AllCourseDataEntity,
             AllCourseDataModel>()
         .toEntityFromModel(responseModel,
@@ -32,5 +42,33 @@ class CourseRepositoryImp extends CourseRepository {
             CourseDetailsDataModel>()
         .toEntityFromModel(responseModel,
             (CourseDetailsDataModel model) => model.toCourseDataEntity);
+  }
+
+  @override
+  Future<ResponseEntity> getScriptDetails(int courseContentId) async {
+    ResponseModel responseModel =
+        (await courseRemoteDataSource.getScriptDetailsAction(courseContentId));
+    return ResponseModelToEntityMapper<ScriptDataEntity, ScriptDataModel>()
+        .toEntityFromModel(
+            responseModel, (ScriptDataModel model) => model.toScriptDataEntity);
+  }
+
+  @override
+  Future<ResponseEntity> getBlendedClass(int courseContentId) async {
+    ResponseModel responseModel =
+        (await courseRemoteDataSource.getScriptDetailsAction(courseContentId));
+    return ResponseModelToEntityMapper<BlendedClassDataEntity,
+            BlendedClassDataModel>()
+        .toEntityFromModel(responseModel,
+            (BlendedClassDataModel model) => model.toBlendedClassDataEntity);
+  }
+
+  @override
+  Future<ResponseEntity> getVideoDetails(int courseContentId) async {
+    ResponseModel responseModel =
+        (await courseRemoteDataSource.getScriptDetailsAction(courseContentId));
+    return ResponseModelToEntityMapper<VideoDataEntity, VideoDataModel>()
+        .toEntityFromModel(
+            responseModel, (VideoDataModel model) => model.toVideoDataEntity);
   }
 }

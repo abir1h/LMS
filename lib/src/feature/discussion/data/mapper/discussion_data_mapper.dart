@@ -1,5 +1,5 @@
-import 'package:lms/src/feature/discussion/data/mapper/user_data_mapper.dart';
-
+import 'user_data_mapper.dart';
+import '../../../notes/data/mapper/content_data_mapper.dart';
 import '../../domain/entities/discussion_data_entity.dart';
 import '../models/discussion_data_model.dart';
 
@@ -23,6 +23,7 @@ class _DiscussionDataModelToEntityMapper
         status: entity.status,
         createdAt: entity.createdAt,
         updatedAt: entity.updatedAt,
+        content: entity.content.toContentDataModel,
         user: entity.user.toUserDataModel);
   }
 
@@ -39,6 +40,7 @@ class _DiscussionDataModelToEntityMapper
         status: model.status,
         createdAt: model.createdAt,
         updatedAt: model.updatedAt,
+        content: model.content!.toContentDataEntity,
         user: model.user!.toUserDataEntity);
   }
 }
