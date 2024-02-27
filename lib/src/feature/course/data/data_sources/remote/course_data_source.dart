@@ -19,7 +19,9 @@ class CourseRemoteDataSourceImp extends CourseRemoteDataSource {
   @override
   Future<ResponseModel> getCoursesAction(String courseStatus) async {
     final responseJson = await Server.instance.getRequest(
-        url: "${ApiCredential.getCourse}?circular_status=$courseStatus");
+        url: courseStatus.isNotEmpty
+            ? "${ApiCredential.getCourse}?circular_status=$courseStatus"
+            : ApiCredential.getCourse);
     ResponseModel responseModel = ResponseModel.fromJson(
         responseJson, (dynamic json) => AllCourseDataModel.fromJson(json));
     return responseModel;

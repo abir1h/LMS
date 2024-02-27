@@ -11,18 +11,15 @@ import '../../../assessment/presentation/screens/assessment_true_false_screen.da
 import '../../../assessment/presentation/screens/assessment_quiz_screen.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../assessment/presentation/screens/assessment_fill_in_the_blank_screen.dart';
+import '../../domain/entities/course_module_data_entity.dart';
 import 'course_content_widget.dart';
 import '../../../../core/constants/common_imports.dart';
 
 class ChapterWidget extends StatefulWidget {
-  final String chapterTitle;
-  final String chapterCode;
+  final CourseModuleDataEntity data;
   final ChapterType chapterType;
   const ChapterWidget(
-      {super.key,
-      required this.chapterTitle,
-      required this.chapterCode,
-      this.chapterType = ChapterType.lock});
+      {super.key, required this.data, this.chapterType = ChapterType.lock});
 
   @override
   State<ChapterWidget> createState() => _ChapterWidgetState();
@@ -96,7 +93,7 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.chapterTitle,
+                        label(e: widget.data.nameEn, b: widget.data.nameBn),
                         style: TextStyle(
                             color: clr.appPrimaryColorGreen,
                             fontSize: size.textSmall,
@@ -107,7 +104,9 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                       ),
                       SizedBox(height: size.h8),
                       Text(
-                        widget.chapterCode,
+                        label(
+                            e: "Chapter Code ${widget.data.code}",
+                            b: "অধ্যায়ের কোড ${widget.data.code}"),
                         style: TextStyle(
                             color: clr.textColorAppleBlack,
                             fontSize: size.textSmall,
@@ -130,7 +129,7 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
           ),
         ),
         if (_isExpanded)
-          ListView(
+          /* ListView(
             padding: EdgeInsets.zero,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -271,21 +270,55 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                     Navigator.of(context).pushNamed(AppRoute.discussionScreen),
               ),
             ],
-          )
-        // ListView.builder(
-        //   padding: EdgeInsets.zero,
-        //   shrinkWrap: true,
-        //   physics: const NeverScrollableScrollPhysics(),
-        //   itemCount: 4,
-        //   itemBuilder: (context, index) {
-        //     return const CourseContentWidget(
-        //       courseIcon: Icons.text_snippet,
-        //       title: "ভূমিকা, অধ্যায়ের বিবরণ",
-        //       buttonIcon: Icons.visibility,
-        //     );
-        //   },
-        // ),
+          )*/
+          CourseContentItemSectionWidget(
+            items: widget.data.courseContents!,
+            buildItem: (BuildContext context, int index, item) {
+              return CourseContentWidget(
+                data: item,
+                courseIcon: Icons.text_snippet,
+                title: label(e: item.titleEn, b: item.titleBn),
+                buttonIcon: Icons.visibility,
+                iconColor: clr.clickableLinkColor,
+              );
+            },
+          ),
+        /* ListView.builder(
+          padding: EdgeInsets.zero,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: widget.data.courseContents!.length,
+          itemBuilder: (context, index) {
+            return CourseContentWidget(
+              courseIcon: Icons.text_snippet,
+              title: "ভূমিকা, অধ্যায়ের বিবরণ",
+              buttonIcon: Icons.visibility,
+              iconColor: clr.clickableLinkColor,
+            );
+          },
+        ),*/
       ],
+    );
+  }
+}
+
+class CourseContentItemSectionWidget<T> extends StatelessWidget with AppTheme {
+  final List<T> items;
+  final Widget Function(BuildContext context, int index, T item) buildItem;
+  const CourseContentItemSectionWidget(
+      {Key? key, required this.items, required this.buildItem})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: items.length,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      padding: EdgeInsets.zero,
+      itemBuilder: (context, index) {
+        return buildItem(context, index, items[index]);
+      },
     );
   }
 }

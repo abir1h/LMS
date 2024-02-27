@@ -59,8 +59,9 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
                 padding: EdgeInsets.symmetric(vertical: size.h12),
                 physics: const BouncingScrollPhysics(),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CourseWidget(
+                    /*     CourseWidget(
                       title: label(
                           e: "Education Policy and Management in Education",
                           b: "শিক্ষা নীতি ও শিক্ষায় ব্যাবস্থাপনা"),
@@ -75,7 +76,110 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
                           e: "Teaching for Learning programs are detailed discussions for those who are teaching, or who want to teach, any subject, in any context",
                           b: "শেখার জন্য শিক্ষাদান প্রোগ্রামের হল যারা শিক্ষা দিচ্ছেন, বা যারা শিক্ষা দিতে চান, যে কোনো বিষয়ে, যে কোনো প্রসঙ্গে বিস্তারিত আলোচনা"),
                       curriculumType: _screenArgs.curriculumType,
+                    ),*/
+                    CourseText(
+                      text: label(e: data.nameEn, b: data.nameBn),
+                      fontSize: size.textXMedium,
                     ),
+                    SizedBox(height: size.h16),
+                    if (data.code.isNotEmpty)
+                      Padding(
+                        padding: EdgeInsets.only(bottom: size.h10),
+                        child: CourseText(
+                          text: label(
+                              e: "Course Code : ${data.code}",
+                              b: "অধিবেশনের কোড : ${data.code}"),
+                          textColor: clr.textColorAppleBlack,
+                          fontSize: size.textXSmall,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    CourseText(
+                      text: label(
+                          e: en.curriculumDescription,
+                          b: bn.curriculumDescription),
+                      textColor: clr.textColorBlack,
+                    ),
+                    SizedBox(height: size.h10),
+                    CourseText(
+                      text: label(e: data.shortDescEn, b: data.shortDescBn),
+                      textColor: clr.textColorAppleBlack,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    SizedBox(height: size.h16),
+                    CourseText(
+                      text: label(
+                          e: en.curriculumContent, b: bn.curriculumContent),
+                      textColor: clr.textColorBlack,
+                    ),
+                    SizedBox(height: size.h12),
+                    CourseModuleItemSectionWidget(
+                        items: data.courseModules!,
+                        buildItem: (BuildContext context, int index, item) {
+                          return ChapterWidget(
+                            data: item,
+                            chapterType: ChapterType.open,
+                          );
+                        }),
+                    /*ListView(
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      children: [
+                        ChapterWidget(
+                          chapterTitle: label(
+                              e: "Chapter 1: The Desert of Karbala",
+                              b: "অধ্যায় ১: কারবালা প্রান্তর"),
+                          chapterCode:
+                              label(e: "Chapter Code", b: "অধ্যায়ের কোড"),
+                          chapterType: curriculumType == "running"
+                              ? ChapterType.done
+                              : chapterType,
+                        ),
+                        SizedBox(height: size.h8),
+                        ChapterWidget(
+                          chapterTitle: label(
+                              e: "Chapter 2: Human-Welfare",
+                              b: "অধ্যায় ২: মানব-কল্যাণ"),
+                          chapterCode:
+                              label(e: "Chapter Code", b: "অধ্যায়ের কোড"),
+                          chapterType: chapterType,
+                        ),
+                        SizedBox(height: size.h8),
+                        ChapterWidget(
+                          chapterTitle: label(
+                              e: "Chapter 3: The Desert of Karbala",
+                              b: "অধ্যায় ৩: কারবালা প্রান্তর"),
+                          chapterCode:
+                              label(e: "Chapter Code", b: "অধ্যায়ের কোড"),
+                          chapterType: curriculumType == "running"
+                              ? ChapterType.lock
+                              : chapterType,
+                        ),
+                        SizedBox(height: size.h8),
+                        ChapterWidget(
+                          chapterTitle: label(
+                              e: "Chapter 4: Human-Welfare",
+                              b: "অধ্যায় ৪: মানব-কল্যাণ"),
+                          chapterCode:
+                              label(e: "Chapter Code", b: "অধ্যায়ের কোড"),
+                          chapterType: curriculumType == "running"
+                              ? ChapterType.lock
+                              : chapterType,
+                        ),
+                        SizedBox(height: size.h8),
+                        ChapterWidget(
+                          chapterTitle: label(
+                              e: "Chapter 5: The Enormity of Life",
+                              b: "অধ্যায় ৫: জীবযাত্রার বিপুলতা"),
+                          chapterCode:
+                              label(e: "Chapter Code", b: "অধ্যায়ের কোড"),
+                          chapterType: curriculumType == "running"
+                              ? ChapterType.lock
+                              : chapterType,
+                        ),
+                      ],
+                    ),*/
                     SizedBox(height: size.h32),
                   ],
                 ),
@@ -144,7 +248,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
   }
 }
 
-class CourseWidget extends StatelessWidget with AppTheme, Language {
+/*class CourseWidget extends StatelessWidget with AppTheme, Language {
   final String title;
   final String courseCode;
   final ChapterType chapterType;
@@ -257,7 +361,7 @@ class CourseWidget extends StatelessWidget with AppTheme, Language {
       ],
     );
   }
-}
+}*/
 
 class CourseText extends StatelessWidget with AppTheme {
   final String text;
@@ -283,6 +387,30 @@ class CourseText extends StatelessWidget with AppTheme {
             fontWeight: fontWeight ?? FontWeight.w600,
             fontFamily: StringData.fontFamilyPoppins),
       ),
+    );
+  }
+}
+
+class CourseModuleItemSectionWidget<T> extends StatelessWidget with AppTheme {
+  final List<T> items;
+  final Widget Function(BuildContext context, int index, T item) buildItem;
+  const CourseModuleItemSectionWidget(
+      {Key? key, required this.items, required this.buildItem})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      itemCount: items.length,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      padding: EdgeInsets.zero,
+      itemBuilder: (context, index) {
+        return buildItem(context, index, items[index]);
+      },
+      separatorBuilder: (context, index) {
+        return SizedBox(height: size.h8);
+      },
     );
   }
 }

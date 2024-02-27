@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/utility/app_label.dart';
 import '../../../../core/constants/common_imports.dart';
+import '../../domain/entities/course_content_data_entity.dart';
 
 class CourseContentWidget extends StatelessWidget with AppTheme, Language {
+  final CourseContentDataEntity data;
   final IconData courseIcon;
   final Color iconColor;
   final String title;
@@ -13,6 +15,7 @@ class CourseContentWidget extends StatelessWidget with AppTheme, Language {
   final bool status;
   const CourseContentWidget(
       {Key? key,
+      required this.data,
       required this.courseIcon,
       required this.iconColor,
       required this.title,
