@@ -15,14 +15,18 @@ class RootScreenArgs {
 }
 
 class CourseListScreenArgs {
-  final String curriculumType;
-  CourseListScreenArgs({required this.curriculumType});
+  final String circularStatus;
+  CourseListScreenArgs({required this.circularStatus});
 }
 
 class CourseDetailsScreenArgs {
+  final int courseId;
   final String curriculumType;
   final String status;
-  CourseDetailsScreenArgs({required this.curriculumType, required this.status});
+  CourseDetailsScreenArgs(
+      {required this.courseId,
+      required this.curriculumType,
+      required this.status});
 }
 
 class CourseIntroductionScreenArgs {

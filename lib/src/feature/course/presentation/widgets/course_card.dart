@@ -1,27 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
+import '../../../../core/utility/app_label.dart';
 import '../../../../core/constants/common_imports.dart';
+import '../../../../core/enums/enums.dart';
+import '../../domain/entities/course_data_entity.dart';
 
 class CourseCard extends StatelessWidget with AppTheme {
-  final String title, code, time, status;
-  final double? titleFontSize;
-  final IconData? iconData;
-  final Color? bgColor, borderColor, iconColor;
-  final double statusValue;
+  final CourseDataEntity data;
+  final String circularStatus;
+  // final String title, code, time, status;
+  // final double? titleFontSize;
+  // final IconData? iconData;
+  // final Color? bgColor, borderColor, iconColor;
+  // final double statusValue;
   final VoidCallback? onTap;
   const CourseCard({
     super.key,
-    required this.title,
-    required this.code,
-    required this.time,
-    required this.status,
-    this.titleFontSize,
-    this.iconData,
-    this.bgColor,
-    this.borderColor,
-    this.iconColor,
-    required this.statusValue,
+    required this.data,
+    required this.circularStatus,
+    // required this.title,
+    // required this.code,
+    // required this.time,
+    // required this.status,
+    // this.titleFontSize,
+    // this.iconData,
+    // this.bgColor,
+    // this.borderColor,
+    // this.iconColor,
+    // required this.statusValue,
     required this.onTap,
   });
 
@@ -32,10 +40,19 @@ class CourseCard extends StatelessWidget with AppTheme {
       child: Container(
           width: 1.sw,
           decoration: BoxDecoration(
-            color: bgColor ?? clr.cardFillColorGreen,
+            color: circularStatus == CircularStatus.running.name
+                ? clr.cardFillColorOrange
+                : circularStatus == CircularStatus.completed.name
+                    ? clr.cardFillColorGreen
+                    : clr.cardFillColorBlue,
             borderRadius: BorderRadius.circular(size.w8),
             border: Border.all(
-                color: borderColor ?? clr.cardStrokeColorGreen, width: size.w1),
+                color: circularStatus == CircularStatus.running.name
+                    ? clr.cardStrokeColorOrange
+                    : circularStatus == CircularStatus.completed.name
+                        ? clr.cardStrokeColorGreen
+                        : clr.cardStrokeColorBlue,
+                width: size.w1),
             boxShadow: [
               BoxShadow(
                 color: clr.blackColor.withOpacity(.2),
@@ -53,27 +70,33 @@ class CourseCard extends StatelessWidget with AppTheme {
                 children: [
                   Expanded(
                     child: Text(
-                      title,
+                      label(e: data.nameEn, b: data.nameBn),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontFamily: StringData.fontFamilyPoppins,
-                          fontSize: titleFontSize ?? size.textSmall,
+                          fontSize: size.textSmall,
                           fontWeight: FontWeight.w600,
                           color: clr.appPrimaryColorGreen),
                     ),
                   ),
-                  if (iconData != null)
+                  if (circularStatus != CircularStatus.running.name)
                     Icon(
-                      iconData,
+                      circularStatus == CircularStatus.completed.name
+                          ? Icons.check_circle
+                          : Icons.lock,
                       size: size.r20,
-                      color: iconColor ?? clr.appPrimaryColorGreen,
+                      color: circularStatus == CircularStatus.completed.name
+                          ? clr.appPrimaryColorGreen
+                          : clr.iconColorDimGrey,
                     )
                 ],
               ),
               SizedBox(height: size.h6),
               Text(
-                code,
+                label(
+                    e: "Course Code : ${data.code}",
+                    b: "অধিবেশনের কোড : ${data.code}"),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -84,7 +107,9 @@ class CourseCard extends StatelessWidget with AppTheme {
               ),
               SizedBox(height: size.h8),
               Text(
-                time,
+                label(
+                    e: "Duration : ${DateFormat('dd/MM/yyyy').format(DateTime.parse(data.startDate))} - ${DateFormat('dd MMMM yyyy').format(DateTime.parse(data.endDate))}",
+                    b: "সময়কাল : ${DateFormat('dd/MM/yyyy').format(DateTime.parse(data.startDate))} - ${DateFormat('dd/MM/yyyy').format(DateTime.parse(data.endDate))}"),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -95,7 +120,7 @@ class CourseCard extends StatelessWidget with AppTheme {
               ),
               SizedBox(height: size.h12),
               LinearProgressIndicator(
-                value: statusValue,
+                value: double.parse(data.courseProgress.toString()) / 100,
                 color: clr.appPrimaryColorGreen,
                 backgroundColor: clr.progressBGColor,
                 valueColor:
@@ -105,7 +130,17 @@ class CourseCard extends StatelessWidget with AppTheme {
               ),
               SizedBox(height: size.h8),
               Text(
-                status,
+                label(
+                    e: circularStatus == CircularStatus.running.name
+                        ? "${data.courseProgress}% complete"
+                        : circularStatus == CircularStatus.completed.name
+                            ? "Completed"
+                            : "Will Begin",
+                    b: circularStatus == CircularStatus.running.name
+                        ? "${data.courseProgress}% সম্পন্ন"
+                        : circularStatus == CircularStatus.completed.name
+                            ? "সম্পন্ন হয়েছে"
+                            : "শুরু হবে"),
                 style: TextStyle(
                     color: clr.appPrimaryColorGreen,
                     fontSize: size.textXXSmall,

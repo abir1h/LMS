@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/common_widgets/app_stream.dart';
+import '../../../../core/common_widgets/circuler_widget.dart';
+import '../../../../core/common_widgets/custom_empty_widget.dart';
+import '../../../../core/common_widgets/custom_toasty.dart';
+import '../../../../core/enums/enums.dart';
 import '../../../../core/routes/app_route.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/service/notifier/app_events_notifier.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../../core/constants/common_imports.dart';
+import '../../domain/entities/all_course_data_entity.dart';
+import '../services/course_screen_service.dart';
 import '../widgets/course_card.dart';
+import '../widgets/course_item_section_widget.dart';
 
 class CourseScreen extends StatefulWidget {
   const CourseScreen({super.key});
@@ -15,10 +23,88 @@ class CourseScreen extends StatefulWidget {
 }
 
 class _CourseScreenState extends State<CourseScreen>
-    with AppTheme, Language, AppEventsNotifier {
+    with AppTheme, Language, CourseScreenService, AppEventsNotifier {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return AppStreamBuilder<AllCourseDataEntity>(
+      stream: allCourseDataStreamController.stream,
+      loadingBuilder: (context) {
+        return const Center(child: CircularLoader());
+      },
+      dataBuilder: (context, data) {
+        return SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          padding:
+              EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label(e: en.ongoingCurriculum, b: bn.ongoingCurriculum),
+                style: TextStyle(
+                    color: clr.appPrimaryColorGreen,
+                    fontSize: size.textXMedium,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: StringData.fontFamilyRoboto),
+              ),
+              SizedBox(height: size.h8),
+              CourseItemSectionWidget(
+                items: data.running,
+                buildItem: (BuildContext context, int index, item) {
+                  return CourseCard(
+                    data: item,
+                    circularStatus: CircularStatus.running.name,
+                    onTap: () => Navigator.of(context).pushNamed(
+                        AppRoute.courseDetailsScreen,
+                        arguments: CourseDetailsScreenArgs(
+                            courseId: item.id,
+                            curriculumType: CircularStatus.running.name,
+                            status: "open")),
+                  );
+                },
+              ),
+              SizedBox(height: size.h16),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: size.w8),
+                child: Divider(
+                    height: size.h1, color: clr.placeHolderTextColorGray),
+              ),
+              SizedBox(height: size.h16),
+              Text(
+                label(e: "Other Courses", b: "অন্যান্য অধিবেশনসমূহ"),
+                style: TextStyle(
+                    color: clr.appPrimaryColorGreen,
+                    fontSize: size.textXMedium,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: StringData.fontFamilyPoppins),
+              ),
+              SizedBox(height: size.h8),
+              CourseItemSectionWidget(
+                items: data.courses,
+                buildItem: (BuildContext context, int index, item) {
+                  return CourseCard(
+                    data: item,
+                    circularStatus: CircularStatus.upcoming.name,
+                    onTap: () => Navigator.of(context).pushNamed(
+                        AppRoute.courseDetailsScreen,
+                        arguments: CourseDetailsScreenArgs(
+                            courseId: item.id,
+                            curriculumType: CircularStatus.upcoming.name,
+                            status: "lock")),
+                  );
+                },
+              ),
+            ],
+          ),
+        );
+      },
+      emptyBuilder: (context, message, icon) => CustomEmptyWidget(
+        message: message,
+        // constraints: constraints,
+        // offset: 350.w,
+      ),
+    );
+    /*return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       padding: EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h12),
       child: Column(
@@ -37,7 +123,7 @@ class _CourseScreenState extends State<CourseScreen>
             onTap: () => Navigator.of(context).pushNamed(
                 AppRoute.courseDetailsScreen,
                 arguments: CourseDetailsScreenArgs(
-                    curriculumType: "running", status: "open")),
+                    curriculumType: CircularStatus.running.name, status: "open")),
             title: label(
                 e: "Education policy and management in education",
                 b: "শিক্ষা নীতি ও শিক্ষায় ব্যাবস্থাপনা"),
@@ -119,7 +205,7 @@ class _CourseScreenState extends State<CourseScreen>
           ),
         ],
       ),
-    );
+    );*/
   }
 
   @override
@@ -130,5 +216,10 @@ class _CourseScreenState extends State<CourseScreen>
         setState(() {});
       }
     }
+  }
+
+  @override
+  void showWarning(String message) {
+    CustomToasty.of(context).showWarning(message);
   }
 }
