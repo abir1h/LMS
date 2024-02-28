@@ -9,6 +9,10 @@ import '../../../shared/domain/entities/response_entity.dart';
 
 abstract class _ViewModel {
   void showWarning(String message);
+  void navigateToCourseVideoScreen();
+  void navigateToCourseAssignmentScreen(int courseContentId);
+  void navigateToCourseAssessmentScreen(int courseContentId);
+  void navigateToCourseLiveClassScreen();
 }
 
 mixin CourseDetailsScreenService<T extends StatefulWidget> on State<T>
@@ -53,5 +57,21 @@ mixin CourseDetailsScreenService<T extends StatefulWidget> on State<T>
         _view.showWarning(value.message!);
       }
     });
+  }
+
+  void onTapCourseVideo() {
+    _view.navigateToCourseVideoScreen();
+  }
+
+  void onTapCourseAssignment(int courseContentId) {
+    _view.navigateToCourseAssignmentScreen(courseContentId);
+  }
+
+  void onTapCourseAssessment(int courseContentId) {
+    _view.navigateToCourseAssessmentScreen(courseContentId);
+  }
+
+  void onTapCourseLiveClass() {
+    _view.navigateToCourseLiveClassScreen();
   }
 }

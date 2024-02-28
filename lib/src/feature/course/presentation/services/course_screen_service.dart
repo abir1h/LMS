@@ -9,6 +9,7 @@ import '../../../shared/domain/entities/response_entity.dart';
 
 abstract class _ViewModel {
   void showWarning(String message);
+  void navigateToCourseDetailsScreen(int courseId, String circularStatus);
 }
 
 mixin CourseScreenService<T extends StatefulWidget> on State<T>
@@ -58,5 +59,9 @@ mixin CourseScreenService<T extends StatefulWidget> on State<T>
         _view.showWarning(value.message!);
       }
     });
+  }
+
+  void onTapCourse(int courseId, String circularStatus) {
+    _view.navigateToCourseDetailsScreen(courseId, circularStatus);
   }
 }

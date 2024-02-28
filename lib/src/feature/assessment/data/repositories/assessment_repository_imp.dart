@@ -12,9 +12,9 @@ class AssessmentRepositoryImp extends AssessmentRepository {
   AssessmentRepositoryImp({required this.assessmentRemoteDataSource});
 
   @override
-  Future<ResponseEntity> getAssessmentDetails(int assessmentId) async {
+  Future<ResponseEntity> getAssessmentDetails(int courseContentId) async {
     ResponseModel responseModel = (await assessmentRemoteDataSource
-        .getAssessmentDetailsAction(assessmentId));
+        .getAssessmentDetailsAction(courseContentId));
     return ResponseModelToEntityMapper<AssessmentDataEntity,
             AssessmentDataModel>()
         .toEntityFromModel(responseModel,

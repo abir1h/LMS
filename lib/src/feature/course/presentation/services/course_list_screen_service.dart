@@ -9,6 +9,7 @@ import '../../domain/use_cases/course_use_case.dart';
 
 abstract class _ViewModel {
   void showWarning(String message);
+  void navigateToCourseDetailsScreen(int courseId, String circularStatus);
 }
 
 mixin CourseListScreenService<T extends StatefulWidget> on State<T>
@@ -57,5 +58,9 @@ mixin CourseListScreenService<T extends StatefulWidget> on State<T>
         _view.showWarning(value.message!);
       }
     });
+  }
+
+  void onTapCourse(int courseId, String circularStatus) {
+    _view.navigateToCourseDetailsScreen(courseId, circularStatus);
   }
 }

@@ -6,8 +6,10 @@ class AssignmentUseCase {
   AssignmentUseCase({required AssignmentRepository assignmentRepository})
       : _assignmentRepository = assignmentRepository;
 
-  Future<ResponseEntity> getAssessmentDetailsUseCase(int assignmentId) async {
-    final response = _assignmentRepository.getAssignmentDetails(assignmentId);
+  Future<ResponseEntity> getAssignmentDetailsUseCase(
+      int courseContentId) async {
+    final response =
+        _assignmentRepository.getAssignmentDetails(courseContentId);
     return response;
   }
 }

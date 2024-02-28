@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/enums/enums.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../domain/entities/course_content_data_entity.dart';
 
 class CourseContentWidget extends StatelessWidget with AppTheme, Language {
   final CourseContentDataEntity data;
-  final IconData courseIcon;
-  final Color iconColor;
-  final String title;
   final String? buttonText;
-  final IconData buttonIcon;
-  final VoidCallback? onTap;
   final bool status;
+  final VoidCallback? onTapVideo,
+      onTapAssignment,
+      onTapAssessment,
+      onTapScript,
+      onTapBlendedClass;
   const CourseContentWidget(
       {Key? key,
       required this.data,
-      required this.courseIcon,
-      required this.iconColor,
-      required this.title,
       this.buttonText,
-      required this.buttonIcon,
-      this.onTap,
-      this.status = false})
+      this.status = false,
+      this.onTapVideo,
+      this.onTapAssignment,
+      this.onTapAssessment,
+      this.onTapScript,
+      this.onTapBlendedClass})
       : super(key: key);
 
   @override
@@ -47,16 +48,31 @@ class CourseContentWidget extends StatelessWidget with AppTheme, Language {
           Expanded(
             flex: 1,
             child: Icon(
-              courseIcon,
+              data.contentType == ContentType.course_video.name
+                  ? Icons.smart_display
+                  : data.contentType == ContentType.course_assignment.name
+                      ? Icons.assignment
+                      : data.contentType == ContentType.course_assessment.name
+                          ? Icons.help_center
+                          : data.contentType == ContentType.course_script.name
+                              ? Icons.smart_display
+                              : Icons.cast_connected,
               size: size.r24,
-              color: iconColor,
+              color: data.contentType == ContentType.course_video.name
+                  ? clr.iconColorSweetRed
+                  : data.contentType == ContentType.course_assignment.name
+                      ? clr.appPrimaryColorGreen
+                      : data.contentType == ContentType.course_assessment.name
+                          ? clr.textColorAppleBlack
+                          : data.contentType == ContentType.course_script.name
+                              ? clr.iconColorSweetRed
+                              : clr.textColorBlack,
             ),
           ),
-          // SizedBox(width: size.w12),
           Expanded(
             flex: buttonTextSize.width < 80.0 ? 3 : 2,
             child: Text(
-              title,
+              label(e: data.titleEn, b: data.titleBn),
               style: TextStyle(
                   color: clr.textColorAppleBlack,
                   fontSize: size.textSmall,
@@ -66,11 +82,18 @@ class CourseContentWidget extends StatelessWidget with AppTheme, Language {
               overflow: TextOverflow.ellipsis,
             ),
           ),
-          // SizedBox(width: size.w12),
           Expanded(
             flex: buttonTextSize.width < 80.0 ? 3 : 4,
             child: GestureDetector(
-              onTap: onTap,
+              onTap: data.contentType == ContentType.course_video.name
+                  ? onTapVideo
+                  : data.contentType == ContentType.course_assignment.name
+                      ? onTapAssignment
+                      : data.contentType == ContentType.course_assessment.name
+                          ? onTapAssessment
+                          : data.contentType == ContentType.course_script.name
+                              ? onTapScript
+                              : onTapBlendedClass,
               child: Container(
                 padding: EdgeInsets.symmetric(
                     horizontal: size.w8, vertical: size.h8),
@@ -97,7 +120,7 @@ class CourseContentWidget extends StatelessWidget with AppTheme, Language {
                     ),
                     SizedBox(width: size.w8),
                     Icon(
-                      buttonIcon,
+                      Icons.visibility,
                       size: size.r16,
                       color: clr.textColorAppleBlack,
                     )

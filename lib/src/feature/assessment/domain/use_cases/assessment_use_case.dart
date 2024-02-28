@@ -7,8 +7,8 @@ class AssessmentUseCase {
       : _assessmentRepository = assessmentRepository;
 
   Future<ResponseEntity> getAssessmentDetailsUseCase(
-      int assessmentId) async {
-    final response = _assessmentRepository.getAssessmentDetails(assessmentId);
+      int courseContentId) async {
+    final response = _assessmentRepository.getAssessmentDetails(courseContentId);
     return response;
   }
 }

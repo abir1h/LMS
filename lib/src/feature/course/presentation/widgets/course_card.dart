@@ -10,26 +10,11 @@ import '../../domain/entities/course_data_entity.dart';
 class CourseCard extends StatelessWidget with AppTheme {
   final CourseDataEntity data;
   final String circularStatus;
-  // final String title, code, time, status;
-  // final double? titleFontSize;
-  // final IconData? iconData;
-  // final Color? bgColor, borderColor, iconColor;
-  // final double statusValue;
   final VoidCallback? onTap;
   const CourseCard({
     super.key,
     required this.data,
     required this.circularStatus,
-    // required this.title,
-    // required this.code,
-    // required this.time,
-    // required this.status,
-    // this.titleFontSize,
-    // this.iconData,
-    // this.bgColor,
-    // this.borderColor,
-    // this.iconColor,
-    // required this.statusValue,
     required this.onTap,
   });
 

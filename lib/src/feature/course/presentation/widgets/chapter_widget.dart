@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
 
 import '../../../../core/routes/app_route.dart';
 import '../../../../core/routes/app_route_args.dart';
@@ -15,17 +14,26 @@ import '../../domain/entities/course_module_data_entity.dart';
 import 'course_content_widget.dart';
 import '../../../../core/constants/common_imports.dart';
 
-class ChapterWidget extends StatefulWidget {
-  final CourseModuleDataEntity data;
+class ChapterWidget<T> extends StatefulWidget {
+  final String chapterTitle;
+  final String chapterCode;
   final ChapterType chapterType;
+  final List<T> items;
+  final Widget Function(BuildContext context, int index, T item) buildItem;
   const ChapterWidget(
-      {super.key, required this.data, this.chapterType = ChapterType.lock});
+      {super.key,
+      required this.chapterTitle,
+      required this.chapterCode,
+      this.chapterType = ChapterType.lock,
+      required this.items,
+      required this.buildItem});
 
   @override
-  State<ChapterWidget> createState() => _ChapterWidgetState();
+  State<ChapterWidget<T>> createState() => _ChapterWidgetState<T>();
 }
 
-class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
+class _ChapterWidgetState<T> extends State<ChapterWidget<T>>
+    with AppTheme, Language {
   bool _isExpanded = false;
 
   _toggle() {
@@ -93,7 +101,7 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        label(e: widget.data.nameEn, b: widget.data.nameBn),
+                        widget.chapterTitle,
                         style: TextStyle(
                             color: clr.appPrimaryColorGreen,
                             fontSize: size.textSmall,
@@ -104,9 +112,7 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
                       ),
                       SizedBox(height: size.h8),
                       Text(
-                        label(
-                            e: "Chapter Code ${widget.data.code}",
-                            b: "অধ্যায়ের কোড ${widget.data.code}"),
+                        widget.chapterCode,
                         style: TextStyle(
                             color: clr.textColorAppleBlack,
                             fontSize: size.textSmall,
@@ -271,54 +277,17 @@ class _ChapterWidgetState extends State<ChapterWidget> with AppTheme, Language {
               ),
             ],
           )*/
-          CourseContentItemSectionWidget(
-            items: widget.data.courseContents!,
-            buildItem: (BuildContext context, int index, item) {
-              return CourseContentWidget(
-                data: item,
-                courseIcon: Icons.text_snippet,
-                title: label(e: item.titleEn, b: item.titleBn),
-                buttonIcon: Icons.visibility,
-                iconColor: clr.clickableLinkColor,
-              );
+
+          ListView.builder(
+            itemCount: widget.items.length,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.zero,
+            itemBuilder: (context, index) {
+              return widget.buildItem(context, index, widget.items[index]);
             },
-          ),
-        /* ListView.builder(
-          padding: EdgeInsets.zero,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: widget.data.courseContents!.length,
-          itemBuilder: (context, index) {
-            return CourseContentWidget(
-              courseIcon: Icons.text_snippet,
-              title: "ভূমিকা, অধ্যায়ের বিবরণ",
-              buttonIcon: Icons.visibility,
-              iconColor: clr.clickableLinkColor,
-            );
-          },
-        ),*/
+          )
       ],
-    );
-  }
-}
-
-class CourseContentItemSectionWidget<T> extends StatelessWidget with AppTheme {
-  final List<T> items;
-  final Widget Function(BuildContext context, int index, T item) buildItem;
-  const CourseContentItemSectionWidget(
-      {Key? key, required this.items, required this.buildItem})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: items.length,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      padding: EdgeInsets.zero,
-      itemBuilder: (context, index) {
-        return buildItem(context, index, items[index]);
-      },
     );
   }
 }

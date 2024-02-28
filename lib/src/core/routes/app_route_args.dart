@@ -35,8 +35,10 @@ class CourseIntroductionScreenArgs {
 }
 
 class CourseAssessmentScreenArgs {
+  final int courseContentId;
   final VoidCallback onTap;
-  CourseAssessmentScreenArgs({required this.onTap});
+  CourseAssessmentScreenArgs(
+      {required this.courseContentId, required this.onTap});
 }
 
 class AssignmentSubmitScreenArgs {

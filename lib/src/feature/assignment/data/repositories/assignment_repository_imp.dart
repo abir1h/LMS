@@ -12,9 +12,9 @@ class AssignmentRepositoryImp extends AssignmentRepository {
   AssignmentRepositoryImp({required this.assignmentRemoteDataSource});
 
   @override
-  Future<ResponseEntity> getAssignmentDetails(int assignmentId) async {
+  Future<ResponseEntity> getAssignmentDetails(int courseContentId) async {
     ResponseModel responseModel = (await assignmentRemoteDataSource
-        .getAssignmentDetailsAction(assignmentId));
+        .getAssignmentDetailsAction(courseContentId));
     return ResponseModelToEntityMapper<AssignmentDataEntity,
             AssignmentDataModel>()
         .toEntityFromModel(responseModel,
