@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../../core/common_widgets/app_stream.dart';
+import '../../../../core/common_widgets/circuler_widget.dart';
+import '../../../../core/common_widgets/custom_empty_widget.dart';
+import '../../../../core/common_widgets/custom_toasty.dart';
+import '../../domain/entities/profile_data_entity.dart';
 import '../service/profile_service.dart';
 import '../../../../core/routes/app_route.dart';
 import '../../../../core/service/auth_cache_manager.dart';
@@ -10,7 +15,6 @@ import '../../../../core/common_widgets/custom_dialog_widget.dart';
 import '../../../../core/common_widgets/custom_switch_button.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
-import '../../domain/entities/profile_data_entity.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -20,167 +24,152 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen>
-    with AppTheme, Language, AppEventsNotifier {
-  ProfileDataEntity? profileDataEntity;
-  bool isLoaded = true;
-
-  @override
-  void initState() {
-    super.initState();
-    getProfile();
-  }
-
-  void getProfile() {
-    ProfileService.getProfileInformation().then((value) {
-      isLoaded = false;
-      profileDataEntity = value.data;
-    });
-  }
-
+    with AppTheme, Language, AppEventsNotifier, ProfileService {
   @override
   Widget build(BuildContext context) {
-    return isLoaded
-        ? const Center(child: CircularProgressIndicator())
-        : Column(
-            children: [
-              Stack(
-                children: [
-                  Center(
-                    child: Column(
-                      children: [
-                        SizedBox(height: size.h20),
-                        Container(
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                  color: clr.cardStrokeColor, width: size.w1)),
-                          child: CircleAvatar(
-                            radius: 45.r,
-                            backgroundImage: AssetImage(
-                              ImageAssets.imgProfile,
-                            ),
+    return AppStreamBuilder<ProfileDataEntity>(
+      stream: profileDataStreamController.stream,
+      loadingBuilder: (context) {
+        return const Center(child: CircularLoader());
+      },
+      dataBuilder: (context, data) {
+        return Column(
+          children: [
+            Stack(
+              children: [
+                Center(
+                  child: Column(
+                    children: [
+                      SizedBox(height: size.h20),
+                      Container(
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                                color: clr.cardStrokeColor, width: size.w1)),
+                        child: CircleAvatar(
+                          radius: 45.r,
+                          backgroundImage: AssetImage(
+                            ImageAssets.imgProfile,
                           ),
                         ),
-                        SizedBox(height: size.h12),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: size.w16),
-                          child: Text(
-                            label(
-                                e: profileDataEntity!.fullnameEn,
-                                b: profileDataEntity!.fullnameBn),
-                            style: TextStyle(
-                                color: clr.appPrimaryColorGreen,
-                                fontSize: size.textXMedium,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: StringData.fontFamilyRoboto),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        SizedBox(height: size.h24)
-                      ],
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          left: size.w24, right: size.w16, top: size.h16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          // SvgPicture.asset(ImageAssets.icEdit),
-                          CustomSwitchButton(
-                            value:
-                                App.currentAppLanguage == AppLanguage.english,
-                            textOn: 'EN',
-                            textSize: size.textXXSmall,
-                            textOff: 'বাং',
-                            bgColor: clr.whiteColor,
-                            width: 64.w,
-                            animationDuration:
-                                const Duration(milliseconds: 300),
-                            onChanged: (bool state) {
-                              App.setAppLanguage(state ? 1 : 0).then((value) {
-                                if (mounted) {
-                                  setState(() {});
-                                }
-                                AppEventsNotifier.notify(
-                                    EventAction.bottomNavBar);
-                              });
-                            },
-                            buttonHolder: const Icon(
-                              Icons.check,
-                              color: Colors.transparent,
-                            ),
-                            onTap: () {},
-                            onDoubleTap: () {},
-                            onSwipe: () {},
-                          ),
-                        ],
                       ),
-                    ),
-                  ),
-                ],
-              ),
-              Expanded(
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: size.w16),
-                  decoration: BoxDecoration(
-                      color: clr.scaffoldBackgroundColor,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(size.w40),
-                        topRight: Radius.circular(size.w40),
+                      SizedBox(height: size.h12),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: size.w16),
+                        child: Text(
+                          label(e: data.fullnameEn, b: data.fullnameBn),
+                          style: TextStyle(
+                              color: clr.appPrimaryColorGreen,
+                              fontSize: size.textXMedium,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: StringData.fontFamilyRoboto),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                        ),
                       ),
-                      border: Border(
-                          top: BorderSide(color: clr.cardStrokeColor),
-                          right: BorderSide(color: clr.cardStrokeColor))),
-                  child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    child: Column(
+                      SizedBox(height: size.h24)
+                    ],
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        left: size.w24, right: size.w16, top: size.h16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        SizedBox(height: size.h40),
-                        TitleWithIcon(
-                            icon: Icons.account_balance,
-                            title: label(
-                                e: en.currentOrganizationNameText,
-                                b: bn.currentOrganizationNameText)),
-                        TitleWithIcon(
-                            icon: Icons.beenhere,
-                            title: label(
-                                e: en.positionNameText,
-                                b: bn.positionNameText)),
-                        TitleWithIcon(
-                            icon: Icons.badge, title: profileDataEntity!.empId),
-                        TitleWithIcon(
-                            icon: Icons.phone,
-                            title: profileDataEntity!.mobileNo),
-                        TitleWithIcon(
-                            onTap: () {},
-                            icon: Icons.email,
-                            title: profileDataEntity!.email),
-                        TitleWithIcon(
-                          onTap: () => Scaffold.of(context).openEndDrawer(),
-                          svgIcon: ImageAssets.icEditorChoice,
-                          title: label(
-                              e: en.certificateText, b: bn.certificateText),
-                          hasTrailing: true,
+                        // SvgPicture.asset(ImageAssets.icEdit),
+                        CustomSwitchButton(
+                          value: App.currentAppLanguage == AppLanguage.english,
+                          textOn: 'EN',
+                          textSize: size.textXXSmall,
+                          textOff: 'বাং',
+                          bgColor: clr.whiteColor,
+                          width: 64.w,
+                          animationDuration: const Duration(milliseconds: 300),
+                          onChanged: (bool state) {
+                            App.setAppLanguage(state ? 1 : 0).then((value) {
+                              if (mounted) {
+                                setState(() {});
+                              }
+                              AppEventsNotifier.notify(
+                                  EventAction.bottomNavBar);
+                            });
+                          },
+                          buttonHolder: const Icon(
+                            Icons.check,
+                            color: Colors.transparent,
+                          ),
+                          onTap: () {},
+                          onDoubleTap: () {},
+                          onSwipe: () {},
                         ),
-                        TitleWithIcon(
-                          icon: Icons.logout,
-                          title: label(e: en.logoutText, b: bn.logoutText),
-                          onTap: showLogoutPromptDialog,
-                          hasBorder: false,
-                        ),
-                        SizedBox(height: size.h40),
                       ],
                     ),
                   ),
                 ),
-              )
-            ],
-          );
+              ],
+            ),
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: size.w16),
+                decoration: BoxDecoration(
+                    color: clr.scaffoldBackgroundColor,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(size.w40),
+                      topRight: Radius.circular(size.w40),
+                    ),
+                    border: Border(
+                        top: BorderSide(color: clr.cardStrokeColor),
+                        right: BorderSide(color: clr.cardStrokeColor))),
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    children: [
+                      SizedBox(height: size.h40),
+                      TitleWithIcon(
+                          icon: Icons.account_balance,
+                          title: label(
+                              e: en.currentOrganizationNameText,
+                              b: bn.currentOrganizationNameText)),
+                      TitleWithIcon(
+                          icon: Icons.beenhere,
+                          title: label(
+                              e: en.positionNameText, b: bn.positionNameText)),
+                      TitleWithIcon(icon: Icons.badge, title: data.empId),
+                      TitleWithIcon(icon: Icons.phone, title: data.mobileNo),
+                      TitleWithIcon(
+                          onTap: () {}, icon: Icons.email, title: data.email),
+                      TitleWithIcon(
+                        onTap: () => Scaffold.of(context).openEndDrawer(),
+                        svgIcon: ImageAssets.icEditorChoice,
+                        title:
+                            label(e: en.certificateText, b: bn.certificateText),
+                        hasTrailing: true,
+                      ),
+                      TitleWithIcon(
+                        icon: Icons.logout,
+                        title: label(e: en.logoutText, b: bn.logoutText),
+                        onTap: showLogoutPromptDialog,
+                        hasBorder: false,
+                      ),
+                      SizedBox(height: size.h40),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],
+        );
+      },
+      emptyBuilder: (context, message, icon) => CustomEmptyWidget(
+        message: message,
+        // constraints: constraints,
+        // offset: 350.w,
+      ),
+    );
   }
 
   void showLogoutPromptDialog() {
@@ -211,6 +200,11 @@ class _ProfileScreenState extends State<ProfileScreen>
         setState(() {});
       }
     }
+  }
+
+  @override
+  void showWarning(String message) {
+    CustomToasty.of(context).showWarning(message);
   }
 }
 
