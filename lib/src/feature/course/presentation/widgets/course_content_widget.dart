@@ -72,7 +72,7 @@ class CourseContentWidget extends StatelessWidget with AppTheme, Language {
           Expanded(
             flex: buttonTextSize.width < 80.0 ? 3 : 2,
             child: Text(
-              label(e: data.titleEn, b: data.titleBn),
+              label(e: data.contentTitleEn, b: data.contentTitleBn),
               style: TextStyle(
                   color: clr.textColorAppleBlack,
                   fontSize: size.textSmall,

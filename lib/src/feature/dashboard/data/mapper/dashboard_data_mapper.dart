@@ -1,6 +1,7 @@
-import 'activity_duration_data_mapper.dart';
-import 'current_module_data_mapper.dart';
-import 'curriculum_data_mapper.dart';
+import 'course_summary_data_mapper.dart';
+import '../../../course/data/mapper/course_data_mapper.dart';
+import '../../../course/data/models/course_data_model.dart';
+import '../../../course/domain/entities/course_data_entity.dart';
 import '../../domain/entities/dashboard_data_entity.dart';
 import '../models/dashboard_data_model.dart';
 
@@ -14,25 +15,21 @@ class _DashboardDataModelToEntityMapper
   @override
   DashboardDataModel fromEntityToModel(DashboardDataEntity entity) {
     return DashboardDataModel(
-        currentModuleData: entity.currentModuleData?.toCurrentModuleDataModel,
-        curriculumData: entity.curriculumData?.toCurriculumDataModel,
-        discussions: entity.discussions,
-        noticesCount: entity.noticesCount,
-        activityDurationData:
-            entity.activityDurationData?.toActivityDurationDataModel,
-        noticeboardList: entity.noticeboardList);
+        courses: List<CourseDataEntity>.from(entity.courses)
+            .map((entity) => entity.toCourseDataModel)
+            .toList(),
+        courseSummery: entity.courseSummery.toCourseSummaryDataModel,
+        discussion: entity.discussion);
   }
 
   @override
   DashboardDataEntity toEntityFromModel(DashboardDataModel model) {
     return DashboardDataEntity(
-        currentModuleData: model.currentModuleData?.toCurrentModuleDataEntity,
-        curriculumData: model.curriculumData?.toCurriculumDataEntity,
-        discussions: model.discussions,
-        noticesCount: model.noticesCount,
-        activityDurationData:
-            model.activityDurationData?.toActivityDurationDataEntity,
-        noticeboardList: model.noticeboardList);
+        courses: List<CourseDataModel>.from(model.courses)
+            .map((model) => model.toCourseDataEntity)
+            .toList(),
+        courseSummery: model.courseSummery!.toCourseSummaryDataEntity,
+        discussion: model.discussion);
   }
 }
 

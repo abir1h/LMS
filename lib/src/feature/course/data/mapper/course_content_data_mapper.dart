@@ -11,27 +11,25 @@ class CourseContentDataModelToEntityMapper extends CourseContentDataMapper<
   @override
   CourseContentDataModel fromEntityToModel(CourseContentDataEntity entity) {
     return CourseContentDataModel(
+        contentTitleEn: entity.contentTitleEn,
+        contentTitleBn: entity.contentTitleBn,
         contentType: entity.contentType,
         contentId: entity.contentId,
         sort: entity.sort,
-        titleEn: entity.titleEn,
-        titleBn: entity.titleBn,
         isCompleted: entity.isCompleted,
-        lastWatchTime: entity.lastWatchTime
-    );
+        lastWatchTime: entity.lastWatchTime);
   }
 
   @override
   CourseContentDataEntity toEntityFromModel(CourseContentDataModel model) {
     return CourseContentDataEntity(
+        contentTitleEn: model.contentTitleEn,
+        contentTitleBn: model.contentTitleBn,
         contentType: model.contentType,
         contentId: model.contentId,
         sort: model.sort,
-        titleEn: model.titleEn,
-        titleBn: model.titleBn,
-       isCompleted: model.isCompleted,
-      lastWatchTime: model.lastWatchTime
-    );
+        isCompleted: model.isCompleted,
+        lastWatchTime: model.lastWatchTime);
   }
 }
 

@@ -13,6 +13,10 @@ class StringData {
   static const String fontFamilyPoppins = 'Poppins';
   static const String fontFamilyRoboto = 'Roboto';
   static const String fontFamilyInter = 'Inter';
+  static const String fontFamilyKalpurush = 'Kalpurush';
+  static const String fontFamilySiyamrupali = 'Siyamrupali';
+  static const String fontFamilyNikosh = 'Nikosh';
+  static const String fontFamilySolaimanLipi = 'SolaimanLipi';
 
   static const String userNameHintText = "ব্যবহারকারী আইডি";
   static const String commentHintText = "এখানে কমেন্ট করুন...";

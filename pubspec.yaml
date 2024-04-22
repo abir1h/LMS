@@ -73,3 +73,23 @@ flutter:
       fonts:
         - asset: assets/fonts/Inter-Regular.ttf
           style: normal
+
+    - family: Kalpurush
+      fonts:
+        - asset: assets/fonts/kalpurush.ttf
+          style: normal
+
+    - family: Siyamrupali
+      fonts:
+        - asset: assets/fonts/Siyamrupali.ttf
+          style: normal
+
+    - family: Nikosh
+      fonts:
+        - asset: assets/fonts/Nikosh.ttf
+          style: normal
+
+    - family: SolaimanLipi
+      fonts:
+        - asset: assets/fonts/SolaimanLipi_20-04-07.ttf
+          style: normal

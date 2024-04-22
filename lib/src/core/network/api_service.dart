@@ -131,7 +131,9 @@ class Server {
   }) async {
     try {
       var body = json.encode(postData);
-      String token = await AuthCacheManager.getUserToken();
+      // String token = await AuthCacheManager.getUserToken();///Todo Delete Later
+      String token =
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOm51bGwsInR5cGUiOiJzdXBlcmFkbWluIiwiaWF0IjoxNzEzNzY1OTcwLCJleHAiOjE3MTYzNTc5NzB9.ofkk_pPVNNwjKXxBb4g5B7f8_MT4PZOM9vN9yE0B3Do";
       var response = await _client.post(
         Uri.parse(host + url),
         headers: {
@@ -154,7 +156,10 @@ class Server {
 
   Future<dynamic> getRequest({required String url}) async {
     try {
-      String token = await AuthCacheManager.getUserToken();
+      // String token = await AuthCacheManager.getUserToken();///Todo Delete Later
+      String token =
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOm51bGwsInR5cGUiOiJzdXBlcmFkbWluIiwiaWF0IjoxNzEzNzY1OTcwLCJleHAiOjE3MTYzNTc5NzB9.ofkk_pPVNNwjKXxBb4g5B7f8_MT4PZOM9vN9yE0B3Do";
+
       var response = await _client.get(Uri.parse(host + url), headers: {
         "Accept": "application/json",
         "Content-Type": "application/json",
@@ -207,7 +212,10 @@ class Server {
 
   Future<dynamic> deleteRequest({required String url}) async {
     try {
-      String token = await AuthCacheManager.getUserToken();
+      // String token = await AuthCacheManager.getUserToken();///Todo Delete Later
+      String token =
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOm51bGwsInR5cGUiOiJzdXBlcmFkbWluIiwiaWF0IjoxNzEzNzY1OTcwLCJleHAiOjE3MTYzNTc5NzB9.ofkk_pPVNNwjKXxBb4g5B7f8_MT4PZOM9vN9yE0B3Do";
+
       var response = await _client.delete(Uri.parse(host + url), headers: {
         "Accept": "application/json",
         "Content-Type": "application/json",
