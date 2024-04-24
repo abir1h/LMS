@@ -35,10 +35,10 @@ class DashboardCard extends StatelessWidget with AppTheme {
           border: Border.all(color: borderColor!),
           boxShadow: [
             BoxShadow(
-              color: clr.blackColor.withOpacity(.2),
-              blurRadius: size.r8,
-              offset: Offset(0.0, size.h2),
-            ),
+                offset: const Offset(0, 4),
+                blurRadius: 4,
+                spreadRadius: 0,
+                color: clr.blackColor.withOpacity(.15))
           ],
         ),
         child: Column(

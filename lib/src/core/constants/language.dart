@@ -67,16 +67,19 @@ class LanguageEn {
   String positionNameText = "Professor"; //"Your Title";
   String certificateText = "Certificate";
   String acknowledgment = "Acknowledgment";
+  String emisId = "EMIS Id: ";
 
   String ongoingModule = "Ongoing Module";
   String completed = "Completed";
   String ongoingCurriculum = "Ongoing Curriculum";
   String completedCurriculum = "Completed curriculum";
-  String discussionArea = "Discussion area";
+  String allCourse = "All Course";
   String upcomingCurriculum = "Upcoming Curriculum";
   String notification = "Notification";
   String effectivePeriod = "Effective Period";
   String noticeBoard = "Notice Board";
+  String leaderboard = "Leaderboard";
+  String seeAll = "See All";
 
   String courseText = "Course";
   String courseDetailsText = "Course Details";
@@ -196,16 +199,19 @@ class LanguageBn {
   String positionNameText = "অধ্যাপক"; //"আপনার পদবী";
   String certificateText = "সনদপত্র";
   String acknowledgment = "স্বীকৃতিপত্র";
+  String emisId = "ইএমআইএস আইডি: ";
 
   String ongoingModule = "চলমান মডিউল";
   String completed = "সম্পন্ন";
-  String ongoingCurriculum = "চলমান অধিবেশন";
-  String completedCurriculum = "সম্পন্ন অধিবেশন";
-  String discussionArea = "আলোচনা ক্ষেত্র";
-  String upcomingCurriculum = "আসন্ন অধিবেশন";
+  String ongoingCurriculum = "চলমান কোর্স";
+  String completedCurriculum = "সম্পন্ন কোর্স";
+  String allCourse = "সকল কোর্সসমূহ";
+  String upcomingCurriculum = "আসন্ন কোর্স";
   String notification = "বিজ্ঞপ্তি";
   String effectivePeriod = "কার্যকম সময়কাল";
   String noticeBoard = "নোটিশবোর্ড";
+  String leaderboard = "লিডারবোর্ড";
+  String seeAll = "সবগুলো দেখুন";
 
   String courseText = "কোর্স";
   String courseDetailsText = "অধিবেশনের বিস্তারিত";

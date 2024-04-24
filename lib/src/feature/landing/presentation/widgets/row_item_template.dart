@@ -10,13 +10,16 @@ class RowItemTemplate extends StatelessWidget with AppTheme {
 
   @override
   Widget build(BuildContext context) {
-    return IntrinsicHeight(
-      child: Row(
-        children: [
-          Expanded(child: leftChild),
-          SizedBox(width: size.w16),
-          Expanded(child: rightChild),
-        ],
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: size.w16),
+      child: IntrinsicHeight(
+        child: Row(
+          children: [
+            Expanded(child: leftChild),
+            SizedBox(width: size.w16),
+            Expanded(child: rightChild),
+          ],
+        ),
       ),
     );
   }

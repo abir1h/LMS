@@ -18,6 +18,11 @@ class ImageAssets {
   static String get imgOption2 => 'option_2'.png;
   static String get imgOption3 => 'option_3'.png;
 
+  static String get leaderImage => 'leadarImage'.png;
+  static String get imgWebinar => 'webinar'.png;
+  static String get imgPdf=> 'pdf'.png;
+  static String get imgDoc => 'doc'.png;
+
   static String get imgTraineeCard1 => 'trainee_card'.svg;
   static String get imgTraineeCard2 => 'trainee_card2'.svg;
   static String get imgTraineeCard3 => 'trainee_card3'.svg;
@@ -33,6 +38,7 @@ class ImageAssets {
   static String get icEditSquare => 'edit_square'.svg;
   static String get icAlarm => 'alarm'.svg;
   static String get icDictionary => 'dictionary'.svg;
+  static String get icWebinar => 'webinar'.svg;
 }
 
 extension on String {

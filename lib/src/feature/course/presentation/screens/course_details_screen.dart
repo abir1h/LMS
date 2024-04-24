@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../../../core/common_widgets/circuler_widget.dart';
@@ -63,6 +65,14 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    if (_screenArgs.curriculumType ==
+                        CircularStatus.running.name)
+                      const LiveClassTopicWidget(),
+                    if (_screenArgs.curriculumType ==
+                        CircularStatus.running.name)
+                      LastSeenWidget(
+                        onTap: () {},
+                      ),
                     CourseText(
                       text: label(e: data.nameEn, b: data.nameBn),
                       fontSize: size.textXMedium,
@@ -74,7 +84,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
                         child: CourseText(
                           text: label(
                               e: "Course Code : ${data.code}",
-                              b: "অধিবেশনের কোড : ${data.code}"),
+                              b: "কোর্সের কোড : ${data.code}"),
                           textColor: clr.textColorAppleBlack,
                           fontSize: size.textXSmall,
                           fontWeight: FontWeight.w400,
@@ -93,6 +103,26 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
                       fontWeight: FontWeight.w500,
                     ),
                     SizedBox(height: size.h16),
+                    CourseText(
+                      text: label(e: "সহায়ক পাঠ", b: "সহায়ক পাঠ"),
+                      textColor: clr.textColorBlack,
+                    ),
+                    SizedBox(height: size.h12),
+                    SupportingTextItemSection(
+                        items: const ["", ""],
+                        buildItem: (BuildContext context, int index, item) {
+                          return SupportingTextItemWidget(
+                            onTap: () {},
+                          );
+                        }),
+                    SizedBox(height: size.h12),
+                    CourseMaterialWidget(
+                      items: const ["", ""],
+                      buildItem: (BuildContext context, int index, item) {
+                        return Text("Test");
+                      },
+                    ),
+                    SizedBox(height: size.h12),
                     CourseText(
                       text: label(
                           e: en.curriculumContent, b: bn.curriculumContent),
@@ -134,7 +164,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
               // offset: 350.w,
             ),
           ),
-          if (_screenArgs.curriculumType == "upcoming")
+          if (_screenArgs.curriculumType == CircularStatus.upcoming.name)
             Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
@@ -198,25 +228,358 @@ class CourseText extends StatelessWidget with AppTheme {
   final Color? textColor;
   final double? fontSize;
   final FontWeight? fontWeight;
+  final int? maxLines;
+  final EdgeInsetsGeometry? padding;
   const CourseText(
       {super.key,
       required this.text,
       this.textColor,
       this.fontSize,
-      this.fontWeight});
+      this.fontWeight,
+      this.maxLines,
+      this.padding});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: size.w16),
+      padding: padding ?? EdgeInsets.symmetric(horizontal: size.w16),
       child: Text(
         text,
         style: TextStyle(
             color: textColor ?? clr.appPrimaryColorGreen,
             fontSize: fontSize ?? size.textSmall,
             fontWeight: fontWeight ?? FontWeight.w600,
-            fontFamily: StringData.fontFamilyPoppins),
+            fontFamily: StringData.fontFamilyPoppins,
+            overflow: TextOverflow.ellipsis),
+        maxLines: maxLines,
       ),
+    );
+  }
+}
+
+class LiveClassTopicWidget extends StatelessWidget with AppTheme {
+  const LiveClassTopicWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: clr.cardFillColorMintCream,
+        borderRadius: BorderRadius.circular(size.w8),
+        border: Border.all(color: clr.cardStrokeColor, width: size.w1),
+      ),
+      // padding: EdgeInsets.symmetric(horizontal: size.w12, vertical: size.h6),
+      margin: EdgeInsets.only(left: size.w16, right: size.w16, top: size.h12),
+      child: Stack(
+        children: [
+          Padding(
+            padding:
+                EdgeInsets.symmetric(horizontal: size.w12, vertical: size.h6),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Image.asset(ImageAssets.imgWebinar),
+                SizedBox(width: size.w10 + size.w1),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CourseText(
+                        text: label(
+                            e: "Live Class Topics", b: "লাইভ ক্লাসের টপিক"),
+                        textColor: clr.blackColor,
+                        fontWeight: FontWeight.w400,
+                        maxLines: 1,
+                        padding: EdgeInsets.zero,
+                      ),
+                      SizedBox(height: size.h4),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.calendar_month,
+                            size: size.r16,
+                            color: clr.gapStrokeGrey,
+                          ),
+                          SizedBox(width: size.w6),
+                          Expanded(
+                            child: CourseText(
+                              text: label(
+                                  e: "২৯ ফেব্রুয়ারী, রাত ৯:০০ টা",
+                                  b: "২৯ ফেব্রুয়ারী, রাত ৯:০০ টা"),
+                              textColor: clr.gapStrokeGrey,
+                              fontSize: size.textXXSmall,
+                              fontWeight: FontWeight.w400,
+                              maxLines: 1,
+                              padding: EdgeInsets.zero,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            right: 0,
+            child: Container(
+              decoration: BoxDecoration(
+                color: clr.gapStrokeGrey,
+                borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(size.w8),
+                    bottomLeft: Radius.circular(size.w8)),
+              ),
+              padding:
+                  EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h4),
+              child: CourseText(
+                text: label(e: "Upcoming", b: "আপকামিং"),
+                textColor: clr.shadeWhiteColor2,
+                fontSize: size.textXSmall,
+                fontWeight: FontWeight.w500,
+                padding: EdgeInsets.zero,
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class LastSeenWidget extends StatelessWidget with AppTheme {
+  final VoidCallback onTap;
+  const LastSeenWidget({super.key, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      child: Container(
+        decoration: BoxDecoration(
+          color: clr.cardFillColorMintCream,
+          borderRadius: BorderRadius.circular(size.w8),
+          border: Border.all(color: clr.cardStrokeColor, width: size.w1),
+          boxShadow: [
+            BoxShadow(
+                offset: const Offset(0, 4),
+                blurRadius: 4,
+                spreadRadius: 0,
+                color: clr.blackColor.withOpacity(.2))
+          ],
+        ),
+        padding: EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h8),
+        margin: EdgeInsets.symmetric(horizontal: size.w12, vertical: size.h12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: CourseText(
+                    text: label(e: "সর্বশেষ দেখা পাঠ", b: "সর্বশেষ দেখা পাঠ"),
+                    textColor: clr.textColorBlack,
+                    fontSize: size.textXXSmall,
+                    fontWeight: FontWeight.w500,
+                    maxLines: 1,
+                    padding: EdgeInsets.zero,
+                  ),
+                ),
+                Icon(
+                  Icons.arrow_forward,
+                  size: size.r16,
+                  color: clr.appPrimaryColorGreen,
+                ),
+              ],
+            ),
+            SizedBox(height: size.h8),
+            LinearProgressIndicator(
+              value: .1,
+              color: clr.cardStrokeColor,
+              backgroundColor: clr.progressBGColor,
+              valueColor: AlwaysStoppedAnimation<Color>(
+                clr.cardStrokeColor,
+              ),
+              borderRadius: BorderRadius.circular(size.w8),
+              minHeight: size.h12,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SupportingTextItemSection<T> extends StatelessWidget with AppTheme {
+  final List<T> items;
+  final Widget Function(BuildContext context, int index, T item) buildItem;
+  const SupportingTextItemSection(
+      {super.key, required this.items, required this.buildItem});
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 3,
+        crossAxisSpacing: size.w8,
+        mainAxisSpacing: size.h8,
+      ),
+      itemCount: items.length,
+      shrinkWrap: true,
+      padding: EdgeInsets.symmetric(horizontal: size.w16),
+      itemBuilder: (context, index) {
+        return buildItem(context, index, items[index]);
+      },
+    );
+  }
+}
+
+class SupportingTextItemWidget<T> extends StatelessWidget
+    with AppTheme, Language {
+  final VoidCallback onTap;
+  const SupportingTextItemWidget({Key? key, required this.onTap})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+            color: clr.shadeWhiteColor2,
+            borderRadius: BorderRadius.circular(size.r4),
+            border: Border.all(color: clr.cardStrokeColorGrey2)),
+        alignment: Alignment.center,
+        padding: EdgeInsets.symmetric(horizontal: size.w8, vertical: size.h4),
+        child: Row(
+          children: [
+            Image.asset(ImageAssets.imgPdf),
+            SizedBox(width: size.w4),
+            Expanded(
+              child: CourseText(
+                text: label(e: "Document-1.pdf", b: "Document-1.pdf"),
+                textColor: clr.textColorBlack,
+                fontSize: size.textXSmall,
+                fontWeight: FontWeight.w500,
+                maxLines: 2,
+                padding: EdgeInsets.zero,
+              ),
+            ),
+            SizedBox(width: size.w4),
+            Icon(
+              Icons.file_download_outlined,
+              color: clr.appPrimaryColorGreen,
+              size: size.r24,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CourseMaterialWidget<T> extends StatefulWidget {
+  final List<T> items;
+  final Widget Function(BuildContext context, int index, T item) buildItem;
+  const CourseMaterialWidget(
+      {super.key, required this.items, required this.buildItem});
+
+  @override
+  State<CourseMaterialWidget<T>> createState() =>
+      _CourseMaterialWidgetState<T>();
+}
+
+class _CourseMaterialWidgetState<T> extends State<CourseMaterialWidget<T>>
+    with AppTheme, Language {
+  bool _isExpanded = false;
+
+  _toggle() {
+    if (mounted) {
+      setState(() {
+        _isExpanded = !_isExpanded;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GestureDetector(
+          onTap: () {
+            _toggle();
+          },
+          child: Container(
+            padding:
+                EdgeInsets.symmetric(horizontal: size.w8, vertical: size.h4),
+            margin: EdgeInsets.symmetric(horizontal: size.w16),
+            decoration: BoxDecoration(
+              color: clr.cardFillColorCruise,
+              borderRadius: BorderRadius.circular(size.r8),
+              border: Border.all(color: clr.drawerFillColor, width: size.w1),
+              boxShadow: [
+                BoxShadow(
+                  color: clr.blackColor.withOpacity(.2),
+                  blurRadius: size.r4,
+                  offset: Offset(0.0, size.h2),
+                ),
+              ],
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CourseText(
+                  text: label(e: "কোর্সে যা থাকবে", b: "কোর্সে যা থাকবে"),
+                  textColor: clr.textColorBlack,
+                  fontSize: size.textSmall,
+                  fontWeight: FontWeight.w500,
+                  maxLines: 2,
+                  padding: EdgeInsets.zero,
+                ),
+                Icon(
+                  _isExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+                  color: clr.iconColorBlack,
+                  size: size.r24,
+                ),
+              ],
+            ),
+          ),
+        ),
+        if (_isExpanded)
+          Container(
+            decoration: BoxDecoration(
+              color: clr.cardFillColorWhite,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(size.w8),
+                bottomRight: Radius.circular(size.w8),
+              ),
+              border:
+                  Border.all(color: clr.cardStrokeColorGrey, width: size.w1),
+              boxShadow: [
+                BoxShadow(
+                    offset: const Offset(0, 4),
+                    blurRadius: 4,
+                    spreadRadius: 0,
+                    color: clr.blackColor.withOpacity(.15))
+              ],
+            ),
+            padding: EdgeInsets.symmetric(
+                horizontal: size.w4 + size.w22, vertical: size.h12),
+            margin: EdgeInsets.symmetric(horizontal: size.w24),
+            child: ListView.builder(
+              itemCount: widget.items.length,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.zero,
+              itemBuilder: (context, index) {
+                return widget.buildItem(context, index, widget.items[index]);
+              },
+            ),
+          )
+      ],
     );
   }
 }

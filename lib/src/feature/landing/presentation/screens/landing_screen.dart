@@ -103,18 +103,24 @@ class _LandingScreenState extends State<LandingScreen> with AppTheme, Language {
                             )),
                         SizedBox(height: size.h16),
                         RowItemTemplate(
-                          leftChild: ModuleCardWidget(
-                            image: ImageAssets.imgModule3,
-                            text: label(e: en.eLibrary, b: bn.eLibrary),
-                          ),
-                          rightChild: ModuleCardWidget(
-                            image: ImageAssets.imgModule4,
-                            text: label(
-                                e: en.formativeAssessment,
-                                b: bn.formativeAssessment),
-                          ),
-                        ),
-                        SizedBox(height: size.h16),
+                            leftChild: ModuleCardWidget(
+                              image: ImageAssets.imgModule3,
+                              text: label(e: en.eLibrary, b: bn.eLibrary),
+                            ),
+                            rightChild: ModuleCardWidget(
+                              image: ImageAssets.imgModule2,
+                              text: label(
+                                  e: en.socialLearningPlatform,
+                                  b: bn.socialLearningPlatform),
+                            )
+                            /*ModuleCardWidget(
+                              image: ImageAssets.imgModule4,
+                              text: label(
+                                  e: en.formativeAssessment,
+                                  b: bn.formativeAssessment),
+                            ),*/
+                            ),
+                        /* SizedBox(height: size.h16),
                         RowItemTemplate(
                             leftChild: ModuleCardWidget(
                               image: ImageAssets.imgModule2,
@@ -122,7 +128,7 @@ class _LandingScreenState extends State<LandingScreen> with AppTheme, Language {
                                   e: en.socialLearningPlatform,
                                   b: bn.socialLearningPlatform),
                             ),
-                            rightChild: Container()),
+                            rightChild: Container()),*/
                       ],
                     ),
                   );

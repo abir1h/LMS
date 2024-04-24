@@ -9,6 +9,9 @@ import '../../domain/use_cases/dashboard_use_case.dart';
 
 abstract class _ViewModel {
   void showWarning(String message);
+  void navigateToTranscriptVideoScreen();
+  void navigateToCourseListScreen(String circularStatus);
+  void navigateToLeaderBoardScreen();
 }
 
 mixin DashboardScreenService<T extends StatefulWidget> on State<T>
@@ -54,5 +57,17 @@ mixin DashboardScreenService<T extends StatefulWidget> on State<T>
         _view.showWarning(value.message!);
       }
     });
+  }
+
+  void onTapRunningModule() {
+    _view.navigateToTranscriptVideoScreen();
+  }
+
+  void onTapCard(String circularStatus) {
+    _view.navigateToCourseListScreen(circularStatus);
+  }
+
+  void onTapSeeAll() {
+    _view.navigateToLeaderBoardScreen();
   }
 }

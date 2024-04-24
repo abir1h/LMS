@@ -15,6 +15,7 @@ import '../../feature/discussion/presentation/screens/detailed_discussion.dart';
 import '../../feature/discussion/presentation/screens/discussion_list_screen.dart';
 import '../../feature/discussion/presentation/screens/discussion_screen.dart';
 import '../../feature/landing/presentation/screens/landing_screen.dart';
+import '../../feature/leaderboard/presentation/screens/leaderboard_screen.dart';
 import '../../feature/notes/presentation/screens/note_details_screen.dart';
 import '../../feature/notes/presentation/screens/note_edit_screen.dart';
 import '../../feature/notification/presentation/screens/notification_screen.dart';
@@ -32,6 +33,7 @@ class AppRoute {
   static const String landingScreen = "landingScreen";
   static const String rootScreen = "rootScreen";
   static const String notificationScreen = "notificationScreen";
+  static const String leaderboardScreen = "leaderboardScreen";
   static const String courseListScreen = "courseListScreen";
   static const String courseDetailsScreen = "courseDetailsScreen";
   static const String courseIntroductionScreen = "courseIntroductionScreen";
@@ -67,8 +69,11 @@ mixin RouteGenerator {
             return const LandingScreen();
           case AppRoute.rootScreen:
             return RootScreen(arguments: setting.arguments);
+
           case AppRoute.notificationScreen:
             return const NotificationScreen();
+          case AppRoute.leaderboardScreen:
+            return const LeaderboardScreen();
 
           ///Course
           case AppRoute.courseListScreen:

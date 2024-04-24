@@ -39,6 +39,7 @@ class ThemeColor {
   Color get textColorAppleBlack => HexColor("1D1D1F");
   Color get textColorBlack => HexColor("414141");
   Color get textColorGray => HexColor("A8A8A8");
+  Color get textColorGray2 => HexColor("7A7A7A");
   Color get placeHolderTextColorGray => HexColor("9F9F9F");
 
   Color get boxStrokeColor => HexColor("DFDFDF");
@@ -48,16 +49,20 @@ class ThemeColor {
   Color get cardStrokeColorGreen => HexColor("B7D37A");
   Color get cardStrokeColorPurple => HexColor("CCBDE2");
   Color get cardStrokeColorBlue => HexColor("ABCEE3");
+  Color get cardStrokeColorGrey => HexColor("EAEAEA");
+  Color get cardStrokeColorGrey2 => HexColor("D0D0D0");
   Color get dividerStrokeColorGrey => HexColor("B0B0B0");
   Color get gapStrokeGrey => HexColor("646464");
 
   Color get fromBoxFillColor => HexColor("FCFFFE");
+  Color get cardFillColorWhite => HexColor("FFFEFF");
   Color get cardFillColorOrange => HexColor("FFE7D2");
   Color get cardFillColorGreen => HexColor("ECFFC2");
   Color get cardFillColorPurple => HexColor("F1E8FF");
   Color get cardFillColorBlue => HexColor("D7EEFC");
   Color get cardFillColorCruise => HexColor("B3E0DD");
   Color get cardFillColorAliceBlue => HexColor("F0FCF9");
+  Color get cardFillColorMintCream => HexColor("F9FFFD");
   Color get drawerFillColor => HexColor("E6F8F4");
 
   Color get clickableLinkColor => HexColor("4A88FF");

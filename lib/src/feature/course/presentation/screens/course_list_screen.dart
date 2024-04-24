@@ -92,29 +92,29 @@ class _CourseListScreenState extends State<CourseListScreen>
                         );
                       },
                     ),
-                    SizedBox(height: size.h16),
-                    if (_screenArgs.circularStatus ==
-                        CircularStatus.running.name)
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: size.w8),
-                        child: Divider(
-                            height: size.h1,
-                            color: clr.placeHolderTextColorGray),
-                      ),
-                    SizedBox(height: size.h16),
-                    if (_screenArgs.circularStatus ==
-                        CircularStatus.running.name)
-                      Text(
-                        label(
-                            e: "Other Ongoing Courses",
-                            b: "অন্যান্য চলমান অধিবেশনসমূহ"),
-                        style: TextStyle(
-                            color: clr.appPrimaryColorGreen,
-                            fontSize: size.textXMedium,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: StringData.fontFamilyPoppins),
-                      ),
-                    SizedBox(height: size.h8),
+                    // SizedBox(height: size.h16),
+                    // if (_screenArgs.circularStatus ==
+                    //     CircularStatus.running.name)
+                    //   Padding(
+                    //     padding: EdgeInsets.symmetric(horizontal: size.w8),
+                    //     child: Divider(
+                    //         height: size.h1,
+                    //         color: clr.placeHolderTextColorGray),
+                    //   ),
+                    // SizedBox(height: size.h16),
+                    // if (_screenArgs.circularStatus ==
+                    //     CircularStatus.running.name)
+                    //   Text(
+                    //     label(
+                    //         e: "Other Ongoing Courses",
+                    //         b: "অন্যান্য চলমান অধিবেশনসমূহ"),
+                    //     style: TextStyle(
+                    //         color: clr.appPrimaryColorGreen,
+                    //         fontSize: size.textXMedium,
+                    //         fontWeight: FontWeight.w600,
+                    //         fontFamily: StringData.fontFamilyPoppins),
+                    //   ),
+                    // SizedBox(height: size.h8),
                     /*if (_screenArgs.circularStatus ==
                         CircularStatus.running.name)
                       ListView.separated(

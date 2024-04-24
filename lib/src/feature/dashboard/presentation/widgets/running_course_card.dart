@@ -25,14 +25,23 @@ class RunningCourseCard extends StatelessWidget with AppTheme, Language {
       child: Container(
           width: 1.sw,
           decoration: BoxDecoration(
-              color: clr.shadeWhiteColor,
-              borderRadius: BorderRadius.circular(size.w8),
-              border: Border.all(color: clr.boxStrokeColor, width: size.w1)),
+            color: clr.shadeWhiteColor,
+            borderRadius: BorderRadius.circular(size.w8),
+            border: Border.all(color: clr.boxStrokeColor, width: size.w1),
+            boxShadow: [
+              BoxShadow(
+                  offset: const Offset(0, 4),
+                  blurRadius: 4,
+                  spreadRadius: 0,
+                  color: clr.blackColor.withOpacity(.15))
+            ],
+          ),
           padding: EdgeInsets.only(
               left: size.w4,
               right: size.w1 + size.w12,
               top: size.h8,
               bottom: size.h4),
+          margin: EdgeInsets.symmetric(horizontal: size.w16),
           child: Column(
             children: [
               Row(
