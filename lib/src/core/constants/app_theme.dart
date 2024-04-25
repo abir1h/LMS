@@ -67,6 +67,8 @@ class ThemeColor {
 
   Color get clickableLinkColor => HexColor("4A88FF");
   Color get progressBGColor => HexColor("D9D9D9");
+  Color get progressColorOrange => HexColor("FA916B");
+  Color get progressColorBlue => HexColor("0875CF");
 
   Color get graphData => HexColor("B5D4BD");
   Color get cardStrokeColorHint => HexColor("D1D1D1");

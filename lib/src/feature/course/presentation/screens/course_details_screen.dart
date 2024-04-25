@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:lms/src/feature/course/presentation/widgets/blinking_widget.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../../../core/common_widgets/circuler_widget.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/custom_empty_widget.dart';
+import '../../../../core/common_widgets/custom_expanded_text.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/enums/enums.dart';
@@ -71,43 +74,86 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
                     if (_screenArgs.curriculumType ==
                         CircularStatus.running.name)
                       LastSeenWidget(
-                        onTap: () {},
+                        onTap: onTapCourseVideo,
                       ),
+                    GestureDetector(
+                      onTap: onTapProgress,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: size.w10, vertical: size.h6),
+                        margin: EdgeInsets.symmetric(horizontal: size.w16),
+                        decoration: BoxDecoration(
+                          color: clr.cardFillColorCruise,
+                          borderRadius: BorderRadius.circular(size.r8),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SvgPicture.asset(ImageAssets.icBarChart),
+                            SizedBox(width: size.w8),
+                            Text(
+                              label(
+                                  e: "Overall Progress", b: "সামগ্রিক অগ্রগতি"),
+                              style: TextStyle(
+                                  color: clr.appPrimaryColorGreen,
+                                  fontSize: size.textXMedium,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: StringData.fontFamilyRoboto),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: size.h12),
                     CourseText(
                       text: label(e: data.nameEn, b: data.nameBn),
                       fontSize: size.textXMedium,
-                    ),
-                    SizedBox(height: size.h16),
-                    if (data.code.isNotEmpty)
-                      Padding(
-                        padding: EdgeInsets.only(bottom: size.h10),
-                        child: CourseText(
-                          text: label(
-                              e: "Course Code : ${data.code}",
-                              b: "কোর্সের কোড : ${data.code}"),
-                          textColor: clr.textColorAppleBlack,
-                          fontSize: size.textXSmall,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    CourseText(
-                      text: label(
-                          e: en.curriculumDescription,
-                          b: bn.curriculumDescription),
-                      textColor: clr.textColorBlack,
-                    ),
-                    SizedBox(height: size.h10),
-                    CourseText(
-                      text: label(e: data.shortDescEn, b: data.shortDescBn),
-                      textColor: clr.textColorAppleBlack,
                       fontWeight: FontWeight.w500,
                     ),
-                    SizedBox(height: size.h16),
+                    SizedBox(height: size.h8),
+                    if (data.code.isNotEmpty)
+                      CourseText(
+                        text: label(
+                            e: "Course Code : ${data.code}",
+                            b: "কোর্সের কোড : ${data.code}"),
+                        textColor: clr.textColorAppleBlack,
+                        fontSize: size.textXSmall,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    SizedBox(height: size.h12),
+                    CourseText(
+                      text: label(e: en.aboutCourse, b: bn.aboutCourse),
+                      textColor: clr.textColorBlack,
+                      fontSize: size.textXMedium,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    SizedBox(height: size.h4),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: size.w16),
+                      child: ExpandableText(
+                        text: label(e: data.shortDescEn, b: data.shortDescBn),
+                        style: TextStyle(
+                            color: clr.textColorAppleBlack,
+                            fontSize: size.textSmall,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: StringData.fontFamilyPoppins),
+                        minimumTextLengthToFold: 130,
+                      ),
+                    ),
+                    // CourseText(
+                    //   text: label(e: data.shortDescEn, b: data.shortDescBn),
+                    //   textColor: clr.textColorAppleBlack,
+                    //   fontWeight: FontWeight.w500,
+                    // ),
+                    SizedBox(height: size.h12),
                     CourseText(
                       text: label(e: "সহায়ক পাঠ", b: "সহায়ক পাঠ"),
                       textColor: clr.textColorBlack,
+                      fontSize: size.textXMedium,
+                      fontWeight: FontWeight.w500,
                     ),
-                    SizedBox(height: size.h12),
+                    SizedBox(height: size.h8),
                     SupportingTextItemSection(
                         items: const ["", ""],
                         buildItem: (BuildContext context, int index, item) {
@@ -119,24 +165,26 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
                     CourseMaterialWidget(
                       items: const ["", ""],
                       buildItem: (BuildContext context, int index, item) {
-                        return Text("Test");
+                        return CourseMaterialItemWidget(
+                          icon: Icons.calendar_month_outlined,
+                          title: label(e: "সময়কাল", b: "সময়কাল"),
+                          duration: label(e: "4 Week", b: "৪ সপ্তাহ"),
+                        );
                       },
                     ),
                     SizedBox(height: size.h12),
                     CourseText(
-                      text: label(
-                          e: en.curriculumContent, b: bn.curriculumContent),
+                      text: label(e: en.courseContent, b: bn.courseContent),
                       textColor: clr.textColorBlack,
+                      fontSize: size.textXMedium,
                     ),
-                    SizedBox(height: size.h12),
+                    SizedBox(height: size.h16),
                     CourseModuleItemSectionWidget(
                         items: data.courseModules!,
                         buildItem: (BuildContext context, int index, item) {
                           return ChapterWidget(
                             chapterTitle: label(e: item.nameEn, b: item.nameBn),
-                            chapterCode: label(
-                                e: "Chapter Code ${item.code}",
-                                b: "অধ্যায়ের কোড ${item.code}"),
+                            chapterCode: label(e: item.code, b: item.code),
                             chapterType: ChapterType.open,
                             items: item.courseContents!,
                             buildItem: (BuildContext context, int index, item) {
@@ -221,6 +269,11 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
   void navigateToCourseVideoScreen() {
     Navigator.of(context).pushNamed(AppRoute.transcriptVideoScreen);
   }
+
+  @override
+  void navigateToOverallProgressScreen() {
+    Navigator.of(context).pushNamed(AppRoute.overallProgressScreen);
+  }
 }
 
 class CourseText extends StatelessWidget with AppTheme {
@@ -269,7 +322,7 @@ class LiveClassTopicWidget extends StatelessWidget with AppTheme {
         border: Border.all(color: clr.cardStrokeColor, width: size.w1),
       ),
       // padding: EdgeInsets.symmetric(horizontal: size.w12, vertical: size.h6),
-      margin: EdgeInsets.only(left: size.w16, right: size.w16, top: size.h12),
+      margin: EdgeInsets.symmetric(horizontal: size.w16),
       child: Stack(
         children: [
           Padding(
@@ -323,21 +376,23 @@ class LiveClassTopicWidget extends StatelessWidget with AppTheme {
           ),
           Positioned(
             right: 0,
-            child: Container(
-              decoration: BoxDecoration(
-                color: clr.gapStrokeGrey,
-                borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(size.w8),
-                    bottomLeft: Radius.circular(size.w8)),
-              ),
-              padding:
-                  EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h4),
-              child: CourseText(
-                text: label(e: "Upcoming", b: "আপকামিং"),
-                textColor: clr.shadeWhiteColor2,
-                fontSize: size.textXSmall,
-                fontWeight: FontWeight.w500,
-                padding: EdgeInsets.zero,
+            child: BlinkingWidget(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: clr.appPrimaryColorGreen,
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(size.w8),
+                      bottomLeft: Radius.circular(size.w8)),
+                ),
+                padding: EdgeInsets.symmetric(
+                    horizontal: size.w16, vertical: size.h4),
+                child: CourseText(
+                  text: label(e: "Upcoming", b: "আপকামিং"),
+                  textColor: clr.shadeWhiteColor2,
+                  fontSize: size.textXSmall,
+                  fontWeight: FontWeight.w500,
+                  padding: EdgeInsets.zero,
+                ),
               ),
             ),
           )
@@ -392,16 +447,23 @@ class LastSeenWidget extends StatelessWidget with AppTheme {
               ],
             ),
             SizedBox(height: size.h8),
-            LinearProgressIndicator(
-              value: .1,
-              color: clr.cardStrokeColor,
-              backgroundColor: clr.progressBGColor,
-              valueColor: AlwaysStoppedAnimation<Color>(
-                clr.cardStrokeColor,
+            LinearPercentIndicator(
+              animation: true,
+              lineHeight: size.h16,
+              percent: 0.6,
+              center: Text(
+                "৬০%",
+                style: TextStyle(
+                    color: clr.blackColor,
+                    fontSize: size.textXXSmall,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: StringData.fontFamilyRoboto),
               ),
-              borderRadius: BorderRadius.circular(size.w8),
-              minHeight: size.h12,
-            ),
+              progressColor: clr.cardStrokeColor,
+              backgroundColor: clr.progressBGColor,
+              barRadius: Radius.circular(size.r12),
+              padding: EdgeInsets.zero,
+            )
           ],
         ),
       ),
@@ -566,19 +628,103 @@ class _CourseMaterialWidgetState<T> extends State<CourseMaterialWidget<T>>
                     color: clr.blackColor.withOpacity(.15))
               ],
             ),
-            padding: EdgeInsets.symmetric(
-                horizontal: size.w4 + size.w22, vertical: size.h12),
-            margin: EdgeInsets.symmetric(horizontal: size.w24),
-            child: ListView.builder(
-              itemCount: widget.items.length,
+            padding:
+                EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h16),
+            margin:
+                EdgeInsets.symmetric(horizontal: size.w24, vertical: size.h2),
+            child: ListView(
+              padding: EdgeInsets.zero,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.zero,
-              itemBuilder: (context, index) {
-                return widget.buildItem(context, index, widget.items[index]);
-              },
+              children: [
+                CourseMaterialItemWidget(
+                  icon: Icons.calendar_month_outlined,
+                  title: label(e: "সময়কাল", b: "সময়কাল"),
+                  duration: label(e: "4 Week", b: "৪ সপ্তাহ"),
+                ),
+                SizedBox(height: size.h8),
+                CourseMaterialItemWidget(
+                  icon: Icons.quiz_outlined,
+                  title: label(e: "মূল্যায়ন", b: "মূল্যায়ন"),
+                  duration: label(e: "4", b: "৪ টি"),
+                ),
+                SizedBox(height: size.h8),
+                CourseMaterialItemWidget(
+                  icon: Icons.video_call_outlined,
+                  title: label(e: "ব্লেনডেড ক্লাস", b: "ব্লেনডেড ক্লাস"),
+                  duration: label(e: "4", b: "৪ টি"),
+                ),
+                SizedBox(height: size.h8),
+                CourseMaterialItemWidget(
+                  icon: Icons.play_circle_outline_outlined,
+                  title: label(e: "স্ক্রিপ্ট", b: "স্ক্রিপ্ট"),
+                  duration: label(e: "4", b: "৪ টি"),
+                ),
+                SizedBox(height: size.h8),
+                CourseMaterialItemWidget(
+                  icon: Icons.assignment_outlined,
+                  title: label(e: "এসাইনমেন্ট", b: "এসাইনমেন্ট"),
+                  duration: label(e: "4", b: "৪ টি"),
+                ),
+              ],
             ),
+            // child: ListView.separated(
+            //   itemCount: widget.items.length,
+            //   shrinkWrap: true,
+            //   physics: const NeverScrollableScrollPhysics(),
+            //   padding: EdgeInsets.zero,
+            //   itemBuilder: (context, index) {
+            //     return widget.buildItem(context, index, widget.items[index]);
+            //   },
+            //   separatorBuilder: (context, index) {
+            //     return SizedBox(height: size.h8);
+            //   },
+            // ),
           )
+      ],
+    );
+  }
+}
+
+class CourseMaterialItemWidget extends StatelessWidget with AppTheme {
+  final IconData icon;
+  final String title;
+  final String duration;
+  const CourseMaterialItemWidget(
+      {super.key,
+      required this.icon,
+      required this.title,
+      required this.duration});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(
+          icon,
+          color: clr.appPrimaryColorGreen,
+          size: size.r16,
+        ),
+        SizedBox(width: size.w4),
+        Expanded(
+          child: CourseText(
+            text: title,
+            textColor: clr.textColorAppleBlack,
+            fontSize: size.textXSmall,
+            fontWeight: FontWeight.w500,
+            padding: EdgeInsets.zero,
+            maxLines: 1,
+          ),
+        ),
+        SizedBox(width: size.w4),
+        CourseText(
+          text: duration,
+          textColor: clr.textColorAppleBlack,
+          fontSize: size.textXSmall,
+          fontWeight: FontWeight.w400,
+          padding: EdgeInsets.zero,
+          maxLines: 1,
+        ),
       ],
     );
   }

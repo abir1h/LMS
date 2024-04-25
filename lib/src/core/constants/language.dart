@@ -85,13 +85,16 @@ class LanguageEn {
   String courseDetailsText = "Course Details";
   String ongoingCourseDetailsText = "Ongoing Course Details";
   String completedCourseDetailsText = "Completed Course Details";
-  String curriculumDescription = "Curriculum Description";
-  String curriculumContent = "Curriculum Content";
+  String aboutCourse = "About Course";
+  String courseContent = "Course Content";
   String check = "Check";
   String see = "See";
   String join = "Join";
   String details = "Details";
   String enroll = "Enroll";
+  String courseOverallProgress = "Overall Progress of the Course";
+  String yourCourseProgress = "Your Progress of the Course";
+  String progressLine = "Progress Line";
 
   String takeNotes = "Take Notes";
   String transcript = "Transcript";
@@ -214,16 +217,19 @@ class LanguageBn {
   String seeAll = "সবগুলো দেখুন";
 
   String courseText = "কোর্স";
-  String courseDetailsText = "অধিবেশনের বিস্তারিত";
-  String ongoingCourseDetailsText = "চলমান অধিবেশনের বিস্তারিত";
-  String completedCourseDetailsText = "সম্পন্ন অধিবেশনের বিস্তারিত";
-  String curriculumDescription = "পাঠ্যসূচীর বর্ণনা";
-  String curriculumContent = "অধিবেশনের বিষয়বস্তু";
+  String courseDetailsText = "কোর্সের বিস্তারিত";
+  String ongoingCourseDetailsText = "চলমান কোর্সের বিস্তারিত";
+  String completedCourseDetailsText = "সম্পন্ন কোর্সের বিস্তারিত";
+  String aboutCourse = "কোর্স সম্পর্কে";
+  String courseContent = "কোর্সের বিষয়বস্তু";
   String check = "চেক করুন";
   String see = "দেখুন";
   String join = "জয়েন করুন";
   String details = "বিস্তারিত";
   String enroll = "এনরোল";
+  String courseOverallProgress = "কোর্সের সামগ্রিক অগ্রগতি";
+  String yourCourseProgress = "আপনার কোর্সের অগ্রগতি";
+  String progressLine = "অগ্রগতি নির্দেশক রেখা";
 
   String takeNotes = "নোট নিন";
   String transcript = "প্রতিলিপি";

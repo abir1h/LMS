@@ -10,6 +10,7 @@ import '../../../shared/domain/entities/response_entity.dart';
 abstract class _ViewModel {
   void showWarning(String message);
   void navigateToCourseVideoScreen();
+  void navigateToOverallProgressScreen();
   void navigateToCourseAssignmentScreen(int courseContentId);
   void navigateToCourseAssessmentScreen(int courseContentId);
   void navigateToCourseLiveClassScreen();
@@ -61,6 +62,10 @@ mixin CourseDetailsScreenService<T extends StatefulWidget> on State<T>
 
   void onTapCourseVideo() {
     _view.navigateToCourseVideoScreen();
+  }
+
+  void onTapProgress() {
+    _view.navigateToOverallProgressScreen();
   }
 
   void onTapCourseAssignment(int courseContentId) {

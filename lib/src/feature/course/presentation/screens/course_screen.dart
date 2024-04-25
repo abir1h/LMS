@@ -67,7 +67,7 @@ class _CourseScreenState extends State<CourseScreen>
               ),
               SizedBox(height: size.h16),
               Text(
-                label(e: "Other Courses", b: "অন্যান্য অধিবেশনসমূহ"),
+                label(e: "Other Courses", b: "অন্যান্য কোর্সসমূহ"),
                 style: TextStyle(
                     color: clr.appPrimaryColorGreen,
                     fontSize: size.textXMedium,

@@ -39,6 +39,7 @@ class ImageAssets {
   static String get icAlarm => 'alarm'.svg;
   static String get icDictionary => 'dictionary'.svg;
   static String get icWebinar => 'webinar'.svg;
+  static String get icBarChart => 'bar_chart'.svg;
 }
 
 extension on String {
