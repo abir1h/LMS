@@ -20,6 +20,12 @@ class AllCourseDataModelToEntityMapper
       running: List<CourseDataEntity>.from(entity.running)
           .map((entity) => entity.toCourseDataModel)
           .toList(),
+      upcoming: List<CourseDataEntity>.from(entity.upcoming)
+          .map((entity) => entity.toCourseDataModel)
+          .toList(),
+      completed: List<CourseDataEntity>.from(entity.completed)
+          .map((entity) => entity.toCourseDataModel)
+          .toList(),
     );
   }
 
@@ -30,6 +36,12 @@ class AllCourseDataModelToEntityMapper
           .map((model) => model.toCourseDataEntity)
           .toList(),
       running: List<CourseDataModel>.from(model.running)
+          .map((model) => model.toCourseDataEntity)
+          .toList(),
+      upcoming: List<CourseDataModel>.from(model.upcoming)
+          .map((model) => model.toCourseDataEntity)
+          .toList(),
+      completed: List<CourseDataModel>.from(model.completed)
           .map((model) => model.toCourseDataEntity)
           .toList(),
     );

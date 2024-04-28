@@ -31,7 +31,7 @@ class LeaderboardSectionWidget<T> extends StatelessWidget
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CustomTextWidgets(
+              CustomTextWidget(
                 text: label(e: en.leaderboard, b: bn.leaderboard),
                 textColor: clr.blackColor,
                 fontWeight: FontWeight.w500,
@@ -40,7 +40,7 @@ class LeaderboardSectionWidget<T> extends StatelessWidget
                 onTap: onTapSeeAll,
                 child: Wrap(
                   children: [
-                    CustomTextWidgets(
+                    CustomTextWidget(
                       text: label(e: en.seeAll, b: bn.seeAll),
                       textColor: clr.appPrimaryColorGreen,
                       fontSize: size.textXXSmall,

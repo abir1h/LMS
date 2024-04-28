@@ -68,7 +68,7 @@ class _RootScreenState extends State<RootScreen>
         preferredSize: Size.fromHeight(size.h56),
         child: CustomAppBar(
           title: _currentPageIndex == 0
-              ? label(e: en.appBarText, b: bn.appBarText)
+              ? label(e: en.homeText, b: bn.homeText)
               : _currentPageIndex == 1
                   ? label(e: en.coursesText, b: bn.coursesText)
                   : _currentPageIndex == 2

@@ -1,5 +1,8 @@
+import 'content_count_data_entity.dart';
 import 'course_module_data_entity.dart';
 import 'course_type_data_entity.dart';
+import 'last_viewed_content_data_entity.dart';
+import 'upcoming_class_data_entity.dart';
 
 class CourseDetailsDataEntity {
   final int id;
@@ -9,6 +12,14 @@ class CourseDetailsDataEntity {
   final String shortDescEn;
   final String shortDescBn;
   final int courseTypeId;
+  final String icon;
+  final String featuredImage;
+  final String supportingDoc;
+  final String longDescEn;
+  final String longDescBn;
+  final UpcomingClassDataEntity? upcomingClass;
+  final ContentCountDataEntity? contentCount;
+  final LastViewedContentDataEntity? lastViewedContent;
   final CourseTypeDataEntity? courseType;
   final List<CourseModuleDataEntity>? courseModules;
 
@@ -20,6 +31,14 @@ class CourseDetailsDataEntity {
     required this.shortDescEn,
     required this.shortDescBn,
     required this.courseTypeId,
+    required this.icon,
+    required this.featuredImage,
+    required this.supportingDoc,
+    required this.longDescEn,
+    required this.longDescBn,
+    required this.upcomingClass,
+    required this.contentCount,
+    required this.lastViewedContent,
     required this.courseType,
     required this.courseModules,
   });

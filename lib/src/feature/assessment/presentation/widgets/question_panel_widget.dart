@@ -63,7 +63,7 @@ class _QuestionAnswerPanelState extends State<QuestionAnswerPanel>
                       QuestionWidget(
                           questionNo: "${position + 1}",
                           questionText:
-                              widget.questions.elementAt(position).data.title,
+                              widget.questions.elementAt(position).data.docTitle,
                           child: FillInTheGapAnswerWidget(
                             mainModel:
                                 widget.questions.elementAt(position).data,

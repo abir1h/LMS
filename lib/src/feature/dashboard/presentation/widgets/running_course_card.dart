@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
@@ -47,7 +48,7 @@ class RunningCourseCard extends StatelessWidget with AppTheme, Language {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CustomTextWidgets(
+                  CustomTextWidget(
                       text: label(e: en.ongoingModule, b: bn.ongoingModule)),
                   Icon(
                     Icons.arrow_forward,
@@ -95,16 +96,25 @@ class RunningCourseCard extends StatelessWidget with AppTheme, Language {
                               color: clr.appPrimaryColorGreen),
                         ),
                         SizedBox(height: size.h12),
-                        LinearProgressIndicator(
-                          value: .1,
-                          color: clr.appPrimaryColorGreen,
+                        LinearPercentIndicator(
+                          animation: true,
+                          lineHeight: size.h8,
+                          percent: 0.1,
+                          progressColor: clr.appPrimaryColorGreen,
                           backgroundColor: clr.progressBGColor,
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            clr.appPrimaryColorGreen,
-                          ),
-                          borderRadius: BorderRadius.circular(size.w6),
-                          minHeight: size.h8,
+                          barRadius: Radius.circular(size.w6),
+                          padding: EdgeInsets.zero,
                         ),
+                        // LinearProgressIndicator(
+                        //   value: .1,
+                        //   color: clr.appPrimaryColorGreen,
+                        //   backgroundColor: clr.progressBGColor,
+                        //   valueColor: AlwaysStoppedAnimation<Color>(
+                        //     clr.appPrimaryColorGreen,
+                        //   ),
+                        //   borderRadius: BorderRadius.circular(size.w6),
+                        //   minHeight: size.h8,
+                        // ),
                         SizedBox(height: size.h8),
                         Text(
                           text3,

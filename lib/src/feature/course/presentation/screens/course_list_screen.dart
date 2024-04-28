@@ -47,14 +47,16 @@ class _CourseListScreenState extends State<CourseListScreen>
               ? label(e: en.completedCurriculum, b: bn.completedCurriculum)
               : _screenArgs.circularStatus == CircularStatus.upcoming.name
                   ? label(e: en.upcomingCurriculum, b: bn.upcomingCurriculum)
-                  : "",
+                  : _screenArgs.circularStatus == CircularStatus.courses.name
+                      ? label(e: en.allCourse, b: bn.allCourse)
+                      : "",
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         padding: EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomTextWidgets(
+            CustomTextWidget(
                 text: _screenArgs.circularStatus == CircularStatus.running.name
                     ? label(e: en.ongoingCurriculum, b: bn.ongoingCurriculum)
                     : _screenArgs.circularStatus ==
@@ -67,7 +69,10 @@ class _CourseListScreenState extends State<CourseListScreen>
                             ? label(
                                 e: en.upcomingCurriculum,
                                 b: bn.upcomingCurriculum)
-                            : ""),
+                            : _screenArgs.circularStatus ==
+                                    CircularStatus.courses.name
+                                ? label(e: en.allCourse, b: bn.allCourse)
+                                : ""),
             SizedBox(height: size.h16),
             AppStreamBuilder<AllCourseDataEntity>(
               stream: allCourseDataStreamController.stream,
@@ -80,9 +85,15 @@ class _CourseListScreenState extends State<CourseListScreen>
                   children: [
                     CourseItemSectionWidget(
                       items: _screenArgs.circularStatus ==
-                              CircularStatus.running.name
-                          ? data.running
-                          : data.courses,
+                              CircularStatus.courses.name
+                          ? data.courses
+                          : _screenArgs.circularStatus ==
+                                  CircularStatus.running.name
+                              ? data.running
+                              : _screenArgs.circularStatus ==
+                                      CircularStatus.upcoming.name
+                                  ? data.upcoming
+                                  : data.completed,
                       buildItem: (BuildContext context, int index, item) {
                         return CourseCard(
                           data: item,

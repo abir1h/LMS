@@ -104,7 +104,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                   ),
                   rightChild: DashboardCard(
                     title: label(e: en.allCourse, b: bn.allCourse),
-                    onPressed: () {},
+                    onPressed: () => onTapCard(CircularStatus.courses.name),
                     subTitle: label(
                         e: data.discussion.toString(),
                         b: data.discussion.toString()),
@@ -120,7 +120,7 @@ class _DashboardScreenState extends State<DashboardScreen>
               SizedBox(height: size.h20),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: size.w16),
-                child: CustomTextWidgets(
+                child: CustomTextWidget(
                     text: label(e: en.noticeBoard, b: bn.noticeBoard)),
               ),
               SizedBox(height: size.h12),
@@ -220,7 +220,7 @@ class EffectivePeriodSection extends StatelessWidget with AppTheme, Language {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomTextWidgets(
+          CustomTextWidget(
             text: label(e: en.effectivePeriod, b: bn.effectivePeriod),
             fontWeight: FontWeight.w500,
           ),

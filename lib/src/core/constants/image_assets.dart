@@ -20,7 +20,7 @@ class ImageAssets {
 
   static String get leaderImage => 'leadarImage'.png;
   static String get imgWebinar => 'webinar'.png;
-  static String get imgPdf=> 'pdf'.png;
+  static String get imgPdf => 'pdf'.png;
   static String get imgDoc => 'doc'.png;
 
   static String get imgTraineeCard1 => 'trainee_card'.svg;
@@ -40,10 +40,14 @@ class ImageAssets {
   static String get icDictionary => 'dictionary'.svg;
   static String get icWebinar => 'webinar'.svg;
   static String get icBarChart => 'bar_chart'.svg;
+  static String get icTwoPager => 'two_pager'.svg;
+
+  static String get animEmpty => 'Animation - 1706009676891'.json;
 }
 
 extension on String {
   String get png => 'assets/images/$this.png';
   String get jpg => 'assets/images/$this.jpg';
   String get svg => 'assets/images/icons/$this.svg';
+  String get json => 'assets/$this.json';
 }

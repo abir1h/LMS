@@ -86,7 +86,16 @@ class LanguageEn {
   String ongoingCourseDetailsText = "Ongoing Course Details";
   String completedCourseDetailsText = "Completed Course Details";
   String aboutCourse = "About Course";
+  String upcoming = "Upcoming";
+  String lastViewedLesson = "Last Viewed Lesson";
+  String supportingLesson = "Supporting Lesson";
+  String whatWillBeInTheCourse = "What will be in the course";
   String courseContent = "Course Content";
+  String courseCode = "Course Code :";
+  String courseDuration = "Duration :";
+  String complete = "Complete";
+  String courseCompleted = "Completed";
+  String willBegin = "Will Begin";
   String check = "Check";
   String see = "See";
   String join = "Join";
@@ -95,6 +104,10 @@ class LanguageEn {
   String courseOverallProgress = "Overall Progress of the Course";
   String yourCourseProgress = "Your Progress of the Course";
   String progressLine = "Progress Line";
+  String overallProgress = "Overall Progress";
+  String progressOfTheWeek = "Progress of The Week";
+  String weeklyProgress = "Weekly Progress";
+  String classAttendance = "Class Attendance";
 
   String takeNotes = "Take Notes";
   String transcript = "Transcript";
@@ -221,7 +234,16 @@ class LanguageBn {
   String ongoingCourseDetailsText = "চলমান কোর্সের বিস্তারিত";
   String completedCourseDetailsText = "সম্পন্ন কোর্সের বিস্তারিত";
   String aboutCourse = "কোর্স সম্পর্কে";
+  String upcoming = "আপকামিং";
+  String lastViewedLesson = "সর্বশেষ দেখা পাঠ";
+  String supportingLesson = "সহায়ক পাঠ";
+  String whatWillBeInTheCourse = "কোর্সে যা থাকবে";
   String courseContent = "কোর্সের বিষয়বস্তু";
+  String courseCode = "কোর্সের কোড :";
+  String courseDuration = "সময়কাল :";
+  String complete = "সম্পন্ন";
+  String courseCompleted = "সম্পন্ন হয়েছে";
+  String willBegin = "শুরু হবে";
   String check = "চেক করুন";
   String see = "দেখুন";
   String join = "জয়েন করুন";
@@ -230,6 +252,10 @@ class LanguageBn {
   String courseOverallProgress = "কোর্সের সামগ্রিক অগ্রগতি";
   String yourCourseProgress = "আপনার কোর্সের অগ্রগতি";
   String progressLine = "অগ্রগতি নির্দেশক রেখা";
+  String overallProgress = "সামগ্রিক অগ্রগতি";
+  String progressOfTheWeek = "সপ্তাহের অগ্রগতি";
+  String weeklyProgress = "Weekly Progress";
+  String classAttendance = "ক্লাসের উপস্থিতি";
 
   String takeNotes = "নোট নিন";
   String transcript = "প্রতিলিপি";

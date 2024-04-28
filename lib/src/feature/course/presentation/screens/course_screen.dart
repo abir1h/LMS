@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../../../core/common_widgets/circuler_widget.dart';
@@ -10,6 +11,7 @@ import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/service/notifier/app_events_notifier.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../../core/constants/common_imports.dart';
+import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
 import '../../domain/entities/all_course_data_entity.dart';
 import '../services/course_screen_service.dart';
 import '../widgets/course_card.dart';
@@ -39,26 +41,40 @@ class _CourseScreenState extends State<CourseScreen>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                label(e: en.ongoingCurriculum, b: bn.ongoingCurriculum),
-                style: TextStyle(
-                    color: clr.appPrimaryColorGreen,
-                    fontSize: size.textXMedium,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: StringData.fontFamilyRoboto),
+              ///Running Course
+              CustomTextWidget(
+                text: label(e: en.ongoingCurriculum, b: bn.ongoingCurriculum),
+                fontSize: size.textXMedium,
               ),
               SizedBox(height: size.h8),
-              CourseItemSectionWidget(
-                items: data.running,
-                buildItem: (BuildContext context, int index, item) {
-                  return CourseCard(
-                    data: item,
-                    circularStatus: CircularStatus.running.name,
-                    onTap: () =>
-                        onTapCourse(item.id, CircularStatus.running.name),
-                  );
-                },
-              ),
+              data.running.isNotEmpty
+                  ? CourseItemSectionWidget(
+                      items: data.running,
+                      buildItem: (BuildContext context, int index, item) {
+                        return CourseCard(
+                          data: item,
+                          circularStatus: CircularStatus.running.name,
+                          onTap: () =>
+                              onTapCourse(item.id, CircularStatus.running.name),
+                        );
+                      },
+                    )
+                  : Center(
+                      child: Column(
+                        children: [
+                          Lottie.asset(ImageAssets.animEmpty,
+                              height: size.h56 * 1.2),
+                          CustomTextWidget(
+                            text: label(
+                                e: "No Running Course Found",
+                                b: "কোনো চলমান কোর্স পাওয়া যায়নি"),
+                            textColor: clr.textColorBlack,
+                            fontSize: size.textXXSmall,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ],
+                      ),
+                    ),
               SizedBox(height: size.h16),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: size.w8),
@@ -66,30 +82,86 @@ class _CourseScreenState extends State<CourseScreen>
                     height: size.h1, color: clr.placeHolderTextColorGray),
               ),
               SizedBox(height: size.h16),
-              Text(
-                label(e: "Other Courses", b: "অন্যান্য কোর্সসমূহ"),
-                style: TextStyle(
-                    color: clr.appPrimaryColorGreen,
-                    fontSize: size.textXMedium,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: StringData.fontFamilyPoppins),
+
+              ///Upcoming Course
+              CustomTextWidget(
+                text: label(e: en.upcomingCurriculum, b: bn.upcomingCurriculum),
+                fontSize: size.textXMedium,
               ),
-              SizedBox(height: size.h8),
-              CourseItemSectionWidget(
-                items: data.courses,
-                buildItem: (BuildContext context, int index, item) {
-                  return CourseCard(
-                    data: item,
-                    circularStatus: CircularStatus.upcoming.name,
-                    onTap: () => Navigator.of(context).pushNamed(
-                        AppRoute.courseDetailsScreen,
-                        arguments: CourseDetailsScreenArgs(
-                            courseId: item.id,
-                            curriculumType: CircularStatus.upcoming.name,
-                            status: "lock")),
-                  );
-                },
+              SizedBox(height: size.h12),
+              data.upcoming.isNotEmpty
+                  ? CourseItemSectionWidget(
+                      items: data.upcoming,
+                      buildItem: (BuildContext context, int index, item) {
+                        return CourseCard(
+                          data: item,
+                          circularStatus: CircularStatus.upcoming.name,
+                          onTap: () => Navigator.of(context).pushNamed(
+                              AppRoute.courseDetailsScreen,
+                              arguments: CourseDetailsScreenArgs(
+                                  courseId: item.id,
+                                  curriculumType: CircularStatus.upcoming.name,
+                                  status: "lock")),
+                        );
+                      },
+                    )
+                  : Center(
+                      child: Column(
+                        children: [
+                          Lottie.asset(ImageAssets.animEmpty,
+                              height: size.h56 * 1.2),
+                          CustomTextWidget(
+                            text: label(
+                                e: "No Upcoming Course Found",
+                                b: "কোনো আসন্ন কোর্স পাওয়া যায়নি"),
+                            textColor: clr.textColorBlack,
+                            fontSize: size.textXXSmall,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ],
+                      ),
+                    ),
+              SizedBox(height: size.h16),
+
+              ///Completed Course
+              CustomTextWidget(
+                text:
+                    label(e: en.completedCurriculum, b: bn.completedCurriculum),
+                fontSize: size.textXMedium,
               ),
+              SizedBox(height: size.h12),
+              data.completed.isNotEmpty
+                  ? CourseItemSectionWidget(
+                      items: data.completed,
+                      buildItem: (BuildContext context, int index, item) {
+                        return CourseCard(
+                          data: item,
+                          circularStatus: CircularStatus.upcoming.name,
+                          onTap: () => Navigator.of(context).pushNamed(
+                              AppRoute.courseDetailsScreen,
+                              arguments: CourseDetailsScreenArgs(
+                                  courseId: item.id,
+                                  curriculumType: CircularStatus.upcoming.name,
+                                  status: "lock")),
+                        );
+                      },
+                    )
+                  : Center(
+                      child: Column(
+                        children: [
+                          Lottie.asset(ImageAssets.animEmpty,
+                              height: size.h56 * 1.2),
+                          CustomTextWidget(
+                            text: label(
+                                e: "No Completed Course Found",
+                                b: "কোনো সম্পন্ন কোর্স পাওয়া যায়নি"),
+                            textColor: clr.textColorBlack,
+                            fontSize: size.textXXSmall,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ],
+                      ),
+                    ),
             ],
           ),
         );

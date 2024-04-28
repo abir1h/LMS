@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -362,7 +361,8 @@ class _ChapterWidgetState<T> extends State<ChapterWidget<T>>
                         SvgPicture.asset(ImageAssets.icBarChart),
                         SizedBox(width: size.w8),
                         Text(
-                          label(e: "Week Progress", b: "সপ্তাহের অগ্রগতি"),
+                          label(
+                              e: en.progressOfTheWeek, b: bn.progressOfTheWeek),
                           style: TextStyle(
                               color: clr.appPrimaryColorGreen,
                               fontSize: size.textXMedium,
@@ -416,8 +416,8 @@ class _ChapterWidgetState<T> extends State<ChapterWidget<T>>
                         children: [
                           Text(
                             label(
-                                e: "Running Week Progress",
-                                b: "চলমান সপ্তাহের অগ্রগতি"),
+                                e: en.progressOfTheWeek,
+                                b: bn.progressOfTheWeek),
                             style: TextStyle(
                                 color: clr.blackColor,
                                 fontSize: size.textSmall,
@@ -465,7 +465,7 @@ class _ChapterWidgetState<T> extends State<ChapterWidget<T>>
                                     ),
                                     SizedBox(height: size.h16),
                                     Text(
-                                      label(e: "Assignment", b: "এসাইনমেন্ট"),
+                                      label(e: en.assignment, b: bn.assignment),
                                       style: TextStyle(
                                           color: clr.blackColor,
                                           fontSize: size.textXSmall,
@@ -513,7 +513,7 @@ class _ChapterWidgetState<T> extends State<ChapterWidget<T>>
                                     ),
                                     SizedBox(height: size.h16),
                                     Text(
-                                      label(e: "Assessment", b: "এসেসমেন্ট"),
+                                      label(e: en.assessment, b: bn.assessment),
                                       style: TextStyle(
                                           color: clr.blackColor,
                                           fontSize: size.textXSmall,
@@ -543,7 +543,7 @@ class _ChapterWidgetState<T> extends State<ChapterWidget<T>>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            label(e: "Weekly Progress", b: "সাপ্তাহিক অগ্রগতি"),
+                            label(e: en.weeklyProgress, b: bn.weeklyProgress),
                             style: TextStyle(
                                 color: clr.gapStrokeGrey,
                                 fontSize: size.textXSmall,
@@ -585,7 +585,7 @@ class _ChapterWidgetState<T> extends State<ChapterWidget<T>>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            label(e: "Class Attendance", b: "ক্লাসের উপস্থিতি"),
+                            label(e: en.classAttendance, b: bn.classAttendance),
                             style: TextStyle(
                                 color: clr.gapStrokeGrey,
                                 fontSize: size.textXSmall,

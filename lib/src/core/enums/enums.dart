@@ -1,7 +1,8 @@
 enum CircularStatus {
+  courses,
+  running,
   upcoming,
   completed,
-  running,
 }
 
 enum ContentType {

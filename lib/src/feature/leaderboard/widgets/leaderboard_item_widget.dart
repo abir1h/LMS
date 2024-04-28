@@ -24,7 +24,7 @@ class LeaderboardItemWidget extends StatelessWidget with AppTheme, Language {
       padding: EdgeInsets.symmetric(horizontal: size.w12, vertical: size.h10),
       child: Row(
         children: [
-          CustomTextWidgets(
+          CustomTextWidget(
             text: label(e: "1st", b: "১ম"),
             textColor: clr.blackColor,
             fontWeight: FontWeight.w400,
@@ -36,14 +36,14 @@ class LeaderboardItemWidget extends StatelessWidget with AppTheme, Language {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomTextWidgets(
+                CustomTextWidget(
                   text: label(e: en.userNameText, b: bn.userNameText),
                   textColor: clr.blackColor,
                   fontWeight: FontWeight.w400,
                   maxLines: 1,
                 ),
                 SizedBox(height: size.h4),
-                CustomTextWidgets(
+                CustomTextWidget(
                   text: label(
                       e: "${en.emisId}101353764", b: "${bn.emisId}১০১৩৫৩৭৬৪"),
                   textColor: clr.textColorGray2,

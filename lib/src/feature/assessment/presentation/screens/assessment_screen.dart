@@ -193,7 +193,7 @@ class _AssessmentScreenState extends State<AssessmentScreen>
                     } else if (data.type == QuestionType.fig) {
                       return QuestionWidget(
                         questionNo: "${index + 1}",
-                        questionText: questions[index].data.title,
+                        questionText: questions[index].data.docTitle,
                         child: FillInTheGapAnswerWidget(
                           mainModel: questions[index].data,
                           onChangeDv1: (v) {

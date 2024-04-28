@@ -1,3 +1,6 @@
+import 'content_count_data_mapper.dart';
+import 'last_viewed_content_data_mapper.dart';
+import 'upcoming_class_data_mapper.dart';
 import 'course_module_data_mapper.dart';
 import 'course_type_data_mapper.dart';
 import '../../domain/entities/course_details_data_entity.dart';
@@ -22,6 +25,14 @@ class CourseDetailsDataModelToEntityMapper extends CourseDetailsDataMapper<
       shortDescEn: entity.shortDescEn,
       shortDescBn: entity.shortDescBn,
       courseTypeId: entity.courseTypeId,
+      icon: entity.icon,
+      featuredImage: entity.featuredImage,
+      supportingDoc: entity.supportingDoc,
+      longDescEn: entity.longDescEn,
+      longDescBn: entity.longDescBn,
+      upcomingClass: entity.upcomingClass?.toUpcomingClassDataModel,
+      contentCount: entity.contentCount?.toContentCountDataModel,
+      lastViewedContent: entity.lastViewedContent?.toLastViewedContentDataModel,
       courseType: entity.courseType?.toCourseTypeDataModel,
       courseModules: List<CourseModuleDataEntity>.from(entity.courseModules!)
           .map((entity) => entity.toCourseModuleDataModel)
@@ -39,6 +50,14 @@ class CourseDetailsDataModelToEntityMapper extends CourseDetailsDataMapper<
       shortDescEn: model.shortDescEn,
       shortDescBn: model.shortDescBn,
       courseTypeId: model.courseTypeId,
+      icon: model.icon,
+      featuredImage: model.featuredImage,
+      supportingDoc: model.supportingDoc,
+      longDescEn: model.longDescEn,
+      longDescBn: model.longDescBn,
+      upcomingClass: model.upcomingClass?.toUpcomingClassDataEntity,
+      contentCount: model.contentCount?.toContentCountDataEntity,
+      lastViewedContent: model.lastViewedContent?.toLastViewedContentDataEntity,
       courseType: model.courseType?.toCourseTypeDataEntity,
       courseModules: List<CourseModuleDataModel>.from(model.courseModules!)
           .map((model) => model.toCourseModuleDataEntity)
