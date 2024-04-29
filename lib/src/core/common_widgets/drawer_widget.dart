@@ -105,12 +105,9 @@ class _DrawerWidgetState extends State<DrawerWidget>
               SizedBox(height: size.h12),
               Container(height: size.h1, color: clr.cardStrokeColor),
               DrawerLinkWidget(
-                icon: Icons.contact_support,
-                text: label(e: en.aboutUs, b: bn.aboutUs),
-                onTap: () {},
-              ),
-              DrawerLinkWidget(
+                cardColor: clr.drawerFillColor,
                 icon: Icons.local_library,
+                iconColor: clr.appPrimaryColorGreen,
                 text: label(e: en.lms, b: bn.lms),
                 onTap: () {},
               ),
@@ -176,6 +173,11 @@ class _DrawerWidgetState extends State<DrawerWidget>
                 icon: Icons.accessible,
                 text: label(e: en.accessibilityText, b: bn.accessibilityText),
                 onTap: () => onTapAccessibility(),
+              ),
+              DrawerLinkWidget(
+                icon: Icons.contact_support,
+                text: label(e: en.aboutUs, b: bn.aboutUs),
+                onTap: () {},
               ),
               DrawerLinkWidget(
                 icon: Icons.logout,
@@ -251,6 +253,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
 }
 
 class DrawerLinkWidget extends StatelessWidget with AppTheme {
+  final Color cardColor;
   final IconData? icon;
   final Color? iconColor;
   final String? svgIcon;
@@ -259,6 +262,7 @@ class DrawerLinkWidget extends StatelessWidget with AppTheme {
   final VoidCallback onTap;
   const DrawerLinkWidget({
     Key? key,
+    this.cardColor = Colors.transparent,
     this.icon,
     this.iconColor,
     this.svgIcon,
@@ -274,7 +278,7 @@ class DrawerLinkWidget extends StatelessWidget with AppTheme {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h12),
         decoration: BoxDecoration(
-          color: Colors.transparent,
+          color: cardColor,
           border: Border(
               bottom: BorderSide(width: size.h1, color: clr.cardStrokeColor)),
         ),
@@ -295,8 +299,8 @@ class DrawerLinkWidget extends StatelessWidget with AppTheme {
                 child: SvgPicture.asset(
                   svgIcon!,
                   height: size.h24,
-                  colorFilter:
-                      ColorFilter.mode(clr.iconColorHint, BlendMode.srcIn),
+                  colorFilter: ColorFilter.mode(
+                      iconColor ?? clr.iconColorHint, BlendMode.srcIn),
                   // color: clr.hintIconColor,
                 ),
               ),

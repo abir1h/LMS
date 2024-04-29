@@ -305,8 +305,8 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
   @override
   void navigateToCourseScriptScreen(int courseContentId, String courseCode,
       String courseDescriptionEn, String courseDescriptionBn) {
-    Navigator.of(context).pushNamed(AppRoute.courseIntroductionScreen,
-        arguments: CourseIntroductionScreenArgs(
+    Navigator.of(context).pushNamed(AppRoute.courseScriptScreen,
+        arguments: CourseScriptScreenArgs(
             courseContentId: courseContentId,
             courseCode: courseCode,
             courseDescriptionEn: courseDescriptionEn,

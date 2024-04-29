@@ -7,6 +7,7 @@ import '../../../../core/constants/app_theme.dart';
 import '../../../../core/config/local_storage_services.dart';
 import '../../../../core/constants/strings.dart';
 import '../../../../core/routes/app_route.dart';
+import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/utility/validator.dart';
 import '../../domain/use_cases/auth_use_case.dart';
 import '../../../../core/utility/log.dart';
@@ -65,7 +66,8 @@ class AuthenticationController extends GetxController with AppTheme {
               authorization.data!.permissions.toString());
           // _saveUser(email);
           Navigator.of(AppRoute.navigatorKey.currentContext!)
-              .pushNamedAndRemoveUntil(AppRoute.landingScreen, (x) => false);
+              .pushNamedAndRemoveUntil(AppRoute.rootScreen, (x) => false,
+                  arguments: RootScreenArgs(index: 0));
         }
       });
     } else {

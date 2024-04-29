@@ -15,23 +15,22 @@ import '../../domain/entities/script_data_entity.dart';
 import '../services/course_script_screen_service.dart';
 import '../widgets/sliver_tab_section_widget.dart';
 
-class CourseIntroductionScreen extends StatefulWidget {
+class CourseScriptScreen extends StatefulWidget {
   final Object? arguments;
-  const CourseIntroductionScreen({super.key, this.arguments});
+  const CourseScriptScreen({super.key, this.arguments});
 
   @override
-  State<CourseIntroductionScreen> createState() =>
-      _CourseIntroductionScreenState();
+  State<CourseScriptScreen> createState() => _CourseScriptScreenState();
 }
 
-class _CourseIntroductionScreenState extends State<CourseIntroductionScreen>
+class _CourseScriptScreenState extends State<CourseScriptScreen>
     with AppTheme, Language, CourseScriptScreenService {
-  late CourseIntroductionScreenArgs _screenArgs;
+  late CourseScriptScreenArgs _screenArgs;
 
   @override
   void initState() {
     super.initState();
-    _screenArgs = widget.arguments as CourseIntroductionScreenArgs;
+    _screenArgs = widget.arguments as CourseScriptScreenArgs;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       loadScriptData(_screenArgs.courseContentId);
     });

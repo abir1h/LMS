@@ -38,8 +38,8 @@ class _DiscussionScreenState extends State<DiscussionScreen>
                   e: "Introduction, Chapter Description",
                   b: "ভূমিকা, অধ্যায়ের বিবরণ"),
               onTap: () => Navigator.of(context).pushNamed(
-                  AppRoute.courseIntroductionScreen,
-                  arguments: CourseIntroductionScreenArgs(
+                  AppRoute.courseScriptScreen,
+                  arguments: CourseScriptScreenArgs(
                       courseContentId: 2,
                       courseCode: "courseCode",
                       courseDescriptionEn: "courseDescriptionEn",

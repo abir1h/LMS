@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../../../core/config/local_storage_services.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/routes/app_route.dart';
+import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/service/auth_cache_manager.dart';
 
 class SplashController extends GetxController {
@@ -25,7 +26,8 @@ class SplashController extends GetxController {
     if (loggedIn) {
       // Get.offNamed(AppRoutes.landing);
       Navigator.of(AppRoute.navigatorKey.currentContext!)
-          .pushNamedAndRemoveUntil(AppRoute.landingScreen, (x) => false);
+          .pushNamedAndRemoveUntil(AppRoute.rootScreen, (x) => false,
+              arguments: RootScreenArgs(index: 0));
     } else {
       // Get.offNamed(AppRoutes.authenticate);
       Navigator.of(AppRoute.navigatorKey.currentContext!)

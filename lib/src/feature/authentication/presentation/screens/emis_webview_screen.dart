@@ -59,7 +59,8 @@ class _EMISWebViewScreenState extends State<EMISWebViewScreen> {
               });
               CustomToasty.of(context).showSuccess("Login Successfully");
               Navigator.of(context).pushNamedAndRemoveUntil(
-                  AppRoute.landingScreen, (x) => false);
+                  AppRoute.rootScreen, (x) => false,
+                  arguments: RootScreenArgs(index: 0));
               return NavigationDecision.prevent;
             }
             return NavigationDecision.navigate;

@@ -29,12 +29,12 @@ class CourseDetailsScreenArgs {
       required this.status});
 }
 
-class CourseIntroductionScreenArgs {
+class CourseScriptScreenArgs {
   final int courseContentId;
   final String courseCode;
   final String courseDescriptionEn;
   final String courseDescriptionBn;
-  CourseIntroductionScreenArgs({
+  CourseScriptScreenArgs({
     required this.courseContentId,
     required this.courseCode,
     required this.courseDescriptionEn,
