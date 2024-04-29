@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -219,7 +218,11 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
                                     onTapCourseAssignment(item.contentId),
                                 onTapAssessment: () =>
                                     onTapCourseAssessment(item.contentId),
-                                onTapScript: () {},
+                                onTapScript: () => onTapScript(
+                                    courseContentId: item.contentId,
+                                    courseCode: data.code,
+                                    courseDescriptionEn: data.longDescEn,
+                                    courseDescriptionBn: data.longDescBn),
                                 onTapBlendedClass: onTapCourseLiveClass,
                               );
                             },
@@ -297,6 +300,17 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
   @override
   void navigateToOverallProgressScreen() {
     Navigator.of(context).pushNamed(AppRoute.overallProgressScreen);
+  }
+
+  @override
+  void navigateToCourseScriptScreen(int courseContentId, String courseCode,
+      String courseDescriptionEn, String courseDescriptionBn) {
+    Navigator.of(context).pushNamed(AppRoute.courseIntroductionScreen,
+        arguments: CourseIntroductionScreenArgs(
+            courseContentId: courseContentId,
+            courseCode: courseCode,
+            courseDescriptionEn: courseDescriptionEn,
+            courseDescriptionBn: courseDescriptionBn));
   }
 }
 
@@ -516,6 +530,7 @@ class SupportingDocWidget<T> extends StatelessWidget with AppTheme, Language {
               textColor: clr.textColorBlack,
               fontSize: size.textXSmall,
               fontWeight: FontWeight.w500,
+              overflow: TextOverflow.ellipsis,
               maxLines: 2,
             ),
           ),
@@ -591,6 +606,7 @@ class _CourseMaterialWidgetState<T> extends State<CourseMaterialWidget<T>>
                     textColor: clr.textColorBlack,
                     fontSize: size.textSmall,
                     fontWeight: FontWeight.w500,
+                    overflow: TextOverflow.ellipsis,
                     maxLines: 2),
                 Icon(
                   _isExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down,
@@ -699,6 +715,7 @@ class CourseMaterialItemWidget extends StatelessWidget with AppTheme {
             textColor: clr.textColorAppleBlack,
             fontSize: size.textXSmall,
             fontWeight: FontWeight.w500,
+            overflow: TextOverflow.ellipsis,
             maxLines: 1,
           ),
         ),
@@ -708,6 +725,7 @@ class CourseMaterialItemWidget extends StatelessWidget with AppTheme {
           textColor: clr.textColorAppleBlack,
           fontSize: size.textXSmall,
           fontWeight: FontWeight.w400,
+          overflow: TextOverflow.ellipsis,
           maxLines: 1,
         ),
       ],

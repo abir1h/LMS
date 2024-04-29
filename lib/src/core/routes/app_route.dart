@@ -5,6 +5,8 @@ import '../../feature/assignment/presentation/screens/assignment_screen.dart';
 import '../../feature/assignment/presentation/screens/assignment_submit_screen.dart';
 import '../../feature/authentication/presentation/screens/authentication_screen.dart';
 import '../../feature/authentication/presentation/screens/emis_webview_screen.dart';
+import '../../feature/circular/presentation/screens/circular_details_screen.dart';
+import '../../feature/circular/presentation/screens/circular_screen.dart';
 import '../../feature/course/presentation/screens/course_assessment_screen.dart';
 import '../../feature/course/presentation/screens/course_assignment_screen.dart';
 import '../../feature/course/presentation/screens/course_details_screen.dart';
@@ -51,6 +53,8 @@ class AppRoute {
   static const String discussionListScreen = "discussionListScreen";
   static const String noteDetailsScreen = "noteDetailsScreen";
   static const String noteEditScreen = "noteEditScreen";
+  static const String circularScreen = "circularScreen";
+  static const String circularDetailsScreen = "circularDetailsScreen";
 }
 
 mixin RouteGenerator {
@@ -110,6 +114,10 @@ mixin RouteGenerator {
             return NoteDetailsScreen(arguments: setting.arguments);
           case AppRoute.noteEditScreen:
             return NoteEditScreen(arguments: setting.arguments);
+          case AppRoute.circularScreen:
+            return const CircularScreen();
+          case AppRoute.circularDetailsScreen:
+            return const CircularDetailsScreen();
 
           default:
             return const SplashScreen();

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:lms/src/feature/course/presentation/widgets/sf_graph.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -14,6 +13,7 @@ import '../../../../core/utility/app_label.dart';
 import '../services/overall_progress_screen_service.dart';
 import '../widgets/tab_switch_widget.dart';
 import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
+import '../widgets/sf_graph.dart';
 
 class OverallProgressScreen extends StatefulWidget {
   const OverallProgressScreen({super.key});
@@ -697,6 +697,7 @@ class OverallProgressWidget extends StatelessWidget with AppTheme, Language {
                         textColor: clr.textColorBlack,
                         fontSize: size.textSmall,
                         fontWeight: FontWeight.w500,
+                        overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                       ),
                     ),

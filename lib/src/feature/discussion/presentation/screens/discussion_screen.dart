@@ -40,9 +40,10 @@ class _DiscussionScreenState extends State<DiscussionScreen>
               onTap: () => Navigator.of(context).pushNamed(
                   AppRoute.courseIntroductionScreen,
                   arguments: CourseIntroductionScreenArgs(
-                      screenTitle: label(
-                          e: "Introduction, Chapter Description",
-                          b: "ভূমিকা, অধ্যায়ের বিবরণ"))),
+                      courseContentId: 2,
+                      courseCode: "courseCode",
+                      courseDescriptionEn: "courseDescriptionEn",
+                      courseDescriptionBn: "courseDescriptionBn")),
             ),
             DiscussionTile(
               iconData: Icons.smart_display,

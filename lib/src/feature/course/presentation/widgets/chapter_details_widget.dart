@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/common_imports.dart';
+import '../../../../core/utility/app_label.dart';
+import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
 
 class ChapterDetailsWidget extends StatelessWidget with AppTheme {
   final String description;
@@ -35,13 +37,17 @@ class ChapterDetailsWidget extends StatelessWidget with AppTheme {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              description,
-              style: TextStyle(
-                  color: clr.textColorBlack,
-                  fontSize: size.textSmall,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: StringData.fontFamilyPoppins),
+            CustomTextWidget(
+              text: label(e: "অধ্যায়ের বিবরণ:", b: "অধ্যায়ের বিবরণ:"),
+              textColor: clr.textColorBlack,
+              fontFamily: StringData.fontFamilyPoppins,
+            ),
+            SizedBox(height: size.h8),
+            CustomTextWidget(
+              text: description,
+              textColor: clr.textColorBlack,
+              fontWeight: FontWeight.w400,
+              fontFamily: StringData.fontFamilyPoppins,
               textAlign: TextAlign.justify,
             ),
             SizedBox(height: size.h64)

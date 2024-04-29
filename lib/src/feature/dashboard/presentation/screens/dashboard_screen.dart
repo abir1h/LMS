@@ -56,7 +56,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                   text3:
                       label(e: "10% ${en.completed}", b: "১০% ${bn.completed}"),
                 ),
-              SizedBox(height: size.h20),
+              // SizedBox(height: size.h20),
               RowItemTemplate(
                   leftChild: DashboardCard(
                     title:

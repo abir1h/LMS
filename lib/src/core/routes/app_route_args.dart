@@ -30,8 +30,16 @@ class CourseDetailsScreenArgs {
 }
 
 class CourseIntroductionScreenArgs {
-  final String screenTitle;
-  CourseIntroductionScreenArgs({required this.screenTitle});
+  final int courseContentId;
+  final String courseCode;
+  final String courseDescriptionEn;
+  final String courseDescriptionBn;
+  CourseIntroductionScreenArgs({
+    required this.courseContentId,
+    required this.courseCode,
+    required this.courseDescriptionEn,
+    required this.courseDescriptionBn,
+  });
 }
 
 class CourseAssessmentScreenArgs {

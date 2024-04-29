@@ -32,7 +32,7 @@ class ImageAssets {
   static String get icBook => 'book'.svg;
   static String get icSocialLearning => 'social_learning'.svg;
   static String get icLockOpenRight => 'lock_open_right'.svg;
-  static String get downloadIcon => 'download'.svg;
+  static String get icDownload => 'download'.svg;
   static String get icEdit => 'edit'.svg;
   static String get icEditorChoice => 'editor_choice'.svg;
   static String get icEditSquare => 'edit_square'.svg;
@@ -41,6 +41,7 @@ class ImageAssets {
   static String get icWebinar => 'webinar'.svg;
   static String get icBarChart => 'bar_chart'.svg;
   static String get icTwoPager => 'two_pager'.svg;
+  static String get icCircular => 'brand_awareness'.svg;
 
   static String get animEmpty => 'Animation - 1706009676891'.json;
 }

@@ -57,6 +57,12 @@ class LanguageEn {
   String monochromeText = "Monochrome";
   String textSizeText = "Text Size";
 
+  String circular = "Circular";
+  String circularDetails = "Circular Details";
+  String referenceNumber = "Reference Number";
+  // String referenceNumber = "আসন্ন বিজ্ঞপ্তির তালিকা";
+  // String referenceNumber = "রেফারেন্স নম্বর";
+
   String profileAppBarText = "LMS My Profile";
   String userNameText = "Mynul Islam"; //"User Name";
   String phoneNumberText = "+0123456789"; //"Phone Number";
@@ -205,6 +211,8 @@ class LanguageBn {
   String accessibilityText = "এক্সেসিবিলিটি";
   String monochromeText = "মনোক্রোম";
   String textSizeText = "টেক্সট সাইজ";
+  String circular = "বিজ্ঞপ্তি";
+  String circularDetails = "বিজ্ঞপ্তির বিস্তারিত";
 
   String profileAppBarText = "এলএমএস আমার প্রোফাইল";
   String userNameText = "মাইনুল ইসলাম"; //"ব্যবহারকারীর নাম";

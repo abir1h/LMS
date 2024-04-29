@@ -12,7 +12,6 @@ import '../service/notifier/app_events_notifier.dart';
 import 'custom_dialog_widget.dart';
 import 'custom_switch_button.dart';
 import '../utility/app_label.dart';
-import '../../feature/landing/presentation/controllers/landing_controller.dart';
 import '../constants/common_imports.dart';
 
 class DrawerWidget extends StatefulWidget {
@@ -146,6 +145,12 @@ class _DrawerWidgetState extends State<DrawerWidget>
                 icon: Icons.chat_bubble,
                 text: label(e: en.messageText, b: bn.messageText),
                 onTap: () {},
+              ),
+              DrawerLinkWidget(
+                svgIcon: ImageAssets.icCircular,
+                text: label(e: en.circular, b: bn.circular),
+                onTap: () =>
+                    Navigator.of(context).pushNamed(AppRoute.circularScreen),
               ),
               /*DrawerLinkWidget(
                 icon: Icons.accessible,

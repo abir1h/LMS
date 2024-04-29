@@ -8,7 +8,7 @@ import '../../domain/entities/course_content_data_entity.dart';
 class CourseContentWidget extends StatelessWidget with AppTheme, Language {
   final CourseContentDataEntity data;
   final String? buttonText;
-  final bool status;
+  // final bool status;
   final VoidCallback? onTapVideo,
       onTapAssignment,
       onTapAssessment,
@@ -18,7 +18,7 @@ class CourseContentWidget extends StatelessWidget with AppTheme, Language {
       {Key? key,
       required this.data,
       this.buttonText,
-      this.status = false,
+      // this.status = false,
       this.onTapVideo,
       this.onTapAssignment,
       this.onTapAssessment,
@@ -55,7 +55,7 @@ class CourseContentWidget extends StatelessWidget with AppTheme, Language {
                       : data.contentType == ContentType.course_assessment.name
                           ? Icons.help_center
                           : data.contentType == ContentType.course_script.name
-                              ? Icons.smart_display
+                              ? Icons.text_snippet
                               : Icons.cast_connected,
               size: size.r24,
               color: data.contentType == ContentType.course_video.name
@@ -65,7 +65,7 @@ class CourseContentWidget extends StatelessWidget with AppTheme, Language {
                       : data.contentType == ContentType.course_assessment.name
                           ? clr.textColorAppleBlack
                           : data.contentType == ContentType.course_script.name
-                              ? clr.iconColorSweetRed
+                              ? clr.iconColorBlue
                               : clr.textColorBlack,
             ),
           ),
@@ -98,9 +98,11 @@ class CourseContentWidget extends StatelessWidget with AppTheme, Language {
                 padding: EdgeInsets.symmetric(
                     horizontal: size.w8, vertical: size.h8),
                 decoration: BoxDecoration(
-                    color: status
-                        ? clr.cardFillColorCruise
-                        : clr.greyColor.withOpacity(.4),
+                    color:
+                        // status
+                        //     ?
+                        clr.cardFillColorCruise,
+                    // : clr.greyColor.withOpacity(.4),
                     borderRadius: BorderRadius.circular(size.r4)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

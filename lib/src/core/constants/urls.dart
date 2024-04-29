@@ -13,8 +13,9 @@ class ApiCredential {
 
   static String userDashboard = "/circular-service/api/mobile/dashboard";
   static String getCourse = "/circular-service/api/mobile/courses";
-  static String getScript = "/scripts";
-  static String getBlendedClass = "/blended-classes";
+  static String getScript = "/circular-service/api/mobile/scripts";
+  static String getBlendedClass =
+      "/circular-service/api/mobile/blended-classes";
   static String getVideo = "/videos";
 
   static String getDiscussion = "/discussions";

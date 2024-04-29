@@ -1,7 +1,6 @@
 import '../../domain/entities/script_data_entity.dart';
 import '../models/script_data_model.dart';
 
-
 abstract class ScriptDataMapper<M, E> {
   M fromEntityToModel(E entity);
   E toEntityFromModel(M model);
@@ -19,8 +18,11 @@ class ScriptDataModelToEntityMapper
         titleBn: entity.titleBn,
         descriptionEn: entity.descriptionEn,
         descriptionBn: entity.descriptionBn,
+        type: entity.type,
+        thumbnail: entity.thumbnail,
         file: entity.file,
         readingTime: entity.readingTime,
+        url: entity.url,
         status: entity.status);
   }
 
@@ -34,8 +36,11 @@ class ScriptDataModelToEntityMapper
         titleBn: model.titleBn,
         descriptionEn: model.descriptionEn,
         descriptionBn: model.descriptionBn,
+        type: model.type,
+        thumbnail: model.thumbnail,
         file: model.file,
         readingTime: model.readingTime,
+        url: model.url,
         status: model.status);
   }
 }

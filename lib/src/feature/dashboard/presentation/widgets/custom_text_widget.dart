@@ -8,6 +8,7 @@ class CustomTextWidget extends StatelessWidget with AppTheme {
   final double? fontSize;
   final String? fontFamily;
   final FontWeight? fontWeight;
+  final TextOverflow? overflow;
   final int? maxLines;
   final TextAlign? textAlign;
   final EdgeInsetsGeometry? padding;
@@ -18,6 +19,7 @@ class CustomTextWidget extends StatelessWidget with AppTheme {
       this.fontSize,
       this.fontFamily,
       this.fontWeight,
+      this.overflow,
       this.maxLines,
       this.textAlign,
       this.padding});
@@ -33,7 +35,7 @@ class CustomTextWidget extends StatelessWidget with AppTheme {
             fontSize: fontSize ?? size.textSmall,
             fontFamily: fontFamily ?? StringData.fontFamilyRoboto,
             fontWeight: fontWeight ?? FontWeight.w600,
-            overflow: TextOverflow.ellipsis),
+            overflow: overflow),
         maxLines: maxLines,
         textAlign: textAlign,
       ),

@@ -42,7 +42,8 @@ class RunningCourseCard extends StatelessWidget with AppTheme, Language {
               right: size.w1 + size.w12,
               top: size.h8,
               bottom: size.h4),
-          margin: EdgeInsets.symmetric(horizontal: size.w16),
+          margin: EdgeInsets.only(
+              left: size.w16, right: size.w16, bottom: size.h20),
           child: Column(
             children: [
               Row(

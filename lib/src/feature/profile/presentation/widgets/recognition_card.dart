@@ -69,7 +69,7 @@ class RecognitionCard extends StatelessWidget with AppTheme {
             ),
           ),
           SvgPicture.asset(
-            ImageAssets.downloadIcon,
+            ImageAssets.icDownload,
             height: size.h24,
             width: size.w24,
           )

@@ -9,8 +9,11 @@ class ScriptDataModel {
   final String titleBn;
   final String descriptionEn;
   final String descriptionBn;
+  final String type;
+  final String thumbnail;
   final String file;
   final int readingTime;
+  final String url;
   final int status;
 
   const ScriptDataModel({
@@ -21,8 +24,11 @@ class ScriptDataModel {
     required this.titleBn,
     required this.descriptionEn,
     required this.descriptionBn,
+    required this.type,
+    required this.thumbnail,
     required this.file,
     required this.readingTime,
+    required this.url,
     required this.status,
   });
 
@@ -35,8 +41,11 @@ class ScriptDataModel {
         titleBn: json["title_bn"] ?? "",
         descriptionEn: json["description_en"] ?? "",
         descriptionBn: json["description_bn"] ?? "",
+        type: json["type"] ?? "",
+        thumbnail: json["thumbnail"] ?? "",
         file: json["file"] ?? "",
         readingTime: json["reading_time"] ?? -1,
+        url: json["url"] ?? "",
         status: json["status"] ?? -1,
       );
 
@@ -48,8 +57,11 @@ class ScriptDataModel {
         "title_bn": titleBn,
         "description_en": descriptionEn,
         "description_bn": descriptionBn,
+        "type": type,
+        "thumbnail": thumbnail,
         "file": file,
         "reading_time": readingTime,
+        "url": url,
         "status": status,
       };
 }
