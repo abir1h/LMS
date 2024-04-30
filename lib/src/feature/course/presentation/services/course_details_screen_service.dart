@@ -13,7 +13,7 @@ abstract class _ViewModel {
   void navigateToOverallProgressScreen();
   void navigateToCourseAssignmentScreen(int courseContentId);
   void navigateToCourseAssessmentScreen(int courseContentId);
-  void navigateToCourseLiveClassScreen();
+  void navigateToCourseLiveClassScreen(int courseContentId);
   void navigateToCourseScriptScreen(int courseContentId, String courseCode,
       String courseDescriptionEn, String courseDescriptionBn);
 }
@@ -78,8 +78,8 @@ mixin CourseDetailsScreenService<T extends StatefulWidget> on State<T>
     _view.navigateToCourseAssessmentScreen(courseContentId);
   }
 
-  void onTapCourseLiveClass() {
-    _view.navigateToCourseLiveClassScreen();
+  void onTapCourseLiveClass(int courseContentId) {
+    _view.navigateToCourseLiveClassScreen(courseContentId);
   }
 
   void onTapScript(

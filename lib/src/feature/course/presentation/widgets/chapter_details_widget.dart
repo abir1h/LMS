@@ -4,7 +4,7 @@ import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
 
-class ChapterDetailsWidget extends StatelessWidget with AppTheme {
+class ChapterDetailsWidget extends StatelessWidget with AppTheme, Language {
   final String description;
   final ScrollPhysics? physics;
   const ChapterDetailsWidget(
@@ -38,7 +38,7 @@ class ChapterDetailsWidget extends StatelessWidget with AppTheme {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomTextWidget(
-              text: label(e: "অধ্যায়ের বিবরণ:", b: "অধ্যায়ের বিবরণ:"),
+              text: label(e: en.chapterDescription, b: bn.chapterDescription),
               textColor: clr.textColorBlack,
               fontFamily: StringData.fontFamilyPoppins,
             ),

@@ -4,8 +4,15 @@ import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
 
 class TabSwitchWidget extends StatefulWidget {
+  final String leftTitle;
+  final String rightTitle;
   final void Function(int)? onTabChange;
-  const TabSwitchWidget({Key? key, this.onTabChange}) : super(key: key);
+  const TabSwitchWidget(
+      {Key? key,
+      required this.leftTitle,
+      required this.rightTitle,
+      this.onTabChange})
+      : super(key: key);
 
   @override
   State<TabSwitchWidget> createState() => _TabSwitchWidgetState();
@@ -50,7 +57,7 @@ class _TabSwitchWidgetState extends State<TabSwitchWidget>
         width: double.maxFinite,
         height: size.h42,
         decoration: BoxDecoration(
-          color: clr.whiteColor,
+          color: clr.scaffoldBackgroundColor,
           borderRadius: BorderRadius.circular(size.r12),
         ),
         child: LayoutBuilder(builder: (context, sizeConstraints) {
@@ -94,9 +101,7 @@ class _TabSwitchWidgetState extends State<TabSwitchWidget>
                               animation: _animationController,
                               builder: (context, child) {
                                 return Text(
-                                  label(
-                                      e: "Weekly Progress",
-                                      b: "সাপ্তাহিক অগ্রগতি"),
+                                  widget.leftTitle,
                                   style: TextStyle(
                                     color: _firstTabAnimation.value,
                                     fontWeight: _selectedTabIndex == 0
@@ -126,9 +131,7 @@ class _TabSwitchWidgetState extends State<TabSwitchWidget>
                               animation: _animationController,
                               builder: (context, child) {
                                 return Text(
-                                  label(
-                                      e: "Overall Progress",
-                                      b: "সামগ্রিক অগ্রগতি "),
+                                  widget.rightTitle,
                                   style: TextStyle(
                                     color: _secondTabAnimation.value,
                                     fontWeight: _selectedTabIndex == 1

@@ -42,6 +42,13 @@ class CourseScriptScreenArgs {
   });
 }
 
+class CourseBlendedScreenArgs {
+  final int courseContentId;
+  CourseBlendedScreenArgs({
+    required this.courseContentId,
+  });
+}
+
 class CourseAssessmentScreenArgs {
   final int courseContentId;
   final VoidCallback onTap;

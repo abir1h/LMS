@@ -95,7 +95,7 @@ mixin RouteGenerator {
           case AppRoute.courseAssignmentScreen:
             return CourseAssignmentScreen(arguments: setting.arguments);
           case AppRoute.courseLiveClassScreen:
-            return const CourseLiveClassScreen();
+            return CourseLiveClassScreen(arguments: setting.arguments);
           case AppRoute.courseAssessmentScreen:
             return CourseAssessmentScreen(arguments: setting.arguments);
           case AppRoute.discussionScreen:

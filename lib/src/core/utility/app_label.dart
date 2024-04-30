@@ -5,7 +5,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 enum AppLanguage { english, bangla }
 
 String label({required String e, required String b}) {
-  return App.currentAppLanguage == AppLanguage.english ? e : b;
+  return App.currentAppLanguage == AppLanguage.english
+      ? (e.isNotEmpty ? e : b)
+      : (b.isNotEmpty ? b : e);
 }
 
 class App {

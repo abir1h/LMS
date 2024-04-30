@@ -106,13 +106,13 @@ class _DrawerWidgetState extends State<DrawerWidget>
               Container(height: size.h1, color: clr.cardStrokeColor),
               DrawerLinkWidget(
                 cardColor: clr.drawerFillColor,
-                icon: Icons.local_library,
+                icon: Icons.auto_stories,
                 iconColor: clr.appPrimaryColorGreen,
                 text: label(e: en.lms, b: bn.lms),
                 onTap: () {},
               ),
               DrawerLinkWidget(
-                icon: Icons.auto_stories,
+                icon: Icons.local_library,
                 text: label(e: en.teachersGuide, b: bn.teachersGuide),
                 onTap: () {},
               ),
@@ -121,12 +121,12 @@ class _DrawerWidgetState extends State<DrawerWidget>
                 text: label(e: en.eLibrary, b: bn.eLibrary),
                 onTap: () {},
               ),
-              DrawerLinkWidget(
-                icon: Icons.assignment,
-                text:
-                    label(e: en.formativeAssessment, b: bn.formativeAssessment),
-                onTap: () {},
-              ),
+              // DrawerLinkWidget(
+              //   icon: Icons.assignment,
+              //   text:
+              //       label(e: en.formativeAssessment, b: bn.formativeAssessment),
+              //   onTap: () {},
+              // ),
               DrawerLinkWidget(
                 svgIcon: ImageAssets.icSocialLearning,
                 text: label(

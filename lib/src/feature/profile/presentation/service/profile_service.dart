@@ -23,36 +23,77 @@ mixin ProfileService<T extends StatefulWidget> on State<T>
     return _profileUseCase.userProfileInformationUseCase();
   }
 
+  int _selectedTabIndex = 0;
+
   ///Service configurations
   @override
   void initState() {
     _view = this;
     super.initState();
-    loadProfileData();
+    _loadDataList();
   }
 
   @override
   void dispose() {
-    profileDataStreamController.dispose();
+    stateDataStreamController.dispose();
     super.dispose();
   }
 
   ///Stream controllers
-  final AppStreamController<ProfileDataEntity> profileDataStreamController =
+  final AppStreamController<StateType> stateDataStreamController =
       AppStreamController();
 
-  ///Load Course list
-  void loadProfileData() {
+  ///Load data list from server based on selected tab
+  void _loadDataList() {
     if (!mounted) return;
-    profileDataStreamController.add(LoadingState());
+
+    ///Loading state
+    stateDataStreamController.add(LoadingState<StateType>());
+    if (_selectedTabIndex == 0) {
+      _loadProfileData();
+    } else {
+      _loadProgressData();
+    }
+  }
+
+  ///Load Profile
+  void _loadProfileData() {
+    // if (!mounted) return;
+    // profileDataStreamController.add(LoadingState());
     getProfileInformation().then((value) {
+      if (_selectedTabIndex != 0) return;
       if (value.error == null && value.data != null) {
-        profileDataStreamController
-            .add(DataLoadedState<ProfileDataEntity>(value.data));
+        stateDataStreamController
+            .add(DataLoadedState<StateType>(ProfileDataState(value.data)));
       } else if (value.error == null && value.data == null) {
       } else {
         _view.showWarning(value.message!);
       }
     });
   }
+
+  ///Load Progress data
+  void _loadProgressData() {
+    stateDataStreamController
+        .add(DataLoadedState<StateType>(ProgressDataState()));
+  }
+
+  void onTabValueChange(int value) {
+    _selectedTabIndex = value;
+    _loadDataList();
+  }
+}
+
+abstract class StateType {}
+
+class ProfileDataState extends StateType {
+  final ProfileDataEntity profileDataEntity;
+  ProfileDataState(this.profileDataEntity);
+}
+
+class ProgressDataState extends StateType {
+  // final ProgressDataEntity progressDataEntity;
+  ProgressDataState(
+      // this.progressDataEntity,
+      );
 }

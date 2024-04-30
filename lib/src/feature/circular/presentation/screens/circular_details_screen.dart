@@ -128,11 +128,10 @@ class CircularNameWidget extends StatelessWidget with AppTheme, Language {
             ),
             SizedBox(height: size.h8),
             CustomTextWidget(
-              text: label(e: "0128060457", b: "0128060457"),
+              text: label(e: "0128060457", b: "০১২৮০৬০৪৫৭"),
               fontSize: size.textXXSmall,
               textColor: clr.textColorAppleBlack,
               fontWeight: FontWeight.w500,
-              maxLines: 2,
             ),
           ],
         ),

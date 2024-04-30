@@ -116,7 +116,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                     ),
                   )),
               SizedBox(height: size.h20),
-              const EffectivePeriodSection(),
+              EffectivePeriodSection(),
               SizedBox(height: size.h20),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: size.w16),
@@ -152,7 +152,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                 onTapSeeAll: onTapSeeAll,
                 items: const ["", "", ""],
                 buildItem: (BuildContext context, int index, item) {
-                  return const LeaderboardItemWidget();
+                  return LeaderboardItemWidget();
                 },
               ),
               SizedBox(height: size.h32),

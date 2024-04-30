@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> with AppTheme {
               ),
               SizedBox(height: size.h32 + size.h6),
               Text(
-                "Welcome To CLMS",
+                "Welcome To LMS",
                 style: TextStyle(
                     color: clr.appPrimaryColorGreen,
                     fontSize: size.textXXSmall + size.textXXSmall,

@@ -57,7 +57,7 @@ class Application extends StatelessWidget with AppTheme {
                     : const ColorFilter.mode(
                         Colors.transparent, BlendMode.srcOver),
                 child: GetMaterialApp(
-                  title: 'CLMS',
+                  title: 'LMS',
                   debugShowCheckedModeBanner: false,
                   useInheritedMediaQuery: true,
                   theme: ThemeData(

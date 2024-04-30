@@ -75,6 +75,9 @@ class _OverallProgressScreenState extends State<OverallProgressScreen>
             Padding(
               padding: EdgeInsets.symmetric(horizontal: size.w24),
               child: TabSwitchWidget(
+                leftTitle: label(e: "Weekly Progress", b: "সাপ্তাহিক অগ্রগতি"),
+                rightTitle:
+                    label(e: "Overall Progress", b: "সামগ্রিক অগ্রগতি "),
                 onTabChange: onTabValueChange,
               ),
             ),
@@ -211,7 +214,7 @@ class YourCourseProgressWidget extends StatelessWidget with AppTheme, Language {
                             lineWidth: size.w1 + size.w4,
                             percent: .5,
                             center: Text(
-                              "৫০%",
+                              label(e: "50%", b: "৫০%"),
                               style: TextStyle(
                                   color: clr.blackColor,
                                   fontSize: size.textXSmall,
@@ -263,7 +266,7 @@ class YourCourseProgressWidget extends StatelessWidget with AppTheme, Language {
                             lineWidth: size.w1 + size.w4,
                             percent: .75,
                             center: Text(
-                              "৭৫%",
+                              label(e: "75%", b: "৭৫%"),
                               style: TextStyle(
                                   color: clr.blackColor,
                                   fontSize: size.textXSmall,
@@ -325,7 +328,7 @@ class YourCourseProgressWidget extends StatelessWidget with AppTheme, Language {
                   lineHeight: size.h16,
                   percent: 0.6,
                   center: Text(
-                    "৬০%",
+                    label(e: "60%", b: "৬০%"),
                     style: TextStyle(
                         color: clr.shadeWhiteColor2,
                         fontSize: size.textXXSmall,
@@ -376,16 +379,14 @@ class RowItemWidget extends StatelessWidget with AppTheme {
             textColor: clr.textColorAppleBlack,
             fontSize: size.textSmall,
             fontWeight: FontWeight.w500,
-            maxLines: 1,
           ),
         ),
-        SizedBox(width: size.w4),
+        SizedBox(width: size.w8),
         CustomTextWidget(
           text: subTitle,
           textColor: clr.textColorAppleBlack,
           fontSize: size.textSmall,
           fontWeight: FontWeight.w500,
-          maxLines: 1,
         ),
       ],
     );
@@ -517,15 +518,17 @@ class WeeklyProgressItemWidget extends StatelessWidget with AppTheme, Language {
                   ],
                 ),
                 SizedBox(height: size.h12),
-                const RowItemWidget(
+                RowItemWidget(
                   icon: Icons.smart_display_outlined,
-                  title: "ভিডিও দেখার সময়",
-                  subTitle: "১৫ মিনিট",
+                  title: label(
+                      e: "Duration of Video Viewing", b: "ভিডিও দেখার সময়"),
+                  subTitle: label(e: "15 Minutes", b: "১৫ মিনিট"),
                 ),
                 SizedBox(height: size.h8),
                 RowItemWidget(
                   svg: ImageAssets.icTwoPager,
-                  title: "স্ক্রিপ্ট পড়ার সময়",
+                  title: label(
+                      e: "Time to read the script", b: "স্ক্রিপ্ট পড়ার সময়"),
                   subTitle: "-",
                 ),
                 SizedBox(height: size.h12),
@@ -542,21 +545,21 @@ class WeeklyProgressItemWidget extends StatelessWidget with AppTheme, Language {
                   fontWeight: FontWeight.w500,
                 ),
                 SizedBox(height: size.h16),
-                const RowItemWidget(
+                RowItemWidget(
                   icon: Icons.assignment_outlined,
-                  title: "এসাইনমেন্ট ১",
+                  title: label(e: "Assignment 1", b: "এসাইনমেন্ট ১"),
                   subTitle: "-",
                 ),
                 SizedBox(height: size.h8),
-                const RowItemWidget(
+                RowItemWidget(
                   icon: Icons.quiz_outlined,
-                  title: "মূল্যায়ন ১",
+                  title: label(e: "Assessment 1", b: "মূল্যায়ন ১"),
                   subTitle: "-",
                 ),
                 SizedBox(height: size.h8),
-                const RowItemWidget(
+                RowItemWidget(
                   icon: Icons.quiz_outlined,
-                  title: "মূল্যায়ন ২",
+                  title: label(e: "Assessment 1", b: "মূল্যায়ন ১"),
                   subTitle: "-",
                 ),
                 SizedBox(height: size.h12),
@@ -596,7 +599,7 @@ class WeeklyProgressItemWidget extends StatelessWidget with AppTheme, Language {
                   trailing: Padding(
                     padding: EdgeInsets.only(left: size.w48),
                     child: Text(
-                      "৬০%",
+                      label(e: "60%", b: "৬০%"),
                       style: TextStyle(
                           color: clr.blackColor,
                           fontSize: size.textXSmall,
@@ -692,7 +695,7 @@ class OverallProgressWidget extends StatelessWidget with AppTheme, Language {
                     Expanded(
                       child: CustomTextWidget(
                         text: label(
-                            e: "এসাইনমেন্ট এর শিরোনাম - এসাইনমেন্ট ১",
+                            e: "Assignment Title - Assignment 1",
                             b: "এসাইনমেন্ট এর শিরোনাম - এসাইনমেন্ট ১"),
                         textColor: clr.textColorBlack,
                         fontSize: size.textSmall,
@@ -701,6 +704,7 @@ class OverallProgressWidget extends StatelessWidget with AppTheme, Language {
                         maxLines: 2,
                       ),
                     ),
+                    SizedBox(width: size.w16),
                     CustomTextWidget(
                       text: label(e: "5 / 10", b: "৫ / ১০"),
                       textColor: clr.textColorBlack,
@@ -736,7 +740,7 @@ class OverallProgressWidget extends StatelessWidget with AppTheme, Language {
                     Expanded(
                       child: CustomTextWidget(
                         text: label(
-                            e: "মূল্যায়নের শিরোনাম - মূল্যায়ন ১",
+                            e: "Assessment Title - Assessment 1",
                             b: "মূল্যায়নের শিরোনাম - মূল্যায়ন ১"),
                         textColor: clr.textColorBlack,
                         fontSize: size.textSmall,
@@ -744,6 +748,7 @@ class OverallProgressWidget extends StatelessWidget with AppTheme, Language {
                         maxLines: 2,
                       ),
                     ),
+                    SizedBox(width: size.w16),
                     CustomTextWidget(
                       text: label(e: "5 / 10", b: "৫ / ১০"),
                       textColor: clr.textColorBlack,

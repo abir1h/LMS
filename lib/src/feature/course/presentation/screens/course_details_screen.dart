@@ -176,7 +176,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
                     ),
                     SizedBox(height: size.h8),
                     SupportingDocWidget(
-                      docTitle: data.supportingDoc,
+                      docTitle: data.supportingDoc.split("/")[1],
                       onTap: () {},
                     ),
                     // SupportingTextItemSection(
@@ -223,7 +223,8 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
                                     courseCode: data.code,
                                     courseDescriptionEn: data.longDescEn,
                                     courseDescriptionBn: data.longDescBn),
-                                onTapBlendedClass: onTapCourseLiveClass,
+                                onTapBlendedClass: () =>
+                                    onTapCourseLiveClass(item.contentId),
                               );
                             },
                           );
@@ -288,8 +289,9 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
   }
 
   @override
-  void navigateToCourseLiveClassScreen() {
-    Navigator.of(context).pushNamed(AppRoute.courseLiveClassScreen);
+  void navigateToCourseLiveClassScreen(int courseContentId) {
+    Navigator.of(context).pushNamed(AppRoute.courseLiveClassScreen,
+        arguments: CourseBlendedScreenArgs(courseContentId: courseContentId));
   }
 
   @override
@@ -523,7 +525,7 @@ class SupportingDocWidget<T> extends StatelessWidget with AppTheme, Language {
       child: Row(
         children: [
           Image.asset(ImageAssets.imgPdf),
-          SizedBox(width: size.w4),
+          SizedBox(width: size.w8),
           Expanded(
             child: CustomTextWidget(
               text: docTitle,
@@ -644,7 +646,7 @@ class _CourseMaterialWidgetState<T> extends State<CourseMaterialWidget<T>>
               children: [
                 CourseMaterialItemWidget(
                   icon: Icons.calendar_month_outlined,
-                  title: label(e: "সময়কাল", b: "সময়কাল"),
+                  title: label(e: "Duration", b: "সময়কাল"),
                   duration: label(
                       e: "${widget.data.courseWeekCount.toString()} Week",
                       b: "${widget.data.courseWeekCount.toString()} সপ্তাহ"),
@@ -652,7 +654,7 @@ class _CourseMaterialWidgetState<T> extends State<CourseMaterialWidget<T>>
                 SizedBox(height: size.h8),
                 CourseMaterialItemWidget(
                   icon: Icons.quiz_outlined,
-                  title: label(e: "মূল্যায়ন", b: "মূল্যায়ন"),
+                  title: label(e: "Assessment", b: "মূল্যায়ন"),
                   duration: label(
                       e: widget.data.assessmentCount.toString(),
                       b: "${widget.data.assessmentCount.toString()} টি"),
@@ -660,7 +662,7 @@ class _CourseMaterialWidgetState<T> extends State<CourseMaterialWidget<T>>
                 SizedBox(height: size.h8),
                 CourseMaterialItemWidget(
                   icon: Icons.video_call_outlined,
-                  title: label(e: "ব্লেনডেড ক্লাস", b: "ব্লেনডেড ক্লাস"),
+                  title: label(e: "Blended Class", b: "ব্লেনডেড ক্লাস"),
                   duration: label(
                       e: widget.data.blendedClassCount.toString(),
                       b: "${widget.data.blendedClassCount.toString()} টি"),
@@ -668,7 +670,7 @@ class _CourseMaterialWidgetState<T> extends State<CourseMaterialWidget<T>>
                 SizedBox(height: size.h8),
                 CourseMaterialItemWidget(
                   icon: Icons.play_circle_outline_outlined,
-                  title: label(e: "স্ক্রিপ্ট", b: "স্ক্রিপ্ট"),
+                  title: label(e: "Script", b: "স্ক্রিপ্ট"),
                   duration: label(
                       e: widget.data.scriptCount.toString(),
                       b: "${widget.data.scriptCount.toString()} টি"),
@@ -676,7 +678,7 @@ class _CourseMaterialWidgetState<T> extends State<CourseMaterialWidget<T>>
                 SizedBox(height: size.h8),
                 CourseMaterialItemWidget(
                   icon: Icons.assignment_outlined,
-                  title: label(e: "এসাইনমেন্ট", b: "এসাইনমেন্ট"),
+                  title: label(e: "Assignment", b: "এসাইনমেন্ট"),
                   duration: label(
                       e: widget.data.assignmentCount.toString(),
                       b: "${widget.data.assignmentCount.toString()} টি"),

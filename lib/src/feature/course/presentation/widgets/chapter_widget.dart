@@ -450,7 +450,7 @@ class _ChapterWidgetState<T> extends State<ChapterWidget<T>>
                                       lineWidth: size.w1 + size.w4,
                                       percent: .5,
                                       center: Text(
-                                        "৫০%",
+                                        label(e: "50%", b: "৫০%"),
                                         style: TextStyle(
                                             color: clr.blackColor,
                                             fontSize: size.textXSmall,
@@ -498,7 +498,7 @@ class _ChapterWidgetState<T> extends State<ChapterWidget<T>>
                                       lineWidth: size.w1 + size.w4,
                                       percent: .75,
                                       center: Text(
-                                        "৭৫%",
+                                        label(e: "75%", b: "৭৫%"),
                                         style: TextStyle(
                                             color: clr.blackColor,
                                             fontSize: size.textXSmall,
@@ -556,7 +556,7 @@ class _ChapterWidgetState<T> extends State<ChapterWidget<T>>
                             lineHeight: size.h16,
                             percent: 0.6,
                             center: Text(
-                              "৬০%",
+                              label(e: "60%", b: "৬০%"),
                               style: TextStyle(
                                   color: clr.blackColor,
                                   fontSize: size.textXXSmall,
@@ -598,7 +598,7 @@ class _ChapterWidgetState<T> extends State<ChapterWidget<T>>
                             lineHeight: size.h16,
                             percent: 0.8,
                             center: Text(
-                              "৮২%",
+                              label(e: "82%", b: "৮২%"),
                               style: TextStyle(
                                   color: clr.shadeWhiteColor2,
                                   fontSize: size.textXXSmall,

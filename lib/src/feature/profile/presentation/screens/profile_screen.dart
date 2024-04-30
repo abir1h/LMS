@@ -6,6 +6,7 @@ import '../../../../core/common_widgets/app_stream.dart';
 import '../../../../core/common_widgets/circuler_widget.dart';
 import '../../../../core/common_widgets/custom_empty_widget.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
+import '../../../course/presentation/widgets/tab_switch_widget.dart';
 import '../../domain/entities/profile_data_entity.dart';
 import '../service/profile_service.dart';
 import '../../../../core/routes/app_route.dart';
@@ -27,148 +28,142 @@ class _ProfileScreenState extends State<ProfileScreen>
     with AppTheme, Language, AppEventsNotifier, ProfileService {
   @override
   Widget build(BuildContext context) {
-    return AppStreamBuilder<ProfileDataEntity>(
-      stream: profileDataStreamController.stream,
-      loadingBuilder: (context) {
-        return const Center(child: CircularLoader());
-      },
-      dataBuilder: (context, data) {
-        return Column(
+    return Column(
+      children: [
+        Stack(
           children: [
-            Stack(
-              children: [
-                Center(
-                  child: Column(
-                    children: [
-                      SizedBox(height: size.h20),
-                      Container(
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                                color: clr.cardStrokeColor, width: size.w1)),
-                        child: CircleAvatar(
-                          radius: 45.r,
-                          backgroundImage: AssetImage(
-                            ImageAssets.imgProfile,
-                          ),
-                        ),
+            Center(
+              child: Column(
+                children: [
+                  SizedBox(height: size.h20),
+                  Container(
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                            color: clr.cardStrokeColor, width: size.w1)),
+                    child: CircleAvatar(
+                      radius: 45.r,
+                      backgroundImage: AssetImage(
+                        ImageAssets.imgProfile,
                       ),
-                      SizedBox(height: size.h12),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: size.w16),
-                        child: Text(
-                          label(e: data.fullnameEn, b: data.fullnameBn),
-                          style: TextStyle(
-                              color: clr.appPrimaryColorGreen,
-                              fontSize: size.textXMedium,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: StringData.fontFamilyRoboto),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      SizedBox(height: size.h24)
-                    ],
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        left: size.w24, right: size.w16, top: size.h16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        // SvgPicture.asset(ImageAssets.icEdit),
-                        CustomSwitchButton(
-                          value: App.currentAppLanguage == AppLanguage.english,
-                          textOn: 'EN',
-                          textSize: size.textXXSmall,
-                          textOff: 'বাং',
-                          bgColor: clr.whiteColor,
-                          width: 64.w,
-                          animationDuration: const Duration(milliseconds: 300),
-                          onChanged: (bool state) {
-                            App.setAppLanguage(state ? 1 : 0).then((value) {
-                              if (mounted) {
-                                setState(() {});
-                              }
-                              AppEventsNotifier.notify(
-                                  EventAction.bottomNavBar);
-                            });
-                          },
-                          buttonHolder: const Icon(
-                            Icons.check,
-                            color: Colors.transparent,
-                          ),
-                          onTap: () {},
-                          onDoubleTap: () {},
-                          onSwipe: () {},
-                        ),
-                      ],
                     ),
                   ),
-                ),
-              ],
+                  SizedBox(height: size.h12),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: size.w16),
+                    child: Text(
+                      label(e: en.userNameText, b: bn.userNameText),
+                      style: TextStyle(
+                          color: clr.appPrimaryColorGreen,
+                          fontSize: size.textXMedium,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: StringData.fontFamilyRoboto),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  SizedBox(height: size.h24)
+                ],
+              ),
             ),
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: size.w16),
-                decoration: BoxDecoration(
-                    color: clr.scaffoldBackgroundColor,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(size.w40),
-                      topRight: Radius.circular(size.w40),
+            Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: EdgeInsets.only(
+                    left: size.w24, right: size.w16, top: size.h16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    // SvgPicture.asset(ImageAssets.icEdit),
+                    CustomSwitchButton(
+                      value: App.currentAppLanguage == AppLanguage.english,
+                      textOn: 'EN',
+                      textSize: size.textXXSmall,
+                      textOff: 'বাং',
+                      bgColor: clr.whiteColor,
+                      width: 64.w,
+                      animationDuration: const Duration(milliseconds: 300),
+                      onChanged: (bool state) {
+                        App.setAppLanguage(state ? 1 : 0).then((value) {
+                          if (mounted) {
+                            setState(() {});
+                          }
+                          AppEventsNotifier.notify(EventAction.bottomNavBar);
+                        });
+                      },
+                      buttonHolder: const Icon(
+                        Icons.check,
+                        color: Colors.transparent,
+                      ),
+                      onTap: () {},
+                      onDoubleTap: () {},
+                      onSwipe: () {},
                     ),
-                    border: Border(
-                        top: BorderSide(color: clr.cardStrokeColor),
-                        right: BorderSide(color: clr.cardStrokeColor))),
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Column(
-                    children: [
-                      SizedBox(height: size.h40),
-                      TitleWithIcon(
-                          icon: Icons.account_balance,
-                          title: label(
-                              e: en.currentOrganizationNameText,
-                              b: bn.currentOrganizationNameText)),
-                      TitleWithIcon(
-                          icon: Icons.beenhere,
-                          title: label(
-                              e: en.positionNameText, b: bn.positionNameText)),
-                      TitleWithIcon(icon: Icons.badge, title: data.empId),
-                      TitleWithIcon(icon: Icons.phone, title: data.mobileNo),
-                      TitleWithIcon(
-                          onTap: () {}, icon: Icons.email, title: data.email),
-                      TitleWithIcon(
-                        onTap: () => Scaffold.of(context).openEndDrawer(),
-                        svgIcon: ImageAssets.icEditorChoice,
-                        title:
-                            label(e: en.certificateText, b: bn.certificateText),
-                        hasTrailing: true,
-                      ),
-                      TitleWithIcon(
-                        icon: Icons.logout,
-                        title: label(e: en.logoutText, b: bn.logoutText),
-                        onTap: showLogoutPromptDialog,
-                        hasBorder: false,
-                      ),
-                      SizedBox(height: size.h40),
-                    ],
-                  ),
+                  ],
                 ),
               ),
-            )
+            ),
           ],
-        );
-      },
-      emptyBuilder: (context, message, icon) => CustomEmptyWidget(
-        message: message,
-        // constraints: constraints,
-        // offset: 350.w,
-      ),
+        ),
+        Expanded(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: size.w16),
+            decoration: BoxDecoration(
+                color: clr.shadeWhiteColor2,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(size.w40),
+                  topRight: Radius.circular(size.w40),
+                ),
+                border: Border(
+                    top: BorderSide(color: clr.cardStrokeColor),
+                    right: BorderSide(color: clr.cardStrokeColor))),
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  SizedBox(height: size.h24),
+
+                  /// Tab Button
+                  TabSwitchWidget(
+                    leftTitle: label(e: "Personal Info", b: "ব্যাক্তিগত তথ্য"),
+                    rightTitle: label(e: "Progress Info", b: "অগ্রগতির তথ্য"),
+                    onTabChange: onTabValueChange,
+                  ),
+                  SizedBox(height: size.h16),
+                  AppStreamBuilder<StateType>(
+                    stream: stateDataStreamController.stream,
+                    loadingBuilder: (context) {
+                      return const Center(child: CircularLoader());
+                    },
+                    dataBuilder: (context, data) {
+                      if (data is ProfileDataState) {
+                        return PersonalInfoWidget(
+                          data: data.profileDataEntity,
+                          onTapLogout: showLogoutPromptDialog,
+                        );
+                      } else if (data is ProgressDataState) {
+                        return ProgressInfoWidget();
+                      } else {
+                        return const CustomEmptyWidget(
+                          icon: Icons.school_outlined,
+                          message: "No matching data found!",
+                        );
+                      }
+                    },
+                    emptyBuilder: (context, message, icon) => CustomEmptyWidget(
+                      message: message,
+                      // constraints: constraints,
+                      // offset: 350.w,
+                    ),
+                  ),
+                  SizedBox(height: size.h40),
+                ],
+              ),
+            ),
+          ),
+        )
+      ],
     );
   }
 
@@ -273,6 +268,59 @@ class TitleWithIcon extends StatelessWidget with AppTheme {
           ],
         ),
       ),
+    );
+  }
+}
+
+class PersonalInfoWidget extends StatelessWidget with AppTheme, Language {
+  final ProfileDataEntity data;
+  final VoidCallback onTapLogout;
+  const PersonalInfoWidget(
+      {super.key, required this.data, required this.onTapLogout});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TitleWithIcon(
+            icon: Icons.account_balance,
+            title: label(
+                e: en.currentOrganizationNameText,
+                b: bn.currentOrganizationNameText)),
+        TitleWithIcon(
+            icon: Icons.beenhere,
+            title: label(e: en.positionNameText, b: bn.positionNameText)),
+        TitleWithIcon(icon: Icons.badge, title: data.empId),
+        TitleWithIcon(icon: Icons.phone, title: data.mobileNo),
+        TitleWithIcon(onTap: () {}, icon: Icons.email, title: data.email),
+        TitleWithIcon(
+          onTap: () => Scaffold.of(context).openEndDrawer(),
+          svgIcon: ImageAssets.icEditorChoice,
+          title: label(e: en.certificateText, b: bn.certificateText),
+          hasTrailing: true,
+        ),
+        TitleWithIcon(
+          icon: Icons.logout,
+          title: label(e: en.logoutText, b: bn.logoutText),
+          onTap: onTapLogout,
+          hasBorder: false,
+        ),
+      ],
+    );
+  }
+}
+
+class ProgressInfoWidget extends StatelessWidget {
+  const ProgressInfoWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(),
+      ],
     );
   }
 }

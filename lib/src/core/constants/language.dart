@@ -44,10 +44,10 @@ class LanguageEn {
   String pageReloadText = "Reload The Page";
 
   String learningManagementSystem = "Learning Management System (LMS)";
-  String teachersGuide = "Teachers Guide";
+  String teachersGuide = "Instructional Guide for Teachers";
   String eLibrary = "E-Library";
   String formativeAssessment = "Formative Assessment System";
-  String socialLearningPlatform = "Social Learning Platform";
+  String socialLearningPlatform = "Professional Learning Community";
 
   String aboutUs = "About Us";
   String lms = "Learning Management System";
@@ -114,6 +114,7 @@ class LanguageEn {
   String progressOfTheWeek = "Progress of The Week";
   String weeklyProgress = "Weekly Progress";
   String classAttendance = "Class Attendance";
+  String chapterDescription = "Chapter Description:";
 
   String takeNotes = "Take Notes";
   String transcript = "Transcript";
@@ -121,7 +122,15 @@ class LanguageEn {
   String seeMore = " See More";
   String seeLess = " See Less";
 
-  String liveClass = "Live Class";
+  String blendedClass = "Blended Class";
+  String inPersonClass = "In-Person Class";
+  String onlineClass = "Online Class";
+  String classInstructions = "Class Instructions";
+  String institutionName = "Institution Name";
+  String classSchedule = "Class Schedule";
+  String classTime = "Class Start Time";
+  String classLink = "Class Link";
+  String confirmInPerson = "Confirm In-Person";
   String joinClass = "Join The Class";
 
   String allNotes = "All Notes";
@@ -164,7 +173,7 @@ class LanguageBn {
   static LanguageBn? _instance;
   static LanguageBn get instance => _instance ?? (_instance = LanguageBn._());
 
-  String appNameText = "সিএলএমএস";
+  String appNameText = "এলএমএস";
   String appBarText = "এলএমএস হোম";
 
   String authScreenHeaderText = "HSEP সম্পর্কে";
@@ -199,10 +208,10 @@ class LanguageBn {
   String pageReloadText = "পেজটি রিলোড দিন";
 
   String learningManagementSystem = "লার্নিং ম্যানেজমেন্ট সিস্টেম (এলএমএস)";
-  String teachersGuide = "টিচার্স গাইড";
+  String teachersGuide = "ইন্সট্রাকশনাল গাইড ফর টিচার্স";
   String eLibrary = "ই-লাইব্রেরি";
   String formativeAssessment = "ফরম্যাটিভ এসেসমেন্ট সিস্টেম";
-  String socialLearningPlatform = "সোস্যাল লার্নিং প্লাটফর্ম";
+  String socialLearningPlatform = "প্রফেশনাল লার্নিং কমিউনিটি";
 
   String aboutUs = "আমাদের সম্পর্কে";
   String lms = "লার্নিং ম্যানেজমেন্ট সিস্টেম";
@@ -232,7 +241,7 @@ class LanguageBn {
   String allCourse = "সকল কোর্সসমূহ";
   String upcomingCurriculum = "আসন্ন কোর্স";
   String notification = "বিজ্ঞপ্তি";
-  String effectivePeriod = "কার্যকম সময়কাল";
+  String effectivePeriod = "কার্যক্রম সময়কাল";
   String noticeBoard = "নোটিশবোর্ড";
   String leaderboard = "লিডারবোর্ড";
   String seeAll = "সবগুলো দেখুন";
@@ -264,6 +273,7 @@ class LanguageBn {
   String progressOfTheWeek = "সপ্তাহের অগ্রগতি";
   String weeklyProgress = "Weekly Progress";
   String classAttendance = "ক্লাসের উপস্থিতি";
+  String chapterDescription = "অধ্যায়ের বিবরণ:";
 
   String takeNotes = "নোট নিন";
   String transcript = "প্রতিলিপি";
@@ -271,8 +281,16 @@ class LanguageBn {
   String seeMore = " আরো দেখুন";
   String seeLess = " সংক্ষিপ্ত করুন";
 
-  String liveClass = "লাইভ ক্লাস";
-  String joinClass = "ক্লাসে জয়েন করুন";
+  String blendedClass = "ব্লেন্ডেড ক্লাস";
+  String inPersonClass = "ইন - পারসন ক্লাস";
+  String onlineClass = "অনলাইন ক্লাস";
+  String classInstructions = "ক্লাসের নির্দেশাবলী";
+  String institutionName = "প্রতিষ্টানের নাম";
+  String classSchedule = "ক্লাসের সময়সূচী";
+  String classTime = "ক্লাস শুরুর সময়";
+  String classLink = "ক্লাসের লিংক";
+  String confirmInPerson = "কর্নফার্ম ইন পার্সন";
+  String joinClass = "জয়েন অনলাইন";
 
   String allNotes = "অল নোটস";
   String noteContent = "";

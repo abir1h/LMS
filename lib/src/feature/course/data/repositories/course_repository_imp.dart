@@ -56,7 +56,7 @@ class CourseRepositoryImp extends CourseRepository {
   @override
   Future<ResponseEntity> getBlendedClass(int courseContentId) async {
     ResponseModel responseModel =
-        (await courseRemoteDataSource.getScriptDetailsAction(courseContentId));
+        (await courseRemoteDataSource.getBlendedClassAction(courseContentId));
     return ResponseModelToEntityMapper<BlendedClassDataEntity,
             BlendedClassDataModel>()
         .toEntityFromModel(responseModel,
