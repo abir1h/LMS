@@ -40,9 +40,10 @@ class _DiscussionListScreenState extends State<DiscussionListScreen>
                   : "0",
               time: controller.discussionList[index].createdAt!,
               onTap: () => Navigator.of(context).pushNamed(
-                  AppRoute.detailedDiscussion,
-                  arguments: DetailedDiscussionArgs(
-                      discussionModel: controller.discussionList[index])),
+                AppRoute.detailedDiscussion,
+                // arguments: DetailedDiscussionArgs(
+                //     discussionModel: controller.discussionList[index]),
+              ),
             );
           },
         );

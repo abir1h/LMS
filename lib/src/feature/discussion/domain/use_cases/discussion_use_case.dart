@@ -7,10 +7,10 @@ class DiscussionUseCase {
   DiscussionUseCase({required DiscussionRepository discussionRepository})
       : _discussionRepository = discussionRepository;
 
-  Future<ResponseEntity> getDiscussionsByContentUseCase(
-      int contentId, String contentType) async {
-    final response =
-        _discussionRepository.getDiscussionsByContent(contentId, contentType);
+  Future<ResponseEntity> getDiscussionsByContentUseCase(int courseId,
+      int courseModuleId, int contentId, String contentType) async {
+    final response = _discussionRepository.getDiscussionsByContent(
+        courseId, courseModuleId, contentId, contentType);
     return response;
   }
 
@@ -20,9 +20,13 @@ class DiscussionUseCase {
   }
 
   Future<ResponseEntity> createDiscussionUseCase(
-      DiscussionDataEntity discussionDataEntity) async {
-    final response =
-        _discussionRepository.createDiscussion(discussionDataEntity);
+      int courseId,
+      int courseModuleId,
+      int contentId,
+      String contentType,
+      String description) async {
+    final response = _discussionRepository.createDiscussion(
+        courseId, courseModuleId, contentId, contentType, description);
     return response;
   }
 
@@ -40,6 +44,13 @@ class DiscussionUseCase {
 
   Future<ResponseEntity> getDiscussionCommentsUseCase(int discussionId) async {
     final response = _discussionRepository.getDiscussionComments(discussionId);
+    return response;
+  }
+
+  Future<ResponseEntity> createCommentUseCase(
+      int discussionId, String description) async {
+    final response =
+        _discussionRepository.createComment(discussionId, description);
     return response;
   }
 }

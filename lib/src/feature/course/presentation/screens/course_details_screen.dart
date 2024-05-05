@@ -175,10 +175,11 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
                       padding: EdgeInsets.symmetric(horizontal: size.w16),
                     ),
                     SizedBox(height: size.h8),
-                    SupportingDocWidget(
-                      docTitle: data.supportingDoc.split("/")[1],
-                      onTap: () {},
-                    ),
+                    if (data.supportingDoc.isNotEmpty)
+                      SupportingDocWidget(
+                        docTitle: data.supportingDoc.split("/")[1],
+                        onTap: () {},
+                      ),
                     // SupportingTextItemSection(
                     //     items: const ["", ""],
                     //     buildItem: (BuildContext context, int index, item) {
@@ -208,7 +209,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
                           return ChapterWidget(
                             chapterTitle: label(e: item.nameEn, b: item.nameBn),
                             chapterCode: label(e: item.code, b: item.code),
-                            chapterType: ChapterType.open,
+                            isLocked: item.isLocked,
                             items: item.courseContents!,
                             buildItem: (BuildContext context, int index, item) {
                               return CourseContentWidget(
@@ -220,6 +221,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
                                     onTapCourseAssessment(item.contentId),
                                 onTapScript: () => onTapScript(
                                     courseContentId: item.contentId,
+                                    courseContentType: item.contentType,
                                     courseCode: data.code,
                                     courseDescriptionEn: data.longDescEn,
                                     courseDescriptionBn: data.longDescBn),
@@ -305,11 +307,16 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
   }
 
   @override
-  void navigateToCourseScriptScreen(int courseContentId, String courseCode,
-      String courseDescriptionEn, String courseDescriptionBn) {
+  void navigateToCourseScriptScreen(
+      int courseContentId,
+      String courseContentType,
+      String courseCode,
+      String courseDescriptionEn,
+      String courseDescriptionBn) {
     Navigator.of(context).pushNamed(AppRoute.courseScriptScreen,
         arguments: CourseScriptScreenArgs(
             courseContentId: courseContentId,
+            courseContentType: courseContentType,
             courseCode: courseCode,
             courseDescriptionEn: courseDescriptionEn,
             courseDescriptionBn: courseDescriptionBn));

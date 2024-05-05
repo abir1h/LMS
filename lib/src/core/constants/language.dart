@@ -150,6 +150,13 @@ class LanguageEn {
   String getStarted = "Get Started";
 
   String assignment = "Assignment";
+  String assignmentIns = "Assignment Instructions";
+  String allInfo = "All information";
+  String duration = "Duration";
+  String assignmentType = "Assignment Type";
+  String submissionType = "Submission Type";
+  String totalMark = "Total Mark";
+  String passMark = "Pass Mark";
   String assignmentInstruction =
       "Please look at the picture below and answer the following questions.";
   String answerTheFollowingQuestions = "Answer the following questions.";
@@ -158,6 +165,7 @@ class LanguageEn {
   String or = "Or";
   String submit = "Submit";
   String saveAsDraft = "Save As Draft";
+  String enter = "Enter";
 
   String assessment = "Assessment";
   String instructions = "Instructions";
@@ -308,6 +316,13 @@ class LanguageBn {
   String getStarted = "শুরু করুন";
 
   String assignment = "অ্যাসাইনমেন্ট";
+  String assignmentIns = "অ্যাসাইনমেন্টের নির্দেশাবলী";
+  String allInfo = "যাবতীয় তথ্যাবলি";
+  String duration = "সময়কাল";
+  String assignmentType = "এসাইনমেন্ট টাইপ";
+  String submissionType = "সাবমিশন টাইপ";
+  String totalMark = "সর্বমোট মার্ক";
+  String passMark = "পাস মার্ক";
   String assignmentInstruction =
       "অনুগ্রহ করে নিচের ছবিটি দেখুন এবং নিম্নলিখিত প্রশ্নের উত্তর দিন।";
   String answerTheFollowingQuestions = "নিচের প্রশ্নগুলোর উত্তর দিন.";
@@ -316,6 +331,7 @@ class LanguageBn {
   String or = "অথবা";
   String submit = "জমা দিন";
   String saveAsDraft = "সেভ এস ড্রাফট";
+  String enter = "প্রবেশ করুন";
 
   String assessment = "মূল্যায়ন";
   String instructions = "নির্দেশাবলী";

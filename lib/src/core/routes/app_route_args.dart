@@ -31,11 +31,13 @@ class CourseDetailsScreenArgs {
 
 class CourseScriptScreenArgs {
   final int courseContentId;
+  final String courseContentType;
   final String courseCode;
   final String courseDescriptionEn;
   final String courseDescriptionBn;
   CourseScriptScreenArgs({
     required this.courseContentId,
+    required this.courseContentType,
     required this.courseCode,
     required this.courseDescriptionEn,
     required this.courseDescriptionBn,
@@ -62,11 +64,16 @@ class AssignmentSubmitScreenArgs {
 }
 
 class DetailedDiscussionArgs {
-  final DiscussionModel? discussionModel;
-  DetailedDiscussionArgs({this.discussionModel});
+  final int discussionId;
+  DetailedDiscussionArgs({required this.discussionId});
 }
 
 class NoteDetailsScreenArgs {
   final NoteModel? noteModel;
   NoteDetailsScreenArgs({this.noteModel});
+}
+
+class CircularDetailsScreenArgs {
+  final int circularId;
+  CircularDetailsScreenArgs({required this.circularId});
 }

@@ -1,6 +1,4 @@
-import 'package:flutter/foundation.dart';
-
-import 'user_data_model.dart';
+import 'package:flutter/material.dart';
 
 @immutable
 class CommentDataModel {
@@ -8,22 +6,28 @@ class CommentDataModel {
   final int discussionId;
   final String description;
   final String attachment;
+  final int vote;
   final int createdBy;
   final int status;
   final String createdAt;
   final String updatedAt;
-  final UserDataModel? user;
+  final bool hasRestriction;
+  final String restrictedBy;
+  final String restrictionRemarks;
 
   const CommentDataModel({
     required this.id,
     required this.discussionId,
     required this.description,
     required this.attachment,
+    required this.vote,
     required this.createdBy,
     required this.status,
     required this.createdAt,
     required this.updatedAt,
-    this.user,
+    required this.hasRestriction,
+    required this.restrictedBy,
+    required this.restrictionRemarks,
   });
 
   factory CommentDataModel.fromJson(Map<String, dynamic> json) =>
@@ -32,12 +36,14 @@ class CommentDataModel {
         discussionId: json["discussion_id"] ?? -1,
         description: json["description"] ?? "",
         attachment: json["attachment"] ?? "",
+        vote: json["vote"] ?? -1,
         createdBy: json["created_by"] ?? -1,
         status: json["status"] ?? -1,
         createdAt: json["created_at"] ?? "",
         updatedAt: json["updated_at"] ?? "",
-        user:
-            json['user'] != null ? UserDataModel.fromJson(json['user']) : null,
+        hasRestriction: json["has_restriction"] ?? false,
+        restrictedBy: json["restricted_by"] ?? "",
+        restrictionRemarks: json["restriction_remarks"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {
@@ -45,17 +51,13 @@ class CommentDataModel {
         "discussion_id": discussionId,
         "description": description,
         "attachment": attachment,
+        "vote": vote,
         "created_by": createdBy,
         "status": status,
         "created_at": createdAt,
         "updated_at": updatedAt,
-        "user": user!.toJson(),
+        "has_restriction": hasRestriction,
+        "restricted_by": restrictedBy,
+        "restriction_remarks": restrictionRemarks,
       };
-
-  static List<CommentDataModel> listFromJson(List<dynamic> json) {
-    return json.isNotEmpty
-        ? List.castFrom<dynamic, CommentDataModel>(
-            json.map((x) => CommentDataModel.fromJson(x)).toList())
-        : [];
-  }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:lms/src/feature/course/data/models/trainer_data_model.dart';
 
+import 'trainer_data_model.dart';
 import 'blended_course_data_model.dart';
 
 @immutable
@@ -23,6 +23,7 @@ class BlendedClassDataModel {
   final String meetingLink;
   final String videoUrl;
   final String transcript;
+  final List<BlendedCourseDataModel>? workstations;
   final BlendedCourseDataModel? course;
   final BlendedCourseDataModel? courseModule;
   final TrainerDataModel? trainer;
@@ -46,6 +47,7 @@ class BlendedClassDataModel {
     required this.meetingLink,
     required this.videoUrl,
     required this.transcript,
+    required this.workstations,
     required this.course,
     required this.courseModule,
     required this.trainer,
@@ -71,6 +73,10 @@ class BlendedClassDataModel {
         meetingLink: json["meeting_link"] ?? "",
         videoUrl: json["video_url"] ?? "",
         transcript: json["transcript"] ?? "",
+        workstations: json["workstations"] != null
+            ? List<BlendedCourseDataModel>.from((json["workstations"])
+                .map((x) => BlendedCourseDataModel.fromJson(x)))
+            : [],
         course: json['course'] != null
             ? BlendedCourseDataModel.fromJson(json['course'])
             : null,
@@ -101,9 +107,10 @@ class BlendedClassDataModel {
         "meeting_link": meetingLink,
         "video_url": videoUrl,
         "transcript": transcript,
+        "workstations": List<BlendedCourseDataModel>.from(
+            workstations!.map((x) => x.toJson())),
         "course": course?.toJson(),
         "course_module": courseModule?.toJson(),
         "trainer": trainer?.toJson(),
       };
 }
-

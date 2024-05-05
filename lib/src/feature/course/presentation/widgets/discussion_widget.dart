@@ -1,84 +1,148 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
+import '../../../../core/common_widgets/app_stream.dart';
+import '../../../../core/common_widgets/circuler_widget.dart';
+import '../../../../core/common_widgets/custom_empty_widget.dart';
+import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/routes/app_route.dart';
+import '../../../discussion/domain/entities/discussion_data_entity.dart';
 import '../../../discussion/presentation/controller/discussion_controller.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../discussion/presentation/screens/discussion_bottom_sheet.dart';
+import '../services/course_discussion_service.dart';
 
 class DiscussionWidget extends StatefulWidget {
+  final int courseId;
+  final int courseModuleId;
+  final int contentId;
+  final String contentType;
   final ScrollPhysics? physics;
-  const DiscussionWidget({super.key, this.physics});
+  const DiscussionWidget({
+    super.key,
+    required this.courseId,
+    required this.courseModuleId,
+    required this.contentId,
+    required this.contentType,
+    this.physics,
+  });
 
   @override
   State<DiscussionWidget> createState() => _DiscussionWidgetState();
 }
 
 class _DiscussionWidgetState extends State<DiscussionWidget>
-    with AppTheme, Language {
-  final controller = Get.put(DiscussionController());
+    with AppTheme, Language, CourseDiscussionWidgetService {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      loadDiscussionList(widget.courseId, widget.courseModuleId,
+          widget.contentId, widget.contentType);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<DiscussionController>(builder: (_) {
-      return Stack(
-        children: [
-          ListView.builder(
-            shrinkWrap: true,
-            itemCount: controller.discussionList.length,
-            physics: widget.physics ?? const BouncingScrollPhysics(),
-            padding: EdgeInsets.only(bottom: size.h64 * 2),
-            itemBuilder: (_, index) {
-              return DiscussionWidgetTile(
-                title: controller.discussionList[index].title!,
-                totalDiscussion:
-                    controller.discussionList[index].comments != null
-                        ? controller.discussionList[index].comments!.length
-                            .toString()
-                        : "0",
-                time: controller.discussionList[index].createdAt!,
-                onTap: () => Navigator.of(context).pushNamed(
-                    AppRoute.detailedDiscussion,
-                    arguments: DetailedDiscussionArgs(
-                        discussionModel: controller.discussionList[index])),
-              );
-            },
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: CustomButton(
-              onTap: onTapCreateDiscussion,
-              icon: Icons.add_comment,
-              radius: 0.0,
-              title: label(e: en.newDiscussion, b: bn.newDiscussion),
-            ),
-          )
-        ],
-      );
-    });
+    return AppStreamBuilder<List<DiscussionDataEntity>>(
+      stream: discussionDataStreamController.stream,
+      loadingBuilder: (context) {
+        return const Center(child: CircularLoader());
+      },
+      dataBuilder: (context, data) {
+        return Stack(
+          children: [
+            DiscussionItemSectionWidget(
+                items: data,
+                buildItem: (BuildContext context, int index, item) {
+                  return DiscussionWidgetTile(
+                    data: item,
+                    onTap: () => onTapCourse(item.id),
+                  );
+                }),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: CustomButton(
+                onTap: onTapCreateDiscussion,
+                icon: Icons.add_comment,
+                radius: 0.0,
+                title: label(e: en.newDiscussion, b: bn.newDiscussion),
+              ),
+            )
+          ],
+        );
+      },
+      emptyBuilder: (context, message, icon) => CustomEmptyWidget(
+        message: message,
+        // constraints: constraints,
+        // offset: 350.w,
+      ),
+    );
   }
 
   void onTapCreateDiscussion() {
     showCupertinoModalPopup(
       context: context,
-      builder: (context) => const DiscussionBottomSheet(),
+      builder: (context) => DiscussionBottomSheet(
+        courseId: widget.courseId,
+        courseModuleId: widget.courseModuleId,
+        contentId: widget.contentId,
+        contentType: widget.contentType,
+        onSuccess: () {
+          Navigator.of(context).pop();
+          loadDiscussionList(widget.courseId, widget.courseModuleId,
+              widget.contentId, widget.contentType);
+        },
+      ),
+    );
+  }
+
+  @override
+  void showWarning(String message) {
+    CustomToasty.of(context).showWarning(message);
+  }
+
+  @override
+  void navigateToDetailedDiscussionScreen(int discussionId) {
+    Navigator.of(context).pushNamed(
+      AppRoute.detailedDiscussion,
+      arguments: DetailedDiscussionArgs(discussionId: discussionId),
+    );
+  }
+}
+
+class DiscussionItemSectionWidget<T> extends StatelessWidget with AppTheme {
+  final ScrollPhysics? physics;
+  final List<T> items;
+  final Widget Function(BuildContext context, int index, T item) buildItem;
+  const DiscussionItemSectionWidget(
+      {super.key, this.physics, required this.items, required this.buildItem});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: items.length,
+      physics: physics ?? const BouncingScrollPhysics(),
+      padding: EdgeInsets.only(bottom: size.h64 * 2),
+      itemBuilder: (context, index) {
+        return buildItem(context, index, items[index]);
+      },
     );
   }
 }
 
 class DiscussionWidgetTile extends StatelessWidget with AppTheme {
-  final String title;
-  final String totalDiscussion;
-  final String time;
+  final DiscussionDataEntity data;
   final VoidCallback? onTap;
   const DiscussionWidgetTile({
     super.key,
-    required this.title,
-    required this.totalDiscussion,
-    required this.time,
+    required this.data,
     this.onTap,
   });
 
@@ -107,7 +171,7 @@ class DiscussionWidgetTile extends StatelessWidget with AppTheme {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    title,
+                    label(e: data.description, b: data.description),
                     style: TextStyle(
                         color: clr.textColorAppleBlack,
                         fontSize: size.textSmall,
@@ -131,15 +195,18 @@ class DiscussionWidgetTile extends StatelessWidget with AppTheme {
                                 fontWeight: FontWeight.w500,
                                 fontFamily: StringData.fontFamilyPoppins),
                             TextSpan(
-                                text: label(
-                                    e: "মোট $totalDiscussion টি",
-                                    b: "মোট $totalDiscussion টি"),
+                                text: label(e: "Total 1", b: "মোট 1 টি"),
                                 children: [
                                   const TextSpan(
                                     text: " | ",
                                   ),
                                   TextSpan(
-                                    text: "তারিখ: $time",
+                                    text: label(
+                                        e: DateFormat('dd MMMM yyyy').format(
+                                            DateTime.parse(data.createdAt)),
+                                        b: DateFormat('dd MMMM yyyy').format(
+                                            DateTime.parse(data.createdAt))),
+                                    // text: "তারিখ: $time",
                                   ),
                                 ])),
                       ),

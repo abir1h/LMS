@@ -20,6 +20,7 @@ class BlendedClassDataEntity {
   final String meetingLink;
   final String videoUrl;
   final String transcript;
+  final List<BlendedCourseDataEntity>? workstations;
   final BlendedCourseDataEntity? course;
   final BlendedCourseDataEntity? courseModule;
   final TrainerDataEntity? trainer;
@@ -43,6 +44,7 @@ class BlendedClassDataEntity {
     required this.meetingLink,
     required this.videoUrl,
     required this.transcript,
+    required this.workstations,
     required this.course,
     required this.courseModule,
     required this.trainer,

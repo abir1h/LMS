@@ -1,3 +1,5 @@
+import 'package:lms/src/feature/assignment/data/mapper/sub_assignment_data_mapper.dart';
+
 import '../../domain/entities/assignment_data_entity.dart';
 import '../models/assignment_data_model.dart';
 
@@ -13,24 +15,25 @@ class AssignmentDataModelToEntityMapper
     return AssignmentDataModel(
         id: entity.id,
         courseId: entity.courseId,
+        circularId: entity.circularId,
         courseModuleId: entity.courseModuleId,
         titleEn: entity.titleEn,
         titleBn: entity.titleBn,
         mark: entity.mark,
         passMark: entity.passMark,
         totalTime: entity.totalTime,
+        submissionType: entity.submissionType,
+        extendedDueDate: entity.extendedDueDate,
         assignmentStartTime: entity.assignmentStartTime,
         assignmentEndTime: entity.assignmentEndTime,
-        extendedDueDate: entity.extendedDueDate,
+        descriptionEn: entity.descriptionEn,
+        descriptionBn: entity.descriptionBn,
         instructionsEn: entity.instructionsEn,
         instructionsBn: entity.instructionsBn,
+        type: entity.type,
         supportingDoc: entity.supportingDoc,
-        submissionType: entity.submissionType,
-        isGroupAssignments: entity.isGroupAssignments,
-        status: entity.status,
-        createdAt: entity.createdAt,
-        updatedAt: entity.updatedAt,
-        deletedAt: entity.deletedAt);
+        circularSubAssignments:
+            entity.circularSubAssignments?.toSubAssignmentDataModel);
   }
 
   @override
@@ -38,24 +41,25 @@ class AssignmentDataModelToEntityMapper
     return AssignmentDataEntity(
         id: model.id,
         courseId: model.courseId,
+        circularId: model.circularId,
         courseModuleId: model.courseModuleId,
         titleEn: model.titleEn,
         titleBn: model.titleBn,
         mark: model.mark,
         passMark: model.passMark,
         totalTime: model.totalTime,
+        submissionType: model.submissionType,
+        extendedDueDate: model.extendedDueDate,
         assignmentStartTime: model.assignmentStartTime,
         assignmentEndTime: model.assignmentEndTime,
-        extendedDueDate: model.extendedDueDate,
+        descriptionEn: model.descriptionEn,
+        descriptionBn: model.descriptionBn,
         instructionsEn: model.instructionsEn,
         instructionsBn: model.instructionsBn,
+        type: model.type,
         supportingDoc: model.supportingDoc,
-        submissionType: model.submissionType,
-        isGroupAssignments: model.isGroupAssignments,
-        status: model.status,
-        createdAt: model.createdAt,
-        updatedAt: model.updatedAt,
-        deletedAt: model.deletedAt);
+        circularSubAssignments:
+            model.circularSubAssignments?.toSubAssignmentDataEntity);
   }
 }
 

@@ -18,10 +18,11 @@ class DiscussionRepositoryImp extends DiscussionRepository {
   DiscussionRepositoryImp({required this.discussionRemoteDataSource});
 
   @override
-  Future<ResponseEntity> getDiscussionsByContent(
-      int contentId, String contentType) async {
-    ResponseModel responseModel = (await discussionRemoteDataSource
-        .getDiscussionsByContentAction(contentId, contentType));
+  Future<ResponseEntity> getDiscussionsByContent(int courseId,
+      int courseModuleId, int contentId, String contentType) async {
+    ResponseModel responseModel =
+        (await discussionRemoteDataSource.getDiscussionsByContentAction(
+            courseId, courseModuleId, contentId, contentType));
     return ResponseModelToEntityMapper<List<DiscussionDataEntity>,
             List<DiscussionDataModel>>()
         .toEntityFromModel(
@@ -43,10 +44,11 @@ class DiscussionRepositoryImp extends DiscussionRepository {
   }
 
   @override
-  Future<ResponseEntity> createDiscussion(
-      DiscussionDataEntity discussionDataEntity) async {
-    ResponseModel responseModel = (await discussionRemoteDataSource
-        .createDiscussionAction(discussionDataEntity.toDiscussionDataModel));
+  Future<ResponseEntity> createDiscussion(int courseId, int courseModuleId,
+      int contentId, String contentType, String description) async {
+    ResponseModel responseModel =
+        (await discussionRemoteDataSource.createDiscussionAction(
+            courseId, courseModuleId, contentId, contentType, description));
     return ResponseModelToEntityMapper<DiscussionDataEntity,
             DiscussionDataModel>()
         .toEntityFromModel(responseModel,
@@ -88,9 +90,9 @@ class DiscussionRepositoryImp extends DiscussionRepository {
 
   @override
   Future<ResponseEntity> createComment(
-      CommentDataEntity commentDataEntity) async {
+      int discussionId, String description) async {
     ResponseModel responseModel = (await discussionRemoteDataSource
-        .createCommentAction(commentDataEntity.toCommentDataModel));
+        .createCommentAction(discussionId, description));
     return ResponseModelToEntityMapper<CommentDataEntity, CommentDataModel>()
         .toEntityFromModel(responseModel,
             (CommentDataModel model) => model.toCommentDataEntity);

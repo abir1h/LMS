@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
 import '../services/auth_service.dart';
 import '../../../../core/routes/app_route.dart';
@@ -9,7 +8,6 @@ import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/custom_switch_button.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
-import '../controllers/authentication_controller.dart';
 
 class AuthenticationScreen extends StatefulWidget {
   const AuthenticationScreen({super.key});
@@ -20,29 +18,6 @@ class AuthenticationScreen extends StatefulWidget {
 
 class _AuthenticationScreenState extends State<AuthenticationScreen>
     with AppTheme, Language {
-  final AuthenticationController authenticationController =
-      Get.find<AuthenticationController>();
-
-  final _formKey = GlobalKey<FormState>();
-
-  _sendAuthRequest() {
-    if (authenticationController.userIdFocusNode.hasFocus) {
-      authenticationController.userIdFocusNode.unfocus();
-    }
-    if (authenticationController.passFocusNode.hasFocus) {
-      authenticationController.passFocusNode.unfocus();
-    }
-    if (_formKey.currentState!.validate()) {
-      if (authenticationController.userIdEditingController.text.isNotEmpty &&
-          authenticationController.passwordEditingController.text.isNotEmpty) {
-        authenticationController.loginUserAccount(
-          authenticationController.userIdEditingController.text,
-          authenticationController.passwordEditingController.text,
-        );
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

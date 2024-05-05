@@ -12,6 +12,9 @@ import '../../../../core/constants/common_imports.dart';
 import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
 import '../../domain/entities/script_data_entity.dart';
 import '../services/course_script_screen_service.dart';
+import '../widgets/chapter_details_widget.dart';
+import '../widgets/discussion_widget.dart';
+import '../widgets/note_widget.dart';
 import '../widgets/sliver_tab_section_widget.dart';
 
 class CourseScriptScreen extends StatefulWidget {
@@ -49,9 +52,18 @@ class _CourseScriptScreenState extends State<CourseScriptScreen>
           },
           dataBuilder: (context, data) {
             return SliverTabSectionWidget(
-              description: label(
-                  e: _screenArgs.courseDescriptionEn,
-                  b: _screenArgs.courseDescriptionBn),
+              tabBarItem1: ChapterDetailsWidget(
+                  description: label(
+                      e: _screenArgs.courseDescriptionEn,
+                      b: _screenArgs.courseDescriptionBn)),
+              tabBarItem2:
+                  const NoteWidget(physics: NeverScrollableScrollPhysics()),
+              tabBarItem3: DiscussionWidget(
+                  courseId: data.courseId,
+                  courseModuleId: data.courseModuleId,
+                  contentId: _screenArgs.courseContentId,
+                  contentType: _screenArgs.courseContentType,
+                  physics: const NeverScrollableScrollPhysics()),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

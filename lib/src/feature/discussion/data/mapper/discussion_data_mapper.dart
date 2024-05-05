@@ -1,6 +1,8 @@
-import 'user_data_mapper.dart';
-import '../../../notes/data/mapper/content_data_mapper.dart';
+import 'package:lms/src/feature/discussion/data/mapper/comment_data_mapper.dart';
+
+import '../../domain/entities/comment_data_entity.dart';
 import '../../domain/entities/discussion_data_entity.dart';
+import '../models/comment_data_model.dart';
 import '../models/discussion_data_model.dart';
 
 abstract class DiscussionDataMapper<M, E> {
@@ -13,35 +15,59 @@ class _DiscussionDataModelToEntityMapper
   @override
   DiscussionDataModel fromEntityToModel(DiscussionDataEntity entity) {
     return DiscussionDataModel(
-        id: entity.id,
-        courseModuleId: entity.courseModuleId,
-        contentType: entity.contentType,
-        contentId: entity.contentId,
-        description: entity.description,
-        attachment: entity.attachment,
-        createdBy: entity.createdBy,
-        status: entity.status,
-        createdAt: entity.createdAt,
-        updatedAt: entity.updatedAt,
-        content: entity.content.toContentDataModel,
-        user: entity.user.toUserDataModel);
+      id: entity.id,
+      courseModuleId: entity.courseModuleId,
+      contentType: entity.contentType,
+      contentId: entity.contentId,
+      description: entity.description,
+      attachment: entity.attachment,
+      vote: entity.vote,
+      createdBy: entity.createdBy,
+      status: entity.status,
+      createdAt: entity.createdAt,
+      updatedAt: entity.updatedAt,
+      courseId: entity.courseId,
+      report: entity.report,
+      hasRestriction: entity.hasRestriction,
+      restrictedBy: entity.restrictedBy,
+      restrictionRemarks: entity.restrictionRemarks,
+      isDeleted: entity.isDeleted,
+      cid: entity.cid,
+      titleEn: entity.titleEn,
+      titleBn: entity.titleBn,
+      comments: List<CommentDataEntity>.from(entity.comments)
+          .map((entity) => entity.toCommentDataModel)
+          .toList(),
+    );
   }
 
   @override
   DiscussionDataEntity toEntityFromModel(DiscussionDataModel model) {
     return DiscussionDataEntity(
-        id: model.id,
-        courseModuleId: model.courseModuleId,
-        contentType: model.contentType,
-        contentId: model.contentId,
-        description: model.description,
-        attachment: model.attachment,
-        createdBy: model.createdBy,
-        status: model.status,
-        createdAt: model.createdAt,
-        updatedAt: model.updatedAt,
-        content: model.content!.toContentDataEntity,
-        user: model.user!.toUserDataEntity);
+      id: model.id,
+      courseModuleId: model.courseModuleId,
+      contentType: model.contentType,
+      contentId: model.contentId,
+      description: model.description,
+      attachment: model.attachment,
+      vote: model.vote,
+      createdBy: model.createdBy,
+      status: model.status,
+      createdAt: model.createdAt,
+      updatedAt: model.updatedAt,
+      courseId: model.courseId,
+      report: model.report,
+      hasRestriction: model.hasRestriction,
+      restrictedBy: model.restrictedBy,
+      restrictionRemarks: model.restrictionRemarks,
+      isDeleted: model.isDeleted,
+      cid: model.cid,
+      titleEn: model.titleEn,
+      titleBn: model.titleBn,
+      comments: List<CommentDataModel>.from(model.comments!)
+          .map((entity) => entity.toCommentDataEntity)
+          .toList(),
+    );
   }
 }
 

@@ -42,6 +42,7 @@ class _DiscussionScreenState extends State<DiscussionScreen>
                   arguments: CourseScriptScreenArgs(
                       courseContentId: 2,
                       courseCode: "courseCode",
+                      courseContentType: "",
                       courseDescriptionEn: "courseDescriptionEn",
                       courseDescriptionBn: "courseDescriptionBn")),
             ),

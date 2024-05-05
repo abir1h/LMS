@@ -16,11 +16,14 @@ class _CommentDataModelToEntityMapper
         discussionId: entity.discussionId,
         description: entity.description,
         attachment: entity.attachment,
+        vote: entity.vote,
         createdBy: entity.createdBy,
         status: entity.status,
         createdAt: entity.createdAt,
         updatedAt: entity.updatedAt,
-        user: entity.user.toUserDataModel);
+        hasRestriction: entity.hasRestriction,
+        restrictedBy: entity.restrictedBy,
+        restrictionRemarks: entity.restrictionRemarks);
   }
 
   @override
@@ -30,11 +33,14 @@ class _CommentDataModelToEntityMapper
         discussionId: model.discussionId,
         description: model.description,
         attachment: model.attachment,
+        vote: model.vote,
         createdBy: model.createdBy,
         status: model.status,
         createdAt: model.createdAt,
         updatedAt: model.updatedAt,
-        user: model.user!.toUserDataEntity);
+        hasRestriction: model.hasRestriction,
+        restrictedBy: model.restrictedBy,
+        restrictionRemarks: model.restrictionRemarks);
   }
 }
 

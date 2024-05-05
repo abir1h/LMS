@@ -8,15 +8,20 @@ import 'note_widget.dart';
 
 class SliverTabSectionWidget extends StatefulWidget {
   final String? tabTitle1, tabTitle2, tabTitle3;
-  final String? description;
   final Widget? child;
+  final Widget tabBarItem1;
+  final Widget tabBarItem2;
+  final Widget tabBarItem3;
+
   const SliverTabSectionWidget({
     super.key,
     this.tabTitle1,
     this.tabTitle2,
     this.tabTitle3,
-    this.description,
     this.child,
+    required this.tabBarItem1,
+    required this.tabBarItem2,
+    required this.tabBarItem3,
   });
 
   @override
@@ -84,9 +89,9 @@ class _SliverTabSectionWidgetState extends State<SliverTabSectionWidget>
             controller: _tabController,
             physics: const NeverScrollableScrollPhysics(),
             children: [
-              ChapterDetailsWidget(description: widget.description.toString()),
-              const NoteWidget(physics: NeverScrollableScrollPhysics()),
-              const DiscussionWidget(physics: NeverScrollableScrollPhysics()),
+              widget.tabBarItem1,
+              widget.tabBarItem2,
+              widget.tabBarItem3,
             ],
           ),
         ),

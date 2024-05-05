@@ -117,7 +117,7 @@ mixin RouteGenerator {
           case AppRoute.circularScreen:
             return const CircularScreen();
           case AppRoute.circularDetailsScreen:
-            return const CircularDetailsScreen();
+            return CircularDetailsScreen(arguments: setting.arguments);
 
           default:
             return const SplashScreen();

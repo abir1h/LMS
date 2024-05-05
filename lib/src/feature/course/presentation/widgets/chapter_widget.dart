@@ -20,14 +20,14 @@ import '../../../../core/constants/common_imports.dart';
 class ChapterWidget<T> extends StatefulWidget {
   final String chapterTitle;
   final String chapterCode;
-  final ChapterType chapterType;
+  final bool isLocked;
   final List<T> items;
   final Widget Function(BuildContext context, int index, T item) buildItem;
   const ChapterWidget(
       {super.key,
       required this.chapterTitle,
       required this.chapterCode,
-      this.chapterType = ChapterType.lock,
+      required this.isLocked,
       required this.items,
       required this.buildItem});
 
@@ -55,7 +55,7 @@ class _ChapterWidgetState<T> extends State<ChapterWidget<T>>
       children: [
         GestureDetector(
           onTap: () {
-            if (widget.chapterType != ChapterType.lock) {
+            if (!widget.isLocked) {
               _toggle();
             }
           },
@@ -76,19 +76,19 @@ class _ChapterWidgetState<T> extends State<ChapterWidget<T>>
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                if (widget.chapterType == ChapterType.done)
-                  Icon(
-                    Icons.check_circle,
-                    color: clr.appPrimaryColorGreen,
-                    size: size.r20,
-                  ),
-                if (widget.chapterType == ChapterType.open)
+                // if (!widget.isLocked)
+                //   Icon(
+                //     Icons.check_circle,
+                //     color: clr.appPrimaryColorGreen,
+                //     size: size.r20,
+                //   ),
+                if (!widget.isLocked)
                   SvgPicture.asset(
                     ImageAssets.icLockOpenRight,
                     colorFilter: ColorFilter.mode(
                         clr.appPrimaryColorGreen, BlendMode.srcIn),
                   ),
-                if (widget.chapterType == ChapterType.lock)
+                if (widget.isLocked)
                   Icon(
                     Icons.lock,
                     color: clr.textColorBlack,
@@ -623,5 +623,3 @@ class _ChapterWidgetState<T> extends State<ChapterWidget<T>>
     );
   }
 }
-
-enum ChapterType { done, open, lock }

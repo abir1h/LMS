@@ -7,25 +7,26 @@ import '../../models/discussion_data_model.dart';
 
 abstract class DiscussionRemoteDataSource {
   Future<ResponseModel> getDiscussionsByContentAction(
-      int contentId, String contentType);
+      int courseId, int courseModuleId, int contentId, String contentType);
   Future<ResponseModel> getDiscussionDetailsAction(int discussionId);
-  Future<ResponseModel> createDiscussionAction(
-      DiscussionDataModel discussionDataModel);
+  Future<ResponseModel> createDiscussionAction(int courseId, int courseModuleId,
+      int contentId, String contentType, String description);
   Future<ResponseModel> updateDiscussionAction(
       DiscussionDataModel discussionDataModel);
   Future<ResponseModel> deleteDiscussionAction(int discussionId);
   Future<ResponseModel> getDiscussionCommentsAction(int discussionId);
-  Future<ResponseModel> createCommentAction(CommentDataModel commentDataModel);
+  Future<ResponseModel> createCommentAction(
+      int discussionId, String description);
   Future<ResponseModel> updateCommentAction(CommentDataModel commentDataModel);
 }
 
 class DiscussionRemoteDataSourceImp extends DiscussionRemoteDataSource {
   @override
-  Future<ResponseModel> getDiscussionsByContentAction(
-      int contentId, String contentType) async {
+  Future<ResponseModel> getDiscussionsByContentAction(int courseId,
+      int courseModuleId, int contentId, String contentType) async {
     final responseJson = await Server.instance.getRequest(
         url:
-            "${ApiCredential.getDiscussion}?content_id=$contentId&content_type=$contentType");
+            "${ApiCredential.getDiscussion}?course_id=$courseId&course_module_id=$courseModuleId&content_id=$contentId&content_type=$contentType");
     ResponseModel responseModel = ResponseModel.fromJson(
         responseJson, (dynamic json) => DiscussionDataModel.listFromJson(json));
     return responseModel;
@@ -34,18 +35,24 @@ class DiscussionRemoteDataSourceImp extends DiscussionRemoteDataSource {
   @override
   Future<ResponseModel> getDiscussionDetailsAction(int discussionId) async {
     final responseJson = await Server.instance
-        .getRequest(url: "${ApiCredential.getDiscussion}/$discussionId");
+        .getRequest(url: "${ApiCredential.getDiscussionDetails}/$discussionId");
     ResponseModel responseModel = ResponseModel.fromJson(
         responseJson, (dynamic json) => DiscussionDataModel.fromJson(json));
     return responseModel;
   }
 
   @override
-  Future<ResponseModel> createDiscussionAction(
-      DiscussionDataModel discussionDataModel) async {
-    final responseJson = await Server.instance.postRequest(
-        url: ApiCredential.getDiscussion,
-        postData: discussionDataModel.toJson());
+  Future<ResponseModel> createDiscussionAction(int courseId, int courseModuleId,
+      int contentId, String contentType, String description) async {
+    Map<String, dynamic> data = {
+      "course_id": courseId,
+      "course_module_id": courseModuleId,
+      "content_id": contentId,
+      "content_type": contentType,
+      "description": description,
+    };
+    final responseJson = await Server.instance
+        .postRequest(url: ApiCredential.createDiscussion, postData: data);
     ResponseModel responseModel = ResponseModel.fromJson(
         responseJson, (dynamic json) => DiscussionDataModel.fromJson(json));
     return responseModel;
@@ -84,9 +91,13 @@ class DiscussionRemoteDataSourceImp extends DiscussionRemoteDataSource {
 
   @override
   Future<ResponseModel> createCommentAction(
-      CommentDataModel commentDataModel) async {
-    final responseJson = await Server.instance.postRequest(
-        url: ApiCredential.getComments, postData: commentDataModel.toJson());
+      int discussionId, String description) async {
+    Map<String, dynamic> data = {
+      "discussion_id": discussionId,
+      "description": description,
+    };
+    final responseJson = await Server.instance
+        .postRequest(url: ApiCredential.createComment, postData: data);
     ResponseModel responseModel = ResponseModel.fromJson(
         responseJson, (dynamic json) => CommentDataModel.fromJson(json));
     return responseModel;
@@ -98,7 +109,7 @@ class DiscussionRemoteDataSourceImp extends DiscussionRemoteDataSource {
     Map<String, dynamic> data = commentDataModel.toJson();
     data["_method"] = "PUT";
     final responseJson = await Server.instance.postRequest(
-        url: "${ApiCredential.getComments}/${commentDataModel.id}",
+        url: "${ApiCredential.createComment}/${commentDataModel.id}",
         postData: data);
     ResponseModel responseModel = ResponseModel.fromJson(
         responseJson, (dynamic json) => CommentDataModel.fromJson(json));

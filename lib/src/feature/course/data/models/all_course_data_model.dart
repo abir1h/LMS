@@ -36,9 +36,9 @@ class AllCourseDataModel {
       );
 
   Map<String, dynamic> toJson() => {
-        "courses": List<CourseDataModel>.from(courses.map((x) => x)),
+        "courses": List<CourseDataModel>.from(courses.map((x) => x.toJson())),
         "running": List<CourseDataModel>.from(running.map((x) => x.toJson())),
-        "upcoming": List<CourseDataModel>.from(upcoming.map((x) => x)),
+        "upcoming": List<CourseDataModel>.from(upcoming.map((x) => x.toJson())),
         "completed":
             List<CourseDataModel>.from(completed.map((x) => x.toJson())),
       };

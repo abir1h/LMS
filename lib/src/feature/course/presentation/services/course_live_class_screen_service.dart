@@ -70,7 +70,7 @@ mixin CourseLiveClassScreenService<T extends StatefulWidget> on State<T>
 
   void _onlineClassData(int courseContentId) {
     getBlendedDetails(courseContentId).then((value) {
-      if (_selectedTabIndex != 0) return;
+      if (_selectedTabIndex != 1) return;
       if (value.error == null && value.data != null) {
         stateDataStreamController
             .add(DataLoadedState<StateType>(OnlineClassDataState(value.data)));

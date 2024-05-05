@@ -1,22 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../models/discussion_model.dart';
-import '../../../../core/common_widgets/custom_button.dart';
-import '../../../../core/common_widgets/text_field_widget.dart';
+import '../../../../core/common_widgets/custom_action_button.dart';
+import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
 import '../controller/discussion_controller.dart';
+import '../services/discussion_bottomsheet_screen_service.dart';
 
 class DiscussionBottomSheet extends StatefulWidget {
-  const DiscussionBottomSheet({super.key});
+  final int courseId;
+  final int courseModuleId;
+  final int contentId;
+  final String contentType;
+  final VoidCallback onSuccess;
+  const DiscussionBottomSheet(
+      {super.key,
+      required this.courseId,
+      required this.courseModuleId,
+      required this.contentId,
+      required this.contentType,
+      required this.onSuccess});
 
   @override
   State<DiscussionBottomSheet> createState() => _DiscussionBottomSheetState();
 }
 
 class _DiscussionBottomSheetState extends State<DiscussionBottomSheet>
-    with AppTheme, Language {
+    with AppTheme, Language, DiscussionBottomSheetScreenService {
   TextEditingController titleController = TextEditingController();
   TextEditingController discussionController = TextEditingController();
   final controller = Get.put(DiscussionController());
@@ -59,12 +70,12 @@ class _DiscussionBottomSheetState extends State<DiscussionBottomSheet>
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    AppTextField(
+                    /*AppTextField(
                       hintText:
                           label(e: en.discussionTitle, b: bn.discussionTitle),
                       controller: titleController,
                     ),
-                    SizedBox(height: size.h8),
+                    SizedBox(height: size.h8),*/
                     TextField(
                       controller: discussionController,
                       minLines: 10,
@@ -98,29 +109,25 @@ class _DiscussionBottomSheetState extends State<DiscussionBottomSheet>
                       ),
                     ),
                     SizedBox(height: size.h16),
-                    CustomButton(
-                      onTap: () {
-                        if (titleController.text.isNotEmpty &&
-                            discussionController.text.isNotEmpty) {
-                          DiscussionModel saveDiscussion = DiscussionModel(
-                            discussionId: 1,
-                            title: titleController.text,
-                            description: discussionController.text,
-                            avatar: ImageAssets.imgEmptyProfile,
-                            comments: [],
-                            createdAt: "২০ নভেম্বর ২০২৩",
-                          );
-                          controller.addDiscussion(saveDiscussion);
-                        }
-                      },
+                    CustomActionButton(
                       title: label(
                           e: en.publishTheDiscussion,
                           b: bn.publishTheDiscussion),
-                      bgColor: (titleController.text.isNotEmpty &&
-                              discussionController.text.isNotEmpty)
+                      textSize: size.textSmall,
+                      radius: size.w10,
+                      buttonColor: discussionController.text.isNotEmpty
                           ? clr.appPrimaryColorGreen
                           : clr.placeHolderDeselectGray,
-                    )
+                      onSuccess: (e) {
+                        widget.onSuccess();
+                      },
+                      tapAction: () => onDiscussionCreate(
+                          courseId: widget.courseId,
+                          courseModuleId: widget.courseModuleId,
+                          contentId: widget.contentId,
+                          contentType: widget.contentType,
+                          description: discussionController.text.trim()),
+                    ),
                   ],
                 ),
               ),
@@ -129,5 +136,15 @@ class _DiscussionBottomSheetState extends State<DiscussionBottomSheet>
         }),
       ),
     );
+  }
+
+  @override
+  void showWarning(String message) {
+    CustomToasty.of(context).showWarning(message);
+  }
+
+  @override
+  void showSuccess(String message) {
+    CustomToasty.of(context).showSuccess(message);
   }
 }

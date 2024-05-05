@@ -1,3 +1,5 @@
+import '../../domain/entities/blended_course_data_entity.dart';
+import '../models/blended_course_data_model.dart';
 import 'blended_course_data_mapper.dart';
 import 'trainer_data_mapper.dart';
 
@@ -32,6 +34,9 @@ class BlendedClassDataModelToEntityMapper extends BlendedClassDataMapper<
         meetingLink: entity.meetingLink,
         videoUrl: entity.videoUrl,
         transcript: entity.transcript,
+        workstations: List<BlendedCourseDataEntity>.from(entity.workstations!)
+            .map((entity) => entity.toBlendedCourseDataModel)
+            .toList(),
         course: entity.course?.toBlendedCourseDataModel,
         courseModule: entity.courseModule?.toBlendedCourseDataModel,
         trainer: entity.trainer?.toTrainerDataModel);
@@ -58,6 +63,9 @@ class BlendedClassDataModelToEntityMapper extends BlendedClassDataMapper<
         meetingLink: model.meetingLink,
         videoUrl: model.videoUrl,
         transcript: model.transcript,
+        workstations: List<BlendedCourseDataModel>.from(model.workstations!)
+            .map((entity) => entity.toBlendedCourseDataEntity)
+            .toList(),
         course: model.course?.toBlendedCourseDataEntity,
         courseModule: model.courseModule?.toBlendedCourseDataEntity,
         trainer: model.trainer?.toTrainerDataEntity);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../../../core/common_widgets/circuler_widget.dart';
@@ -7,6 +8,7 @@ import '../../../../core/common_widgets/custom_empty_widget.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
+import '../../domain/entities/blended_class_data_entity.dart';
 import '../services/course_live_class_screen_service.dart';
 import '../widgets/sliver_tab_section_widget.dart';
 import '../../../../core/utility/app_label.dart';
@@ -73,7 +75,7 @@ class _CourseLiveClassScreenState extends State<CourseLiveClassScreen>
               padding: EdgeInsets.symmetric(
                   horizontal: size.w16, vertical: size.h16),
               child: Center(child: TypeSelectorTab(onSelected: (e) {
-                onTabValueChange(0, _screenArgs.courseContentId);
+                onTabValueChange(e, _screenArgs.courseContentId);
               })),
             ),
 
@@ -84,9 +86,9 @@ class _CourseLiveClassScreenState extends State<CourseLiveClassScreen>
               },
               dataBuilder: (context, data) {
                 if (data is InPersonClassDataState) {
-                  return InPersonClassWidget();
+                  return InPersonClassWidget(data: data.blendedClassDataEntity);
                 } else if (data is OnlineClassDataState) {
-                  return OnlineClassWidget();
+                  return OnlineClassWidget(data: data.blendedClassDataEntity);
                 } else {
                   return const CustomEmptyWidget(
                     icon: Icons.school_outlined,
@@ -283,7 +285,8 @@ class _CourseLiveClassScreenState extends State<CourseLiveClassScreen>
 }
 
 class InClassCardWidget extends StatelessWidget with AppTheme, Language {
-  const InClassCardWidget({super.key});
+  final BlendedClassDataEntity data;
+  const InClassCardWidget({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -298,17 +301,24 @@ class InClassCardWidget extends StatelessWidget with AppTheme, Language {
         children: [
           CardRowItemWidget(
             leftText: label(e: en.institutionName, b: bn.institutionName),
-            rightText: label(e: "Dhaka HSTTI", b: "ঢাকা এইচএসটিটিআই"),
+            rightText: data.workstations!
+                .map((c) => label(e: c.nameEn, b: c.nameBn))
+                .toList()
+                .join(', '),
           ),
           SizedBox(height: size.h20),
           CardRowItemWidget(
             leftText: label(e: en.classSchedule, b: bn.classSchedule),
-            rightText: label(e: "1st January, 2024", b: "১লা জানুয়ারী, ২০২৪ "),
+            rightText: label(
+                e: DateFormat('dd MMMM, yyyy')
+                    .format(DateTime.parse(data.classSchedule)),
+                b: DateFormat('dd MMMM, yyyy')
+                    .format(DateTime.parse(data.classSchedule))),
           ),
           SizedBox(height: size.h20),
           CardRowItemWidget(
             leftText: label(e: en.classTime, b: bn.classTime),
-            rightText: label(e: "9 AM", b: "সকাল ৯ টা"),
+            rightText: label(e: data.time, b: data.time),
           ),
           SizedBox(height: size.h20),
           Padding(
@@ -327,7 +337,8 @@ class InClassCardWidget extends StatelessWidget with AppTheme, Language {
 }
 
 class InPersonClassWidget extends StatelessWidget with AppTheme, Language {
-  const InPersonClassWidget({super.key});
+  final BlendedClassDataEntity data;
+  const InPersonClassWidget({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -341,23 +352,22 @@ class InPersonClassWidget extends StatelessWidget with AppTheme, Language {
         ),
         SizedBox(height: size.h12),
         CustomTextWidget(
-          text: label(
-              e: "Engage with effective post-secondary education teaching methods in this in-person class course, inspired by the in-person seminar program currently offered by the Ministry's Center for Teaching and Learning.",
-              b: "এই ইন - পারসন ক্লাস কোর্সে কার্যকর পোস্ট-সেকেন্ডারি শিক্ষা শিক্ষণ পদ্ধতির সাথে যুক্ত হন, যা বর্তমানে সেন্টার ফর টিচিং অ্যান্ড লার্নিং মন্ত্রকের দ্বারা দেওয়া ব্যক্তিগত সেমিনার প্রোগ্রাম দ্বারা অনুপ্রাণিত।"),
+          text: label(e: data.transcript, b: data.transcript),
           textColor: clr.blackColor,
           fontWeight: FontWeight.w500,
           fontFamily: StringData.fontFamilyPoppins,
           padding: EdgeInsets.symmetric(horizontal: size.w16),
         ),
         SizedBox(height: size.h12),
-        InClassCardWidget(),
+        InClassCardWidget(data: data),
       ],
     );
   }
 }
 
 class OnlineClassCardWidget extends StatelessWidget with AppTheme, Language {
-  const OnlineClassCardWidget({super.key});
+  final BlendedClassDataEntity data;
+  const OnlineClassCardWidget({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -376,9 +386,7 @@ class OnlineClassCardWidget extends StatelessWidget with AppTheme, Language {
               children: [
                 Expanded(
                   child: CustomTextWidget(
-                    text: label(
-                        e: "https://meet.google.com/mms-ekkp-vmf",
-                        b: "https://meet.google.com/mms-ekkp-vmf"),
+                    text: data.meetingLink,
                     textColor: clr.gapStrokeGrey,
                     fontSize: size.textXSmall,
                     fontWeight: FontWeight.w500,
@@ -388,8 +396,8 @@ class OnlineClassCardWidget extends StatelessWidget with AppTheme, Language {
                 ),
                 SizedBox(width: size.w4),
                 InkWell(
-                  onTap: () => Clipboard.setData(const ClipboardData(
-                      text: "https://meet.google.com/mms-ekkp-vmf")),
+                  onTap: () =>
+                      Clipboard.setData(ClipboardData(text: data.meetingLink)),
                   child: Icon(
                     Icons.copy_rounded,
                     size: size.r16,
@@ -402,12 +410,16 @@ class OnlineClassCardWidget extends StatelessWidget with AppTheme, Language {
           SizedBox(height: size.h20),
           CardRowItemWidget(
             leftText: label(e: en.classSchedule, b: bn.classSchedule),
-            rightText: label(e: "1st January, 2024", b: "১লা জানুয়ারী, ২০২৪ "),
+            rightText: label(
+                e: DateFormat('dd MMMM, yyyy')
+                    .format(DateTime.parse(data.classSchedule)),
+                b: DateFormat('dd MMMM, yyyy')
+                    .format(DateTime.parse(data.classSchedule))),
           ),
           SizedBox(height: size.h20),
           CardRowItemWidget(
             leftText: label(e: en.classTime, b: bn.classTime),
-            rightText: label(e: "9 AM", b: "সকাল ৯ টা"),
+            rightText: label(e: data.time, b: data.time),
           ),
           SizedBox(height: size.h20),
           Padding(
@@ -426,7 +438,8 @@ class OnlineClassCardWidget extends StatelessWidget with AppTheme, Language {
 }
 
 class OnlineClassWidget extends StatelessWidget with AppTheme, Language {
-  const OnlineClassWidget({super.key});
+  final BlendedClassDataEntity data;
+  const OnlineClassWidget({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -449,7 +462,7 @@ class OnlineClassWidget extends StatelessWidget with AppTheme, Language {
           padding: EdgeInsets.symmetric(horizontal: size.w16),
         ),
         SizedBox(height: size.h12),
-        OnlineClassCardWidget(),
+        OnlineClassCardWidget(data: data),
       ],
     );
   }

@@ -109,7 +109,12 @@ class CourseContentWidget extends StatelessWidget with AppTheme, Language {
                   children: [
                     Flexible(
                       child: Text(
-                        buttonText ?? label(e: en.check, b: bn.check),
+                        data.contentType == ContentType.course_video.name
+                            ? label(e: en.see, b: bn.see)
+                            : data.contentType ==
+                                    ContentType.course_blended_class.name
+                                ? label(e: en.join, b: bn.join)
+                                : label(e: en.check, b: bn.check),
                         style: TextStyle(
                             color: clr.textColorAppleBlack,
                             fontSize: size.textSmall,
@@ -122,7 +127,12 @@ class CourseContentWidget extends StatelessWidget with AppTheme, Language {
                     ),
                     SizedBox(width: size.w8),
                     Icon(
-                      Icons.visibility,
+                      data.contentType == ContentType.course_video.name
+                          ? Icons.play_circle
+                          : data.contentType ==
+                                  ContentType.course_blended_class.name
+                              ? Icons.video_call
+                              : Icons.visibility,
                       size: size.r16,
                       color: clr.textColorAppleBlack,
                     )

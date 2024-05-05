@@ -1,95 +1,98 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:lms/src/feature/assignment/data/models/sub_assignment_data_model.dart';
 
 @immutable
 class AssignmentDataModel {
   final int id;
   final int courseId;
+  final int circularId;
   final int courseModuleId;
   final String titleEn;
   final String titleBn;
   final int mark;
   final int passMark;
   final int totalTime;
+  final String submissionType;
+  final String extendedDueDate;
   final String assignmentStartTime;
   final String assignmentEndTime;
-  final String extendedDueDate;
+  final String descriptionEn;
+  final String descriptionBn;
   final String instructionsEn;
   final String instructionsBn;
+  final String type;
   final String supportingDoc;
-  final String submissionType;
-  final bool isGroupAssignments;
-  final int status;
-  final String createdAt;
-  final String updatedAt;
-  final String deletedAt;
+  final SubAssignmentDataModel? circularSubAssignments;
 
   const AssignmentDataModel({
     required this.id,
     required this.courseId,
+    required this.circularId,
     required this.courseModuleId,
     required this.titleEn,
     required this.titleBn,
     required this.mark,
     required this.passMark,
     required this.totalTime,
+    required this.submissionType,
+    required this.extendedDueDate,
     required this.assignmentStartTime,
     required this.assignmentEndTime,
-    required this.extendedDueDate,
+    required this.descriptionEn,
+    required this.descriptionBn,
     required this.instructionsEn,
     required this.instructionsBn,
+    required this.type,
     required this.supportingDoc,
-    required this.submissionType,
-    required this.isGroupAssignments,
-    required this.status,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.deletedAt,
+    required this.circularSubAssignments,
   });
 
   factory AssignmentDataModel.fromJson(Map<String, dynamic> json) =>
       AssignmentDataModel(
         id: json["id"] ?? -1,
         courseId: json["course_id"] ?? -1,
+        circularId: json["circular_id"] ?? -1,
         courseModuleId: json["course_module_id"] ?? -1,
         titleEn: json["title_en"] ?? "",
         titleBn: json["title_bn"] ?? "",
         mark: json["mark"] ?? -1,
         passMark: json["pass_mark"] ?? -1,
         totalTime: json["total_time"] ?? -1,
+        submissionType: json["submission_type"] ?? "",
+        extendedDueDate: json["extended_due_date"] ?? "",
         assignmentStartTime: json["assignment_start_time"] ?? "",
         assignmentEndTime: json["assignment_end_time"] ?? "",
-        extendedDueDate: json["extended_due_date"] ?? "",
+        descriptionEn: json["description_en"] ?? "",
+        descriptionBn: json["description_bn"] ?? "",
         instructionsEn: json["instructions_en"] ?? "",
         instructionsBn: json["instructions_bn"] ?? "",
+        type: json["type"] ?? "",
         supportingDoc: json["supporting_doc"] ?? "",
-        submissionType: json["submission_type"] ?? "",
-        isGroupAssignments: json["is_group_assignments"] ?? false,
-        status: json["status"] ?? -1,
-        createdAt: json["created_at"] ?? "",
-        updatedAt: json["updated_at"] ?? "",
-        deletedAt: json["deleted_at"] ?? "",
+        circularSubAssignments: json['circular_sub_assignments'] != null
+            ? SubAssignmentDataModel.fromJson(json["circular_sub_assignments"])
+            : null,
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "course_id": courseId,
+        "circular_id": circularId,
         "course_module_id": courseModuleId,
         "title_en": titleEn,
         "title_bn": titleBn,
         "mark": mark,
         "pass_mark": passMark,
         "total_time": totalTime,
+        "submission_type": submissionType,
+        "extended_due_date": extendedDueDate,
         "assignment_start_time": assignmentStartTime,
         "assignment_end_time": assignmentEndTime,
-        "extended_due_date": extendedDueDate,
+        "description_en": descriptionEn,
+        "description_bn": descriptionBn,
         "instructions_en": instructionsEn,
         "instructions_bn": instructionsBn,
+        "type": type,
         "supporting_doc": supportingDoc,
-        "submission_type": submissionType,
-        "is_group_assignments": isGroupAssignments,
-        "status": status,
-        "created_at": createdAt,
-        "updated_at": updatedAt,
-        "deleted_at": deletedAt,
+        "circular_sub_assignments": circularSubAssignments?.toJson(),
       };
 }
