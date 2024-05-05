@@ -20,14 +20,14 @@ import '../../../../core/constants/common_imports.dart';
 class ChapterWidget<T> extends StatefulWidget {
   final String chapterTitle;
   final String chapterCode;
-  final bool isLocked;
+  final int status;
   final List<T> items;
   final Widget Function(BuildContext context, int index, T item) buildItem;
   const ChapterWidget(
       {super.key,
       required this.chapterTitle,
       required this.chapterCode,
-      required this.isLocked,
+      required this.status,
       required this.items,
       required this.buildItem});
 
@@ -55,7 +55,7 @@ class _ChapterWidgetState<T> extends State<ChapterWidget<T>>
       children: [
         GestureDetector(
           onTap: () {
-            if (!widget.isLocked) {
+            if (widget.status != 0) {
               _toggle();
             }
           },
@@ -76,22 +76,22 @@ class _ChapterWidgetState<T> extends State<ChapterWidget<T>>
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // if (!widget.isLocked)
-                //   Icon(
-                //     Icons.check_circle,
-                //     color: clr.appPrimaryColorGreen,
-                //     size: size.r20,
-                //   ),
-                if (!widget.isLocked)
+                if (widget.status == 0)
+                  Icon(
+                    Icons.lock,
+                    color: clr.textColorBlack,
+                    size: size.r20,
+                  ),
+                if (widget.status == 1)
                   SvgPicture.asset(
                     ImageAssets.icLockOpenRight,
                     colorFilter: ColorFilter.mode(
                         clr.appPrimaryColorGreen, BlendMode.srcIn),
                   ),
-                if (widget.isLocked)
+                if (widget.status == 2)
                   Icon(
-                    Icons.lock,
-                    color: clr.textColorBlack,
+                    Icons.check_circle,
+                    color: clr.appPrimaryColorGreen,
                     size: size.r20,
                   ),
                 SizedBox(width: size.w4),

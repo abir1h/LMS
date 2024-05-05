@@ -209,7 +209,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
                           return ChapterWidget(
                             chapterTitle: label(e: item.nameEn, b: item.nameBn),
                             chapterCode: label(e: item.code, b: item.code),
-                            isLocked: item.isLocked,
+                            status: item.status,
                             items: item.courseContents!,
                             buildItem: (BuildContext context, int index, item) {
                               return CourseContentWidget(
