@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:lms/src/core/service/notifier/app_events_notifier.dart';
 
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../../../core/common_widgets/circuler_widget.dart';
@@ -37,7 +38,7 @@ class DiscussionWidget extends StatefulWidget {
 }
 
 class _DiscussionWidgetState extends State<DiscussionWidget>
-    with AppTheme, Language, CourseDiscussionWidgetService {
+    with AppTheme, Language, AppEventsNotifier, CourseDiscussionWidgetService {
   @override
   void initState() {
     super.initState();
@@ -113,6 +114,18 @@ class _DiscussionWidgetState extends State<DiscussionWidget>
       AppRoute.detailedDiscussion,
       arguments: DetailedDiscussionArgs(discussionId: discussionId),
     );
+  }
+
+  @override
+  void onEventReceived(EventAction action) {
+    if (action == EventAction.discussion) {
+      if (mounted) {
+        setState(() {
+          loadDiscussionList(widget.courseId, widget.courseModuleId,
+              widget.contentId, widget.contentType);
+        });
+      }
+    }
   }
 }
 

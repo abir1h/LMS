@@ -42,5 +42,6 @@ enum EventAction {
   courseDetailsScreen,
   bottomNavBar,
   graphChart,
-  drawer
+  drawer,
+  discussion,
 }

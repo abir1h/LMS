@@ -9,6 +9,7 @@ import '../../../../core/common_widgets/circuler_widget.dart';
 import '../../../../core/common_widgets/custom_empty_widget.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/routes/app_route_args.dart';
+import '../../../../core/service/notifier/app_events_notifier.dart';
 import '../../domain/entities/comment_data_entity.dart';
 import '../../domain/entities/discussion_data_entity.dart';
 import '../services/detailed_discussion_service.dart';
@@ -320,6 +321,7 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
         onSuccess: () {
           Navigator.of(context).pop();
           loadDiscussionData(_screenArgs.discussionId);
+          AppEventsNotifier.notify(EventAction.discussion);
         },
       ),
     );
