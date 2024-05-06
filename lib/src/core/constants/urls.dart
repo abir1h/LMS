@@ -24,11 +24,14 @@ class ApiCredential {
   static String createDiscussion = "/circular-service/api/web/discussion";
   static String getDiscussion =
       "/circular-service/api/web/discussion-content-wise";
-  static String getDiscussionDetails = "/circular-service/api/web/discussion/";
+  static String getDiscussionDetails = "/circular-service/api/web/discussion";
+  static String voteDiscussion = "/circular-service/api/web/vote-discussion";
   static String getDiscussionComments =
       "/circular-service/api/web/discussion-comments/";
 
   static String createComment = "/circular-service/api/web/comment";
+  static String voteComment = "/circular-service/api/web/vote-comment";
+  static String reportComment = "/circular-service/api/web/report-comment";
 
   static String getAssessment = "/circular-service/api/mobile/assessment";
   static String getAssignment = "/assignment-service/api/mobile/assignments";

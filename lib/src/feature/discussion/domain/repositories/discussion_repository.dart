@@ -8,10 +8,12 @@ abstract class DiscussionRepository {
   Future<ResponseEntity> getDiscussionDetails(int discussionId);
   Future<ResponseEntity> createDiscussion(int courseId, int courseModuleId,
       int contentId, String contentType, String description);
-  Future<ResponseEntity> updateDiscussion(
-      DiscussionDataEntity discussionDataEntity);
+  Future<ResponseEntity> updateDiscussion(int discussionId, String description);
   Future<ResponseEntity> deleteDiscussion(int discussionId);
+  Future<ResponseEntity> voteDiscussion(int discussionId);
   Future<ResponseEntity> getDiscussionComments(int discussionId);
   Future<ResponseEntity> createComment(int discussionId, String description);
   Future<ResponseEntity> updateComment(CommentDataEntity commentDataEntity);
+  Future<ResponseEntity> voteComment(int commentId);
+  Future<ResponseEntity> reportComment(int commentId, String remarks);
 }

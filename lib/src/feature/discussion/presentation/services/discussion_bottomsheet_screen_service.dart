@@ -30,6 +30,12 @@ mixin DiscussionBottomSheetScreenService<T extends StatefulWidget> on State<T>
         courseId, courseModuleId, contentId, contentType, description);
   }
 
+  Future<ResponseEntity> updateDiscussions(
+      {required int discussionId, required String description}) async {
+    return _discussionUseCase.updateDiscussionUseCase(
+        discussionId, description);
+  }
+
   ///Service configurations
   @override
   void initState() {
@@ -94,6 +100,18 @@ mixin DiscussionBottomSheetScreenService<T extends StatefulWidget> on State<T>
         contentId: contentId,
         contentType: contentType,
         description: description);
+    if (responseEntity.error == null && responseEntity.data != null) {
+      _view.showSuccess(responseEntity.message!);
+    } else {
+      _view.showWarning(responseEntity.message!);
+    }
+    return responseEntity;
+  }
+
+  Future<ResponseEntity> onDiscussionUpdate(
+      {required int discussionId, required String description}) async {
+    ResponseEntity responseEntity = await updateDiscussions(
+        discussionId: discussionId, description: description);
     if (responseEntity.error == null && responseEntity.data != null) {
       _view.showSuccess(responseEntity.message!);
     } else {

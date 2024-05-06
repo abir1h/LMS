@@ -57,9 +57,9 @@ class DiscussionRepositoryImp extends DiscussionRepository {
 
   @override
   Future<ResponseEntity> updateDiscussion(
-      DiscussionDataEntity discussionDataEntity) async {
+      int discussionId, String description) async {
     ResponseModel responseModel = (await discussionRemoteDataSource
-        .updateDiscussionAction(discussionDataEntity.toDiscussionDataModel));
+        .updateDiscussionAction(discussionId, description));
     return ResponseModelToEntityMapper<DiscussionDataEntity,
             DiscussionDataModel>()
         .toEntityFromModel(responseModel,
@@ -70,6 +70,16 @@ class DiscussionRepositoryImp extends DiscussionRepository {
   Future<ResponseEntity> deleteDiscussion(int discussionId) async {
     ResponseModel responseModel =
         (await discussionRemoteDataSource.deleteDiscussionAction(discussionId));
+    return ResponseModelToEntityMapper<DiscussionDataEntity,
+            DiscussionDataModel>()
+        .toEntityFromModel(responseModel,
+            (DiscussionDataModel model) => model.toDiscussionDataEntity);
+  }
+
+  @override
+  Future<ResponseEntity> voteDiscussion(int discussionId) async {
+    ResponseModel responseModel =
+        (await discussionRemoteDataSource.voteDiscussionAction(discussionId));
     return ResponseModelToEntityMapper<DiscussionDataEntity,
             DiscussionDataModel>()
         .toEntityFromModel(responseModel,
@@ -103,6 +113,24 @@ class DiscussionRepositoryImp extends DiscussionRepository {
       CommentDataEntity commentDataEntity) async {
     ResponseModel responseModel = (await discussionRemoteDataSource
         .updateCommentAction(commentDataEntity.toCommentDataModel));
+    return ResponseModelToEntityMapper<CommentDataEntity, CommentDataModel>()
+        .toEntityFromModel(responseModel,
+            (CommentDataModel model) => model.toCommentDataEntity);
+  }
+
+  @override
+  Future<ResponseEntity> voteComment(int commentId) async {
+    ResponseModel responseModel =
+        (await discussionRemoteDataSource.voteCommentAction(commentId));
+    return ResponseModelToEntityMapper<CommentDataEntity, CommentDataModel>()
+        .toEntityFromModel(responseModel,
+            (CommentDataModel model) => model.toCommentDataEntity);
+  }
+
+  @override
+  Future<ResponseEntity> reportComment(int commentId, String remarks) async {
+    ResponseModel responseModel = (await discussionRemoteDataSource
+        .reportCommentAction(commentId, remarks));
     return ResponseModelToEntityMapper<CommentDataEntity, CommentDataModel>()
         .toEntityFromModel(responseModel,
             (CommentDataModel model) => model.toCommentDataEntity);

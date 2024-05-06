@@ -77,7 +77,7 @@ mixin OpinionBottomSheetScreenService<T extends StatefulWidget> on State<T>
   //   }
   // }
 
-  Future  onCommentCreate(
+  Future onCommentCreate(
       {required int discussionId, required String description}) async {
     ResponseEntity responseEntity =
         await createComment(discussionId, description);

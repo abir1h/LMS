@@ -31,14 +31,19 @@ class DiscussionUseCase {
   }
 
   Future<ResponseEntity> updateDiscussionUseCase(
-      DiscussionDataEntity discussionDataEntity) async {
+      int discussionId, String description) async {
     final response =
-        _discussionRepository.updateDiscussion(discussionDataEntity);
+        _discussionRepository.updateDiscussion(discussionId, description);
     return response;
   }
 
   Future<ResponseEntity> deleteDiscussionUseCase(int discussionId) async {
     final response = _discussionRepository.deleteDiscussion(discussionId);
+    return response;
+  }
+
+  Future<ResponseEntity> voteDiscussionUseCase(int discussionId) async {
+    final response = _discussionRepository.voteDiscussion(discussionId);
     return response;
   }
 
@@ -51,6 +56,17 @@ class DiscussionUseCase {
       int discussionId, String description) async {
     final response =
         _discussionRepository.createComment(discussionId, description);
+    return response;
+  }
+
+  Future<ResponseEntity> voteCommentUseCase(int commentId) async {
+    final response = _discussionRepository.voteComment(commentId);
+    return response;
+  }
+
+  Future<ResponseEntity> reportCommentUseCase(
+      int commentId, String remarks) async {
+    final response = _discussionRepository.reportComment(commentId, remarks);
     return response;
   }
 }

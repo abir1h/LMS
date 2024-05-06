@@ -3,7 +3,7 @@ class CommentDataEntity {
   final int discussionId;
   final String description;
   final String attachment;
-  final int vote;
+  int vote;
   final int createdBy;
   final int status;
   final String createdAt;

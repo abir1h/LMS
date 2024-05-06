@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
@@ -10,8 +11,8 @@ import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../../domain/entities/comment_data_entity.dart';
 import '../../domain/entities/discussion_data_entity.dart';
-import '../../models/comment_model.dart';
 import '../services/detailed_discussion_service.dart';
+import 'discussion_bottom_sheet.dart';
 import 'opinion_bottom_sheet.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
@@ -57,80 +58,94 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
                   child: Column(
                     children: [
                       ///Title
-                      Container(
-                        padding: EdgeInsets.only(
-                            left: size.w16,
-                            top: size.h16,
-                            right: size.w16,
-                            bottom: size.h10),
-                        decoration: BoxDecoration(
-                            color: clr.scaffoldBackgroundColor,
-                            border: Border(
-                                bottom: BorderSide(
-                                    color: clr.placeHolderTextColorGray))),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Image.asset(
-                              ImageAssets.imgEmptyProfile,
-                              height: size.r24,
-                            ),
-                            SizedBox(width: size.w8),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    label(
-                                        e: data.description,
-                                        b: data.description),
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontFamily:
-                                            StringData.fontFamilyPoppins,
-                                        fontSize: size.textSmall,
-                                        color: clr.textColorAppleBlack),
-                                  ),
-                                  SizedBox(height: size.h12),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Expanded(
-                                        child: Text.rich(
-                                            textAlign: TextAlign.end,
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                                color: clr
-                                                    .placeHolderTextColorGray,
-                                                fontSize: size.textXXSmall,
-                                                fontWeight: FontWeight.w500,
-                                                fontFamily: StringData
-                                                    .fontFamilyPoppins),
-                                            TextSpan(
-                                                // text: label(
-                                                //     e: "মোট ${_screenArgs.discussionModel!.comments != null ? _screenArgs.discussionModel!.comments!.length.toString() : "0"} টি",
-                                                //     b: "মোট ${_screenArgs.discussionModel!.comments != null ? _screenArgs.discussionModel!.comments!.length.toString() : "0"} টি"),
-
-                                                text: "মোট 3 টি",
-                                                children: [
-                                                  const TextSpan(
-                                                    text: " | ",
-                                                  ),
-                                                  TextSpan(
-                                                    text: label(
-                                                      e: "Date: ${DateFormat('dd MMMM yyyy').format(DateTime.parse(data.createdAt))}",
-                                                      b: "তারিখ: ${DateFormat('dd MMMM yyyy').format(DateTime.parse(data.createdAt))}",
-                                                    ),
-                                                  )
-                                                ])),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                      GestureDetector(
+                        onTap: () => onTapUpdateDiscussion(data.description),
+                        child: Container(
+                          padding: EdgeInsets.only(
+                              left: size.w16,
+                              top: size.h16,
+                              right: size.w16,
+                              bottom: size.h10),
+                          decoration: BoxDecoration(
+                              color: clr.scaffoldBackgroundColor,
+                              border: Border(
+                                  bottom: BorderSide(
+                                      color: clr.placeHolderTextColorGray))),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Image.asset(
+                                ImageAssets.imgEmptyProfile,
+                                height: size.r24,
                               ),
-                            )
-                          ],
+                              SizedBox(width: size.w8),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      label(
+                                          e: data.description,
+                                          b: data.description),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontFamily:
+                                              StringData.fontFamilyPoppins,
+                                          fontSize: size.textSmall,
+                                          color: clr.textColorAppleBlack),
+                                    ),
+                                    SizedBox(height: size.h12),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () =>
+                                              onTapVoteDiscussion(data.id),
+                                          child: Icon(
+                                            Icons.thumb_up,
+                                            color: data.vote == 0
+                                                ? clr.placeHolderTextColorGray
+                                                : clr.appPrimaryColorGreen,
+                                            size: size.r20,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Text.rich(
+                                              textAlign: TextAlign.end,
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                  color: clr
+                                                      .placeHolderTextColorGray,
+                                                  fontSize: size.textXXSmall,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontFamily: StringData
+                                                      .fontFamilyPoppins),
+                                              TextSpan(
+                                                  // text: label(
+                                                  //     e: "মোট ${_screenArgs.discussionModel!.comments != null ? _screenArgs.discussionModel!.comments!.length.toString() : "0"} টি",
+                                                  //     b: "মোট ${_screenArgs.discussionModel!.comments != null ? _screenArgs.discussionModel!.comments!.length.toString() : "0"} টি"),
+
+                                                  text: "মোট 3 টি",
+                                                  children: [
+                                                    const TextSpan(
+                                                      text: " | ",
+                                                    ),
+                                                    TextSpan(
+                                                      text: label(
+                                                        e: "Date: ${DateFormat('dd MMMM yyyy').format(DateTime.parse(data.createdAt))}",
+                                                        b: "তারিখ: ${DateFormat('dd MMMM yyyy').format(DateTime.parse(data.createdAt))}",
+                                                      ),
+                                                    )
+                                                  ])),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                       ListView.builder(
@@ -140,6 +155,8 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
                         itemBuilder: (_, index) {
                           return CommentTile(
                             data: data.comments[index],
+                            onTapVote: () =>
+                                onTapVoteComment(data.comments[index].id),
                           );
                         },
                       ),
@@ -293,6 +310,21 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
     // }));
   }
 
+  void onTapUpdateDiscussion(String description) {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (context) => DiscussionBottomSheet(
+        edit: true,
+        discussionId: _screenArgs.discussionId,
+        description: description,
+        onSuccess: () {
+          Navigator.of(context).pop();
+          loadDiscussionData(_screenArgs.discussionId);
+        },
+      ),
+    );
+  }
+
   void onTapOpinion() {
     showCupertinoModalPopup(
       context: context,
@@ -310,11 +342,17 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
   void showWarning(String message) {
     CustomToasty.of(context).showWarning(message);
   }
+
+  @override
+  void showSuccess(String message) {
+    CustomToasty.of(context).showSuccess(message);
+  }
 }
 
 class CommentTile extends StatelessWidget with AppTheme, Language {
   final CommentDataEntity data;
-  const CommentTile({super.key, required this.data});
+  final VoidCallback onTapVote;
+  const CommentTile({super.key, required this.data, required this.onTapVote});
 
   @override
   Widget build(BuildContext context) {
@@ -372,10 +410,12 @@ class CommentTile extends StatelessWidget with AppTheme, Language {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               GestureDetector(
-                onTap: () {},
+                onTap: onTapVote,
                 child: Icon(
                   Icons.thumb_up,
-                  color: clr.placeHolderTextColorGray,
+                  color: data.vote == 0
+                      ? clr.placeHolderTextColorGray
+                      : clr.appPrimaryColorGreen,
                   size: size.r20,
                 ),
               ),
