@@ -182,8 +182,8 @@ class _CourseListScreenState extends State<CourseListScreen>
   void navigateToCourseDetailsScreen(int courseId, String circularStatus) {
     Navigator.of(context).pushNamed(AppRoute.courseDetailsScreen,
         arguments: CourseDetailsScreenArgs(
-            courseId: courseId,
-            curriculumType: circularStatus,
-            status: "open"));
+          courseId: courseId,
+          curriculumType: circularStatus,
+        ));
   }
 }

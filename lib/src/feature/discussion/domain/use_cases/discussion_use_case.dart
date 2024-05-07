@@ -59,6 +59,18 @@ class DiscussionUseCase {
     return response;
   }
 
+  Future<ResponseEntity> updateCommentUseCase(
+      int commentId, String description) async {
+    final response =
+        _discussionRepository.updateComment(commentId, description);
+    return response;
+  }
+
+  Future<ResponseEntity> deleteCommentUseCase(int commentId) async {
+    final response = _discussionRepository.deleteComment(commentId);
+    return response;
+  }
+
   Future<ResponseEntity> voteCommentUseCase(int commentId) async {
     final response = _discussionRepository.voteComment(commentId);
     return response;

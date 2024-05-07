@@ -55,7 +55,7 @@ class App {
   }
 }
 
-String replaceEnglishNumberWithBangla(String inputString) {
+String replaceEnglishNumberWithBengali(String inputString) {
   Map<String, String> numberMap = {
     '0': '০',
     '1': '১',
@@ -77,4 +77,65 @@ String replaceEnglishNumberWithBangla(String inputString) {
   }
 
   return result;
+}
+
+String timeAgoToBengali(String timeAgo) {
+  // Define a map to store the mapping of English words to Bangla words
+  final Map<String, String> banglaMap = {
+    'January': 'জানুয়ারি',
+    'February': 'ফেব্রুয়ারি',
+    'March': 'মার্চ',
+    'April': 'এপ্রিল',
+    'May': 'মে',
+    'June': 'জুন',
+    'July': 'জুলাই',
+    'August': 'আগস্ট',
+    'September': 'সেপ্টেম্বর',
+    'october': 'অক্টোবর',
+    'November': 'নভেম্বর',
+    'December': 'ডিসেম্বর',
+    'seconds': 'সেকেন্ড',
+    'minute': 'মিনিট',
+    'minutes': 'মিনিট',
+    'hour': 'ঘন্টা',
+    'hours': 'ঘন্টা',
+    'day': 'দিন',
+    'days': 'দিন',
+    'week': 'সপ্তাহ',
+    'weeks': 'সপ্তাহ',
+    'month': 'মাস',
+    'months': 'মাস',
+    'year': 'বছর',
+    'years': 'বছর',
+    'ago': 'আগে',
+    'moment': 'কিছুক্ষণ',
+    'about': 'প্রায়',
+    'an': 'এক',
+    'a': '',
+    '0': '০',
+    '1': '১',
+    '2': '২',
+    '3': '৩',
+    '4': '৪',
+    '5': '৫',
+    '6': '৬',
+    '7': '৭',
+    '8': '৮',
+    '9': '৯',
+  };
+
+  // Split the timeAgo string into words
+  List<String> words = timeAgo.split(' ');
+
+  // Replace English words with Bangla words using the map
+  String banglaText = words.map((word) {
+    // Check if the word is a number
+    if (int.tryParse(word) != null) {
+      // Convert each digit separately
+      return word.split('').map((char) => banglaMap[char] ?? char).join('');
+    }
+    return banglaMap[word.toLowerCase()] ?? word;
+  }).join(' ');
+
+  return banglaText;
 }

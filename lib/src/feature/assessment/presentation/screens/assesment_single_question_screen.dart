@@ -430,7 +430,7 @@ class _AssessmentSingleQuestionScreenState
                   child: Center(
                     child: StreamBuilder<String>(
                       initialData:
-                          "${label(e: "Question", b: "প্রশ্ন")}: ${"${replaceEnglishNumberWithBangla("1")}/${replaceEnglishNumberWithBangla(questions.length.toString())}"}",
+                          "${label(e: "Question", b: "প্রশ্ন")}: ${"${replaceEnglishNumberWithBengali("1")}/${replaceEnglishNumberWithBengali(questions.length.toString())}"}",
                       stream: _questionNumberTextStream.stream,
                       builder: (context, snapshot) {
                         return Text(
@@ -535,7 +535,7 @@ class _AssessmentSingleQuestionScreenState
                                             ? Text(
                                                 label(
                                                     e: "${index + 1}",
-                                                    b: replaceEnglishNumberWithBangla(
+                                                    b: replaceEnglishNumberWithBengali(
                                                         "${index + 1}")),
                                                 // "${index + 1}",
                                                 style: TextStyle(
@@ -555,7 +555,7 @@ class _AssessmentSingleQuestionScreenState
                                                 child: Text(
                                                   label(
                                                       e: "${index + 1}",
-                                                      b: replaceEnglishNumberWithBangla(
+                                                      b: replaceEnglishNumberWithBengali(
                                                           "${index + 1}")),
                                                   // "${index + 1}",
                                                   style: TextStyle(
@@ -639,7 +639,7 @@ class _AssessmentSingleQuestionScreenState
         duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
     _pageSelectedIndexStream.sink.add(index);
     _questionNumberTextStream.add(
-        "${label(e: "Question", b: "প্রশ্ন")}: ${replaceEnglishNumberWithBangla("${index + 1}")} / ${replaceEnglishNumberWithBangla(questions.length.toString())}");
+        "${label(e: "Question", b: "প্রশ্ন")}: ${replaceEnglishNumberWithBengali("${index + 1}")} / ${replaceEnglishNumberWithBengali(questions.length.toString())}");
     if (index == questions.length - 1) {
       _buttonTextStream.add({
         "next": label(e: "Submit", b: "সাবমিট"),

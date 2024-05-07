@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../../../core/common_widgets/circuler_widget.dart';
@@ -312,8 +313,8 @@ class InClassCardWidget extends StatelessWidget with AppTheme, Language {
             rightText: label(
                 e: DateFormat('dd MMMM, yyyy')
                     .format(DateTime.parse(data.classSchedule)),
-                b: DateFormat('dd MMMM, yyyy')
-                    .format(DateTime.parse(data.classSchedule))),
+                b: timeAgoToBengali(DateFormat('dd MMMM, yyyy')
+                    .format(DateTime.parse(data.classSchedule)))),
           ),
           SizedBox(height: size.h20),
           CardRowItemWidget(
@@ -425,7 +426,8 @@ class OnlineClassCardWidget extends StatelessWidget with AppTheme, Language {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: size.w44),
             child: CustomButton(
-              onTap: () {},
+              onTap: () => launchUrl(Uri.parse(data.meetingLink),
+                  mode: LaunchMode.externalApplication),
               title: label(e: en.joinClass, b: bn.joinClass),
               textColor: clr.whiteColor,
               radius: size.r16,

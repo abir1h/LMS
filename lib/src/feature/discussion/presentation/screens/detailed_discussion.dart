@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
+import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
+import 'report_bottom_sheet.dart';
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../../../core/common_widgets/circuler_widget.dart';
 import '../../../../core/common_widgets/custom_empty_widget.dart';
@@ -57,96 +59,151 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
                 SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ///Title
-                      GestureDetector(
-                        onTap: () => onTapUpdateDiscussion(data.description),
-                        child: Container(
-                          padding: EdgeInsets.only(
-                              left: size.w16,
-                              top: size.h16,
-                              right: size.w16,
-                              bottom: size.h10),
-                          decoration: BoxDecoration(
-                              color: clr.scaffoldBackgroundColor,
-                              border: Border(
-                                  bottom: BorderSide(
-                                      color: clr.placeHolderTextColorGray))),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Image.asset(
-                                ImageAssets.imgEmptyProfile,
-                                height: size.r24,
-                              ),
-                              SizedBox(width: size.w8),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      label(
-                                          e: data.description,
-                                          b: data.description),
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontFamily:
-                                              StringData.fontFamilyPoppins,
-                                          fontSize: size.textSmall,
-                                          color: clr.textColorAppleBlack),
-                                    ),
-                                    SizedBox(height: size.h12),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () =>
-                                              onTapVoteDiscussion(data.id),
-                                          child: Icon(
-                                            Icons.thumb_up,
-                                            color: data.vote == 0
-                                                ? clr.placeHolderTextColorGray
-                                                : clr.appPrimaryColorGreen,
-                                            size: size.r20,
-                                          ),
+                      Container(
+                        padding: EdgeInsets.only(
+                            left: size.w16,
+                            top: size.h16,
+                            right: size.w16,
+                            bottom: size.h10),
+                        decoration: BoxDecoration(
+                            color: clr.scaffoldBackgroundColor,
+                            border: Border(
+                                bottom: BorderSide(
+                                    color: clr.placeHolderTextColorGray))),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Image.asset(
+                              ImageAssets.imgEmptyProfile,
+                              height: size.r24,
+                            ),
+                            SizedBox(width: size.w8),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    label(
+                                        e: data.description,
+                                        b: data.description),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontFamily:
+                                            StringData.fontFamilyPoppins,
+                                        fontSize: size.textSmall,
+                                        color: clr.textColorAppleBlack),
+                                  ),
+                                  SizedBox(height: size.h12),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () =>
+                                            onTapVoteDiscussion(data.id),
+                                        child: Icon(
+                                          Icons.thumb_up,
+                                          color: data.vote == 0
+                                              ? clr.placeHolderTextColorGray
+                                              : clr.appPrimaryColorGreen,
+                                          size: size.r20,
                                         ),
-                                        Expanded(
-                                          child: Text.rich(
-                                              textAlign: TextAlign.end,
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                  color: clr
-                                                      .placeHolderTextColorGray,
-                                                  fontSize: size.textXXSmall,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontFamily: StringData
-                                                      .fontFamilyPoppins),
-                                              TextSpan(
-                                                  // text: label(
-                                                  //     e: "মোট ${_screenArgs.discussionModel!.comments != null ? _screenArgs.discussionModel!.comments!.length.toString() : "0"} টি",
-                                                  //     b: "মোট ${_screenArgs.discussionModel!.comments != null ? _screenArgs.discussionModel!.comments!.length.toString() : "0"} টি"),
+                                      ),
+                                      Expanded(
+                                        child: Text.rich(
+                                            textAlign: TextAlign.end,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                color: clr
+                                                    .placeHolderTextColorGray,
+                                                fontSize: size.textXXSmall,
+                                                fontWeight: FontWeight.w500,
+                                                fontFamily: StringData
+                                                    .fontFamilyPoppins),
+                                            TextSpan(
+                                                // text: label(
+                                                //     e: "মোট ${_screenArgs.discussionModel!.comments != null ? _screenArgs.discussionModel!.comments!.length.toString() : "0"} টি",
+                                                //     b: "মোট ${_screenArgs.discussionModel!.comments != null ? _screenArgs.discussionModel!.comments!.length.toString() : "0"} টি"),
 
-                                                  text: "মোট 3 টি",
-                                                  children: [
-                                                    const TextSpan(
-                                                      text: " | ",
+                                                text: "মোট 3 টি",
+                                                children: [
+                                                  const TextSpan(
+                                                    text: " | ",
+                                                  ),
+                                                  TextSpan(
+                                                    text: label(
+                                                      e: "Date: ${DateFormat('dd MMMM yyyy').format(DateTime.parse(data.createdAt))}",
+                                                      b: "তারিখ: ${DateFormat('dd MMMM yyyy').format(DateTime.parse(data.createdAt))}",
                                                     ),
-                                                    TextSpan(
-                                                      text: label(
-                                                        e: "Date: ${DateFormat('dd MMMM yyyy').format(DateTime.parse(data.createdAt))}",
-                                                        b: "তারিখ: ${DateFormat('dd MMMM yyyy').format(DateTime.parse(data.createdAt))}",
-                                                      ),
-                                                    )
-                                                  ])),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                                  )
+                                                ])),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            PopupMenuButton(
+                              surfaceTintColor: clr.shadeWhiteColor2,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(size.r4),
                                 ),
-                              )
-                            ],
-                          ),
+                              ),
+                              itemBuilder: (BuildContext context) => [
+                                PopupMenuItem(
+                                  onTap: () =>
+                                      onTapUpdateDiscussion(data.description),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        Icons.border_color_outlined,
+                                        size: size.r16,
+                                        color: clr.appPrimaryColorGreen,
+                                      ),
+                                      SizedBox(width: size.w8),
+                                      CustomTextWidget(
+                                        text: label(e: "Edit", b: "এডিট করুন"),
+                                        fontSize: size.textXSmall,
+                                        textColor: clr.gapStrokeGrey,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                PopupMenuItem(
+                                  onTap: () {},
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        Icons.delete_outline_outlined,
+                                        size: size.r16,
+                                        color: clr.appPrimaryColorGreen,
+                                      ),
+                                      SizedBox(width: size.w8),
+                                      CustomTextWidget(
+                                        text:
+                                            label(e: "Remove", b: "মুছে ফেলুন"),
+                                        fontSize: size.textXSmall,
+                                        textColor: clr.gapStrokeGrey,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                              child: Icon(
+                                Icons.more_vert_outlined,
+                                size: size.r16,
+                                color: clr.iconColorBlack,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       ListView.builder(
@@ -158,6 +215,14 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
                             data: data.comments[index],
                             onTapVote: () =>
                                 onTapVoteComment(data.comments[index].id),
+                            onTapReport: () =>
+                                onTapReport(data.comments[index].id),
+                            onTapEdit: () => onTapOpinion(
+                                edit: true,
+                                commentId: data.comments[index].id,
+                                description: data.comments[index].description),
+                            onTapRemove: () =>
+                                onTapRemoveComment(data.comments[index].id),
                           );
                         },
                       ),
@@ -171,14 +236,8 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
                   bottom: size.h20,
                   right: size.w16,
                   child: CustomButton(
-                    onTap: onTapOpinion,
-                    // onTap: () {
-                    //   showCupertinoModalPopup(
-                    //     context: context,
-                    //     builder: (context) => OpinionBottomSheet(
-                    //         masterModel: _screenArgs.discussionModel),
-                    //   );
-                    // },
+                    onTap: () => onTapOpinion(
+                        edit: false, commentId: -1, description: ""),
                     icon: Icons.add_comment,
                     title: label(e: en.yourOpinion, b: bn.yourOpinion),
                     radius: size.r4,
@@ -193,122 +252,6 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
             // offset: 350.w,
           ),
         ));
-    // body: GetBuilder<DiscussionController>(builder: (_) {
-    //   return Stack(
-    //     children: [
-    //       SingleChildScrollView(
-    //         physics: const BouncingScrollPhysics(),
-    //         child: Column(
-    //           children: [
-    //             ///Title
-    //             Container(
-    //               padding: EdgeInsets.only(
-    //                   left: size.w16,
-    //                   top: size.h16,
-    //                   right: size.w16,
-    //                   bottom: size.h10),
-    //               decoration: BoxDecoration(
-    //                   color: clr.scaffoldBackgroundColor,
-    //                   border: Border(
-    //                       bottom: BorderSide(
-    //                           color: clr.placeHolderTextColorGray))),
-    //               child: Row(
-    //                 crossAxisAlignment: CrossAxisAlignment.start,
-    //                 children: [
-    //                   Image.asset(
-    //                     _screenArgs.discussionModel!.avatar!,
-    //                     height: size.r24,
-    //                   ),
-    //                   SizedBox(width: size.w8),
-    //                   Expanded(
-    //                     child: Column(
-    //                       crossAxisAlignment: CrossAxisAlignment.start,
-    //                       children: [
-    //                         Text(
-    //                           _screenArgs.discussionModel!.description!,
-    //                           /*    label(
-    //                             e: "Student Qualifications Physiology is an integrated science that considers the function of each organ and organ system and their interaction in the maintenance of life.",
-    //                             b: "শিক্ষার্থীদের যোগ্যতা ফিজিওলজি হল একটি সমন্বিত বিজ্ঞান যা প্রতিটি অঙ্গ এবং অঙ্গ সিস্টেমের কাজ এবং জীবনের রক্ষণাবেক্ষণে তাদের মিথস্ক্রিয়া বিবেচনা করে।")*/
-    //                           style: TextStyle(
-    //                               fontWeight: FontWeight.w500,
-    //                               fontFamily: StringData.fontFamilyPoppins,
-    //                               fontSize: size.textSmall,
-    //                               color: clr.textColorAppleBlack),
-    //                         ),
-    //                         SizedBox(height: size.h12),
-    //                         Row(
-    //                           mainAxisAlignment: MainAxisAlignment.end,
-    //                           children: [
-    //                             Expanded(
-    //                               child: Text.rich(
-    //                                   textAlign: TextAlign.end,
-    //                                   maxLines: 2,
-    //                                   overflow: TextOverflow.ellipsis,
-    //                                   style: TextStyle(
-    //                                       color:
-    //                                           clr.placeHolderTextColorGray,
-    //                                       fontSize: size.textXXSmall,
-    //                                       fontWeight: FontWeight.w500,
-    //                                       fontFamily:
-    //                                           StringData.fontFamilyPoppins),
-    //                                   TextSpan(
-    //                                       text: label(
-    //                                           e: "মোট ${_screenArgs.discussionModel!.comments != null ? _screenArgs.discussionModel!.comments!.length.toString() : "0"} টি",
-    //                                           b: "মোট ${_screenArgs.discussionModel!.comments != null ? _screenArgs.discussionModel!.comments!.length.toString() : "0"} টি"),
-    //                                       children: [
-    //                                         const TextSpan(
-    //                                           text: " | ",
-    //                                         ),
-    //                                         TextSpan(
-    //                                           text:
-    //                                               "তারিখ: ${_screenArgs.discussionModel!.createdAt!}",
-    //                                         ),
-    //                                       ])),
-    //                             ),
-    //                           ],
-    //                         ),
-    //                       ],
-    //                     ),
-    //                   )
-    //                 ],
-    //               ),
-    //             ),
-    //             ListView.builder(
-    //               itemBuilder: (_, index) {
-    //                 return CommentTile(
-    //                   commentModel:
-    //                       _screenArgs.discussionModel!.comments![index],
-    //                 );
-    //               },
-    //               itemCount: _screenArgs.discussionModel!.comments!.length,
-    //               shrinkWrap: true,
-    //               physics: const NeverScrollableScrollPhysics(),
-    //             ),
-    //             SizedBox(
-    //               height: 100.h,
-    //             )
-    //           ],
-    //         ),
-    //       ),
-    //       Positioned(
-    //         bottom: size.h20,
-    //         right: size.w16,
-    //         child: CustomButton(
-    //           onTap: () {
-    //             showCupertinoModalPopup(
-    //               context: context,
-    //               builder: (context) => OpinionBottomSheet(
-    //                   masterModel: _screenArgs.discussionModel),
-    //             );
-    //           },
-    //           icon: Icons.add_comment,
-    //           title: label(e: en.yourOpinion, b: bn.yourOpinion),
-    //           radius: size.r4,
-    //         ),
-    //       )
-    //     ],
-    //   );
-    // }));
   }
 
   void onTapUpdateDiscussion(String description) {
@@ -327,14 +270,33 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
     );
   }
 
-  void onTapOpinion() {
+  void onTapOpinion(
+      {required bool edit,
+      required int commentId,
+      required String description}) {
     showCupertinoModalPopup(
       context: context,
       builder: (context) => OpinionBottomSheet(
+        edit: edit,
         discussionId: _screenArgs.discussionId,
+        commentId: commentId,
+        description: description,
         onSuccess: () {
           Navigator.of(context).pop();
           loadDiscussionData(_screenArgs.discussionId);
+        },
+      ),
+    );
+  }
+
+  void onTapReport(int commentId) {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (context) => ReportBottomSheet(
+        commentId: commentId,
+        onSuccess: () {
+          Navigator.of(context).pop();
+          // loadDiscussionData(_screenArgs.discussionId);
         },
       ),
     );
@@ -354,7 +316,16 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
 class CommentTile extends StatelessWidget with AppTheme, Language {
   final CommentDataEntity data;
   final VoidCallback onTapVote;
-  const CommentTile({super.key, required this.data, required this.onTapVote});
+  final VoidCallback onTapReport;
+  final VoidCallback onTapEdit;
+  final VoidCallback onTapRemove;
+  const CommentTile(
+      {super.key,
+      required this.data,
+      required this.onTapVote,
+      required this.onTapReport,
+      required this.onTapEdit,
+      required this.onTapRemove});
 
   @override
   Widget build(BuildContext context) {
@@ -367,6 +338,8 @@ class CommentTile extends StatelessWidget with AppTheme, Language {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Image.asset(
                 ImageAssets.imgEmptyProfile,
@@ -374,25 +347,101 @@ class CommentTile extends StatelessWidget with AppTheme, Language {
               ),
               SizedBox(width: size.w12),
               Expanded(
-                child: Text(
-                  "ব্যবহারকারীর নাম",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomTextWidget(
+                      text: label(e: "ব্যবহারকারীর নাম", b: "ব্যবহারকারীর নাম"),
+                      textColor: clr.blackColor,
                       fontFamily: StringData.fontFamilyPoppins,
-                      fontSize: size.textSmall,
-                      color: clr.blackColor),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                    SizedBox(height: size.h4),
+                    CustomTextWidget(
+                      text: label(
+                          e: timeago.format(DateTime.parse(data.createdAt)),
+                          b: timeAgoToBengali(timeago
+                              .format(DateTime.parse(data.createdAt.trim())))),
+                      textColor: clr.placeHolderTextColorGray,
+                      fontSize: size.textXXSmall,
+                      fontFamily: StringData.fontFamilyPoppins,
+                    ),
+                  ],
                 ),
               ),
-              Text(
-                label(
-                  e: "Date: ${DateFormat('dd MMMM yyyy').format(DateTime.parse(data.createdAt))}",
-                  b: "তারিখ: ${DateFormat('dd MMMM yyyy').format(DateTime.parse(data.createdAt))}",
+
+              ///
+              // Text(
+              //   label(
+              //     e: "Date: ${DateFormat('dd MMMM yyyy').format(DateTime.parse(data.createdAt))}",
+              //     b: "তারিখ: ${DateFormat('dd MMMM yyyy').format(DateTime.parse(data.createdAt))}",
+              //   ),
+              //   style: TextStyle(
+              //       fontWeight: FontWeight.w500,
+              //       fontFamily: StringData.fontFamilyPoppins,
+              //       fontSize: size.textXXSmall,
+              //       color: clr.iconColorHint),
+              // ),
+              // Icon(
+              //   Icons.more_vert_outlined,
+              //   size: size.r16,
+              //   color: clr.iconColorBlack,
+              // ),
+              PopupMenuButton(
+                surfaceTintColor: clr.shadeWhiteColor2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(size.r4),
+                  ),
                 ),
-                style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontFamily: StringData.fontFamilyPoppins,
-                    fontSize: size.textXXSmall,
-                    color: clr.iconColorHint),
+                itemBuilder: (BuildContext context) => [
+                  PopupMenuItem(
+                    onTap: onTapEdit,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.border_color_outlined,
+                          size: size.r16,
+                          color: clr.appPrimaryColorGreen,
+                        ),
+                        SizedBox(width: size.w8),
+                        CustomTextWidget(
+                          text: label(e: "Edit", b: "এডিট করুন"),
+                          fontSize: size.textXSmall,
+                          textColor: clr.gapStrokeGrey,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ],
+                    ),
+                  ),
+                  PopupMenuItem(
+                    onTap: onTapRemove,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.delete_outline_outlined,
+                          size: size.r16,
+                          color: clr.appPrimaryColorGreen,
+                        ),
+                        SizedBox(width: size.w8),
+                        CustomTextWidget(
+                          text: label(e: "Remove", b: "মুছে ফেলুন"),
+                          fontSize: size.textXSmall,
+                          textColor: clr.gapStrokeGrey,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+                child: Icon(
+                  Icons.more_vert_outlined,
+                  size: size.r16,
+                  color: clr.iconColorBlack,
+                ),
               ),
             ],
           ),
@@ -426,7 +475,9 @@ class CommentTile extends StatelessWidget with AppTheme, Language {
                 child: Row(
                   children: [
                     Text(
-                      "${data.vote.toString()}  ভোট",
+                      label(
+                          e: "${data.vote.toString()}  Like",
+                          b: "${replaceEnglishNumberWithBengali(data.vote.toString())}  লাইক"),
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontFamily: StringData.fontFamilyPoppins,
@@ -442,13 +493,16 @@ class CommentTile extends StatelessWidget with AppTheme, Language {
                 size: size.r20,
               ),
               SizedBox(width: size.w4),
-              Text(
-                "রিপোর্ট",
-                style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontFamily: StringData.fontFamilyPoppins,
-                    fontSize: size.textXSmall,
-                    color: clr.placeHolderTextColorGray),
+              GestureDetector(
+                onTap: onTapReport,
+                child: Text(
+                  "রিপোর্ট",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontFamily: StringData.fontFamilyPoppins,
+                      fontSize: size.textXSmall,
+                      color: clr.placeHolderTextColorGray),
+                ),
               ),
             ],
           )

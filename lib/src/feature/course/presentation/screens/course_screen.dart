@@ -99,9 +99,9 @@ class _CourseScreenState extends State<CourseScreen>
                           onTap: () => Navigator.of(context).pushNamed(
                               AppRoute.courseDetailsScreen,
                               arguments: CourseDetailsScreenArgs(
-                                  courseId: item.id,
-                                  curriculumType: CircularStatus.upcoming.name,
-                                  status: "lock")),
+                                courseId: item.id,
+                                curriculumType: CircularStatus.upcoming.name,
+                              )),
                         );
                       },
                     )
@@ -136,13 +136,13 @@ class _CourseScreenState extends State<CourseScreen>
                       buildItem: (BuildContext context, int index, item) {
                         return CourseCard(
                           data: item,
-                          circularStatus: CircularStatus.upcoming.name,
+                          circularStatus: CircularStatus.completed.name,
                           onTap: () => Navigator.of(context).pushNamed(
                               AppRoute.courseDetailsScreen,
                               arguments: CourseDetailsScreenArgs(
-                                  courseId: item.id,
-                                  curriculumType: CircularStatus.upcoming.name,
-                                  status: "lock")),
+                                courseId: item.id,
+                                curriculumType: CircularStatus.completed.name,
+                              )),
                         );
                       },
                     )
@@ -193,8 +193,8 @@ class _CourseScreenState extends State<CourseScreen>
   void navigateToCourseDetailsScreen(int courseId, String circularStatus) {
     Navigator.of(context).pushNamed(AppRoute.courseDetailsScreen,
         arguments: CourseDetailsScreenArgs(
-            courseId: courseId,
-            curriculumType: circularStatus,
-            status: "open"));
+          courseId: courseId,
+          curriculumType: circularStatus,
+        ));
   }
 }

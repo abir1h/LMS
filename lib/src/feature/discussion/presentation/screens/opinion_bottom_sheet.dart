@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
 
 import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../../core/common_widgets/text_field_widget.dart';
 import '../../../../core/constants/common_imports.dart';
-import '../controller/discussion_controller.dart';
 import '../services/opinion_bottomsheet_screen_service.dart';
 
 class OpinionBottomSheet extends StatefulWidget {
+  final bool edit;
   final int discussionId;
+  final int commentId;
+  final String description;
   final VoidCallback onSuccess;
   const OpinionBottomSheet({
     super.key,
+    this.edit = false,
     required this.discussionId,
+    required this.commentId,
+    this.description = "",
     required this.onSuccess,
   });
 
@@ -26,11 +30,11 @@ class _OpinionBottomSheetState extends State<OpinionBottomSheet>
     with AppTheme, Language, OpinionBottomSheetScreenService {
   TextEditingController titleController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  final controller = Get.put(DiscussionController());
 
   @override
   void initState() {
     super.initState();
+    titleController.text = widget.description;
     titleController.addListener(() {
       setState(() {});
     });
@@ -95,9 +99,17 @@ class _OpinionBottomSheetState extends State<OpinionBottomSheet>
                 ),
                 SizedBox(width: size.w4),
                 InkWell(
-                  onTap: () => onCommentCreate(
-                      discussionId: widget.discussionId,
-                      description: titleController.text.trim()),
+                  onTap: () {
+                    if (validateFormData(titleController)) {
+                      !widget.edit
+                          ? onCommentCreate(
+                              discussionId: widget.discussionId,
+                              description: titleController.text.trim())
+                          : onCommentUpdate(
+                              commentId: widget.commentId,
+                              description: titleController.text.trim());
+                    }
+                  },
                   child: Icon(
                     Icons.send,
                     size: size.r28,

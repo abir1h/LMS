@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:lms/src/core/service/notifier/app_events_notifier.dart';
 
+import '../../../../core/service/notifier/app_events_notifier.dart';
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../../../core/common_widgets/circuler_widget.dart';
 import '../../../../core/common_widgets/custom_empty_widget.dart';
@@ -11,7 +10,6 @@ import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/routes/app_route.dart';
 import '../../../discussion/domain/entities/discussion_data_entity.dart';
-import '../../../discussion/presentation/controller/discussion_controller.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';

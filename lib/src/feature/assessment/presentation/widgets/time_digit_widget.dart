@@ -79,7 +79,7 @@ class _TimeDigitWidgetState<T> extends State<TimeDigitWidget<T>> with AppTheme {
       ),
       child: FittedBox(
         child: Text(
-          replaceEnglishNumberWithBangla(value.toString()),
+          replaceEnglishNumberWithBengali(value.toString()),
           style: TextStyle(
             fontSize: size.textLarge,
             color: clr.whiteColor,

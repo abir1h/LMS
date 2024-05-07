@@ -48,45 +48,14 @@ mixin DiscussionBottomSheetScreenService<T extends StatefulWidget> on State<T>
     super.dispose();
   }
 
-  // bool validateFormData(
-  //     TextEditingController authorNameController,
-  //     TextEditingController bookNameController,
-  //     TextEditingController publishYearController,
-  //     TextEditingController editionController) {
-  //   if (Validator.isEmpty(authorNameController.text.trim())) {
-  //     _view.showWarning("Author name is required!");
-  //     return false;
-  //   } else if (!Validator.isValidLength(
-  //       authorNameController.text.trim(), 3, 100)) {
-  //     _view.showWarning("Author name is required at least 3 character!");
-  //     return false;
-  //   } else if (Validator.isValidString(authorNameController.text.trim())) {
-  //     _view.showWarning("Special character is not allowed");
-  //     return false;
-  //   } else if (Validator.isEmpty(bookNameController.text.trim())) {
-  //     _view.showWarning("Book name is required!");
-  //     return false;
-  //   } else if (!Validator.isValidLength(
-  //       bookNameController.text.trim(), 3, 100)) {
-  //     _view.showWarning("Book name is required at least 3 character!");
-  //     return false;
-  //   } else if (Validator.isValidString(bookNameController.text.trim())) {
-  //     _view.showWarning("Special character is not allowed");
-  //     return false;
-  //   } else if (Validator.isEmpty(publishYearController.text.trim())) {
-  //     _view.showWarning("Publish year is required!");
-  //     return false;
-  //   } else if (Validator.isEmpty(editionController.text.trim())) {
-  //     _view.showWarning("Edition is required!");
-  //     return false;
-  //   } else if (!Validator.isValidLength(
-  //       editionController.text.trim(), 3, 100)) {
-  //     _view.showWarning("Edition is required at least 3 character!");
-  //     return false;
-  //   } else {
-  //     return true;
-  //   }
-  // }
+  bool validateFormData(TextEditingController discussionController) {
+    if (Validator.isEmpty(discussionController.text.trim())) {
+      _view.showWarning("Description is required!");
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   Future<ResponseEntity> onDiscussionCreate(
       {required int courseId,

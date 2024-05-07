@@ -18,7 +18,8 @@ abstract class DiscussionRemoteDataSource {
   Future<ResponseModel> getDiscussionCommentsAction(int discussionId);
   Future<ResponseModel> createCommentAction(
       int discussionId, String description);
-  Future<ResponseModel> updateCommentAction(CommentDataModel commentDataModel);
+  Future<ResponseModel> updateCommentAction(int commentId, String description);
+  Future<ResponseModel> deleteCommentAction(int commentId);
   Future<ResponseModel> voteCommentAction(int commentId);
   Future<ResponseModel> reportCommentAction(int commentId, String remarks);
 }
@@ -67,8 +68,8 @@ class DiscussionRemoteDataSourceImp extends DiscussionRemoteDataSource {
     Map<String, dynamic> data = {
       "description": description,
     };
-    data["_method"] = "PUT";
-    final responseJson = await Server.instance.postRequest(
+    // data["_method"] = "PUT";
+    final responseJson = await Server.instance.putRequest(
         url: "${ApiCredential.createDiscussion}/$discussionId", postData: data);
     ResponseModel responseModel = ResponseModel.fromJson(
         responseJson, (dynamic json) => DiscussionDataModel.fromJson(json));
@@ -89,9 +90,9 @@ class DiscussionRemoteDataSourceImp extends DiscussionRemoteDataSource {
     Map<String, dynamic> data = {
       "discussion_id": discussionId,
     };
-    data["_method"] = "PUT";
+    // data["_method"] = "PUT";
     final responseJson = await Server.instance
-        .postRequest(url: ApiCredential.voteDiscussion, postData: data);
+        .putRequest(url: ApiCredential.voteDiscussion, postData: data);
     ResponseModel responseModel = ResponseModel.fromJson(
         responseJson, (dynamic json) => DiscussionDataModel.fromJson(json));
     return responseModel;
@@ -122,12 +123,23 @@ class DiscussionRemoteDataSourceImp extends DiscussionRemoteDataSource {
 
   @override
   Future<ResponseModel> updateCommentAction(
-      CommentDataModel commentDataModel) async {
-    Map<String, dynamic> data = commentDataModel.toJson();
-    data["_method"] = "PUT";
-    final responseJson = await Server.instance.postRequest(
-        url: "${ApiCredential.createComment}/${commentDataModel.id}",
-        postData: data);
+      int commentId, String description) async {
+    Map<String, dynamic> data = {
+      "description": description,
+    };
+    final responseJson = await Server.instance.putRequest(
+        url: "${ApiCredential.createComment}/$commentId", postData: data);
+    ResponseModel responseModel = ResponseModel.fromJson(
+        responseJson, (dynamic json) => CommentDataModel.fromJson(json));
+    return responseModel;
+  }
+
+  @override
+  Future<ResponseModel> deleteCommentAction(int commentId) async {
+    Map<String, dynamic> data = {};
+    // data["_method"] = "PUT";
+    final responseJson = await Server.instance.putRequest(
+        url: "${ApiCredential.createComment}/$commentId", postData: data);
     ResponseModel responseModel = ResponseModel.fromJson(
         responseJson, (dynamic json) => CommentDataModel.fromJson(json));
     return responseModel;
@@ -138,9 +150,9 @@ class DiscussionRemoteDataSourceImp extends DiscussionRemoteDataSource {
     Map<String, dynamic> data = {
       "comment_id": commentId,
     };
-    data["_method"] = "PUT";
+    // data["_method"] = "PUT";
     final responseJson = await Server.instance
-        .postRequest(url: ApiCredential.voteComment, postData: data);
+        .putRequest(url: ApiCredential.voteComment, postData: data);
     ResponseModel responseModel = ResponseModel.fromJson(
         responseJson, (dynamic json) => CommentDataModel.fromJson(json));
     return responseModel;
@@ -151,11 +163,11 @@ class DiscussionRemoteDataSourceImp extends DiscussionRemoteDataSource {
       int commentId, String remarks) async {
     Map<String, dynamic> data = {
       "comment_id": commentId,
-      "remark": remarks,
+      "remarks": remarks,
     };
-    data["_method"] = "PUT";
+    // data["_method"] = "PUT";
     final responseJson = await Server.instance
-        .postRequest(url: ApiCredential.reportComment, postData: data);
+        .putRequest(url: ApiCredential.reportComment, postData: data);
     ResponseModel responseModel = ResponseModel.fromJson(
         responseJson, (dynamic json) => CommentDataModel.fromJson(json));
     return responseModel;

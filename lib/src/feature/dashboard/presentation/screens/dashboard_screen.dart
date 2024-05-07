@@ -64,7 +64,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                     onPressed: () => onTapCard(CircularStatus.running.name),
                     subTitle: label(
                         e: data.courseSummery.runningCourses.toString(),
-                        b: data.courseSummery.runningCourses.toString()),
+                        b: replaceEnglishNumberWithBengali(
+                            data.courseSummery.runningCourses.toString())),
                     borderColor: clr.cardStrokeColorOrange,
                     primaryColor: clr.cardFillColorOrange,
                     image: SvgPicture.asset(
@@ -78,7 +79,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                     onPressed: () => onTapCard(CircularStatus.completed.name),
                     subTitle: label(
                         e: data.courseSummery.completedCourses.toString(),
-                        b: data.courseSummery.completedCourses.toString()),
+                        b: replaceEnglishNumberWithBengali(
+                            data.courseSummery.completedCourses.toString())),
                     borderColor: clr.cardStrokeColorGreen,
                     primaryColor: clr.cardFillColorGreen,
                     image: SvgPicture.asset(
@@ -94,7 +96,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                     onPressed: () => onTapCard(CircularStatus.upcoming.name),
                     subTitle: label(
                         e: data.courseSummery.upcomingCourses.toString(),
-                        b: data.courseSummery.upcomingCourses.toString()),
+                        b: replaceEnglishNumberWithBengali(
+                            data.courseSummery.upcomingCourses.toString())),
                     borderColor: clr.cardStrokeColorBlue,
                     primaryColor: clr.cardFillColorBlue,
                     image: SvgPicture.asset(
@@ -106,8 +109,9 @@ class _DashboardScreenState extends State<DashboardScreen>
                     title: label(e: en.allCourse, b: bn.allCourse),
                     onPressed: () => onTapCard(CircularStatus.courses.name),
                     subTitle: label(
-                        e: data.discussion.toString(),
-                        b: data.discussion.toString()),
+                        e: data.courses.length.toString(),
+                        b: replaceEnglishNumberWithBengali(
+                            data.courses.length.toString())),
                     borderColor: clr.cardStrokeColorPurple,
                     primaryColor: clr.cardFillColorPurple,
                     image: SvgPicture.asset(

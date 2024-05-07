@@ -9,10 +9,9 @@ import '../../domain/use_cases/discussion_use_case.dart';
 abstract class _ViewModel {
   void showWarning(String message);
   void showSuccess(String message);
-  void onSuccessRequest();
 }
 
-mixin OpinionBottomSheetScreenService<T extends StatefulWidget> on State<T>
+mixin ReportBottomSheetScreenService<T extends StatefulWidget> on State<T>
     implements _ViewModel {
   late _ViewModel _view;
 
@@ -20,14 +19,8 @@ mixin OpinionBottomSheetScreenService<T extends StatefulWidget> on State<T>
       discussionRepository: DiscussionRepositoryImp(
           discussionRemoteDataSource: DiscussionRemoteDataSourceImp()));
 
-  Future<ResponseEntity> createComment(
-      int discussionId, String description) async {
-    return _discussionUseCase.createCommentUseCase(discussionId, description);
-  }
-
-  Future<ResponseEntity> updateComment(
-      int commentId, String description) async {
-    return _discussionUseCase.updateCommentUseCase(commentId, description);
+  Future<ResponseEntity> reportComment(int commentId, String remarks) async {
+    return _discussionUseCase.reportCommentUseCase(commentId, remarks);
   }
 
   ///Service configurations
@@ -51,26 +44,14 @@ mixin OpinionBottomSheetScreenService<T extends StatefulWidget> on State<T>
     }
   }
 
-  Future onCommentCreate(
-      {required int discussionId, required String description}) async {
-    ResponseEntity responseEntity =
-        await createComment(discussionId, description);
+  Future<ResponseEntity> onReportComment(
+      {required int commentId, required String remarks}) async {
+    ResponseEntity responseEntity = await reportComment(commentId, remarks);
     if (responseEntity.error == null && responseEntity.data != null) {
       _view.showSuccess(responseEntity.message!);
-      _view.onSuccessRequest();
     } else {
       _view.showWarning(responseEntity.message!);
     }
-  }
-
-  Future onCommentUpdate(
-      {required int commentId, required String description}) async {
-    ResponseEntity responseEntity = await updateComment(commentId, description);
-    if (responseEntity.error == null && responseEntity.data != null) {
-      _view.showSuccess(responseEntity.message!);
-      _view.onSuccessRequest();
-    } else {
-      _view.showWarning(responseEntity.message!);
-    }
+    return responseEntity;
   }
 }

@@ -154,6 +154,35 @@ class Server {
     }
   }
 
+  Future<dynamic> putRequest({
+    required String url,
+    required dynamic postData,
+  }) async {
+    try {
+      var body = json.encode(postData);
+      // String token = await AuthCacheManager.getUserToken();///Todo Delete Later
+      String token =
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOm51bGwsInR5cGUiOiJzdXBlcmFkbWluIiwiaWF0IjoxNzEzNzY1OTcwLCJleHAiOjE3MTYzNTc5NzB9.ofkk_pPVNNwjKXxBb4g5B7f8_MT4PZOM9vN9yE0B3Do";
+      var response = await _client.put(
+        Uri.parse(host + url),
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token"
+        },
+        body: utf8.encode(body),
+      );
+      debugPrint("REQUEST => ${response.request.toString()}");
+      debugPrint("REQUEST DATA => $body");
+      debugPrint("RESPONSE DATA => ${response.body.toString()}");
+      return _returnResponse(response);
+    } on SocketException catch (_) {
+      return '{"message": "Request failed! Check internet connection.", "error": "Error message"}';
+    } on Exception catch (_) {
+      return '{"message": "Request failed! Unknown error occurred.", "error": "Error message"}';
+    }
+  }
+
   Future<dynamic> getRequest({required String url}) async {
     try {
       // String token = await AuthCacheManager.getUserToken();///Todo Delete Later

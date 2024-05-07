@@ -22,11 +22,9 @@ class CourseListScreenArgs {
 class CourseDetailsScreenArgs {
   final int courseId;
   final String curriculumType;
-  final String status;
   CourseDetailsScreenArgs(
       {required this.courseId,
-      required this.curriculumType,
-      required this.status});
+      required this.curriculumType});
 }
 
 class CourseScriptScreenArgs {

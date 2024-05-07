@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -6,7 +5,6 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../../../../core/common_widgets/custom_switch_button.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../course/presentation/widgets/tab_section_widget.dart';
-import '../../../discussion/presentation/screens/discussion_screen.dart';
 import '../../../../core/constants/common_imports.dart';
 
 class TranscriptVideoScreen extends StatefulWidget {
@@ -474,13 +472,6 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
           ],
         ),
       ),
-    );
-  }
-
-  void onTapDiscussion() {
-    showCupertinoModalPopup(
-      context: context,
-      builder: (context) => const DiscussionScreen(),
     );
   }
 }

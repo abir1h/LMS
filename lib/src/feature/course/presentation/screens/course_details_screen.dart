@@ -656,7 +656,7 @@ class _CourseMaterialWidgetState<T> extends State<CourseMaterialWidget<T>>
                   title: label(e: "Duration", b: "সময়কাল"),
                   duration: label(
                       e: "${widget.data.courseWeekCount.toString()} Week",
-                      b: "${widget.data.courseWeekCount.toString()} সপ্তাহ"),
+                      b: "${replaceEnglishNumberWithBengali(widget.data.courseWeekCount.toString())} সপ্তাহ"),
                 ),
                 SizedBox(height: size.h8),
                 CourseMaterialItemWidget(
@@ -664,7 +664,7 @@ class _CourseMaterialWidgetState<T> extends State<CourseMaterialWidget<T>>
                   title: label(e: "Assessment", b: "মূল্যায়ন"),
                   duration: label(
                       e: widget.data.assessmentCount.toString(),
-                      b: "${widget.data.assessmentCount.toString()} টি"),
+                      b: "${replaceEnglishNumberWithBengali(widget.data.assessmentCount.toString())} টি"),
                 ),
                 SizedBox(height: size.h8),
                 CourseMaterialItemWidget(
@@ -672,7 +672,7 @@ class _CourseMaterialWidgetState<T> extends State<CourseMaterialWidget<T>>
                   title: label(e: "Blended Class", b: "ব্লেনডেড ক্লাস"),
                   duration: label(
                       e: widget.data.blendedClassCount.toString(),
-                      b: "${widget.data.blendedClassCount.toString()} টি"),
+                      b: "${replaceEnglishNumberWithBengali(widget.data.blendedClassCount.toString())} টি"),
                 ),
                 SizedBox(height: size.h8),
                 CourseMaterialItemWidget(
@@ -680,7 +680,7 @@ class _CourseMaterialWidgetState<T> extends State<CourseMaterialWidget<T>>
                   title: label(e: "Script", b: "স্ক্রিপ্ট"),
                   duration: label(
                       e: widget.data.scriptCount.toString(),
-                      b: "${widget.data.scriptCount.toString()} টি"),
+                      b: "${replaceEnglishNumberWithBengali(widget.data.scriptCount.toString())} টি"),
                 ),
                 SizedBox(height: size.h8),
                 CourseMaterialItemWidget(
@@ -688,7 +688,7 @@ class _CourseMaterialWidgetState<T> extends State<CourseMaterialWidget<T>>
                   title: label(e: "Assignment", b: "এসাইনমেন্ট"),
                   duration: label(
                       e: widget.data.assignmentCount.toString(),
-                      b: "${widget.data.assignmentCount.toString()} টি"),
+                      b: "${replaceEnglishNumberWithBengali(widget.data.assignmentCount.toString())} টি"),
                 ),
               ],
             ),

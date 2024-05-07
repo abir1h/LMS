@@ -110,9 +110,18 @@ class DiscussionRepositoryImp extends DiscussionRepository {
 
   @override
   Future<ResponseEntity> updateComment(
-      CommentDataEntity commentDataEntity) async {
+      int commentId, String description) async {
     ResponseModel responseModel = (await discussionRemoteDataSource
-        .updateCommentAction(commentDataEntity.toCommentDataModel));
+        .updateCommentAction(commentId, description));
+    return ResponseModelToEntityMapper<CommentDataEntity, CommentDataModel>()
+        .toEntityFromModel(responseModel,
+            (CommentDataModel model) => model.toCommentDataEntity);
+  }
+
+  @override
+  Future<ResponseEntity> deleteComment(int commentId) async {
+    ResponseModel responseModel =
+        (await discussionRemoteDataSource.deleteCommentAction(commentId));
     return ResponseModelToEntityMapper<CommentDataEntity, CommentDataModel>()
         .toEntityFromModel(responseModel,
             (CommentDataModel model) => model.toCommentDataEntity);

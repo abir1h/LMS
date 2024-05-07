@@ -97,7 +97,7 @@ class CourseCard extends StatelessWidget with AppTheme, Language {
               Text(
                 label(
                     e: "${en.courseDuration} ${DateFormat('dd/MM/yyyy').format(DateTime.parse(data.startDate))} - ${DateFormat('dd MMMM yyyy').format(DateTime.parse(data.endDate))}",
-                    b: "${bn.courseDuration} ${DateFormat('dd/MM/yyyy').format(DateTime.parse(data.startDate))} - ${DateFormat('dd/MM/yyyy').format(DateTime.parse(data.endDate))}"),
+                    b: "${bn.courseDuration} ${replaceEnglishNumberWithBengali(DateFormat('dd/MM/yyyy').format(DateTime.parse(data.startDate)))} - ${replaceEnglishNumberWithBengali(DateFormat('dd/MM/yyyy').format(DateTime.parse(data.endDate)))}"),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -134,10 +134,10 @@ class CourseCard extends StatelessWidget with AppTheme, Language {
                             ? en.completed
                             : en.willBegin,
                     b: circularStatus == CircularStatus.running.name
-                        ? "${data.courseProgress}% ${bn.complete}"
+                        ? "${replaceEnglishNumberWithBengali(data.courseProgress.toString())}% ${bn.complete}"
                         : circularStatus == CircularStatus.completed.name
-                            ? en.completed
-                            : en.willBegin),
+                            ? bn.completed
+                            : bn.willBegin),
                 style: TextStyle(
                     color: clr.appPrimaryColorGreen,
                     fontSize: size.textXXSmall,

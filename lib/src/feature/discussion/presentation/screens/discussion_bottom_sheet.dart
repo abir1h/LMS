@@ -32,19 +32,25 @@ class DiscussionBottomSheet extends StatefulWidget {
 
 class _DiscussionBottomSheetState extends State<DiscussionBottomSheet>
     with AppTheme, Language, DiscussionBottomSheetScreenService {
-  TextEditingController titleController = TextEditingController();
+  // TextEditingController titleController = TextEditingController();
   TextEditingController discussionController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     discussionController.text = widget.description;
-    titleController.addListener(() {
-      setState(() {});
-    });
+    // titleController.addListener(() {
+    //   setState(() {});
+    // });
     discussionController.addListener(() {
       setState(() {});
     });
+  }
+
+  @override
+  void dispose() {
+    discussionController.dispose();
+    super.dispose();
   }
 
   @override
@@ -123,6 +129,7 @@ class _DiscussionBottomSheetState extends State<DiscussionBottomSheet>
                     onSuccess: (e) {
                       widget.onSuccess();
                     },
+                    onCheck: () => validateFormData(discussionController),
                     tapAction: () => !widget.edit!
                         ? onDiscussionCreate(
                             courseId: widget.courseId!,
