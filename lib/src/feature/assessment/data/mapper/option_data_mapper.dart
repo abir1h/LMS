@@ -1,5 +1,5 @@
 import '../../domain/entities/option_data_entity.dart';
-import '../models/Option_data_model.dart';
+import '../models/option_data_model.dart';
 
 abstract class OptionDataMapper<M, E> {
   M fromEntityToModel(E entity);
@@ -12,7 +12,7 @@ class OptionDataModelToEntityMapper
   OptionDataModel fromEntityToModel(OptionDataEntity entity) {
     return OptionDataModel(
         id: entity.id,
-        questionId: entity.questionId,
+        circularQuestionId: entity.circularQuestionId,
         optionKey: entity.optionKey,
         optionValue: entity.optionValue,
         optionImg: entity.optionImg,
@@ -23,7 +23,7 @@ class OptionDataModelToEntityMapper
   OptionDataEntity toEntityFromModel(OptionDataModel model) {
     return OptionDataEntity(
         id: model.id,
-        questionId: model.questionId,
+        circularQuestionId: model.circularQuestionId,
         optionKey: model.optionKey,
         optionValue: model.optionValue,
         optionImg: model.optionImg,

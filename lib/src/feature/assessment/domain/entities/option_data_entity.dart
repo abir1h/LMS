@@ -1,6 +1,6 @@
 class OptionDataEntity {
   final int id;
-  final int questionId;
+  final int circularQuestionId;
   final String optionKey;
   final String optionValue;
   final String optionImg;
@@ -8,7 +8,7 @@ class OptionDataEntity {
 
   OptionDataEntity({
     required this.id,
-    required this.questionId,
+    required this.circularQuestionId,
     required this.optionKey,
     required this.optionValue,
     required this.optionImg,

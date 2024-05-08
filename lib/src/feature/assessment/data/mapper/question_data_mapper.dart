@@ -1,6 +1,5 @@
 import 'option_data_mapper.dart';
-import 'question_type_data_mapper.dart';
-import '../models/Option_data_model.dart';
+import '../models/option_data_model.dart';
 import '../../domain/entities/option_data_entity.dart';
 import '../../domain/entities/question_data_entity.dart';
 import '../models/question_data_model.dart';
@@ -16,15 +15,24 @@ class QuestionDataModelToEntityMapper
   QuestionDataModel fromEntityToModel(QuestionDataEntity entity) {
     return QuestionDataModel(
       id: entity.id,
-      courseId: entity.courseId,
-      courseAssessmentId: entity.courseAssessmentId,
+      circularCourseId: entity.circularCourseId,
+      circularId: entity.circularId,
+      parentQuestionId: entity.parentQuestionId,
+      circularAssessmentId: entity.circularAssessmentId,
       question: entity.question,
       questionImg: entity.questionImg,
       supportingNotesEn: entity.supportingNotesEn,
+      explanation: entity.explanation,
+      supportingNotesBn: entity.supportingNotesBn,
       mark: entity.mark,
       negativeMark: entity.negativeMark,
-      questionType: entity.questionType?.toQuestionTypeDataModel,
+      createdBy: entity.createdBy,
+      questionType: entity.questionType,
       typeId: entity.typeId,
+      status: entity.status,
+      createdAt: entity.createdAt,
+      updatedAt: entity.updatedAt,
+      deletedAt: entity.deletedAt,
       options: List<OptionDataEntity>.from(entity.options)
           .map((entity) => entity.toOptionDataModel)
           .toList(),
@@ -35,15 +43,24 @@ class QuestionDataModelToEntityMapper
   QuestionDataEntity toEntityFromModel(QuestionDataModel model) {
     return QuestionDataEntity(
       id: model.id,
-      courseId: model.courseId,
-      courseAssessmentId: model.courseAssessmentId,
+      circularCourseId: model.circularCourseId,
+      circularId: model.circularId,
+      parentQuestionId: model.parentQuestionId,
+      circularAssessmentId: model.circularAssessmentId,
       question: model.question,
       questionImg: model.questionImg,
       supportingNotesEn: model.supportingNotesEn,
+      explanation: model.explanation,
+      supportingNotesBn: model.supportingNotesBn,
       mark: model.mark,
       negativeMark: model.negativeMark,
-      questionType: model.questionType?.toQuestionTypeDataEntity,
+      createdBy: model.createdBy,
+      questionType: model.questionType,
       typeId: model.typeId,
+      status: model.status,
+      createdAt: model.createdAt,
+      updatedAt: model.updatedAt,
+      deletedAt: model.deletedAt,
       options: List<OptionDataModel>.from(model.options)
           .map((model) => model.toOptionDataEntity)
           .toList(),

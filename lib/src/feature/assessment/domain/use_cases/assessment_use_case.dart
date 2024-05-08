@@ -16,4 +16,9 @@ class AssessmentUseCase {
     final response = _assessmentRepository.getQuestionType();
     return response;
   }
+
+  Future<ResponseEntity> startExamUseCase(int circularAssessmentId) async {
+    final response = _assessmentRepository.startExam(circularAssessmentId);
+    return response;
+  }
 }

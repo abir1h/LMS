@@ -1,3 +1,6 @@
+import '../mapper/exam_data_mapper.dart';
+import '../models/exam_data_model.dart';
+import '../../domain/entities/exam_data_entity.dart';
 import '../mapper/question_type_data_mapper.dart';
 import '../models/question_type_data_model.dart';
 import '../../domain/entities/qustion_type_data_entity.dart';
@@ -36,5 +39,14 @@ class AssessmentRepositoryImp extends AssessmentRepository {
                 List<QuestionTypeDataModel>.from(models)
                     .map((e) => e.toQuestionTypeDataEntity)
                     .toList());
+  }
+
+  @override
+  Future<ResponseEntity> startExam(int circularAssessmentId) async {
+    ResponseModel responseModel = (await assessmentRemoteDataSource
+        .startExamAction(circularAssessmentId));
+    return ResponseModelToEntityMapper<ExamDataEntity, ExamDataModel>()
+        .toEntityFromModel(
+            responseModel, (ExamDataModel model) => model.toExamDataEntity);
   }
 }
