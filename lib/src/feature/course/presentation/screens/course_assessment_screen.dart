@@ -57,7 +57,7 @@ class _CourseAssessmentScreenState extends State<CourseAssessmentScreen>
                       border: Border(
                           bottom: BorderSide(color: clr.boxStrokeColor))),
                   child: Text(
-                    label(e: data.assessmentTitleEn, b: data.assessmentTitleBn),
+                    label(e: data.titleEn, b: data.titleBn),
                     style: TextStyle(
                         color: clr.appPrimaryColorGreen,
                         fontSize: size.textSmall,

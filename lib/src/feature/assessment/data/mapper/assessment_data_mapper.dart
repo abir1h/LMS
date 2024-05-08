@@ -16,15 +16,26 @@ class AssessmentDataModelToEntityMapper
     return AssessmentDataModel(
         id: entity.id,
         courseId: entity.courseId,
+        circularId: entity.circularId,
+        parentAssessmentId: entity.parentAssessmentId,
         courseModuleId: entity.courseModuleId,
-        assessmentTitleEn: entity.assessmentTitleEn,
-        assessmentTitleBn: entity.assessmentTitleBn,
+        titleEn: entity.titleEn,
+        titleBn: entity.titleBn,
         totalMark: entity.totalMark,
         passMark: entity.passMark,
+        negativeMark: entity.negativeMark,
         totalTime: entity.totalTime,
         tries: entity.tries,
-        isHorizontal: entity.isHorizontal,
         isCertificationAssessment: entity.isCertificationAssessment,
+        isHorizontal: entity.isHorizontal,
+        status: entity.status,
+        createdBy: entity.createdBy,
+        createdAt: entity.createdAt,
+        updatedAt: entity.updatedAt,
+        deletedAt: entity.deletedAt,
+        assessmentInstruction: entity.assessmentInstruction,
+        startDate: entity.startDate,
+        endDate: entity.endDate,
         questions: List<QuestionDataEntity>.from(entity.questions)
             .map((entity) => entity.toQuestionDataModel)
             .toList());
@@ -33,20 +44,32 @@ class AssessmentDataModelToEntityMapper
   @override
   AssessmentDataEntity toEntityFromModel(AssessmentDataModel model) {
     return AssessmentDataEntity(
-        id: model.id,
-        courseId: model.courseId,
-        courseModuleId: model.courseModuleId,
-        assessmentTitleEn: model.assessmentTitleEn,
-        assessmentTitleBn: model.assessmentTitleBn,
-        totalMark: model.totalMark,
-        passMark: model.passMark,
-        totalTime: model.totalTime,
-        tries: model.tries,
-        isHorizontal: model.isHorizontal,
-        isCertificationAssessment: model.isCertificationAssessment,
-        questions: List<QuestionDataModel>.from(model.questions)
-            .map((model) => model.toQuestionDataEntity)
-            .toList(),);
+      id: model.id,
+      courseId: model.courseId,
+      circularId: model.circularId,
+      parentAssessmentId: model.parentAssessmentId,
+      courseModuleId: model.courseModuleId,
+      titleEn: model.titleEn,
+      titleBn: model.titleBn,
+      totalMark: model.totalMark,
+      passMark: model.passMark,
+      negativeMark: model.negativeMark,
+      totalTime: model.totalTime,
+      tries: model.tries,
+      isCertificationAssessment: model.isCertificationAssessment,
+      isHorizontal: model.isHorizontal,
+      status: model.status,
+      createdBy: model.createdBy,
+      createdAt: model.createdAt,
+      updatedAt: model.updatedAt,
+      deletedAt: model.deletedAt,
+      assessmentInstruction: model.assessmentInstruction,
+      startDate: model.startDate,
+      endDate: model.endDate,
+      questions: List<QuestionDataModel>.from(model.questions)
+          .map((model) => model.toQuestionDataEntity)
+          .toList(),
+    );
   }
 }
 
