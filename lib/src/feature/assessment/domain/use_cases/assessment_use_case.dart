@@ -11,4 +11,9 @@ class AssessmentUseCase {
     final response = _assessmentRepository.getAssessmentDetails(courseContentId);
     return response;
   }
+
+  Future<ResponseEntity> getQuestionTypeUseCase() async {
+    final response = _assessmentRepository.getQuestionType();
+    return response;
+  }
 }

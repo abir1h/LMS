@@ -1,3 +1,6 @@
+import '../mapper/question_type_data_mapper.dart';
+import '../models/question_type_data_model.dart';
+import '../../domain/entities/qustion_type_data_entity.dart';
 import '../mapper/assessment_data_mapper.dart';
 import '../../../shared/data/mapper/response_mapper.dart';
 import '../../../shared/domain/entities/response_entity.dart';
@@ -19,5 +22,19 @@ class AssessmentRepositoryImp extends AssessmentRepository {
             AssessmentDataModel>()
         .toEntityFromModel(responseModel,
             (AssessmentDataModel model) => model.toAssessmentDataEntity);
+  }
+
+  @override
+  Future<ResponseEntity> getQuestionType() async {
+    ResponseModel responseModel =
+        (await assessmentRemoteDataSource.getQuestionTypeAction());
+    return ResponseModelToEntityMapper<List<QuestionTypeDataEntity>,
+            List<QuestionTypeDataModel>>()
+        .toEntityFromModel(
+            responseModel,
+            (List<QuestionTypeDataModel> models) =>
+                List<QuestionTypeDataModel>.from(models)
+                    .map((e) => e.toQuestionTypeDataEntity)
+                    .toList());
   }
 }

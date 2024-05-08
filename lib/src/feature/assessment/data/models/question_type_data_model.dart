@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
 @immutable
 class QuestionTypeDataModel {
@@ -23,4 +23,11 @@ class QuestionTypeDataModel {
     "name_en": nameEn,
     "name_bn": nameBn,
   };
+
+  static List<QuestionTypeDataModel> listFromJson(List<dynamic> json) {
+    return json.isNotEmpty
+        ? List.castFrom<dynamic, QuestionTypeDataModel>(
+        json.map((x) => QuestionTypeDataModel.fromJson(x)).toList())
+        : [];
+  }
 }
