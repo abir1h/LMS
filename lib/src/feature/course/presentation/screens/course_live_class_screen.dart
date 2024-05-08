@@ -310,11 +310,13 @@ class InClassCardWidget extends StatelessWidget with AppTheme, Language {
           SizedBox(height: size.h20),
           CardRowItemWidget(
             leftText: label(e: en.classSchedule, b: bn.classSchedule),
-            rightText: label(
-                e: DateFormat('dd MMMM, yyyy')
-                    .format(DateTime.parse(data.classSchedule)),
-                b: timeAgoToBengali(DateFormat('dd MMMM, yyyy')
-                    .format(DateTime.parse(data.classSchedule)))),
+            rightText: data.classSchedule.isNotEmpty
+                ? label(
+                    e: DateFormat('dd MMMM, yyyy')
+                        .format(DateTime.parse(data.classSchedule)),
+                    b: timeAgoToBengali(DateFormat('dd MMMM, yyyy')
+                        .format(DateTime.parse(data.classSchedule))))
+                : "",
           ),
           SizedBox(height: size.h20),
           CardRowItemWidget(
@@ -411,11 +413,13 @@ class OnlineClassCardWidget extends StatelessWidget with AppTheme, Language {
           SizedBox(height: size.h20),
           CardRowItemWidget(
             leftText: label(e: en.classSchedule, b: bn.classSchedule),
-            rightText: label(
-                e: DateFormat('dd MMMM, yyyy')
-                    .format(DateTime.parse(data.classSchedule)),
-                b: DateFormat('dd MMMM, yyyy')
-                    .format(DateTime.parse(data.classSchedule))),
+            rightText: data.classSchedule.isNotEmpty
+                ? label(
+                    e: DateFormat('dd MMMM, yyyy')
+                        .format(DateTime.parse(data.classSchedule)),
+                    b: DateFormat('dd MMMM, yyyy')
+                        .format(DateTime.parse(data.classSchedule)))
+                : "",
           ),
           SizedBox(height: size.h20),
           CardRowItemWidget(

@@ -48,21 +48,21 @@ class CourseContentWidget extends StatelessWidget with AppTheme, Language {
           Expanded(
             flex: 1,
             child: Icon(
-              data.contentType == ContentType.course_video.name
+              data.contentType == ContentType.circular_videos.name
                   ? Icons.smart_display
-                  : data.contentType == ContentType.course_assignment.name
+                  : data.contentType == ContentType.circular_assignment.name
                       ? Icons.assignment
-                      : data.contentType == ContentType.course_assessment.name
+                      : data.contentType == ContentType.circular_assessment.name
                           ? Icons.help_center
                           : data.contentType == ContentType.course_script.name
                               ? Icons.text_snippet
                               : Icons.cast_connected,
               size: size.r24,
-              color: data.contentType == ContentType.course_video.name
+              color: data.contentType == ContentType.circular_videos.name
                   ? clr.iconColorSweetRed
-                  : data.contentType == ContentType.course_assignment.name
+                  : data.contentType == ContentType.circular_assignment.name
                       ? clr.appPrimaryColorGreen
-                      : data.contentType == ContentType.course_assessment.name
+                      : data.contentType == ContentType.circular_assessment.name
                           ? clr.textColorAppleBlack
                           : data.contentType == ContentType.course_script.name
                               ? clr.iconColorBlue
@@ -85,11 +85,11 @@ class CourseContentWidget extends StatelessWidget with AppTheme, Language {
           Expanded(
             flex: buttonTextSize.width < 80.0 ? 3 : 4,
             child: GestureDetector(
-              onTap: data.contentType == ContentType.course_video.name
+              onTap: data.contentType == ContentType.circular_videos.name
                   ? onTapVideo
-                  : data.contentType == ContentType.course_assignment.name
+                  : data.contentType == ContentType.circular_assignment.name
                       ? onTapAssignment
-                      : data.contentType == ContentType.course_assessment.name
+                      : data.contentType == ContentType.circular_assessment.name
                           ? onTapAssessment
                           : data.contentType == ContentType.course_script.name
                               ? onTapScript
@@ -109,7 +109,7 @@ class CourseContentWidget extends StatelessWidget with AppTheme, Language {
                   children: [
                     Flexible(
                       child: Text(
-                        data.contentType == ContentType.course_video.name
+                        data.contentType == ContentType.circular_videos.name
                             ? label(e: en.see, b: bn.see)
                             : data.contentType ==
                                     ContentType.course_blended_class.name
@@ -127,7 +127,7 @@ class CourseContentWidget extends StatelessWidget with AppTheme, Language {
                     ),
                     SizedBox(width: size.w8),
                     Icon(
-                      data.contentType == ContentType.course_video.name
+                      data.contentType == ContentType.circular_videos.name
                           ? Icons.play_circle
                           : data.contentType ==
                                   ContentType.course_blended_class.name

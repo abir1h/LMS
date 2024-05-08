@@ -11,6 +11,7 @@ import '../../../../core/common_widgets/quil_text_viewer.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
+import '../services/written_assignment_submit_screen_service.dart';
 import '../widgets/assignment_bottom_sheet.dart';
 
 class AssignmentSubmitScreen extends StatefulWidget {
@@ -23,7 +24,7 @@ class AssignmentSubmitScreen extends StatefulWidget {
 }
 
 class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
-    with AppTheme, Language {
+    with AppTheme, Language, WrittenAssignmentSubmitScreenService {
   late AssignmentSubmitScreenArgs _screenArgs;
 
   final controller = Get.put(AssignmentController());
@@ -87,60 +88,75 @@ class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
                         top: BorderSide(
                             color: clr.boxStrokeColor, width: size.w1))),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Expanded(
-                        child: FilledButton(
-                            onPressed: () {
-                              CustomToasty.of(context)
-                                  .showSuccess("সফলভাবে  জমাদান সম্পন্ন হয়েছে");
-                              Navigator.of(context)
-                                  .pushNamed(AppRoute.courseAssignmentScreen);
-                            },
-                            style: FilledButton.styleFrom(
-                              side: BorderSide(
-                                  color: clr.appPrimaryColorGreen,
-                                  width: size.r1),
-                              backgroundColor: clr.scaffoldBackgroundColor,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(size.r4),
-                              ),
-                            ),
-                            child: Text(
-                              label(e: en.submit, b: bn.submit),
-                              style: TextStyle(
-                                  color: clr.appPrimaryColorGreen,
-                                  fontSize: size.textSmall,
-                                  fontWeight: FontWeight.w600,
-                                  fontFamily: StringData.fontFamilyPoppins),
-                              textAlign: TextAlign.center,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ))),
-                    SizedBox(width: size.w16),
-                    Expanded(
-                      child: FilledButton(
-                          onPressed: () {
-                            CustomToasty.of(context)
-                                .showSuccess("সফলভাবে সংরক্ষণ সম্পন্ন হয়েছে ");
-                          },
-                          style: FilledButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(size.r4),
-                            ),
+                    FilledButton(
+                        onPressed: () {
+                          onStoreAssignment(
+                              assignmentId:
+                                  _screenArgs.assignmentDataEntity!.id,
+                              subAssignmentId: _screenArgs.assignmentDataEntity
+                                          ?.circularSubAssignments !=
+                                      null
+                                  ? _screenArgs.assignmentDataEntity!
+                                      .circularSubAssignments!.id
+                                  : -1,
+                              courseId:
+                                  _screenArgs.assignmentDataEntity!.courseId,
+                              circularId:
+                                  _screenArgs.assignmentDataEntity!.circularId,
+                              answer: data,
+                              filePath: "");
+                          Navigator.of(context).pushNamed(
+                              AppRoute.courseAssignmentScreen,
+                              arguments: CourseAssessmentScreenArgs(
+                                  courseContentId:
+                                      _screenArgs.assignmentDataEntity!.id,
+                                  onTap: () {}));
+                        },
+                        style: FilledButton.styleFrom(
+                          side: BorderSide(
+                              color: clr.appPrimaryColorGreen, width: size.r1),
+                          backgroundColor: clr.scaffoldBackgroundColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(size.r4),
                           ),
-                          child: Text(
-                            label(e: en.saveAsDraft, b: bn.saveAsDraft),
-                            style: TextStyle(
-                                color: clr.whiteColor,
-                                fontSize: size.textSmall,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: StringData.fontFamilyPoppins),
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          )),
-                    ),
+                        ),
+                        child: Text(
+                          label(e: en.submit, b: bn.submit),
+                          style: TextStyle(
+                              color: clr.appPrimaryColorGreen,
+                              fontSize: size.textSmall,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: StringData.fontFamilyPoppins),
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        )),
+                    // SizedBox(width: size.w16),
+                    // Expanded(
+                    //   child: FilledButton(
+                    //       onPressed: () {
+                    //         CustomToasty.of(context)
+                    //             .showSuccess("সফলভাবে সংরক্ষণ সম্পন্ন হয়েছে ");
+                    //       },
+                    //       style: FilledButton.styleFrom(
+                    //         shape: RoundedRectangleBorder(
+                    //           borderRadius: BorderRadius.circular(size.r4),
+                    //         ),
+                    //       ),
+                    //       child: Text(
+                    //         label(e: en.saveAsDraft, b: bn.saveAsDraft),
+                    //         style: TextStyle(
+                    //             color: clr.whiteColor,
+                    //             fontSize: size.textSmall,
+                    //             fontWeight: FontWeight.w600,
+                    //             fontFamily: StringData.fontFamilyPoppins),
+                    //         textAlign: TextAlign.center,
+                    //         maxLines: 1,
+                    //         overflow: TextOverflow.ellipsis,
+                    //       )),
+                    // ),
                   ],
                 ),
               ),
@@ -155,5 +171,15 @@ class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
       builder: (context) => AssignmentBottomSheet(
           from: screenName, mainModel: _screenArgs.assignmentModel),
     );
+  }
+
+  @override
+  void showSuccess(String message) {
+    CustomToasty.of(context).showSuccess(message);
+  }
+
+  @override
+  void showWarning(String message) {
+    CustomToasty.of(context).showWarning(message);
   }
 }

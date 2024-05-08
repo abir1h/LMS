@@ -111,6 +111,18 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
                                           size: size.r20,
                                         ),
                                       ),
+                                      SizedBox(width: size.w8),
+                                      GestureDetector(
+                                        onTap: () =>
+                                            onTapReportDiscussion(data.id),
+                                        child: Icon(
+                                          Icons.flag,
+                                          color: data.vote == 0
+                                              ? clr.placeHolderTextColorGray
+                                              : clr.appPrimaryColorGreen,
+                                          size: size.r20,
+                                        ),
+                                      ),
                                       Expanded(
                                         child: Text.rich(
                                             textAlign: TextAlign.end,
@@ -176,7 +188,7 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
                                   ),
                                 ),
                                 PopupMenuItem(
-                                  onTap: () {},
+                                  onTap: () => onTapRemoveDiscussions(data.id),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
@@ -270,6 +282,20 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
     );
   }
 
+  void onTapReportDiscussion(int discussionId) {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (context) => ReportBottomSheet(
+        from: "discussion",
+        id: discussionId,
+        onSuccess: () {
+          Navigator.of(context).pop();
+          // loadDiscussionData(_screenArgs.discussionId);
+        },
+      ),
+    );
+  }
+
   void onTapOpinion(
       {required bool edit,
       required int commentId,
@@ -293,7 +319,8 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
     showCupertinoModalPopup(
       context: context,
       builder: (context) => ReportBottomSheet(
-        commentId: commentId,
+        from: "comment",
+        id: commentId,
         onSuccess: () {
           Navigator.of(context).pop();
           // loadDiscussionData(_screenArgs.discussionId);

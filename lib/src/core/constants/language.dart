@@ -145,7 +145,8 @@ class LanguageEn {
   String discussionTitle = "Discussion Title";
   String writeHere = "Write here...";
   String publishTheDiscussion = "Publish The Discussion";
-  String writeYourReport = "Enter the reason for reporting the comment";
+  String reportDiscussion = "Enter the reason for reporting the discussion";
+  String reportComment = "Enter the reason for reporting the comment";
   String report = "Report";
   String writeYourOpinion = "Write Your Opinion";
 
@@ -313,7 +314,8 @@ class LanguageBn {
   String discussionTitle = "আলোচনার শিরোনাম";
   String writeHere = "এখানে লিখুন...";
   String publishTheDiscussion = "আলোচনা প্রকাশ করুন";
-  String writeYourReport = "মন্তব্যটি রিপোর্ট করার কারণ লিখুন";
+  String reportDiscussion = "আলোচনাটি রিপোর্ট করার কারণ লিখুন";
+  String reportComment = "মন্তব্যটি রিপোর্ট করার কারণ লিখুন";
   String report = "রিপোর্ট";
   String writeYourOpinion = "আপনার মতামত লিখুন";
 

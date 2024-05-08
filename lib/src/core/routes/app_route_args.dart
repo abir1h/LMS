@@ -1,7 +1,7 @@
 import 'dart:ui';
 
+import '../../feature/assignment/domain/entities/assignment_data_entity.dart';
 import '../../feature/assignment/presentation/models/assignment_model.dart';
-import '../../feature/discussion/models/discussion_model.dart';
 import '../../feature/notes/presentation/models/note_model.dart';
 
 class EMISWebViewScreenArgs {
@@ -23,8 +23,7 @@ class CourseDetailsScreenArgs {
   final int courseId;
   final String curriculumType;
   CourseDetailsScreenArgs(
-      {required this.courseId,
-      required this.curriculumType});
+      {required this.courseId, required this.curriculumType});
 }
 
 class CourseScriptScreenArgs {
@@ -52,13 +51,20 @@ class CourseBlendedScreenArgs {
 class CourseAssessmentScreenArgs {
   final int courseContentId;
   final VoidCallback onTap;
-  CourseAssessmentScreenArgs(
-      {required this.courseContentId, required this.onTap});
+  CourseAssessmentScreenArgs({required this.courseContentId, required this.onTap});
+}
+
+class AssignmentArgs {
+  final AssignmentDataEntity assignmentDataEntity;
+  AssignmentArgs({required this.assignmentDataEntity});
 }
 
 class AssignmentSubmitScreenArgs {
   final AssignmentModel? assignmentModel;
-  AssignmentSubmitScreenArgs({this.assignmentModel});
+  final AssignmentDataEntity? assignmentDataEntity;
+  final String? answer;
+  AssignmentSubmitScreenArgs(
+      {this.assignmentModel, this.assignmentDataEntity, this.answer});
 }
 
 class DetailedDiscussionArgs {

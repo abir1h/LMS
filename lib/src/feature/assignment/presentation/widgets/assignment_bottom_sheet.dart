@@ -4,19 +4,21 @@ import 'package:get/get.dart';
 
 import '../../../../core/routes/app_route.dart';
 import '../../../../core/routes/app_route_args.dart';
+import '../../domain/entities/assignment_data_entity.dart';
 import '../models/assignment_model.dart';
 import '../../../../core/utility/app_label.dart';
 import '../controllers/assignment_controller.dart';
 import '../../../../core/constants/common_imports.dart';
 
 class AssignmentBottomSheet extends StatefulWidget {
-  final AssignmentModel? mainModel;
   final String from;
-  const AssignmentBottomSheet({
-    super.key,
-    this.mainModel,
-    required this.from,
-  });
+  final AssignmentDataEntity? assignmentDataEntity;
+  final AssignmentModel? mainModel;
+  const AssignmentBottomSheet(
+      {super.key,
+      required this.from,
+      this.assignmentDataEntity,
+      this.mainModel});
 
   @override
   State<AssignmentBottomSheet> createState() => _AssignmentBottomSheetState();
@@ -169,6 +171,8 @@ class _AssignmentBottomSheetState extends State<AssignmentBottomSheet>
                             Navigator.of(context).pushNamed(
                                 AppRoute.assignmentSubmitScreen,
                                 arguments: AssignmentSubmitScreenArgs(
+                                    assignmentDataEntity:
+                                        widget.assignmentDataEntity,
                                     assignmentModel: AssignmentModel(
                                         assignmentId: 0,
                                         content: _controller.document)));

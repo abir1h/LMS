@@ -21,21 +21,24 @@ class ApiCredential {
 
   static String getCircular = "/circular-service/api/mobile/circulars";
 
-  static String createDiscussion = "/circular-service/api/mobile/discussion";
+  static String discussion = "/circular-service/api/mobile/discussion";
   static String getDiscussion =
       "/circular-service/api/mobile/discussion-content-wise";
-  static String getDiscussionDetails =
-      "/circular-service/api/mobile/discussion";
-  static String voteDiscussion = "/circular-service/api/mobile/vote-discussion";
   static String getDiscussionComments =
       "/circular-service/api/mobile/discussion-comments/";
+  static String voteDiscussion = "/circular-service/api/mobile/vote-discussion";
+  static String reportDiscussion =
+      "/circular-service/api/mobile/report-discussion";
 
   static String createComment = "/circular-service/api/mobile/comment";
   static String voteComment = "/circular-service/api/mobile/vote-comment";
   static String reportComment = "/circular-service/api/mobile/report-comment";
 
   static String getAssessment = "/circular-service/api/mobile/assessment";
+
   static String getAssignment = "/assignment-service/api/mobile/assignments";
+  static String createAssignment =
+      "/assignment-service/api/mobile/assignment-submissions";
 
   static String getNotes = "/notes";
   static String getNotesByContent = "/notes-by-content";

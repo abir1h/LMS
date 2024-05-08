@@ -87,6 +87,17 @@ class DiscussionRepositoryImp extends DiscussionRepository {
   }
 
   @override
+  Future<ResponseEntity> reportDiscussion(
+      int discussionId, String remarks) async {
+    ResponseModel responseModel = (await discussionRemoteDataSource
+        .reportDiscussionAction(discussionId, remarks));
+    return ResponseModelToEntityMapper<DiscussionDataEntity,
+            DiscussionDataModel>()
+        .toEntityFromModel(responseModel,
+            (DiscussionDataModel model) => model.toDiscussionDataEntity);
+  }
+
+  @override
   Future<ResponseEntity> getDiscussionComments(int discussionId) async {
     ResponseModel responseModel = (await discussionRemoteDataSource
         .getDiscussionCommentsAction(discussionId));
