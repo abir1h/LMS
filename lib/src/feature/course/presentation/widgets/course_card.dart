@@ -96,7 +96,7 @@ class CourseCard extends StatelessWidget with AppTheme, Language {
               SizedBox(height: size.h8),
               Text(
                 label(
-                    e: "${en.courseDuration} ${DateFormat('dd/MM/yyyy').format(DateTime.parse(data.startDate))} - ${DateFormat('dd MMMM yyyy').format(DateTime.parse(data.endDate))}",
+                    e: "${en.courseDuration} ${DateFormat('dd/MM/yyyy').format(DateTime.parse(data.startDate))} - ${DateFormat('dd/MM/yyyy').format(DateTime.parse(data.endDate))}",
                     b: "${bn.courseDuration} ${replaceEnglishNumberWithBengali(DateFormat('dd/MM/yyyy').format(DateTime.parse(data.startDate)))} - ${replaceEnglishNumberWithBengali(DateFormat('dd/MM/yyyy').format(DateTime.parse(data.endDate)))}"),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
