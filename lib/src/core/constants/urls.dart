@@ -37,6 +37,7 @@ class ApiCredential {
   static String getAssessment = "/circular-service/api/mobile/assessment";
   static String getAssignment = "/assignment-service/api/mobile/assignments";
 
-  static String getNotes = "/notes";
-  static String getNotesByContent = "/notes-by-content";
+  static String getNotes = "/circular-service/api/mobile/notes";
+  static String createNotes = "/circular-service/api/mobile/notes";
+  static String getNotesByContent = "/circular-service/api/notes-by-content";
 }

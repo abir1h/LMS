@@ -7,36 +7,26 @@ class NoteUseCase {
   NoteUseCase({required NoteRepository noteRepository})
       : _noteRepository = noteRepository;
 
-  Future<ResponseEntity> getNotesUseCase() async {
-    final response = _noteRepository.getNotes();
+  Future<ResponseEntity> getNotesUseCase(int pageNumber) async {
+    final response =
+    _noteRepository.getNoteList(pageNumber);
     return response;
   }
 
-  Future<ResponseEntity> getNotesByContentUseCase(
-      int contentId, String contentType) async {
-    final response = _noteRepository.getNotesByContent(contentId, contentType);
-    return response;
-  }
-
-  Future<ResponseEntity> getNoteDetailsUseCase(int noteId) async {
-    final response = _noteRepository.getNoteDetails(noteId);
-    return response;
-  }
-
-  Future<ResponseEntity> createNoteUseCase(
+  Future<ResponseEntity> createNotesUseCase(
       NoteDataEntity noteDataEntity) async {
-    final response = _noteRepository.createNote(noteDataEntity);
+    final response = _noteRepository.createNotes(noteDataEntity);
     return response;
   }
 
-  Future<ResponseEntity> updateNoteUseCase(
+  Future<ResponseEntity> updateNotesUseCase(
       NoteDataEntity noteDataEntity) async {
-    final response = _noteRepository.updateNote(noteDataEntity);
+    final response = _noteRepository.updateNotes(noteDataEntity);
     return response;
   }
 
-  Future<ResponseEntity> deleteNoteUseCase(int noteId) async {
-    final response = _noteRepository.deleteNote(noteId);
+  Future<ResponseEntity> deleteNotesUseCase(int noteId) async {
+    final response = _noteRepository.deleteNotes(noteId);
     return response;
   }
 }

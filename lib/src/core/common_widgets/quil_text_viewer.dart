@@ -26,7 +26,7 @@ class _QuilTextViewerState extends State<QuilTextViewer> with AppTheme {
           return QuillEditor(
             scrollController: ScrollController(),
             configurations: QuillEditorConfigurations(
-              readOnly: false,
+              readOnly: true,
               scrollPhysics: const NeverScrollableScrollPhysics(),
               customStyles: DefaultStyles(
                 code: DefaultTextBlockStyle(

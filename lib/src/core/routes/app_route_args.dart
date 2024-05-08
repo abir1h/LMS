@@ -1,9 +1,12 @@
 import 'dart:ui';
 
+import 'package:lms/src/feature/notes/domain/entities/note_data_entity.dart';
+
 import '../../feature/assignment/presentation/models/assignment_model.dart';
 import '../../feature/discussion/models/discussion_model.dart';
-import '../../feature/notes/presentation/models/note_model.dart';
-
+enum NoteType{
+  edit,create,readMode
+}
 class EMISWebViewScreenArgs {
   final String webViewLink;
   EMISWebViewScreenArgs({required this.webViewLink});
@@ -67,8 +70,9 @@ class DetailedDiscussionArgs {
 }
 
 class NoteDetailsScreenArgs {
-  final NoteModel? noteModel;
-  NoteDetailsScreenArgs({this.noteModel});
+  final NoteDataEntity? noteDataEntity;
+  final NoteType? noteType;
+  NoteDetailsScreenArgs({ this.noteType, required this.noteDataEntity});
 }
 
 class CircularDetailsScreenArgs {

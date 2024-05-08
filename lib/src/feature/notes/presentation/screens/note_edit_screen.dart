@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,9 +10,11 @@ import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/routes/app_route.dart';
 import '../../../../core/routes/app_route_args.dart';
+import '../../domain/entities/note_data_entity.dart';
 import '../controllers/note_controller.dart';
 import '../models/note_model.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
+import '../service/note_edit_screen_service.dart';
 
 class NoteEditScreen extends StatefulWidget {
   final Object? arguments;
@@ -20,7 +24,8 @@ class NoteEditScreen extends StatefulWidget {
   State<NoteEditScreen> createState() => _NoteEditScreenState();
 }
 
-class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
+class _NoteEditScreenState extends State<NoteEditScreen>
+    with AppTheme, NoteEditScreenService {
   late NoteDetailsScreenArgs _screenArgs;
   final _controller = QuillController.basic();
   final _editorFocusNode = FocusNode();
@@ -34,25 +39,27 @@ class _NoteEditScreenState extends State<NoteEditScreen> with AppTheme {
   void initState() {
     super.initState();
     _screenArgs = widget.arguments as NoteDetailsScreenArgs;
-    setContent();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      setContent();
+    });
   }
 
   setContent() {
-    if (_screenArgs.noteModel != null) {
-      if (_screenArgs.noteModel!.description != null) {
-        final Document doc =
-            Document.fromJson(_screenArgs.noteModel?.description as List);
+    if (_screenArgs.noteDataEntity != null) {
+      if (_screenArgs.noteDataEntity!.description.isNotEmpty) {
+        final Document doc = Document.fromJson(
+            json.decode(_screenArgs.noteDataEntity!.description));
         _controller.document = doc;
       }
-      if (_screenArgs.noteModel!.title != null) {
-        titleController.text = _screenArgs.noteModel!.title!;
+      if (_screenArgs.noteDataEntity!.title.isNotEmpty) {
+        titleController.text = _screenArgs.noteDataEntity!.title;
       }
-      if (_screenArgs.noteModel!.reference != null) {
+      /* if (_screenArgs.noteModel!.reference != null) {
         refVlaue = _screenArgs.noteModel!.reference!;
-        /* setState(() {
+         setState(() {
 print(refVlaue);
-        });*/
-      }
+        });
+      }*/
     }
   }
 
@@ -66,100 +73,6 @@ print(refVlaue);
     super.dispose();
   }
 
-  saveData() {
-    if (titleController.text.isEmpty && _controller.document.isEmpty()) {
-      Get.back();
-    } else {
-      if (_screenArgs.noteModel == null) {
-        int id = controller.noteList.length + 1;
-        DateTime now = DateTime.now();
-        var currentTime =
-            DateTime(now.year, now.month, now.day, now.hour, now.minute);
-        var newModel = NoteModel(
-            id: id,
-            time: currentTime.toString(),
-            title: titleController.text,
-            description: _controller.document.toDelta().toJson(),
-            reference: refVlaue != "টপিক সিলেক্ট করুন"
-                ? refVlaue
-                : 'টপিক সিলেক্ট করুন');
-        controller.noteList.add(newModel);
-        Navigator.of(context).pushNamed(AppRoute.rootScreen,
-            arguments: RootScreenArgs(index: 2));
-        CustomToasty.of(context)
-            .showSuccess("তালিকা সফলভাবে সংরক্ষণ করা হয়েছে");
-      } else {
-        DateTime now = DateTime.now();
-        var currentTime = DateTime(
-          now.year,
-          now.month,
-          now.day,
-          now.hour,
-          now.minute,
-        );
-        var updatedModel = NoteModel(
-            id: _screenArgs.noteModel?.id!,
-            time: currentTime.toString(),
-            title: titleController.text,
-            description: _controller.document.toDelta().toJson(),
-            reference: _screenArgs.noteModel!.reference);
-
-        // Check if the note with the same ID exists in the list
-        int existingIndex = controller.noteList.indexWhere(
-          (note) => note.id == updatedModel.id,
-        );
-
-        if (existingIndex != -1) {
-          // Replace the existing note with the updated one
-          controller.noteList[existingIndex] = updatedModel;
-          Navigator.of(context).pushNamed(AppRoute.rootScreen,
-              arguments: RootScreenArgs(index: 2));
-          CustomToasty.of(context)
-              .showSuccess("তালিকা সফলভাবে আপডেট করা হয়েছে");
-        } else {
-          // If the note with the ID doesn't exist, add it to the list
-          controller.noteList.add(updatedModel);
-          Navigator.of(context).pushNamed(AppRoute.rootScreen,
-              arguments: RootScreenArgs(index: 2));
-          CustomToasty.of(context)
-              .showSuccess("তালিকা সফলভাবে আপডেট করা হয়েছে");
-        }
-      }
-    }
-  }
-
-  toggleToReadMode() {
-    if (_screenArgs.noteModel == null) {
-      int id = controller.noteList.length + 1;
-      DateTime now = DateTime.now();
-      var currentTime =
-          DateTime(now.year, now.month, now.day, now.hour, now.minute);
-      var newModel = NoteModel(
-          id: id,
-          time: currentTime.toString(),
-          title: titleController.text,
-          description: _controller.document.toDelta().toJson(),
-          reference: refVlaue);
-      Navigator.of(context).pushNamed(AppRoute.noteDetailsScreen,
-          arguments: NoteDetailsScreenArgs(noteModel: newModel));
-    } else {
-      DateTime now = DateTime.now();
-      var currentTime =
-          DateTime(now.year, now.month, now.day, now.hour, now.minute);
-      var newModel = NoteModel(
-        id: _screenArgs.noteModel?.id!,
-        time: currentTime.toString(),
-        title: titleController.text,
-        reference: _screenArgs.noteModel!.reference,
-        description: _controller.document.toDelta().toJson(),
-      );
-      Navigator.of(context).pushNamed(AppRoute.noteDetailsScreen,
-          arguments: NoteDetailsScreenArgs(noteModel: newModel));
-    }
-  }
-
-  NoteModel noteModel = NoteModel();
-
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
@@ -169,15 +82,58 @@ print(refVlaue);
       title: "",
       bgColor: clr.scaffoldBackgroundColor,
       resizeToAvoidBottomInset: true,
-      leadingBack: () => saveData(),
+      leadingBack: () {},
       actionChild: Row(
         children: [
           IconButton(
               onPressed: () {
-                saveData();
+                _screenArgs.noteType == NoteType.create
+                    ? onCreateNotes(NoteDataEntity(
+                        title: titleController.text,
+                        description:
+                            jsonEncode(_controller.document.toDelta().toJson()),
+                        status: 1))
+                    : onUpdateNotes(NoteDataEntity(
+                        id: _screenArgs.noteDataEntity!.id,
+                        title: titleController.text,
+                        description:
+                            jsonEncode(_controller.document.toDelta().toJson()),
+                        status: 1));
               },
               icon: Icon(Icons.check,
                   size: size.r24, color: clr.appPrimaryColorGreen)),
+          IconButton(
+              onPressed: () {
+                if (_screenArgs.noteType == NoteType.edit) {
+                  if (titleController.text.isNotEmpty &&
+                      _controller.document.toPlainText().isNotEmpty) {
+                    Navigator.of(context).pushNamed(AppRoute.noteDetailsScreen,
+                        arguments: NoteDetailsScreenArgs(
+                            noteDataEntity: NoteDataEntity(
+                                id: _screenArgs.noteDataEntity!.id,
+                                title: titleController.text,
+                                description: jsonEncode(
+                                    _controller.document.toDelta().toJson()),
+                                status: 1),
+                            noteType: NoteType.edit));
+                  }
+                } else {
+                  if (titleController.text.isNotEmpty &&
+                      _controller.document.toPlainText().isNotEmpty) {
+                    Navigator.of(context).pushNamed(AppRoute.noteDetailsScreen,
+                        arguments: NoteDetailsScreenArgs(
+                            noteDataEntity: NoteDataEntity(
+                                title: titleController.text,
+                                description: jsonEncode(
+                                    _controller.document.toDelta().toJson()),
+                                status: 1),
+                            noteType: NoteType.create));
+                  }
+                }
+              },
+              icon: Icon(Icons.visibility,
+                  size: size.r24, color: clr.iconColorDimGrey)),
+/*
           IconButton(
               onPressed: () {
                 if (titleController.text.isNotEmpty &&
@@ -187,6 +143,7 @@ print(refVlaue);
               },
               icon: Icon(Icons.visibility,
                   size: size.r24, color: clr.iconColorDimGrey)),
+*/
         ],
       ),
       body: QuillProvider(
@@ -206,7 +163,7 @@ print(refVlaue);
               padding: EdgeInsets.only(left: size.w16, right: size.w16),
               child: Column(
                 children: [
-                  AppDropDownWidget(
+                  /* AppDropDownWidget(
                     onGenerateTitle: (x) => x,
                     onLoadData: controller.getDropDown,
                     onSelected: (v) {
@@ -216,7 +173,7 @@ print(refVlaue);
                       }
                     },
                     hintText: refVlaue.toString(),
-                  ),
+                  ),*/
                   TextField(
                     controller: titleController,
                     style: TextStyle(
@@ -421,5 +378,15 @@ print(refVlaue);
         ),
       ),
     );
+  }
+
+  @override
+  void showSuccess(String message) {
+    // TODO: implement showSuccess
+  }
+
+  @override
+  void showWarning(String message) {
+    // TODO: implement showWarning
   }
 }
