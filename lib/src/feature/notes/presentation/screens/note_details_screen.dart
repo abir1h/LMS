@@ -1,6 +1,11 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
+import 'package:lms/src/feature/notes/domain/entities/note_data_entity.dart';
+import 'package:lms/src/feature/notes/presentation/service/note_edit_screen_service.dart';
 
 import '../../../../core/routes/app_route.dart';
 import '../../../../core/routes/app_route_args.dart';
@@ -8,6 +13,7 @@ import '../../../../core/common_widgets/quil_text_viewer.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../controllers/note_controller.dart';
+import '../service/note_details_screen_service.dart';
 
 class NoteDetailsScreen extends StatefulWidget {
   final Object? arguments;
@@ -17,7 +23,8 @@ class NoteDetailsScreen extends StatefulWidget {
   State<NoteDetailsScreen> createState() => _NoteDetailsScreenState();
 }
 
-class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
+class _NoteDetailsScreenState extends State<NoteDetailsScreen>
+    with AppTheme, NoteDetailsScreenService, NoteEditScreenService {
   late NoteDetailsScreenArgs _screenArgs;
 
   String contentText = '';
@@ -28,14 +35,18 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
   void initState() {
     super.initState();
     _screenArgs = widget.arguments as NoteDetailsScreenArgs;
-    setData();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      setData();
+    });
   }
 
   setData() {
-    if (_screenArgs.noteModel != null) {
-      if (_screenArgs.noteModel!.description != null) {
-        final Document doc =
-            Document.fromJson(_screenArgs.noteModel!.description as List);
+    if (_screenArgs.noteDataEntity != null) {
+      if (_screenArgs.noteDataEntity!.description.isNotEmpty) {
+        log(_screenArgs.noteDataEntity!.description);
+
+        final Document doc = Document.fromJson(
+            json.decode(_screenArgs.noteDataEntity!.description));
         _controller.document = doc;
         contentText = doc.toPlainText();
       }
@@ -51,6 +62,37 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
       actionChild: Row(
         children: [
           IconButton(
+              onPressed: () {
+                if (_screenArgs.noteType == NoteType.edit) {
+                  onUpdateNotes(NoteDataEntity(
+                      id: _screenArgs.noteDataEntity!.id,
+                      title: _screenArgs.noteDataEntity!.title,
+                      description:
+                          jsonEncode(_controller.document.toDelta().toJson()),
+                      status: 1));
+                  Navigator.of(context).pushNamed(AppRoute.rootScreen,
+                      arguments: RootScreenArgs(index: 2));
+                }else{
+                  onCreateNotes(NoteDataEntity(
+                      title: _screenArgs.noteDataEntity!.title,
+                      description:
+                      jsonEncode(_controller.document.toDelta().toJson()),
+                      status: 1));
+                  Navigator.of(context).pushNamed(AppRoute.rootScreen,
+                      arguments: RootScreenArgs(index: 2));
+                }
+              },
+              icon: Icon(Icons.check,
+                  size: size.r24, color: clr.appPrimaryColorGreen)),
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(AppRoute.noteEditScreen,
+                    arguments: NoteDetailsScreenArgs(
+                        noteDataEntity: _screenArgs.noteDataEntity,
+                        noteType: NoteType.edit));
+              },
+              icon: Icon(Icons.edit, size: size.r24, color: clr.iconColorBlack))
+          /* IconButton(
               onPressed: () {
                 // Check if the note with the same ID exists in the list
                 int existingIndex = controller.noteList.indexWhere(
@@ -79,7 +121,7 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
                         noteModel: _screenArgs.noteModel));
               },
               icon:
-                  Icon(Icons.edit, size: size.r24, color: clr.iconColorBlack)),
+                  Icon(Icons.edit, size: size.r24, color: clr.iconColorBlack)),*/
         ],
       ),
       body: SingleChildScrollView(
@@ -87,7 +129,7 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _screenArgs.noteModel!.reference != "টপিক সিলেক্ট করুন"
+            /* _screenArgs.noteModel!.reference != "টপিক সিলেক্ট করুন"
                 ? InkWell(
                     onTap: () => Navigator.of(context)
                         .pushNamed(AppRoute.transcriptVideoScreen),
@@ -109,12 +151,12 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
                       ],
                     ),
                   )
-                : const SizedBox(),
+                : const SizedBox(),*/
             SizedBox(
               height: size.h10,
             ),
             Text(
-              _screenArgs.noteModel!.title!,
+              _screenArgs.noteDataEntity!.title,
               style: TextStyle(
                   fontSize: size.textXMedium,
                   color: clr.textColorAppleBlack,
@@ -132,4 +174,20 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> with AppTheme {
       ),
     );
   }
+
+  @override
+  void onNavigateToNoteEditScreen(NoteDataEntity noteDataEntity) {
+    // TODO: implement onNavigateToNoteEditScreen
+  }
+
+  @override
+  void showWarning(String message) {
+    // TODO: implement showWarning
+  }
+
+  @override
+  void showSuccess(String message) {
+    // TODO: implement showSuccess
+  }
+
 }

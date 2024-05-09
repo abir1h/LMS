@@ -12,4 +12,28 @@ class AssignmentUseCase {
         _assignmentRepository.getAssignmentDetails(courseContentId);
     return response;
   }
+
+  Future<ResponseEntity> storeAssignmentUseCase(
+      int assignmentId,
+      int subAssignmentId,
+      int courseId,
+      int circularId,
+      String answer,
+      String filePath) async {
+    final response = _assignmentRepository.storeAssignment(
+        assignmentId, subAssignmentId, courseId, circularId, answer, filePath);
+    return response;
+  }
+
+  Future<ResponseEntity> updateAssignmentUseCase(
+      int assignmentId,
+      int subAssignmentId,
+      int courseId,
+      int circularId,
+      String answer,
+      String filePath) async {
+    final response = _assignmentRepository.updateAssignment(
+        assignmentId, subAssignmentId, courseId, circularId, answer, filePath);
+    return response;
+  }
 }

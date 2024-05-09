@@ -1,8 +1,10 @@
 import 'dart:ui';
 
+import '../../feature/assignment/domain/entities/assignment_data_entity.dart';
 import '../../feature/assignment/presentation/models/assignment_model.dart';
-import '../../feature/discussion/models/discussion_model.dart';
-import '../../feature/notes/presentation/models/note_model.dart';
+import '../../feature/notes/domain/entities/note_data_entity.dart';
+
+enum NoteType { edit, create, readMode }
 
 class EMISWebViewScreenArgs {
   final String webViewLink;
@@ -23,8 +25,7 @@ class CourseDetailsScreenArgs {
   final int courseId;
   final String curriculumType;
   CourseDetailsScreenArgs(
-      {required this.courseId,
-      required this.curriculumType});
+      {required this.courseId, required this.curriculumType});
 }
 
 class CourseScriptScreenArgs {
@@ -56,9 +57,17 @@ class CourseAssessmentScreenArgs {
       {required this.courseContentId, required this.onTap});
 }
 
+class AssignmentArgs {
+  final AssignmentDataEntity assignmentDataEntity;
+  AssignmentArgs({required this.assignmentDataEntity});
+}
+
 class AssignmentSubmitScreenArgs {
   final AssignmentModel? assignmentModel;
-  AssignmentSubmitScreenArgs({this.assignmentModel});
+  final AssignmentDataEntity? assignmentDataEntity;
+  final String? answer;
+  AssignmentSubmitScreenArgs(
+      {this.assignmentModel, this.assignmentDataEntity, this.answer});
 }
 
 class DetailedDiscussionArgs {
@@ -67,8 +76,9 @@ class DetailedDiscussionArgs {
 }
 
 class NoteDetailsScreenArgs {
-  final NoteModel? noteModel;
-  NoteDetailsScreenArgs({this.noteModel});
+  final NoteDataEntity? noteDataEntity;
+  final NoteType? noteType;
+  NoteDetailsScreenArgs({this.noteType, required this.noteDataEntity});
 }
 
 class CircularDetailsScreenArgs {

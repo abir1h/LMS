@@ -19,6 +19,11 @@ mixin ReportBottomSheetScreenService<T extends StatefulWidget> on State<T>
       discussionRepository: DiscussionRepositoryImp(
           discussionRemoteDataSource: DiscussionRemoteDataSourceImp()));
 
+  Future<ResponseEntity> reportDiscussion(
+      int discussionId, String remarks) async {
+    return _discussionUseCase.reportDiscussionUseCase(discussionId, remarks);
+  }
+
   Future<ResponseEntity> reportComment(int commentId, String remarks) async {
     return _discussionUseCase.reportCommentUseCase(commentId, remarks);
   }
@@ -42,6 +47,18 @@ mixin ReportBottomSheetScreenService<T extends StatefulWidget> on State<T>
     } else {
       return true;
     }
+  }
+
+  Future<ResponseEntity> onReportDiscussion(
+      {required int discussionId, required String remarks}) async {
+    ResponseEntity responseEntity =
+        await reportDiscussion(discussionId, remarks);
+    if (responseEntity.error == null && responseEntity.data != null) {
+      _view.showSuccess(responseEntity.message!);
+    } else {
+      _view.showWarning(responseEntity.message!);
+    }
+    return responseEntity;
   }
 
   Future<ResponseEntity> onReportComment(

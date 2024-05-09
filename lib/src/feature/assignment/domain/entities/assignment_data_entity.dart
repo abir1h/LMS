@@ -1,4 +1,4 @@
-import 'package:lms/src/feature/assignment/domain/entities/sub_assignment_data_entity.dart';
+import 'sub_assignment_data_entity.dart';
 
 class AssignmentDataEntity {
   final int id;

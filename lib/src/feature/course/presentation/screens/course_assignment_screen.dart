@@ -32,7 +32,7 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
     super.initState();
     _screenArgs = widget.arguments as CourseAssessmentScreenArgs;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      loadAssignmentData(_screenArgs.courseContentId);
+      loadAssignmentData(_screenArgs.courseContentId!);
     });
   }
 
@@ -235,8 +235,7 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: size.w40),
                   child: CustomButton(
-                    onTap: () => Navigator.of(context)
-                        .pushNamed(AppRoute.assignmentScreen),
+                    onTap: () => onTap(data),
                     title: label(e: en.enter, b: bn.enter),
                     textColor: clr.whiteColor,
                     radius: size.r4,
@@ -258,6 +257,12 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
   @override
   void showWarning(String message) {
     CustomToasty.of(context).showWarning(message);
+  }
+
+  @override
+  void navigateToAssignmentScreen(AssignmentDataEntity assignmentDataEntity) {
+    Navigator.of(context).pushNamed(AppRoute.assignmentScreen,
+        arguments: AssignmentArgs(assignmentDataEntity: assignmentDataEntity));
   }
 }
 
