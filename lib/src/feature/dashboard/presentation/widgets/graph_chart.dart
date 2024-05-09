@@ -22,6 +22,9 @@ class _GraphChartState extends State<GraphChart>
     const FlSpot(1.5, 3),
     const FlSpot(2.5, 0),
     const FlSpot(5, 4),
+    const FlSpot(5, 4),
+    const FlSpot(5, 4),
+    const FlSpot(5, 4),
   ];
   bool showAvg = false;
 
@@ -31,7 +34,7 @@ class _GraphChartState extends State<GraphChart>
       aspectRatio: 1.7,
       child: Padding(
         padding: EdgeInsets.only(right: size.w16),
-        child: LineChart(mainData()),
+        child: LineChart(mainData(),),
       ),
     );
   }
@@ -209,7 +212,7 @@ class _GraphChartState extends State<GraphChart>
       minX: 0,
       maxX: maxX,
       minY: 0,
-      maxY: maxY,
+      maxY: maxY,baselineX: 100,
       lineBarsData: [
         LineChartBarData(
           spots: dynamicData,

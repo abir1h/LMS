@@ -1,5 +1,3 @@
-import 'package:lms/src/feature/notes/data/mapper/content_data_mapper.dart';
-
 import '../../domain/entities/note_data_entity.dart';
 import '../models/note_data_model.dart';
 
@@ -19,10 +17,13 @@ class NoteDataModelToEntityMapper
         contentType: entity.contentType,
         title: entity.title,
         description: entity.description,
+        attachment: entity.attachment,
         createdBy: entity.createdBy,
         status: entity.status,
         createdAt: entity.createdAt,
-        content: entity.content.toContentDataModel);
+        updatedAt: entity.updatedAt,
+        contentTitleEn: entity.contentTitleEn,
+        contentTitleBn: entity.contentTitleBn);
   }
 
   @override
@@ -34,10 +35,13 @@ class NoteDataModelToEntityMapper
         contentType: model.contentType,
         title: model.title,
         description: model.description,
+        attachment: model.attachment,
         createdBy: model.createdBy,
         status: model.status,
         createdAt: model.createdAt,
-        content: model.content!.toContentDataEntity);
+        updatedAt: model.updatedAt,
+        contentTitleEn: model.contentTitleEn,
+        contentTitleBn: model.contentTitleBn);
   }
 }
 
