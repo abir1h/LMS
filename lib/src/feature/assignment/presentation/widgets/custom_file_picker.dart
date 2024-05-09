@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
@@ -13,8 +15,11 @@ class CustomFilePicker extends StatefulWidget {
 }
 
 class _CustomFilePickerState extends State<CustomFilePicker> {
+  final List<File> files = [];
+
   void _pickFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    FilePickerResult? result =
+        await FilePicker.platform.pickFiles(allowMultiple: true);
 
     if (result != null) {
       String filePath = result.files.single.path!;

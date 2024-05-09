@@ -47,52 +47,52 @@ class CustomEmptyWidget extends StatelessWidget with AppTheme, Language {
                         fontWeight: FontWeight.w500,
                         fontFamily: StringData.fontFamilyPoppins),
                   ),
-                  SizedBox(height: size.h4 + size.h32),
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: size.w32, vertical: size.h8),
-                    decoration: BoxDecoration(
-                        color: clr.appPrimaryColorGreen,
-                        borderRadius: BorderRadius.circular(size.w1 + size.w4)),
-                    child: Text(
-                      label(e: en.backToHomeText, b: bn.backToHomeText),
-                      style: TextStyle(
-                          color: clr.whiteColor,
-                          fontSize: size.textSmall,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: StringData.fontFamilyPoppins),
-                    ),
-                  )
+                  // SizedBox(height: size.h4 + size.h32),
+                  // Container(
+                  //   padding: EdgeInsets.symmetric(
+                  //       horizontal: size.w32, vertical: size.h8),
+                  //   decoration: BoxDecoration(
+                  //       color: clr.appPrimaryColorGreen,
+                  //       borderRadius: BorderRadius.circular(size.w1 + size.w4)),
+                  //   child: Text(
+                  //     label(e: en.backToHomeText, b: bn.backToHomeText),
+                  //     style: TextStyle(
+                  //         color: clr.whiteColor,
+                  //         fontSize: size.textSmall,
+                  //         fontWeight: FontWeight.w500,
+                  //         fontFamily: StringData.fontFamilyPoppins),
+                  //   ),
+                  // )
                 ],
               ),
             ),
-            Positioned(
-              top: size.h16 - size.h1,
-              right: size.w16,
-              child: CustomSwitchButton(
-                value: App.currentAppLanguage == AppLanguage.english,
-                textOn: 'EN',
-                textSize: size.textXXSmall,
-                textOff: 'বাং',
-                bgColor: clr.whiteColor,
-                width: 64.w,
-                animationDuration: const Duration(milliseconds: 300),
-                onChanged: (bool state) {
-                  // App.setAppLanguage(state ? 1 : 0).then((value) {
-                  //   if (mounted) {
-                  //     setState(() {});
-                  //   }
-                  // });
-                },
-                buttonHolder: const Icon(
-                  Icons.check,
-                  color: Colors.transparent,
-                ),
-                onTap: () {},
-                onDoubleTap: () {},
-                onSwipe: () {},
-              ),
-            )
+            // Positioned(
+            //   top: size.h16 - size.h1,
+            //   right: size.w16,
+            //   child: CustomSwitchButton(
+            //     value: App.currentAppLanguage == AppLanguage.english,
+            //     textOn: 'EN',
+            //     textSize: size.textXXSmall,
+            //     textOff: 'বাং',
+            //     bgColor: clr.whiteColor,
+            //     width: 64.w,
+            //     animationDuration: const Duration(milliseconds: 300),
+            //     onChanged: (bool state) {
+            //       // App.setAppLanguage(state ? 1 : 0).then((value) {
+            //       //   if (mounted) {
+            //       //     setState(() {});
+            //       //   }
+            //       // });
+            //     },
+            //     buttonHolder: const Icon(
+            //       Icons.check,
+            //       color: Colors.transparent,
+            //     ),
+            //     onTap: () {},
+            //     onDoubleTap: () {},
+            //     onSwipe: () {},
+            //   ),
+            // )
           ],
         ),
       ),

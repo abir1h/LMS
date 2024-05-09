@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../shared/domain/entities/response_entity.dart';
 import '../../data/data_sources/remote/assignment_data_source.dart';
@@ -29,6 +33,9 @@ mixin AssignmentScreenService<T extends StatefulWidget> on State<T>
     return _assignmentUseCase.updateAssignmentUseCase(
         assignmentId, subAssignmentId, courseId, circularId, answer, filePath);
   }
+
+  List<String> fileName = [];
+  List<File>? files;
 
   ///Service configurations
   @override
@@ -66,5 +73,19 @@ mixin AssignmentScreenService<T extends StatefulWidget> on State<T>
       _view.showWarning(responseEntity.message!);
     }
     return responseEntity;
+  }
+
+  void pickFiles() async {
+    FilePickerResult? result = await FilePicker.platform
+        .pickFiles(allowMultiple: true, allowCompression: true);
+
+    if (result != null) {
+      files = result.paths.map((path) => File(path!)).toList();
+      for (var element in result.files) {
+        fileName.add(element.name);
+      }
+    } else {
+      print("No file selected");
+    }
   }
 }

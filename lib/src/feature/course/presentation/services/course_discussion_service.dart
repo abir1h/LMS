@@ -53,8 +53,7 @@ mixin CourseDiscussionWidgetService<T extends StatefulWidget> on State<T>
       if (value.error == null && value.data.isNotEmpty) {
         discussionDataStreamController
             .add(DataLoadedState<List<DiscussionDataEntity>>(value.data));
-      } else if (value.error == null &&
-          value.data.bookRequestDataEntity.isEmpty) {
+      } else if (value.error == null && value.data.isEmpty) {
         discussionDataStreamController
             .add(EmptyState(message: 'No Discussions Found'));
       } else {

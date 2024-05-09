@@ -11,6 +11,7 @@ import '../../../../core/routes/app_route_args.dart';
 import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
 import '../../domain/entities/assignment_data_entity.dart';
 import '../controllers/assignment_controller.dart';
+import '../services/assignment_screen_service.dart';
 import '../widgets/assignment_bottom_sheet.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
@@ -26,7 +27,7 @@ class AssignmentScreen extends StatefulWidget {
 }
 
 class _AssignmentScreenState extends State<AssignmentScreen>
-    with AppTheme, Language, ImagePreviewDialog {
+    with AppTheme, Language, ImagePreviewDialog, AssignmentScreenService {
   final controller = Get.put(AssignmentController());
 
   late AssignmentArgs _screenArgs;
@@ -229,6 +230,50 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                     ),
                   ),
                 ),
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(
+                    horizontal: size.w16, vertical: size.h12),
+                decoration: BoxDecoration(
+                  color: clr.whiteColor,
+                  borderRadius: BorderRadius.circular(size.r8),
+                  border: Border.all(color: clr.boxStrokeColor, width: size.w1),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        fileName.map((c) => c).toList().join(', '),
+                        style: TextStyle(
+                            color: clr.appPrimaryColorGreen,
+                            fontSize: size.textSmall,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: StringData.fontFamilyPoppins),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    if (fileName.isNotEmpty)
+                      InkWell(
+                          onTap: () {
+                            // fileName.removeWhere((element) => element)
+                          },
+                          child: Icon(
+                            Icons.close,
+                            color: clr.appPrimaryColorGreen,
+                            size: size.r24,
+                          )),
+                    GestureDetector(
+                      onTap: pickFiles,
+                      child: Icon(
+                        Icons.attach_file,
+                        color: clr.iconColorHint,
+                        size: size.r24,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
 
               ///Upload
               if (_screenArgs.assignmentDataEntity.submissionType == "upload" ||
@@ -327,6 +372,16 @@ class _AssignmentScreenState extends State<AssignmentScreen>
     return fileName.length > maxFileNameLength
         ? '${fileName.substring(0, maxFileNameLength)}...'
         : fileName;
+  }
+
+  @override
+  void showSuccess(String message) {
+    CustomToasty.of(context).showSuccess(message);
+  }
+
+  @override
+  void showWarning(String message) {
+    CustomToasty.of(context).showWarning(message);
   }
 }
 

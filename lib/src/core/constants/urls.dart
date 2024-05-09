@@ -35,7 +35,8 @@ class ApiCredential {
   static String reportComment = "/circular-service/api/mobile/report-comment";
 
   static String getAssessment = "/assessment-service/web/assessment-details";
-  static String getAssessmentQuestionType = "/assessment-service/admin/quiz-types";
+  static String getAssessmentQuestionType =
+      "/assessment-service/admin/quiz-types";
   static String startExam = "/assessment-service/web/exam/start";
 
   static String getAssignment = "/assignment-service/api/mobile/assignments";
