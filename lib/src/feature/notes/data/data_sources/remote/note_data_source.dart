@@ -9,15 +9,17 @@ abstract class NoteRemoteDataSource {
   Future<ResponseModel> createNotesAction(NoteDataModel noteDataModel);
   Future<ResponseModel> updateNotesAction(NoteDataModel noteDataModel);
   Future<ResponseModel> deleteNotesAction(int noteId);
+  Future<ResponseModel> getNotesByContentAction(
+      int contentId, String contentType);
 }
 
 class NoteRemoteDataSourceImp extends NoteRemoteDataSource {
   @override
   Future<ResponseModel> getNoteListAction(int pageNumber) async {
-    final responseJson =
-    await Server.instance.getRequest(url: "${ApiCredential.getNotes}?page=$pageNumber");
-    ResponseModel responseModel = ResponseModel.fromJson(responseJson,
-            (dynamic json) => PaginatedNoteDataModel.fromJson(json));
+    final responseJson = await Server.instance
+        .getRequest(url: "${ApiCredential.getNotes}?page=$pageNumber");
+    ResponseModel responseModel = ResponseModel.fromJson(
+        responseJson, (dynamic json) => PaginatedNoteDataModel.fromJson(json));
 
     return responseModel;
   }
@@ -35,7 +37,8 @@ class NoteRemoteDataSourceImp extends NoteRemoteDataSource {
   Future<ResponseModel> updateNotesAction(NoteDataModel noteDataModel) async {
     Map<String, dynamic> data = noteDataModel.toJson();
     final responseJson = await Server.instance.putRequest(
-        url: "${ApiCredential.createNotes}/${noteDataModel.id}", postData: data);
+        url: "${ApiCredential.createNotes}/${noteDataModel.id}",
+        postData: data);
     ResponseModel responseModel = ResponseModel.fromJson(
         responseJson, (dynamic json) => NoteDataModel.fromJson(json));
     return responseModel;
@@ -47,6 +50,17 @@ class NoteRemoteDataSourceImp extends NoteRemoteDataSource {
         .deleteRequest(url: "${ApiCredential.createNotes}/$noteId");
     ResponseModel responseModel = ResponseModel.fromJson(
         responseJson, (dynamic json) => NoteDataModel.fromJson(json));
+    return responseModel;
+  }
+
+  @override
+  Future<ResponseModel> getNotesByContentAction(
+      int contentId, String contentType) async {
+    final responseJson = await Server.instance.getRequest(
+        url:
+            "${ApiCredential.getNotesByContent}?content_id=$contentId&content_type=$contentType");
+    ResponseModel responseModel = ResponseModel.fromJson(
+        responseJson, (dynamic json) => NoteDataModel.listFromJson(json));
     return responseModel;
   }
 }

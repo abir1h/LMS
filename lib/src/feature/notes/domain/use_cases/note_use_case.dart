@@ -8,8 +8,7 @@ class NoteUseCase {
       : _noteRepository = noteRepository;
 
   Future<ResponseEntity> getNotesUseCase(int pageNumber) async {
-    final response =
-    _noteRepository.getNoteList(pageNumber);
+    final response = _noteRepository.getNoteList(pageNumber);
     return response;
   }
 
@@ -27,6 +26,12 @@ class NoteUseCase {
 
   Future<ResponseEntity> deleteNotesUseCase(int noteId) async {
     final response = _noteRepository.deleteNotes(noteId);
+    return response;
+  }
+
+  Future<ResponseEntity> getNotesByContentUseCase(
+      int contentId, String contentType) async {
+    final response = _noteRepository.getNotesByContent(contentId, contentType);
     return response;
   }
 }
