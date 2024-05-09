@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../feature/assessment/presentation/screens/assessment_screen.dart';
+import '../../feature/assessment/presentation/screens/assessment_all_question_screen.dart';
 import '../../feature/assignment/presentation/screens/assignment_screen.dart';
 import '../../feature/assignment/presentation/screens/assignment_submit_screen.dart';
 import '../../feature/authentication/presentation/screens/authentication_screen.dart';

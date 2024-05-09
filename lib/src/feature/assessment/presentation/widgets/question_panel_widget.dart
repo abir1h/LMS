@@ -4,7 +4,7 @@ import '../../../../core/constants/app_theme.dart';
 import 'question_widget.dart';
 import 'true_false_answer_widget.dart';
 import '../screens/assessment_quiz_screen.dart';
-import '../screens/assessment_screen.dart';
+import '../screens/assessment_all_question_screen.dart';
 import 'descriptive_answer_widget.dart';
 import 'fill_in_the_gap_answer_widget.dart';
 import 'matching_answer_widget.dart';

@@ -126,8 +126,8 @@ class _CourseAssessmentScreenState extends State<CourseAssessmentScreen>
                           Expanded(
                             child: Text(
                               label(
-                                  e: "Last date for submission: 31 January",
-                                  b: "জমাদানের শেষ তারিখ: ৩১ জানুয়ারী"),
+                                  e: "Last date for submission: ${data.endDate}",
+                                  b: "জমাদানের শেষ তারিখ: ${data.endDate}"),
                               style: TextStyle(
                                   color: clr.blackColor,
                                   fontSize: size.textSmall,
@@ -149,7 +149,7 @@ class _CourseAssessmentScreenState extends State<CourseAssessmentScreen>
                           ),
                           SizedBox(width: size.w8),
                           Text(
-                            label(e: "Time: 30 minutes", b: "সময়ঃ ৩০ মিনিট"),
+                            label(e: "Time: ${data.totalTime} minutes", b: "সময়ঃ ${data.totalTime} মিনিট"),
                             style: TextStyle(
                                 color: clr.blackColor,
                                 fontSize: size.textSmall,
@@ -165,7 +165,7 @@ class _CourseAssessmentScreenState extends State<CourseAssessmentScreen>
                           SizedBox(width: size.w8),
                           Expanded(
                             child: Text(
-                              label(e: "Marks: 25", b: "মার্কস : ২৫"),
+                              label(e: "Marks: ${data.totalMark}", b: "মার্কস : ${data.totalMark}"),
                               style: TextStyle(
                                   color: clr.blackColor,
                                   fontSize: size.textSmall,

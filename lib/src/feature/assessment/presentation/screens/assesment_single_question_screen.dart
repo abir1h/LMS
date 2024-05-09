@@ -12,7 +12,7 @@ import '../models/matching_question.dart';
 import '../models/quiz_model.dart';
 import '../widgets/question_panel_widget.dart';
 import '../widgets/time_digit_widget.dart';
-import 'assessment_screen.dart';
+import 'assessment_all_question_screen.dart';
 
 class AssessmentSingleQuestionScreen extends StatefulWidget {
   const AssessmentSingleQuestionScreen({super.key});
