@@ -183,6 +183,37 @@ class Server {
     }
   }
 
+  Future<dynamic> postRequestWithFile({
+    required String url,
+    required dynamic postData,
+    required List<String> filePaths
+  }) async {
+    try {
+      // String token = await AuthCacheManager.getUserToken();///Todo Delete Later
+      String token =
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOm51bGwsInR5cGUiOiJzdXBlcmFkbWluIiwiaWF0IjoxNzEzNzY1OTcwLCJleHAiOjE3MTYzNTc5NzB9.ofkk_pPVNNwjKXxBb4g5B7f8_MT4PZOM9vN9yE0B3Do";
+      // var body = json.encode(postData);
+
+      Uri uri = Uri.parse(url);
+      http.MultipartRequest request = http.MultipartRequest('POST', uri);
+      Map<String, String> headers = {"Accept": "application/json", "Authorization": "Bearer $token"};
+      request.headers.addAll(headers);
+      request.fields.addAll(postData);
+      for(String path in filePaths){
+        request.files.add(await http.MultipartFile.fromPath('file', path,));
+      }
+      final response = await http.Response.fromStream(await request.send());
+      debugPrint("REQUEST => ${response.request.toString()}");
+      debugPrint("REQUEST DATA => $postData");
+      debugPrint("RESPONSE DATA => ${response.body.toString()}");
+      return _returnResponse(response);
+    } on SocketException catch (_) {
+      return '{"message": "Request failed! Check internet connection.", "error": "Error message"}';
+    } on Exception catch (_) {
+      return '{"message": "Request failed! Unknown error occurred.", "error": "Error message"}';
+    }
+  }
+
   Future<dynamic> getRequest({required String url}) async {
     try {
       // String token = await AuthCacheManager.getUserToken();///Todo Delete Later
