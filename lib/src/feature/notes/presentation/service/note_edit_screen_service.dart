@@ -43,8 +43,7 @@ mixin NoteEditScreenService<T extends StatefulWidget> on State<T>
         if (value.error == null && value.data != null) {
           _view.showSuccess(value.message!);
           AppEventsNotifier.notify(EventAction.notesScreen);
-          Navigator.of(context).pushNamed(AppRoute.rootScreen,
-              arguments: RootScreenArgs(index: 2));
+          Navigator.of(context).pushNamedAndRemoveUntil(AppRoute.rootScreen, arguments: RootScreenArgs(index: 2),(route) => false);
         } else {
           _view.showWarning(value.message!);
           AppEventsNotifier.notify(EventAction.notesScreen);
@@ -60,8 +59,8 @@ mixin NoteEditScreenService<T extends StatefulWidget> on State<T>
         if (value.error == null && value.data != null) {
           _view.showSuccess(value.message!);
           AppEventsNotifier.notify(EventAction.notesScreen);
-          Navigator.of(context).pushNamed(AppRoute.rootScreen,
-              arguments: RootScreenArgs(index: 2));
+          Navigator.of(context).pushNamedAndRemoveUntil(AppRoute.rootScreen, arguments: RootScreenArgs(index: 2),(route) => false);
+
         } else {
           _view.showWarning(value.message!);
           AppEventsNotifier.notify(EventAction.notesScreen);

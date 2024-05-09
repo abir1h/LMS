@@ -82,18 +82,18 @@ String replaceEnglishNumberWithBengali(String inputString) {
 String timeAgoToBengali(String timeAgo) {
   // Define a map to store the mapping of English words to Bangla words
   final Map<String, String> banglaMap = {
-    'January': 'জানুয়ারি',
-    'February': 'ফেব্রুয়ারি',
-    'March': 'মার্চ',
-    'April': 'এপ্রিল',
-    'May': 'মে',
-    'June': 'জুন',
-    'July': 'জুলাই',
-    'August': 'আগস্ট',
-    'September': 'সেপ্টেম্বর',
+    'january': 'জানুয়ারি',
+    'february': 'ফেব্রুয়ারি',
+    'march': 'মার্চ',
+    'april': 'এপ্রিল',
+    'may': 'মে',
+    'june': 'জুন',
+    'july': 'জুলাই',
+    'august': 'আগস্ট',
+    'september': 'সেপ্টেম্বর',
     'october': 'অক্টোবর',
-    'November': 'নভেম্বর',
-    'December': 'ডিসেম্বর',
+    'november': 'নভেম্বর',
+    'december': 'ডিসেম্বর',
     'seconds': 'সেকেন্ড',
     'minute': 'মিনিট',
     'minutes': 'মিনিট',
@@ -136,6 +136,7 @@ String timeAgoToBengali(String timeAgo) {
     }
     return banglaMap[word.toLowerCase()] ?? word;
   }).join(' ');
+  print(banglaText);
 
   return banglaText;
 }

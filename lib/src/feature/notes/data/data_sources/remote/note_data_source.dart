@@ -46,7 +46,7 @@ class NoteRemoteDataSourceImp extends NoteRemoteDataSource {
     final responseJson = await Server.instance
         .deleteRequest(url: "${ApiCredential.createNotes}/$noteId");
     ResponseModel responseModel = ResponseModel.fromJson(
-        responseJson, (dynamic json) => NoteDataModel.fromJson(json));
+        responseJson, (dynamic json) => NoteDataModel.listFromJson(json));
     return responseModel;
   }
 }

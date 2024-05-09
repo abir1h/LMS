@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
-import '../../../../core/common_widgets/app_dropdown_widget.dart';
-import '../../../../core/common_widgets/custom_toasty.dart';
+import 'package:lms/src/core/common_widgets/custom_toasty.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/routes/app_route.dart';
 import '../../../../core/routes/app_route_args.dart';
@@ -33,7 +31,6 @@ class _NoteEditScreenState extends State<NoteEditScreen>
   final _isReadOnly = false;
   final controller = Get.put(NoteController());
   TextEditingController titleController = TextEditingController();
-  String refVlaue = "টপিক সিলেক্ট করুন";
 
   @override
   void initState() {
@@ -54,12 +51,6 @@ class _NoteEditScreenState extends State<NoteEditScreen>
       if (_screenArgs.noteDataEntity!.title.isNotEmpty) {
         titleController.text = _screenArgs.noteDataEntity!.title;
       }
-      /* if (_screenArgs.noteModel!.reference != null) {
-        refVlaue = _screenArgs.noteModel!.reference!;
-         setState(() {
-print(refVlaue);
-        });
-      }*/
     }
   }
 
@@ -82,23 +73,52 @@ print(refVlaue);
       title: "",
       bgColor: clr.scaffoldBackgroundColor,
       resizeToAvoidBottomInset: true,
-      leadingBack: () {},
+      leadingBack: () {
+        if (titleController.text.isNotEmpty &&
+            _controller.document.toPlainText().isNotEmpty) {
+          _screenArgs.noteType == NoteType.create
+              ? onCreateNotes(NoteDataEntity(
+                  title: titleController.text,
+                  description:
+                      jsonEncode(_controller.document.toDelta().toJson()),
+                  status: 1))
+              : onUpdateNotes(NoteDataEntity(
+                  id: _screenArgs.noteDataEntity!.id,
+                  title: titleController.text,
+                  description:
+                      jsonEncode(_controller.document.toDelta().toJson()),
+                  status: 1));
+        } else {
+          Navigator.of(context).pushNamedAndRemoveUntil(
+              AppRoute.rootScreen,
+              arguments: RootScreenArgs(index: 2),
+              (route) => false);
+        }
+      },
       actionChild: Row(
         children: [
           IconButton(
               onPressed: () {
-                _screenArgs.noteType == NoteType.create
-                    ? onCreateNotes(NoteDataEntity(
-                        title: titleController.text,
-                        description:
-                            jsonEncode(_controller.document.toDelta().toJson()),
-                        status: 1))
-                    : onUpdateNotes(NoteDataEntity(
-                        id: _screenArgs.noteDataEntity!.id,
-                        title: titleController.text,
-                        description:
-                            jsonEncode(_controller.document.toDelta().toJson()),
-                        status: 1));
+                if (titleController.text.isNotEmpty &&
+                    _controller.document.toPlainText().isNotEmpty) {
+                  _screenArgs.noteType == NoteType.create
+                      ? onCreateNotes(NoteDataEntity(
+                          title: titleController.text,
+                          description: jsonEncode(
+                              _controller.document.toDelta().toJson()),
+                          status: 1))
+                      : onUpdateNotes(NoteDataEntity(
+                          id: _screenArgs.noteDataEntity!.id,
+                          title: titleController.text,
+                          description: jsonEncode(
+                              _controller.document.toDelta().toJson()),
+                          status: 1));
+                } else {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      AppRoute.rootScreen,
+                      arguments: RootScreenArgs(index: 2),
+                      (route) => false);
+                }
               },
               icon: Icon(Icons.check,
                   size: size.r24, color: clr.appPrimaryColorGreen)),
@@ -133,17 +153,6 @@ print(refVlaue);
               },
               icon: Icon(Icons.visibility,
                   size: size.r24, color: clr.iconColorDimGrey)),
-/*
-          IconButton(
-              onPressed: () {
-                if (titleController.text.isNotEmpty &&
-                    _controller.document.toPlainText().isNotEmpty) {
-                  toggleToReadMode();
-                }
-              },
-              icon: Icon(Icons.visibility,
-                  size: size.r24, color: clr.iconColorDimGrey)),
-*/
         ],
       ),
       body: QuillProvider(
@@ -163,17 +172,6 @@ print(refVlaue);
               padding: EdgeInsets.only(left: size.w16, right: size.w16),
               child: Column(
                 children: [
-                  /* AppDropDownWidget(
-                    onGenerateTitle: (x) => x,
-                    onLoadData: controller.getDropDown,
-                    onSelected: (v) {
-                      refVlaue = v;
-                      if (_screenArgs.noteModel != null) {
-                        _screenArgs.noteModel!.reference = refVlaue;
-                      }
-                    },
-                    hintText: refVlaue.toString(),
-                  ),*/
                   TextField(
                     controller: titleController,
                     style: TextStyle(
@@ -345,14 +343,14 @@ print(refVlaue);
                                 },
                               ),
                             ),
-                            QuillToolbarColorButton(
+                            /* QuillToolbarColorButton(
                               controller: controller,
                               isBackground: true,
                               options: const QuillToolbarColorButtonOptions(
                                 iconData: Icons.text_format,
                                 dialogBarrierColor: Colors.white,
                               ),
-                            ),
+                            ),*/
                             QuillToolbarSelectAlignmentButton(
                               showLeftAlignment: true,
                               showRightAlignment: true,
@@ -382,8 +380,7 @@ print(refVlaue);
 
   @override
   void showSuccess(String message) {
-    // TODO: implement showSuccess
-  }
+CustomToasty.of(context).showSuccess(message);  }
 
   @override
   void showWarning(String message) {

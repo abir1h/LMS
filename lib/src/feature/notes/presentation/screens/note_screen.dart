@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:lms/src/core/common_widgets/custom_toasty.dart';
 import 'package:lms/src/core/utility/app_label.dart';
 import 'package:lms/src/feature/notes/domain/entities/note_data_entity.dart';
 
@@ -51,10 +53,14 @@ class _NoteScreenState extends State<NoteScreen>
         builder: (context, constraints) => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: size.h12,),
+            SizedBox(
+              height: size.h12,
+            ),
             Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: size.h16, ),              child: Row(
+                horizontal: size.h16,
+              ),
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   PopupMenuButton<int>(
@@ -82,18 +88,20 @@ class _NoteScreenState extends State<NoteScreen>
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Title",
+                                label(e: "Title", b: "টাইটেল"),
                                 style: selectedValue == 1
                                     ? TextStyle(
-                                    color: clr.appPrimaryColorGreen,
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: StringData.fontFamilyPoppins,
-                                    fontSize: size.textSmall)
+                                        color: clr.appPrimaryColorGreen,
+                                        fontWeight: FontWeight.w500,
+                                        fontFamily:
+                                            StringData.fontFamilyPoppins,
+                                        fontSize: size.textSmall)
                                     : TextStyle(
-                                    color: clr.blackColor,
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: StringData.fontFamilyPoppins,
-                                    fontSize: size.textSmall),
+                                        color: clr.blackColor,
+                                        fontWeight: FontWeight.w500,
+                                        fontFamily:
+                                            StringData.fontFamilyPoppins,
+                                        fontSize: size.textSmall),
                               ),
                               SizedBox(width: size.w8),
                               if (selectedValue == 1)
@@ -111,18 +119,18 @@ class _NoteScreenState extends State<NoteScreen>
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Date Created",
+                              label(e: 'Date Created', b: 'ডেট ক্রিটেড'),
                               style: selectedValue == 2
                                   ? TextStyle(
-                                  color: clr.appPrimaryColorGreen,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: StringData.fontFamilyPoppins,
-                                  fontSize: size.textSmall)
+                                      color: clr.appPrimaryColorGreen,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: StringData.fontFamilyPoppins,
+                                      fontSize: size.textSmall)
                                   : TextStyle(
-                                  color: clr.blackColor,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: StringData.fontFamilyPoppins,
-                                  fontSize: size.textSmall),
+                                      color: clr.blackColor,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: StringData.fontFamilyPoppins,
+                                      fontSize: size.textSmall),
                             ),
                             SizedBox(width: size.w8),
                             if (selectedValue == 2)
@@ -140,18 +148,19 @@ class _NoteScreenState extends State<NoteScreen>
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Date Modified",
+                              label(e: 'Date Modified', b: 'ডেট মডিফাইড'),
+
                               style: selectedValue == 3
                                   ? TextStyle(
-                                  color: clr.appPrimaryColorGreen,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: StringData.fontFamilyPoppins,
-                                  fontSize: size.textSmall)
+                                      color: clr.appPrimaryColorGreen,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: StringData.fontFamilyPoppins,
+                                      fontSize: size.textSmall)
                                   : TextStyle(
-                                  color: clr.blackColor,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: StringData.fontFamilyPoppins,
-                                  fontSize: size.textSmall),
+                                      color: clr.blackColor,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: StringData.fontFamilyPoppins,
+                                      fontSize: size.textSmall),
                             ),
                             SizedBox(width: size.w8),
                             if (selectedValue == 3)
@@ -177,10 +186,10 @@ class _NoteScreenState extends State<NoteScreen>
                           SizedBox(width: size.w8),
                           Text(
                             selectedValue == 1
-                                ? "Title"
+                                ?  label(e: "Title", b: "টাইটেল")
                                 : selectedValue == 2
-                                ? "Date Created"
-                                : "Date modified",
+                                    ? label(e: 'Date Created', b: 'ডেট ক্রিটেড')
+                                    :   label(e: 'Date Modified', b: 'ডেট মডিফাইড'),
                             style: TextStyle(
                               color: clr.textColorBlack,
                               fontWeight: FontWeight.w400,
@@ -198,7 +207,7 @@ class _NoteScreenState extends State<NoteScreen>
             SizedBox(height: size.h8),
             Expanded(
               child:
-              AppStreamBuilder<PaginatedListViewController<NoteDataEntity>>(
+                  AppStreamBuilder<PaginatedListViewController<NoteDataEntity>>(
                 stream: pageStateStreamController.stream,
                 loadingBuilder: (context) {
                   return const Center(child: CircularLoader());
@@ -208,7 +217,8 @@ class _NoteScreenState extends State<NoteScreen>
                     controller: paginationController,
                     physics: const BouncingScrollPhysics(),
                     padding: EdgeInsets.symmetric(
-                        horizontal: size.h16, ),
+                      horizontal: size.h16,
+                    ),
                     itemBuilder: (context, item, index) {
                       return NoteItemWidget(
                         noteDataEntity: item,
@@ -260,7 +270,7 @@ class _NoteScreenState extends State<NoteScreen>
             title: "Do you want to delete Notes?",
             infoText: "Are you Sure?")
         .then((x) {
-      if (x) {
+      if (!x) {
         onNotesDelete(noteId);
       }
     });
@@ -279,12 +289,13 @@ class _NoteScreenState extends State<NoteScreen>
   @override
   void onNavigateToNoteDetailsScreen(NoteDataEntity noteDataEntity) {
     Navigator.of(context).pushNamed(AppRoute.noteDetailsScreen,
-        arguments: NoteDetailsScreenArgs(noteDataEntity:  noteDataEntity,noteType: NoteType.edit));
+        arguments: NoteDetailsScreenArgs(
+            noteDataEntity: noteDataEntity, noteType: NoteType.edit));
   }
 
   @override
   void showSuccess(String message) {
-    // TODO: implement showSuccess
+    CustomToasty.of(context).showSuccess(message);
   }
 
   @override
@@ -333,9 +344,9 @@ class NoteItemWidget extends StatelessWidget with AppTheme {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: size.h8,horizontal: size.h4),
+        padding: EdgeInsets.symmetric(vertical: size.h8, horizontal: size.h4),
         decoration: BoxDecoration(
-        color: clr.noteBoxColor,
+          color: clr.noteBoxColor,
           boxShadow: [
             BoxShadow(
                 offset: const Offset(0, 3),
@@ -374,19 +385,34 @@ class NoteItemWidget extends StatelessWidget with AppTheme {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    noteDataEntity.title,
-                    style: TextStyle(
-                      color: clr.blackColor,
-                      fontWeight: FontWeight.w500,
-                      fontSize: size.textSmall,
-                      fontFamily: StringData.fontFamilyPoppins,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          noteDataEntity.title,
+                          style: TextStyle(
+                            color: clr.blackColor,
+                            fontWeight: FontWeight.w500,
+                            fontSize: size.textSmall,
+                            fontFamily: StringData.fontFamilyPoppins,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      GestureDetector(
+                          onTap: onDelete,
+                          child: Icon(
+                            Icons.delete,
+                            color: Colors.red,
+                            size: size.r24,
+                          ))
+                    ],
                   ),
                   SizedBox(height: size.h4),
-                  noteDataEntity.contentTitleEn!.isNotEmpty|| noteDataEntity.contentTitleBn!.isNotEmpty
+                  noteDataEntity.contentTitleEn!.isNotEmpty ||
+                          noteDataEntity.contentTitleBn!.isNotEmpty
                       ? Text(
                           label(
                               e: noteDataEntity.contentTitleEn!,
@@ -399,18 +425,18 @@ class NoteItemWidget extends StatelessWidget with AppTheme {
                         )
                       : const SizedBox(),
                   SizedBox(height: size.h4),
-
                   Row(
-                    mainAxisAlignment:  noteDataEntity.contentTitleEn!.isNotEmpty|| noteDataEntity.contentTitleBn!.isNotEmpty
-                        ? MainAxisAlignment.end
-                        :
-                        MainAxisAlignment.start,
+                    mainAxisAlignment:
+                        noteDataEntity.contentTitleEn!.isNotEmpty ||
+                                noteDataEntity.contentTitleBn!.isNotEmpty
+                            ? MainAxisAlignment.end
+                            : MainAxisAlignment.start,
                     children: [
                       Expanded(
                         child: Text(
-                          "তারিখ: ${label(e: DateFormat('dd MMMM, yyyy').format(
+                          "তারিখ: ${label(e: DateFormat('dd MMMM yyyy').format(
                                 DateTime.parse(noteDataEntity.createdAt!),
-                              ), b: timeAgoToBengali(DateFormat('dd MMMM, yyyy').format(DateTime.parse(noteDataEntity.createdAt!))))}",
+                              ), b: timeAgoToBengali(DateFormat('dd MMMM yyyy').format(DateTime.parse(noteDataEntity.createdAt!))))}",
                           style: TextStyle(
                             color: clr.placeHolderTextColorGray,
                             fontWeight: FontWeight.w400,
