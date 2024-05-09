@@ -101,7 +101,7 @@ mixin RouteGenerator {
           case AppRoute.discussionScreen:
             return const DiscussionScreen();
           case AppRoute.assignmentScreen:
-            return const AssignmentScreen();
+            return AssignmentScreen(arguments: setting.arguments);
           case AppRoute.assignmentSubmitScreen:
             return AssignmentSubmitScreen(arguments: setting.arguments);
           case AppRoute.assessmentScreen:

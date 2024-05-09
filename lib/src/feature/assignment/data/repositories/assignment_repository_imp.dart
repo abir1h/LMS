@@ -20,4 +20,28 @@ class AssignmentRepositoryImp extends AssignmentRepository {
         .toEntityFromModel(responseModel,
             (AssignmentDataModel model) => model.toAssignmentDataEntity);
   }
+
+  @override
+  Future<ResponseEntity> storeAssignment(int assignmentId, int subAssignmentId,
+      int courseId, int circularId, String answer, String filePath) async {
+    ResponseModel responseModel =
+        (await assignmentRemoteDataSource.storeAssignmentAction(assignmentId,
+            subAssignmentId, courseId, circularId, answer, filePath));
+    return ResponseModelToEntityMapper<AssignmentDataEntity,
+            AssignmentDataModel>()
+        .toEntityFromModel(responseModel,
+            (AssignmentDataModel model) => model.toAssignmentDataEntity);
+  }
+
+  @override
+  Future<ResponseEntity> updateAssignment(int assignmentId, int subAssignmentId,
+      int courseId, int circularId, String answer, String filePath) async {
+    ResponseModel responseModel =
+        (await assignmentRemoteDataSource.updateAssignmentAction(assignmentId,
+            subAssignmentId, courseId, circularId, answer, filePath));
+    return ResponseModelToEntityMapper<AssignmentDataEntity,
+            AssignmentDataModel>()
+        .toEntityFromModel(responseModel,
+            (AssignmentDataModel model) => model.toAssignmentDataEntity);
+  }
 }

@@ -180,7 +180,7 @@ class _RootScreenState extends State<RootScreen>
           ? GestureDetector(
               onTap: () {
                 Navigator.of(context).pushNamed(AppRoute.noteEditScreen,
-                    arguments: NoteDetailsScreenArgs(noteModel: null));
+                    arguments: NoteDetailsScreenArgs(noteType: NoteType.create,noteDataEntity: null));
               },
               child: Container(
                 padding: EdgeInsets.all(size.r16),

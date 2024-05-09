@@ -1,5 +1,4 @@
 import '../../../shared/domain/entities/response_entity.dart';
-import '../entities/discussion_data_entity.dart';
 import '../repositories/discussion_repository.dart';
 
 class DiscussionUseCase {
@@ -44,6 +43,13 @@ class DiscussionUseCase {
 
   Future<ResponseEntity> voteDiscussionUseCase(int discussionId) async {
     final response = _discussionRepository.voteDiscussion(discussionId);
+    return response;
+  }
+
+  Future<ResponseEntity> reportDiscussionUseCase(
+      int discussionId, String remarks) async {
+    final response =
+        _discussionRepository.reportDiscussion(discussionId, remarks);
     return response;
   }
 

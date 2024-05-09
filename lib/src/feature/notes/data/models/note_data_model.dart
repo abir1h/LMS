@@ -1,31 +1,35 @@
 import 'package:flutter/cupertino.dart';
 
-import 'content_data_model.dart';
-
 @immutable
 class NoteDataModel {
-  final int id;
-  final int courseModuleId;
-  final int contentId;
-  final String contentType;
-  final String title;
-  final String description;
-  final int createdBy;
-  final int status;
-  final String createdAt;
-  final ContentDataModel? content;
+  int? id;
+  int? courseModuleId;
+  int? contentId;
+  String? contentType;
+  String title;
+  String description;
+  String? attachment;
+  int? createdBy;
+  int status;
+  String? createdAt;
+  String? updatedAt;
+  String? contentTitleEn;
+  String? contentTitleBn;
 
-  const NoteDataModel({
-    required this.id,
-    required this.courseModuleId,
-    required this.contentId,
-    required this.contentType,
+  NoteDataModel({
+    this.id,
+    this.courseModuleId,
+    this.contentId,
+    this.contentType,
     required this.title,
     required this.description,
-    required this.createdBy,
+    this.attachment,
+    this.createdBy,
     required this.status,
-    required this.createdAt,
-    required this.content,
+    this.createdAt,
+    this.updatedAt,
+    this.contentTitleEn,
+    this.contentTitleBn,
   });
 
   factory NoteDataModel.fromJson(Map<String, dynamic> json) => NoteDataModel(
@@ -35,26 +39,61 @@ class NoteDataModel {
         contentType: json["content_type"] ?? "",
         title: json["title"] ?? "",
         description: json["description"] ?? "",
+        attachment: json["attachment"] ?? "",
         createdBy: json["created_by"] ?? "",
         status: json["status"] ?? -1,
         createdAt: json["created_at"] ?? "",
-        content: json['content'] != null
-            ? ContentDataModel.fromJson(json['content'])
-            : null,
+        updatedAt: json["updated_at"] ?? "",
+        contentTitleEn: json["content_title_en"] ?? "",
+        contentTitleBn: json["content_title_bn"] ?? "",
       );
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "course_module_id": courseModuleId,
-        "content_id": contentId,
-        "content_type": contentType,
-        "title": title,
-        "description": description,
-        "created_by": createdBy,
-        "status": status,
-        "created_at": createdAt,
-        "content": content!.toJson()
-      };
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> data = {};
+    data["id"] = id;
+    if (courseModuleId != null) {
+      data["course_module_id"] = courseModuleId;
+    }
+    data["title"] = title;
+    data["description"] = description;
+    data["status"] = status;
+
+    if (updatedAt != null) {
+      data["updated_at"] = updatedAt;
+    }
+    if (createdAt != null) {
+      data["created_at"] = createdAt;
+    }
+    if (createdBy != null) {
+      data["created_by"] = createdBy;
+    }
+    if (createdBy != null) {
+      data["created_by"] = createdBy;
+    }
+    if (attachment != null) {
+      data["attachment"] = attachment;
+    }
+    if (updatedAt != null) {
+      data["updated_at"] = updatedAt;
+    }
+    if (contentTitleEn != null) {
+      data["content_title_en"] = contentTitleEn;
+    }
+    if (contentTitleBn != null) {
+      data["content_title_bn"] = contentTitleBn;
+    }
+    if (contentTitleBn != null) {
+      data["content_title_bn"] = contentTitleBn;
+    }
+    if (contentId != null) {
+      data["content_id"] = contentId;
+    }
+    if (contentType != null) {
+      data["content_type"] = contentType;
+    }
+    return data;
+  }
+
   static List<NoteDataModel> listFromJson(List<dynamic> json) {
     return json.isNotEmpty
         ? List.castFrom<dynamic, NoteDataModel>(

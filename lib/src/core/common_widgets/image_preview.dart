@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../constants/app_theme.dart';
 
@@ -77,9 +78,13 @@ class _InstructionVideoWrapperState extends State<_InstructionVideoWrapper>
                         scaleEnabled: true,
                         minScale: 0.5,
                         maxScale: 4.5,
-                        child: Image.asset(
-                          widget.filePath,
+                        child: CachedNetworkImage(
                           fit: BoxFit.fitWidth,
+                          imageUrl: widget.filePath,
+                          placeholder: (context, url) =>
+                          const CircularProgressIndicator(),
+                          errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
                         )),
                   ),
                 ),

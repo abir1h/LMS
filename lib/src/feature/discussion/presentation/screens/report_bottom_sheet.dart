@@ -8,11 +8,13 @@ import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
 import '../services/report_bottomsheet_screen_service.dart';
 
 class ReportBottomSheet extends StatefulWidget {
-  final int commentId;
+  final String from;
+  final int id;
   final VoidCallback onSuccess;
   const ReportBottomSheet({
     super.key,
-    required this.commentId,
+    required this.from,
+    required this.id,
     required this.onSuccess,
   });
 
@@ -67,7 +69,9 @@ class _ReportBottomSheetState extends State<ReportBottomSheet>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CustomTextWidget(
-                    text: label(e: en.writeYourReport, b: bn.writeYourReport),
+                    text: widget.from == "discussion"
+                        ? label(e: en.reportDiscussion, b: bn.reportDiscussion)
+                        : label(e: en.reportComment, b: bn.reportComment),
                     textColor: clr.blackColor,
                     fontFamily: StringData.fontFamilyPoppins,
                     fontWeight: FontWeight.w500,
@@ -117,9 +121,13 @@ class _ReportBottomSheetState extends State<ReportBottomSheet>
                       widget.onSuccess();
                     },
                     onCheck: () => validateFormData(titleController),
-                    tapAction: () => onReportComment(
-                        commentId: widget.commentId,
-                        remarks: titleController.text.trim()),
+                    tapAction: () => widget.from == "discussion"
+                        ? onReportDiscussion(
+                            discussionId: widget.id,
+                            remarks: titleController.text.trim())
+                        : onReportComment(
+                            commentId: widget.id,
+                            remarks: titleController.text.trim()),
                   ),
                 ],
               ),
@@ -182,10 +190,5 @@ class _ReportBottomSheetState extends State<ReportBottomSheet>
   @override
   void showSuccess(String message) {
     CustomToasty.of(context).showSuccess(message);
-  }
-
-  @override
-  void onSuccessRequest() {
-    widget.onSuccess();
   }
 }

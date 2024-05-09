@@ -26,6 +26,10 @@ mixin DetailedDiscussionService<T extends StatefulWidget> on State<T>
     return _discussionUseCase.getDiscussionDetailsUseCase(discussionId);
   }
 
+  Future<ResponseEntity> deleteDiscussions(int discussionId) async {
+    return _discussionUseCase.deleteDiscussionUseCase(discussionId);
+  }
+
   Future<ResponseEntity> deleteComment(int commentId) async {
     return _discussionUseCase.deleteCommentUseCase(commentId);
   }
@@ -67,6 +71,16 @@ mixin DetailedDiscussionService<T extends StatefulWidget> on State<T>
         discussionDataStreamController
             .add(DataLoadedState<DiscussionDataEntity>(value.data));
       } else if (value.error == null && value.data == null) {
+      } else {
+        _view.showWarning(value.message!);
+      }
+    });
+  }
+
+  void onTapRemoveDiscussions(int discussionId) {
+    deleteDiscussions(discussionId).then((value) {
+      if (value.error == null && value.data != null) {
+        _view.showSuccess(value.message!);
       } else {
         _view.showWarning(value.message!);
       }
