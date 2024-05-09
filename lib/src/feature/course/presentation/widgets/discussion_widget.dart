@@ -67,6 +67,8 @@ class _DiscussionWidgetState extends State<DiscussionWidget>
           },
           emptyBuilder: (context, message, icon) => CustomEmptyWidget(
             message: message,
+            title:
+                label(e: "No Discussions Found", b: "কোন আলোচনা পাওয়া যায়নি"),
             // constraints: constraints,
             // offset: 350.w,
           ),
@@ -206,7 +208,9 @@ class DiscussionWidgetTile extends StatelessWidget with AppTheme {
                                 fontWeight: FontWeight.w500,
                                 fontFamily: StringData.fontFamilyPoppins),
                             TextSpan(
-                                text: label(e: "Total 1", b: "মোট 1 টি"),
+                                text: label(
+                                    e: "Total ${data.vote.toString()}",
+                                    b: "মোট ${replaceEnglishNumberWithBengali(data.vote.toString())} টি"),
                                 children: [
                                   const TextSpan(
                                     text: " | ",

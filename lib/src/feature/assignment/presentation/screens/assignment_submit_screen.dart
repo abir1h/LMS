@@ -106,13 +106,12 @@ class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
                               circularId:
                                   _screenArgs.assignmentDataEntity!.circularId,
                               answer: data,
-                              filePath: "");
+                              files: []);
                           Navigator.of(context).pushNamed(
                               AppRoute.courseAssignmentScreen,
-                              arguments: CourseAssessmentScreenArgs(
+                              arguments: AssignmentArgs(
                                   courseContentId:
-                                      _screenArgs.assignmentDataEntity!.id,
-                                  onTap: () {}));
+                                      _screenArgs.assignmentDataEntity!.id));
                         },
                         style: FilledButton.styleFrom(
                           side: BorderSide(

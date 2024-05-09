@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lms/src/feature/assignment/data/models/sub_assignment_data_model.dart';
 
+import 'assignment_submission_data_model.dart';
+
 @immutable
 class AssignmentDataModel {
   final int id;
@@ -23,6 +25,7 @@ class AssignmentDataModel {
   final String type;
   final String supportingDoc;
   final SubAssignmentDataModel? circularSubAssignments;
+  final AssignmentSubmissionDataModel? assignmentSubmissions;
 
   const AssignmentDataModel({
     required this.id,
@@ -45,6 +48,7 @@ class AssignmentDataModel {
     required this.type,
     required this.supportingDoc,
     required this.circularSubAssignments,
+    required this.assignmentSubmissions,
   });
 
   factory AssignmentDataModel.fromJson(Map<String, dynamic> json) =>
@@ -71,6 +75,10 @@ class AssignmentDataModel {
         circularSubAssignments: json['circular_sub_assignments'] != null
             ? SubAssignmentDataModel.fromJson(json["circular_sub_assignments"])
             : null,
+        assignmentSubmissions: json['assignment_submissions'] != null
+            ? AssignmentSubmissionDataModel.fromJson(
+                json["assignment_submissions"])
+            : null,
       );
 
   Map<String, dynamic> toJson() => {
@@ -94,5 +102,6 @@ class AssignmentDataModel {
         "type": type,
         "supporting_doc": supportingDoc,
         "circular_sub_assignments": circularSubAssignments?.toJson(),
+        "assignment_submissions": assignmentSubmissions?.toJson(),
       };
 }

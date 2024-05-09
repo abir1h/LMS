@@ -55,10 +55,9 @@ class _ChapterWidgetState<T> extends State<ChapterWidget<T>>
       children: [
         GestureDetector(
           onTap: () {
-            // if (widget.status != 0) {
-            //   _toggle();///Todo Open
-            // }
-            _toggle();
+            if (widget.status != 0) {
+              _toggle();
+            }
           },
           child: Container(
             padding:

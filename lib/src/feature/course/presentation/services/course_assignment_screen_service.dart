@@ -9,7 +9,7 @@ import '../../../shared/domain/entities/response_entity.dart';
 
 abstract class _ViewModel {
   void showWarning(String message);
-  void navigateToAssignmentScreen(AssignmentDataEntity assignmentDataEntity);
+  void navigateToAssignmentScreen(int courseContentId);
 }
 
 mixin CourseAssignmentScreenService<T extends StatefulWidget> on State<T>
@@ -56,7 +56,7 @@ mixin CourseAssignmentScreenService<T extends StatefulWidget> on State<T>
     });
   }
 
-  void onTap(AssignmentDataEntity assignmentDataEntity) {
-    _view.navigateToAssignmentScreen(assignmentDataEntity);
+  void onTap(int courseContentId) {
+    _view.navigateToAssignmentScreen(courseContentId);
   }
 }

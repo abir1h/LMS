@@ -103,26 +103,29 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
                                       GestureDetector(
                                         onTap: () =>
                                             onTapVoteDiscussion(data.id),
+
+                                        ///Todo
                                         child: Icon(
                                           Icons.thumb_up,
-                                          color: data.vote == 0
+                                          color: !data.isVote
                                               ? clr.placeHolderTextColorGray
                                               : clr.appPrimaryColorGreen,
                                           size: size.r20,
                                         ),
                                       ),
                                       SizedBox(width: size.w8),
-                                      GestureDetector(
-                                        onTap: () =>
-                                            onTapReportDiscussion(data.id),
-                                        child: Icon(
-                                          Icons.flag,
-                                          color: data.vote == 0
-                                              ? clr.placeHolderTextColorGray
-                                              : clr.appPrimaryColorGreen,
-                                          size: size.r20,
+                                      if (!data.isSelf)
+                                        GestureDetector(
+                                          onTap: () =>
+                                              onTapReportDiscussion(data.id),
+                                          child: Icon(
+                                            Icons.flag,
+                                            color: !data.isReport
+                                                ? clr.placeHolderTextColorGray
+                                                : clr.appPrimaryColorGreen,
+                                            size: size.r20,
+                                          ),
                                         ),
-                                      ),
                                       Expanded(
                                         child: Text.rich(
                                             textAlign: TextAlign.end,
@@ -140,7 +143,9 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
                                                 //     e: "মোট ${_screenArgs.discussionModel!.comments != null ? _screenArgs.discussionModel!.comments!.length.toString() : "0"} টি",
                                                 //     b: "মোট ${_screenArgs.discussionModel!.comments != null ? _screenArgs.discussionModel!.comments!.length.toString() : "0"} টি"),
 
-                                                text: "মোট 3 টি",
+                                                text: label(
+                                                    e: "Total ${data.vote.toString()}",
+                                                    b: "মোট ${replaceEnglishNumberWithBengali(data.vote.toString())} টি"),
                                                 children: [
                                                   const TextSpan(
                                                     text: " | ",
@@ -158,63 +163,66 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
                                 ],
                               ),
                             ),
-                            PopupMenuButton(
-                              surfaceTintColor: clr.shadeWhiteColor2,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(size.r4),
-                                ),
-                              ),
-                              itemBuilder: (BuildContext context) => [
-                                PopupMenuItem(
-                                  onTap: () =>
-                                      onTapUpdateDiscussion(data.description),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(
-                                        Icons.border_color_outlined,
-                                        size: size.r16,
-                                        color: clr.appPrimaryColorGreen,
-                                      ),
-                                      SizedBox(width: size.w8),
-                                      CustomTextWidget(
-                                        text: label(e: "Edit", b: "এডিট করুন"),
-                                        fontSize: size.textXSmall,
-                                        textColor: clr.gapStrokeGrey,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ],
+                            if (data.isSelf)
+                              PopupMenuButton(
+                                surfaceTintColor: clr.shadeWhiteColor2,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(size.r4),
                                   ),
                                 ),
-                                PopupMenuItem(
-                                  onTap: () => onTapRemoveDiscussions(data.id),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(
-                                        Icons.delete_outline_outlined,
-                                        size: size.r16,
-                                        color: clr.appPrimaryColorGreen,
-                                      ),
-                                      SizedBox(width: size.w8),
-                                      CustomTextWidget(
-                                        text:
-                                            label(e: "Remove", b: "মুছে ফেলুন"),
-                                        fontSize: size.textXSmall,
-                                        textColor: clr.gapStrokeGrey,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ],
+                                itemBuilder: (BuildContext context) => [
+                                  PopupMenuItem(
+                                    onTap: () =>
+                                        onTapUpdateDiscussion(data.description),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(
+                                          Icons.border_color_outlined,
+                                          size: size.r16,
+                                          color: clr.appPrimaryColorGreen,
+                                        ),
+                                        SizedBox(width: size.w8),
+                                        CustomTextWidget(
+                                          text:
+                                              label(e: "Edit", b: "এডিট করুন"),
+                                          fontSize: size.textXSmall,
+                                          textColor: clr.gapStrokeGrey,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ],
+                                    ),
                                   ),
+                                  PopupMenuItem(
+                                    onTap: () =>
+                                        onTapRemoveDiscussions(data.id),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(
+                                          Icons.delete_outline_outlined,
+                                          size: size.r16,
+                                          color: clr.appPrimaryColorGreen,
+                                        ),
+                                        SizedBox(width: size.w8),
+                                        CustomTextWidget(
+                                          text: label(
+                                              e: "Remove", b: "মুছে ফেলুন"),
+                                          fontSize: size.textXSmall,
+                                          textColor: clr.gapStrokeGrey,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                                child: Icon(
+                                  Icons.more_vert_outlined,
+                                  size: size.r16,
+                                  color: clr.iconColorBlack,
                                 ),
-                              ],
-                              child: Icon(
-                                Icons.more_vert_outlined,
-                                size: size.r16,
-                                color: clr.iconColorBlack,
                               ),
-                            ),
                           ],
                         ),
                       ),
@@ -415,61 +423,62 @@ class CommentTile extends StatelessWidget with AppTheme, Language {
               //   size: size.r16,
               //   color: clr.iconColorBlack,
               // ),
-              PopupMenuButton(
-                surfaceTintColor: clr.shadeWhiteColor2,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(size.r4),
-                  ),
-                ),
-                itemBuilder: (BuildContext context) => [
-                  PopupMenuItem(
-                    onTap: onTapEdit,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.border_color_outlined,
-                          size: size.r16,
-                          color: clr.appPrimaryColorGreen,
-                        ),
-                        SizedBox(width: size.w8),
-                        CustomTextWidget(
-                          text: label(e: "Edit", b: "এডিট করুন"),
-                          fontSize: size.textXSmall,
-                          textColor: clr.gapStrokeGrey,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ],
+              if (data.isSelf)
+                PopupMenuButton(
+                  surfaceTintColor: clr.shadeWhiteColor2,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(size.r4),
                     ),
                   ),
-                  PopupMenuItem(
-                    onTap: onTapRemove,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.delete_outline_outlined,
-                          size: size.r16,
-                          color: clr.appPrimaryColorGreen,
-                        ),
-                        SizedBox(width: size.w8),
-                        CustomTextWidget(
-                          text: label(e: "Remove", b: "মুছে ফেলুন"),
-                          fontSize: size.textXSmall,
-                          textColor: clr.gapStrokeGrey,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ],
+                  itemBuilder: (BuildContext context) => [
+                    PopupMenuItem(
+                      onTap: onTapEdit,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.border_color_outlined,
+                            size: size.r16,
+                            color: clr.appPrimaryColorGreen,
+                          ),
+                          SizedBox(width: size.w8),
+                          CustomTextWidget(
+                            text: label(e: "Edit", b: "এডিট করুন"),
+                            fontSize: size.textXSmall,
+                            textColor: clr.gapStrokeGrey,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ],
+                      ),
                     ),
+                    PopupMenuItem(
+                      onTap: onTapRemove,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.delete_outline_outlined,
+                            size: size.r16,
+                            color: clr.appPrimaryColorGreen,
+                          ),
+                          SizedBox(width: size.w8),
+                          CustomTextWidget(
+                            text: label(e: "Remove", b: "মুছে ফেলুন"),
+                            fontSize: size.textXSmall,
+                            textColor: clr.gapStrokeGrey,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                  child: Icon(
+                    Icons.more_vert_outlined,
+                    size: size.r16,
+                    color: clr.iconColorBlack,
                   ),
-                ],
-                child: Icon(
-                  Icons.more_vert_outlined,
-                  size: size.r16,
-                  color: clr.iconColorBlack,
                 ),
-              ),
             ],
           ),
           SizedBox(height: size.h16),
@@ -491,7 +500,7 @@ class CommentTile extends StatelessWidget with AppTheme, Language {
                 onTap: onTapVote,
                 child: Icon(
                   Icons.thumb_up,
-                  color: data.vote == 0
+                  color: !data.isVote
                       ? clr.placeHolderTextColorGray
                       : clr.appPrimaryColorGreen,
                   size: size.r20,
@@ -514,23 +523,25 @@ class CommentTile extends StatelessWidget with AppTheme, Language {
                   ],
                 ),
               ),
-              Icon(
-                Icons.flag,
-                color: clr.placeHolderTextColorGray,
-                size: size.r20,
-              ),
-              SizedBox(width: size.w4),
-              GestureDetector(
-                onTap: onTapReport,
-                child: Text(
-                  "রিপোর্ট",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontFamily: StringData.fontFamilyPoppins,
-                      fontSize: size.textXSmall,
-                      color: clr.placeHolderTextColorGray),
+              if (!data.isSelf)
+                Icon(
+                  Icons.flag,
+                  color: clr.placeHolderTextColorGray,
+                  size: size.r20,
                 ),
-              ),
+              SizedBox(width: size.w4),
+              if (!data.isSelf)
+                GestureDetector(
+                  onTap: onTapReport,
+                  child: Text(
+                    "রিপোর্ট",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontFamily: StringData.fontFamilyPoppins,
+                        fontSize: size.textXSmall,
+                        color: clr.placeHolderTextColorGray),
+                  ),
+                ),
             ],
           )
         ],

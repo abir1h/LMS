@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import '../mapper/assignment_data_mapper.dart';
 import '../models/assignment_data_model.dart';
 import '../../domain/entities/assignment_data_entity.dart';
@@ -23,10 +25,10 @@ class AssignmentRepositoryImp extends AssignmentRepository {
 
   @override
   Future<ResponseEntity> storeAssignment(int assignmentId, int subAssignmentId,
-      int courseId, int circularId, String answer, String filePath) async {
+      int courseId, int circularId, String answer, List<File> files) async {
     ResponseModel responseModel =
         (await assignmentRemoteDataSource.storeAssignmentAction(assignmentId,
-            subAssignmentId, courseId, circularId, answer, filePath));
+            subAssignmentId, courseId, circularId, answer, files));
     return ResponseModelToEntityMapper<AssignmentDataEntity,
             AssignmentDataModel>()
         .toEntityFromModel(responseModel,
@@ -34,11 +36,23 @@ class AssignmentRepositoryImp extends AssignmentRepository {
   }
 
   @override
-  Future<ResponseEntity> updateAssignment(int assignmentId, int subAssignmentId,
-      int courseId, int circularId, String answer, String filePath) async {
+  Future<ResponseEntity> updateAssignment(
+      int submissionId,
+      int assignmentId,
+      int subAssignmentId,
+      int courseId,
+      int circularId,
+      String answer,
+      List<File> files) async {
     ResponseModel responseModel =
-        (await assignmentRemoteDataSource.updateAssignmentAction(assignmentId,
-            subAssignmentId, courseId, circularId, answer, filePath));
+        (await assignmentRemoteDataSource.updateAssignmentAction(
+            submissionId,
+            assignmentId,
+            subAssignmentId,
+            courseId,
+            circularId,
+            answer,
+            files));
     return ResponseModelToEntityMapper<AssignmentDataEntity,
             AssignmentDataModel>()
         .toEntityFromModel(responseModel,

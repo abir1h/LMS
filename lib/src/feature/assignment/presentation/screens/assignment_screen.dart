@@ -1,8 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:lms/src/core/common_widgets/custom_action_button.dart';
 
+import '../../../../core/common_widgets/app_stream.dart';
+import '../../../../core/common_widgets/circuler_widget.dart';
+import '../../../../core/common_widgets/custom_empty_widget.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/image_preview.dart';
@@ -36,321 +41,304 @@ class _AssignmentScreenState extends State<AssignmentScreen>
   void initState() {
     super.initState();
     _screenArgs = widget.arguments as AssignmentArgs;
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      loadAssignmentData(_screenArgs.courseContentId);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-        title: "",
-        body: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          padding:
-              EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (_screenArgs.assignmentDataEntity.supportingDoc.isNotEmpty)
-                CustomTextWidget(
-                  text: label(
-                      e: en.assignmentInstruction, b: bn.assignmentInstruction),
-                  textColor: clr.blackColor,
-                  fontFamily: StringData.fontFamilyPoppins,
-                  padding: EdgeInsets.only(bottom: size.h16),
-                ),
-              if (_screenArgs.assignmentDataEntity.supportingDoc.isNotEmpty)
-                _screenArgs.assignmentDataEntity.supportingDoc
-                            .split(".")
-                            .last ==
-                        ".pdf"
-                    ? Padding(
-                        padding: EdgeInsets.only(bottom: size.h20),
-                        child: SupportingDocWidget(
-                          docTitle: _screenArgs
-                              .assignmentDataEntity.supportingDoc
-                              .split("/")[1],
-                          onTap: () {},
-                        ),
-                      )
-                    : Padding(
-                        padding: EdgeInsets.only(bottom: size.h20),
-                        child: GestureDetector(
-                            onTap: () {
-                              ImagePreviewDialog.showImagePreview(
-                                  context,
-                                  _screenArgs
-                                      .assignmentDataEntity.supportingDoc);
-                            },
-                            child: Center(
-                              child: CachedNetworkImage(
-                                imageUrl: _screenArgs
-                                    .assignmentDataEntity.supportingDoc,
-                                placeholder: (context, url) =>
-                                    const CircularProgressIndicator(),
-                                errorWidget: (context, url, error) =>
-                                    const Icon(Icons.error),
-                              ),
-                            )),
-                      ),
-              Text(
-                label(
-                    e: en.answerTheFollowingQuestions,
-                    b: bn.answerTheFollowingQuestions),
-                style: TextStyle(
-                    color: clr.appPrimaryColorGreen,
-                    fontSize: size.textSmall,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: StringData.fontFamilyPoppins),
-              ),
-              SizedBox(height: size.h12),
-              Text(
-                label(
-                    e: _screenArgs.assignmentDataEntity.descriptionEn,
-                    b: _screenArgs.assignmentDataEntity.descriptionBn),
-                style: TextStyle(
-                    color: clr.blackColor,
-                    fontSize: size.textSmall,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: StringData.fontFamilyPoppins),
-              ),
-              SizedBox(height: size.h12),
-              if (_screenArgs.assignmentDataEntity.submissionType ==
-                      "written" ||
-                  _screenArgs.assignmentDataEntity.submissionType == "both")
-                GetBuilder<AssignmentController>(builder: (_) {
-                  return GestureDetector(
-                    onTap: () => onTapWriteHere(
-                        "assignmentScreen", _screenArgs.assignmentDataEntity),
-                    child: Container(
-                      width: double.infinity,
-                      padding: EdgeInsets.only(
-                          left: size.w16,
-                          right: size.w16,
-                          top: size.h12,
-                          bottom: size.h44),
-                      decoration: BoxDecoration(
-                        color: clr.whiteColor,
-                        borderRadius: BorderRadius.circular(size.r8),
-                        border: Border.all(
-                            color: clr.boxStrokeColor, width: size.w1),
-                      ),
-                      child: Text(
-                        controller.data != ''
-                            ? controller.data
-                            : label(e: en.writeHere, b: bn.writeHere),
-                        style: TextStyle(
-                            color: controller.data == ''
-                                ? clr.placeHolderTextColorGray
-                                : clr.textColorAppleBlack,
-                            fontSize: size.textSmall,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: StringData.fontFamilyPoppins),
-                      ),
-                    ),
-                  );
-                }),
-              if (_screenArgs.assignmentDataEntity.submissionType == "both")
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: size.h12),
-                  child: Center(
-                    child: Text(
-                      label(e: en.or, b: bn.or),
-                      style: TextStyle(
-                          color: clr.blackColor,
-                          fontSize: size.textSmall,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: StringData.fontFamilyPoppins),
-                    ),
+      title: "",
+      body: AppStreamBuilder<AssignmentDataEntity>(
+        stream: assignmentDetailsDataStreamController.stream,
+        loadingBuilder: (context) {
+          return const Center(child: CircularLoader());
+        },
+        dataBuilder: (context, data) {
+          return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            padding:
+                EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (data.supportingDoc.isNotEmpty)
+                  CustomTextWidget(
+                    text: label(
+                        e: en.assignmentInstruction,
+                        b: bn.assignmentInstruction),
+                    textColor: clr.blackColor,
+                    fontFamily: StringData.fontFamilyPoppins,
+                    padding: EdgeInsets.only(bottom: size.h16),
                   ),
-                ),
-              if (_screenArgs.assignmentDataEntity.submissionType == "upload" ||
-                  _screenArgs.assignmentDataEntity.submissionType == "both")
+                if (data.supportingDoc.isNotEmpty)
+                  data.supportingDoc.split(".").last == ".pdf"
+                      ? Padding(
+                          padding: EdgeInsets.only(bottom: size.h20),
+                          child: SupportingDocWidget(
+                            docTitle: data.supportingDoc.split("/")[1],
+                            onTap: () {},
+                          ),
+                        )
+                      : Padding(
+                          padding: EdgeInsets.only(bottom: size.h20),
+                          child: GestureDetector(
+                              onTap: () {
+                                ImagePreviewDialog.showImagePreview(
+                                    context, data.supportingDoc);
+                              },
+                              child: Center(
+                                child: CachedNetworkImage(
+                                  imageUrl: data.supportingDoc,
+                                  placeholder: (context, url) =>
+                                      const CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(Icons.error),
+                                ),
+                              )),
+                        ),
                 Text(
-                  label(e: en.uploadTheFile, b: bn.uploadTheFile),
+                  label(
+                      e: en.answerTheFollowingQuestions,
+                      b: bn.answerTheFollowingQuestions),
+                  style: TextStyle(
+                      color: clr.appPrimaryColorGreen,
+                      fontSize: size.textSmall,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: StringData.fontFamilyPoppins),
+                ),
+                SizedBox(height: size.h12),
+                Text(
+                  label(e: data.descriptionEn, b: data.descriptionBn),
                   style: TextStyle(
                       color: clr.blackColor,
                       fontSize: size.textSmall,
                       fontWeight: FontWeight.w500,
                       fontFamily: StringData.fontFamilyPoppins),
                 ),
-              if (_screenArgs.assignmentDataEntity.submissionType == "upload" ||
-                  _screenArgs.assignmentDataEntity.submissionType == "both")
-                Padding(
-                  padding: EdgeInsets.only(top: size.h12),
-                  child: Obx(
-                    () => CustomFilePicker(
-                      onFilePicked: (filePath) {
-                        print('Selected file: $filePath');
-                        // controller.filename.value = filePath.toString();
-
-                        // Handle the selected file path as needed
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.symmetric(
-                            horizontal: size.w16, vertical: size.h12),
-                        decoration: BoxDecoration(
-                          color: clr.whiteColor,
-                          borderRadius: BorderRadius.circular(size.r8),
-                          border: Border.all(
-                              color: clr.boxStrokeColor, width: size.w1),
-                        ),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                getShortenedFileName(controller.filename.value),
-                                style: TextStyle(
-                                    color: clr.appPrimaryColorGreen,
-                                    fontSize: size.textSmall,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: StringData.fontFamilyPoppins),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                            if (controller.filename.value != '')
-                              InkWell(
-                                  onTap: () {
-                                    controller.filename.value = '';
-                                    controller.isUpload.value = false;
-                                  },
-                                  child: Icon(
-                                    Icons.close,
-                                    color: clr.appPrimaryColorGreen,
-                                    size: size.r24,
-                                  )),
-                            Icon(
-                              Icons.attach_file,
-                              color: clr.iconColorHint,
-                              size: size.r24,
-                            ),
-                          ],
-                        ),
+                SizedBox(height: size.h12),
+                if (data.submissionType == "written" ||
+                    data.submissionType == "both")
+                  // GetBuilder<AssignmentController>(builder: (_) {
+                  //   return GestureDetector(
+                  //     onTap: () => onTapWriteHere(
+                  //         "assignmentScreen", data),
+                  //     child: Container(
+                  //       width: double.infinity,
+                  //       padding: EdgeInsets.only(
+                  //           left: size.w16,
+                  //           right: size.w16,
+                  //           top: size.h12,
+                  //           bottom: size.h44),
+                  //       decoration: BoxDecoration(
+                  //         color: clr.whiteColor,
+                  //         borderRadius: BorderRadius.circular(size.r8),
+                  //         border: Border.all(
+                  //             color: clr.boxStrokeColor, width: size.w1),
+                  //       ),
+                  //       child: Text(
+                  //         controller.data != ''
+                  //             ? controller.data
+                  //             : label(e: en.writeHere, b: bn.writeHere),
+                  //         style: TextStyle(
+                  //             color: controller.data == ''
+                  //                 ? clr.placeHolderTextColorGray
+                  //                 : clr.textColorAppleBlack,
+                  //             fontSize: size.textSmall,
+                  //             fontWeight: FontWeight.w500,
+                  //             fontFamily: StringData.fontFamilyPoppins),
+                  //       ),
+                  //     ),
+                  //   );
+                  // }),
+                  WrittenAnswerWidget(
+                    onTap: () => onTapWriteHere("assignmentScreen", data),
+                  ),
+                if (data.submissionType == "both")
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: size.h12),
+                    child: Center(
+                      child: Text(
+                        label(e: en.or, b: bn.or),
+                        style: TextStyle(
+                            color: clr.blackColor,
+                            fontSize: size.textSmall,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: StringData.fontFamilyPoppins),
                       ),
                     ),
                   ),
-                ),
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(
-                    horizontal: size.w16, vertical: size.h12),
-                decoration: BoxDecoration(
-                  color: clr.whiteColor,
-                  borderRadius: BorderRadius.circular(size.r8),
-                  border: Border.all(color: clr.boxStrokeColor, width: size.w1),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        fileName.map((c) => c).toList().join(', '),
-                        style: TextStyle(
-                            color: clr.appPrimaryColorGreen,
-                            fontSize: size.textSmall,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: StringData.fontFamilyPoppins),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    if (fileName.isNotEmpty)
-                      InkWell(
-                          onTap: () {
-                            // fileName.removeWhere((element) => element)
-                          },
-                          child: Icon(
-                            Icons.close,
-                            color: clr.appPrimaryColorGreen,
-                            size: size.r24,
-                          )),
-                    GestureDetector(
-                      onTap: pickFiles,
-                      child: Icon(
-                        Icons.attach_file,
-                        color: clr.iconColorHint,
-                        size: size.r24,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              ///Upload
-              if (_screenArgs.assignmentDataEntity.submissionType == "upload" ||
-                  _screenArgs.assignmentDataEntity.submissionType == "both")
-                Obx(() {
-                  return controller.isUpload.isFalse
-                      ? Padding(
-                          padding: EdgeInsets.symmetric(vertical: size.h20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                if (data.submissionType == "upload" ||
+                    data.submissionType == "both")
+                  Text(
+                    label(e: en.uploadTheFile, b: bn.uploadTheFile),
+                    style: TextStyle(
+                        color: clr.blackColor,
+                        fontSize: size.textSmall,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: StringData.fontFamilyPoppins),
+                  ),
+                if (data.submissionType == "upload" ||
+                    data.submissionType == "both")
+                  Padding(
+                    padding: EdgeInsets.only(top: size.h12),
+                    child: FilePickerWidget(
+                        items: files!,
+                        builder: (BuildContext context, int index, item) {
+                          return Row(
                             children: [
-                              CustomButton(
-                                onTap: () {
-                                  if (controller.filename.value != '') {
-                                    controller.isUpload.value = true;
-                                  }
-                                },
-                                title: label(e: en.upload, b: bn.upload),
-                                bgColor: controller.filename.value == ''
-                                    ? clr.greyColor
-                                    : clr.appPrimaryColorGreen,
-                                borderColor: Colors.transparent,
-                                radius: size.r8,
-                                verticalPadding: size.h4,
-                              )
+                              Expanded(
+                                child: Text(
+                                  files![index].path.split('/').last,
+                                  style: TextStyle(
+                                      color: clr.appPrimaryColorGreen,
+                                      fontSize: size.textSmall,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: StringData.fontFamilyPoppins),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              if (files!.isNotEmpty)
+                                InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        files!.removeWhere((element) =>
+                                            element == files![index]);
+                                      });
+                                    },
+                                    child: Icon(
+                                      Icons.close,
+                                      color: clr.appPrimaryColorGreen,
+                                      size: size.r24,
+                                    )),
                             ],
-                          ),
-                        )
-                      : const Wrap();
-                }),
+                          );
+                        },
+                        onPick: pickFiles),
+                  ),
 
-              ///Upload
-              // Obx(() {
-              //   return controller.isUpload.isTrue
-              //       ? Padding(
-              //           padding: EdgeInsets.symmetric(
-              //               horizontal: size.w16, vertical: size.h48),
-              //           child: Row(
-              //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //             children: [
-              //               Expanded(
-              //                 child: CustomButton(
-              //                   onTap: () {
-              //                     CustomToasty.of(context).showSuccess(
-              //                         "সফলভাবে  জমাদান সম্পন্ন হয়েছে");
-              //                     Navigator.of(context).pushNamed(
-              //                         AppRoute.courseAssignmentScreen);
-              //                   },
-              //                   title: label(e: en.submit, b: bn.submit),
-              //                   radius: size.r4,
-              //                   verticalPadding: size.h4,
-              //                   bgColor: clr.scaffoldBackgroundColor,
-              //                   textColor: clr.appPrimaryColorGreen,
-              //                   borderColor: clr.appPrimaryColorGreen,
-              //                 ),
-              //               ),
-              //               SizedBox(width: size.w16),
-              //               Expanded(
-              //                 child: CustomButton(
-              //                   onTap: () {
-              //                     CustomToasty.of(context).showSuccess(
-              //                         "সফলভাবে সংরক্ষণ সম্পন্ন হয়েছে");
-              //                   },
-              //                   title:
-              //                       label(e: en.saveAsDraft, b: bn.saveAsDraft),
-              //                   radius: size.r4,
-              //                   verticalPadding: size.h4,
-              //                 ),
-              //               ),
-              //             ],
-              //           ),
-              //         )
-              //       : const Wrap();
-              // })
-            ],
-          ),
-        ));
+                ///Upload
+                if (data.submissionType == "upload" ||
+                    data.submissionType == "both")
+                  Obx(() {
+                    return controller.isUpload.isFalse
+                        ? Padding(
+                            padding: EdgeInsets.symmetric(vertical: size.h20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                CustomButton(
+                                  onTap: () {
+                                    // if (controller.filename.value != '') {
+                                    //   controller.isUpload.value = true;
+                                    // }
+                                    onStoreAssignment(
+                                        assignmentId: data.id,
+                                        subAssignmentId:
+                                            data.circularSubAssignments != null
+                                                ? data
+                                                    .circularSubAssignments!.id
+                                                : -1,
+                                        courseId: data.courseId,
+                                        circularId: data.circularId,
+                                        answer: '',
+                                        files: files!);
+                                  },
+                                  title: label(e: en.upload, b: bn.upload),
+                                  bgColor: controller.filename.value == ''
+                                      ? clr.greyColor
+                                      : clr.appPrimaryColorGreen,
+                                  borderColor: Colors.transparent,
+                                  radius: size.r8,
+                                  verticalPadding: size.h4,
+                                )
+                              ],
+                            ),
+                          )
+                        : const Wrap();
+                  }),
+
+                CustomButton(
+                  onTap: () {
+                    // if (controller.filename.value != '') {
+                    //   controller.isUpload.value = true;
+                    // }
+                    onUpdateAssignment(
+                        submissionId: data.assignmentSubmissions!.id,
+                        assignmentId: data.id,
+                        subAssignmentId: data.circularSubAssignments != null
+                            ? data.circularSubAssignments!.id
+                            : -1,
+                        courseId: data.courseId,
+                        circularId: data.circularId,
+                        answer: '',
+                        files: files!);
+                  },
+                  title: label(e: en.upload, b: "Re-Submit"),
+                  bgColor: controller.filename.value == ''
+                      ? clr.greyColor
+                      : clr.appPrimaryColorGreen,
+                  borderColor: Colors.transparent,
+                  radius: size.r8,
+                  verticalPadding: size.h4,
+                )
+
+                ///Upload
+                // Obx(() {
+                //   return controller.isUpload.isTrue
+                //       ? Padding(
+                //           padding: EdgeInsets.symmetric(
+                //               horizontal: size.w16, vertical: size.h48),
+                //           child: Row(
+                //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //             children: [
+                //               Expanded(
+                //                 child: CustomButton(
+                //                   onTap: () {
+                //                     CustomToasty.of(context).showSuccess(
+                //                         "সফলভাবে  জমাদান সম্পন্ন হয়েছে");
+                //                     Navigator.of(context).pushNamed(
+                //                         AppRoute.courseAssignmentScreen);
+                //                   },
+                //                   title: label(e: en.submit, b: bn.submit),
+                //                   radius: size.r4,
+                //                   verticalPadding: size.h4,
+                //                   bgColor: clr.scaffoldBackgroundColor,
+                //                   textColor: clr.appPrimaryColorGreen,
+                //                   borderColor: clr.appPrimaryColorGreen,
+                //                 ),
+                //               ),
+                //               SizedBox(width: size.w16),
+                //               Expanded(
+                //                 child: CustomButton(
+                //                   onTap: () {
+                //                     CustomToasty.of(context).showSuccess(
+                //                         "সফলভাবে সংরক্ষণ সম্পন্ন হয়েছে");
+                //                   },
+                //                   title:
+                //                       label(e: en.saveAsDraft, b: bn.saveAsDraft),
+                //                   radius: size.r4,
+                //                   verticalPadding: size.h4,
+                //                 ),
+                //               ),
+                //             ],
+                //           ),
+                //         )
+                //       : const Wrap();
+                // })
+              ],
+            ),
+          );
+        },
+        emptyBuilder: (context, message, icon) => CustomEmptyWidget(
+          message: message,
+          // constraints: constraints,
+          // offset: 350.w,
+        ),
+      ),
+    );
   }
 
   void onTapWriteHere(
@@ -424,6 +412,99 @@ class SupportingDocWidget<T> extends StatelessWidget with AppTheme, Language {
               size: size.r24,
             ),
           )
+        ],
+      ),
+    );
+  }
+}
+
+class WrittenAnswerWidget extends StatelessWidget with AppTheme, Language {
+  final VoidCallback onTap;
+  const WrittenAnswerWidget({super.key, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: double.infinity,
+        padding: EdgeInsets.only(
+            left: size.w16, right: size.w16, top: size.h12, bottom: size.h44),
+        decoration: BoxDecoration(
+          color: clr.whiteColor,
+          borderRadius: BorderRadius.circular(size.r8),
+          border: Border.all(color: clr.boxStrokeColor, width: size.w1),
+        ),
+        child: Text(
+          label(e: en.writeHere, b: bn.writeHere),
+          style: TextStyle(
+              color: clr.placeHolderTextColorGray,
+              // : clr.textColorAppleBlack,
+              fontSize: size.textSmall,
+              fontWeight: FontWeight.w500,
+              fontFamily: StringData.fontFamilyPoppins),
+        ),
+      ),
+    );
+  }
+}
+
+class FilePickerWidget<T> extends StatelessWidget with AppTheme, Language {
+  final List<T> items;
+  final Widget Function(BuildContext context, int index, T item) builder;
+  final VoidCallback onPick;
+  const FilePickerWidget(
+      {super.key,
+      required this.items,
+      required this.builder,
+      required this.onPick});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h12),
+      decoration: BoxDecoration(
+        color: clr.whiteColor,
+        borderRadius: BorderRadius.circular(size.r8),
+        border: Border.all(color: clr.boxStrokeColor, width: size.w1),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          items.isEmpty
+              ? Expanded(
+                  child: CustomTextWidget(
+                    text: label(
+                        e: "Upload Your File Here",
+                        b: "আপনার ফাইলটি এখানে আপলোড করুন"),
+                    textColor: clr.textColorGray,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: StringData.fontFamilyPoppins,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                )
+              : Expanded(
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: items.length,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) =>
+                        builder(context, index, items[index]),
+                    separatorBuilder: (context, index) {
+                      return SizedBox(height: size.h4);
+                    },
+                  ),
+                ),
+          GestureDetector(
+            onTap: onPick,
+            child: Icon(
+              Icons.attach_file,
+              color: clr.iconColorHint,
+              size: size.r24,
+            ),
+          ),
         ],
       ),
     );

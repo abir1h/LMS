@@ -1,3 +1,4 @@
+import 'assignment_submission_data_entity.dart';
 import 'sub_assignment_data_entity.dart';
 
 class AssignmentDataEntity {
@@ -21,6 +22,7 @@ class AssignmentDataEntity {
   final String type;
   final String supportingDoc;
   final SubAssignmentDataEntity? circularSubAssignments;
+  final AssignmentSubmissionDataEntity? assignmentSubmissions;
 
   AssignmentDataEntity({
     required this.id,
@@ -43,5 +45,6 @@ class AssignmentDataEntity {
     required this.type,
     required this.supportingDoc,
     required this.circularSubAssignments,
+    required this.assignmentSubmissions,
   });
 }

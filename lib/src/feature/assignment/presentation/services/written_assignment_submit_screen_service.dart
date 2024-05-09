@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import '../../../shared/domain/entities/response_entity.dart';
@@ -19,15 +21,21 @@ mixin WrittenAssignmentSubmitScreenService<T extends StatefulWidget> on State<T>
           assignmentRemoteDataSource: AssignmentRemoteDataSourceImp()));
 
   Future<ResponseEntity> storeAssignment(int assignmentId, int subAssignmentId,
-      int courseId, int circularId, String answer, String filePath) async {
+      int courseId, int circularId, String answer, List<File> files) async {
     return _assignmentUseCase.storeAssignmentUseCase(
-        assignmentId, subAssignmentId, courseId, circularId, answer, filePath);
+        assignmentId, subAssignmentId, courseId, circularId, answer, files);
   }
 
-  Future<ResponseEntity> updateAssignment(int assignmentId, int subAssignmentId,
-      int courseId, int circularId, String answer, String filePath) async {
-    return _assignmentUseCase.updateAssignmentUseCase(
-        assignmentId, subAssignmentId, courseId, circularId, answer, filePath);
+  Future<ResponseEntity> updateAssignment(
+      int submissionId,
+      int assignmentId,
+      int subAssignmentId,
+      int courseId,
+      int circularId,
+      String answer,
+      List<File> files) async {
+    return _assignmentUseCase.updateAssignmentUseCase(submissionId,
+        assignmentId, subAssignmentId, courseId, circularId, answer, files);
   }
 
   ///Service configurations
@@ -57,9 +65,9 @@ mixin WrittenAssignmentSubmitScreenService<T extends StatefulWidget> on State<T>
       required int courseId,
       required int circularId,
       required String answer,
-      required String filePath}) async {
+      required List<File> files}) async {
     ResponseEntity responseEntity = await storeAssignment(
-        assignmentId, -1, courseId, circularId, answer, filePath);
+        assignmentId, -1, courseId, circularId, answer, files);
     if (responseEntity.error == null && responseEntity.data != null) {
       _view.showSuccess(responseEntity.message!);
     } else {

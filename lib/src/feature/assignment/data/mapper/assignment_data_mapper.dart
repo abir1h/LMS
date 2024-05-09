@@ -1,3 +1,4 @@
+import 'package:lms/src/feature/assignment/data/mapper/assignment_submission_data_mapper.dart';
 import 'package:lms/src/feature/assignment/data/mapper/sub_assignment_data_mapper.dart';
 
 import '../../domain/entities/assignment_data_entity.dart';
@@ -33,7 +34,9 @@ class AssignmentDataModelToEntityMapper
         type: entity.type,
         supportingDoc: entity.supportingDoc,
         circularSubAssignments:
-            entity.circularSubAssignments?.toSubAssignmentDataModel);
+            entity.circularSubAssignments?.toSubAssignmentDataModel,
+        assignmentSubmissions:
+            entity.assignmentSubmissions?.toAssignmentSubmissionDataModel);
   }
 
   @override
@@ -59,7 +62,9 @@ class AssignmentDataModelToEntityMapper
         type: model.type,
         supportingDoc: model.supportingDoc,
         circularSubAssignments:
-            model.circularSubAssignments?.toSubAssignmentDataEntity);
+            model.circularSubAssignments?.toSubAssignmentDataEntity,
+        assignmentSubmissions:
+            model.assignmentSubmissions?.toAssignmentSubmissionDataEntity);
   }
 }
 
