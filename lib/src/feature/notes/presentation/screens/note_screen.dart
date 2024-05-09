@@ -434,9 +434,9 @@ class NoteItemWidget extends StatelessWidget with AppTheme {
                     children: [
                       Expanded(
                         child: Text(
-                          "তারিখ: ${label(e: DateFormat('dd MMMM, yyyy').format(
+                          "তারিখ: ${label(e: DateFormat('dd MMMM yyyy').format(
                                 DateTime.parse(noteDataEntity.createdAt!),
-                              ), b: timeAgoToBengali(DateFormat('dd MMMM, yyyy').format(DateTime.parse(noteDataEntity.createdAt!))))}",
+                              ), b: timeAgoToBengali(DateFormat('dd MMMM yyyy').format(DateTime.parse(noteDataEntity.createdAt!))))}",
                           style: TextStyle(
                             color: clr.placeHolderTextColorGray,
                             fontWeight: FontWeight.w400,
