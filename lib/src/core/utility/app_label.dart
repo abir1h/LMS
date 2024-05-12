@@ -111,6 +111,8 @@ String timeAgoToBengali(String timeAgo) {
     'moment': 'কিছুক্ষণ',
     'about': 'প্রায়',
     'an': 'এক',
+    'am': 'এম',
+    'pm': 'পিএম',
     'a': '',
     '0': '০',
     '1': '১',
