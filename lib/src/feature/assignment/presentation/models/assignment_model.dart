@@ -3,7 +3,7 @@ import 'package:flutter_quill/flutter_quill.dart';
 
 class AssignmentModel {
   int? assignmentId;
-  Document? content;
+  String? content;
 
   AssignmentModel({
      this.assignmentId,

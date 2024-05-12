@@ -7,7 +7,7 @@ class AssignmentController extends GetxController {
 
   String data = '';
   setContentToText(AssignmentModel mainModel) {
-    data = mainModel.content!.toPlainText();
+    data = mainModel.content!;
     update();
   }
 

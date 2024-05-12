@@ -1,11 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
-import 'package:get/get.dart';
 
+import '../../../../core/service/notifier/app_events_notifier.dart';
 import '../../../../core/routes/app_route.dart';
 import '../../../../core/routes/app_route_args.dart';
-import '../controllers/assignment_controller.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/common_widgets/quil_text_viewer.dart';
 import '../../../../core/utility/app_label.dart';
@@ -15,7 +16,6 @@ import '../services/written_assignment_submit_screen_service.dart';
 import '../widgets/assignment_bottom_sheet.dart';
 
 class AssignmentSubmitScreen extends StatefulWidget {
-  // final AssignmentModel? mainModel;
   final Object? arguments;
   const AssignmentSubmitScreen({super.key, this.arguments});
 
@@ -24,10 +24,13 @@ class AssignmentSubmitScreen extends StatefulWidget {
 }
 
 class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
-    with AppTheme, Language, WrittenAssignmentSubmitScreenService {
+    with
+        AppTheme,
+        Language,
+        WrittenAssignmentSubmitScreenService,
+        AppEventsNotifier {
   late AssignmentSubmitScreenArgs _screenArgs;
 
-  final controller = Get.put(AssignmentController());
   final _controller = QuillController.basic();
 
   String data = '';
@@ -39,10 +42,11 @@ class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
   }
 
   setContent() {
-    if (_screenArgs.assignmentModel != null) {
-      if (_screenArgs.assignmentModel!.content != null) {
-        _controller.document = _screenArgs.assignmentModel!.content!;
-        data = _screenArgs.assignmentModel!.content!.toPlainText();
+    if (_screenArgs.answer != null) {
+      if (_screenArgs.answer != null) {
+        final Document doc =
+            Document.fromJson(json.decode(_screenArgs.answer!));
+        _controller.document = doc;
       }
     }
   }
@@ -64,11 +68,9 @@ class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  GetBuilder<AssignmentController>(builder: (_) {
-                    return QuilTextViewer(
-                      controller: _controller,
-                    );
-                  }),
+                  QuilTextViewer(
+                    controller: _controller,
+                  ),
                   SizedBox(height: size.h20 * 5),
                 ],
               ),
@@ -105,7 +107,7 @@ class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
                                   _screenArgs.assignmentDataEntity!.courseId,
                               circularId:
                                   _screenArgs.assignmentDataEntity!.circularId,
-                              answer: data,
+                              answer: _screenArgs.answer!,
                               files: []);
                           Navigator.of(context).pushNamed(
                               AppRoute.courseAssignmentScreen,
@@ -132,30 +134,6 @@ class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         )),
-                    // SizedBox(width: size.w16),
-                    // Expanded(
-                    //   child: FilledButton(
-                    //       onPressed: () {
-                    //         CustomToasty.of(context)
-                    //             .showSuccess("সফলভাবে সংরক্ষণ সম্পন্ন হয়েছে ");
-                    //       },
-                    //       style: FilledButton.styleFrom(
-                    //         shape: RoundedRectangleBorder(
-                    //           borderRadius: BorderRadius.circular(size.r4),
-                    //         ),
-                    //       ),
-                    //       child: Text(
-                    //         label(e: en.saveAsDraft, b: bn.saveAsDraft),
-                    //         style: TextStyle(
-                    //             color: clr.whiteColor,
-                    //             fontSize: size.textSmall,
-                    //             fontWeight: FontWeight.w600,
-                    //             fontFamily: StringData.fontFamilyPoppins),
-                    //         textAlign: TextAlign.center,
-                    //         maxLines: 1,
-                    //         overflow: TextOverflow.ellipsis,
-                    //       )),
-                    // ),
                   ],
                 ),
               ),
@@ -168,7 +146,10 @@ class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
     showCupertinoModalPopup(
       context: context,
       builder: (context) => AssignmentBottomSheet(
-          from: screenName, mainModel: _screenArgs.assignmentModel),
+        from: screenName,
+        answer: _screenArgs.answer!,
+        assignmentDataEntity: _screenArgs.assignmentDataEntity,
+      ),
     );
   }
 
@@ -180,5 +161,14 @@ class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
   @override
   void showWarning(String message) {
     CustomToasty.of(context).showWarning(message);
+  }
+
+  @override
+  void onEventReceived(EventAction action) {
+    if (action == EventAction.courseDetailsScreen) {
+      if (mounted) {
+        setState(() {});
+      }
+    }
   }
 }

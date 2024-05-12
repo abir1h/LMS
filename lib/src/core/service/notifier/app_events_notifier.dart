@@ -44,4 +44,5 @@ enum EventAction {
   graphChart,
   drawer,
   discussion,
+  assignmentSubmitScreen,
 }
