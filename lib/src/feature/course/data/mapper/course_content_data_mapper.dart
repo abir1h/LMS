@@ -16,6 +16,7 @@ class CourseContentDataModelToEntityMapper extends CourseContentDataMapper<
         contentType: entity.contentType,
         contentId: entity.contentId,
         sort: entity.sort,
+        schedule: entity.schedule,
         isCompleted: entity.isCompleted,
         lastWatchTime: entity.lastWatchTime);
   }
@@ -28,6 +29,7 @@ class CourseContentDataModelToEntityMapper extends CourseContentDataMapper<
         contentType: model.contentType,
         contentId: model.contentId,
         sort: model.sort,
+        schedule: model.schedule,
         isCompleted: model.isCompleted,
         lastWatchTime: model.lastWatchTime);
   }

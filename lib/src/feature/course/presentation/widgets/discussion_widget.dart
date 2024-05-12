@@ -219,8 +219,10 @@ class DiscussionWidgetTile extends StatelessWidget with AppTheme {
                                     text: label(
                                         e: DateFormat('dd MMMM yyyy').format(
                                             DateTime.parse(data.createdAt)),
-                                        b: DateFormat('dd MMMM yyyy').format(
-                                            DateTime.parse(data.createdAt))),
+                                        b: timeAgoToBengali(
+                                            DateFormat('dd MMMM yyyy').format(
+                                                DateTime.parse(
+                                                    data.createdAt)))),
                                     // text: "তারিখ: $time",
                                   ),
                                 ])),

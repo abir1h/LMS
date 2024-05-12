@@ -104,6 +104,7 @@ mixin DetailedDiscussionService<T extends StatefulWidget> on State<T>
   void onTapVoteDiscussion(int discussionId) {
     voteDiscussions(discussionId).then((value) {
       if (value.error == null && value.data != null) {
+        discussionDataEntity.isVote = value.data.isVote;
         discussionDataEntity.vote = value.data.vote;
         discussionDataStreamController
             .add(DataLoadedState<DiscussionDataEntity>(discussionDataEntity));
@@ -120,6 +121,9 @@ mixin DetailedDiscussionService<T extends StatefulWidget> on State<T>
         discussionDataEntity.comments
             .singleWhere((element) => element.id == value.data.id)
             .vote = value.data.vote;
+        discussionDataEntity.comments
+            .singleWhere((element) => element.id == value.data.id)
+            .isVote = value.data.isVote;
         discussionDataStreamController
             .add(DataLoadedState<DiscussionDataEntity>(discussionDataEntity));
         _view.showSuccess(value.message!);

@@ -116,8 +116,11 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
                                       SizedBox(width: size.w8),
                                       if (!data.isSelf)
                                         GestureDetector(
-                                          onTap: () =>
-                                              onTapReportDiscussion(data.id),
+                                          onTap: () {
+                                            if (!data.isReport) {
+                                              onTapReportDiscussion(data.id);
+                                            }
+                                          },
                                           child: Icon(
                                             Icons.flag,
                                             color: !data.isReport
@@ -153,7 +156,7 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
                                                   TextSpan(
                                                     text: label(
                                                       e: "Date: ${DateFormat('dd MMMM yyyy').format(DateTime.parse(data.createdAt))}",
-                                                      b: "তারিখ: ${DateFormat('dd MMMM yyyy').format(DateTime.parse(data.createdAt))}",
+                                                      b: "তারিখ: ${timeAgoToBengali(DateFormat('dd MMMM yyyy').format(DateTime.parse(data.createdAt)))}",
                                                     ),
                                                   )
                                                 ])),
@@ -298,7 +301,7 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
         id: discussionId,
         onSuccess: () {
           Navigator.of(context).pop();
-          // loadDiscussionData(_screenArgs.discussionId);
+          loadDiscussionData(_screenArgs.discussionId);
         },
       ),
     );
@@ -331,7 +334,7 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
         id: commentId,
         onSuccess: () {
           Navigator.of(context).pop();
-          // loadDiscussionData(_screenArgs.discussionId);
+          loadDiscussionData(_screenArgs.discussionId);
         },
       ),
     );
@@ -526,7 +529,9 @@ class CommentTile extends StatelessWidget with AppTheme, Language {
               if (!data.isSelf)
                 Icon(
                   Icons.flag,
-                  color: clr.placeHolderTextColorGray,
+                  color: data.isReport
+                      ? clr.appPrimaryColorGreen
+                      : clr.placeHolderTextColorGray,
                   size: size.r20,
                 ),
               SizedBox(width: size.w4),
@@ -539,7 +544,9 @@ class CommentTile extends StatelessWidget with AppTheme, Language {
                         fontWeight: FontWeight.w500,
                         fontFamily: StringData.fontFamilyPoppins,
                         fontSize: size.textXSmall,
-                        color: clr.placeHolderTextColorGray),
+                        color: data.isReport
+                            ? clr.appPrimaryColorGreen
+                            : clr.placeHolderTextColorGray),
                   ),
                 ),
             ],

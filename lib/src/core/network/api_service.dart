@@ -203,7 +203,7 @@ class Server {
       request.fields.addAll(postData);
       for (File file in files) {
         request.files.add(await http.MultipartFile.fromPath(
-          'file',
+          'file[]',
           file.path,
         ));
       }

@@ -121,17 +121,17 @@ class _DrawerWidgetState extends State<DrawerWidget>
                 text: label(e: en.eLibrary, b: bn.eLibrary),
                 onTap: () {},
               ),
-              // DrawerLinkWidget(
-              //   icon: Icons.assignment,
-              //   text:
-              //       label(e: en.formativeAssessment, b: bn.formativeAssessment),
-              //   onTap: () {},
-              // ),
               DrawerLinkWidget(
                 svgIcon: ImageAssets.icSocialLearning,
                 text: label(
                     e: en.socialLearningPlatform, b: bn.socialLearningPlatform),
                 onTap: () {},
+              ),
+              DrawerLinkWidget(
+                icon: Icons.forum,
+                text: label(e: en.discussionArea, b: bn.discussionArea),
+                onTap: () =>
+                    Navigator.of(context).pushNamed(AppRoute.discussionScreen),
               ),
               DrawerLinkWidget(
                 icon: Icons.play_circle,

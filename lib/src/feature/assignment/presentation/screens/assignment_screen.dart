@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:lms/src/core/common_widgets/custom_action_button.dart';
 
@@ -118,6 +117,8 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                       fontFamily: StringData.fontFamilyPoppins),
                 ),
                 SizedBox(height: size.h12),
+
+                ///Written
                 if (data.submissionType == "written" ||
                     data.submissionType == "both")
                   // GetBuilder<AssignmentController>(builder: (_) {
@@ -169,6 +170,8 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                       ),
                     ),
                   ),
+
+                ///File Upload
                 if (data.submissionType == "upload" ||
                     data.submissionType == "both")
                   Text(
@@ -219,71 +222,77 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                         onPick: pickFiles),
                   ),
 
-                ///Upload
-                if (data.submissionType == "upload" ||
-                    data.submissionType == "both")
-                  Obx(() {
-                    return controller.isUpload.isFalse
-                        ? Padding(
-                            padding: EdgeInsets.symmetric(vertical: size.h20),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                CustomButton(
-                                  onTap: () {
-                                    // if (controller.filename.value != '') {
-                                    //   controller.isUpload.value = true;
-                                    // }
-                                    onStoreAssignment(
-                                        assignmentId: data.id,
-                                        subAssignmentId:
-                                            data.circularSubAssignments != null
-                                                ? data
-                                                    .circularSubAssignments!.id
-                                                : -1,
-                                        courseId: data.courseId,
-                                        circularId: data.circularId,
-                                        answer: '',
-                                        files: files!);
-                                  },
-                                  title: label(e: en.upload, b: bn.upload),
-                                  bgColor: controller.filename.value == ''
-                                      ? clr.greyColor
-                                      : clr.appPrimaryColorGreen,
-                                  borderColor: Colors.transparent,
-                                  radius: size.r8,
-                                  verticalPadding: size.h4,
-                                )
-                              ],
-                            ),
-                          )
-                        : const Wrap();
-                  }),
+                ///Submit
+                if ((data.submissionType == "upload" ||
+                        data.submissionType == "both") &&
+                    data.assignmentSubmissions == null)
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: size.h20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        CustomButton(
+                          onTap: () {
+                            // if (controller.filename.value != '') {
+                            //   controller.isUpload.value = true;
+                            // }
+                            onStoreAssignment(
+                                assignmentId: data.id,
+                                subAssignmentId:
+                                    data.circularSubAssignments != null
+                                        ? data.circularSubAssignments!.id
+                                        : -1,
+                                courseId: data.courseId,
+                                circularId: data.circularId,
+                                answer: '',
+                                files: files!);
+                          },
+                          title: label(e: en.upload, b: bn.upload),
+                          bgColor: controller.filename.value == ''
+                              ? clr.greyColor
+                              : clr.appPrimaryColorGreen,
+                          borderColor: Colors.transparent,
+                          radius: size.r8,
+                          verticalPadding: size.h4,
+                        )
+                      ],
+                    ),
+                  ),
 
-                CustomButton(
-                  onTap: () {
-                    // if (controller.filename.value != '') {
-                    //   controller.isUpload.value = true;
-                    // }
-                    onUpdateAssignment(
-                        submissionId: data.assignmentSubmissions!.id,
-                        assignmentId: data.id,
-                        subAssignmentId: data.circularSubAssignments != null
-                            ? data.circularSubAssignments!.id
-                            : -1,
-                        courseId: data.courseId,
-                        circularId: data.circularId,
-                        answer: '',
-                        files: files!);
-                  },
-                  title: label(e: en.upload, b: "Re-Submit"),
-                  bgColor: controller.filename.value == ''
-                      ? clr.greyColor
-                      : clr.appPrimaryColorGreen,
-                  borderColor: Colors.transparent,
-                  radius: size.r8,
-                  verticalPadding: size.h4,
-                )
+                ///Re-Submit
+                if ((data.submissionType == "upload" ||
+                        data.submissionType == "both") &&
+                    data.assignmentSubmissions != null)
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: size.h20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        CustomButton(
+                          onTap: () {
+                            onUpdateAssignment(
+                                submissionId: data.assignmentSubmissions!.id,
+                                assignmentId: data.id,
+                                subAssignmentId:
+                                    data.circularSubAssignments != null
+                                        ? data.circularSubAssignments!.id
+                                        : -1,
+                                courseId: data.courseId,
+                                circularId: data.circularId,
+                                answer: '',
+                                files: files!);
+                          },
+                          title: label(e: "Re-Submit", b: "Re-Submit"),
+                          bgColor: controller.filename.value == ''
+                              ? clr.greyColor
+                              : clr.appPrimaryColorGreen,
+                          borderColor: Colors.transparent,
+                          radius: size.r8,
+                          verticalPadding: size.h4,
+                        ),
+                      ],
+                    ),
+                  )
 
                 ///Upload
                 // Obx(() {

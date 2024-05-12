@@ -208,7 +208,12 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
                         buildItem: (BuildContext context, int index, item) {
                           return ChapterWidget(
                             chapterTitle: label(e: item.nameEn, b: item.nameBn),
-                            chapterCode: label(e: item.code, b: item.code),
+                            duration: item.startDate.isNotEmpty &&
+                                    item.endDate.isNotEmpty
+                                ? label(
+                                    e: "${DateFormat('dd/MM/yyyy').format(DateTime.parse(item.startDate))} - ${DateFormat('dd/MM/yyyy').format(DateTime.parse(item.endDate))}",
+                                    b: "${replaceEnglishNumberWithBengali(DateFormat('dd/MM/yyyy').format(DateTime.parse(item.startDate)))} - ${replaceEnglishNumberWithBengali(DateFormat('dd/MM/yyyy').format(DateTime.parse(item.endDate)))}")
+                                : "",
                             status: item.status,
                             items: item.courseContents!,
                             buildItem: (BuildContext context, int index, item) {

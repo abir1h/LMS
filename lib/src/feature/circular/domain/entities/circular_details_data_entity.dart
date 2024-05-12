@@ -30,6 +30,12 @@ class CircularDetailsDataEntity {
   final String createdAt;
   final String updatedAt;
   final String deletedAt;
+  final int batchCoordinatorId;
+  final String venueType;
+  final String venueName;
+  final int venueId;
+  final String batchCoordinatorNameEn;
+  final String batchCoordinatorNameBn;
   final List<BatchDataEntity> workstations;
   final List<TrainerDataEntity> trainers;
   final BatchDataEntity batch;
@@ -64,6 +70,12 @@ class CircularDetailsDataEntity {
     required this.createdAt,
     required this.updatedAt,
     required this.deletedAt,
+    required this.batchCoordinatorId,
+    required this.venueType,
+    required this.venueName,
+    required this.venueId,
+    required this.batchCoordinatorNameEn,
+    required this.batchCoordinatorNameBn,
     required this.workstations,
     required this.trainers,
     required this.batch,

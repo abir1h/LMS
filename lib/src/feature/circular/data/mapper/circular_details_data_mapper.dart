@@ -46,6 +46,12 @@ class CircularDetailsDataModelToEntityMapper extends CircularDetailsDataMapper<
         createdAt: entity.createdAt,
         updatedAt: entity.updatedAt,
         deletedAt: entity.deletedAt,
+        batchCoordinatorId: entity.batchCoordinatorId,
+        venueType: entity.venueType,
+        venueName: entity.venueName,
+        venueId: entity.venueId,
+        batchCoordinatorNameEn: entity.batchCoordinatorNameEn,
+        batchCoordinatorNameBn: entity.batchCoordinatorNameBn,
         workstations: List<BatchDataEntity>.from(entity.workstations)
             .map((entity) => entity.toBatchDataModel)
             .toList(),
@@ -87,6 +93,12 @@ class CircularDetailsDataModelToEntityMapper extends CircularDetailsDataMapper<
         createdAt: model.createdAt,
         updatedAt: model.updatedAt,
         deletedAt: model.deletedAt,
+        batchCoordinatorId: model.batchCoordinatorId,
+        venueType: model.venueType,
+        venueName: model.venueName,
+        venueId: model.venueId,
+        batchCoordinatorNameEn: model.batchCoordinatorNameEn,
+        batchCoordinatorNameBn: model.batchCoordinatorNameBn,
         workstations: List<BatchDataModel>.from(model.workstations!)
             .map((entity) => entity.toBatchDataEntity)
             .toList(),

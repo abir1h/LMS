@@ -4,6 +4,7 @@ class CourseContentDataEntity {
   final String contentType;
   final int contentId;
   final int sort;
+  final String schedule;
   final bool isCompleted;
   final String lastWatchTime;
   CourseContentDataEntity(
@@ -12,6 +13,7 @@ class CourseContentDataEntity {
       required this.contentType,
       required this.contentId,
       required this.sort,
+      required this.schedule,
       required this.isCompleted,
       required this.lastWatchTime});
 }

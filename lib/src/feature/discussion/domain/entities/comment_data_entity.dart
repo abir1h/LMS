@@ -12,7 +12,7 @@ class CommentDataEntity {
   final String restrictedBy;
   final String restrictionRemarks;
   final int report;
-  final bool isVote;
+  bool isVote;
   final bool isReport;
   final bool isSelf;
 

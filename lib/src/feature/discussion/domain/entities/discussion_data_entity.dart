@@ -18,7 +18,7 @@ class DiscussionDataEntity {
   final String restrictedBy;
   final String restrictionRemarks;
   final bool isDeleted;
-  final bool isVote;
+  bool isVote;
   final bool isReport;
   final bool isSelf;
   final int cid;

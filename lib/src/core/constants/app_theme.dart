@@ -55,6 +55,7 @@ class ThemeColor {
   Color get cardStrokeColorGrey2 => HexColor("D0D0D0");
   Color get dividerStrokeColorGrey => HexColor("B0B0B0");
   Color get gapStrokeGrey => HexColor("646464");
+  Color get cardStrokeColorLeafGreen => HexColor("B6D7A8");
 
   Color get fromBoxFillColor => HexColor("FCFFFE");
   Color get cardFillColorWhite => HexColor("FFFEFF");
@@ -65,6 +66,7 @@ class ThemeColor {
   Color get cardFillColorCruise => HexColor("B3E0DD");
   Color get cardFillColorAliceBlue => HexColor("F0FCF9");
   Color get cardFillColorMintCream => HexColor("F9FFFD");
+  Color get cardFillColorLeafGreen => HexColor("F9FFFD");
   Color get drawerFillColor => HexColor("E6F8F4");
 
   Color get clickableLinkColor => HexColor("4A88FF");

@@ -7,6 +7,7 @@ class CourseContentDataModel {
   final String contentType;
   final int contentId;
   final int sort;
+  final String schedule;
   final bool isCompleted;
   final String lastWatchTime;
 
@@ -16,6 +17,7 @@ class CourseContentDataModel {
       required this.contentType,
       required this.contentId,
       required this.sort,
+      required this.schedule,
       required this.isCompleted,
       required this.lastWatchTime});
 
@@ -26,6 +28,7 @@ class CourseContentDataModel {
         contentType: json["content_type"] ?? "",
         contentId: json["content_id"] ?? -1,
         sort: json["sort"] ?? -1,
+        schedule: json["schedule"] ?? "",
         isCompleted: json["is_completed"] ?? false,
         lastWatchTime: json["last_watch_time"] ?? "",
       );
@@ -36,6 +39,9 @@ class CourseContentDataModel {
         "content_type": contentType,
         "content_id": contentId,
         "sort": sort,
+        "schedule": schedule,
+        "is_completed": isCompleted,
+        "last_watch_time": lastWatchTime,
       };
   static List<CourseContentDataModel> listFromJson(List<dynamic> json) {
     return json.isNotEmpty

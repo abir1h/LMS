@@ -33,6 +33,12 @@ class CircularDetailsDataModel {
   final String createdAt;
   final String updatedAt;
   final String deletedAt;
+  final int batchCoordinatorId;
+  final String venueType;
+  final String venueName;
+  final int venueId;
+  final String batchCoordinatorNameEn;
+  final String batchCoordinatorNameBn;
   final List<BatchDataModel>? workstations;
   final List<TrainerDataModel>? trainers;
   final BatchDataModel? batch;
@@ -67,6 +73,12 @@ class CircularDetailsDataModel {
     required this.createdAt,
     required this.updatedAt,
     required this.deletedAt,
+    required this.batchCoordinatorId,
+    required this.venueType,
+    required this.venueName,
+    required this.venueId,
+    required this.batchCoordinatorNameEn,
+    required this.batchCoordinatorNameBn,
     required this.workstations,
     required this.trainers,
     required this.batch,
@@ -103,6 +115,12 @@ class CircularDetailsDataModel {
         createdAt: json["created_at"] ?? "",
         updatedAt: json["updated_at"] ?? "",
         deletedAt: json["deleted_at"] ?? "",
+        batchCoordinatorId: json["batch_coordinator_id"] ?? -1,
+        venueType: json["venue_type"] ?? "",
+        venueName: json["venue_name"] ?? "",
+        venueId: json["venue_id"] ?? -1,
+        batchCoordinatorNameEn: json["batch_coordinator_name_en"] ?? "",
+        batchCoordinatorNameBn: json["batch_coordinator_name_bn"] ?? "",
         workstations: json["workstations"] != null
             ? List<BatchDataModel>.from(
                 (json["workstations"]).map((x) => BatchDataModel.fromJson(x)))
@@ -148,6 +166,12 @@ class CircularDetailsDataModel {
         "created_at": createdAt,
         "updated_at": updatedAt,
         "deleted_at": deletedAt,
+        "batch_coordinator_id": batchCoordinatorId,
+        "venue_type": venueType,
+        "venue_name": venueName,
+        "venue_id": venueId,
+        "batch_coordinator_name_en": batchCoordinatorNameEn,
+        "batch_coordinator_name_bn": batchCoordinatorNameBn,
         "workstations":
             List<BatchDataModel>.from(workstations!.map((x) => x.toJson())),
         "trainers":

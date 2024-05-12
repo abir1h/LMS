@@ -13,20 +13,21 @@ import '../../../assessment/presentation/screens/assessment_true_false_screen.da
 import '../../../assessment/presentation/screens/assessment_quiz_screen.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../assessment/presentation/screens/assessment_fill_in_the_blank_screen.dart';
+import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
 import '../../domain/entities/course_module_data_entity.dart';
 import 'course_content_widget.dart';
 import '../../../../core/constants/common_imports.dart';
 
 class ChapterWidget<T> extends StatefulWidget {
   final String chapterTitle;
-  final String chapterCode;
+  final String duration;
   final int status;
   final List<T> items;
   final Widget Function(BuildContext context, int index, T item) buildItem;
   const ChapterWidget(
       {super.key,
       required this.chapterTitle,
-      required this.chapterCode,
+      required this.duration,
       required this.status,
       required this.items,
       required this.buildItem});
@@ -96,9 +97,9 @@ class _ChapterWidgetState<T> extends State<ChapterWidget<T>>
                   ),
                 SizedBox(width: size.w4),
                 Container(
-                  width: size.w40,
+                  width: size.w56,
                   padding: EdgeInsets.symmetric(
-                      horizontal: size.w4, vertical: size.h8),
+                      horizontal: size.w8, vertical: size.h8),
                   decoration: BoxDecoration(
                     color: clr.cardFillColorCruise,
                     borderRadius: BorderRadius.circular(size.r8),
@@ -129,45 +130,35 @@ class _ChapterWidgetState<T> extends State<ChapterWidget<T>>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Text(
-                      //   widget.chapterTitle,
-                      //   style: TextStyle(
-                      //       color: clr.appPrimaryColorGreen,
-                      //       fontSize: size.textSmall,
-                      //       fontWeight: FontWeight.w600,
-                      //       fontFamily: StringData.fontFamilyPoppins),
-                      //   maxLines: 1,
-                      //   overflow: TextOverflow.ellipsis,
-                      // ),
-                      Text.rich(
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          TextSpan(
-                              text: label(e: "Week 1: ", b: "সপ্তাহ ১: "),
-                              style: TextStyle(
-                                  color: clr.appPrimaryColorGreen,
-                                  fontSize: size.textSmall,
-                                  fontWeight: FontWeight.w600,
-                                  fontFamily: StringData.fontFamilyPoppins),
-                              children: [
-                                TextSpan(
-                                    text: widget.chapterTitle,
-                                    style: TextStyle(
-                                        color: clr.appPrimaryColorGreen,
-                                        fontSize: size.textSmall,
-                                        fontWeight: FontWeight.w400,
-                                        fontFamily:
-                                            StringData.fontFamilyPoppins)),
-                              ])),
-                      SizedBox(height: size.h8),
-                      Text(
-                        widget.chapterCode,
-                        style: TextStyle(
-                            color: clr.appPrimaryColorGreen,
-                            fontSize: size.textSmall,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: StringData.fontFamilyPoppins),
+                      CustomTextWidget(
+                        text: widget.chapterTitle,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: StringData.fontFamilyPoppins,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
+                      if (widget.duration.isNotEmpty)
+                        Padding(
+                          padding: EdgeInsets.only(top: size.h8),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.calendar_month_outlined,
+                                size: size.r16,
+                                color: clr.gapStrokeGrey,
+                              ),
+                              SizedBox(width: size.w8),
+                              CustomTextWidget(
+                                text: widget.duration,
+                                textColor: clr.gapStrokeGrey,
+                                fontSize: size.textXXSmall,
+                                fontWeight: FontWeight.w400,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        ),
                     ],
                   ),
                 ),
