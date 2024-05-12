@@ -179,8 +179,17 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
                     SizedBox(height: size.h8),
                     if (data.supportingDoc.isNotEmpty)
                       SupportingDocWidget(
-                        docTitle: data.supportingDoc.split("/")[1],
-                        onTap: () {},
+                        docTitle: data.supportingDoc.split("/").last,
+                        onTap: () {
+                          downloadFiles(
+                              fileUrl:
+                                  "https://api-saas.bacbonx.com/uploads/attachment/bb_1696234990.pdf",
+                              filename:
+                                  "https://api-saas.bacbonx.com/uploads/attachment/bb_1696234990.pdf"
+                                      .split("/")
+                                      .last,
+                              context: context);
+                        },
                       ),
                     // SupportingTextItemSection(
                     //     items: const ["", ""],

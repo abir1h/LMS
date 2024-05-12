@@ -110,7 +110,7 @@ class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
                               answer: _screenArgs.answer!,
                               files: []);
                           Navigator.of(context).pushNamed(
-                              AppRoute.courseAssignmentScreen,
+                              AppRoute.assignmentScreen,
                               arguments: AssignmentArgs(
                                   courseContentId:
                                       _screenArgs.assignmentDataEntity!.id));

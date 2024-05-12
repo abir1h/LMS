@@ -1,5 +1,12 @@
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/material.dart';
+import 'dart:io';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+import '../common_widgets/custom_toasty.dart';
 
 ///App Language
 enum AppLanguage { english, bangla }
@@ -141,4 +148,79 @@ String timeAgoToBengali(String timeAgo) {
   print(banglaText);
 
   return banglaText;
+}
+
+Future<void> downloadFiles(
+    {required String fileUrl,
+    required String filename,
+    required BuildContext context}) async {
+  final deviceInfo = await DeviceInfoPlugin().androidInfo;
+
+  if (deviceInfo.version.sdkInt > 32) {
+    var status = await Permission.manageExternalStorage.request();
+    if (status.isGranted) {
+      // Proceed with the file download
+      downloadFile(url: fileUrl, filename: filename, context: context);
+    } else {
+      // Permission denied
+
+      CustomToasty.of(context).showSuccess('Storage permission denied');
+    }
+  } else {
+    var status = await Permission.storage.request();
+    if (status.isGranted) {
+      // Proceed with the file download
+      downloadFile(url: fileUrl, filename: filename, context: context);
+    } else {
+      // Permission denied
+      CustomToasty.of(context).showSuccess('Storage permission denied');
+    }
+  }
+}
+
+Future<void> downloadFile({
+  required String url,
+  required String filename,
+  required BuildContext context,
+}) async {
+  try {
+    HttpClient client = HttpClient();
+    List<int> downloadData = [];
+
+    Directory? downloadDirectory;
+
+    if (Platform.isIOS) {
+      downloadDirectory = await getApplicationDocumentsDirectory();
+    } else {
+      downloadDirectory = Directory('/storage/emulated/0/Download');
+      if (!await downloadDirectory.exists()) {
+        downloadDirectory = (await getExternalStorageDirectory());
+      }
+    }
+
+    String filePathName = "${downloadDirectory?.path}/$filename";
+    File savedFile = File(filePathName);
+    bool fileExists = await savedFile.exists();
+
+    if (fileExists && context.mounted) {
+      CustomToasty.of(context).showSuccess("File already downloaded");
+    } else {
+      client.getUrl(Uri.parse(url)).then(
+        (HttpClientRequest request) {
+          CustomToasty.of(context).showSuccess("Downloading file...");
+          return request.close();
+        },
+      ).then(
+        (HttpClientResponse response) {
+          response.listen((d) => downloadData.addAll(d), onDone: () {
+            savedFile.writeAsBytes(downloadData);
+            CustomToasty.of(context)
+                .showSuccess("File downloaded successfully");
+          });
+        },
+      );
+    }
+  } catch (error) {
+    CustomToasty.of(context).showSuccess("Some error occurred -> $error");
+  }
 }
