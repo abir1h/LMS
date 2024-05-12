@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'question_type_data_model.dart';
 import 'option_data_model.dart';
 
 @immutable
@@ -16,7 +17,7 @@ class QuestionDataModel {
   final String mark;
   final String negativeMark;
   final int createdBy;
-  final String questionType;
+  final QuestionTypeDataModel? questionType;
   final int typeId;
   final int status;
   final String createdAt;
@@ -62,7 +63,9 @@ class QuestionDataModel {
         mark: json["mark"] ?? -1,
         negativeMark: json["negative_mark"] ?? -1,
         createdBy: json["created_by"] ?? -1,
-        questionType: json["question_type"] ?? "",
+        questionType: json['question_type'] != null
+            ? QuestionTypeDataModel.fromJson(json['question_type'])
+            : null,
         typeId: json["type_id"] ?? -1,
         status: json["status"] ?? -1,
         createdAt: json["created_at"] ?? "",
@@ -88,7 +91,7 @@ class QuestionDataModel {
         "mark": mark,
         "negative_mark": negativeMark,
         "created_by": createdBy,
-        "question_type": questionType,
+        "question_type": questionType?.toJson(),
         "type_id": typeId,
         "status": status,
         "created_at": createdAt,

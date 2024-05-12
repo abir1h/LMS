@@ -1,3 +1,5 @@
+import 'package:lms/src/feature/assessment/data/mapper/question_type_data_mapper.dart';
+
 import 'option_data_mapper.dart';
 import '../models/option_data_model.dart';
 import '../../domain/entities/option_data_entity.dart';
@@ -27,7 +29,7 @@ class QuestionDataModelToEntityMapper
       mark: entity.mark,
       negativeMark: entity.negativeMark,
       createdBy: entity.createdBy,
-      questionType: entity.questionType,
+      questionType: entity.questionType?.toQuestionTypeDataModel,
       typeId: entity.typeId,
       status: entity.status,
       createdAt: entity.createdAt,
@@ -55,7 +57,7 @@ class QuestionDataModelToEntityMapper
       mark: model.mark,
       negativeMark: model.negativeMark,
       createdBy: model.createdBy,
-      questionType: model.questionType,
+      questionType: model.questionType?.toQuestionTypeDataEntity,
       typeId: model.typeId,
       status: model.status,
       createdAt: model.createdAt,

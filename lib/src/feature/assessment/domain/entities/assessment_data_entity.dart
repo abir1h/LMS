@@ -23,6 +23,7 @@ class AssessmentDataEntity {
   final String assessmentInstruction;
   final String startDate;
   final String endDate;
+  final int noOfQuestion;
   final List<QuestionDataEntity> questions;
 
 
@@ -49,6 +50,7 @@ class AssessmentDataEntity {
     required this.assessmentInstruction,
     required this.startDate,
     required this.endDate,
+    required this.noOfQuestion,
     required this.questions,
   });
 }

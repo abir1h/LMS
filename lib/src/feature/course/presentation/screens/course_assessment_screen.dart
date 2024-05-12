@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lms/src/feature/assessment/domain/entities/exam_data_entity.dart';
 
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../../../core/common_widgets/circuler_widget.dart';
@@ -8,9 +9,11 @@ import '../../../../core/common_widgets/custom_empty_widget.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/constants/common_imports.dart';
+import '../../../../core/routes/app_route.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../assessment/domain/entities/assessment_data_entity.dart';
+import '../../../assessment/presentation/screens/assessment_all_question_screen.dart';
 import '../services/course_assessment_screen_service.dart';
 
 class CourseAssessmentScreen extends StatefulWidget {
@@ -206,7 +209,7 @@ class _CourseAssessmentScreenState extends State<CourseAssessmentScreen>
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: size.w10),
                         child: CustomButton(
-                          onTap: _screenArgs.onTap,
+                          onTap:()=> onTapStartExam(data.circularId),
                           title: label(e: en.getStarted, b: bn.getStarted),
                           radius: size.r4,
                         ),
@@ -230,5 +233,12 @@ class _CourseAssessmentScreenState extends State<CourseAssessmentScreen>
   @override
   void showWarning(String message) {
     CustomToasty.of(context).showWarning(message);
+  }
+
+  @override
+  void onTapExamDetailsScreen(ExamDataEntity data) {
+    Navigator.of(context).pushNamed(
+        AppRoute.assessmentAllQuestionScreen,
+        arguments: AssessmentScreenArgs(examData: data));
   }
 }
