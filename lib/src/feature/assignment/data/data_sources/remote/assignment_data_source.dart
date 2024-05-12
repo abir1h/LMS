@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import '../../../../../core/constants/common_imports.dart';
 import '../../../../../core/network/api_service.dart';
 import '../../../../shared/data/models/response_model.dart';
@@ -11,14 +14,15 @@ abstract class AssignmentRemoteDataSource {
       int courseId,
       int circularId,
       String answer,
-      String filePath);
+      List<File> files);
   Future<ResponseModel> updateAssignmentAction(
+      int submissionId,
       int assignmentId,
       int subAssignmentId,
       int courseId,
       int circularId,
       String answer,
-      String filePath);
+      List<File> files);
 }
 
 class AssignmentRemoteDataSourceImp extends AssignmentRemoteDataSource {
@@ -31,6 +35,29 @@ class AssignmentRemoteDataSourceImp extends AssignmentRemoteDataSource {
     return responseModel;
   }
 
+  // @override
+  // Future<ResponseModel> storeAssignmentAction(
+  //     int assignmentId,
+  //     int subAssignmentId,
+  //     int courseId,
+  //     int circularId,
+  //     String answer,
+  //     List<File> files) async {
+  //   Map<String, dynamic> data = {
+  //     "circular_assignment_id": assignmentId,
+  //     "circular_sub_assignment_id": subAssignmentId,
+  //     "course_id": courseId,
+  //     "circular_id": circularId,
+  //     "answer": answer,
+  //     "file[]": files,
+  //   };
+  //   final responseJson = await Server.instance
+  //       .postRequest(url: ApiCredential.createAssignment, postData: data);
+  //   ResponseModel responseModel = ResponseModel.fromJson(
+  //       responseJson, (dynamic json) => AssignmentDataModel.fromJson(json));
+  //   return responseModel;
+  // }
+
   @override
   Future<ResponseModel> storeAssignmentAction(
       int assignmentId,
@@ -38,17 +65,16 @@ class AssignmentRemoteDataSourceImp extends AssignmentRemoteDataSource {
       int courseId,
       int circularId,
       String answer,
-      String filePath) async {
-    Map<String, dynamic> data = {
-      "circular_assignment_id": assignmentId,
-      "circular_sub_assignment_id": subAssignmentId,
-      "course_id": courseId,
-      "circular_id": circularId,
+      List<File> files) async {
+    Map<String, String> data = {
+      "circular_assignment_id": json.encode(assignmentId),
+      "circular_sub_assignment_id": json.encode(subAssignmentId),
+      "course_id": json.encode(courseId),
+      "circular_id": json.encode(circularId),
       "answer": answer,
-      "file[]": filePath,
     };
-    final responseJson = await Server.instance
-        .postRequest(url: ApiCredential.createAssignment, postData: data);
+    final responseJson = await Server.instance.postRequestWithFile(
+        url: ApiCredential.createAssignment, postData: data, files: files);
     ResponseModel responseModel = ResponseModel.fromJson(
         responseJson, (dynamic json) => AssignmentDataModel.fromJson(json));
     return responseModel;
@@ -56,22 +82,25 @@ class AssignmentRemoteDataSourceImp extends AssignmentRemoteDataSource {
 
   @override
   Future<ResponseModel> updateAssignmentAction(
+      int submissionId,
       int assignmentId,
       int subAssignmentId,
       int courseId,
       int circularId,
       String answer,
-      String filePath) async {
-    Map<String, dynamic> data = {
-      "circular_assignment_id": assignmentId,
-      "circular_sub_assignment_id": subAssignmentId,
-      "course_id": courseId,
-      "circular_id": circularId,
-      "answer": answer,
-      "file[]": filePath,
+      List<File> files) async {
+    Map<String, String> data = {
+      "circular_assignment_id": json.encode(assignmentId),
+      "circular_sub_assignment_id": json.encode(subAssignmentId),
+      "course_id": json.encode(courseId),
+      "circular_id": json.encode(circularId),
+      "answer": "answer",
     };
-    final responseJson = await Server.instance.postRequest(
-        url: "${ApiCredential.createAssignment}/$assignmentId", postData: data);
+    data["_method"] = "PUT";
+    final responseJson = await Server.instance.postRequestWithFile(
+        url: "${ApiCredential.createAssignment}/$submissionId",
+        postData: data,
+        files: files);
     ResponseModel responseModel = ResponseModel.fromJson(
         responseJson, (dynamic json) => AssignmentDataModel.fromJson(json));
     return responseModel;

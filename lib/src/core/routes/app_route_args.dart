@@ -58,8 +58,8 @@ class CourseAssessmentScreenArgs {
 }
 
 class AssignmentArgs {
-  final AssignmentDataEntity assignmentDataEntity;
-  AssignmentArgs({required this.assignmentDataEntity});
+  final int courseContentId;
+  AssignmentArgs({required this.courseContentId});
 }
 
 class AssignmentSubmitScreenArgs {

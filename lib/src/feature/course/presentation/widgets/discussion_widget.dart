@@ -48,39 +48,41 @@ class _DiscussionWidgetState extends State<DiscussionWidget>
 
   @override
   Widget build(BuildContext context) {
-    return AppStreamBuilder<List<DiscussionDataEntity>>(
-      stream: discussionDataStreamController.stream,
-      loadingBuilder: (context) {
-        return const Center(child: CircularLoader());
-      },
-      dataBuilder: (context, data) {
-        return Stack(
-          children: [
-            DiscussionItemSectionWidget(
+    return Stack(
+      children: [
+        AppStreamBuilder<List<DiscussionDataEntity>>(
+          stream: discussionDataStreamController.stream,
+          loadingBuilder: (context) {
+            return const Center(child: CircularLoader());
+          },
+          dataBuilder: (context, data) {
+            return DiscussionItemSectionWidget(
                 items: data,
                 buildItem: (BuildContext context, int index, item) {
                   return DiscussionWidgetTile(
                     data: item,
                     onTap: () => onTapCourse(item.id),
                   );
-                }),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: CustomButton(
-                onTap: onTapCreateDiscussion,
-                icon: Icons.add_comment,
-                radius: 0.0,
-                title: label(e: en.newDiscussion, b: bn.newDiscussion),
-              ),
-            )
-          ],
-        );
-      },
-      emptyBuilder: (context, message, icon) => CustomEmptyWidget(
-        message: message,
-        // constraints: constraints,
-        // offset: 350.w,
-      ),
+                });
+          },
+          emptyBuilder: (context, message, icon) => CustomEmptyWidget(
+            message: message,
+            title:
+                label(e: "No Discussions Found", b: "কোন আলোচনা পাওয়া যায়নি"),
+            // constraints: constraints,
+            // offset: 350.w,
+          ),
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: CustomButton(
+            onTap: onTapCreateDiscussion,
+            icon: Icons.add_comment,
+            radius: 0.0,
+            title: label(e: en.newDiscussion, b: bn.newDiscussion),
+          ),
+        )
+      ],
     );
   }
 
@@ -206,7 +208,9 @@ class DiscussionWidgetTile extends StatelessWidget with AppTheme {
                                 fontWeight: FontWeight.w500,
                                 fontFamily: StringData.fontFamilyPoppins),
                             TextSpan(
-                                text: label(e: "Total 1", b: "মোট 1 টি"),
+                                text: label(
+                                    e: "Total ${data.vote.toString()}",
+                                    b: "মোট ${replaceEnglishNumberWithBengali(data.vote.toString())} টি"),
                                 children: [
                                   const TextSpan(
                                     text: " | ",

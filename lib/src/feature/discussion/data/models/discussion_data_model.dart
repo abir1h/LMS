@@ -21,6 +21,9 @@ class DiscussionDataModel {
   final String restrictedBy;
   final String restrictionRemarks;
   final bool isDeleted;
+  final bool isVote;
+  final bool isReport;
+  final bool isSelf;
   final int cid;
   final String titleEn;
   final String titleBn;
@@ -44,6 +47,9 @@ class DiscussionDataModel {
     required this.restrictedBy,
     required this.restrictionRemarks,
     required this.isDeleted,
+    required this.isVote,
+    required this.isReport,
+    required this.isSelf,
     required this.cid,
     required this.titleEn,
     required this.titleBn,
@@ -69,6 +75,9 @@ class DiscussionDataModel {
         restrictedBy: json["restricted_by"] ?? "",
         restrictionRemarks: json["restriction_remarks"] ?? "",
         isDeleted: json["is_deleted"] ?? false,
+        isVote: json["is_vote"] ?? false,
+        isReport: json["is_report"] ?? false,
+        isSelf: json["is_self"] ?? false,
         cid: json["cid"] ?? -1,
         titleEn: json["title_en"] ?? "",
         titleBn: json["title_bn"] ?? "",
@@ -96,6 +105,9 @@ class DiscussionDataModel {
         "restricted_by": restrictedBy,
         "restriction_remarks": restrictionRemarks,
         "is_deleted": isDeleted,
+        "is_vote": isVote,
+        "is_report": isReport,
+        "is_self": isSelf,
         "cid": cid,
         "title_en": titleEn,
         "title_bn": titleBn,

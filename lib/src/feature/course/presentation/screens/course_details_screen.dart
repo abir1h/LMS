@@ -286,8 +286,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
   @override
   void navigateToCourseAssignmentScreen(int courseContentId) {
     Navigator.of(context).pushNamed(AppRoute.courseAssignmentScreen,
-        arguments: CourseAssessmentScreenArgs(
-            courseContentId: courseContentId, onTap: () {}));
+        arguments: AssignmentArgs(courseContentId: courseContentId));
   }
 
   @override

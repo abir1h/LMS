@@ -49,12 +49,14 @@ class _DashboardScreenState extends State<DashboardScreen>
                 RunningCourseCard(
                   onPressed: () => onTapRunningModule(),
                   image: Image.asset("assets/images/image.png"),
-                  text1:
-                      label(e: StringData.cardText1, b: StringData.cardText1Bn),
+                  text1: label(
+                      e: data.courses[0].batchNameEn,
+                      b: data.courses[0].batchNameBn),
                   text2: label(
                       e: data.courses[0].nameEn, b: data.courses[0].nameBn),
-                  text3:
-                      label(e: "10% ${en.completed}", b: "১০% ${bn.completed}"),
+                  text3: label(
+                      e: "${data.courses[0].courseProgress}% ${en.completed}",
+                      b: "${replaceEnglishNumberWithBengali(data.courses[0].courseProgress.toString())}% ${bn.completed}"),
                 ),
               // SizedBox(height: size.h20),
               RowItemTemplate(

@@ -23,7 +23,11 @@ class _CommentDataModelToEntityMapper
         updatedAt: entity.updatedAt,
         hasRestriction: entity.hasRestriction,
         restrictedBy: entity.restrictedBy,
-        restrictionRemarks: entity.restrictionRemarks);
+        restrictionRemarks: entity.restrictionRemarks,
+        report: entity.report,
+        isVote: entity.isVote,
+        isReport: entity.isReport,
+        isSelf: entity.isSelf);
   }
 
   @override
@@ -40,7 +44,11 @@ class _CommentDataModelToEntityMapper
         updatedAt: model.updatedAt,
         hasRestriction: model.hasRestriction,
         restrictedBy: model.restrictedBy,
-        restrictionRemarks: model.restrictionRemarks);
+        restrictionRemarks: model.restrictionRemarks,
+        report: model.report,
+        isVote: model.isVote,
+        isReport: model.isReport,
+        isSelf: model.isSelf);
   }
 }
 

@@ -25,14 +25,14 @@ class CourseAssignmentScreen extends StatefulWidget {
 
 class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
     with AppTheme, Language, CourseAssignmentScreenService {
-  late CourseAssessmentScreenArgs _screenArgs;
+  late AssignmentArgs _screenArgs;
 
   @override
   void initState() {
     super.initState();
-    _screenArgs = widget.arguments as CourseAssessmentScreenArgs;
+    _screenArgs = widget.arguments as AssignmentArgs;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      loadAssignmentData(_screenArgs.courseContentId!);
+      loadAssignmentData(_screenArgs.courseContentId);
     });
   }
 
@@ -235,7 +235,7 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: size.w40),
                   child: CustomButton(
-                    onTap: () => onTap(data),
+                    onTap: () => onTap(_screenArgs.courseContentId),
                     title: label(e: en.enter, b: bn.enter),
                     textColor: clr.whiteColor,
                     radius: size.r4,
@@ -260,9 +260,9 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
   }
 
   @override
-  void navigateToAssignmentScreen(AssignmentDataEntity assignmentDataEntity) {
+  void navigateToAssignmentScreen(int courseContentId) {
     Navigator.of(context).pushNamed(AppRoute.assignmentScreen,
-        arguments: AssignmentArgs(assignmentDataEntity: assignmentDataEntity));
+        arguments: AssignmentArgs(courseContentId: courseContentId));
   }
 }
 

@@ -14,7 +14,10 @@ class CommentDataModel {
   final bool hasRestriction;
   final String restrictedBy;
   final String restrictionRemarks;
-
+  final int report;
+  final bool isVote;
+  final bool isReport;
+  final bool isSelf;
   const CommentDataModel({
     required this.id,
     required this.discussionId,
@@ -28,6 +31,10 @@ class CommentDataModel {
     required this.hasRestriction,
     required this.restrictedBy,
     required this.restrictionRemarks,
+    required this.report,
+    required this.isVote,
+    required this.isReport,
+    required this.isSelf,
   });
 
   factory CommentDataModel.fromJson(Map<String, dynamic> json) =>
@@ -44,6 +51,10 @@ class CommentDataModel {
         hasRestriction: json["has_restriction"] ?? false,
         restrictedBy: json["restricted_by"] ?? "",
         restrictionRemarks: json["restriction_remarks"] ?? "",
+        report: json["report"] ?? -1,
+        isVote: json["is_vote"] ?? false,
+        isReport: json["is_report"] ?? false,
+        isSelf: json["is_self"] ?? false,
       );
 
   Map<String, dynamic> toJson() => {
@@ -59,5 +70,9 @@ class CommentDataModel {
         "has_restriction": hasRestriction,
         "restricted_by": restrictedBy,
         "restriction_remarks": restrictionRemarks,
+        "report": report,
+        "is_vote": isVote,
+        "is_report": isReport,
+        "is_self": isSelf,
       };
 }

@@ -46,9 +46,13 @@ class NoteRepositoryImp extends NoteRepository {
   Future<ResponseEntity> deleteNotes(int noteId) async {
     ResponseModel responseModel =
         (await noteRemoteDataSource.deleteNotesAction(noteId));
-    return ResponseModelToEntityMapper<NoteDataEntity, NoteDataModel>()
+    return ResponseModelToEntityMapper<List<NoteDataEntity>,
+        List<NoteDataModel>>()
         .toEntityFromModel(
-            responseModel, (NoteDataModel model) => model.toNoteDataEntity);
+        responseModel,
+            (List<NoteDataModel> models) => List<NoteDataModel>.from(models)
+            .map((e) => e.toNoteDataEntity)
+            .toList());
   }
 
   @override

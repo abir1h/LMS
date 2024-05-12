@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import '../../../shared/domain/entities/response_entity.dart';
 import '../repositories/assignment_repository.dart';
 
@@ -19,21 +21,22 @@ class AssignmentUseCase {
       int courseId,
       int circularId,
       String answer,
-      String filePath) async {
+      List<File> files) async {
     final response = _assignmentRepository.storeAssignment(
-        assignmentId, subAssignmentId, courseId, circularId, answer, filePath);
+        assignmentId, subAssignmentId, courseId, circularId, answer, files);
     return response;
   }
 
   Future<ResponseEntity> updateAssignmentUseCase(
+      int submissionId,
       int assignmentId,
       int subAssignmentId,
       int courseId,
       int circularId,
       String answer,
-      String filePath) async {
-    final response = _assignmentRepository.updateAssignment(
-        assignmentId, subAssignmentId, courseId, circularId, answer, filePath);
+      List<File> files) async {
+    final response = _assignmentRepository.updateAssignment(submissionId,
+        assignmentId, subAssignmentId, courseId, circularId, answer, files);
     return response;
   }
 }

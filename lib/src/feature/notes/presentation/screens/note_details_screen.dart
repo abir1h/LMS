@@ -4,8 +4,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/feature/notes/domain/entities/note_data_entity.dart';
-import 'package:lms/src/feature/notes/presentation/service/note_edit_screen_service.dart';
+import '../../domain/entities/note_data_entity.dart';
+import '../service/note_edit_screen_service.dart';
 
 import '../../../../core/routes/app_route.dart';
 import '../../../../core/routes/app_route_args.dart';
@@ -70,16 +70,16 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen>
                       description:
                           jsonEncode(_controller.document.toDelta().toJson()),
                       status: 1));
-                  Navigator.of(context).pushNamed(AppRoute.rootScreen,
-                      arguments: RootScreenArgs(index: 2));
+                  Navigator.of(context).pushNamedAndRemoveUntil(AppRoute.rootScreen, arguments: RootScreenArgs(index: 2),(route) => false);
+
                 }else{
                   onCreateNotes(NoteDataEntity(
                       title: _screenArgs.noteDataEntity!.title,
                       description:
                       jsonEncode(_controller.document.toDelta().toJson()),
                       status: 1));
-                  Navigator.of(context).pushNamed(AppRoute.rootScreen,
-                      arguments: RootScreenArgs(index: 2));
+                  Navigator.of(context).pushNamedAndRemoveUntil(AppRoute.rootScreen, arguments: RootScreenArgs(index: 2),(route) => false);
+
                 }
               },
               icon: Icon(Icons.check,
@@ -92,36 +92,6 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen>
                         noteType: NoteType.edit));
               },
               icon: Icon(Icons.edit, size: size.r24, color: clr.iconColorBlack))
-          /* IconButton(
-              onPressed: () {
-                // Check if the note with the same ID exists in the list
-                int existingIndex = controller.noteList.indexWhere(
-                  (note) => note.id == _screenArgs.noteModel?.id!,
-                );
-
-                if (existingIndex != -1) {
-                  // Replace the existing note with the updated one
-                  controller.noteList[existingIndex] = _screenArgs.noteModel!;
-                  Navigator.of(context).pushNamed(AppRoute.rootScreen,
-                      arguments: RootScreenArgs(index: 2));
-                  // Get.toNamed(AppRoutes.bottomNav, arguments: 2);
-                } else {
-                  // If the note with the ID doesn't exist, add it to the list
-                  controller.noteList.add(_screenArgs.noteModel!);
-                  Navigator.of(context).pushNamed(AppRoute.rootScreen,
-                      arguments: RootScreenArgs(index: 2));
-                }
-              },
-              icon: Icon(Icons.check,
-                  size: size.r24, color: clr.appPrimaryColorGreen)),
-          IconButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(AppRoute.noteEditScreen,
-                    arguments: NoteDetailsScreenArgs(
-                        noteModel: _screenArgs.noteModel));
-              },
-              icon:
-                  Icon(Icons.edit, size: size.r24, color: clr.iconColorBlack)),*/
         ],
       ),
       body: SingleChildScrollView(

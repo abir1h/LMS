@@ -18,6 +18,9 @@ class DiscussionDataEntity {
   final String restrictedBy;
   final String restrictionRemarks;
   final bool isDeleted;
+  final bool isVote;
+  final bool isReport;
+  final bool isSelf;
   final int cid;
   final String titleEn;
   final String titleBn;
@@ -41,6 +44,9 @@ class DiscussionDataEntity {
     required this.restrictedBy,
     required this.restrictionRemarks,
     required this.isDeleted,
+    required this.isVote,
+    required this.isReport,
+    required this.isSelf,
     required this.cid,
     required this.titleEn,
     required this.titleBn,
