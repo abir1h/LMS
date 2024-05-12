@@ -18,15 +18,17 @@ abstract class _ViewModel {
 }
 
 mixin NoteScreenService<T extends StatefulWidget> on State<T>
-implements _ViewModel {
+    implements _ViewModel {
   late _ViewModel _view;
   int selectedValue = 3;
   final NoteUseCase _noteUseCase = NoteUseCase(
       noteRepository:
-      NoteRepositoryImp(noteRemoteDataSource: NoteRemoteDataSourceImp()));
+          NoteRepositoryImp(noteRemoteDataSource: NoteRemoteDataSourceImp()));
 
-  Future<ResponseEntity> getNoteList(int pageNumber,String? sortBy,bool? sortDesc) async {
-    return _noteUseCase.getNotesUseCase(pageNumber,sortBy:sortBy,sortDesc:sortDesc);
+  Future<ResponseEntity> getNoteList(
+      int pageNumber, String? sortBy, bool? sortDesc) async {
+    return _noteUseCase.getNotesUseCase(pageNumber,
+        sortBy: sortBy, sortDesc: sortDesc);
   }
 
   Future<ResponseEntity> deleteNotes({required int noteId}) async {
@@ -38,38 +40,34 @@ implements _ViewModel {
   void initState() {
     _view = this;
     super.initState();
-    loadNotesData(1,sortBy: "updated_at");
+    loadNotesData(1, sortBy: "updated_at");
     paginationController.onLoadMore = _onLoadMoreItems;
   }
 
   @override
   void dispose() {
-    // noteDataStreamController.dispose();
     pageStateStreamController.dispose();
     super.dispose();
   }
 
   ///Stream controllers
-  // final AppStreamController<List<NoteDataEntity>> noteDataStreamController =
-  //     AppStreamController();
-
-  ///Stream controllers
-  final AppStreamController<PaginatedListViewController<NoteDataEntity>> pageStateStreamController = AppStreamController();
-  PaginatedListViewController<NoteDataEntity> paginationController = PaginatedListViewController();
+  final AppStreamController<PaginatedListViewController<NoteDataEntity>>
+      pageStateStreamController = AppStreamController();
+  PaginatedListViewController<NoteDataEntity> paginationController =
+      PaginatedListViewController();
 
   ///Load Category list
-  void loadNotesData(int pageNumber,{String? sortBy, bool? sortDesc}) {
-    if(!mounted) return;
+  void loadNotesData(int pageNumber, {String? sortBy, bool? sortDesc}) {
+    if (!mounted) return;
     paginationController.clear();
     pageStateStreamController.add(LoadingState());
-    getNoteList(pageNumber,sortBy,sortDesc).then((value) {
+    getNoteList(pageNumber, sortBy, sortDesc).then((value) {
       if (value.error == null && value.data.noteDataEntity!.isNotEmpty) {
         // noteDataStreamController.add(
         //     DataLoadedState<List<NoteDataEntity>>(value.data!.noteDataEntity));
         paginationController.setTotalItemCount(value.data!.total);
         paginationController.addItems(value.data!.noteDataEntity);
         pageStateStreamController.add(DataLoadedState(paginationController));
-
       } else if (value.error == null && value.data.noteDataEntity!.isEmpty) {
         pageStateStreamController.add(EmptyState(message: 'No Notes Found'));
       } else {
@@ -87,28 +85,31 @@ implements _ViewModel {
     CustomToasty.of(context).lockUI();
     ResponseEntity responseEntity = await deleteNotes(noteId: noteId);
     if (responseEntity.error == null && responseEntity.data != null) {
-      loadNotesData(1,sortBy: "updated_at");
+      loadNotesData(1, sortBy: "updated_at");
       _view.showSuccess(responseEntity.message!);
     } else {
       _view.showWarning(responseEntity.message!);
     }
+    // ignore: use_build_context_synchronously
     CustomToasty.of(context).releaseUI();
     return responseEntity;
   }
 
   ///Load more data
-  Future<bool> _onLoadMoreItems(int nextPage) async{
+  Future<bool> _onLoadMoreItems(int nextPage) async {
     Completer<bool> completer = Completer();
-    getNoteList(nextPage,'created_at',false).asStream().listen((value) {
+    getNoteList(nextPage, 'created_at', false).asStream().listen((value) {
       if (!mounted) return;
+
       ///Data loaded state
-      if(value.error == null && value.data.noteDataEntity.isNotEmpty){
+      if (value.error == null && value.data.noteDataEntity.isNotEmpty) {
         paginationController.setTotalItemCount(value.data!.total);
         paginationController.addItems(value.data!.noteDataEntity);
         completer.complete(true);
       }
+
       ///Error state
-      else{
+      else {
         ///Try reloading
         // _view.showWarning(value.message);
         completer.complete(false);
@@ -117,5 +118,4 @@ implements _ViewModel {
 
     return completer.future;
   }
-
 }

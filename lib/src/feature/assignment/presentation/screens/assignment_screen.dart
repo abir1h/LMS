@@ -294,49 +294,7 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                     ),
                   )
 
-                ///Upload
-                // Obx(() {
-                //   return controller.isUpload.isTrue
-                //       ? Padding(
-                //           padding: EdgeInsets.symmetric(
-                //               horizontal: size.w16, vertical: size.h48),
-                //           child: Row(
-                //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //             children: [
-                //               Expanded(
-                //                 child: CustomButton(
-                //                   onTap: () {
-                //                     CustomToasty.of(context).showSuccess(
-                //                         "সফলভাবে  জমাদান সম্পন্ন হয়েছে");
-                //                     Navigator.of(context).pushNamed(
-                //                         AppRoute.courseAssignmentScreen);
-                //                   },
-                //                   title: label(e: en.submit, b: bn.submit),
-                //                   radius: size.r4,
-                //                   verticalPadding: size.h4,
-                //                   bgColor: clr.scaffoldBackgroundColor,
-                //                   textColor: clr.appPrimaryColorGreen,
-                //                   borderColor: clr.appPrimaryColorGreen,
-                //                 ),
-                //               ),
-                //               SizedBox(width: size.w16),
-                //               Expanded(
-                //                 child: CustomButton(
-                //                   onTap: () {
-                //                     CustomToasty.of(context).showSuccess(
-                //                         "সফলভাবে সংরক্ষণ সম্পন্ন হয়েছে");
-                //                   },
-                //                   title:
-                //                       label(e: en.saveAsDraft, b: bn.saveAsDraft),
-                //                   radius: size.r4,
-                //                   verticalPadding: size.h4,
-                //                 ),
-                //               ),
-                //             ],
-                //           ),
-                //         )
-                //       : const Wrap();
-                // })
+
               ],
             ),
           );
