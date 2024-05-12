@@ -136,9 +136,87 @@ String timeAgoToBengali(String timeAgo) {
       // Convert each digit separately
       return word.split('').map((char) => banglaMap[char] ?? char).join('');
     }
+    if (word == 'AM') {
+      print(word);
+    }
     return banglaMap[word.toLowerCase()] ?? word;
   }).join(' ');
   print(banglaText);
+
+  return banglaText;
+}
+
+String nightDayConvertor(String timeAgo, String timstamp) {
+  // Define a map to store the mapping of English words to Bangla words
+  DateTime time = DateTime.parse(timstamp).toUtc();
+  int hours = time.hour;
+
+  String greeting = "";
+
+  if (hours >= 1 && hours <= 12) {
+    greeting = "সকাল";
+  } else if (hours > 12 && hours <= 17) {
+    greeting = "অপরাহ্ণ";
+  } else if (hours > 17 && hours <= 20) {
+    greeting = "সন্ধ্যা";
+  } else if (hours > 20 && hours <= 24) {
+    greeting = "রাত";
+  }
+  final Map<String, String> banglaMap = {
+    'january': 'জানুয়ারি $greeting',
+    'february': 'ফেব্রুয়ারি $greeting',
+    'march': 'মার্চ $greeting',
+    'april': 'এপ্রিল $greeting',
+    'may': 'মে $greeting',
+    'june': 'জুন $greeting',
+    'july': 'জুলাই $greeting',
+    'august': 'আগস্ট $greeting',
+    'september': 'সেপ্টেম্বর $greeting',
+    'october': 'অক্টোবর $greeting',
+    'november': 'নভেম্বর $greeting',
+    'december': 'ডিসেম্বর $greeting',
+    'seconds': 'সেকেন্ড',
+    'minute': 'মিনিট',
+    'minutes': 'মিনিট',
+    'hour': 'ঘন্টা',
+    'hours': 'ঘন্টা',
+    'day': 'দিন',
+    'days': 'দিন',
+    'week': 'সপ্তাহ',
+    'weeks': 'সপ্তাহ',
+    'month': 'মাস',
+    'months': 'মাস',
+    'year': 'বছর',
+    'years': 'বছর',
+    'ago': 'আগে',
+    'moment': 'কিছুক্ষণ',
+    'about': 'প্রায়',
+    'an': 'এক',
+    'am': '',
+    'pm': '',
+    'a': '',
+    '0': '০',
+    '1': '১',
+    '2': '২',
+    '3': '৩',
+    '4': '৪',
+    '5': '৫',
+    '6': '৬',
+    '7': '৭',
+    '8': '৮',
+    '9': '৯',
+  };
+
+  // Split the timeAgo string into words
+  List<String> words = timeAgo.split(' ');
+
+  String banglaText = words.map((word) {
+    if (int.tryParse(word) != null) {
+      return word.split('').map((char) => banglaMap[char] ?? char).join('');
+    }
+
+    return banglaMap[word.toLowerCase()] ?? word;
+  }).join(' ');
 
   return banglaText;
 }
