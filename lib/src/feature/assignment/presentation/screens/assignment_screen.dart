@@ -248,7 +248,7 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                                 files: files!);
                           },
                           title: label(e: en.upload, b: bn.upload),
-                          bgColor: controller.filename.value == ''
+                          bgColor: files!.isEmpty
                               ? clr.greyColor
                               : clr.appPrimaryColorGreen,
                           borderColor: Colors.transparent,
@@ -283,7 +283,7 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                                 files: files!);
                           },
                           title: label(e: "Re-Submit", b: "Re-Submit"),
-                          bgColor: controller.filename.value == ''
+                          bgColor: files!.isEmpty
                               ? clr.greyColor
                               : clr.appPrimaryColorGreen,
                           borderColor: Colors.transparent,
@@ -293,8 +293,6 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                       ],
                     ),
                   )
-
-
               ],
             ),
           );
