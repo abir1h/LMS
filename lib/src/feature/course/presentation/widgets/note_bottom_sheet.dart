@@ -17,11 +17,13 @@ import '../../../notes/presentation/models/note_model.dart';
 class NoteBottomSheet extends StatefulWidget {
   final Object? arguments;
   final String? ref;
+  final VoidCallback onSuccess;
 
   const NoteBottomSheet({
     super.key,
     this.arguments,
     this.ref,
+    required this.onSuccess
   });
 
   @override
@@ -67,6 +69,7 @@ class _NoteBottomSheetState extends State<NoteBottomSheet>
     _controller.dispose();
     _editorFocusNode.dispose();
     _editorScrollController.dispose();
+    titleController.dispose();
     super.dispose();
   }
 
@@ -463,5 +466,10 @@ class _NoteBottomSheetState extends State<NoteBottomSheet>
   @override
   void showWarning(String message) {
     CustomToasty.of(context).showWarning(message);
+  }
+
+  @override
+  void onSuccessRequest() {
+    widget.onSuccess();
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../notes/domain/entities/note_data_entity.dart';
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../../notes/data/data_sources/remote/note_data_source.dart';
@@ -8,6 +9,7 @@ import '../../../shared/domain/entities/response_entity.dart';
 
 abstract class _ViewModel {
   void showWarning(String message);
+  void showSuccess(String message);
   // void navigateToDetailedNoteScreen(int noteId);
 }
 
@@ -21,6 +23,10 @@ mixin CourseNoteWidgetService<T extends StatefulWidget> on State<T>
 
   Future<ResponseEntity> getNotesByContent(int contentId, String contentType) async {
     return _noteUseCase.getNotesByContentUseCase(contentId, contentType);
+  }
+
+  Future<ResponseEntity> deleteNotes({required int noteId}) async {
+    return _noteUseCase.deleteNotesUseCase(noteId);
   }
 
   ///Service configurations
@@ -59,6 +65,18 @@ mixin CourseNoteWidgetService<T extends StatefulWidget> on State<T>
         _view.showWarning(value.message!);
       }
     });
+  }
+
+  void onNoteDelete(int noteId) async {
+    CustomToasty.of(context).lockUI();
+    ResponseEntity responseEntity = await deleteNotes(noteId: noteId);
+    if (responseEntity.error == null && responseEntity.data != null) {
+      _view.showSuccess(responseEntity.message!);
+      // _view.onSuccessRequest();
+    } else {
+      _view.showWarning(responseEntity.message!);
+    }
+    CustomToasty.of(context).releaseUI();
   }
 
   // void onTapNote(int noteId) {

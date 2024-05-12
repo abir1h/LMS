@@ -10,6 +10,7 @@ import '../../../shared/domain/entities/response_entity.dart';
 abstract class _ViewModel {
   void showWarning(String message);
   void showSuccess(String message);
+  void onSuccessRequest();
 }
 
 mixin NoteBottomSheetService<T extends StatefulWidget> on State<T>
@@ -40,6 +41,7 @@ implements _ViewModel {
       if (mounted) {
         if (value.error == null && value.data != null) {
           _view.showSuccess(value.message!);
+          _view.onSuccessRequest();
           // AppEventsNotifier.notify(EventAction.notesScreen);
         } else {
           _view.showWarning(value.message!);
@@ -55,6 +57,7 @@ implements _ViewModel {
       if (mounted) {
         if (value.error == null && value.data != null) {
           _view.showSuccess(value.message!);
+          _view.onSuccessRequest();
           // AppEventsNotifier.notify(EventAction.notesScreen);
         } else {
           _view.showWarning(value.message!);

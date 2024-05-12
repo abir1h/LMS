@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -7,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../../../core/common_widgets/custom_dialog_widget.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
@@ -40,12 +42,12 @@ class NoteWidget extends StatefulWidget {
 class _NoteWidgetState extends State<NoteWidget>
     with AppTheme, Language, AppEventsNotifier, CourseNoteWidgetService {
   final controller = Get.put(NoteController());
-  void onTapCreateDiscussion() {
-    showCupertinoModalPopup(
-      context: context,
-      builder: (context) => const NoteBottomSheet(),
-    );
-  }
+  // void onTapCreateDiscussion() {
+  //   showCupertinoModalPopup(
+  //     context: context,
+  //     builder: (context) => const NoteBottomSheet(),
+  //   );
+  // }
 
   @override
   void initState() {
@@ -70,17 +72,25 @@ class _NoteWidgetState extends State<NoteWidget>
                     items: data,
                     buildItem: (BuildContext context, int index, item) {
                       return NoteWidgetTile(
-                        noteContent: item.description,
+                        noteContent: item.title,
                         title: item.title,
-                        timestamp: DateFormat('dd MMMM yyyy')
+                        timestamp: DateFormat('dd MMMM yyyy', label(e: "en", b: "bn"))
                             .format(DateTime.parse(item.createdAt ?? "")),
                         onPressed: () => showCupertinoModalPopup(
                           context: context,
                           builder: (context) => NoteBottomSheet(
-                              arguments: NoteDetailsScreenArgs(
-                                  noteType: NoteType.edit,
-                                  noteDataEntity: item)),
+                            arguments: NoteDetailsScreenArgs(
+                              noteType: NoteType.edit,
+                              noteDataEntity: item,
+                            ),
+                            onSuccess: () {
+                              Navigator.of(context).pop();
+                              loadNoteList(
+                                  widget.contentId, widget.contentType);
+                            },
+                          ),
                         ),
+                        onDelete: () => _onDelete(noteId: item.id!),
                       );
                     })
                 : Center(
@@ -105,15 +115,21 @@ class _NoteWidgetState extends State<NoteWidget>
                   context: context,
                   barrierDismissible: false,
                   builder: (context) => NoteBottomSheet(
-                      arguments: NoteDetailsScreenArgs(
-                          noteType: NoteType.create,
-                          noteDataEntity: NoteDataEntity(
-                              courseModuleId: widget.courseModuleId,
-                              contentId: widget.contentId,
-                              contentType: widget.contentType,
-                              title: "",
-                              description: "",
-                              status: 1))),
+                    arguments: NoteDetailsScreenArgs(
+                      noteType: NoteType.create,
+                      noteDataEntity: NoteDataEntity(
+                          courseModuleId: widget.courseModuleId,
+                          contentId: widget.contentId,
+                          contentType: widget.contentType,
+                          title: "",
+                          description: "",
+                          status: 1),
+                    ),
+                    onSuccess: () {
+                      Navigator.of(context).pop();
+                      loadNoteList(widget.contentId, widget.contentType);
+                    },
+                  ),
                 ),
                 child: Container(
                   width: 1.sw,
@@ -293,6 +309,28 @@ class _NoteWidgetState extends State<NoteWidget>
   void showWarning(String message) {
     CustomToasty.of(context).showWarning(message);
   }
+
+  void _onDelete({required int noteId}) {
+    CustomDialogWidget.show(
+            context: context,
+            title: label(
+                e: "Do you want to delete this note?",
+                b: "আপনি কি এই নোটটি মুছতে চান?"),
+            infoText: label(e: "Are you Sure?", b: "আপনি কি নিশ্চিত?"),
+            leftButtonText: label(e: "Cancel", b: "বাতিল করুন"),
+            rightButtonText: label(e: "Yes", b: "হ্যাঁ"))
+        .then((x) {
+      if (!x) {
+        onNoteDelete(noteId);
+        loadNoteList(widget.contentId, widget.contentType);
+      }
+    });
+  }
+
+  @override
+  void showSuccess(String message) {
+    CustomToasty.of(context).showSuccess(message);
+  }
 }
 
 class NoteItemSectionWidget<T> extends StatelessWidget with AppTheme {
@@ -321,12 +359,14 @@ class NoteWidgetTile extends StatelessWidget with AppTheme {
   final String title;
   final String timestamp;
   final VoidCallback onPressed;
+  final VoidCallback onDelete;
   const NoteWidgetTile(
       {super.key,
       required this.noteContent,
       required this.title,
       required this.timestamp,
-      required this.onPressed});
+      required this.onPressed,
+      required this.onDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -370,16 +410,30 @@ class NoteWidgetTile extends StatelessWidget with AppTheme {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    title,
-                    style: TextStyle(
-                      color: clr.blackColor,
-                      fontWeight: FontWeight.w500,
-                      fontSize: size.textSmall,
-                      fontFamily: StringData.fontFamilyPoppins,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          title,
+                          style: TextStyle(
+                            color: clr.blackColor,
+                            fontWeight: FontWeight.w500,
+                            fontSize: size.textSmall,
+                            fontFamily: StringData.fontFamilyPoppins,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      GestureDetector(
+                          onTap: onDelete,
+                          child: Icon(
+                            Icons.delete,
+                            color: Colors.red,
+                            size: size.r24,
+                          ))
+                    ],
                   ),
                   SizedBox(height: size.h8),
                   Row(
