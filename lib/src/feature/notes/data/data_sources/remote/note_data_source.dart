@@ -10,6 +10,8 @@ abstract class NoteRemoteDataSource {
   Future<ResponseModel> createNotesAction(NoteDataModel noteDataModel);
   Future<ResponseModel> updateNotesAction(NoteDataModel noteDataModel);
   Future<ResponseModel> deleteNotesAction(int noteId);
+  Future<ResponseModel> getNotesByContentAction(
+      int contentId, String contentType);
 }
 
 class NoteRemoteDataSourceImp extends NoteRemoteDataSource {
@@ -55,6 +57,17 @@ class NoteRemoteDataSourceImp extends NoteRemoteDataSource {
   Future<ResponseModel> deleteNotesAction(int noteId) async {
     final responseJson = await Server.instance
         .deleteRequest(url: "${ApiCredential.createNotes}/$noteId");
+    ResponseModel responseModel = ResponseModel.fromJson(
+        responseJson, (dynamic json) => NoteDataModel.listFromJson(json));
+    return responseModel;
+  }
+
+  @override
+  Future<ResponseModel> getNotesByContentAction(
+      int contentId, String contentType) async {
+    final responseJson = await Server.instance.getRequest(
+        url:
+            "${ApiCredential.getNotesByContent}?content_id=$contentId&content_type=$contentType");
     ResponseModel responseModel = ResponseModel.fromJson(
         responseJson, (dynamic json) => NoteDataModel.listFromJson(json));
     return responseModel;
