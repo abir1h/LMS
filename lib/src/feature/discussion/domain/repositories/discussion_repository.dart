@@ -3,6 +3,7 @@ import '../entities/discussion_data_entity.dart';
 import '../../../shared/domain/entities/response_entity.dart';
 
 abstract class DiscussionRepository {
+  Future<ResponseEntity> getDiscussions(int courseId);
   Future<ResponseEntity> getDiscussionsByContent(
       int courseId, int courseModuleId, int contentId, String contentType);
   Future<ResponseEntity> getDiscussionDetails(int discussionId);

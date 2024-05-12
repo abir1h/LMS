@@ -18,6 +18,20 @@ class DiscussionRepositoryImp extends DiscussionRepository {
   DiscussionRepositoryImp({required this.discussionRemoteDataSource});
 
   @override
+  Future<ResponseEntity> getDiscussions(int courseId) async {
+    ResponseModel responseModel =
+        (await discussionRemoteDataSource.getDiscussionsAction(courseId));
+    return ResponseModelToEntityMapper<List<DiscussionDataEntity>,
+            List<DiscussionDataModel>>()
+        .toEntityFromModel(
+            responseModel,
+            (List<DiscussionDataModel> models) =>
+                List<DiscussionDataModel>.from(models)
+                    .map((e) => e.toDiscussionDataEntity)
+                    .toList());
+  }
+
+  @override
   Future<ResponseEntity> getDiscussionsByContent(int courseId,
       int courseModuleId, int contentId, String contentType) async {
     ResponseModel responseModel =

@@ -6,6 +6,11 @@ class DiscussionUseCase {
   DiscussionUseCase({required DiscussionRepository discussionRepository})
       : _discussionRepository = discussionRepository;
 
+  Future<ResponseEntity> getDiscussionsUseCase(int courseId) async {
+    final response = _discussionRepository.getDiscussions(courseId);
+    return response;
+  }
+
   Future<ResponseEntity> getDiscussionsByContentUseCase(int courseId,
       int courseModuleId, int contentId, String contentType) async {
     final response = _discussionRepository.getDiscussionsByContent(

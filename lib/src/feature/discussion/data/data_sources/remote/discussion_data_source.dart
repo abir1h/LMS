@@ -6,6 +6,7 @@ import '../../models/discussion_comments_data_model.dart';
 import '../../models/discussion_data_model.dart';
 
 abstract class DiscussionRemoteDataSource {
+  Future<ResponseModel> getDiscussionsAction(int courseId);
   Future<ResponseModel> getDiscussionsByContentAction(
       int courseId, int courseModuleId, int contentId, String contentType);
   Future<ResponseModel> getDiscussionDetailsAction(int discussionId);
@@ -27,6 +28,15 @@ abstract class DiscussionRemoteDataSource {
 }
 
 class DiscussionRemoteDataSourceImp extends DiscussionRemoteDataSource {
+  @override
+  Future<ResponseModel> getDiscussionsAction(int courseId) async {
+    final responseJson = await Server.instance.getRequest(
+        url: "${ApiCredential.getAllDiscussion}?course_id=$courseId");
+    ResponseModel responseModel = ResponseModel.fromJson(
+        responseJson, (dynamic json) => DiscussionDataModel.listFromJson(json));
+    return responseModel;
+  }
+
   @override
   Future<ResponseModel> getDiscussionsByContentAction(int courseId,
       int courseModuleId, int contentId, String contentType) async {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -42,6 +43,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
     super.initState();
     _screenArgs = widget.arguments as CourseDetailsScreenArgs;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      initializeDateFormatting();
       loadCourseData(_screenArgs.courseId);
     });
   }

@@ -130,8 +130,9 @@ class _DrawerWidgetState extends State<DrawerWidget>
               DrawerLinkWidget(
                 icon: Icons.forum,
                 text: label(e: en.discussionArea, b: bn.discussionArea),
-                onTap: () =>
-                    Navigator.of(context).pushNamed(AppRoute.discussionScreen),
+                onTap: () {},
+                // onTap: () =>
+                //     Navigator.of(context).pushNamed(AppRoute.discussionScreen),
               ),
               DrawerLinkWidget(
                 icon: Icons.play_circle,

@@ -22,6 +22,7 @@ class ApiCredential {
   static String getCircular = "/circular-service/api/mobile/circulars";
 
   static String discussion = "/circular-service/api/mobile/discussion";
+  static String getAllDiscussion = "/circular-service/api/mobile/discussions";
   static String getDiscussion =
       "/circular-service/api/mobile/discussion-content-wise";
   static String getDiscussionComments =
