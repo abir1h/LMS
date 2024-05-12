@@ -58,6 +58,7 @@ class _CourseScriptScreenState extends State<CourseScriptScreen>
                       b: _screenArgs.courseDescriptionBn)),
               tabBarItem2: NoteWidget(
                 physics: const NeverScrollableScrollPhysics(),
+                courseModuleId: data.courseModuleId,
                 contentId: _screenArgs.courseContentId,
                 contentType: _screenArgs.courseContentType,
               ),

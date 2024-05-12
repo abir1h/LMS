@@ -167,19 +167,30 @@ class _NoteBottomSheetState extends State<NoteBottomSheet>
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       GestureDetector(
-                        onTap: () =>
-                          _screenArgs.noteType == NoteType.create
-                              ? onCreateNotes(NoteDataEntity(
-                              title: titleController.text,
-                              description:
-                              jsonEncode(_controller.document.toDelta().toJson()),
-                              status: 1))
-                              : onUpdateNotes(NoteDataEntity(
-                              id: _screenArgs.noteDataEntity!.id,
-                              title: titleController.text,
-                              description:
-                              jsonEncode(_controller.document.toDelta().toJson()),
-                              status: 1)),
+                        onTap: () => _screenArgs.noteType == NoteType.create
+                            ? onCreateNotes(NoteDataEntity(
+                                title: titleController.text,
+                                description: jsonEncode(
+                                    _controller.document.toDelta().toJson()),
+                                courseModuleId:
+                                    _screenArgs.noteDataEntity?.courseModuleId,
+                                contentId:
+                                    _screenArgs.noteDataEntity?.contentId,
+                                contentType:
+                                    _screenArgs.noteDataEntity?.contentType,
+                                status: _screenArgs.noteDataEntity!.status))
+                            : onUpdateNotes(NoteDataEntity(
+                                id: _screenArgs.noteDataEntity!.id,
+                                title: titleController.text,
+                                description: jsonEncode(
+                                    _controller.document.toDelta().toJson()),
+                                courseModuleId:
+                                    _screenArgs.noteDataEntity?.courseModuleId,
+                                contentId:
+                                    _screenArgs.noteDataEntity?.contentId,
+                                contentType:
+                                    _screenArgs.noteDataEntity?.contentType,
+                                status: _screenArgs.noteDataEntity!.status)),
                         child: Container(
                           padding: EdgeInsets.all(size.r4),
                           decoration: BoxDecoration(

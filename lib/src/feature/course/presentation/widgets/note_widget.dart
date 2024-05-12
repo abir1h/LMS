@@ -23,11 +23,13 @@ import '../../../notes/presentation/controllers/note_controller.dart';
 
 class NoteWidget extends StatefulWidget {
   final ScrollPhysics? physics;
+  final int courseModuleId;
   final int contentId;
   final String contentType;
   const NoteWidget(
       {super.key,
       this.physics,
+      required this.courseModuleId,
       required this.contentId,
       required this.contentType});
 
@@ -74,7 +76,10 @@ class _NoteWidgetState extends State<NoteWidget>
                             .format(DateTime.parse(item.createdAt ?? "")),
                         onPressed: () => showCupertinoModalPopup(
                           context: context,
-                          builder: (context) => NoteBottomSheet(arguments: NoteDetailsScreenArgs(noteType: NoteType.edit, noteDataEntity: item)),
+                          builder: (context) => NoteBottomSheet(
+                              arguments: NoteDetailsScreenArgs(
+                                  noteType: NoteType.edit,
+                                  noteDataEntity: item)),
                         ),
                       );
                     })
@@ -99,7 +104,16 @@ class _NoteWidgetState extends State<NoteWidget>
                 onTap: () => showCupertinoModalPopup(
                   context: context,
                   barrierDismissible: false,
-                  builder: (context) => const NoteBottomSheet(),
+                  builder: (context) => NoteBottomSheet(
+                      arguments: NoteDetailsScreenArgs(
+                          noteType: NoteType.create,
+                          noteDataEntity: NoteDataEntity(
+                              courseModuleId: widget.courseModuleId,
+                              contentId: widget.contentId,
+                              contentType: widget.contentType,
+                              title: "",
+                              description: "",
+                              status: 1))),
                 ),
                 child: Container(
                   width: 1.sw,
