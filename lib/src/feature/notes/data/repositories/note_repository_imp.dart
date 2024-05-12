@@ -16,9 +16,9 @@ class NoteRepositoryImp extends NoteRepository {
   NoteRepositoryImp({required this.noteRemoteDataSource});
 
   @override
-  Future<ResponseEntity> getNoteList(int pageNumber) async {
+  Future<ResponseEntity> getNoteList(int pageNumber,{String? sortBy, bool? sortDesc}) async {
     ResponseModel responseModel =
-        (await noteRemoteDataSource.getNoteListAction(pageNumber));
+        (await noteRemoteDataSource.getNoteListAction(pageNumber,sortBy:sortBy,sortDesc:sortDesc));
     return ResponseModelToEntityMapper<PaginatedNoteDataEntity,
             PaginatedNoteDataModel>()
         .toEntityFromModel(responseModel,

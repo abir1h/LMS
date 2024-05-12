@@ -7,9 +7,9 @@ class NoteUseCase {
   NoteUseCase({required NoteRepository noteRepository})
       : _noteRepository = noteRepository;
 
-  Future<ResponseEntity> getNotesUseCase(int pageNumber) async {
+  Future<ResponseEntity> getNotesUseCase(int pageNumber,{String? sortBy, bool? sortDesc}) async {
     final response =
-    _noteRepository.getNoteList(pageNumber);
+    _noteRepository.getNoteList(pageNumber,sortBy:sortBy,sortDesc:sortDesc);
     return response;
   }
 

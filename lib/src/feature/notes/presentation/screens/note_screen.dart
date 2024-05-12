@@ -43,7 +43,7 @@ class _NoteScreenState extends State<NoteScreen>
   ];
 
   final controller = Get.put(NoteController());
-  int selectedValue = 3;
+
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +77,12 @@ class _NoteScreenState extends State<NoteScreen>
                     onSelected: (int value) {
                       setState(() {
                         selectedValue = value;
+                        if (value == 1) {
+                          loadNotesData(1, sortBy: null, sortDesc: true);
+                        } else {
+                          String? sortBy = (value == 2) ? 'created_at' : 'updated_at';
+                          loadNotesData(1, sortBy:sortBy,sortDesc:  null);
+                        }
                       });
                     },
                     itemBuilder: (context) => [
@@ -205,7 +211,7 @@ class _NoteScreenState extends State<NoteScreen>
               ),
             ),
             SizedBox(height: size.h8),
-            Expanded(
+                    Expanded(
               child:
                   AppStreamBuilder<PaginatedListViewController<NoteDataEntity>>(
                 stream: pageStateStreamController.stream,
@@ -571,6 +577,6 @@ class NoteItemWidget extends StatelessWidget with AppTheme {
         ),
       ),
     )*/
-    ;
+
   }
 }
