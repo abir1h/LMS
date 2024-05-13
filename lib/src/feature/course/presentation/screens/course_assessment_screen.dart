@@ -152,7 +152,9 @@ class _CourseAssessmentScreenState extends State<CourseAssessmentScreen>
                           ),
                           SizedBox(width: size.w8),
                           Text(
-                            label(e: "Time: ${data.totalTime} minutes", b: "সময়ঃ ${data.totalTime} মিনিট"),
+                            label(
+                                e: "Time: ${data.totalTime} minutes",
+                                b: "সময়ঃ ${data.totalTime} মিনিট"),
                             style: TextStyle(
                                 color: clr.blackColor,
                                 fontSize: size.textSmall,
@@ -168,7 +170,9 @@ class _CourseAssessmentScreenState extends State<CourseAssessmentScreen>
                           SizedBox(width: size.w8),
                           Expanded(
                             child: Text(
-                              label(e: "Marks: ${data.totalMark}", b: "মার্কস : ${data.totalMark}"),
+                              label(
+                                  e: "Marks: ${data.totalMark}",
+                                  b: "মার্কস : ${data.totalMark}"),
                               style: TextStyle(
                                   color: clr.blackColor,
                                   fontSize: size.textSmall,
@@ -209,7 +213,7 @@ class _CourseAssessmentScreenState extends State<CourseAssessmentScreen>
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: size.w10),
                         child: CustomButton(
-                          onTap:()=> onTapStartExam(data.circularId),
+                          onTap: () => onTapStartExam(data.circularId),
                           title: label(e: en.getStarted, b: bn.getStarted),
                           radius: size.r4,
                         ),
@@ -237,8 +241,7 @@ class _CourseAssessmentScreenState extends State<CourseAssessmentScreen>
 
   @override
   void onTapExamDetailsScreen(ExamDataEntity data) {
-    Navigator.of(context).pushNamed(
-        AppRoute.assessmentAllQuestionScreen,
+    Navigator.of(context).pushNamed(AppRoute.assessmentAllQuestionScreen,
         arguments: AssessmentScreenArgs(examData: data));
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'attachment_data_model.dart';
+
 @immutable
 class AssignmentSubmissionDataModel {
   final int id;
@@ -17,6 +19,7 @@ class AssignmentSubmissionDataModel {
   final String isResubmitted;
   final String createdAt;
   final String updatedAt;
+  final List<AttachmentDataModel> attachments;
 
   const AssignmentSubmissionDataModel({
     required this.id,
@@ -34,6 +37,7 @@ class AssignmentSubmissionDataModel {
     required this.isResubmitted,
     required this.createdAt,
     required this.updatedAt,
+    required this.attachments,
   });
 
   factory AssignmentSubmissionDataModel.fromJson(Map<String, dynamic> json) =>
@@ -53,6 +57,10 @@ class AssignmentSubmissionDataModel {
         isResubmitted: json["is_resubmitted"] ?? "",
         createdAt: json["created_at"] ?? "",
         updatedAt: json["updated_at"] ?? "",
+        attachments: json["attachments"] != null
+            ? List<AttachmentDataModel>.from((json["attachments"])
+                .map((x) => AttachmentDataModel.fromJson(x)))
+            : [],
       );
 
   Map<String, dynamic> toJson() => {
@@ -71,5 +79,7 @@ class AssignmentSubmissionDataModel {
         "is_resubmitted": isResubmitted,
         "created_at": createdAt,
         "updated_at": updatedAt,
+        "attachments":
+            List<AttachmentDataModel>.from(attachments.map((x) => x.toJson())),
       };
 }

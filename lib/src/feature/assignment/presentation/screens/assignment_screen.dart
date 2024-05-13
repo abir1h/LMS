@@ -321,15 +321,17 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                             //   controller.isUpload.value = true;
                             // }
                             onStoreAssignment(
-                                assignmentId: data.id,
-                                subAssignmentId:
-                                    data.circularSubAssignments != null
-                                        ? data.circularSubAssignments!.id
-                                        : -1,
-                                courseId: data.courseId,
-                                circularId: data.circularId,
-                                answer: '',
-                                files: files!);
+                                    assignmentId: data.id,
+                                    subAssignmentId:
+                                        data.circularSubAssignments != null
+                                            ? data.circularSubAssignments!.id
+                                            : -1,
+                                    courseId: data.courseId,
+                                    circularId: data.circularId,
+                                    answer: '',
+                                    files: files!)
+                                .then((value) => loadAssignmentData(
+                                    _screenArgs.courseContentId));
                           },
                           title: label(e: en.upload, b: bn.upload),
                           bgColor: files!.isEmpty
@@ -355,16 +357,19 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                         CustomButton(
                           onTap: () {
                             onUpdateAssignment(
-                                submissionId: data.assignmentSubmissions!.id,
-                                assignmentId: data.id,
-                                subAssignmentId:
-                                    data.circularSubAssignments != null
-                                        ? data.circularSubAssignments!.id
-                                        : -1,
-                                courseId: data.courseId,
-                                circularId: data.circularId,
-                                answer: '',
-                                files: files!);
+                                    submissionId:
+                                        data.assignmentSubmissions!.id,
+                                    assignmentId: data.id,
+                                    subAssignmentId:
+                                        data.circularSubAssignments != null
+                                            ? data.circularSubAssignments!.id
+                                            : -1,
+                                    courseId: data.courseId,
+                                    circularId: data.circularId,
+                                    answer: '',
+                                    files: files!)
+                                .then((value) => loadAssignmentData(
+                                    _screenArgs.courseContentId));
                           },
                           title: label(e: "Re-Submit", b: "Re-Submit"),
                           bgColor: files!.isEmpty
@@ -648,7 +653,7 @@ class SubmissionCompletedWidget extends StatelessWidget
           ),
           SizedBox(height: size.h12),
           CustomTextWidget(
-            text: label(e: "অ্যাসাইনমেন্ট.pdf", b: "অ্যাসাইনমেন্ট.pdf"),
+            text: data.attachments.map((c) => c.file).toList().join(', '),
             fontSize: size.textXSmall,
             fontWeight: FontWeight.w500,
           ),

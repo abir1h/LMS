@@ -98,14 +98,16 @@ class _QuestionAnswerPanelState extends State<QuestionAnswerPanel>
                             // data: controller.questions[index],
                             ),
                       )
-                    ] else if (widget.questions.elementAt(position).type ==
-                        QuestionType.trueFalse) ...[
-                      QuestionWidget(
-                        questionNo: "${position + 1}",
-                        questionText: "বাংলাদেশের জাতীয় ফল কাঁঠাল",
-                        child: const TrueFalseAnswerWidget(),
-                      )
-                    ] else if (widget.questions.elementAt(position).type ==
+                    ]
+                    // else if (widget.questions.elementAt(position).type ==
+                    //     QuestionType.trueFalse) ...[
+                    //   QuestionWidget(
+                    //     questionNo: "${position + 1}",
+                    //     questionText: "বাংলাদেশের জাতীয় ফল কাঁঠাল",
+                    //     child: const TrueFalseAnswerWidget(),
+                    //   )
+                    // ]
+                      else if (widget.questions.elementAt(position).type ==
                         QuestionType.written) ...[
                       QuestionWidget(
                         questionNo: "${position + 1}",

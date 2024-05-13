@@ -6,9 +6,14 @@ import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/utility/app_label.dart';
+import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
+import '../../domain/entities/question_data_entity.dart';
 import '../services/assessment_screen_service.dart';
 import '../widgets/question_list_widget.dart';
+import '../widgets/question_widget.dart';
 import '../widgets/time_digit_widget.dart';
+import '../widgets/true_false_answer_widget.dart';
+import 'assessment_quiz_screen.dart';
 
 class AssessmentAllQuestionScreen extends StatefulWidget {
   final Object? arguments;
@@ -163,19 +168,42 @@ class _AssessmentAllQuestionScreenState
         emptyBuilder: (context, message, icon) => const Offstage(),
         dataBuilder: (context, data) {
           if (data is ExamRunningState) {
-            return Container();
-           // return QuestionListWidget<McqQuestion>(
-           //    items: widget.data.mcqQuestions,
-           //    builder: (context,data, index){
-           //      return QuestionWidget(
-           //        questionNo: "${index + 1}",
-           //        questionText: data.question,
-           //        child: MCQAnswerWidget(
-           //          data: data,
-           //        ),
-           //      );
-           //    },
-           //  ),
+            // return Container();
+            return SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              padding: EdgeInsets.symmetric(
+                  horizontal: size.w16, vertical: size.h12),
+              child: Column(
+                children: [
+                  CustomTextWidget(
+                    text: label(
+                        e: data.examData.assessment!.titleEn,
+                        b: data.examData.assessment!.titleBn),
+                    fontSize: size.textXMedium,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  QuestionListWidget<QuestionDataEntity>(
+                    items: data.examData.assessment!.questions,
+                    builder: (context, data, index) {
+                      return QuestionWidget(
+                        questionNo: "${index + 1}",
+                        questionText: data.question,
+                        // child: Text(data.question),
+                        child: data.questionType?.id == 2
+                            ? MCQAnswerWidget(
+                                data: data,
+                              )
+                            : data.questionType?.id == 5
+                                ? TrueFalseAnswerWidget(
+                                    data: data,
+                                  )
+                                : Container(),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            );
           } else if (data is TimeExpiredState) {
             return Container();
           } else if (data is AnswerSubmittedState) {

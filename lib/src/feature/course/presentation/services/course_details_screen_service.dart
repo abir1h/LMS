@@ -11,7 +11,7 @@ abstract class _ViewModel {
   void showWarning(String message);
   void navigateToCourseVideoScreen();
   void navigateToOverallProgressScreen();
-  void navigateToCourseAssignmentScreen(int courseContentId);
+  void navigateToCourseAssignmentScreen(int courseContentId, bool isCompleted);
   void navigateToCourseAssessmentScreen(int courseContentId);
   void navigateToCourseLiveClassScreen(int courseContentId);
   void navigateToCourseScriptScreen(
@@ -74,8 +74,8 @@ mixin CourseDetailsScreenService<T extends StatefulWidget> on State<T>
     _view.navigateToOverallProgressScreen();
   }
 
-  void onTapCourseAssignment(int courseContentId) {
-    _view.navigateToCourseAssignmentScreen(courseContentId);
+  void onTapCourseAssignment(int courseContentId, bool isCompleted) {
+    _view.navigateToCourseAssignmentScreen(courseContentId, isCompleted);
   }
 
   void onTapCourseAssessment(int courseContentId) {

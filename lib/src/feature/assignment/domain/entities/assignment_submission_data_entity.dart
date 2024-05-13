@@ -1,3 +1,5 @@
+import 'attachment_data_entity.dart';
+
 class AssignmentSubmissionDataEntity {
   final int id;
   final int circularId;
@@ -14,6 +16,7 @@ class AssignmentSubmissionDataEntity {
   final String isResubmitted;
   final String createdAt;
   final String updatedAt;
+  final List<AttachmentDataEntity> attachments;
 
   AssignmentSubmissionDataEntity({
     required this.id,
@@ -31,5 +34,6 @@ class AssignmentSubmissionDataEntity {
     required this.isResubmitted,
     required this.createdAt,
     required this.updatedAt,
+    required this.attachments,
   });
 }

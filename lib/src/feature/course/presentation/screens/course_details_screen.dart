@@ -231,8 +231,8 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
                               return CourseContentWidget(
                                 data: item,
                                 onTapVideo: onTapCourseVideo,
-                                onTapAssignment: () =>
-                                    onTapCourseAssignment(item.contentId),
+                                onTapAssignment: () => onTapCourseAssignment(
+                                    item.contentId, item.isCompleted),
                                 onTapAssessment: () =>
                                     onTapCourseAssessment(item.contentId),
                                 onTapScript: () => onTapScript(
@@ -300,9 +300,14 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
   }
 
   @override
-  void navigateToCourseAssignmentScreen(int courseContentId) {
-    Navigator.of(context).pushNamed(AppRoute.courseAssignmentScreen,
-        arguments: AssignmentArgs(courseContentId: courseContentId));
+  void navigateToCourseAssignmentScreen(int courseContentId, bool isCompleted) {
+    if (isCompleted) {
+      Navigator.of(context).pushNamed(AppRoute.assignmentScreen,
+          arguments: AssignmentArgs(courseContentId: courseContentId));
+    } else {
+      Navigator.of(context).pushNamed(AppRoute.courseAssignmentScreen,
+          arguments: AssignmentArgs(courseContentId: courseContentId));
+    }
   }
 
   @override

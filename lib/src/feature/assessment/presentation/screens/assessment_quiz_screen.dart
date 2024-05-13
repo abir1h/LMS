@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/common_widgets/custom_toasty.dart';
+import '../../domain/entities/question_data_entity.dart';
 import '../models/quiz_model.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
@@ -44,27 +45,27 @@ class _AssessmentQuizScreenState extends State<AssessmentQuizScreen>
                     fontFamily: StringData.fontFamilyPoppins),
               ),
               SizedBox(height: size.h16),
-              GetBuilder<AssessmentController>(
-                  builder: (_) => ListView.separated(
-                        shrinkWrap: true,
-                        itemCount: controller.questions.length,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return QuestionWidget(
-                            questionNo: "${index + 1}",
-                            questionText:
-                                controller.questions[index].questionText,
-                            questionImage:
-                                controller.questions[index].questionImage,
-                            child: MCQAnswerWidget(
-                              data: controller.questions[index],
-                            ),
-                          );
-                        },
-                        separatorBuilder: (context, index) {
-                          return SizedBox(height: size.h20);
-                        },
-                      )),
+              // GetBuilder<AssessmentController>(
+              //     builder: (_) => ListView.separated(
+              //           shrinkWrap: true,
+              //           itemCount: controller.questions.length,
+              //           physics: const NeverScrollableScrollPhysics(),
+              //           itemBuilder: (context, index) {
+              //             return QuestionWidget(
+              //               questionNo: "${index + 1}",
+              //               questionText:
+              //                   controller.questions[index].questionText,
+              //               questionImage:
+              //                   controller.questions[index].questionImage,
+              //               child: MCQAnswerWidget(
+              //                 data: controller.questions[index],
+              //               ),
+              //             );
+              //           },
+              //           separatorBuilder: (context, index) {
+              //             return SizedBox(height: size.h20);
+              //           },
+              //         )),
               SizedBox(height: size.h16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -90,7 +91,8 @@ class _AssessmentQuizScreenState extends State<AssessmentQuizScreen>
 
 ///MCQ Section
 class MCQAnswerWidget extends StatefulWidget {
-  final QuestionsEntity data;
+  // final QuestionsEntity data;
+  final QuestionDataEntity data;
   const MCQAnswerWidget({
     Key? key,
     required this.data,
@@ -103,82 +105,127 @@ class MCQAnswerWidget extends StatefulWidget {
 class _MCQAnswerWidgetState extends State<MCQAnswerWidget> with AppTheme {
   @override
   Widget build(BuildContext context) {
+    return ListView.separated(
+      shrinkWrap: true,
+      itemCount: widget.data.options.length,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) => MCQAnswerOptionWidget(
+        value: widget.data.options[index].optionValue,
+        imageValue: widget.data.options[index].optionImg,
+        isSelected: false,
+        onTap: () => setState(() {
+          // widget.data.userAnswer1 = !widget.data.userAnswer1;
+          // widget.data.userAnswer2
+          //     ? widget.data.userAnswer2 = !widget.data.userAnswer2
+          //     : widget.data.userAnswer2;
+          // widget.data.userAnswer3
+          //     ? widget.data.userAnswer3 = !widget.data.userAnswer3
+          //     : widget.data.userAnswer3;
+          // widget.data.userAnswer4
+          //     ? widget.data.userAnswer4 = !widget.data.userAnswer4
+          //     : widget.data.userAnswer4;
+        }),
+      ),
+      separatorBuilder: (context, index) {
+        return SizedBox(height: size.h12);
+      },
+    );
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        MCQAnswerOptionWidget(
-          value: widget.data.option1,
-          imageValue: widget.data.option1Image,
-          isSelected: widget.data.userAnswer1,
+      children: List.generate(
+        widget.data.options.length,
+        (index) => MCQAnswerOptionWidget(
+          value: widget.data.options[index].optionValue,
+          imageValue: "",
+          isSelected: false,
           onTap: () => setState(() {
-            widget.data.userAnswer1 = !widget.data.userAnswer1;
-            widget.data.userAnswer2
-                ? widget.data.userAnswer2 = !widget.data.userAnswer2
-                : widget.data.userAnswer2;
-            widget.data.userAnswer3
-                ? widget.data.userAnswer3 = !widget.data.userAnswer3
-                : widget.data.userAnswer3;
-            widget.data.userAnswer4
-                ? widget.data.userAnswer4 = !widget.data.userAnswer4
-                : widget.data.userAnswer4;
+            // widget.data.userAnswer1 = !widget.data.userAnswer1;
+            // widget.data.userAnswer2
+            //     ? widget.data.userAnswer2 = !widget.data.userAnswer2
+            //     : widget.data.userAnswer2;
+            // widget.data.userAnswer3
+            //     ? widget.data.userAnswer3 = !widget.data.userAnswer3
+            //     : widget.data.userAnswer3;
+            // widget.data.userAnswer4
+            //     ? widget.data.userAnswer4 = !widget.data.userAnswer4
+            //     : widget.data.userAnswer4;
           }),
         ),
-        SizedBox(height: size.h12),
-        MCQAnswerOptionWidget(
-          value: widget.data.option2,
-          imageValue: widget.data.option2Image,
-          isSelected: widget.data.userAnswer2,
-          onTap: () => setState(() {
-            widget.data.userAnswer2 = !widget.data.userAnswer2;
-            widget.data.userAnswer1
-                ? widget.data.userAnswer1 = !widget.data.userAnswer1
-                : widget.data.userAnswer1;
-            widget.data.userAnswer3
-                ? widget.data.userAnswer3 = !widget.data.userAnswer3
-                : widget.data.userAnswer3;
-            widget.data.userAnswer4
-                ? widget.data.userAnswer4 = !widget.data.userAnswer4
-                : widget.data.userAnswer4;
-          }),
-        ),
-        SizedBox(height: size.h12),
-        MCQAnswerOptionWidget(
-          value: widget.data.option3,
-          imageValue: widget.data.option3Image,
-          isSelected: widget.data.userAnswer3,
-          onTap: () => setState(() {
-            widget.data.userAnswer3 = !widget.data.userAnswer3;
-            widget.data.userAnswer1
-                ? widget.data.userAnswer1 = !widget.data.userAnswer1
-                : widget.data.userAnswer1;
-            widget.data.userAnswer2
-                ? widget.data.userAnswer2 = !widget.data.userAnswer2
-                : widget.data.userAnswer2;
-            widget.data.userAnswer4
-                ? widget.data.userAnswer4 = !widget.data.userAnswer4
-                : widget.data.userAnswer4;
-          }),
-        ),
-        SizedBox(height: size.h12),
-        MCQAnswerOptionWidget(
-          value: widget.data.option4,
-          imageValue: widget.data.option4Image,
-          isSelected: widget.data.userAnswer4,
-          onTap: () => setState(() {
-            widget.data.userAnswer4 = !widget.data.userAnswer4;
-            widget.data.userAnswer1
-                ? widget.data.userAnswer1 = !widget.data.userAnswer1
-                : widget.data.userAnswer1;
-            widget.data.userAnswer2
-                ? widget.data.userAnswer2 = !widget.data.userAnswer2
-                : widget.data.userAnswer2;
-            widget.data.userAnswer3
-                ? widget.data.userAnswer3 = !widget.data.userAnswer3
-                : widget.data.userAnswer3;
-          }),
-        ),
-      ],
+      ),
+      // children: [
+      //   MCQAnswerOptionWidget(
+      //     value: widget.data.option1,
+      //     imageValue: widget.data.option1Image,
+      //     isSelected: widget.data.userAnswer1,
+      //     onTap: () => setState(() {
+      //       widget.data.userAnswer1 = !widget.data.userAnswer1;
+      //       widget.data.userAnswer2
+      //           ? widget.data.userAnswer2 = !widget.data.userAnswer2
+      //           : widget.data.userAnswer2;
+      //       widget.data.userAnswer3
+      //           ? widget.data.userAnswer3 = !widget.data.userAnswer3
+      //           : widget.data.userAnswer3;
+      //       widget.data.userAnswer4
+      //           ? widget.data.userAnswer4 = !widget.data.userAnswer4
+      //           : widget.data.userAnswer4;
+      //     }),
+      //   ),
+      //   SizedBox(height: size.h12),
+      //   MCQAnswerOptionWidget(
+      //     value: widget.data.option2,
+      //     imageValue: widget.data.option2Image,
+      //     isSelected: widget.data.userAnswer2,
+      //     onTap: () => setState(() {
+      //       widget.data.userAnswer2 = !widget.data.userAnswer2;
+      //       widget.data.userAnswer1
+      //           ? widget.data.userAnswer1 = !widget.data.userAnswer1
+      //           : widget.data.userAnswer1;
+      //       widget.data.userAnswer3
+      //           ? widget.data.userAnswer3 = !widget.data.userAnswer3
+      //           : widget.data.userAnswer3;
+      //       widget.data.userAnswer4
+      //           ? widget.data.userAnswer4 = !widget.data.userAnswer4
+      //           : widget.data.userAnswer4;
+      //     }),
+      //   ),
+      //   SizedBox(height: size.h12),
+      //   MCQAnswerOptionWidget(
+      //     value: widget.data.option3,
+      //     imageValue: widget.data.option3Image,
+      //     isSelected: widget.data.userAnswer3,
+      //     onTap: () => setState(() {
+      //       widget.data.userAnswer3 = !widget.data.userAnswer3;
+      //       widget.data.userAnswer1
+      //           ? widget.data.userAnswer1 = !widget.data.userAnswer1
+      //           : widget.data.userAnswer1;
+      //       widget.data.userAnswer2
+      //           ? widget.data.userAnswer2 = !widget.data.userAnswer2
+      //           : widget.data.userAnswer2;
+      //       widget.data.userAnswer4
+      //           ? widget.data.userAnswer4 = !widget.data.userAnswer4
+      //           : widget.data.userAnswer4;
+      //     }),
+      //   ),
+      //   SizedBox(height: size.h12),
+      //   MCQAnswerOptionWidget(
+      //     value: widget.data.option4,
+      //     imageValue: widget.data.option4Image,
+      //     isSelected: widget.data.userAnswer4,
+      //     onTap: () => setState(() {
+      //       widget.data.userAnswer4 = !widget.data.userAnswer4;
+      //       widget.data.userAnswer1
+      //           ? widget.data.userAnswer1 = !widget.data.userAnswer1
+      //           : widget.data.userAnswer1;
+      //       widget.data.userAnswer2
+      //           ? widget.data.userAnswer2 = !widget.data.userAnswer2
+      //           : widget.data.userAnswer2;
+      //       widget.data.userAnswer3
+      //           ? widget.data.userAnswer3 = !widget.data.userAnswer3
+      //           : widget.data.userAnswer3;
+      //     }),
+      //   ),
+      // ],
     );
   }
 }
