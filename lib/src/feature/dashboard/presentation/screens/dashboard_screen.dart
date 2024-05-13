@@ -50,13 +50,14 @@ class _DashboardScreenState extends State<DashboardScreen>
                   onPressed: () => onTapRunningModule(),
                   image: Image.asset("assets/images/image.png"),
                   text1: label(
-                      e: data.courses[0].batchNameEn,
-                      b: data.courses[0].batchNameBn),
+                      e: data.courses.first.batchNameEn,
+                      b: data.courses.first.batchNameBn),
                   text2: label(
-                      e: data.courses[0].nameEn, b: data.courses[0].nameBn),
+                      e: data.courses.first.nameEn,
+                      b: data.courses.first.nameBn),
                   text3: label(
-                      e: "${data.courses[0].courseProgress}% ${en.completed}",
-                      b: "${replaceEnglishNumberWithBengali(data.courses[0].courseProgress.toString())}% ${bn.completed}"),
+                      e: "${data.courses.first.courseProgress}% ${en.completed}",
+                      b: "${replaceEnglishNumberWithBengali(data.courses.first.courseProgress.toString())}% ${bn.completed}"),
                 ),
               // SizedBox(height: size.h20),
               RowItemTemplate(

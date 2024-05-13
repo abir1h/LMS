@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/core/common_widgets/custom_action_button.dart';
 
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../../../core/common_widgets/circuler_widget.dart';
@@ -10,17 +9,16 @@ import '../../../../core/common_widgets/custom_empty_widget.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/image_preview.dart';
-import '../../../../core/routes/app_route.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
 import '../../domain/entities/assignment_data_entity.dart';
+import '../../domain/entities/assignment_submission_data_entity.dart';
 import '../controllers/assignment_controller.dart';
 import '../services/assignment_screen_service.dart';
 import '../widgets/assignment_bottom_sheet.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
-import '../widgets/custom_file_picker.dart';
 
 class AssignmentScreen extends StatefulWidget {
   final Object? arguments;
@@ -116,7 +114,54 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                       fontWeight: FontWeight.w500,
                       fontFamily: StringData.fontFamilyPoppins),
                 ),
+
                 SizedBox(height: size.h12),
+
+                if (data.assignmentSubmissions != null)
+                  Padding(
+                    padding: EdgeInsets.only(bottom: size.h12),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: CustomTextWidget(
+                            text: label(
+                                e: "Assignment submission completed",
+                                b: "অ্যাসাইনমেন্ট জমাদান সম্পন্ন হয়েছে"),
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        SizedBox(width: size.w8),
+                        if (data.submissionType == "written" &&
+                            data.assignmentSubmissions!.evaluatedBy.isEmpty)
+                          GestureDetector(
+                            onTap: () =>
+                                onTapWriteHere("assignmentScreen", data),
+                            child: Container(
+                              padding: EdgeInsets.all(size.w2),
+                              decoration: BoxDecoration(
+                                color: clr.whiteColor,
+                                borderRadius: BorderRadius.circular(size.r4),
+                                border: Border.all(
+                                    color: clr.cardStrokeColor, width: size.r1),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: clr.blackColor.withOpacity(.2),
+                                    blurRadius: size.r4,
+                                    offset: Offset(0.0, size.h2),
+                                  ),
+                                ],
+                              ),
+                              child: Icon(
+                                Icons.border_color_outlined,
+                                color: clr.appPrimaryColorGreen,
+                                size: size.r20,
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
 
                 ///Written
                 if (data.submissionType == "written" ||
@@ -154,8 +199,47 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                   //   );
                   // }),
                   WrittenAnswerWidget(
-                    onTap: () => onTapWriteHere("assignmentScreen", data),
+                    onTap: () {
+                      if (data.assignmentSubmissions == null) {
+                        onTapWriteHere("assignmentScreen", data);
+                      }
+                    },
                   ),
+                if (data.assignmentSubmissions != null &&
+                    data.submissionType == "written")
+                  Container(
+                    width: double.infinity,
+                    margin: EdgeInsets.only(top: size.h12),
+                    decoration: BoxDecoration(
+                      color: clr.cardFillColorMintCream,
+                      borderRadius: BorderRadius.circular(size.r8),
+                      border: Border.all(
+                          color: clr.cardStrokeColor, width: size.w1),
+                      boxShadow: [
+                        BoxShadow(
+                            offset: const Offset(0, 4),
+                            blurRadius: 4,
+                            spreadRadius: 0,
+                            color: clr.blackColor.withOpacity(.2))
+                      ],
+                    ),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: size.w12, vertical: size.h8),
+                    child: CustomTextWidget(
+                      text: data.assignmentSubmissions!.evaluatedBy.isEmpty
+                          ? label(
+                              e:
+                                  "Your assignment has been submitted, please wait for review Review You can edit it before the review",
+                              b:
+                                  "আপনার এসাইনমেন্ট সাবমিট করা হয়েছে, দয়া করে রিভিউ এর জন্য অপেক্ষা করুন| রিভিউ এর পূর্ব  পর্যন্ত আপনি এটি এডিট করতে পারবেন")
+                          : label(
+                              e: "Your assignment is in review",
+                              b: "আপনার এসাইনমেন্ট রিভিউতে রয়েছে"),
+                      fontSize: size.textXXSmall,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+
                 if (data.submissionType == "both")
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: size.h12),
@@ -172,8 +256,8 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                   ),
 
                 ///File Upload
-                if (data.submissionType == "upload" ||
-                    data.submissionType == "both")
+                if ((data.submissionType == "upload" ||
+                    data.submissionType == "both"))
                   Text(
                     label(e: en.uploadTheFile, b: bn.uploadTheFile),
                     style: TextStyle(
@@ -292,7 +376,11 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                         ),
                       ],
                     ),
-                  )
+                  ),
+
+                if (data.assignmentSubmissions != null &&
+                    data.submissionType == "upload")
+                  SubmissionCompletedWidget(data: data.assignmentSubmissions!),
               ],
             ),
           );
@@ -473,5 +561,175 @@ class FilePickerWidget<T> extends StatelessWidget with AppTheme, Language {
         ],
       ),
     );
+  }
+}
+
+class SubmissionCompletedWidget extends StatelessWidget
+    with AppTheme, Language {
+  final AssignmentSubmissionDataEntity data;
+  const SubmissionCompletedWidget({super.key, required this.data});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: clr.shadeWhiteColor2,
+        borderRadius: BorderRadius.circular(size.r8),
+        border: Border.all(color: clr.boxStrokeColor, width: size.w1),
+        boxShadow: [
+          BoxShadow(
+              offset: const Offset(0, 4),
+              blurRadius: 4,
+              spreadRadius: 0,
+              color: clr.blackColor.withOpacity(.2))
+        ],
+      ),
+      padding: EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: CustomTextWidget(
+                  text: label(e: "Submission Completed", b: "জমাদান সম্পন্ন"),
+                  textColor: clr.textColorBlack,
+                  fontWeight: FontWeight.w500,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              SizedBox(width: size.w10),
+              Container(
+                padding: EdgeInsets.all(size.r1),
+                decoration: BoxDecoration(
+                  color: clr.whiteColor,
+                  borderRadius: BorderRadius.circular(size.r4),
+                  border:
+                      Border.all(color: clr.cardStrokeColor, width: size.r1),
+                  boxShadow: [
+                    BoxShadow(
+                      color: clr.blackColor.withOpacity(.2),
+                      blurRadius: size.r4,
+                      offset: Offset(0.0, size.h2),
+                    ),
+                  ],
+                ),
+                child: Icon(
+                  Icons.save_alt,
+                  color: clr.appPrimaryColorGreen,
+                  size: size.r20,
+                ),
+              ),
+              // SizedBox(width: size.w8),
+              // Container(
+              //   padding: EdgeInsets.all(size.r1),
+              //   decoration: BoxDecoration(
+              //     color: clr.whiteColor,
+              //     borderRadius: BorderRadius.circular(size.r4),
+              //     border:
+              //         Border.all(color: clr.cardStrokeColor, width: size.r1),
+              //     boxShadow: [
+              //       BoxShadow(
+              //         color: clr.blackColor.withOpacity(.2),
+              //         blurRadius: size.r4,
+              //         offset: Offset(0.0, size.h2),
+              //       ),
+              //     ],
+              //   ),
+              //   child: Icon(
+              //     Icons.border_color_outlined,
+              //     color: clr.appPrimaryColorGreen,
+              //     size: size.r20,
+              //   ),
+              // ),
+            ],
+          ),
+          SizedBox(height: size.h12),
+          CustomTextWidget(
+            text: label(e: "অ্যাসাইনমেন্ট.pdf", b: "অ্যাসাইনমেন্ট.pdf"),
+            fontSize: size.textXSmall,
+            fontWeight: FontWeight.w500,
+          ),
+          SizedBox(height: size.h12),
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: clr.cardFillColorMintCream,
+              borderRadius: BorderRadius.circular(size.r8),
+              border: Border.all(color: clr.cardStrokeColor, width: size.w1),
+              boxShadow: [
+                BoxShadow(
+                    offset: const Offset(0, 4),
+                    blurRadius: 4,
+                    spreadRadius: 0,
+                    color: clr.blackColor.withOpacity(.2))
+              ],
+            ),
+            padding:
+                EdgeInsets.symmetric(horizontal: size.w12, vertical: size.h8),
+            child: CustomTextWidget(
+              text: data.evaluatedBy.isEmpty
+                  ? label(
+                      e:
+                          "Your assignment has been submitted, please wait for review Review You can edit it before the review",
+                      b:
+                          "আপনার এসাইনমেন্ট সাবমিট করা হয়েছে, দয়া করে রিভিউ এর জন্য অপেক্ষা করুন| রিভিউ রিভিউ এর পূর্ব  পর্যন্ত আপনি এটি এডিট করতে পারবেন")
+                  : label(
+                      e: "Your assignment is in review",
+                      b: "আপনার এসাইনমেন্ট রিভিউতে রয়েছে"),
+              fontSize: size.textXXSmall,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class AssignmentReviewWidget extends StatelessWidget with AppTheme, Language {
+  const AssignmentReviewWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: clr.shadeWhiteColor2,
+        borderRadius: BorderRadius.circular(size.r8),
+        border: Border.all(color: clr.boxStrokeColor, width: size.w1),
+        boxShadow: [
+          BoxShadow(
+              offset: const Offset(0, 4),
+              blurRadius: 4,
+              spreadRadius: 0,
+              color: clr.blackColor.withOpacity(.2))
+        ],
+      ),
+      padding: EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(
+            child: Icon(
+              Icons.assignment,
+              size: size.r16 * 2,
+              color: clr.appPrimaryColorGreen,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class InstructorCommentWidget extends StatelessWidget with AppTheme, Language {
+  const InstructorCommentWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
   }
 }

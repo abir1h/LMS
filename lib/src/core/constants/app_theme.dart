@@ -37,6 +37,7 @@ class ThemeColor {
   Color get iconColorDarkGrey => HexColor("656565");
   Color get noteBoxColor => HexColor("F4FFFD");
   Color get iconColorBlue => HexColor("1D78FF");
+  Color get iconColorRedShade => HexColor("FFBFC7");
 
   Color get textColorAppleBlack => HexColor("1D1D1F");
   Color get textColorBlack => HexColor("414141");

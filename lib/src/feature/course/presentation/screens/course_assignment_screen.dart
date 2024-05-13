@@ -350,12 +350,12 @@ class AssignmentInfoRowWidget extends StatelessWidget with AppTheme, Language {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(
-          Icons.circle,
-          size: size.r8,
-          color: clr.appPrimaryColorGreen,
-        ),
-        SizedBox(width: size.w4),
+        // Icon(
+        //   Icons.circle,
+        //   size: size.r8,
+        //   color: clr.appPrimaryColorGreen,
+        // ),
+        // SizedBox(width: size.w4),
         Expanded(
           child: CustomTextWidget(
             text: leftText,

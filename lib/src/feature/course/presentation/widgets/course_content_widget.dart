@@ -38,87 +38,94 @@ class CourseContentWidget extends StatelessWidget with AppTheme, Language {
     // )
     //       ..layout())
     //     .size;
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.only(
-          left: size.w12 * 2, top: size.h16, bottom: size.h16, right: size.w16),
-      decoration: BoxDecoration(
-          color: clr.shadeWhiteColor2,
-          border: Border(bottom: BorderSide(color: clr.boxStrokeColor))),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Icon(
-            data.contentType == ContentType.circular_videos.name
-                ? Icons.smart_display
-                : data.contentType == ContentType.circular_assignment.name
-                    ? Icons.assignment
-                    : data.contentType == ContentType.circular_assessment.name
-                        ? Icons.help_center
-                        : data.contentType == ContentType.course_script.name
-                            ? Icons.text_snippet
-                            : Icons.cast_connected,
-            size: size.r24,
-            color: data.contentType == ContentType.circular_videos.name
-                ? clr.iconColorSweetRed
-                : data.contentType == ContentType.circular_assignment.name
-                    ? clr.appPrimaryColorGreen
-                    : data.contentType == ContentType.circular_assessment.name
-                        ? clr.textColorAppleBlack
-                        : data.contentType == ContentType.course_script.name
-                            ? clr.iconColorBlue
-                            : clr.textColorBlack,
-          ),
-          SizedBox(width: size.w8),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomTextWidget(
-                  text: label(
-                    e: data.contentTitleEn,
-                    b: data.contentTitleBn,
-                  ),
-                  textColor: clr.textColorAppleBlack,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: StringData.fontFamilyPoppins,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                if (data.schedule.isNotEmpty)
+    return GestureDetector(
+      onTap: data.contentType == ContentType.circular_videos.name
+          ? onTapVideo
+          : data.contentType == ContentType.circular_assignment.name
+              ? onTapAssignment
+              : data.contentType == ContentType.circular_assessment.name
+                  ? onTapAssessment
+                  : data.contentType == ContentType.course_script.name
+                      ? onTapScript
+                      : onTapBlendedClass,
+      child: Container(
+        width: double.infinity,
+        padding: EdgeInsets.only(
+            left: size.w12 * 2,
+            top: size.h16,
+            bottom: size.h16,
+            right: size.w16),
+        decoration: BoxDecoration(
+            color: clr.shadeWhiteColor2,
+            border: Border(bottom: BorderSide(color: clr.boxStrokeColor))),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              data.contentType == ContentType.circular_videos.name
+                  ? Icons.smart_display
+                  : data.contentType == ContentType.circular_assignment.name
+                      ? Icons.assignment
+                      : data.contentType == ContentType.circular_assessment.name
+                          ? Icons.help_center
+                          : data.contentType == ContentType.course_script.name
+                              ? Icons.text_snippet
+                              : Icons.cast_connected,
+              size: size.r24,
+              color: data.contentType == ContentType.circular_videos.name
+                  ? clr.iconColorSweetRed
+                  : data.contentType == ContentType.circular_assignment.name
+                      ? clr.appPrimaryColorGreen
+                      : data.contentType == ContentType.circular_assessment.name
+                          ? clr.textColorAppleBlack
+                          : data.contentType == ContentType.course_script.name
+                              ? clr.iconColorBlue
+                              : clr.textColorBlack,
+            ),
+            SizedBox(width: size.w8),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                   CustomTextWidget(
                     text: label(
-                        e: DateFormat('dd MMMM h:mm a')
-                            .format(DateTime.parse(data.schedule)),
-                        b: timeAgoToBengali(DateFormat("dd MMMM  h : mm a")
-                            .format(DateTime.parse(data.schedule)))),
-                    textColor: clr.gapStrokeGrey,
-                    fontSize: size.textXXSmall,
+                      e: data.contentTitleEn,
+                      b: data.contentTitleBn,
+                    ),
+                    textColor: clr.textColorAppleBlack,
                     fontWeight: FontWeight.w400,
-                    maxLines: 1,
+                    fontFamily: StringData.fontFamilyPoppins,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-              ],
+                  if (data.schedule.isNotEmpty)
+                    CustomTextWidget(
+                      text: label(
+                          e: DateFormat('dd MMMM h:mm a')
+                              .format(DateTime.parse(data.schedule)),
+                          b: timeAgoToBengali(DateFormat("dd MMMM  h : mm a")
+                              .format(DateTime.parse(data.schedule)))),
+                      textColor: clr.gapStrokeGrey,
+                      fontSize: size.textXXSmall,
+                      fontWeight: FontWeight.w400,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                ],
+              ),
             ),
-          ),
-          SizedBox(width: size.w8),
-          GestureDetector(
-            onTap: data.contentType == ContentType.circular_videos.name
-                ? onTapVideo
-                : data.contentType == ContentType.circular_assignment.name
-                    ? onTapAssignment
-                    : data.contentType == ContentType.circular_assessment.name
-                        ? onTapAssessment
-                        : data.contentType == ContentType.course_script.name
-                            ? onTapScript
-                            : onTapBlendedClass,
-            child: Container(
+            SizedBox(width: size.w8),
+            Container(
               padding:
                   EdgeInsets.symmetric(horizontal: size.w6, vertical: size.h2),
               decoration: BoxDecoration(
                   color:
                       data.contentType == ContentType.course_blended_class.name
-                          ? clr.iconColorBlue
+                          ? (DateTime.parse(data.schedule) == DateTime.now()
+                              ? clr.iconColorBlue
+                              : data.isCompleted
+                                  ? clr.iconColorRedShade
+                                  : clr.iconColorHint)
                           : clr.cardFillColorCruise,
                   borderRadius: BorderRadius.circular(size.r4)),
               child: Icon(
@@ -166,9 +173,9 @@ class CourseContentWidget extends StatelessWidget with AppTheme, Language {
               //     )
               //   ],
               // ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
