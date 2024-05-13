@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lms/src/feature/profile/domain/entities/all_progress_data_entity.dart';
+import 'package:lms/src/feature/profile/domain/entities/user_info_data_entity.dart';
 
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../data/data_sources/remote/profile_data_source.dart';
@@ -23,6 +25,10 @@ mixin ProfileService<T extends StatefulWidget> on State<T>
     return _profileUseCase.userProfileInformationUseCase();
   }
 
+  Future<ResponseEntity> getProfileData() async {
+    return _profileUseCase.getUserProfileInformationUseCase();
+  }
+
   int _selectedTabIndex = 0;
 
   ///Service configurations
@@ -30,6 +36,7 @@ mixin ProfileService<T extends StatefulWidget> on State<T>
   void initState() {
     _view = this;
     super.initState();
+    _loadHeader();
     _loadDataList();
   }
 
@@ -41,6 +48,8 @@ mixin ProfileService<T extends StatefulWidget> on State<T>
 
   ///Stream controllers
   final AppStreamController<StateType> stateDataStreamController =
+      AppStreamController();
+  final AppStreamController<AllProgressDataEntity> headerDataStreamController =
       AppStreamController();
 
   ///Load data list from server based on selected tab
@@ -55,12 +64,29 @@ mixin ProfileService<T extends StatefulWidget> on State<T>
       _loadProgressData();
     }
   }
+  late AllProgressDataEntity allProgressDataEntity;
 
   ///Load Profile
+  void _loadHeader() {
+      if (!mounted) return;
+      headerDataStreamController.add(LoadingState());
+      getProfileData().then((value) {
+        if (value.error == null && value.data != null) {
+          allProgressDataEntity = value.data;
+          headerDataStreamController
+              .add(DataLoadedState<AllProgressDataEntity>(value.data));
+        } else if (value.error == null && value.data == null) {
+        } else {
+          _view.showWarning(value.message!);
+        }
+      });
+
+  }
+
   void _loadProfileData() {
     // if (!mounted) return;
     // profileDataStreamController.add(LoadingState());
-    getProfileInformation().then((value) {
+    getProfileData().then((value) {
       if (_selectedTabIndex != 0) return;
       if (value.error == null && value.data != null) {
         stateDataStreamController
@@ -74,8 +100,16 @@ mixin ProfileService<T extends StatefulWidget> on State<T>
 
   ///Load Progress data
   void _loadProgressData() {
-    stateDataStreamController
-        .add(DataLoadedState<StateType>(ProgressDataState()));
+    getProfileData().then((value) {
+      if (_selectedTabIndex != 1) return;
+      if (value.error == null && value.data != null) {
+        stateDataStreamController
+            .add(DataLoadedState<StateType>(ProgressDataState(value.data)));
+      } else if (value.error == null && value.data == null) {
+      } else {
+        _view.showWarning(value.message!);
+      }
+    });
   }
 
   void onTabValueChange(int value) {
@@ -87,13 +121,13 @@ mixin ProfileService<T extends StatefulWidget> on State<T>
 abstract class StateType {}
 
 class ProfileDataState extends StateType {
-  final ProfileDataEntity profileDataEntity;
-  ProfileDataState(this.profileDataEntity);
+  final AllProgressDataEntity userInfoDataEntity;
+  ProfileDataState(this.userInfoDataEntity);
 }
 
 class ProgressDataState extends StateType {
-  // final ProgressDataEntity progressDataEntity;
+  final AllProgressDataEntity progressDataEntity;
   ProgressDataState(
-      // this.progressDataEntity,
-      );
+    this.progressDataEntity,
+  );
 }

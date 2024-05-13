@@ -1,3 +1,7 @@
+import '../mapper/all_progress_data_mapper.dart';
+import '../models/all_progress_data_model.dart';
+import '../../domain/entities/all_progress_data_entity.dart';
+
 import '../../domain/entities/profile_data_entity.dart';
 import '../mapper/profile_data_mapper.dart';
 import '../../../shared/data/mapper/response_mapper.dart';
@@ -18,5 +22,15 @@ class ProfileRepositoryImp extends ProfileRepository {
     return ResponseModelToEntityMapper<ProfileDataEntity, ProfileDataModel>()
         .toEntityFromModel(responseModel,
             (ProfileDataModel model) => model.toProfileDataEntity);
+  }
+
+  @override
+  Future<ResponseEntity> getUserProfileInformation() async {
+    ResponseModel responseModel =
+        (await profileRemoteDataSource.getUserProfileInformationAction());
+    return ResponseModelToEntityMapper<AllProgressDataEntity,
+            AllProgressDataModel>()
+        .toEntityFromModel(responseModel,
+            (AllProgressDataModel model) => model.toAllProgressDataEntity);
   }
 }

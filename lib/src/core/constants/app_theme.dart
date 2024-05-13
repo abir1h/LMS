@@ -44,6 +44,7 @@ class ThemeColor {
   Color get textColorGray => HexColor("A8A8A8");
   Color get textColorGray2 => HexColor("7A7A7A");
   Color get placeHolderTextColorGray => HexColor("9F9F9F");
+  Color get blackText => HexColor("222222");
 
   Color get boxStrokeColor => HexColor("DFDFDF");
   Color get boxStrokeColorSilver => HexColor("C0C0C0");

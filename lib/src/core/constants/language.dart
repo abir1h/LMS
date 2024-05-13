@@ -72,6 +72,7 @@ class LanguageEn {
       "Dhaka College"; //"Name of the working organization";
   String positionNameText = "Professor"; //"Your Title";
   String certificateText = "Certificate";
+  String masterTrainerText = "Master Trainer";
   String acknowledgment = "Acknowledgment";
   String emisId = "EMIS Id: ";
 
@@ -178,6 +179,7 @@ class LanguageEn {
   String writeOneWordAnswer = "Write the answer in one word:";
   String dropHere = "Drop Here";
   String dragAnOption = "Drag an option";
+  String courseSummary = "Course Summary";
 }
 
 class LanguageBn {
@@ -243,6 +245,8 @@ class LanguageBn {
   String currentOrganizationNameText = "ঢাকা কলেজ"; //"কর্মরত প্রতিষ্ঠানের নাম";
   String positionNameText = "অধ্যাপক"; //"আপনার পদবী";
   String certificateText = "সনদপত্র";
+  String masterTrainerText = "মাস্টার ট্রেইনার";
+
   String acknowledgment = "স্বীকৃতিপত্র";
   String emisId = "ইএমআইএস আইডি: ";
 
@@ -348,4 +352,6 @@ class LanguageBn {
   String writeOneWordAnswer = "এক কথায় উত্তর লিখুন:";
   String dropHere = "এখানে ড্রপ করুন";
   String dragAnOption = "একটি বিকল্প টেনে আনুন";
+  String courseSummary = "কোর্সের সারসংক্ষেপ";
+
 }

@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../feature/accessibility/presentation/controllers/accessibility_controller.dart';
 import '../../feature/accessibility/presentation/screens/accessibility_bottom_sheet.dart';
+import '../../feature/transcript_video/presentaion/screens/demo_interactive_player.dart';
 import '../routes/app_route.dart';
 import '../service/auth_cache_manager.dart';
 import '../service/notifier/app_events_notifier.dart';
@@ -177,7 +178,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
               DrawerLinkWidget(
                 icon: Icons.contact_support,
                 text: label(e: en.aboutUs, b: bn.aboutUs),
-                onTap: () {},
+                onTap: () {Navigator.push(context, MaterialPageRoute(builder: (_)=>VideoPlayerScreen()));},
               ),
               DrawerLinkWidget(
                 icon: Icons.logout,

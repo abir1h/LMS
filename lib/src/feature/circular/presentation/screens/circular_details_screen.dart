@@ -184,21 +184,24 @@ class CircularNameWidget extends StatelessWidget with AppTheme, Language {
   }
 }
 
-class RowItemWidget extends StatelessWidget with AppTheme, Language {
+class RowItemWidgetText extends StatelessWidget with AppTheme, Language {
   final String leftText;
   final Color? leftTextColor;
+  final Color? rightTextColor;
   final String? rightText;
   final Widget? widget;
-  const RowItemWidget(
+  const RowItemWidgetText(
       {super.key,
       required this.leftText,
       this.leftTextColor,
+      this.rightTextColor,
       this.rightText,
       this.widget});
 
   @override
   Widget build(BuildContext context) {
     return Row(
+
       // crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Icon(Icons.circle, size: size.r8, color: clr.appPrimaryColorGreen),
@@ -213,7 +216,7 @@ class RowItemWidget extends StatelessWidget with AppTheme, Language {
         ),
         CustomTextWidget(
           text: label(e: ":", b: ":"),
-          textColor: clr.textColorAppleBlack,
+          textColor: leftTextColor??clr.textColorAppleBlack,
           fontWeight: FontWeight.w500,
           padding: EdgeInsets.only(left: size.w8, right: size.w24),
         ),
@@ -221,7 +224,7 @@ class RowItemWidget extends StatelessWidget with AppTheme, Language {
           Expanded(
             child: CustomTextWidget(
               text: rightText.toString(),
-              textColor: clr.textColorAppleBlack,
+              textColor: rightTextColor??clr.textColorAppleBlack,
               fontSize: size.textXSmall,
               fontWeight: FontWeight.w500,
             ),
@@ -253,7 +256,7 @@ class CircularDetailsInfoWidget extends StatelessWidget
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          RowItemWidget(
+          RowItemWidgetText(
             leftText: label(e: "Duration: (Start)", b: "সময়কাল: (শুরু)"),
             rightText: label(
               e: DateFormat('dd MMMM').format(DateTime.parse(data.startDate)),
@@ -262,7 +265,7 @@ class CircularDetailsInfoWidget extends StatelessWidget
             ),
           ),
           SizedBox(height: size.h16),
-          RowItemWidget(
+          RowItemWidgetText(
             leftText: label(e: "Duration: (End)", b: "সময়কাল: (শেষ)"),
             rightText: label(
                 e: DateFormat('dd MMMM').format(DateTime.parse(data.endDate)),
@@ -270,7 +273,7 @@ class CircularDetailsInfoWidget extends StatelessWidget
                     .format(DateTime.parse(data.endDate)))),
           ),
           SizedBox(height: size.h16),
-          RowItemWidget(
+          RowItemWidgetText(
             leftText: label(
                 e: "Circular Publication Time", b: "বিজ্ঞপ্তির প্রকাশের সময়"),
             rightText: label(
@@ -281,19 +284,19 @@ class CircularDetailsInfoWidget extends StatelessWidget
                     .format(DateTime.parse(data.publishDate)))),
           ),
           SizedBox(height: size.h16),
-          RowItemWidget(
+          RowItemWidgetText(
             leftText: label(
                 e: "Scheduled Batch of Circular",
                 b: "বিজ্ঞপ্তির নির্ধারিত ব্যাচ"),
             rightText: label(e: data.batch.nameEn, b: data.batch.nameBn),
           ),
           SizedBox(height: size.h16),
-          RowItemWidget(
+          RowItemWidgetText(
             leftText: label(e: "Training Venue", b: "ট্রেনিং ভেন্যুু"),
             rightText: data.venueName,
           ),
           SizedBox(height: size.h16),
-          RowItemWidget(
+          RowItemWidgetText(
             leftText: label(
                 e: "Scheduled Session of Circular",
                 b: "বিজ্ঞপ্তির নির্ধারিত অধিবেশন"),
@@ -331,7 +334,7 @@ class CircularDetailsInfoWidget extends StatelessWidget
             ),
           ),
           SizedBox(height: size.h16),
-          RowItemWidget(
+          RowItemWidgetText(
             leftText: label(e: "Circular Link", b: "বিজ্ঞপ্তির লিংক "),
             widget: CustomTextWidget(
               text: data.url,
@@ -345,7 +348,7 @@ class CircularDetailsInfoWidget extends StatelessWidget
           if (data.supportingDoc.isNotEmpty)
             Padding(
               padding: EdgeInsets.only(top: size.h16),
-              child: RowItemWidget(
+              child: RowItemWidgetText(
                 leftText:
                     label(e: "Circular Document", b: "বিজ্ঞপ্তির ডকুমেন্ট"),
                 widget: Row(
@@ -370,7 +373,7 @@ class CircularDetailsInfoWidget extends StatelessWidget
           if (data.status == 1)
             Padding(
               padding: EdgeInsets.only(top: size.h16),
-              child: RowItemWidget(
+              child: RowItemWidgetText(
                 leftText: label(e: "Circular Status", b: "বিজ্ঞপ্তির স্টেটাস"),
                 widget: Container(
                   decoration: BoxDecoration(
@@ -432,14 +435,14 @@ class BatchCoordinatorWidget extends StatelessWidget with AppTheme, Language {
             ],
           ),
           SizedBox(height: size.h16),
-          RowItemWidget(
+          RowItemWidgetText(
             leftText:
                 label(e: "Batch Coordinator Name", b: "ব্যাচ সমন্বয়কারীর নাম"),
             rightText: label(
                 e: data.batchCoordinatorNameEn, b: data.batchCoordinatorNameBn),
           ),
           SizedBox(height: size.h16),
-          RowItemWidget(
+          RowItemWidgetText(
             leftText: label(e: "Code", b: "কোড"),
             rightText: label(
                 e: data.batchCoordinatorId.toString(),
@@ -447,12 +450,12 @@ class BatchCoordinatorWidget extends StatelessWidget with AppTheme, Language {
                     data.batchCoordinatorId.toString())),
           ),
           SizedBox(height: size.h16),
-          RowItemWidget(
+          RowItemWidgetText(
             leftText: label(e: "Email", b: "ইমেইল"),
             rightText: label(e: "", b: ""),
           ),
           SizedBox(height: size.h16),
-          RowItemWidget(
+          RowItemWidgetText(
             leftText: label(e: "Phone", b: "ফোন নাম্বার"),
             rightText: label(e: "", b: ""),
           ),
@@ -496,7 +499,7 @@ class CircularTrainerWidget extends StatelessWidget with AppTheme, Language {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: size.h16),
-                  RowItemWidget(
+                  RowItemWidgetText(
                       leftText:
                           label(e: "Instructor Name", b: "প্রশিক্ষকের নাম"),
                       leftTextColor: clr.appPrimaryColorGreen,
@@ -504,17 +507,17 @@ class CircularTrainerWidget extends StatelessWidget with AppTheme, Language {
                           e: data.trainers[index].fullnameEn,
                           b: data.trainers[index].fullnameBn)),
                   SizedBox(height: size.h16),
-                  RowItemWidget(
+                  RowItemWidgetText(
                     leftText: label(e: "Subject", b: "বিষয়"),
                     rightText: label(e: "", b: ""),
                   ),
                   SizedBox(height: size.h16),
-                  RowItemWidget(
+                  RowItemWidgetText(
                     leftText: label(e: "Email", b: "ইমেইল"),
                     rightText: label(e: "", b: ""),
                   ),
                   SizedBox(height: size.h16),
-                  RowItemWidget(
+                  RowItemWidgetText(
                     leftText: label(e: "Phone Number", b: "ফোন নাম্বার"),
                     rightText: label(e: "", b: ""),
                   ),

@@ -210,6 +210,7 @@ class _NoteScreenState extends State<NoteScreen>
                 ],
               ),
             ),
+
             SizedBox(height: size.h8),
                     Expanded(
               child:
