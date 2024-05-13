@@ -7,7 +7,11 @@ class ApiCredential {
   static String apiKey = "";
 
   static String getEMISLink = "http://103.209.40.89:81/api/auth/dev/emis-link";
-  static String getToken = "http://103.209.40.89:81/api/auth/dev/emis-auth";
+  static String eMISLink =
+      "http://103.69.149.41/SSO/Account/Login?MerchantId=000010&token=obA5ijGMXHoQEiOtEYTlw34tyKVqM9pUVFcqaPNlC5e1reRojM&RETURNURL=http://103.209.40.89/auth-service/api/auth/emis-login";
+  // static String getToken = "http://103.209.40.89:81/api/auth/dev/emis-auth";
+  static String getToken =
+      "http://103.209.40.89/auth-service/api/auth/emis-login";
   static String refreshToken = "/auth/dev/token/refresh";
   static String userProfile = "http://103.209.40.89:70/api/clms/dev/profile";
 
@@ -46,5 +50,6 @@ class ApiCredential {
 
   static String getNotes = "/circular-service/api/mobile/notes";
   static String createNotes = "/circular-service/api/mobile/notes";
-  static String getNotesByContent = "/circular-service/api/mobile/notes-by-content";
+  static String getNotesByContent =
+      "/circular-service/api/mobile/notes-by-content";
 }

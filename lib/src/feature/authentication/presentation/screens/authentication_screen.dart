@@ -106,26 +106,10 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
                           SizedBox(height: size.h20),
                           CustomButton(
                               onTap: () {
-                                AuthService.getEMISLink()
-                                    .then((responseEntity) {
-                                  Navigator.of(context).pushNamed(
-                                      AppRoute.eMISWebViewScreen,
-                                      arguments: EMISWebViewScreenArgs(
-                                          webViewLink:
-                                              responseEntity.data.url));
-                                  // Get.to(() => EMISWebViewScreen(
-                                  //     webViewLink: responseEntity.data.url));
-                                });
-                                // ApiService()
-                                //     .getRequest(ApiCredential.userLogin)
-                                //     .then((value) {
-                                //   EMISLoginResponse loginResponse =
-                                //       EMISLoginResponse.fromJson(
-                                //           json.decode(value));
-                                //   Get.to(() => EMISWebViewScreen(
-                                //       webViewLink: loginResponse.data.url));
-                                // });
-                                // Get.toNamed(AppRoutes.landing);
+                                Navigator.of(context).pushNamed(
+                                    AppRoute.eMISWebViewScreen,
+                                    arguments: EMISWebViewScreenArgs(
+                                        webViewLink: ApiCredential.eMISLink));
                               },
                               title: label(e: en.loginText, b: bn.loginText))
                           // Form(

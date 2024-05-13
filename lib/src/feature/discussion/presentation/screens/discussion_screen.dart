@@ -1,10 +1,23 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/common_widgets/app_dropdown_widget.dart';
+import '../../../../core/common_widgets/app_stream.dart';
+import '../../../../core/common_widgets/circuler_widget.dart';
+import '../../../../core/common_widgets/custom_button.dart';
+import '../../../../core/common_widgets/custom_empty_widget.dart';
+import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/routes/app_route.dart';
 import '../../../../core/routes/app_route_args.dart';
+import '../../../course/domain/entities/all_course_data_entity.dart';
+import '../../../course/domain/entities/course_data_entity.dart';
+import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
+import '../../domain/entities/discussion_data_entity.dart';
+import '../services/discussion_screen_service.dart';
+import 'discussion_bottom_sheet.dart';
 
 class DiscussionScreen extends StatefulWidget {
   const DiscussionScreen({super.key});
@@ -14,358 +27,269 @@ class DiscussionScreen extends StatefulWidget {
 }
 
 class _DiscussionScreenState extends State<DiscussionScreen>
-    with AppTheme, Language {
+    with AppTheme, Language, DiscussionScreenService {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-        title: label(e: en.discussion, b: bn.discussion),
-        body: ListView(
-          padding: EdgeInsets.zero,
-          shrinkWrap: true,
-          physics: const BouncingScrollPhysics(),
-          children: [
-            DiscussionTile(
-              iconData: Icons.groups,
-              iconColor: clr.appPrimaryColorGreen,
-              title: label(e: en.allDiscussion, b: bn.allDiscussion),
-              onTap: () => Navigator.of(context)
-                  .pushNamed(AppRoute.discussionListScreen),
-            ),
-            DiscussionTile(
-              iconData: Icons.text_snippet,
-              iconColor: clr.clickableLinkColor,
-              title: label(
-                  e: "Introduction, Chapter Description",
-                  b: "ভূমিকা, অধ্যায়ের বিবরণ"),
-              onTap: () => Navigator.of(context).pushNamed(
-                  AppRoute.courseScriptScreen,
-                  arguments: CourseScriptScreenArgs(
-                      courseContentId: 2,
-                      courseCode: "courseCode",
-                      courseContentType: "",
-                      courseDescriptionEn: "courseDescriptionEn",
-                      courseDescriptionBn: "courseDescriptionBn")),
-            ),
-            DiscussionTile(
-              iconData: Icons.smart_display,
-              iconColor: clr.iconColorSweetRed,
-              title: label(
-                  e: "Video 1: Course Introduction",
-                  b: "ভিডিও ১: কোর্সের পরিচিতি"),
-            ),
-            DiscussionTile(
-              iconData: Icons.cast_connected,
-              iconColor: clr.textColorBlack,
-              title: label(e: "Live Class", b: "লাইভ ক্লাস"),
-            ),
-            DiscussionTile(
-              iconData: Icons.smart_display,
-              iconColor: clr.iconColorSweetRed,
-              title: label(
-                  e: "Video 2: Learning Experience",
-                  b: "ভিডিও ২: শিখন-অভিজ্ঞতা"),
-            ),
-            DiscussionTile(
-              iconData: Icons.smart_display,
-              iconColor: clr.iconColorSweetRed,
-              title: label(
-                  e: "Video 3: Traditional concepts",
-                  b: "ভিডিও ৩: ঐতিহ্যগত ধারণা"),
-            ),
-          ],
-        ));
-    /*return SafeArea(
-      child: GestureDetector(
-        onTap: () {
-          Navigator.of(context).pop();
+      title: label(e: en.discussion, b: bn.discussion),
+      body: AppStreamBuilder<AllCourseDataEntity>(
+        stream: allCourseDataStreamController.stream,
+        loadingBuilder: (context) {
+          return const Center(child: CircularLoader());
         },
-        child: Material(
-          type: MaterialType.transparency,
-          child: Scaffold(
-            backgroundColor: Colors.transparent,
-            resizeToAvoidBottomInset: true,
-            body: Align(
-              alignment: Alignment.bottomCenter,
-              child: GestureDetector(
-                onTap: () {},
-                child: Container(
-                  width: double.maxFinite,
-                  constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height * .84),
-                  decoration: BoxDecoration(
-                    color: clr.scaffoldBackgroundColor,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(size.r8),
-                      topRight: Radius.circular(size.r8),
+        dataBuilder: (context, data) {
+          return Stack(
+            children: [
+              SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                padding: EdgeInsets.symmetric(
+                    horizontal: size.w16, vertical: size.h12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomTextWidget(
+                      text: label(
+                          e: "Running Course Discussion",
+                          b: "চলমান কোর্সের আলোচনাক্ষেত্র"),
+                      fontSize: size.textXMedium,
                     ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: size.w16,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'আলোচনা',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: size.textSmall,
-                                fontFamily: StringData.fontFamilyPoppins,
-                              ),
-                            ),
-                            IconButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                icon: Icon(
-                                  Icons.close,
-                                  size: size.r24,
-                                ))
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: SingleChildScrollView(
-                          controller: _scrollController,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: size.w16,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                CustomCardTile(
-                                  vertical: 6.0,
-                                  horizontal: 14.0,
-                                  bgColor: clr.cardStrokeColor,
-                                  radius: 8.0,
-                                  child: Text('সর্বশেষ',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: size.textSmall,
-                                        fontFamily:
-                                            StringData.fontFamilyPoppins,
-                                      )),
-                                ),
-                                SizedBox(
-                                  height: 25.h,
-                                ),
-                                commentTile(hasReply: true),
-                                SizedBox(
-                                  height: 20.h,
-                                ),
-                                commentTile(),
-                                SizedBox(
-                                  height: 20.h,
-                                ),
-                                commentTile(),
-                                SizedBox(
-                                  height: 20.h,
-                                ),
-                                commentTile(),
-                                SizedBox(
-                                  height: 20.h,
-                                ),
-                                commentTile(),
-                              ],
+                    SizedBox(height: size.h4),
+                    CustomTextWidget(
+                      text: label(
+                          e: data.running.first.nameBn,
+                          b: data.running.first.nameBn),
+                      textColor: clr.gapStrokeGrey,
+                      fontSize: size.textXSmall,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        PopupMenuButton<String>(
+                          surfaceTintColor: clr.shadeWhiteColor2,
+                          padding: EdgeInsets.symmetric(horizontal: size.w8),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(size.r4),
                             ),
                           ),
+                          position: PopupMenuPosition.under,
+                          onSelected: (String? value) {
+                            setState(() {
+                              // loadDiscussions(value)
+                            });
+                          },
+                          itemBuilder: (context) => data.courses
+                              .map<PopupMenuEntry<String>>(
+                                  (CourseDataEntity value) {
+                            return PopupMenuItem(
+                              onTap: () {
+                                loadDiscussions(value.id);
+                              },
+                              child: CustomTextWidget(
+                                text: label(e: value.nameEn, b: value.nameBn),
+                                fontSize: size.textXSmall,
+                                textColor: clr.gapStrokeGrey,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            );
+                          }).toList(),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.filter_list,
+                                color: clr.appPrimaryColorGreen,
+                                size: size.r16,
+                              ),
+                              SizedBox(width: size.w8),
+                              CustomTextWidget(
+                                text: label(e: "Courses", b: "কোর্সেস"),
+                                fontSize: size.textXSmall,
+                                textColor: clr.gapStrokeGrey,
+                                fontWeight: FontWeight.w400,
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                      Container(
-                        width: 1.sw,
-                        height: 1.h,
-                        color: clr.dividerStrokeColorGrey,
-                      ),
-                      SizedBox(height: size.h12 + size.h2),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            bottom: size.h16, left: size.h16, right: size.h16),
-                        child: Row(
-                          children: [
-                            Image.asset(
-                              ImageAssets.imgEmptyProfile,
-                              height: size.h28,
-                            ),
-                            SizedBox(
-                              width: size.w16,
-                            ),
-                            Expanded(
-                              child: AppTextField(
-                                  hintText: StringData.commentHintText,
-                                  controller: controller,
-                                  suffixIcon: IconButton(
-                                    icon: Icon(
-                                      Icons.send,
-                                      size: size.r24,
-                                    ),
-                                    onPressed: () { _scrollController.animateTo(
-                                      0.0,
-                                      duration:
-                                      const Duration(milliseconds: 200),
-                                      curve: Curves.easeInOut,
-                                    );},
-                                  ),
-                                  onTaped: () {
-
-                                    _scrollController.animateTo(
-                                      0.0,
-                                      duration:
-                                          const Duration(milliseconds: 200),
-                                      curve: Curves.easeInOut,
-                                    );
-                                  }),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                      ],
+                    ),
+                    SizedBox(height: size.h12),
+                    AppStreamBuilder<List<DiscussionDataEntity>>(
+                      stream: discussionDataStreamController.stream,
+                      loadingBuilder: (context) {
+                        return const Center(child: CircularLoader());
+                      },
+                      dataBuilder: (context, data) {
+                        return DiscussionSectionWidget(
+                            items: data,
+                            buildItem: (BuildContext context, int index, item) {
+                              return DiscussionItemWidget(
+                                  data: item, onTap: () => onTap(item.id));
+                            });
+                      },
+                      emptyBuilder: (context, message, icon) => Container(),
+                    ),
+                  ],
                 ),
               ),
-            ),
-          ),
+              // Align(
+              //   alignment: Alignment.bottomCenter,
+              //   child: CustomButton(
+              //     onTap: () => onTapCreateDiscussion(
+              //         courseId: data.running.first.id,
+              //         courseModuleId: 1,
+              //         contentId: 1,
+              //         contentType: 'course_script'),
+              //     icon: Icons.add_comment,
+              //     radius: 0.0,
+              //     title: label(e: en.newDiscussion, b: bn.newDiscussion),
+              //   ),
+              // )
+            ],
+          );
+        },
+        emptyBuilder: (context, message, icon) => CustomEmptyWidget(
+          message: message,
+          // constraints: constraints,
+          // offset: 350.w,
         ),
       ),
-    );*/
+    );
   }
 
-  Widget commentTile({bool? hasReply = false}) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Image.asset(
-          ImageAssets.imgEmptyProfile,
-          height: size.h28,
-        ),
-        SizedBox(
-          width: size.w16,
-        ),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    "ব্যবহারকারীর নাম ",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontFamily: StringData.fontFamilyPoppins,
-                        fontSize: size.textSmall,
-                        color: clr.iconColorHint),
-                  ),
-                  Text(
-                    " ২০ মিনিট পূর্বে",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontFamily: StringData.fontFamilyPoppins,
-                        fontSize: size.textXXSmall,
-                        color: clr.iconColorHint),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: size.h8,
-              ),
-              Text(
-                "শিক্ষার্থীদের যোগ্যতাগুলো অর্জনের জন্য এই সহায়িকায় যেসব শিখন-অভিজ্ঞতা রয়েছে",
-                style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontFamily: StringData.fontFamilyPoppins,
-                    fontSize: size.textSmall,
-                    color: clr.blackColor),
-              ),
-              SizedBox(
-                height: size.h8,
-              ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.chat_outlined,
-                    size: size.h20,
-                    color: clr.iconColorBlack,
-                  ),
-                  SizedBox(
-                    width: size.w8,
-                  ),
-                  Text(
-                    "রিপ্লাই করুন",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontFamily: StringData.fontFamilyPoppins,
-                        fontSize: size.textSmall,
-                        color: clr.iconColorHint),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: size.h12,
-              ),
-              hasReply!
-                  ? Text(
-                      "৩টি উত্তর রয়েছে",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontFamily: StringData.fontFamilyPoppins,
-                          fontSize: size.textSmall,
-                          color: clr.appPrimaryColorGreen),
-                    )
-                  : const SizedBox(),
-            ],
-          ),
-        )
-      ],
+  void onTapCreateDiscussion(
+      {required int courseId,
+      required int courseModuleId,
+      required int contentId,
+      required String contentType}) {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (context) => DiscussionBottomSheet(
+        courseId: courseId,
+        courseModuleId: courseModuleId,
+        contentId: contentId,
+        contentType: contentType,
+        onSuccess: () {
+          Navigator.of(context).pop();
+        },
+      ),
+    );
+  }
+
+  @override
+  void navigateToDetailedDiscussionScreen(int discussionId) {
+    Navigator.of(context).pushNamed(
+      AppRoute.detailedDiscussion,
+      arguments: DetailedDiscussionArgs(discussionId: discussionId),
+    );
+  }
+
+  @override
+  void showWarning(String message) {
+    CustomToasty.of(context).showWarning(message);
+  }
+
+  @override
+  void showSuccess(String message) {
+    CustomToasty.of(context).showSuccess(message);
+  }
+}
+
+class DiscussionSectionWidget<T> extends StatelessWidget
+    with AppTheme, Language {
+  final List<T> items;
+  final Widget Function(BuildContext context, int index, T item) buildItem;
+  const DiscussionSectionWidget({
+    super.key,
+    required this.items,
+    required this.buildItem,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: clr.shadeWhiteColor2,
+        borderRadius: BorderRadius.circular(size.r8),
+        border: Border.all(color: clr.cardStrokeColorGrey2, width: size.w1),
+      ),
+      padding: EdgeInsets.symmetric(horizontal: size.w12),
+      child: ListView.separated(
+        itemCount: items.length,
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        padding: EdgeInsets.zero,
+        itemBuilder: (context, index) {
+          return buildItem(context, index, items[index]);
+        },
+        separatorBuilder: (context, index) {
+          return Divider(height: size.h1, color: clr.cardStrokeColorGrey2);
+        },
+      ),
     );
   }
 }
 
-class DiscussionTile extends StatelessWidget with AppTheme {
-  final IconData iconData;
-  final Color iconColor;
-  final String title;
-  final VoidCallback? onTap;
-  const DiscussionTile({
-    super.key,
-    required this.iconData,
-    required this.iconColor,
-    required this.title,
-    this.onTap,
-  });
+class DiscussionItemWidget extends StatelessWidget with AppTheme, Language {
+  final DiscussionDataEntity data;
+  final VoidCallback onTap;
+  const DiscussionItemWidget(
+      {super.key, required this.data, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h24),
-        decoration: BoxDecoration(
-            border:
-                Border(bottom: BorderSide(color: clr.dividerStrokeColorGrey))),
-        child: Row(
+        color: Colors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(
-              iconData,
-              color: iconColor,
-              size: size.r24,
+            SizedBox(height: size.h12),
+            CustomTextWidget(
+              text: label(e: data.titleEn, b: data.titleBn),
+              textColor: clr.progressColorBlue,
+              fontWeight: FontWeight.w500,
             ),
-            SizedBox(width: size.w16),
-            Expanded(
-              child: Text(
-                title,
-                style: TextStyle(
-                    color: clr.textColorAppleBlack,
-                    fontSize: size.textSmall,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: StringData.fontFamilyPoppins),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
+            SizedBox(height: size.h12),
+            CustomTextWidget(
+              text: label(e: data.description, b: data.description),
+              textColor: clr.gapStrokeGrey,
+              fontSize: size.textXSmall,
+              fontWeight: FontWeight.w500,
             ),
+            SizedBox(height: size.h12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Icon(
+                  Icons.thumb_up,
+                  size: size.r16,
+                  color: clr.gapStrokeGrey,
+                ),
+                SizedBox(width: size.w8),
+                CustomTextWidget(
+                  text: label(e: "Like ${data.vote}", b: "লাইক ${data.vote}"),
+                  textColor: clr.gapStrokeGrey,
+                  fontWeight: FontWeight.w500,
+                ),
+                SizedBox(width: size.w20),
+                Icon(
+                  Icons.reply_outlined,
+                  size: size.r16,
+                  color: clr.gapStrokeGrey,
+                ),
+                SizedBox(width: size.w8),
+                CustomTextWidget(
+                  text: label(
+                      e: "Reply ${data.comments.length}",
+                      b: "রিপ্লাই ${data.comments.length}"),
+                  textColor: clr.gapStrokeGrey,
+                  fontWeight: FontWeight.w500,
+                ),
+              ],
+            ),
+            SizedBox(height: size.h12),
           ],
         ),
       ),

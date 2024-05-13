@@ -3,6 +3,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
+import '../../../../core/constants/common_imports.dart';
 import '../../../../core/routes/app_route.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../../domain/entities/auth_data_entity.dart';
@@ -47,8 +48,7 @@ class _EMISWebViewScreenState extends State<EMISWebViewScreen> {
             if (request.url.startsWith("http://103.69.149.41/SSO/")) {
               isLoading = true;
               print(isLoading);
-            } else if (request.url.startsWith(
-                "http://103.209.40.89:81/api/auth/dev/emis-auth?")) {
+            } else if (request.url.startsWith(ApiCredential.getToken)) {
               isLoading = true;
 
               getUsernameToken(request.url);
