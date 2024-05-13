@@ -1,5 +1,4 @@
-import 'package:lms/src/feature/notes/data/mapper/note_data_mapper.dart';
-
+import '../mapper/note_data_mapper.dart';
 import '../../domain/entities/note_data_entity.dart';
 import '../mapper/paginated_note_data_mapper.dart';
 import '../../domain/entities/paginated_note_data_entity.dart';
@@ -54,5 +53,19 @@ class NoteRepositoryImp extends NoteRepository {
             (List<NoteDataModel> models) => List<NoteDataModel>.from(models)
             .map((e) => e.toNoteDataEntity)
             .toList());
+  }
+
+  @override
+  Future<ResponseEntity> getNotesByContent(
+      int contentId, String contentType) async {
+    ResponseModel responseModel = (await noteRemoteDataSource
+        .getNotesByContentAction(contentId, contentType));
+    return ResponseModelToEntityMapper<List<NoteDataEntity>,
+            List<NoteDataModel>>()
+        .toEntityFromModel(
+            responseModel,
+            (List<NoteDataModel> models) => List<NoteDataModel>.from(models)
+                .map((e) => e.toNoteDataEntity)
+                .toList());
   }
 }

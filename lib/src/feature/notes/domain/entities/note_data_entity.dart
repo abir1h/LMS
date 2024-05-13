@@ -1,5 +1,3 @@
-import 'content_data_entity.dart';
-
 class NoteDataEntity {
   int? id;
   int? courseModuleId;

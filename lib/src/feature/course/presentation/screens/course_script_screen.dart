@@ -56,8 +56,12 @@ class _CourseScriptScreenState extends State<CourseScriptScreen>
                   description: label(
                       e: _screenArgs.courseDescriptionEn,
                       b: _screenArgs.courseDescriptionBn)),
-              tabBarItem2:
-                  const NoteWidget(physics: NeverScrollableScrollPhysics()),
+              tabBarItem2: NoteWidget(
+                physics: const NeverScrollableScrollPhysics(),
+                courseModuleId: data.courseModuleId,
+                contentId: _screenArgs.courseContentId,
+                contentType: _screenArgs.courseContentType,
+              ),
               tabBarItem3: DiscussionWidget(
                   courseId: data.courseId,
                   courseModuleId: data.courseModuleId,

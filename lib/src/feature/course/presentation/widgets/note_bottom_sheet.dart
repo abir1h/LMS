@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../../notes/domain/entities/note_data_entity.dart';
+import '../services/note_bottom_sheet_service.dart';
+import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/constants/common_imports.dart';
@@ -10,14 +15,15 @@ import '../../../notes/presentation/controllers/note_controller.dart';
 import '../../../notes/presentation/models/note_model.dart';
 
 class NoteBottomSheet extends StatefulWidget {
-  final NoteModel? noteModel;
-
+  final Object? arguments;
   final String? ref;
+  final VoidCallback onSuccess;
 
   const NoteBottomSheet({
     super.key,
-    this.noteModel,
+    this.arguments,
     this.ref,
+    required this.onSuccess
   });
 
   @override
@@ -25,7 +31,8 @@ class NoteBottomSheet extends StatefulWidget {
 }
 
 class _NoteBottomSheetState extends State<NoteBottomSheet>
-    with AppTheme, Language {
+    with AppTheme, Language, NoteBottomSheetService {
+  late NoteDetailsScreenArgs _screenArgs;
   final _controller = QuillController.basic();
   final _editorFocusNode = FocusNode();
   final _editorScrollController = ScrollController();
@@ -35,18 +42,22 @@ class _NoteBottomSheetState extends State<NoteBottomSheet>
   @override
   void initState() {
     super.initState();
+    _screenArgs = widget.arguments as NoteDetailsScreenArgs;
     setContent();
   }
 
   setContent() {
-    if (widget.noteModel != null) {
-      if (widget.noteModel!.description != null) {
-        final Document doc =
-            Document.fromJson(widget.noteModel?.description as List);
+    if (_screenArgs.noteDataEntity != null) {
+      if (_screenArgs.noteDataEntity!.description.isNotEmpty) {
+        // final Document doc =
+        //     Document.fromJson(widget.noteDataEntity?.description as List);
+        // _controller.document = doc;
+        final Document doc = Document.fromJson(
+            json.decode(_screenArgs.noteDataEntity!.description));
         _controller.document = doc;
       }
-      if (widget.noteModel!.title != null) {
-        titleController.text = widget.noteModel!.title!;
+      if (_screenArgs.noteDataEntity!.title.isNotEmpty) {
+        titleController.text = _screenArgs.noteDataEntity!.title;
       }
     }
   }
@@ -58,6 +69,7 @@ class _NoteBottomSheetState extends State<NoteBottomSheet>
     _controller.dispose();
     _editorFocusNode.dispose();
     _editorScrollController.dispose();
+    titleController.dispose();
     super.dispose();
   }
 
@@ -65,7 +77,7 @@ class _NoteBottomSheetState extends State<NoteBottomSheet>
     if (titleController.text.isEmpty && _controller.document.isEmpty()) {
       Get.back();
     } else {
-      if (widget.noteModel == null) {
+      if (_screenArgs.noteDataEntity == null) {
         int id = controller.noteList.length + 1;
         DateTime now = DateTime.now();
         var currentTime =
@@ -90,7 +102,7 @@ class _NoteBottomSheetState extends State<NoteBottomSheet>
           now.minute,
         );
         var updatedModel = NoteModel(
-            id: widget.noteModel?.id!,
+            id: _screenArgs.noteDataEntity?.id!,
             time: currentTime.toString(),
             title: titleController.text,
             description: _controller.document.toDelta().toJson(),
@@ -158,9 +170,30 @@ class _NoteBottomSheetState extends State<NoteBottomSheet>
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       GestureDetector(
-                        onTap: () {
-                          saveData();
-                        },
+                        onTap: () => _screenArgs.noteType == NoteType.create
+                            ? onCreateNotes(NoteDataEntity(
+                                title: titleController.text,
+                                description: jsonEncode(
+                                    _controller.document.toDelta().toJson()),
+                                courseModuleId:
+                                    _screenArgs.noteDataEntity?.courseModuleId,
+                                contentId:
+                                    _screenArgs.noteDataEntity?.contentId,
+                                contentType:
+                                    _screenArgs.noteDataEntity?.contentType,
+                                status: _screenArgs.noteDataEntity!.status))
+                            : onUpdateNotes(NoteDataEntity(
+                                id: _screenArgs.noteDataEntity!.id,
+                                title: titleController.text,
+                                description: jsonEncode(
+                                    _controller.document.toDelta().toJson()),
+                                courseModuleId:
+                                    _screenArgs.noteDataEntity?.courseModuleId,
+                                contentId:
+                                    _screenArgs.noteDataEntity?.contentId,
+                                contentType:
+                                    _screenArgs.noteDataEntity?.contentType,
+                                status: _screenArgs.noteDataEntity!.status)),
                         child: Container(
                           padding: EdgeInsets.all(size.r4),
                           decoration: BoxDecoration(
@@ -423,5 +456,20 @@ class _NoteBottomSheetState extends State<NoteBottomSheet>
         ),
       ),
     );
+  }
+
+  @override
+  void showSuccess(String message) {
+    CustomToasty.of(context).showSuccess(message);
+  }
+
+  @override
+  void showWarning(String message) {
+    CustomToasty.of(context).showWarning(message);
+  }
+
+  @override
+  void onSuccessRequest() {
+    widget.onSuccess();
   }
 }

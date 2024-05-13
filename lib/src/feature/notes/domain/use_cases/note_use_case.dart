@@ -29,4 +29,10 @@ class NoteUseCase {
     final response = _noteRepository.deleteNotes(noteId);
     return response;
   }
+
+  Future<ResponseEntity> getNotesByContentUseCase(
+      int contentId, String contentType) async {
+    final response = _noteRepository.getNotesByContent(contentId, contentType);
+    return response;
+  }
 }
