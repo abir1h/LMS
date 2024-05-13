@@ -42,6 +42,10 @@ class ImageAssets {
   static String get icBarChart => 'bar_chart'.svg;
   static String get icTwoPager => 'two_pager'.svg;
   static String get icCircular => 'brand_awareness'.svg;
+  static String get masterTrainerIc => 'master_trainer'.svg;
+  static String get calendarMonth => 'calendar_month'.svg;
+  static String get trophyIcon => 'trophy'.svg;
+  static String get shieldPerson => 'shield_person'.svg;
 
   static String get animEmpty => 'Animation - 1706009676891'.json;
 }
