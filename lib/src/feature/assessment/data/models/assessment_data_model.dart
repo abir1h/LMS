@@ -25,6 +25,7 @@ class AssessmentDataModel {
   final String assessmentInstruction;
   final String startDate;
   final String endDate;
+  final int noOfQuestion;
   final List<QuestionDataModel> questions;
 
   const AssessmentDataModel({
@@ -50,6 +51,7 @@ class AssessmentDataModel {
     required this.assessmentInstruction,
     required this.startDate,
     required this.endDate,
+    required this.noOfQuestion,
     required this.questions,
   });
 
@@ -77,6 +79,7 @@ class AssessmentDataModel {
         assessmentInstruction: json["assessment_instruction"] ?? "",
         startDate: json["start_date"] ?? "",
         endDate: json["end_date"] ?? "",
+        noOfQuestion: json["no_of_question"] ?? -1,
         questions: json["questions"] != null
             ? List<QuestionDataModel>.from(
                 (json["questions"]).map((x) => QuestionDataModel.fromJson(x)))
@@ -106,6 +109,7 @@ class AssessmentDataModel {
         "assessment_instruction": assessmentInstruction,
         "start_date": startDate,
         "end_date": endDate,
+        "no_of_question": noOfQuestion,
         "questions":
             List<QuestionDataModel>.from(questions.map((x) => x.toJson())),
       };

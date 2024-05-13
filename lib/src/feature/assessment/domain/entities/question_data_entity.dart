@@ -1,3 +1,4 @@
+import 'qustion_type_data_entity.dart';
 import 'option_data_entity.dart';
 
 class QuestionDataEntity {
@@ -14,7 +15,7 @@ class QuestionDataEntity {
   final String mark;
   final String negativeMark;
   final int createdBy;
-  final String questionType;
+  final QuestionTypeDataEntity? questionType;
   final int typeId;
   final int status;
   final String createdAt;

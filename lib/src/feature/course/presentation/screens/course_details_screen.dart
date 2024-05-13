@@ -296,7 +296,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
         arguments: CourseAssessmentScreenArgs(
             courseContentId: courseContentId,
             onTap: () =>
-                Navigator.of(context).pushNamed(AppRoute.assessmentScreen)));
+                Navigator.of(context).pushNamed(AppRoute.courseAssessmentScreen)));
   }
 
   @override

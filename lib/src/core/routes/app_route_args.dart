@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import '../../feature/assessment/domain/entities/exam_data_entity.dart';
 import '../../feature/assignment/domain/entities/assignment_data_entity.dart';
 import '../../feature/assignment/presentation/models/assignment_model.dart';
 import '../../feature/notes/domain/entities/note_data_entity.dart';
@@ -84,4 +85,9 @@ class NoteDetailsScreenArgs {
 class CircularDetailsScreenArgs {
   final int circularId;
   CircularDetailsScreenArgs({required this.circularId});
+}
+
+class AssessmentScreenArgs {
+  final ExamDataEntity examData;
+  AssessmentScreenArgs({required this.examData});
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../feature/assessment/presentation/screens/assessment_screen.dart';
+import '../../feature/assessment/presentation/screens/assessment_all_question_screen.dart';
 import '../../feature/assignment/presentation/screens/assignment_screen.dart';
 import '../../feature/assignment/presentation/screens/assignment_submit_screen.dart';
 import '../../feature/authentication/presentation/screens/authentication_screen.dart';
@@ -48,7 +48,7 @@ class AppRoute {
   static const String discussionScreen = "discussionScreen";
   static const String assignmentScreen = "assignmentScreen";
   static const String assignmentSubmitScreen = "assignmentSubmitScreen";
-  static const String assessmentScreen = "assessmentScreen";
+  static const String assessmentAllQuestionScreen = "assessmentAllQuestionScreen";
   static const String detailedDiscussion = "detailedDiscussion";
   static const String discussionListScreen = "discussionListScreen";
   static const String noteDetailsScreen = "noteDetailsScreen";
@@ -104,8 +104,8 @@ mixin RouteGenerator {
             return AssignmentScreen(arguments: setting.arguments);
           case AppRoute.assignmentSubmitScreen:
             return AssignmentSubmitScreen(arguments: setting.arguments);
-          case AppRoute.assessmentScreen:
-            return const AssessmentScreen();
+          case AppRoute.assessmentAllQuestionScreen:
+            return  AssessmentAllQuestionScreen(arguments: setting.arguments,);
           case AppRoute.detailedDiscussion:
             return DetailedDiscussion(arguments: setting.arguments);
           case AppRoute.discussionListScreen:

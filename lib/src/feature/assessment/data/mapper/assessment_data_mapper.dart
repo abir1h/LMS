@@ -36,6 +36,7 @@ class AssessmentDataModelToEntityMapper
         assessmentInstruction: entity.assessmentInstruction,
         startDate: entity.startDate,
         endDate: entity.endDate,
+        noOfQuestion: entity.noOfQuestion,
         questions: List<QuestionDataEntity>.from(entity.questions)
             .map((entity) => entity.toQuestionDataModel)
             .toList());
@@ -66,6 +67,7 @@ class AssessmentDataModelToEntityMapper
       assessmentInstruction: model.assessmentInstruction,
       startDate: model.startDate,
       endDate: model.endDate,
+      noOfQuestion: model.noOfQuestion,
       questions: List<QuestionDataModel>.from(model.questions)
           .map((model) => model.toQuestionDataEntity)
           .toList(),
