@@ -1,39 +1,72 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lms/src/core/common_widgets/custom_toasty.dart';
+import 'package:lms/src/feature/course/domain/entities/video_data_entity.dart';
+import 'package:video_player/video_player.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
+import '../../../../core/common_widgets/app_stream.dart';
+import '../../../../core/common_widgets/circuler_widget.dart';
+import '../../../../core/common_widgets/empty_widget.dart';
+import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/common_widgets/custom_switch_button.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../course/presentation/widgets/tab_section_widget.dart';
 import '../../../../core/constants/common_imports.dart';
+import '../service/transcript_video_screen_service.dart';
+
+enum VideoCategory { s3, link }
 
 class TranscriptVideoScreen extends StatefulWidget {
-  const TranscriptVideoScreen({super.key});
+  final Object? arguments;
+  const TranscriptVideoScreen({super.key, required this.arguments});
 
   @override
   State<TranscriptVideoScreen> createState() => _TranscriptVideoScreenState();
 }
 
 class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
-    with AppTheme, Language {
-  YoutubePlayerController? _controller;
+    with AppTheme, Language, TranscriptScreenVideoService {
+  late CourseVideoScreenArgs _screenArgs;
+  YoutubePlayerController? _youtubeController;
+  VideoPlayerController? _controller;
   final GlobalKey _bodyKey = GlobalKey();
+
+  bool _onTouch = true;
+  Timer? _timer;
 
   @override
   void initState() {
     super.initState();
-    _controller = YoutubePlayerController(
-      initialVideoId: "uGqidUUFzwY",
-      flags: const YoutubePlayerFlags(
-          mute: false,
-          autoPlay: false,
-          disableDragSeek: false,
-          loop: false,
-          isLive: false,
-          forceHD: false,
-          enableCaption: true,
-          showLiveFullscreenButton: true),
-    );
+
+    _screenArgs = widget.arguments as CourseVideoScreenArgs;
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      // loadVideoData(_screenArgs.contentId);
+      loadVideoData(136);
+    });
+
+    // _youtubeController = YoutubePlayerController(
+    //   initialVideoId: "uGqidUUFzwY",
+    //   flags: const YoutubePlayerFlags(
+    //       mute: false,
+    //       autoPlay: false,
+    //       disableDragSeek: false,
+    //       loop: false,
+    //       isLive: false,
+    //       forceHD: false,
+    //       enableCaption: true,
+    //       showLiveFullscreenButton: true),
+    // );
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    _timer?.cancel();
+
+    super.dispose();
   }
 
   bool playerFlag = false;
@@ -42,110 +75,198 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: clr.whiteColor,
-      body: SafeArea(
-        top: MediaQuery.of(context).orientation == Orientation.portrait,
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            ///Page body
-            Column(
-              mainAxisSize: MainAxisSize.min,
+      body: LayoutBuilder(
+        builder: (context, constraints) => AppStreamBuilder<VideoDataEntity>(
+          stream: videoDetailsDataStreamController.stream,
+          loadingBuilder: (context) {
+            return Column(
               children: [
-                if (playerFlag) ...[
-                  ///Activate solid video player
-                ] else if (playerFlag) ...[
-                  ///Activate HLS video player
-                ] else ...[
-                  ///Activate Youtube video player
-                  YoutubePlayerBuilder(
-                    player: YoutubePlayer(
-                      controller: _controller!,
-                      aspectRatio: 16 / 9,
-                      showVideoProgressIndicator: true,
-                      progressColors: ProgressBarColors(
-                          backgroundColor: clr.progressBGColor,
-                          playedColor: clr.appSecondaryColorFlagRed,
-                          handleColor: clr.appSecondaryColorFlagRed),
-                    ),
-                    builder: (context, player) {
-                      return Column(
-                        children: [
-                          Stack(
-                            fit: StackFit.loose,
-                            children: [
-                              player,
-                              Positioned(
-                                  top: size.h16,
-                                  left: size.w16,
-                                  child: InkWell(
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: Icon(
-                                      Icons.arrow_back,
-                                      color: clr.shadeWhiteColor2,
-                                      size: size.r20,
-                                    ),
-                                  ))
-                            ],
-                          ),
-                        ],
-                      );
-                    },
-                  )
-                ],
+                SizedBox(
+                  height: .3.sh,
+                ),
+                const Center(
+                  child: CircularLoader(),
+                ),
+              ],
+            );
+          },
+          dataBuilder: (context, data) {
+            return SafeArea(
+              top: MediaQuery.of(context).orientation == Orientation.portrait,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  ///Page body
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (data.category == VideoCategory.s3.name) ...[
+                        ///Activate solid video player
 
-                ///Details section
-                if (MediaQuery.of(context).orientation == Orientation.portrait)
-                  Expanded(
-                    child: LayoutBuilder(builder: (context, constraints) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: size.h16),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: size.w16),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    label(
-                                        e: "Video 1: Course Introduction",
-                                        b: "ভিডিও ১: কোর্সের পরিচিতি"),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                    style: TextStyle(
-                                        fontFamily:
-                                            StringData.fontFamilyPoppins,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: size.textSmall,
-                                        color: clr.appPrimaryColorGreen),
+                        _controller!.value.isInitialized
+                            ? Stack(
+                          fit: StackFit.loose,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _onTouch == true
+                                      ? _onTouch = false
+                                      : _onTouch = true;
+                                });
+
+                                /*  playVideo == true
+                                        ? _controller!.pause()
+                                        : _controller!.play();*/
+                              },
+                              child: AspectRatio(
+                                aspectRatio: 16 / 9,
+                                child: VideoPlayer(_controller!),
+                              ),
+                            ),
+                            Positioned(
+                                top: size.h16,
+                                left: size.w16,
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Icon(
+                                    Icons.arrow_back,
+                                    color: clr.shadeWhiteColor2,
+                                    size: size.r20,
                                   ),
+                                )),
+                            Positioned(
+                              top: 80,
+                              left: .45.sw,
+                              child: Visibility(
+                                visible: _onTouch,
+                                child:  GestureDetector(
+                                  onTap: (){
+                                    _timer?.cancel();
+
+                                    // pause while video is playing, play while video is pausing
+                                    setState(() {
+                                      _controller!.value.isPlaying ?
+                                      _controller!.pause() :
+                                      _controller!.play();
+                                    });
+
+                                    // Auto dismiss overlay after 1 second
+                                    _timer = Timer.periodic(Duration(milliseconds: 2000), (_) {
+                                      setState(() {
+                                        _onTouch = false;
+                                      });
+                                    });
+                                  },
+                                  child: CircleAvatar(
+                                      backgroundColor: Colors.grey.withOpacity(0.5),
+                                      radius: 25,
+                                      child: Icon(_controller!.value.isPlaying ? Icons.pause : Icons.play_arrow, color: Colors.white,)),
                                 ),
-                                Icon(
-                                  Icons.download,
-                                  size: size.r20,
-                                  color: clr.appPrimaryColorGreen,
-                                ),
+
+
+                              ),
+                            )
+                          ],
+                        )
+                            : const Center(child: CircularProgressIndicator()),
+
+                      ] else if (playerFlag) ...[
+                        ///Activate HLS video player
+                      ] else ...[
+                        ///Activate Youtube video player
+                        // YoutubePlayerBuilder(
+                        //   player: YoutubePlayer(
+                        //     controller: _controller!,
+                        //     aspectRatio: 16 / 9,
+                        //     showVideoProgressIndicator: true,
+                        //     progressColors: ProgressBarColors(
+                        //         backgroundColor: clr.progressBGColor,
+                        //         playedColor: clr.appSecondaryColorFlagRed,
+                        //         handleColor: clr.appSecondaryColorFlagRed),
+                        //   ),
+                        //   builder: (context, player) {
+                        //     return Column(
+                        //       children: [
+                        //         Stack(
+                        //           fit: StackFit.loose,
+                        //           children: [
+                        //             player,
+                        //             Positioned(
+                        //                 top: size.h16,
+                        //                 left: size.w16,
+                        //                 child: InkWell(
+                        //                   onTap: () {
+                        //                     Navigator.pop(context);
+                        //                   },
+                        //                   child: Icon(
+                        //                     Icons.arrow_back,
+                        //                     color: clr.shadeWhiteColor2,
+                        //                     size: size.r20,
+                        //                   ),
+                        //                 ))
+                        //           ],
+                        //         ),
+                        //       ],
+                        //     );
+                        //   },
+                        // )
+                      ],
+
+                      ///Details section
+                      if (MediaQuery.of(context).orientation ==
+                          Orientation.portrait)
+                        Expanded(
+                          child: LayoutBuilder(builder: (context, constraints) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: size.h16),
                                 Padding(
-                                  padding: EdgeInsets.only(left: size.w8),
-                                  child: CustomSwitchButton(
-                                    value: App.currentAppLanguage ==
-                                        AppLanguage.english,
-                                    textOn: 'EN',
-                                    textSize: size.textXXSmall,
-                                    textOff: 'বাং',
-                                    bgColor: clr.whiteColor,
-                                    width: 64.w,
-                                    animationDuration:
-                                        const Duration(milliseconds: 300),
-                                    onChanged: (bool state) {
-                                      App.setAppLanguage(state ? 1 : 0)
-                                          .then((value) {
-                                        if (mounted) {
-                                          setState(() {});
-                                        }
-                                        /*AppEventsNotifier.notify(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: size.w16),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          label(
+                                              e: data.titleEn, b: data.titleBn),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                              fontFamily:
+                                                  StringData.fontFamilyPoppins,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: size.textSmall,
+                                              color: clr.appPrimaryColorGreen),
+                                        ),
+                                      ),
+                                      Icon(
+                                        Icons.download,
+                                        size: size.r20,
+                                        color: clr.appPrimaryColorGreen,
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(left: size.w8),
+                                        child: CustomSwitchButton(
+                                          value: App.currentAppLanguage ==
+                                              AppLanguage.english,
+                                          textOn: 'EN',
+                                          textSize: size.textXXSmall,
+                                          textOff: 'বাং',
+                                          bgColor: clr.whiteColor,
+                                          width: 64.w,
+                                          animationDuration:
+                                              const Duration(milliseconds: 300),
+                                          onChanged: (bool state) {
+                                            App.setAppLanguage(state ? 1 : 0)
+                                                .then((value) {
+                                              if (mounted) {
+                                                setState(() {});
+                                              }
+                                              /*AppEventsNotifier.notify(
                                             EventAction.courseDetailsScreen);
                                         AppEventsNotifier.notify(
                                             EventAction.onGoingCoursesScreen);
@@ -155,324 +276,352 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                                             EventAction.bottomNavBar);
                                         AppEventsNotifier.notify(
                                             EventAction.graphChart);*/
-                                      });
-                                    },
-                                    buttonHolder: const Icon(
-                                      Icons.check,
-                                      color: Colors.transparent,
-                                    ),
-                                    onTap: () {},
-                                    onDoubleTap: () {},
-                                    onSwipe: () {},
+                                            });
+                                          },
+                                          buttonHolder: const Icon(
+                                            Icons.check,
+                                            color: Colors.transparent,
+                                          ),
+                                          onTap: () {},
+                                          onDoubleTap: () {},
+                                          onSwipe: () {},
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
+                                SizedBox(height: size.h8),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: size.w16),
+                                  child: Text(
+                                    label(
+                                        e: _screenArgs.contentTitleEn,
+                                        b: _screenArgs.contentTitleBn),
+                                    style: TextStyle(
+                                        fontFamily:
+                                            StringData.fontFamilyPoppins,
+                                        fontSize: size.textSmall,
+                                        fontWeight: FontWeight.w400,
+                                        color: clr.textColorBlack),
+                                  ),
+                                ),
+                                SizedBox(height: size.h16),
+                                TabSectionWidget(
+                                  tabTitle1:
+                                      label(e: en.transcript, b: bn.transcript),
+                                  videoDataEntity: data,
+                                  contentType: _screenArgs.contentType,
+                                )
                               ],
-                            ),
-                          ),
-                          SizedBox(height: size.h8),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: size.w16),
-                            child: Text(
-                              label(
-                                  e: "Traditional Concepts of Interconnected Formal Education",
-                                  b: "আন্তঃসংযুক্ত আনুষ্ঠানিক শিক্ষার ঐতিহ্যগত ধারণা"),
-                              style: TextStyle(
-                                  fontFamily: StringData.fontFamilyPoppins,
-                                  fontSize: size.textSmall,
-                                  fontWeight: FontWeight.w400,
-                                  color: clr.textColorBlack),
-                            ),
-                          ),
-                          SizedBox(height: size.h16),
-                          TabSectionWidget(
-                            tabTitle1:
-                                label(e: en.transcript, b: bn.transcript),
-                          )
-                        ],
-                      );
-                      // return SingleChildScrollView(
-                      //   child: Column(
-                      //     mainAxisSize: MainAxisSize.min,
-                      //     crossAxisAlignment: CrossAxisAlignment.start,
-                      //     children: [
-                      //       ///Title and Details section
-                      //       SizedBox(height: size.h16),
-                      //       Padding(
-                      //         padding: EdgeInsets.symmetric(horizontal: size.w16),
-                      //         child: Row(
-                      //           children: [
-                      //             Expanded(
-                      //               child: Text(
-                      //                 label(
-                      //                     e: "Video 1: Course Introduction",
-                      //                     b: "ভিডিও ১: কোর্সের পরিচিতি"),
-                      //                 overflow: TextOverflow.ellipsis,
-                      //                 maxLines: 1,
-                      //                 style: TextStyle(
-                      //                     fontFamily: StringData.fontFamilyPoppins,
-                      //                     fontWeight: FontWeight.w600,
-                      //                     fontSize: size.textSmall,
-                      //                     color: clr.appPrimaryColorGreen),
-                      //               ),
-                      //             ),
-                      //             Icon(
-                      //               Icons.download,
-                      //               size: size.r20,
-                      //               color: clr.appPrimaryColorGreen,
-                      //             ),
-                      //             Padding(
-                      //               padding: EdgeInsets.only(left: size.w8),
-                      //               child: CustomSwitchButton(
-                      //                 value: App.currentAppLanguage ==
-                      //                     AppLanguage.english,
-                      //                 textOn: 'EN',
-                      //                 textSize: size.textXXSmall,
-                      //                 textOff: 'বাং',
-                      //                 bgColor: clr.whiteColor,
-                      //                 width: 64.w,
-                      //                 animationDuration:
-                      //                     const Duration(milliseconds: 300),
-                      //                 onChanged: (bool state) {
-                      //                   App.setAppLanguage(state ? 1 : 0)
-                      //                       .then((value) {
-                      //                     if (mounted) {
-                      //                       setState(() {});
-                      //                     }
-                      //                     AppEventsNotifier.notify(
-                      //                         EventAction.courseDetailsScreen);
-                      //                     AppEventsNotifier.notify(
-                      //                         EventAction.onGoingCoursesScreen);
-                      //                     AppEventsNotifier.notify(
-                      //                         EventAction.dashBoardScreen);
-                      //                     AppEventsNotifier.notify(
-                      //                         EventAction.bottomNavBar);
-                      //                     AppEventsNotifier.notify(
-                      //                         EventAction.graphChart);
-                      //                   });
-                      //                 },
-                      //                 buttonHolder: const Icon(
-                      //                   Icons.check,
-                      //                   color: Colors.transparent,
-                      //                 ),
-                      //                 onTap: () {},
-                      //                 onDoubleTap: () {},
-                      //                 onSwipe: () {},
-                      //               ),
-                      //             ),
-                      //           ],
-                      //         ),
-                      //       ),
-                      //       SizedBox(height: size.h8),
-                      //       Padding(
-                      //         padding: EdgeInsets.symmetric(horizontal: size.w16),
-                      //         child: Text(
-                      //           label(
-                      //               e: "Traditional Concepts of Interconnected Formal Education",
-                      //               b: "আন্তঃসংযুক্ত আনুষ্ঠানিক শিক্ষার ঐতিহ্যগত ধারণা"),
-                      //           style: TextStyle(
-                      //               fontFamily: StringData.fontFamilyPoppins,
-                      //               fontSize: size.textSmall,
-                      //               fontWeight: FontWeight.w400,
-                      //               color: clr.textColorBlack),
-                      //         ),
-                      //       ),
-                      //       SizedBox(height: size.h16),
-                      //
-                      //       ///Transcript, Discussions & Notes section
-                      //       SectionTabWidget(
-                      //         key: _bodyKey,
-                      //         onTabChange: (value) {},
-                      //         builder: (context, index) {
-                      //           switch (index) {
-                      //             ///Transcript
-                      //             case 0:
-                      //               return Container(
-                      //                 color: Colors.red,
-                      //                 height: 100,
-                      //                 width: 100,
-                      //               );
-                      //
-                      //             ///Notes
-                      //             case 1:
-                      //               return Container(
-                      //                 color: Colors.green,
-                      //                 height: 100,
-                      //                 width: 100,
-                      //               );
-                      //
-                      //             ///Discussions
-                      //             case 2:
-                      //               return Container(
-                      //                 color: Colors.black,
-                      //                 height: 100,
-                      //                 width: 100,
-                      //               );
-                      //
-                      //             ///Loading state
-                      //             default:
-                      //               return Container();
-                      //           }
-                      //         },
-                      //       ),
-                      //     ],
-                      //   ),
-                      // );
-                    }),
-                  ),
-              ],
-            )
+                            );
+                            // return SingleChildScrollView(
+                            //   child: Column(
+                            //     mainAxisSize: MainAxisSize.min,
+                            //     crossAxisAlignment: CrossAxisAlignment.start,
+                            //     children: [
+                            //       ///Title and Details section
+                            //       SizedBox(height: size.h16),
+                            //       Padding(
+                            //         padding: EdgeInsets.symmetric(horizontal: size.w16),
+                            //         child: Row(
+                            //           children: [
+                            //             Expanded(
+                            //               child: Text(
+                            //                 label(
+                            //                     e: "Video 1: Course Introduction",
+                            //                     b: "ভিডিও ১: কোর্সের পরিচিতি"),
+                            //                 overflow: TextOverflow.ellipsis,
+                            //                 maxLines: 1,
+                            //                 style: TextStyle(
+                            //                     fontFamily: StringData.fontFamilyPoppins,
+                            //                     fontWeight: FontWeight.w600,
+                            //                     fontSize: size.textSmall,
+                            //                     color: clr.appPrimaryColorGreen),
+                            //               ),
+                            //             ),
+                            //             Icon(
+                            //               Icons.download,
+                            //               size: size.r20,
+                            //               color: clr.appPrimaryColorGreen,
+                            //             ),
+                            //             Padding(
+                            //               padding: EdgeInsets.only(left: size.w8),
+                            //               child: CustomSwitchButton(
+                            //                 value: App.currentAppLanguage ==
+                            //                     AppLanguage.english,
+                            //                 textOn: 'EN',
+                            //                 textSize: size.textXXSmall,
+                            //                 textOff: 'বাং',
+                            //                 bgColor: clr.whiteColor,
+                            //                 width: 64.w,
+                            //                 animationDuration:
+                            //                     const Duration(milliseconds: 300),
+                            //                 onChanged: (bool state) {
+                            //                   App.setAppLanguage(state ? 1 : 0)
+                            //                       .then((value) {
+                            //                     if (mounted) {
+                            //                       setState(() {});
+                            //                     }
+                            //                     AppEventsNotifier.notify(
+                            //                         EventAction.courseDetailsScreen);
+                            //                     AppEventsNotifier.notify(
+                            //                         EventAction.onGoingCoursesScreen);
+                            //                     AppEventsNotifier.notify(
+                            //                         EventAction.dashBoardScreen);
+                            //                     AppEventsNotifier.notify(
+                            //                         EventAction.bottomNavBar);
+                            //                     AppEventsNotifier.notify(
+                            //                         EventAction.graphChart);
+                            //                   });
+                            //                 },
+                            //                 buttonHolder: const Icon(
+                            //                   Icons.check,
+                            //                   color: Colors.transparent,
+                            //                 ),
+                            //                 onTap: () {},
+                            //                 onDoubleTap: () {},
+                            //                 onSwipe: () {},
+                            //               ),
+                            //             ),
+                            //           ],
+                            //         ),
+                            //       ),
+                            //       SizedBox(height: size.h8),
+                            //       Padding(
+                            //         padding: EdgeInsets.symmetric(horizontal: size.w16),
+                            //         child: Text(
+                            //           label(
+                            //               e: "Traditional Concepts of Interconnected Formal Education",
+                            //               b: "আন্তঃসংযুক্ত আনুষ্ঠানিক শিক্ষার ঐতিহ্যগত ধারণা"),
+                            //           style: TextStyle(
+                            //               fontFamily: StringData.fontFamilyPoppins,
+                            //               fontSize: size.textSmall,
+                            //               fontWeight: FontWeight.w400,
+                            //               color: clr.textColorBlack),
+                            //         ),
+                            //       ),
+                            //       SizedBox(height: size.h16),
+                            //
+                            //       ///Transcript, Discussions & Notes section
+                            //       SectionTabWidget(
+                            //         key: _bodyKey,
+                            //         onTabChange: (value) {},
+                            //         builder: (context, index) {
+                            //           switch (index) {
+                            //             ///Transcript
+                            //             case 0:
+                            //               return Container(
+                            //                 color: Colors.red,
+                            //                 height: 100,
+                            //                 width: 100,
+                            //               );
+                            //
+                            //             ///Notes
+                            //             case 1:
+                            //               return Container(
+                            //                 color: Colors.green,
+                            //                 height: 100,
+                            //                 width: 100,
+                            //               );
+                            //
+                            //             ///Discussions
+                            //             case 2:
+                            //               return Container(
+                            //                 color: Colors.black,
+                            //                 height: 100,
+                            //                 width: 100,
+                            //               );
+                            //
+                            //             ///Loading state
+                            //             default:
+                            //               return Container();
+                            //           }
+                            //         },
+                            //       ),
+                            //     ],
+                            //   ),
+                            // );
+                          }),
+                        ),
+                    ],
+                  )
 
-            // ///Back Button
-            // const  Align(
-            //     alignment: Alignment.topLeft,
-            //     child: Offstage()
-            // ),
+                  // ///Back Button
+                  // const  Align(
+                  //     alignment: Alignment.topLeft,
+                  //     child: Offstage()
+                  // ),
 
-            // SafeArea(
-            // child: CustomYoutubePlayer(
-            //   videoUrl: "uGqidUUFzwY",
-            //   body: Expanded(
-            //     child: ListView(
-            //       physics: const BouncingScrollPhysics(),
-            //       padding: EdgeInsets.only(
-            //           top: size.h16, right: size.w16, left: size.w16),
-            //       children: [
-            //         Row(
-            //           children: [
-            //             Expanded(
-            //               child: Text(
-            //                 label(
-            //                     e: "Video 1: Course Introduction",
-            //                     b: "ভিডিও ১: কোর্সের পরিচিতি"),
-            //                 overflow: TextOverflow.ellipsis,
-            //                 maxLines: 1,
-            //                 style: TextStyle(
-            //                     fontFamily: StringData.fontFamilyPoppins,
-            //                     fontWeight: FontWeight.w600,
-            //                     fontSize: size.textSmall,
-            //                     color: clr.appPrimaryColorGreen),
-            //               ),
-            //             ),
-            //             Icon(
-            //               Icons.download,
-            //               size: size.r20,
-            //               color: clr.appPrimaryColorGreen,
-            //             ),
-            //             Padding(
-            //               padding: EdgeInsets.only(left: size.w8),
-            //               child: CustomSwitchButton(
-            //                 value: App.currentAppLanguage == AppLanguage.english,
-            //                 textOn: 'EN',
-            //                 textSize: size.textXXSmall,
-            //                 textOff: 'বাং',
-            //                 bgColor: clr.whiteColor,
-            //                 width: 64.w,
-            //                 animationDuration: const Duration(milliseconds: 300),
-            //                 onChanged: (bool state) {
-            //                   App.setAppLanguage(state ? 1 : 0).then((value) {
-            //                     if (mounted) {
-            //                       setState(() {});
-            //                     }
-            //                     AppEventsNotifier.notify(
-            //                         EventAction.courseDetailsScreen);
-            //                     AppEventsNotifier.notify(
-            //                         EventAction.onGoingCoursesScreen);
-            //                     AppEventsNotifier.notify(
-            //                         EventAction.dashBoardScreen);
-            //                     AppEventsNotifier.notify(EventAction.bottomNavBar);
-            //                     AppEventsNotifier.notify(EventAction.graphChart);
-            //                   });
-            //                 },
-            //                 buttonHolder: const Icon(
-            //                   Icons.check,
-            //                   color: Colors.transparent,
-            //                 ),
-            //                 onTap: () {},
-            //                 onDoubleTap: () {},
-            //                 onSwipe: () {},
-            //               ),
-            //             ),
-            //           ],
-            //         ),
-            //         SizedBox(height: size.h8),
-            //         Text(
-            //           label(
-            //               e: "Traditional Concepts of Interconnected Formal Education",
-            //               b: "আন্তঃসংযুক্ত আনুষ্ঠানিক শিক্ষার ঐতিহ্যগত ধারণা"),
-            //           style: TextStyle(
-            //               fontFamily: StringData.fontFamilyPoppins,
-            //               fontSize: size.textSmall,
-            //               fontWeight: FontWeight.w400,
-            //               color: clr.textColorBlack),
-            //         ),
-            //         SizedBox(height: size.h12),
-            //         Row(
-            //           mainAxisAlignment: MainAxisAlignment.end,
-            //           children: [
-            //             CustomButton(
-            //               onTap: () => Get.to(() => const NoteEditScreen()),
-            //               icon: Icons.add,
-            //               title: label(e: en.takeNotes, b: bn.takeNotes),
-            //               textSize: size.textXXXSmall,
-            //               horizontalPadding: size.w10,
-            //               verticalPadding: 6.5.h,
-            //               radius: size.w8,
-            //             ),
-            //             SizedBox(width: size.w16),
-            //             CustomButton(
-            //               // onTap: onTapDiscussion,
-            //               onTap: () {},
-            //               icon: Icons.add,
-            //               title: label(e: en.discussion, b: bn.discussion),
-            //               textSize: size.textXXXSmall,
-            //               horizontalPadding: size.w10,
-            //               verticalPadding: 6.5.h,
-            //               radius: size.w8,
-            //             )
-            //           ],
-            //         ),
-            //         SizedBox(height: size.h16),
-            //         Text(
-            //           label(e: en.transcript, b: bn.transcript),
-            //           overflow: TextOverflow.ellipsis,
-            //           maxLines: 1,
-            //           style: TextStyle(
-            //               fontFamily: StringData.fontFamilyPoppins,
-            //               fontWeight: FontWeight.w600,
-            //               fontSize: size.textSmall,
-            //               color: clr.appPrimaryColorGreen),
-            //         ),
-            //         SizedBox(height: size.h8),
-            //         ExpandableText(
-            //           text: label(
-            //               e: StringData.transcriptTitle2Description,
-            //               b: StringData.transcriptTitle2DescriptionBn),
-            //           style: TextStyle(
-            //               fontFamily: StringData.fontFamilyPoppins,
-            //               fontSize: size.textSmall,
-            //               fontWeight: FontWeight.w400,
-            //               color: clr.textColorBlack),
-            //           minimumTextLengthToFold: 200,
-            //         ),
-            //         SizedBox(height: size.h56),
-            //         Padding(
-            //           padding: EdgeInsets.symmetric(horizontal: 106.w),
-            //           child: CustomButton(
-            //             onTap: () {},
-            //             title: label(e: en.next, b: bn.next),
-            //             verticalPadding: 2.h,
-            //             radius: size.w4,
-            //           ),
-            //         ),
-            //         SizedBox(height: size.h56),
-            //       ],
-            //     ),
-            //   ),
-            // ),
-          ],
+                  // SafeArea(
+                  // child: CustomYoutubePlayer(
+                  //   videoUrl: "uGqidUUFzwY",
+                  //   body: Expanded(
+                  //     child: ListView(
+                  //       physics: const BouncingScrollPhysics(),
+                  //       padding: EdgeInsets.only(
+                  //           top: size.h16, right: size.w16, left: size.w16),
+                  //       children: [
+                  //         Row(
+                  //           children: [
+                  //             Expanded(
+                  //               child: Text(
+                  //                 label(
+                  //                     e: "Video 1: Course Introduction",
+                  //                     b: "ভিডিও ১: কোর্সের পরিচিতি"),
+                  //                 overflow: TextOverflow.ellipsis,
+                  //                 maxLines: 1,
+                  //                 style: TextStyle(
+                  //                     fontFamily: StringData.fontFamilyPoppins,
+                  //                     fontWeight: FontWeight.w600,
+                  //                     fontSize: size.textSmall,
+                  //                     color: clr.appPrimaryColorGreen),
+                  //               ),
+                  //             ),
+                  //             Icon(
+                  //               Icons.download,
+                  //               size: size.r20,
+                  //               color: clr.appPrimaryColorGreen,
+                  //             ),
+                  //             Padding(
+                  //               padding: EdgeInsets.only(left: size.w8),
+                  //               child: CustomSwitchButton(
+                  //                 value: App.currentAppLanguage == AppLanguage.english,
+                  //                 textOn: 'EN',
+                  //                 textSize: size.textXXSmall,
+                  //                 textOff: 'বাং',
+                  //                 bgColor: clr.whiteColor,
+                  //                 width: 64.w,
+                  //                 animationDuration: const Duration(milliseconds: 300),
+                  //                 onChanged: (bool state) {
+                  //                   App.setAppLanguage(state ? 1 : 0).then((value) {
+                  //                     if (mounted) {
+                  //                       setState(() {});
+                  //                     }
+                  //                     AppEventsNotifier.notify(
+                  //                         EventAction.courseDetailsScreen);
+                  //                     AppEventsNotifier.notify(
+                  //                         EventAction.onGoingCoursesScreen);
+                  //                     AppEventsNotifier.notify(
+                  //                         EventAction.dashBoardScreen);
+                  //                     AppEventsNotifier.notify(EventAction.bottomNavBar);
+                  //                     AppEventsNotifier.notify(EventAction.graphChart);
+                  //                   });
+                  //                 },
+                  //                 buttonHolder: const Icon(
+                  //                   Icons.check,
+                  //                   color: Colors.transparent,
+                  //                 ),
+                  //                 onTap: () {},
+                  //                 onDoubleTap: () {},
+                  //                 onSwipe: () {},
+                  //               ),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //         SizedBox(height: size.h8),
+                  //         Text(
+                  //           label(
+                  //               e: "Traditional Concepts of Interconnected Formal Education",
+                  //               b: "আন্তঃসংযুক্ত আনুষ্ঠানিক শিক্ষার ঐতিহ্যগত ধারণা"),
+                  //           style: TextStyle(
+                  //               fontFamily: StringData.fontFamilyPoppins,
+                  //               fontSize: size.textSmall,
+                  //               fontWeight: FontWeight.w400,
+                  //               color: clr.textColorBlack),
+                  //         ),
+                  //         SizedBox(height: size.h12),
+                  //         Row(
+                  //           mainAxisAlignment: MainAxisAlignment.end,
+                  //           children: [
+                  //             CustomButton(
+                  //               onTap: () => Get.to(() => const NoteEditScreen()),
+                  //               icon: Icons.add,
+                  //               title: label(e: en.takeNotes, b: bn.takeNotes),
+                  //               textSize: size.textXXXSmall,
+                  //               horizontalPadding: size.w10,
+                  //               verticalPadding: 6.5.h,
+                  //               radius: size.w8,
+                  //             ),
+                  //             SizedBox(width: size.w16),
+                  //             CustomButton(
+                  //               // onTap: onTapDiscussion,
+                  //               onTap: () {},
+                  //               icon: Icons.add,
+                  //               title: label(e: en.discussion, b: bn.discussion),
+                  //               textSize: size.textXXXSmall,
+                  //               horizontalPadding: size.w10,
+                  //               verticalPadding: 6.5.h,
+                  //               radius: size.w8,
+                  //             )
+                  //           ],
+                  //         ),
+                  //         SizedBox(height: size.h16),
+                  //         Text(
+                  //           label(e: en.transcript, b: bn.transcript),
+                  //           overflow: TextOverflow.ellipsis,
+                  //           maxLines: 1,
+                  //           style: TextStyle(
+                  //               fontFamily: StringData.fontFamilyPoppins,
+                  //               fontWeight: FontWeight.w600,
+                  //               fontSize: size.textSmall,
+                  //               color: clr.appPrimaryColorGreen),
+                  //         ),
+                  //         SizedBox(height: size.h8),
+                  //         ExpandableText(
+                  //           text: label(
+                  //               e: StringData.transcriptTitle2Description,
+                  //               b: StringData.transcriptTitle2DescriptionBn),
+                  //           style: TextStyle(
+                  //               fontFamily: StringData.fontFamilyPoppins,
+                  //               fontSize: size.textSmall,
+                  //               fontWeight: FontWeight.w400,
+                  //               color: clr.textColorBlack),
+                  //           minimumTextLengthToFold: 200,
+                  //         ),
+                  //         SizedBox(height: size.h56),
+                  //         Padding(
+                  //           padding: EdgeInsets.symmetric(horizontal: 106.w),
+                  //           child: CustomButton(
+                  //             onTap: () {},
+                  //             title: label(e: en.next, b: bn.next),
+                  //             verticalPadding: 2.h,
+                  //             radius: size.w4,
+                  //           ),
+                  //         ),
+                  //         SizedBox(height: size.h56),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
+                ],
+              ),
+            );
+          },
+          emptyBuilder: (context, message, icon) => EmptyWidget(
+            message: message,
+            constraints: constraints,
+            offset: 350.w,
+          ),
         ),
       ),
     );
+  }
+
+  @override
+  void showWarning(String message) {
+    CustomToasty.of(context).showWarning(message);
+  }
+
+  @override
+  void setVideo(String url) {
+    _controller = VideoPlayerController.networkUrl(
+        Uri.parse(url))
+      ..initialize().then((_) {
+        Future.delayed((const Duration(microseconds: 100))).then((value) {
+          setState(() {});
+        });
+      });
   }
 }
 

@@ -1,3 +1,4 @@
+import '../../models/video_content_data_model.dart';
 import '../../models/blended_class_data_model.dart';
 import '../../models/course_details_data_model.dart';
 import '../../models/all_course_data_model.dart';
@@ -59,7 +60,7 @@ class CourseRemoteDataSourceImp extends CourseRemoteDataSource {
     final responseJson = await Server.instance
         .getRequest(url: "${ApiCredential.getVideo}/$courseContentId");
     ResponseModel responseModel = ResponseModel.fromJson(
-        responseJson, (dynamic json) => VideoDataModel.fromJson(json));
+        responseJson, (dynamic json) => VideoContentDataModel.fromJson(json));
     return responseModel;
   }
 }

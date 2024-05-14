@@ -91,7 +91,7 @@ mixin RouteGenerator {
           case AppRoute.courseScriptScreen:
             return CourseScriptScreen(arguments: setting.arguments);
           case AppRoute.transcriptVideoScreen:
-            return const TranscriptVideoScreen();
+            return TranscriptVideoScreen(arguments: setting.arguments);
           case AppRoute.courseAssignmentScreen:
             return CourseAssignmentScreen(arguments: setting.arguments);
           case AppRoute.courseLiveClassScreen:

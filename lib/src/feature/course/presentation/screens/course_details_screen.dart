@@ -86,7 +86,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
                     if (_screenArgs.curriculumType ==
                         CircularStatus.running.name)
                       LastSeenWidget(
-                        onTap: onTapCourseVideo,
+                        onTap: () => onTapCourseVideo,
                       ),
                     CustomTextWidget(
                       text: label(e: data.nameEn, b: data.nameBn),
@@ -230,7 +230,11 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
                             buildItem: (BuildContext context, int index, item) {
                               return CourseContentWidget(
                                 data: item,
-                                onTapVideo: onTapCourseVideo,
+                                onTapVideo: () => onTapCourseVideo(
+                                    item.contentId,
+                                    item.contentType,
+                                    item.contentTitleEn,
+                                    item.contentTitleBn),
                                 onTapAssignment: () => onTapCourseAssignment(
                                     item.contentId, item.isCompleted),
                                 onTapAssessment: () =>
@@ -317,8 +321,14 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
   }
 
   @override
-  void navigateToCourseVideoScreen() {
-    Navigator.of(context).pushNamed(AppRoute.transcriptVideoScreen);
+  void navigateToCourseVideoScreen(int contentId, String contentType,
+      String contentTitleEn, String contentTitleBn) {
+    Navigator.of(context).pushNamed(AppRoute.transcriptVideoScreen,
+        arguments: CourseVideoScreenArgs(
+            contentId: contentId,
+            contentType: contentType,
+            contentTitleEn: contentTitleEn,
+            contentTitleBn: contentTitleBn));
   }
 
   @override

@@ -11,33 +11,37 @@ class VideoDataModelToEntityMapper
   @override
   VideoDataModel fromEntityToModel(VideoDataEntity entity) {
     return VideoDataModel(
-        id: entity.id,
-        courseId: entity.courseId,
-        courseModuleId: entity.courseModuleId,
-        titleEn: entity.titleEn,
-        titleBn: entity.titleBn,
-        type: entity.type,
-        url: entity.url,
-        transcriptEn: entity.transcriptEn,
-        transcriptBn: entity.transcriptBn,
-        category: entity.category,
-        history: entity.history);
+      id: entity.id,
+      circularId: entity.circularId,
+      courseId: entity.courseId,
+      courseModuleId: entity.courseModuleId,
+      titleEn: entity.titleEn,
+      titleBn: entity.titleBn,
+      transcriptEn: entity.transcriptEn,
+      transcriptBn: entity.transcriptBn,
+      sort: entity.sort,
+      status: entity.status,
+      category: entity.category,
+      videoUrl: entity.videoUrl,
+    );
   }
 
   @override
   VideoDataEntity toEntityFromModel(VideoDataModel model) {
     return VideoDataEntity(
-        id: model.id,
-        courseId: model.courseId,
-        courseModuleId: model.courseModuleId,
-        titleEn: model.titleEn,
-        titleBn: model.titleBn,
-        type: model.type,
-        url: model.url,
-        transcriptEn: model.transcriptEn,
-        transcriptBn: model.transcriptBn,
-        category: model.category,
-        history: model.history);
+      id: model.id,
+      circularId: model.circularId,
+      courseId: model.courseId,
+      courseModuleId: model.courseModuleId,
+      titleEn: model.titleEn,
+      titleBn: model.titleBn,
+      transcriptEn: model.transcriptEn,
+      transcriptBn: model.transcriptBn,
+      sort: model.sort,
+      status: model.status,
+      category: model.category,
+      videoUrl: model.videoUrl,
+    );
   }
 }
 
