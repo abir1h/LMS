@@ -30,11 +30,15 @@ mixin AssessmentScreenService<T extends StatefulWidget> on State<T>
   void initState() {
     _view = this;
     super.initState();
+
     ///Initialized timer
     _examStartTime = DateTime.now();
     _examTimer = Timer.periodic(const Duration(seconds: 1), _onTimerTick);
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {_onTimerTick(_examTimer);});
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _onTimerTick(_examTimer);
+    });
   }
+
   @override
   void dispose() {
     pageStateStreamController.dispose();
@@ -45,21 +49,25 @@ mixin AssessmentScreenService<T extends StatefulWidget> on State<T>
 
   ///Set screen args and load questions
   void initService(AssessmentScreenArgs args) {
-    if(!mounted) return;
+    if (!mounted) return;
+
     ///Loading state
     pageStateStreamController.add(LoadingState<PageState>());
     screenArgs = args;
     pageStateStreamController
         .add(DataLoadedState<PageState>(ExamRunningState(screenArgs.examData)));
   }
+
   void _onTimerTick(Timer timer) {
     ///Exam started
     var elapsedTime = DateTime.now().difference(_examStartTime);
-    var remaining = Duration(minutes: screenArgs.examData.assessment!.totalTime) - elapsedTime;
+    var remaining =
+        Duration(minutes: screenArgs.examData.assessment!.totalTime) -
+            elapsedTime;
     timerStreamController.sink.add(remaining);
 
     ///Exam expired check
-    if(remaining.inSeconds <= 0){
+    if (remaining.inSeconds <= 0) {
       _examTimer.cancel();
       // widget.onTimeExpired(widget.data,widget.overview,_examStartTime,DateTime.now());
     }
@@ -83,5 +91,6 @@ class TimeExpiredState extends PageState {
 }
 
 class AnswerSubmittedState extends PageState {
-  AnswerSubmittedState();
+  final ExamDataEntity examData;
+  AnswerSubmittedState(this.examData);
 }

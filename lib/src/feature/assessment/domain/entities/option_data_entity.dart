@@ -3,6 +3,7 @@ class OptionDataEntity {
   final int circularQuestionId;
   final String optionKey;
   final String optionValue;
+  bool isSelected;
   final String optionImg;
   final int sort;
   String userInput;
@@ -14,6 +15,7 @@ class OptionDataEntity {
     required this.circularQuestionId,
     required this.optionKey,
     required this.optionValue,
+    this.isSelected = false,
     required this.optionImg,
     required this.sort,
     required this.userInput,
