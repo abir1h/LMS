@@ -223,7 +223,7 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                                       Expanded(
                                         child: Text(
                                           label(
-                                              e: data.titleEn, b: data.titleBn),
+                                              e: "Training on Pedagory", b:"শিক্ষাবিদ্যার উপর প্রশিক্ষণ"),
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 1,
                                           style: TextStyle(
