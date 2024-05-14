@@ -1,4 +1,10 @@
 import 'package:lms/src/feature/course/data/mapper/blended_class_data_mapper.dart';
+import 'package:lms/src/feature/course/data/mapper/content_read_data_mapper.dart';
+import 'package:lms/src/feature/course/data/models/content_read_data_model.dart';
+import 'package:lms/src/feature/course/domain/entities/content_read_data_entity.dart';
+import 'package:lms/src/feature/notes/data/mapper/content_data_mapper.dart';
+import 'package:lms/src/feature/notes/data/models/content_data_model.dart';
+import 'package:lms/src/feature/notes/domain/entities/content_data_entity.dart';
 
 import '../../domain/entities/blended_class_data_entity.dart';
 import '../mapper/video_data_mapper.dart';
@@ -70,5 +76,21 @@ class CourseRepositoryImp extends CourseRepository {
     return ResponseModelToEntityMapper<VideoDataEntity, VideoDataModel>()
         .toEntityFromModel(
             responseModel, (VideoDataModel model) => model.toVideoDataEntity);
+  }
+
+  @override
+  Future<ResponseEntity> contentRead(
+      int contentId,
+      String contentType,
+      int courseId,
+      bool isCompleted,
+      String lastWatchTime,
+      String attendanceType) async {
+    ResponseModel responseModel =
+        (await courseRemoteDataSource.contentReadAction(contentId, contentType,
+            courseId, isCompleted, lastWatchTime, attendanceType));
+    return ResponseModelToEntityMapper<ContentReadDataEntity, ContentReadDataModel>()
+        .toEntityFromModel(responseModel,
+            (ContentReadDataModel model) => model.toContentReadDataEntity);
   }
 }

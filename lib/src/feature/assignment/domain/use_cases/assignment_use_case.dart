@@ -38,5 +38,14 @@ class AssignmentUseCase {
     final response = _assignmentRepository.updateAssignment(submissionId,
         assignmentId, subAssignmentId, courseId, circularId, answer, files);
     return response;
+  }  Future<ResponseEntity> requestAssignmentUseCase(
+      int circularId,
+      int courseId,
+      int circularAssignmentId,
+      int courseModuleId,
+      String message,) async {
+    final response = _assignmentRepository.requestAssignment(circularId,
+        courseId, circularAssignmentId, courseModuleId, message);
+    return response;
   }
 }

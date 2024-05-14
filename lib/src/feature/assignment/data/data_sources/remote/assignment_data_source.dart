@@ -5,6 +5,7 @@ import '../../../../../core/constants/common_imports.dart';
 import '../../../../../core/network/api_service.dart';
 import '../../../../shared/data/models/response_model.dart';
 import '../../models/assignment_data_model.dart';
+import '../../models/assignment_request_model.dart';
 
 abstract class AssignmentRemoteDataSource {
   Future<ResponseModel> getAssignmentDetailsAction(int courseContentId);
@@ -23,6 +24,13 @@ abstract class AssignmentRemoteDataSource {
       int circularId,
       String answer,
       List<File> files);
+  Future<ResponseModel> requestAssignmentAction(
+    int circularId,
+    int courseId,
+    int circularAssignmentId,
+    int courseModuleId,
+    String message,
+  );
 }
 
 class AssignmentRemoteDataSourceImp extends AssignmentRemoteDataSource {
@@ -103,6 +111,25 @@ class AssignmentRemoteDataSourceImp extends AssignmentRemoteDataSource {
         files: files);
     ResponseModel responseModel = ResponseModel.fromJson(
         responseJson, (dynamic json) => AssignmentDataModel.fromJson(json));
+    return responseModel;
+  }
+
+  @override
+  Future<ResponseModel> requestAssignmentAction(int circularId, int courseId,
+      int circularAssignmentId, int courseModuleId, String message) async {
+    Map<String, String> data = {
+      "circular_id": circularId.toString(),
+      "course_id": courseId.toString(),
+      "circular_assignment_id": circularAssignmentId.toString(),
+      "course_module_id": courseModuleId.toString(),
+      "message": message,
+    };
+    final responseJson = await Server.instance.postRequest(
+      url: ApiCredential.requestAssignment,
+      postData: data,
+    );
+    ResponseModel responseModel = ResponseModel.fromJson(
+        responseJson, (dynamic json) => AssignmentRequestModel.fromJson(json));
     return responseModel;
   }
 }

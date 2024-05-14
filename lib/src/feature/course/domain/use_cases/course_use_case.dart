@@ -30,4 +30,16 @@ class CourseUseCase {
     final response = _courseRepository.getVideoDetails(courseContentId);
     return response;
   }
+
+  Future<ResponseEntity> contentReadUseCase(
+      int contentId,
+      String contentType,
+      int courseId,
+      bool isCompleted,
+      String lastWatchTime,
+      String attendanceType) async {
+    final response = _courseRepository.contentRead(contentId, contentType,
+        courseId, isCompleted, lastWatchTime, attendanceType);
+    return response;
+  }
 }

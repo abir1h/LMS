@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:lms/src/feature/assignment/data/mapper/assignement_request_mapper.dart';
+import 'package:lms/src/feature/assignment/domain/entities/assignement_request_entity.dart';
+
 import '../mapper/assignment_data_mapper.dart';
 import '../models/assignment_data_model.dart';
 import '../../domain/entities/assignment_data_entity.dart';
@@ -8,6 +11,7 @@ import '../../../shared/data/models/response_model.dart';
 import '../../../shared/domain/entities/response_entity.dart';
 import '../../domain/repositories/assignment_repository.dart';
 import '../data_sources/remote/assignment_data_source.dart';
+import '../models/assignment_request_model.dart';
 
 class AssignmentRepositoryImp extends AssignmentRepository {
   final AssignmentRemoteDataSource assignmentRemoteDataSource;
@@ -57,5 +61,17 @@ class AssignmentRepositoryImp extends AssignmentRepository {
             AssignmentDataModel>()
         .toEntityFromModel(responseModel,
             (AssignmentDataModel model) => model.toAssignmentDataEntity);
+  }
+
+  @override
+  Future<ResponseEntity> requestAssignment(int circularId, int courseId,
+      int circularAssignmentId, int courseModuleId, String message) async {
+    ResponseModel responseModel =
+        (await assignmentRemoteDataSource.requestAssignmentAction(circularId,
+            courseId, circularAssignmentId, courseModuleId, message));
+    return ResponseModelToEntityMapper<AssignmentRequestEntity,
+            AssignmentRequestModel>()
+        .toEntityFromModel(responseModel,
+            (AssignmentRequestModel model) => model.toAssignmentRequestEntity);
   }
 }

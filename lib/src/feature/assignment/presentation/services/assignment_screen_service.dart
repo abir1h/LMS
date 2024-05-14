@@ -3,6 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/common_widgets/app_stream.dart';
+import '../../../../core/utility/validator.dart';
 import '../../../shared/domain/entities/response_entity.dart';
 import '../../data/data_sources/remote/assignment_data_source.dart';
 import '../../data/repositories/assignment_repository_imp.dart';
@@ -12,6 +13,7 @@ import '../../domain/use_cases/assignment_use_case.dart';
 abstract class _ViewModel {
   void showWarning(String message);
   void showSuccess(String message);
+
 }
 
 mixin AssignmentScreenService<T extends StatefulWidget> on State<T>
@@ -30,6 +32,12 @@ mixin AssignmentScreenService<T extends StatefulWidget> on State<T>
       int courseId, int circularId, String answer, List<File> files) async {
     return _assignmentUseCase.storeAssignmentUseCase(
         assignmentId, subAssignmentId, courseId, circularId, answer, files);
+  }
+
+  Future<ResponseEntity> requestAssignment(int circularId, int courseId,
+      int circularAssignmentId, int courseModuleId, String message) async {
+    return _assignmentUseCase.requestAssignmentUseCase(
+        circularId, courseId, circularAssignmentId, courseModuleId, message);
   }
 
   Future<ResponseEntity> updateAssignment(
@@ -121,6 +129,32 @@ mixin AssignmentScreenService<T extends StatefulWidget> on State<T>
       _view.showWarning(responseEntity.message!);
     }
     return responseEntity;
+  }
+
+  Future<ResponseEntity> onRequestAssignmentSubmit({
+    required int circularId,
+    required int courseId,
+    required int circularAssignmentId,
+    required int courseModuleId,
+    required String message,
+  }) async {
+    ResponseEntity responseEntity = await requestAssignment(
+        circularId, courseId, circularAssignmentId, courseModuleId, message);
+    if (responseEntity.error == null && responseEntity.data != null) {
+      _view.showSuccess(responseEntity.message!);
+    } else {
+      _view.showWarning(responseEntity.message!);
+    }
+    return responseEntity;
+  }
+
+  bool validateFormData(TextEditingController discussionController) {
+    if (Validator.isEmpty(discussionController.text.trim())) {
+      _view.showWarning("Description is required!");
+      return false;
+    } else {
+      return true;
+    }
   }
 
   void pickFiles() async {

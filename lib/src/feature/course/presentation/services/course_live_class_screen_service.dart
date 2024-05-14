@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:lms/src/feature/course/domain/entities/content_read_data_entity.dart';
 
 import '../../../../core/common_widgets/app_stream.dart';
+import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../shared/domain/entities/response_entity.dart';
 import '../../data/data_sources/remote/course_data_source.dart';
 import '../../data/repositories/course_repository_imp.dart';
@@ -8,6 +10,7 @@ import '../../domain/entities/blended_class_data_entity.dart';
 import '../../domain/use_cases/course_use_case.dart';
 
 abstract class _ViewModel {
+  void showSuccess(String message);
   void showWarning(String message);
 }
 
@@ -22,6 +25,59 @@ mixin CourseLiveClassScreenService<T extends StatefulWidget> on State<T>
   Future<ResponseEntity> getBlendedDetails(int courseContentId) async {
     return _courseUseCase.getBlendedClassUseCase(courseContentId);
   }
+
+  Future<ResponseEntity> contentRead(
+      int contentId,
+      String contentType,
+      int courseId,
+      bool isCompleted,
+      String lastWatchTime,
+      String attendanceType) async {
+    return _courseUseCase.contentReadUseCase(contentId, contentType, courseId,
+        isCompleted, lastWatchTime, attendanceType);
+  }
+
+  Future<ResponseEntity> contentReadPost(
+      int contentId,
+      String contentType,
+      int courseId,
+      bool isCompleted,
+      String lastWatchTime,
+      String attendanceType) async {
+    ResponseEntity responseEntity = await contentRead(contentId, contentType,
+        courseId, isCompleted, lastWatchTime, attendanceType);
+    if (responseEntity.error == null && responseEntity.data != null) {
+      CustomToasty.of(context).releaseUI();
+      _view.showSuccess(responseEntity.message!);
+    } else {
+      _view.showWarning(responseEntity.message!);
+      CustomToasty.of(context).releaseUI();
+
+    }
+    return responseEntity;
+
+    // CustomToasty.of(context).lockUI();
+    // contentRead(contentId, contentType, courseId, isCompleted, lastWatchTime,
+    //         attendanceType)
+    //     .then((value) {
+    //   if (value.error == null && value.data != null) {
+    //     _view.showSuccess(value.message!);
+    //     CustomToasty.of(context).releaseUI();
+    //   } else {
+    //     _view.showWarning(value.message!);
+    //     CustomToasty.of(context).releaseUI();
+    //   }
+    // });
+    return responseEntity;
+  }
+
+  // contentReadPost(int contentId, String contentType, int courseId,
+  //     bool isCompleted, String lastWatchTime, String attendanceType) async {
+  //   CustomToasty.of(context).lockUI();
+  //   contentRead(contentId, contentType, courseId, isCompleted, lastWatchTime,
+  //       attendanceType);
+  //   CustomToasty.of(context).releaseUI();
+  // }
 
   int _selectedTabIndex = 0;
 

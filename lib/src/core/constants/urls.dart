@@ -47,10 +47,13 @@ class ApiCredential {
   static String getAssignment = "/assignment-service/api/mobile/assignments";
   static String createAssignment =
       "/assignment-service/api/mobile/assignment-submissions";
+  static String requestAssignment =
+      "/assignment-service/api/mobile/assignment-request";
 
   static String getNotes = "/circular-service/api/mobile/notes";
   static String createNotes = "/circular-service/api/mobile/notes";
   static String getNotesByContent = "/circular-service/api/mobile/notes-by-content";
+  static String contentRead = "/circular-service/api/mobile/content-read";
 
   static String getProfile = "/circular-service/api/mobile/profile";
   static String imageUrl = "$baseUrl/circular-service/uploads/";
