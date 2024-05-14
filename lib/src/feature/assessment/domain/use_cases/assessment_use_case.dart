@@ -1,3 +1,5 @@
+import 'package:lms/src/feature/assessment/domain/entities/exam_data_entity.dart';
+
 import '../../../shared/domain/entities/response_entity.dart';
 import '../repositories/assessment_repository.dart';
 
@@ -19,6 +21,11 @@ class AssessmentUseCase {
 
   Future<ResponseEntity> startExamUseCase(int circularAssessmentId) async {
     final response = _assessmentRepository.startExam(circularAssessmentId);
+    return response;
+  }
+
+  Future<ResponseEntity> submitExamUseCase(ExamDataEntity examDataEntity) async {
+    final response = _assessmentRepository.submitExam(examDataEntity);
     return response;
   }
 }

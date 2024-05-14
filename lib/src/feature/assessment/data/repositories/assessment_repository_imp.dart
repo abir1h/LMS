@@ -49,4 +49,13 @@ class AssessmentRepositoryImp extends AssessmentRepository {
         .toEntityFromModel(
             responseModel, (ExamDataModel model) => model.toExamDataEntity);
   }
+
+  @override
+  Future<ResponseEntity> submitExam(ExamDataEntity examDataEntity) async {
+    ResponseModel responseModel = (await assessmentRemoteDataSource
+        .submitExamAction(examDataEntity.toExamDataModel));
+    return ResponseModelToEntityMapper<ExamDataEntity, ExamDataModel>()
+        .toEntityFromModel(
+            responseModel, (ExamDataModel model) => model.toExamDataEntity);
+  }
 }
