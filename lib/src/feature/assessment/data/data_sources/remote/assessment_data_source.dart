@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import '../../models/exam_data_model.dart';
 import '../../models/question_type_data_model.dart';
 import '../../models/assessment_data_model.dart';
@@ -43,9 +45,60 @@ class AssessmentRemoteDataSourceImp extends AssessmentRemoteDataSource {
     return responseModel;
   }
 
+  // @override
+  // Future<ResponseModel> submitExamAction(ExamDataModel examDataModel) async {
+  //   Map<String, dynamic> data = examDataModel.toJson();
+  //   data["submission_type"] = "Manual";
+  //   data["assessment_id"] = examDataModel.assessment!.id;
+  //   final responseJson = await Server.instance
+  //       .postRequest(url: ApiCredential.submitExam, postData: data);
+  //   ResponseModel responseModel = ResponseModel.fromJson(
+  //       responseJson, (dynamic json) => ExamDataModel.fromJson(json));
+  //   return responseModel;
+  // }
+
   @override
   Future<ResponseModel> submitExamAction(ExamDataModel examDataModel) async {
-    Map<String, dynamic> data = examDataModel.toJson();
+    Map<String, dynamic> data = {
+      "exam_result_id": examDataModel.examResultId,
+      "submission_type": "Manual",
+      "assessment_id": examDataModel.assessment!.id,
+      "questions": examDataModel.questions
+          .map((e) => e.questionType!.id != 6
+              ? {
+                  "question_id": e.id,
+                  "type_id": e.questionType!.id,
+                  "options": e.options
+                      .map((v) =>
+                          e.questionType!.id == 2 || e.questionType!.id == 5
+                              ? {
+                                  "option_id": v.id,
+                                  "user_correct_value": v.userCorrectValue,
+                                }
+                              : e.questionType!.id == 3
+                                  ? {
+                                      "option_id": v.id,
+                                      "user_correct_input": v.userCorrectInput,
+                                    }
+                                  : e.questionType!.id == 4
+                                      ? {
+                                          "option_id": v.id,
+                                          "user_input": v.userInput,
+                                        }
+                                      : {
+                                          "option_id": v.id,
+                                          "user_input": v.userInput,
+                                        })
+                      .toList()
+                }
+              : {
+                  "question_id": e.id,
+                  "type_id": e.questionType!.id,
+                  "user_input": e.userInput,
+                })
+          .toList()
+    };
+    log(data.toString());
     final responseJson = await Server.instance
         .postRequest(url: ApiCredential.submitExam, postData: data);
     ResponseModel responseModel = ResponseModel.fromJson(

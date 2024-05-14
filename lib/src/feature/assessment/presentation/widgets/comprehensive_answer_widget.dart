@@ -7,11 +7,9 @@ import 'written_text_field_widget.dart';
 
 class ComprehensiveAnswerWidget extends StatefulWidget {
   final QuestionDataEntity data;
-  final ValueChanged<String>? onChange;
   const ComprehensiveAnswerWidget({
     Key? key,
     required this.data,
-    this.onChange,
   }) : super(key: key);
 
   @override
@@ -50,7 +48,7 @@ class _ComprehensiveAnswerWidgetState extends State<ComprehensiveAnswerWidget>
           SizedBox(height: size.h8),
           WrittenTextFieldWidget(
             onChanged: (e) {
-              widget.data.options[index].optionValue == e;
+              widget.data.options[index].userInput == e;
             },
           ),
         ],

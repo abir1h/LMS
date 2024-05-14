@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:lms/src/core/common_widgets/custom_action_button.dart';
+import 'package:lms/src/core/common_widgets/custom_toasty.dart';
+import 'package:lms/src/feature/shared/domain/entities/response_entity.dart';
 
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../../../core/common_widgets/circuler_widget.dart';
@@ -7,6 +10,7 @@ import '../../../../core/constants/common_imports.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
+import '../../domain/entities/exam_data_entity.dart';
 import '../../domain/entities/question_data_entity.dart';
 import '../services/assessment_screen_service.dart';
 import '../widgets/comprehensive_answer_widget.dart';
@@ -159,12 +163,12 @@ class _AssessmentAllQuestionScreenState
   Widget build(BuildContext context) {
     return CustomScaffold(
       title: label(e: en.assessment, b: bn.assessment),
-      // actionChild: TimeDigitWidget(
-      //   examStateStream: pageStateStreamController.stream,
-      //   timerStream: timerStreamController.stream,
-      //   // isExamRunning: (x)=> x != null && (x is DataLoadedState) && x.data is ExamRunningState,
-      //   isExamRunning: (x) => true,
-      // ),
+      actionChild: TimeDigitWidget(
+        examStateStream: pageStateStreamController.stream,
+        timerStream: timerStreamController.stream,
+        // isExamRunning: (x)=> x != null && (x is DataLoadedState) && x.data is ExamRunningState,
+        isExamRunning: (x) => true,
+      ),
       resizeToAvoidBottomInset: true,
       body: AppStreamBuilder<PageState>(
         stream: pageStateStreamController.stream,
@@ -187,14 +191,14 @@ class _AssessmentAllQuestionScreenState
                         fontSize: size.textXMedium,
                         fontWeight: FontWeight.w500,
                       ),
-                      SizedBox(width: size.w16),
-                      TimeDigitWidget(
-                        examStateStream: pageStateStreamController.stream,
-                        timerStream: timerStreamController.stream,
-                        // isExamRunning: (x)=> x != null && (x is DataLoadedState) && x.data is ExamRunningState,
-                        isExamRunning: (x) => true,
-                      ),
-                      SizedBox(width: size.w20)
+                      // SizedBox(width: size.w16),
+                      // TimeDigitWidget(
+                      //   examStateStream: pageStateStreamController.stream,
+                      //   timerStream: timerStreamController.stream,
+                      //   isExamRunning: (x)=> x != null && (x is DataLoadedState) && x.data is ExamRunningState,
+                      //   // isExamRunning: (x) => true,
+                      // ),
+                      // SizedBox(width: size.w20)
                     ],
                   ),
                   SizedBox(height: size.h24),
@@ -210,46 +214,47 @@ class _AssessmentAllQuestionScreenState
                   QuestionListWidget<QuestionDataEntity>(
                     items: data.examData.assessment!.questions,
                     builder: (context, data, index) {
-                      return QuestionWidget(
-                        questionNo: replaceEnglishNumberWithBengali(
-                            (index + 1).toString()),
-                        questionText: data.question,
-                        // child: Text(data.question),
-                        child: data.questionType?.id == 2
-                            ? MCQAnswerWidget(
-                                data: data,
-                              )
-                            : data.questionType?.id == 3
-                                ? MatchingAnswerWidget(
-                                    data: data,
-                                  )
-                                : data.questionType?.id == 4
-                                    ? FillInTheGapAnswerWidget(
-                                        data: data,
-                                        onChange: (v) {
-                                          // data.options = v;
-                                        },
-                                      )
-                                    : data.questionType?.id == 5
-                                        ? TrueFalseAnswerWidget(
-                                            data: data,
-                                          )
-                                        : data.questionType?.id == 6
-                                            ? DescriptiveAnswerWidget(
-                                                onChange: (v) {
-                                                  // data.options = v;
-                                                },
-                                              )
-                                            : data.questionType?.id == 7
-                                                ? ComprehensiveAnswerWidget(
-                                                    data: data,
-                                                    onChange: (v) {
-                                                      // data.options = v;
-                                                    },
-                                                  )
-                                                : Container(),
-                      );
+                      ///Todo Fixed After Demo
+                      return data.questionType?.id != 3
+                          ? QuestionWidget(
+                              questionNo: replaceEnglishNumberWithBengali(
+                                  (index + 1).toString()),
+                              questionText: data.questionType?.id != 4
+                                  ? data.question
+                                  : "",
+                              // child: Text(data.question),
+                              child: data.questionType?.id == 2
+                                  ? MCQAnswerWidget(data: data)
+                                  // : data.questionType?.id == 3
+                                  //     ? MatchingAnswerWidget(data: data)
+                                  : data.questionType?.id == 4
+                                      ? FillInTheGapAnswerWidget(data: data)
+                                      : data.questionType?.id == 5
+                                          ? TrueFalseAnswerWidget(data: data)
+                                          : data.questionType?.id == 6
+                                              ? DescriptiveAnswerWidget(
+                                                  data: data)
+                                              : data.questionType?.id == 7
+                                                  ? ComprehensiveAnswerWidget(
+                                                      data: data)
+                                                  : Container(),
+                            )
+                          : Wrap();
                     },
+                  ),
+                  SizedBox(height: size.h16),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: size.w32),
+                    child: CustomActionButton<ExamDataEntity>(
+                        title: label(e: "Submit Answer", b: "জমা দিন"),
+                        // controller: _submitButtonController,
+                        // onCheck: _showConfirmationDialog,
+                        tapAction: () =>
+                            onSubmitExam(examDataEntity: data.examData),
+                        onSuccess: (x) {
+                          // _examTimer.cancel();
+                          // widget.onResultSubmitted(widget.data);
+                        }),
                   ),
                   SizedBox(height: size.h64),
                 ],
@@ -368,12 +373,12 @@ class _AssessmentAllQuestionScreenState
 
   @override
   void showSuccess(String message) {
-    // TODO: implement showSuccess
+    CustomToasty.of(context).showSuccess(message);
   }
 
   @override
   void showWarning(String message) {
-    // TODO: implement showWarning
+    CustomToasty.of(context).showSuccess(message);
   }
 }
 

@@ -7,7 +7,7 @@ class OptionDataEntity {
   final String optionImg;
   final int sort;
   String userInput;
-  bool userCorrectValue;
+  String userCorrectValue;
   String userCorrectInput;
 
   OptionDataEntity({

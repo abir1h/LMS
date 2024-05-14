@@ -8,11 +8,11 @@ class OptionDataModel {
   final String optionValue;
   final String optionImg;
   final int sort;
-  final String userInput;
-  final bool userCorrectValue;
-  final String userCorrectInput;
+  String userInput;
+  String userCorrectValue;
+  String userCorrectInput;
 
-  const OptionDataModel({
+  OptionDataModel({
     required this.id,
     required this.circularQuestionId,
     required this.optionKey,
@@ -33,7 +33,7 @@ class OptionDataModel {
         optionImg: json["option_img"] ?? "",
         sort: json["sort"] ?? -1,
         userInput: json["user_input"] ?? "",
-        userCorrectValue: json["user_correct_value"] ?? false,
+        userCorrectValue: json["user_correct_value"] ?? "",
         userCorrectInput: json["user_correct_input"] ?? "",
       );
 

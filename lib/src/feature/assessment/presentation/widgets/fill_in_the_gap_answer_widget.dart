@@ -10,12 +10,9 @@ import '../models/blank_model.dart';
 import 'dashed_border.dart';
 
 class FillInTheGapAnswerWidget extends StatefulWidget {
-  // final BlankModel? mainModel;
   final QuestionDataEntity data;
-  final ValueChanged<String>? onChange;
 
-  const FillInTheGapAnswerWidget(
-      {super.key, required this.data, this.onChange});
+  const FillInTheGapAnswerWidget({super.key, required this.data});
 
   @override
   State<FillInTheGapAnswerWidget> createState() =>
@@ -45,7 +42,10 @@ class _FillInTheGapAnswerWidgetState extends State<FillInTheGapAnswerWidget>
                 fontWeight: FontWeight.w400,
               ),
               SizedBox(height: size.h8),
-              WrittenTextFieldWidget(onChanged: widget.onChange),
+              WrittenTextFieldWidget(onChanged: (e) {
+                widget.data.options[index].userInput = e;
+                print("Blank  ${widget.data.options[index].userInput}");
+              }),
             ],
           ),
           separatorBuilder: (context, index) {

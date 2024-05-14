@@ -28,24 +28,17 @@ class _MCQAnswerWidgetState extends State<MCQAnswerWidget> with AppTheme {
         imageValue: widget.data.options[index].optionImg,
         isSelected: widget.data.options[index].isSelected,
         onTap: () => setState(() {
-          widget.data.options[index].isSelected
-              ? widget.data.options[index].isSelected =
-                  !widget.data.options[index].isSelected
-              : widget.data.options[index].isSelected;
           for (OptionDataEntity optionDataEntity in widget.data.options) {
-            if (optionDataEntity.isSelected == !optionDataEntity.isSelected) {}
+            if (widget.data.options.indexOf(optionDataEntity) != index) {
+              optionDataEntity.isSelected = false;
+            } else {
+              optionDataEntity.isSelected = !optionDataEntity.isSelected;
+              widget.data.options[index].userCorrectValue =
+                  widget.data.options[index].optionValue;
+            }
           }
-
-          // widget.data.userAnswer1 = !widget.data.userAnswer1;
-          // widget.data.userAnswer2
-          //     ? widget.data.userAnswer2 = !widget.data.userAnswer2
-          //     : widget.data.userAnswer2;
-          // widget.data.userAnswer3
-          //     ? widget.data.userAnswer3 = !widget.data.userAnswer3
-          //     : widget.data.userAnswer3;
-          // widget.data.userAnswer4
-          //     ? widget.data.userAnswer4 = !widget.data.userAnswer4
-          //     : widget.data.userAnswer4;
+          print(
+              "Ansewwlelkfekf ${widget.data.options[index].userCorrectValue}");
         }),
       ),
       separatorBuilder: (context, index) {

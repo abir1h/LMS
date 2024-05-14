@@ -6,9 +6,8 @@ class ExamDataEntity {
   final AssessmentDataEntity? assessment;
   final List<QuestionDataEntity> questions;
 
-  const ExamDataEntity({
-    required this.examResultId,
-    required this.assessment,
-    required this.questions
-  });
+  const ExamDataEntity(
+      {required this.examResultId,
+      required this.assessment,
+      required this.questions});
 }

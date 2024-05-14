@@ -69,9 +69,9 @@ class _QuestionAnswerPanelState extends State<QuestionAnswerPanel>
                               .docTitle,
                           child: FillInTheGapAnswerWidget(
                             data: widget.questions.elementAt(position).data,
-                            onChange: (v) {
-                              // controller.qusList[index].blank1 = v;
-                            },
+                            // onChange: (v) {
+                            //   // controller.qusList[index].blank1 = v;
+                            // },
                           ))
                     ] else if (widget.questions.elementAt(position).type ==
                         QuestionType.matching) ...[
@@ -106,17 +106,17 @@ class _QuestionAnswerPanelState extends State<QuestionAnswerPanel>
                     //     child: const TrueFalseAnswerWidget(),
                     //   )
                     // ]
-                    else if (widget.questions.elementAt(position).type ==
-                        QuestionType.written) ...[
-                      QuestionWidget(
-                        questionNo: "${position + 1}",
-                        questionText:
-                            "আপনি গঠনমূলক মূল্যায়ন সিস্টেম সম্পর্কে কি জানেন?",
-                        child: const DescriptiveAnswerWidget(
-                            // data: controller.questions[index],
-                            ),
-                      )
-                    ]
+                    // else if (widget.questions.elementAt(position).type ==
+                    //     QuestionType.written) ...[
+                    //   QuestionWidget(
+                    //     questionNo: "${position + 1}",
+                    //     questionText:
+                    //         "আপনি গঠনমূলক মূল্যায়ন সিস্টেম সম্পর্কে কি জানেন?",
+                    //     child: const DescriptiveAnswerWidget(
+                    //         // data: controller.questions[index],
+                    //         ),
+                    //   )
+                    // ]
                   ],
                 ),
               );

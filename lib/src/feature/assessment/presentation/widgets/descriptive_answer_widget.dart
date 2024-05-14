@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../../domain/entities/question_data_entity.dart';
 import 'written_text_field_widget.dart';
 import '../../../../core/constants/common_imports.dart';
 
 class DescriptiveAnswerWidget extends StatefulWidget {
-  final ValueChanged<String>? onChange;
+  final QuestionDataEntity data;
   const DescriptiveAnswerWidget({
     Key? key,
-    this.onChange,
+    required this.data,
   }) : super(key: key);
 
   @override
@@ -34,7 +35,9 @@ class _DescriptiveAnswerWidgetState extends State<DescriptiveAnswerWidget>
     return WrittenTextFieldWidget(
       minLines: 5,
       maxLines: 10,
-      onChanged: widget.onChange,
+      onChanged: (e) {
+        widget.data.userInput == e;
+      },
     );
   }
 }
