@@ -198,7 +198,12 @@ class _DashboardScreenState extends State<DashboardScreen>
 
   @override
   void navigateToTranscriptVideoScreen() {
-    Navigator.of(context).pushNamed(AppRoute.transcriptVideoScreen);
+    // Navigator.of(context).pushNamed(AppRoute.transcriptVideoScreen,
+    //     arguments: CourseVideoScreenArgs(
+    //         contentId: contentId,
+    //         contentType: contentType,
+    //         contentTitleEn: contentTitleEn,
+    //         contentTitleBn: contentTitleBn));
   }
 
   @override
