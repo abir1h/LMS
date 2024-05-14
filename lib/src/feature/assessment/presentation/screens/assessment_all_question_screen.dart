@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lms/src/core/common_widgets/custom_action_button.dart';
 import 'package:lms/src/core/common_widgets/custom_toasty.dart';
+import 'package:lms/src/feature/assessment/presentation/widgets/assessment_result_widget.dart';
 import 'package:lms/src/feature/shared/domain/entities/response_entity.dart';
 
 import '../../../../core/common_widgets/app_stream.dart';
@@ -163,12 +164,11 @@ class _AssessmentAllQuestionScreenState
   Widget build(BuildContext context) {
     return CustomScaffold(
       title: label(e: en.assessment, b: bn.assessment),
-      actionChild: TimeDigitWidget(
-        examStateStream: pageStateStreamController.stream,
-        timerStream: timerStreamController.stream,
-        // isExamRunning: (x)=> x != null && (x is DataLoadedState) && x.data is ExamRunningState,
-        isExamRunning: (x) => true,
-      ),
+      // actionChild: TimeDigitWidget(
+      //   examStateStream: pageStateStreamController.stream,
+      //   timerStream: timerStreamController.stream,
+      //   isExamRunning: (x) => x != null && (x is DataLoadedState),
+      // ),
       resizeToAvoidBottomInset: true,
       body: AppStreamBuilder<PageState>(
         stream: pageStateStreamController.stream,
@@ -199,6 +199,12 @@ class _AssessmentAllQuestionScreenState
                       //   // isExamRunning: (x) => true,
                       // ),
                       // SizedBox(width: size.w20)
+                      TimeDigitWidget(
+                        examStateStream: pageStateStreamController.stream,
+                        timerStream: timerStreamController.stream,
+                        isExamRunning: (x) =>
+                            x != null && (x is DataLoadedState),
+                      ),
                     ],
                   ),
                   SizedBox(height: size.h24),
@@ -252,8 +258,8 @@ class _AssessmentAllQuestionScreenState
                         tapAction: () =>
                             onSubmitExam(examDataEntity: data.examData),
                         onSuccess: (x) {
-                          // _examTimer.cancel();
-                          // widget.onResultSubmitted(widget.data);
+                          examTimer.cancel();
+                          onExamResultSubmitted(x);
                         }),
                   ),
                   SizedBox(height: size.h64),
@@ -263,7 +269,7 @@ class _AssessmentAllQuestionScreenState
           } else if (data is TimeExpiredState) {
             return Container();
           } else if (data is AnswerSubmittedState) {
-            return Container();
+            return AssessmentResultWidget(data: data.examData);
           } else {
             return const Offstage();
           }

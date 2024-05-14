@@ -29,7 +29,7 @@ mixin AssessmentScreenService<T extends StatefulWidget> on State<T>
 
   ///Screen args
   late AssessmentScreenArgs screenArgs;
-  late Timer _examTimer;
+  late Timer examTimer;
   late DateTime _examStartTime;
 
   ///Stream Controllers
@@ -45,9 +45,9 @@ mixin AssessmentScreenService<T extends StatefulWidget> on State<T>
 
     ///Initialized timer
     _examStartTime = DateTime.now();
-    _examTimer = Timer.periodic(const Duration(seconds: 1), _onTimerTick);
+    examTimer = Timer.periodic(const Duration(seconds: 1), _onTimerTick);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _onTimerTick(_examTimer);
+      _onTimerTick(examTimer);
     });
   }
 
@@ -55,7 +55,7 @@ mixin AssessmentScreenService<T extends StatefulWidget> on State<T>
   void dispose() {
     pageStateStreamController.dispose();
     timerStreamController.close();
-    _examTimer.cancel();
+    examTimer.cancel();
     super.dispose();
   }
 
@@ -80,7 +80,7 @@ mixin AssessmentScreenService<T extends StatefulWidget> on State<T>
 
     ///Exam expired check
     if (remaining.inSeconds <= 0) {
-      _examTimer.cancel();
+      examTimer.cancel();
       // widget.onTimeExpired(widget.data,widget.overview,_examStartTime,DateTime.now());
     }
   }
@@ -94,6 +94,11 @@ mixin AssessmentScreenService<T extends StatefulWidget> on State<T>
       _view.showWarning(responseEntity.message!);
     }
     return responseEntity;
+  }
+
+  void onExamResultSubmitted(ExamDataEntity data) {
+    pageStateStreamController
+        .add(DataLoadedState<PageState>(AnswerSubmittedState(data)));
   }
 }
 
