@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -10,26 +8,39 @@ class TimeDigitWidget<T> extends StatefulWidget {
   final Stream<Duration> timerStream;
   final Stream<DataState<T>> examStateStream;
   final bool Function(DataState<T>? snapshot) isExamRunning;
-  const TimeDigitWidget({Key? key,required this.timerStream,required this.examStateStream,required this.isExamRunning }) : super(key: key);
+  const TimeDigitWidget(
+      {Key? key,
+      required this.timerStream,
+      required this.examStateStream,
+      required this.isExamRunning})
+      : super(key: key);
 
   @override
   _TimeDigitWidgetState<T> createState() => _TimeDigitWidgetState<T>();
 }
-class _TimeDigitWidgetState<T> extends State<TimeDigitWidget<T>> with AppTheme{
+
+class _TimeDigitWidgetState<T> extends State<TimeDigitWidget<T>> with AppTheme {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<DataState<T>>(
         stream: widget.examStateStream,
         builder: (context, snapshot) {
-          if(widget.isExamRunning(snapshot.data)) {
+          if (widget.isExamRunning(snapshot.data)) {
             return Container(
               padding: EdgeInsets.symmetric(
-                horizontal: 2.w,
-                vertical: 2.w,
+                horizontal: size.w8,
+                vertical: size.h6,
               ),
               decoration: BoxDecoration(
-                color: clr.whiteColor,
+                color: clr.shadeWhiteColor2,
                 borderRadius: BorderRadius.circular(size.h4),
+                boxShadow: [
+                  BoxShadow(
+                      offset: const Offset(0, 4),
+                      blurRadius: 4,
+                      spreadRadius: 0,
+                      color: clr.blackColor.withOpacity(.2))
+                ],
               ),
               child: StreamBuilder<Duration>(
                   initialData: const Duration(),
@@ -47,37 +58,44 @@ class _TimeDigitWidgetState<T> extends State<TimeDigitWidget<T>> with AppTheme{
                     var secLsb = sec % 10;
                     return Row(
                       children: [
-                        if(minMMsb > 0)_buildDigitBox(minMMsb),
-                        if(minMMsb > 0)SizedBox(width: 2.w,),
+                        if (minMMsb > 0) _buildDigitBox(minMMsb),
+                        if (minMMsb > 0)
+                          SizedBox(
+                            width: 2.w,
+                          ),
                         _buildDigitBox(minMsb),
-                        SizedBox(width: 2.w,),
+                        SizedBox(
+                          width: 2.w,
+                        ),
                         _buildDigitBox(minLsb),
-                        SizedBox(width: 2.w,),
+                        SizedBox(
+                          width: 2.w,
+                        ),
                         _buildDigitSeparatorBox(":"),
-                        SizedBox(width: 2.w,),
+                        SizedBox(
+                          width: 2.w,
+                        ),
                         _buildDigitBox(secMsb),
-                        SizedBox(width: 2.w,),
+                        SizedBox(
+                          width: 2.w,
+                        ),
                         _buildDigitBox(secLsb),
                       ],
                     );
-                  }
-              ),
+                  }),
             );
-          }
-          else{
+          } else {
             return const Offstage();
           }
-        }
-    );
+        });
   }
 
-
-  Widget _buildDigitBox(int value){
+  Widget _buildDigitBox(int value) {
     return Container(
       height: size.h24,
       width: size.w20,
       decoration: BoxDecoration(
-        color: clr.blackColor,
+        color: clr.iconColorSweetRed,
         borderRadius: BorderRadius.circular(2.w),
       ),
       child: FittedBox(
@@ -92,12 +110,13 @@ class _TimeDigitWidgetState<T> extends State<TimeDigitWidget<T>> with AppTheme{
       ),
     );
   }
-  Widget _buildDigitSeparatorBox(String value){
+
+  Widget _buildDigitSeparatorBox(String value) {
     return Container(
       height: size.h24,
       width: size.w12,
       decoration: BoxDecoration(
-        color: clr.blackColor,
+        color: clr.iconColorSweetRed,
         borderRadius: BorderRadius.circular(2.w),
       ),
       child: FittedBox(

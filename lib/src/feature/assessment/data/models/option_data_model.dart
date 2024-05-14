@@ -8,6 +8,9 @@ class OptionDataModel {
   final String optionValue;
   final String optionImg;
   final int sort;
+  final String userInput;
+  final bool userCorrectValue;
+  final String userCorrectInput;
 
   const OptionDataModel({
     required this.id,
@@ -16,6 +19,9 @@ class OptionDataModel {
     required this.optionValue,
     required this.optionImg,
     required this.sort,
+    required this.userInput,
+    required this.userCorrectValue,
+    required this.userCorrectInput,
   });
 
   factory OptionDataModel.fromJson(Map<String, dynamic> json) =>
@@ -26,6 +32,9 @@ class OptionDataModel {
         optionValue: json["option_value"] ?? "",
         optionImg: json["option_img"] ?? "",
         sort: json["sort"] ?? -1,
+        userInput: json["user_input"] ?? "",
+        userCorrectValue: json["user_correct_value"] ?? false,
+        userCorrectInput: json["user_correct_input"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {
@@ -35,6 +44,9 @@ class OptionDataModel {
         "option_value": optionValue,
         "option_img": optionImg,
         "sort": sort,
+        "user_input": userInput,
+        "user_correct_value": userCorrectValue,
+        "user_correct_input": userCorrectInput,
       };
   static List<OptionDataModel> listFromJson(List<dynamic> json) {
     return json.isNotEmpty

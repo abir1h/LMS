@@ -22,8 +22,9 @@ class QuestionDataEntity {
   final String updatedAt;
   final String deletedAt;
   final List<OptionDataEntity> options;
+  String userInput;
 
-  const QuestionDataEntity({
+  QuestionDataEntity({
     required this.id,
     required this.circularCourseId,
     required this.circularId,
@@ -44,5 +45,6 @@ class QuestionDataEntity {
     required this.updatedAt,
     required this.deletedAt,
     required this.options,
+    required this.userInput,
   });
 }

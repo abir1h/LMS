@@ -9,11 +9,15 @@ import '../../../../core/utility/app_label.dart';
 import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
 import '../../domain/entities/question_data_entity.dart';
 import '../services/assessment_screen_service.dart';
+import '../widgets/comprehensive_answer_widget.dart';
+import '../widgets/descriptive_answer_widget.dart';
+import '../widgets/fill_in_the_gap_answer_widget.dart';
+import '../widgets/matching_answer_widget.dart';
+import '../widgets/mcq_answer_widget.dart';
 import '../widgets/question_list_widget.dart';
 import '../widgets/question_widget.dart';
 import '../widgets/time_digit_widget.dart';
 import '../widgets/true_false_answer_widget.dart';
-import 'assessment_quiz_screen.dart';
 
 class AssessmentAllQuestionScreen extends StatefulWidget {
   final Object? arguments;
@@ -155,12 +159,12 @@ class _AssessmentAllQuestionScreenState
   Widget build(BuildContext context) {
     return CustomScaffold(
       title: label(e: en.assessment, b: bn.assessment),
-      actionChild: TimeDigitWidget(
-        examStateStream: pageStateStreamController.stream,
-        timerStream: timerStreamController.stream,
-        // isExamRunning: (x)=> x != null && (x is DataLoadedState) && x.data is ExamRunningState,
-        isExamRunning: (x) => true,
-      ),
+      // actionChild: TimeDigitWidget(
+      //   examStateStream: pageStateStreamController.stream,
+      //   timerStream: timerStreamController.stream,
+      //   // isExamRunning: (x)=> x != null && (x is DataLoadedState) && x.data is ExamRunningState,
+      //   isExamRunning: (x) => true,
+      // ),
       resizeToAvoidBottomInset: true,
       body: AppStreamBuilder<PageState>(
         stream: pageStateStreamController.stream,
@@ -171,36 +175,83 @@ class _AssessmentAllQuestionScreenState
             // return Container();
             return SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
-              padding: EdgeInsets.symmetric(
-                  horizontal: size.w16, vertical: size.h12),
               child: Column(
                 children: [
+                  SizedBox(height: size.h12),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      CustomTextWidget(
+                        text: label(e: "Total Time:", b: "সর্বমোট সময়:"),
+                        textColor: clr.textColorBlack,
+                        fontSize: size.textXMedium,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      SizedBox(width: size.w16),
+                      TimeDigitWidget(
+                        examStateStream: pageStateStreamController.stream,
+                        timerStream: timerStreamController.stream,
+                        // isExamRunning: (x)=> x != null && (x is DataLoadedState) && x.data is ExamRunningState,
+                        isExamRunning: (x) => true,
+                      ),
+                      SizedBox(width: size.w20)
+                    ],
+                  ),
+                  SizedBox(height: size.h24),
                   CustomTextWidget(
                     text: label(
                         e: data.examData.assessment!.titleEn,
                         b: data.examData.assessment!.titleBn),
                     fontSize: size.textXMedium,
                     fontWeight: FontWeight.w400,
+                    padding: EdgeInsets.symmetric(horizontal: size.w16),
                   ),
+                  SizedBox(height: size.h16),
                   QuestionListWidget<QuestionDataEntity>(
                     items: data.examData.assessment!.questions,
                     builder: (context, data, index) {
                       return QuestionWidget(
-                        questionNo: "${index + 1}",
+                        questionNo: replaceEnglishNumberWithBengali(
+                            (index + 1).toString()),
                         questionText: data.question,
                         // child: Text(data.question),
                         child: data.questionType?.id == 2
                             ? MCQAnswerWidget(
                                 data: data,
                               )
-                            : data.questionType?.id == 5
-                                ? TrueFalseAnswerWidget(
+                            : data.questionType?.id == 3
+                                ? MatchingAnswerWidget(
                                     data: data,
                                   )
-                                : Container(),
+                                : data.questionType?.id == 4
+                                    ? FillInTheGapAnswerWidget(
+                                        data: data,
+                                        onChange: (v) {
+                                          // data.options = v;
+                                        },
+                                      )
+                                    : data.questionType?.id == 5
+                                        ? TrueFalseAnswerWidget(
+                                            data: data,
+                                          )
+                                        : data.questionType?.id == 6
+                                            ? DescriptiveAnswerWidget(
+                                                onChange: (v) {
+                                                  // data.options = v;
+                                                },
+                                              )
+                                            : data.questionType?.id == 7
+                                                ? ComprehensiveAnswerWidget(
+                                                    data: data,
+                                                    onChange: (v) {
+                                                      // data.options = v;
+                                                    },
+                                                  )
+                                                : Container(),
                       );
                     },
                   ),
+                  SizedBox(height: size.h64),
                 ],
               ),
             );

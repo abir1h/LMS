@@ -21,58 +21,72 @@ class QuestionWidget extends StatelessWidget with AppTheme, ImagePreviewDialog {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text.rich(TextSpan(
-            text: label(
-                e: "Question ${questionNo.trim()}. ",
-                b: "প্রশ্ন ${questionNo.trim()}. "),
-            style: TextStyle(
-              color: clr.blackColor,
-              fontSize: size.textSmall,
-              fontWeight: FontWeight.w700,
-              fontFamily: StringData.fontFamilyPoppins,
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: clr.shadeWhiteColor2,
+        boxShadow: [
+          BoxShadow(
+              offset: const Offset(0, 4),
+              blurRadius: 4,
+              spreadRadius: 0,
+              color: clr.blackColor.withOpacity(.2))
+        ],
+      ),
+      padding: EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h12),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text.rich(TextSpan(
+              text: label(
+                  e: "Question ${questionNo.trim()}. ",
+                  b: "প্রশ্ন ${questionNo.trim()}. "),
+              style: TextStyle(
+                color: clr.blackColor,
+                fontSize: size.textSmall,
+                fontWeight: FontWeight.w700,
+                fontFamily: StringData.fontFamilyPoppins,
+              ),
+              children: [
+                TextSpan(
+                  text: questionText.trim(),
+                  style: TextStyle(
+                    color: clr.blackColor,
+                    fontSize: size.textSmall,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: StringData.fontFamilyPoppins,
+                  ),
+                ),
+              ])),
+          if (questionImage.isNotEmpty)
+            Padding(
+              padding: EdgeInsets.only(top: size.h4),
+              child: GestureDetector(
+                  onTap: () {
+                    ImagePreviewDialog.showImagePreview(context, questionImage);
+                  },
+                  child: Center(child: Image.asset(questionImage))),
             ),
-            children: [
-              TextSpan(
-                text: questionText.trim(),
+          if (questionDescription.isNotEmpty)
+            Padding(
+              padding: EdgeInsets.only(top: size.h4),
+              child: Text(
+                questionDescription,
                 style: TextStyle(
-                  color: clr.blackColor,
-                  fontSize: size.textSmall,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: StringData.fontFamilyPoppins,
+                  color: clr.gapStrokeGrey,
+                  fontSize: size.textXXSmall,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: StringData.fontFamilyRoboto,
                 ),
               ),
-            ])),
-        if (questionImage.isNotEmpty)
-          Padding(
-            padding: EdgeInsets.only(top: size.h4),
-            child: GestureDetector(
-                onTap: () {
-                  ImagePreviewDialog.showImagePreview(context, questionImage);
-                },
-                child: Center(child: Image.asset(questionImage))),
-          ),
-        if (questionDescription.isNotEmpty)
-          Padding(
-            padding: EdgeInsets.only(top: size.h4),
-            child: Text(
-              questionDescription,
-              style: TextStyle(
-                color: clr.gapStrokeGrey,
-                fontSize: size.textXXSmall,
-                fontWeight: FontWeight.w400,
-                fontFamily: StringData.fontFamilyRoboto,
-              ),
             ),
+          SizedBox(height: size.h10),
+          Flexible(
+            child: child,
           ),
-        SizedBox(height: size.h10),
-        Flexible(
-          child: child,
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

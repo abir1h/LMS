@@ -3,11 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
+import '../../domain/entities/question_data_entity.dart';
 import '../models/matching_question.dart';
 import 'dashed_border.dart';
 
 class MatchingAnswerWidget extends StatefulWidget {
-  final MatchingQuestions data;
+  // final MatchingQuestions data;
+  final QuestionDataEntity data;
   const MatchingAnswerWidget({
     Key? key,
     required this.data,
@@ -35,7 +37,7 @@ class _MatchingAnswerWidgetState extends State<MatchingAnswerWidget>
             physics: const BouncingScrollPhysics(),
             clipBehavior: Clip.none,
             child: Row(
-              children: widget.data.leftSides
+              children: widget.data.options
                   .asMap()
                   .map((key, lhs) => MapEntry(
                       key,
@@ -67,7 +69,7 @@ class _MatchingAnswerWidgetState extends State<MatchingAnswerWidget>
                                 ),
                                 Expanded(
                                   child: Text(
-                                    lhs.leftSide,
+                                    lhs.optionKey,
                                     style: TextStyle(
                                         color: clr.blackColor,
                                         fontSize: size.textSmall,
@@ -82,10 +84,10 @@ class _MatchingAnswerWidgetState extends State<MatchingAnswerWidget>
                             SizedBox(height: size.h28),
 
                             ///RHS
-                            MatchingRHSReceiverWidget(
-                              lhs: lhs,
-                              onUpdate: () => setState(() {}),
-                            ),
+                            // MatchingRHSReceiverWidget(
+                            //   lhs: lhs,
+                            //   onUpdate: () => setState(() {}),
+                            // ),
                           ],
                         ),
                       )))
@@ -110,22 +112,22 @@ class _MatchingAnswerWidgetState extends State<MatchingAnswerWidget>
           SizedBox(height: size.h8),
 
           ///RHS
-          SingleChildScrollView(
-            child: Column(
-              children: widget.data.rightSides
-                  .asMap()
-                  .map((key, value) {
-                    value.index = key + 1;
-                    return MapEntry(
-                        key,
-                        MatchingRHSSenderWidget(
-                          rhs: value,
-                        ));
-                  })
-                  .values
-                  .toList(),
-            ),
-          ),
+          // SingleChildScrollView(
+          //   child: Column(
+          //     children: widget.data.options
+          //         .asMap()
+          //         .map((key, value) {
+          //           // value.index = key + 1;
+          //           return MapEntry(
+          //               key,
+          //               MatchingRHSSenderWidget(
+          //                 rhs: value,
+          //               ));
+          //         })
+          //         .values
+          //         .toList(),
+          //   ),
+          // ),
         ],
       ),
     );

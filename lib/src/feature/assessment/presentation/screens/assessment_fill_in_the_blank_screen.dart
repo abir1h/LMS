@@ -35,25 +35,25 @@ class _AssessmentFillInTheBlankScreenState
                 EdgeInsets.symmetric(horizontal: size.h16, vertical: size.w16),
             child: Column(
               children: [
-                ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: controller.qusList.length,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (_, index) {
-                      return QuestionWidget(
-                        questionNo: "${index + 1}",
-                        questionText: controller.qusList[index].title!,
-                        child: FillInTheGapAnswerWidget(
-                          mainModel: controller.qusList[index],
-                          onChangeDv1: (v) {
-                            controller.qusList[index].blank1 = v;
-                          },
-                          onChangeDv2: (v) {
-                            controller.qusList[index].blank2 = v;
-                          },
-                        ),
-                      );
-                    }),
+                // ListView.builder(
+                //     shrinkWrap: true,
+                //     itemCount: controller.qusList.length,
+                //     physics: const NeverScrollableScrollPhysics(),
+                //     itemBuilder: (_, index) {
+                //       return QuestionWidget(
+                //         questionNo: "${index + 1}",
+                //         questionText: controller.qusList[index].title!,
+                //         child: FillInTheGapAnswerWidget(
+                //           data: controller.qusList[index],
+                //           onChangeDv1: (v) {
+                //             controller.qusList[index].blank1 = v;
+                //           },
+                //           onChangeDv2: (v) {
+                //             controller.qusList[index].blank2 = v;
+                //           },
+                //         ),
+                //       );
+                //     }),
                 SizedBox(height: size.h16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,

@@ -51,7 +51,7 @@ mixin CourseAssessmentScreenService<T extends StatefulWidget> on State<T>
   void loadAssessmentData(int courseContentId) {
     if (!mounted) return;
     assessmentDetailsDataStreamController.add(LoadingState());
-    getAssessmentDetails(1).then((value) {
+    getAssessmentDetails(courseContentId).then((value) {
       if (value.error == null && value.data != null) {
         assessmentDetailsDataStreamController
             .add(DataLoadedState<AssessmentDataEntity>(value.data));

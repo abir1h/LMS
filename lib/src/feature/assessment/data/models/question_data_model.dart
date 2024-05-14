@@ -24,6 +24,7 @@ class QuestionDataModel {
   final String updatedAt;
   final String deletedAt;
   final List<OptionDataModel> options;
+  final String userInput;
 
   const QuestionDataModel({
     required this.id,
@@ -46,6 +47,7 @@ class QuestionDataModel {
     required this.updatedAt,
     required this.deletedAt,
     required this.options,
+    required this.userInput,
   });
 
   factory QuestionDataModel.fromJson(Map<String, dynamic> json) =>
@@ -75,6 +77,7 @@ class QuestionDataModel {
             ? List<OptionDataModel>.from(
                 (json["options"]).map((x) => OptionDataModel.fromJson(x)))
             : [],
+        userInput: json["user_input"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {
@@ -98,6 +101,7 @@ class QuestionDataModel {
         "updated_at": updatedAt,
         "deleted_at": deletedAt,
         "options": List<dynamic>.from(options.map((x) => x.toJson())),
+        "user_input": userInput,
       };
   static List<QuestionDataModel> listFromJson(List<dynamic> json) {
     return json.isNotEmpty

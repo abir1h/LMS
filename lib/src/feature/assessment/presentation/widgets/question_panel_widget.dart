@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_theme.dart';
+import 'mcq_answer_widget.dart';
 import 'question_widget.dart';
 import 'true_false_answer_widget.dart';
 import '../screens/assessment_quiz_screen.dart';
@@ -62,16 +63,14 @@ class _QuestionAnswerPanelState extends State<QuestionAnswerPanel>
                         QuestionType.fig) ...[
                       QuestionWidget(
                           questionNo: "${position + 1}",
-                          questionText:
-                              widget.questions.elementAt(position).data.docTitle,
+                          questionText: widget.questions
+                              .elementAt(position)
+                              .data
+                              .docTitle,
                           child: FillInTheGapAnswerWidget(
-                            mainModel:
-                                widget.questions.elementAt(position).data,
-                            onChangeDv1: (v) {
+                            data: widget.questions.elementAt(position).data,
+                            onChange: (v) {
                               // controller.qusList[index].blank1 = v;
-                            },
-                            onChangeDv2: (v) {
-                              // controller.qusList[index].blank2 = v;
                             },
                           ))
                     ] else if (widget.questions.elementAt(position).type ==
@@ -107,7 +106,7 @@ class _QuestionAnswerPanelState extends State<QuestionAnswerPanel>
                     //     child: const TrueFalseAnswerWidget(),
                     //   )
                     // ]
-                      else if (widget.questions.elementAt(position).type ==
+                    else if (widget.questions.elementAt(position).type ==
                         QuestionType.written) ...[
                       QuestionWidget(
                         questionNo: "${position + 1}",

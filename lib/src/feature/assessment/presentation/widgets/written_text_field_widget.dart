@@ -4,14 +4,20 @@ import '../../../../core/constants/common_imports.dart';
 
 class WrittenTextFieldWidget extends StatelessWidget with AppTheme {
   final ValueChanged<String>? onChanged;
+  final TextEditingController? textEditingController;
   final int minLines;
   final int maxLines;
   const WrittenTextFieldWidget(
-      {super.key, this.onChanged, this.minLines = 1, this.maxLines = 1});
+      {super.key,
+      this.textEditingController,
+      this.onChanged,
+      this.minLines = 1,
+      this.maxLines = 1});
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: textEditingController,
       onChanged: onChanged,
       minLines: minLines,
       maxLines: maxLines,

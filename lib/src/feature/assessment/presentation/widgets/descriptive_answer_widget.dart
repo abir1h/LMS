@@ -4,10 +4,10 @@ import 'written_text_field_widget.dart';
 import '../../../../core/constants/common_imports.dart';
 
 class DescriptiveAnswerWidget extends StatefulWidget {
-  // final FillInTheGapQuestion data;
+  final ValueChanged<String>? onChange;
   const DescriptiveAnswerWidget({
     Key? key,
-    // required this.data,
+    this.onChange,
   }) : super(key: key);
 
   @override
@@ -17,8 +17,6 @@ class DescriptiveAnswerWidget extends StatefulWidget {
 
 class _DescriptiveAnswerWidgetState extends State<DescriptiveAnswerWidget>
     with AppTheme, Language {
-  late final TextEditingController _controller;
-
   @override
   void initState() {
     // _controller = TextEditingController(text: widget.data.writtenAnswer);
@@ -33,9 +31,10 @@ class _DescriptiveAnswerWidgetState extends State<DescriptiveAnswerWidget>
 
   @override
   Widget build(BuildContext context) {
-    return const WrittenTextFieldWidget(
+    return WrittenTextFieldWidget(
       minLines: 5,
       maxLines: 10,
+      onChanged: widget.onChange,
     );
   }
 }

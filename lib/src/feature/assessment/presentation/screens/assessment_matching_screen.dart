@@ -69,24 +69,24 @@ class _AssessmentMatchingScreenState extends State<AssessmentMatchingScreen>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ListView.separated(
-                shrinkWrap: true,
-                itemCount: matchingQuestions.length,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return QuestionWidget(
-                    questionNo: "${index + 1}",
-                    questionText: "সঠিক উত্তর ম্যাচিং:",
-                    child: MatchingAnswerWidget(
-                      data: matchingQuestions[index],
-                      // data: controller.questions[index],
-                    ),
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return SizedBox(height: size.h20);
-                },
-              ),
+              // ListView.separated(
+              //   shrinkWrap: true,
+              //   itemCount: matchingQuestions.length,
+              //   physics: const NeverScrollableScrollPhysics(),
+              //   itemBuilder: (context, index) {
+              //     return QuestionWidget(
+              //       questionNo: "${index + 1}",
+              //       questionText: "সঠিক উত্তর ম্যাচিং:",
+              //       child: MatchingAnswerWidget(
+              //         data: matchingQuestions[index],
+              //         // data: controller.questions[index],
+              //       ),
+              //     );
+              //   },
+              //   separatorBuilder: (context, index) {
+              //     return SizedBox(height: size.h20);
+              //   },
+              // ),
               SizedBox(height: size.h16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,

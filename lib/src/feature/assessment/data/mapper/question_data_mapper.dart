@@ -38,6 +38,7 @@ class QuestionDataModelToEntityMapper
       options: List<OptionDataEntity>.from(entity.options)
           .map((entity) => entity.toOptionDataModel)
           .toList(),
+      userInput: entity.userInput,
     );
   }
 
@@ -66,6 +67,7 @@ class QuestionDataModelToEntityMapper
       options: List<OptionDataModel>.from(model.options)
           .map((model) => model.toOptionDataEntity)
           .toList(),
+      userInput: model.userInput,
     );
   }
 }

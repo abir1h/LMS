@@ -16,7 +16,10 @@ class OptionDataModelToEntityMapper
         optionKey: entity.optionKey,
         optionValue: entity.optionValue,
         optionImg: entity.optionImg,
-        sort: entity.sort);
+        sort: entity.sort,
+        userInput: entity.userInput,
+        userCorrectValue: entity.userCorrectValue,
+        userCorrectInput: entity.userCorrectInput);
   }
 
   @override
@@ -27,7 +30,10 @@ class OptionDataModelToEntityMapper
         optionKey: model.optionKey,
         optionValue: model.optionValue,
         optionImg: model.optionImg,
-        sort: model.sort);
+        sort: model.sort,
+        userInput: model.userInput,
+        userCorrectValue: model.userCorrectValue,
+        userCorrectInput: model.userCorrectInput);
   }
 }
 
