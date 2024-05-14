@@ -390,25 +390,25 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                   SubmissionCompletedWidget(data: data.assignmentSubmissions!),
 
                 ///Assignment Result
-                /*  if (data.assignmentSubmissions != null &&
-                    data.assignmentSubmissions!.remarks.isNotEmpty)*/
-                AssignmentReviewWidget(
-                  data: data,
-                  onTapRequest: () {
-                    showCupertinoModalPopup(
-                      context: context,
-                      builder: (context) => AssignmentRequestBottomSheet(
-                        circularAssignmentId: data.id,
-                        circularId: data.circularId,
-                        courseId: data.courseId,
-                        courseModuleId: data.courseModuleId,
-                        onSuccess: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    );
-                  },
-                ),
+                if (data.assignmentSubmissions != null &&
+                    data.assignmentSubmissions!.remarks.isNotEmpty)
+                  AssignmentReviewWidget(
+                    data: data,
+                    onTapRequest: () {
+                      showCupertinoModalPopup(
+                        context: context,
+                        builder: (context) => AssignmentRequestBottomSheet(
+                          circularAssignmentId: data.id,
+                          circularId: data.circularId,
+                          courseId: data.courseId,
+                          courseModuleId: data.courseModuleId,
+                          onSuccess: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      );
+                    },
+                  ),
 
                 ///Instructor Comment
                 if (data.assignmentSubmissions != null &&

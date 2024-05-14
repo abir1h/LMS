@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lms/src/feature/assessment/domain/entities/option_data_entity.dart';
 
 import '../../../../core/constants/common_imports.dart';
 import '../../domain/entities/question_data_entity.dart';
@@ -25,8 +26,16 @@ class _MCQAnswerWidgetState extends State<MCQAnswerWidget> with AppTheme {
       itemBuilder: (context, index) => MCQAnswerOptionWidget(
         value: widget.data.options[index].optionValue,
         imageValue: widget.data.options[index].optionImg,
-        isSelected: false,
+        isSelected: widget.data.options[index].isSelected,
         onTap: () => setState(() {
+          widget.data.options[index].isSelected
+              ? widget.data.options[index].isSelected =
+                  !widget.data.options[index].isSelected
+              : widget.data.options[index].isSelected;
+          for (OptionDataEntity optionDataEntity in widget.data.options) {
+            if (optionDataEntity.isSelected == !optionDataEntity.isSelected) {}
+          }
+
           // widget.data.userAnswer1 = !widget.data.userAnswer1;
           // widget.data.userAnswer2
           //     ? widget.data.userAnswer2 = !widget.data.userAnswer2
