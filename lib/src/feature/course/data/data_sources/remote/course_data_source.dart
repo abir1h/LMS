@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import '../../models/blended_class_data_model.dart';
+import '../../models/content_read_data_model.dart';
 import '../../models/course_details_data_model.dart';
 import '../../models/all_course_data_model.dart';
 import '../../../../../core/constants/common_imports.dart';
@@ -13,6 +16,14 @@ abstract class CourseRemoteDataSource {
   Future<ResponseModel> getScriptDetailsAction(int courseContentId);
   Future<ResponseModel> getBlendedClassAction(int courseContentId);
   Future<ResponseModel> getVideoDetailsAction(int courseContentId);
+  Future<ResponseModel> contentReadAction(
+    int contentId,
+    String contentType,
+    int courseId,
+    bool isCompleted,
+    String lastWatchTime,
+    String attendanceType,
+  );
 }
 
 class CourseRemoteDataSourceImp extends CourseRemoteDataSource {
@@ -60,6 +71,31 @@ class CourseRemoteDataSourceImp extends CourseRemoteDataSource {
         .getRequest(url: "${ApiCredential.getVideo}/$courseContentId");
     ResponseModel responseModel = ResponseModel.fromJson(
         responseJson, (dynamic json) => VideoDataModel.fromJson(json));
+    return responseModel;
+  }
+
+  @override
+  Future<ResponseModel> contentReadAction(
+      int contentId,
+      String contentType,
+      int courseId,
+      bool isCompleted,
+      String lastWatchTime,
+      String attendanceType) async {
+    Map<String, dynamic> data = {
+      "content_id": contentId,
+      "content_type":contentType,
+      "is_completed":isCompleted,
+      "course_id":courseId,
+      "last_watch_time": lastWatchTime,
+      "attendance_type": attendanceType
+    };
+    final responseJson = await Server.instance.postRequest(
+      url: ApiCredential.contentRead,
+      postData: data,
+    );
+    ResponseModel responseModel = ResponseModel.fromJson(
+        responseJson, (dynamic json) => ContentReadDataModel.fromJson(json));
     return responseModel;
   }
 }

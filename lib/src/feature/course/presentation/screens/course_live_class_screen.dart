@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -5,6 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../../../core/common_widgets/circuler_widget.dart';
+import '../../../../core/common_widgets/custom_dialog_widget.dart';
 import '../../../../core/common_widgets/custom_empty_widget.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/routes/app_route_args.dart';
@@ -87,9 +90,57 @@ class _CourseLiveClassScreenState extends State<CourseLiveClassScreen>
               },
               dataBuilder: (context, data) {
                 if (data is InPersonClassDataState) {
-                  return InPersonClassWidget(data: data.blendedClassDataEntity);
+                  return InPersonClassWidget(
+                    data: data.blendedClassDataEntity,
+                    onTapConfirm: () {
+                      CustomDialogWidget.show(
+                              context: context,
+                              icon: Icons.info,
+                              title: label(
+                                  e: "Do you want to confirm?",
+                                  b: "আপনি কি নিশ্চিত করতে চান?"),
+                              infoText: "Are you Sure?")
+                          .then((x) {
+                        if (!x) {
+                          contentReadPost(
+                              data.blendedClassDataEntity.id,
+                              'course_script',
+                              data.blendedClassDataEntity.courseId,
+                              true,
+                              '40',
+                              'physical');
+                        }
+                      });
+                    },
+                  );
                 } else if (data is OnlineClassDataState) {
-                  return OnlineClassWidget(data: data.blendedClassDataEntity);
+                  return OnlineClassWidget(
+                    data: data.blendedClassDataEntity,
+                    onTapConfirm: () {
+                      CustomDialogWidget.show(
+                              context: context,
+                              icon: Icons.info,
+                              title: label(
+                                  e: "Do you want to confirm?",
+                                  b: "আপনি কি নিশ্চিত করতে চান?"),
+                              infoText: "Are you Sure?")
+                          .then((x) {
+                        if (!x) {
+                          contentReadPost(
+                                  data.blendedClassDataEntity.id,
+                                  'course_script',
+                                  data.blendedClassDataEntity.courseId,
+                                  true,
+                                  '40',
+                                  'online')
+                              .then((value) => launchUrl(
+                                  Uri.parse(
+                                      data.blendedClassDataEntity.meetingLink),
+                                  mode: LaunchMode.externalApplication));
+                        }
+                      });
+                    },
+                  );
                 } else {
                   return const CustomEmptyWidget(
                     icon: Icons.school_outlined,
@@ -283,11 +334,18 @@ class _CourseLiveClassScreenState extends State<CourseLiveClassScreen>
   void showWarning(String message) {
     CustomToasty.of(context).showWarning(message);
   }
+
+  @override
+  void showSuccess(String message) {
+    CustomToasty.of(context).showSuccess(message);
+  }
 }
 
 class InClassCardWidget extends StatelessWidget with AppTheme, Language {
   final BlendedClassDataEntity data;
-  const InClassCardWidget({super.key, required this.data});
+  final VoidCallback onTapConfirm;
+  const InClassCardWidget(
+      {super.key, required this.data, required this.onTapConfirm});
 
   @override
   Widget build(BuildContext context) {
@@ -327,7 +385,7 @@ class InClassCardWidget extends StatelessWidget with AppTheme, Language {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: size.w44),
             child: CustomButton(
-              onTap: () {},
+              onTap: onTapConfirm,
               title: label(e: en.confirmInPerson, b: bn.confirmInPerson),
               textColor: clr.whiteColor,
               radius: size.r16,
@@ -341,7 +399,9 @@ class InClassCardWidget extends StatelessWidget with AppTheme, Language {
 
 class InPersonClassWidget extends StatelessWidget with AppTheme, Language {
   final BlendedClassDataEntity data;
-  const InPersonClassWidget({super.key, required this.data});
+  final VoidCallback onTapConfirm;
+  const InPersonClassWidget(
+      {super.key, required this.data, required this.onTapConfirm});
 
   @override
   Widget build(BuildContext context) {
@@ -362,7 +422,7 @@ class InPersonClassWidget extends StatelessWidget with AppTheme, Language {
           padding: EdgeInsets.symmetric(horizontal: size.w16),
         ),
         SizedBox(height: size.h12),
-        InClassCardWidget(data: data),
+        InClassCardWidget(data: data, onTapConfirm: onTapConfirm),
       ],
     );
   }
@@ -370,7 +430,9 @@ class InPersonClassWidget extends StatelessWidget with AppTheme, Language {
 
 class OnlineClassCardWidget extends StatelessWidget with AppTheme, Language {
   final BlendedClassDataEntity data;
-  const OnlineClassCardWidget({super.key, required this.data});
+  final VoidCallback onTapConfirm;
+  const OnlineClassCardWidget(
+      {super.key, required this.data, required this.onTapConfirm});
 
   @override
   Widget build(BuildContext context) {
@@ -430,8 +492,7 @@ class OnlineClassCardWidget extends StatelessWidget with AppTheme, Language {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: size.w44),
             child: CustomButton(
-              onTap: () => launchUrl(Uri.parse(data.meetingLink),
-                  mode: LaunchMode.externalApplication),
+              onTap: onTapConfirm,
               title: label(e: en.joinClass, b: bn.joinClass),
               textColor: clr.whiteColor,
               radius: size.r16,
@@ -445,7 +506,9 @@ class OnlineClassCardWidget extends StatelessWidget with AppTheme, Language {
 
 class OnlineClassWidget extends StatelessWidget with AppTheme, Language {
   final BlendedClassDataEntity data;
-  const OnlineClassWidget({super.key, required this.data});
+  final VoidCallback onTapConfirm;
+  const OnlineClassWidget(
+      {super.key, required this.data, required this.onTapConfirm});
 
   @override
   Widget build(BuildContext context) {
@@ -468,7 +531,10 @@ class OnlineClassWidget extends StatelessWidget with AppTheme, Language {
           padding: EdgeInsets.symmetric(horizontal: size.w16),
         ),
         SizedBox(height: size.h12),
-        OnlineClassCardWidget(data: data),
+        OnlineClassCardWidget(
+          data: data,
+          onTapConfirm: onTapConfirm,
+        ),
       ],
     );
   }

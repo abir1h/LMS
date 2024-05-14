@@ -14,4 +14,11 @@ abstract class AssignmentRepository {
       int circularId,
       String answer,
       List<File> files);
+  Future<ResponseEntity> requestAssignment(
+    int circularId,
+    int courseId,
+    int circularAssignmentId,
+    int courseModuleId,
+    String message,
+  );
 }

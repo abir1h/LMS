@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lms/src/feature/assignment/presentation/screens/assignement_request_bottomsheet.dart';
 
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../../../core/common_widgets/circuler_widget.dart';
@@ -389,11 +390,29 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                   SubmissionCompletedWidget(data: data.assignmentSubmissions!),
 
                 ///Assignment Result
-                if (data.assignmentSubmissions!.remarks.isNotEmpty)
-                  AssignmentReviewWidget(data: data),
+                /*  if (data.assignmentSubmissions != null &&
+                    data.assignmentSubmissions!.remarks.isNotEmpty)*/
+                AssignmentReviewWidget(
+                  data: data,
+                  onTapRequest: () {
+                    showCupertinoModalPopup(
+                      context: context,
+                      builder: (context) => AssignmentRequestBottomSheet(
+                        circularAssignmentId: data.id,
+                        circularId: data.circularId,
+                        courseId: data.courseId,
+                        courseModuleId: data.courseModuleId,
+                        onSuccess: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    );
+                  },
+                ),
 
                 ///Instructor Comment
-                if (data.assignmentSubmissions!.remarks.isNotEmpty)
+                if (data.assignmentSubmissions != null &&
+                    data.assignmentSubmissions!.remarks.isNotEmpty)
                   InstructorCommentWidget(
                       remarks: data.assignmentSubmissions!.remarks),
               ],
@@ -706,7 +725,9 @@ class SubmissionCompletedWidget extends StatelessWidget
 
 class AssignmentReviewWidget extends StatelessWidget with AppTheme, Language {
   final AssignmentDataEntity data;
-  const AssignmentReviewWidget({super.key, required this.data});
+  final VoidCallback onTapRequest;
+  const AssignmentReviewWidget(
+      {super.key, required this.data, required this.onTapRequest});
 
   @override
   Widget build(BuildContext context) {
@@ -814,7 +835,7 @@ class AssignmentReviewWidget extends StatelessWidget with AppTheme, Language {
             padding:
                 EdgeInsets.only(left: size.w64, right: size.w64, top: size.h24),
             child: CustomButton(
-              onTap: () {},
+              onTap: onTapRequest,
               title: label(e: "Send Request", b: "অনুরোধ পাঠান"),
               bgColor: clr.appPrimaryColorGreen,
               borderColor: Colors.transparent,
