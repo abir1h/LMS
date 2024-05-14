@@ -6,9 +6,10 @@ import 'package:lms/src/feature/notes/data/mapper/content_data_mapper.dart';
 import 'package:lms/src/feature/notes/data/models/content_data_model.dart';
 import 'package:lms/src/feature/notes/domain/entities/content_data_entity.dart';
 
+import '../mapper/video_content_data_mapper.dart';
+import '../../domain/entities/video_content_data_entity.dart';
+import '../mapper/blended_class_data_mapper.dart';
 import '../../domain/entities/blended_class_data_entity.dart';
-import '../mapper/video_data_mapper.dart';
-import '../../domain/entities/video_data_entity.dart';
 import '../mapper/script_data_mapper.dart';
 import '../../domain/entities/script_data_entity.dart';
 import '../mapper/course_details_data_mapper.dart';
@@ -24,7 +25,7 @@ import '../../../shared/data/models/response_model.dart';
 import '../../domain/repositories/course_repository.dart';
 import '../data_sources/remote/course_data_source.dart';
 import '../models/script_data_model.dart';
-import '../models/video_data_model.dart';
+import '../models/video_content_data_model.dart';
 
 class CourseRepositoryImp extends CourseRepository {
   final CourseRemoteDataSource courseRemoteDataSource;
@@ -72,10 +73,11 @@ class CourseRepositoryImp extends CourseRepository {
   @override
   Future<ResponseEntity> getVideoDetails(int courseContentId) async {
     ResponseModel responseModel =
-        (await courseRemoteDataSource.getScriptDetailsAction(courseContentId));
-    return ResponseModelToEntityMapper<VideoDataEntity, VideoDataModel>()
-        .toEntityFromModel(
-            responseModel, (VideoDataModel model) => model.toVideoDataEntity);
+        (await courseRemoteDataSource.getVideoDetailsAction(courseContentId));
+    return ResponseModelToEntityMapper<VideoContentDataEntity,
+            VideoContentDataModel>()
+        .toEntityFromModel(responseModel,
+            (VideoContentDataModel model) => model.toVideoContentDataEntity);
   }
 
   @override

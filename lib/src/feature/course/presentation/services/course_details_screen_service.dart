@@ -9,7 +9,8 @@ import '../../../shared/domain/entities/response_entity.dart';
 
 abstract class _ViewModel {
   void showWarning(String message);
-  void navigateToCourseVideoScreen();
+  void navigateToCourseVideoScreen(int contentId, String contentType,
+      String contentTitleEn, String contentTitleBn);
   void navigateToOverallProgressScreen();
   void navigateToCourseAssignmentScreen(int courseContentId, bool isCompleted);
   void navigateToCourseAssessmentScreen(int courseContentId);
@@ -66,8 +67,10 @@ mixin CourseDetailsScreenService<T extends StatefulWidget> on State<T>
     });
   }
 
-  void onTapCourseVideo() {
-    _view.navigateToCourseVideoScreen();
+  void onTapCourseVideo(int contentId, String contentType,
+      String contentTitleEn, String contentTitleBn) {
+    _view.navigateToCourseVideoScreen(
+        contentId, contentType, contentTitleEn, contentTitleBn);
   }
 
   void onTapProgress() {

@@ -44,6 +44,7 @@ dependencies:
   permission_handler:
   device_info_plus:
   path_provider:
+  chewie: ^1.8.1
 
 
 
