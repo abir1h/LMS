@@ -23,20 +23,20 @@ class SplashController extends GetxController {
   Future<void> _navigateBasedOnLogin() async {
     final loggedIn = await AuthCacheManager.isUserLoggedIn();
 
-    Navigator.of(AppRoute.navigatorKey.currentContext!)
-        .pushNamedAndRemoveUntil(AppRoute.rootScreen, (x) => false,
-        arguments: RootScreenArgs(index: 0));
+    // Navigator.of(AppRoute.navigatorKey.currentContext!)
+    //     .pushNamedAndRemoveUntil(AppRoute.rootScreen, (x) => false,
+    //     arguments: RootScreenArgs(index: 0));
 
-    // if (loggedIn) {
-    //   // Get.offNamed(AppRoutes.landing);
-    //   Navigator.of(AppRoute.navigatorKey.currentContext!)
-    //       .pushNamedAndRemoveUntil(AppRoute.rootScreen, (x) => false,
-    //           arguments: RootScreenArgs(index: 0));
-    // } else {
-    //   // Get.offNamed(AppRoutes.authenticate);
-    //   Navigator.of(AppRoute.navigatorKey.currentContext!)
-    //       .pushNamedAndRemoveUntil(AppRoute.authenticationScreen, (x) => false);
-    // }
+    if (loggedIn) {
+      // Get.offNamed(AppRoutes.landing);
+      Navigator.of(AppRoute.navigatorKey.currentContext!)
+          .pushNamedAndRemoveUntil(AppRoute.rootScreen, (x) => false,
+              arguments: RootScreenArgs(index: 0));
+    } else {
+      // Get.offNamed(AppRoutes.authenticate);
+      Navigator.of(AppRoute.navigatorKey.currentContext!)
+          .pushNamedAndRemoveUntil(AppRoute.authenticationScreen, (x) => false);
+    }
   }
 
   Future<bool> _isLoggedIn() async {

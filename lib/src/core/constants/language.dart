@@ -333,8 +333,8 @@ class LanguageBn {
   String duration = "সময়কাল";
   String assignmentType = "এসাইনমেন্ট টাইপ";
   String submissionType = "সাবমিশন টাইপ";
-  String totalMark = "সর্বমোট মার্ক";
-  String passMark = "পাস মার্ক";
+  String totalMark = "সর্বমোট নম্বর";
+  String passMark = "পাস নম্বর";
   String assignmentInstruction =
       "অনুগ্রহ করে নিচের ছবিটি দেখুন এবং নিম্নলিখিত প্রশ্নের উত্তর দিন।";
   String answerTheFollowingQuestions = "নিচের প্রশ্নগুলোর উত্তর দিন.";
@@ -353,5 +353,4 @@ class LanguageBn {
   String dropHere = "এখানে ড্রপ করুন";
   String dragAnOption = "একটি বিকল্প টেনে আনুন";
   String courseSummary = "কোর্সের সারসংক্ষেপ";
-
 }

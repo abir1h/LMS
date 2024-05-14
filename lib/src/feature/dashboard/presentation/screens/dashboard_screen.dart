@@ -114,7 +114,9 @@ class _DashboardScreenState extends State<DashboardScreen>
                     subTitle: label(
                         e: data.courses.length.toString(),
                         b: replaceEnglishNumberWithBengali(
-                            data.courses.length.toString())),
+                            (data.courseSummery.runningCourses +
+                                    data.courseSummery.upcomingCourses)
+                                .toString())),
                     borderColor: clr.cardStrokeColorPurple,
                     primaryColor: clr.cardFillColorPurple,
                     image: SvgPicture.asset(

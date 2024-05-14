@@ -80,12 +80,9 @@ class _CourseListScreenState extends State<CourseListScreen>
                 return const Center(child: CircularLoader());
               },
               dataBuilder: (context, data) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CourseItemSectionWidget(
-                      items: _screenArgs.circularStatus ==
-                              CircularStatus.courses.name
+                return CourseItemSectionWidget(
+                  items:
+                      _screenArgs.circularStatus == CircularStatus.courses.name
                           ? data.courses
                           : _screenArgs.circularStatus ==
                                   CircularStatus.running.name
@@ -94,71 +91,14 @@ class _CourseListScreenState extends State<CourseListScreen>
                                       CircularStatus.upcoming.name
                                   ? data.upcoming
                                   : data.completed,
-                      buildItem: (BuildContext context, int index, item) {
-                        return CourseCard(
-                          data: item,
-                          circularStatus: _screenArgs.circularStatus,
-                          onTap: () =>
-                              onTapCourse(item.id, _screenArgs.circularStatus),
-                        );
-                      },
-                    ),
-                    // SizedBox(height: size.h16),
-                    // if (_screenArgs.circularStatus ==
-                    //     CircularStatus.running.name)
-                    //   Padding(
-                    //     padding: EdgeInsets.symmetric(horizontal: size.w8),
-                    //     child: Divider(
-                    //         height: size.h1,
-                    //         color: clr.placeHolderTextColorGray),
-                    //   ),
-                    // SizedBox(height: size.h16),
-                    // if (_screenArgs.circularStatus ==
-                    //     CircularStatus.running.name)
-                    //   Text(
-                    //     label(
-                    //         e: "Other Ongoing Courses",
-                    //         b: "অন্যান্য চলমান অধিবেশনসমূহ"),
-                    //     style: TextStyle(
-                    //         color: clr.appPrimaryColorGreen,
-                    //         fontSize: size.textXMedium,
-                    //         fontWeight: FontWeight.w600,
-                    //         fontFamily: StringData.fontFamilyPoppins),
-                    //   ),
-                    // SizedBox(height: size.h8),
-                    /*if (_screenArgs.circularStatus ==
-                        CircularStatus.running.name)
-                      ListView.separated(
-                        shrinkWrap: true,
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: 3,
-                        padding: EdgeInsets.zero,
-                        itemBuilder: (context, index) {
-                          return CourseCard(
-                            onTap: () => Navigator.of(context).pushNamed(
-                                AppRoute.courseDetailsScreen,
-                                arguments: CourseDetailsScreenArgs(
-                                    curriculumType: _screenArgs.circularStatus,
-                                    status: "open")),
-                            title: label(
-                                e: "Right to Information", b: "তথ্য অধিকার"),
-                            code: label(
-                                e: "Course Code : 1568",
-                                b: "অধিবেশনের কোড : ১৫৬৮"),
-                            time: label(
-                                e: "Duration : 12/01/2023 - 17/03/2023",
-                                b: "সময়কাল : ১২/০১/২০২৩ - ১৭/০৩/২০২৩ "),
-                            statusValue: .8,
-                            status: label(e: "80% complete", b: " ৮০% সম্পন্ন"),
-                            bgColor: clr.cardFillColorOrange,
-                            borderColor: clr.cardStrokeColorOrange,
-                          );
-                        },
-                        separatorBuilder: (context, index) {
-                          return SizedBox(height: size.h16);
-                        },
-                      ),*/
-                  ],
+                  buildItem: (BuildContext context, int index, item) {
+                    return CourseCard(
+                      data: item,
+                      circularStatus: _screenArgs.circularStatus,
+                      onTap: () =>
+                          onTapCourse(item.id, _screenArgs.circularStatus),
+                    );
+                  },
                 );
               },
               emptyBuilder: (context, message, icon) => CustomEmptyWidget(

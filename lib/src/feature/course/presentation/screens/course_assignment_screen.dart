@@ -426,13 +426,16 @@ class AssignmentInfoWidget extends StatelessWidget with AppTheme, Language {
           SizedBox(height: size.h20),
           AssignmentInfoRowWidget(
             leftText: label(e: en.totalMark, b: bn.totalMark),
-            rightText: label(e: data.mark.toString(), b: data.mark.toString()),
+            rightText: label(
+                e: data.mark.toString(),
+                b: replaceEnglishNumberWithBengali(data.mark.toString())),
           ),
           SizedBox(height: size.h20),
           AssignmentInfoRowWidget(
             leftText: label(e: en.passMark, b: bn.passMark),
-            rightText:
-                label(e: data.passMark.toString(), b: data.passMark.toString()),
+            rightText: label(
+                e: data.passMark.toString(),
+                b: replaceEnglishNumberWithBengali(data.passMark.toString())),
           ),
         ],
       ),
