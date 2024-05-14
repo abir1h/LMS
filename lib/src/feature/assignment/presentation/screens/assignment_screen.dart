@@ -383,9 +383,19 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                     ),
                   ),
 
+                ///Submission Complete Message for upload
                 if (data.assignmentSubmissions != null &&
                     data.submissionType == "upload")
                   SubmissionCompletedWidget(data: data.assignmentSubmissions!),
+
+                ///Assignment Result
+                if (data.assignmentSubmissions!.remarks.isNotEmpty)
+                  AssignmentReviewWidget(data: data),
+
+                ///Instructor Comment
+                if (data.assignmentSubmissions!.remarks.isNotEmpty)
+                  InstructorCommentWidget(
+                      remarks: data.assignmentSubmissions!.remarks),
               ],
             ),
           );
@@ -695,7 +705,8 @@ class SubmissionCompletedWidget extends StatelessWidget
 }
 
 class AssignmentReviewWidget extends StatelessWidget with AppTheme, Language {
-  const AssignmentReviewWidget({super.key});
+  final AssignmentDataEntity data;
+  const AssignmentReviewWidget({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -714,6 +725,7 @@ class AssignmentReviewWidget extends StatelessWidget with AppTheme, Language {
         ],
       ),
       padding: EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h12),
+      margin: EdgeInsets.only(top: size.h16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -724,6 +736,92 @@ class AssignmentReviewWidget extends StatelessWidget with AppTheme, Language {
               color: clr.appPrimaryColorGreen,
             ),
           ),
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: clr.shadeWhiteColor2,
+              borderRadius: BorderRadius.circular(size.r8),
+              border: Border.all(color: clr.cardStrokeColor, width: size.w1),
+              boxShadow: [
+                BoxShadow(
+                    offset: const Offset(0, 4),
+                    blurRadius: 4,
+                    spreadRadius: 0,
+                    color: clr.blackColor.withOpacity(.2))
+              ],
+            ),
+            padding:
+                EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h12),
+            margin: EdgeInsets.only(top: size.h16),
+            child: CustomTextWidget(
+              text: label(
+                  e: "Sorry, you failed to complete the assignment, please try again",
+                  b: "দুঃখিত, অ্যাসাইনমেন্ট টি সম্পন্ন করতে আপনি ব্যার্থ হয়েছেন, দয়া করে আবার চেষ্টা করুন"),
+              textColor: clr.iconColorSweetRed,
+              fontSize: size.textXSmall,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          SizedBox(height: size.h16),
+          Center(
+            child: CustomTextWidget(
+              text: label(
+                  e: "Assignment Review Completed",
+                  b: "অ্যাসাইনমেন্ট রিভিউ সম্পন্ন হয়েছে"),
+              fontSize: size.textXMedium,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          SizedBox(height: size.h16),
+          AssignmentResultRowWidget(
+              leftText: label(e: "Total Mark", b: "মোট মার্ক"),
+              rightText:
+                  label(e: data.mark.toString(), b: data.mark.toString())),
+          SizedBox(height: size.h16),
+          AssignmentResultRowWidget(
+              leftText: label(e: "Pass Mark", b: "পাশ মার্ক"),
+              rightText: label(
+                  e: data.passMark.toString(), b: data.passMark.toString())),
+          SizedBox(height: size.h16),
+          AssignmentResultRowWidget(
+              leftText: label(e: "Marks Obtained", b: "প্রাপ্ত মার্ক"),
+              rightText: label(
+                  e: data.assignmentSubmissions!.marks.toString(),
+                  b: data.assignmentSubmissions!.marks.toString())),
+          Padding(
+            padding: EdgeInsets.only(top: size.h20),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.chat_bubble_outline,
+                  size: size.r24,
+                  color: clr.appPrimaryColorGreen,
+                ),
+                SizedBox(width: size.w8),
+                Expanded(
+                  child: CustomTextWidget(
+                    text: label(
+                        e: "You have more opportunities. You can try a maximum of 10 times. Request the instructor to participate in the re-evaluation.",
+                        b: "আপনার কাছে আরো সুযোগ আছে. আপনি সর্বোচ্চ ১০ বার চেষ্টা করতে পারবেন. পুনরায় মূল্যায়নে অংশগ্রহণ করার জন্য প্রশিক্ষকের কাছে অনুরোধ করুন."),
+                    fontSize: size.textXSmall,
+                    fontWeight: FontWeight.w500,
+                  ),
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding:
+                EdgeInsets.only(left: size.w64, right: size.w64, top: size.h24),
+            child: CustomButton(
+              onTap: () {},
+              title: label(e: "Send Request", b: "অনুরোধ পাঠান"),
+              bgColor: clr.appPrimaryColorGreen,
+              borderColor: Colors.transparent,
+              radius: size.r8,
+              verticalPadding: size.h4,
+            ),
+          )
         ],
       ),
     );
@@ -731,10 +829,70 @@ class AssignmentReviewWidget extends StatelessWidget with AppTheme, Language {
 }
 
 class InstructorCommentWidget extends StatelessWidget with AppTheme, Language {
-  const InstructorCommentWidget({super.key});
+  final String remarks;
+  const InstructorCommentWidget({super.key, required this.remarks});
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: clr.shadeWhiteColor2,
+        borderRadius: BorderRadius.circular(size.r8),
+        border: Border.all(color: clr.boxStrokeColor, width: size.w1),
+        boxShadow: [
+          BoxShadow(
+              offset: const Offset(0, 4),
+              blurRadius: 4,
+              spreadRadius: 0,
+              color: clr.blackColor.withOpacity(.2))
+        ],
+      ),
+      padding: EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h12),
+      margin: EdgeInsets.only(top: size.h12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CustomTextWidget(
+            text: label(e: "Instructor Comments", b: "প্রশিক্ষকের মন্তব্য"),
+            textColor: clr.textColorBlack,
+            fontSize: size.textXMedium,
+            fontWeight: FontWeight.w500,
+          ),
+          SizedBox(height: size.h16),
+          CustomTextWidget(
+            text: remarks,
+            fontSize: size.textXMedium,
+            fontWeight: FontWeight.w500,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class AssignmentResultRowWidget extends StatelessWidget with AppTheme {
+  final String leftText;
+  final String rightText;
+  const AssignmentResultRowWidget(
+      {super.key, required this.leftText, required this.rightText});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        CustomTextWidget(
+          text: leftText,
+          textColor: clr.textColorBlack,
+          fontWeight: FontWeight.w500,
+        ),
+        CustomTextWidget(
+          text: rightText,
+          textColor: clr.textColorBlack,
+          fontWeight: FontWeight.w500,
+        ),
+      ],
+    );
   }
 }
