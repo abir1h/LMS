@@ -54,14 +54,15 @@ class _DiscussionScreenState extends State<DiscussionScreen>
                       fontSize: size.textXMedium,
                     ),
                     SizedBox(height: size.h4),
-                    CustomTextWidget(
-                      text: label(
-                          e: data.running.first.nameBn,
-                          b: data.running.first.nameBn),
-                      textColor: clr.gapStrokeGrey,
-                      fontSize: size.textXSmall,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    if (data.running.isNotEmpty)
+                      CustomTextWidget(
+                        text: label(
+                            e: data.running.first.nameBn,
+                            b: data.running.first.nameBn),
+                        textColor: clr.gapStrokeGrey,
+                        fontSize: size.textXSmall,
+                        fontWeight: FontWeight.w500,
+                      ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -150,6 +151,7 @@ class _DiscussionScreenState extends State<DiscussionScreen>
         },
         emptyBuilder: (context, message, icon) => CustomEmptyWidget(
           message: message,
+          title: label(e: "No Discussions Found", b: "কোন আলোচনা পাওয়া যায়নি"),
           // constraints: constraints,
           // offset: 350.w,
         ),

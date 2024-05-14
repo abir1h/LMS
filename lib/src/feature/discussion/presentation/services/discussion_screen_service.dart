@@ -66,7 +66,11 @@ mixin DiscussionScreenService<T extends StatefulWidget> on State<T>
       if (value.error == null && value.data != null) {
         allCourseDataStreamController
             .add(DataLoadedState<AllCourseDataEntity>(value.data));
-        loadDiscussions(value.data.running.first.id);
+        if (value.data.running.isNotEmpty) {
+          loadDiscussions(value.data.running.first.id);
+        } else {
+          allCourseDataStreamController.add(EmptyState(message: ''));
+        }
       } else if (value.error == null && value.data == null) {
       } else {
         _view.showWarning(value.message!);

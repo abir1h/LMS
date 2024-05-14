@@ -6,7 +6,7 @@ enum CircularStatus {
 }
 
 enum ContentType {
-  circular_videos,
+  circular_video,
   circular_assignment,
   circular_assessment,
   course_script,

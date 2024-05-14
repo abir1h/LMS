@@ -39,7 +39,7 @@ class CourseContentWidget extends StatelessWidget with AppTheme, Language {
     //       ..layout())
     //     .size;
     return GestureDetector(
-      onTap: data.contentType == ContentType.circular_videos.name
+      onTap: data.contentType == ContentType.circular_video.name
           ? onTapVideo
           : data.contentType == ContentType.circular_assignment.name
               ? onTapAssignment
@@ -62,7 +62,7 @@ class CourseContentWidget extends StatelessWidget with AppTheme, Language {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Icon(
-              data.contentType == ContentType.circular_videos.name
+              data.contentType == ContentType.circular_video.name
                   ? Icons.smart_display
                   : data.contentType == ContentType.circular_assignment.name
                       ? Icons.assignment
@@ -72,7 +72,7 @@ class CourseContentWidget extends StatelessWidget with AppTheme, Language {
                               ? Icons.text_snippet
                               : Icons.cast_connected,
               size: size.r24,
-              color: data.contentType == ContentType.circular_videos.name
+              color: data.contentType == ContentType.circular_video.name
                   ? clr.iconColorSweetRed
                   : data.contentType == ContentType.circular_assignment.name
                       ? clr.appPrimaryColorGreen
@@ -129,7 +129,7 @@ class CourseContentWidget extends StatelessWidget with AppTheme, Language {
                           : clr.cardFillColorCruise,
                   borderRadius: BorderRadius.circular(size.r4)),
               child: Icon(
-                data.contentType == ContentType.circular_videos.name
+                data.contentType == ContentType.circular_video.name
                     ? Icons.play_circle
                     : data.contentType == ContentType.course_blended_class.name
                         ? Icons.video_call
