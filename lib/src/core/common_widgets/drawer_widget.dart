@@ -178,7 +178,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
               DrawerLinkWidget(
                 icon: Icons.contact_support,
                 text: label(e: en.aboutUs, b: bn.aboutUs),
-                onTap: () {Navigator.push(context, MaterialPageRoute(builder: (_)=>VideoPlayerScreen()));},
+                onTap: () {},
               ),
               DrawerLinkWidget(
                 icon: Icons.logout,
