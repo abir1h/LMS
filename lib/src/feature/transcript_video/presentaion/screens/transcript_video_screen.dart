@@ -287,8 +287,8 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                                       horizontal: size.w16),
                                   child: Text(
                                     label(
-                                        e: _screenArgs.contentTitleEn,
-                                        b: _screenArgs.contentTitleBn),
+                                        e: "Training on Pedagory",
+                                        b: "শিক্ষাবিদ্যার উপর প্রশিক্ষণ"),
                                     style: TextStyle(
                                         fontFamily:
                                             StringData.fontFamilyPoppins,
@@ -608,7 +608,7 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
   void setVideo(String url, String category) {
     if(category == VideoCategory.s3.name){
       _controller = VideoPlayerController.networkUrl(
-          Uri.parse(url))
+          Uri.parse("http://116.204.155.53/$url"))
         ..initialize().then((_) {
           Future.delayed((const Duration(microseconds: 100))).then((value) {
             setState(() {
