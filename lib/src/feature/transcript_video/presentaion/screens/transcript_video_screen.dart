@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lms/src/core/common_widgets/custom_toasty.dart';
@@ -32,6 +33,7 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
   late CourseVideoScreenArgs _screenArgs;
   YoutubePlayerController? _youtubeController;
   VideoPlayerController? _controller;
+  ChewieController? _chewieController;
   final GlobalKey _bodyKey = GlobalKey();
 
   bool _onTouch = true;
@@ -43,27 +45,15 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
 
     _screenArgs = widget.arguments as CourseVideoScreenArgs;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // loadVideoData(_screenArgs.contentId);
-      loadVideoData(136);
+      loadVideoData(_screenArgs.contentId);
+      // loadVideoData(136);
     });
-
-    // _youtubeController = YoutubePlayerController(
-    //   initialVideoId: "uGqidUUFzwY",
-    //   flags: const YoutubePlayerFlags(
-    //       mute: false,
-    //       autoPlay: false,
-    //       disableDragSeek: false,
-    //       loop: false,
-    //       isLive: false,
-    //       forceHD: false,
-    //       enableCaption: true,
-    //       showLiveFullscreenButton: true),
-    // );
   }
 
   @override
   void dispose() {
     _controller?.dispose();
+    _chewieController?.dispose();
     _timer?.cancel();
 
     super.dispose();
@@ -121,7 +111,10 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                               },
                               child: AspectRatio(
                                 aspectRatio: 16 / 9,
-                                child: VideoPlayer(_controller!),
+                                // child: VideoPlayer(_controller!),
+                                  child: Chewie(
+                                    controller: _chewieController!,
+                                  ),
                               ),
                             ),
                             Positioned(
@@ -137,82 +130,80 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                                     size: size.r20,
                                   ),
                                 )),
-                            Positioned(
-                              top: 80,
-                              left: .45.sw,
-                              child: Visibility(
-                                visible: _onTouch,
-                                child:  GestureDetector(
-                                  onTap: (){
-                                    _timer?.cancel();
-
-                                    // pause while video is playing, play while video is pausing
-                                    setState(() {
-                                      _controller!.value.isPlaying ?
-                                      _controller!.pause() :
-                                      _controller!.play();
-                                    });
-
-                                    // Auto dismiss overlay after 1 second
-                                    _timer = Timer.periodic(Duration(milliseconds: 2000), (_) {
-                                      setState(() {
-                                        _onTouch = false;
-                                      });
-                                    });
-                                  },
-                                  child: CircleAvatar(
-                                      backgroundColor: Colors.grey.withOpacity(0.5),
-                                      radius: 25,
-                                      child: Icon(_controller!.value.isPlaying ? Icons.pause : Icons.play_arrow, color: Colors.white,)),
-                                ),
-
-
-                              ),
-                            )
+                            // Positioned(
+                            //   top: 80,
+                            //   left: .45.sw,
+                            //   child: Visibility(
+                            //     visible: _onTouch,
+                            //     child:  GestureDetector(
+                            //       onTap: (){
+                            //         _timer?.cancel();
+                            //
+                            //         // pause while video is playing, play while video is pausing
+                            //         setState(() {
+                            //           _controller!.value.isPlaying ?
+                            //           _controller!.pause() :
+                            //           _controller!.play();
+                            //         });
+                            //
+                            //         // Auto dismiss overlay after 1 second
+                            //         _timer = Timer.periodic(Duration(milliseconds: 2000), (_) {
+                            //           setState(() {
+                            //             _onTouch = false;
+                            //           });
+                            //         });
+                            //       },
+                            //       child: CircleAvatar(
+                            //           backgroundColor: Colors.grey.withOpacity(0.5),
+                            //           radius: 25,
+                            //           child: Icon(_controller!.value.isPlaying ? Icons.pause : Icons.play_arrow, color: Colors.white,)),
+                            //     ),
+                            //
+                            //
+                            //   ),
+                            // )
                           ],
                         )
                             : const Center(child: CircularProgressIndicator()),
 
-                      ] else if (playerFlag) ...[
-                        ///Activate HLS video player
                       ] else ...[
                         ///Activate Youtube video player
-                        // YoutubePlayerBuilder(
-                        //   player: YoutubePlayer(
-                        //     controller: _controller!,
-                        //     aspectRatio: 16 / 9,
-                        //     showVideoProgressIndicator: true,
-                        //     progressColors: ProgressBarColors(
-                        //         backgroundColor: clr.progressBGColor,
-                        //         playedColor: clr.appSecondaryColorFlagRed,
-                        //         handleColor: clr.appSecondaryColorFlagRed),
-                        //   ),
-                        //   builder: (context, player) {
-                        //     return Column(
-                        //       children: [
-                        //         Stack(
-                        //           fit: StackFit.loose,
-                        //           children: [
-                        //             player,
-                        //             Positioned(
-                        //                 top: size.h16,
-                        //                 left: size.w16,
-                        //                 child: InkWell(
-                        //                   onTap: () {
-                        //                     Navigator.pop(context);
-                        //                   },
-                        //                   child: Icon(
-                        //                     Icons.arrow_back,
-                        //                     color: clr.shadeWhiteColor2,
-                        //                     size: size.r20,
-                        //                   ),
-                        //                 ))
-                        //           ],
-                        //         ),
-                        //       ],
-                        //     );
-                        //   },
-                        // )
+                        YoutubePlayerBuilder(
+                          player: YoutubePlayer(
+                            controller: _youtubeController!,
+                            aspectRatio: 16 / 9,
+                            showVideoProgressIndicator: true,
+                            progressColors: ProgressBarColors(
+                                backgroundColor: clr.progressBGColor,
+                                playedColor: clr.appSecondaryColorFlagRed,
+                                handleColor: clr.appSecondaryColorFlagRed),
+                          ),
+                          builder: (context, player) {
+                            return Column(
+                              children: [
+                                Stack(
+                                  fit: StackFit.loose,
+                                  children: [
+                                    player,
+                                    Positioned(
+                                        top: size.h16,
+                                        left: size.w16,
+                                        child: InkWell(
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Icon(
+                                            Icons.arrow_back,
+                                            color: clr.shadeWhiteColor2,
+                                            size: size.r20,
+                                          ),
+                                        ))
+                                  ],
+                                ),
+                              ],
+                            );
+                          },
+                        )
                       ],
 
                       ///Details section
@@ -614,14 +605,59 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
   }
 
   @override
-  void setVideo(String url) {
-    _controller = VideoPlayerController.networkUrl(
-        Uri.parse(url))
-      ..initialize().then((_) {
-        Future.delayed((const Duration(microseconds: 100))).then((value) {
-          setState(() {});
+  void setVideo(String url, String category) {
+    if(category == VideoCategory.s3.name){
+      _controller = VideoPlayerController.networkUrl(
+          Uri.parse(url))
+        ..initialize().then((_) {
+          Future.delayed((const Duration(microseconds: 100))).then((value) {
+            setState(() {
+              _chewieController = ChewieController(
+                videoPlayerController: _controller!,
+                autoPlay: true,
+                looping: true,
+
+                // Try playing around with some of these other options:
+
+                showControls: true,
+
+                materialProgressColors: ChewieProgressColors(
+                  playedColor: Colors.red,
+                  handleColor: Colors.grey,
+                  backgroundColor: Colors.grey,
+                  bufferedColor: Colors.grey,
+                ),
+                //
+                // placeholder: Container(
+                //   color: Colors.grey,
+                // ),
+                autoInitialize: true,
+              );
+            });
+          });
         });
-      });
+    }else{
+      _youtubeController = YoutubePlayerController(
+        initialVideoId: url.split("=").last,
+        flags: const YoutubePlayerFlags(
+            mute: false,
+            autoPlay: false,
+            disableDragSeek: false,
+            loop: false,
+            isLive: false,
+            forceHD: false,
+            enableCaption: true,
+            showLiveFullscreenButton: true),
+      );
+    }
+
+    // _controller = VideoPlayerController.networkUrl(
+    //     Uri.parse(url))
+    //   ..initialize().then((_) {
+    //     Future.delayed((const Duration(microseconds: 100))).then((value) {
+    //       setState(() {});
+    //     });
+    //   });
   }
 }
 

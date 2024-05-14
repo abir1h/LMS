@@ -9,7 +9,7 @@ import '../../../shared/domain/entities/response_entity.dart';
 
 abstract class _ViewModel {
   void showWarning(String message);
-  void setVideo(String url);
+  void setVideo(String url, String category);
 }
 
 mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
@@ -49,7 +49,7 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
       if (value.error == null && value.data != null && value.data.videoData != null) {
         videoDetailsDataStreamController
             .add(DataLoadedState<VideoDataEntity>(value.data.videoData));
-        _view.setVideo(value.data.videoData.videoUrl);
+        _view.setVideo(value.data.videoData.videoUrl, value.data.videoData.category);
       } else if (value.error == null && value.data == null) {
         _view.showWarning(value.message!);
       } else {
