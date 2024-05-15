@@ -5,6 +5,7 @@ import '../../../course/data/data_sources/remote/course_data_source.dart';
 import '../../../course/data/repositories/course_repository_imp.dart';
 import '../../../course/domain/entities/all_course_data_entity.dart';
 import '../../../course/domain/use_cases/course_use_case.dart';
+import '../../../course/presentation/services/course_live_class_screen_service.dart';
 import '../../../shared/domain/entities/response_entity.dart';
 import '../../data/data_sources/remote/discussion_data_source.dart';
 import '../../data/repositories/discussion_repository_imp.dart';
@@ -36,18 +37,22 @@ mixin DiscussionScreenService<T extends StatefulWidget> on State<T>
   Future<ResponseEntity> getDiscussions(int courseId) async {
     return _discussionUseCase.getDiscussionsUseCase(courseId);
   }
+  int _selectedTabIndex = 0;
 
   ///Service configurations
   @override
   void initState() {
     _view = this;
     super.initState();
+    loadDataList();
     loadAllCourseData("");
   }
 
   @override
   void dispose() {
     allCourseDataStreamController.dispose();
+    stateDataStreamController.dispose();
+
     super.dispose();
   }
 
@@ -57,6 +62,9 @@ mixin DiscussionScreenService<T extends StatefulWidget> on State<T>
 
   final AppStreamController<List<DiscussionDataEntity>>
       discussionDataStreamController = AppStreamController();
+
+  final AppStreamController<StateType> stateDataStreamController =
+      AppStreamController();
 
   ///Load Course list
   void loadAllCourseData(String courseStatus) {
@@ -77,7 +85,19 @@ mixin DiscussionScreenService<T extends StatefulWidget> on State<T>
       }
     });
   }
+  void loadDataList() {
+    if (!mounted) return;
 
+    ///Loading state
+    stateDataStreamController.add(LoadingState<StateType>());
+    if (_selectedTabIndex == 0) {
+      // _inPersonClassData(courseContentId);
+      stateDataStreamController.add(
+          DataLoadedState<StateType>(WeeklyDiscussionDataState()));
+    } else {
+      stateDataStreamController.add(
+          DataLoadedState<StateType>(AllDiscussionDataState()));    }
+  }
   ///Load Discussion list
   void loadDiscussions(int courseId) {
     if (!mounted) return;
@@ -98,4 +118,17 @@ mixin DiscussionScreenService<T extends StatefulWidget> on State<T>
   void onTap(int discussionId) {
     _view.navigateToDetailedDiscussionScreen(discussionId);
   }
+  void onTabValueChange(int value, int courseContentId) {
+    _selectedTabIndex = value;
+  }
+}
+
+abstract class StateType {}
+
+class WeeklyDiscussionDataState extends StateType {
+  WeeklyDiscussionDataState();
+}
+
+class AllDiscussionDataState extends StateType {
+  AllDiscussionDataState();
 }
