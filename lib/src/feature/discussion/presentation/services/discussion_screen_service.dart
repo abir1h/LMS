@@ -5,16 +5,17 @@ import '../../../course/data/data_sources/remote/course_data_source.dart';
 import '../../../course/data/repositories/course_repository_imp.dart';
 import '../../../course/domain/entities/all_course_data_entity.dart';
 import '../../../course/domain/use_cases/course_use_case.dart';
-import '../../../course/presentation/services/course_live_class_screen_service.dart';
 import '../../../shared/domain/entities/response_entity.dart';
 import '../../data/data_sources/remote/discussion_data_source.dart';
 import '../../data/repositories/discussion_repository_imp.dart';
 import '../../domain/entities/discussion_data_entity.dart';
+import '../../domain/entities/weekly_view_data_entity.dart';
 import '../../domain/use_cases/discussion_use_case.dart';
 
 abstract class _ViewModel {
   void showWarning(String message);
   void showSuccess(String message);
+  void navigateToModuleDiscussionScreen(int courseId, int courseModuleId);
   void navigateToDetailedDiscussionScreen(int discussionId);
 }
 
@@ -38,6 +39,10 @@ mixin DiscussionScreenService<T extends StatefulWidget> on State<T>
     return _discussionUseCase.getDiscussionsUseCase(courseId);
   }
 
+  Future<ResponseEntity> getWeekWiseDiscussions(int courseId) async {
+    return _discussionUseCase.getWeekWiseDiscussionsUseCase(courseId);
+  }
+
   int _selectedTabIndex = 0;
 
   ///Service configurations
@@ -45,7 +50,7 @@ mixin DiscussionScreenService<T extends StatefulWidget> on State<T>
   void initState() {
     _view = this;
     super.initState();
-    loadDataList();
+    // loadDataList();
     loadAllCourseData("");
   }
 
@@ -75,7 +80,7 @@ mixin DiscussionScreenService<T extends StatefulWidget> on State<T>
         allCourseDataStreamController
             .add(DataLoadedState<AllCourseDataEntity>(value.data));
         if (value.data.running.isNotEmpty) {
-          loadDiscussions(value.data.running.first.id);
+          loadDataList(value.data.running.first.id);
         } else {
           allCourseDataStreamController.add(EmptyState(message: ''));
         }
@@ -86,18 +91,15 @@ mixin DiscussionScreenService<T extends StatefulWidget> on State<T>
     });
   }
 
-  void loadDataList() {
+  void loadDataList(int courseId) {
     if (!mounted) return;
 
     ///Loading state
     stateDataStreamController.add(LoadingState<StateType>());
     if (_selectedTabIndex == 0) {
-      // _inPersonClassData(courseContentId);
-      stateDataStreamController
-          .add(DataLoadedState<StateType>(WeeklyDiscussionDataState()));
+      _weekWiseData(courseId);
     } else {
-      stateDataStreamController
-          .add(DataLoadedState<StateType>(AllDiscussionDataState()));
+      _allDiscussionsData(courseId);
     }
   }
 
@@ -118,22 +120,54 @@ mixin DiscussionScreenService<T extends StatefulWidget> on State<T>
     });
   }
 
+  void _weekWiseData(int courseId) {
+    getWeekWiseDiscussions(courseId).then((value) {
+      if (_selectedTabIndex != 0) return;
+      if (value.error == null && value.data != null) {
+        stateDataStreamController.add(
+            DataLoadedState<StateType>(WeeklyDiscussionDataState(value.data)));
+      } else if (value.error == null && value.data == null) {
+      } else {
+        _view.showWarning(value.message!);
+      }
+    });
+  }
+
+  void _allDiscussionsData(int courseId) {
+    getDiscussions(courseId).then((value) {
+      if (_selectedTabIndex != 1) return;
+      if (value.error == null && value.data != null) {
+        stateDataStreamController.add(
+            DataLoadedState<StateType>(AllDiscussionDataState(value.data)));
+      } else if (value.error == null && value.data == null) {
+      } else {
+        _view.showWarning(value.message!);
+      }
+    });
+  }
+
   void onTap(int discussionId) {
     _view.navigateToDetailedDiscussionScreen(discussionId);
   }
 
-  void onTabValueChange(int value, int courseContentId) {
+  void onTapWeek(int courseId, int courseModuleId) {
+    _view.navigateToModuleDiscussionScreen(courseId, courseModuleId);
+  }
+
+  void onTabValueChange(int value, int courseId) {
     _selectedTabIndex = value;
-    loadDataList();
+    loadDataList(courseId);
   }
 }
 
 abstract class StateType {}
 
 class WeeklyDiscussionDataState extends StateType {
-  WeeklyDiscussionDataState();
+  final List<WeeklyViewDataEntity> weeklyViewDataEntity;
+  WeeklyDiscussionDataState(this.weeklyViewDataEntity);
 }
 
 class AllDiscussionDataState extends StateType {
-  AllDiscussionDataState();
+  final List<DiscussionDataEntity> discussionDataEntity;
+  AllDiscussionDataState(this.discussionDataEntity);
 }

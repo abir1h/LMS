@@ -1,4 +1,3 @@
-import 'user_data_mapper.dart';
 import '../../domain/entities/comment_data_entity.dart';
 import '../models/comment_data_model.dart';
 

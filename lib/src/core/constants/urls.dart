@@ -27,6 +27,10 @@ class ApiCredential {
 
   static String discussion = "/circular-service/api/mobile/discussion";
   static String getAllDiscussion = "/circular-service/api/mobile/discussions";
+  static String getWeakWiseDiscussion =
+      "/circular-service/api/web/discussion-module-wise";
+  static String getWeakWiseDiscussionDetails =
+      "/circular-service/api/web/discussion-module-wise-details";
   static String getDiscussion =
       "/circular-service/api/mobile/discussion-content-wise";
   static String getDiscussionComments =

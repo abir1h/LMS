@@ -11,6 +11,18 @@ class DiscussionUseCase {
     return response;
   }
 
+  Future<ResponseEntity> getWeekWiseDiscussionsUseCase(int courseId) async {
+    final response = _discussionRepository.getWeekWiseDiscussions(courseId);
+    return response;
+  }
+
+  Future<ResponseEntity> getWeekWiseDiscussionsDetailsUseCase(
+      int courseId, int courseModuleId) async {
+    final response = _discussionRepository.getWeekWiseDiscussionsDetails(
+        courseId, courseModuleId);
+    return response;
+  }
+
   Future<ResponseEntity> getDiscussionsByContentUseCase(int courseId,
       int courseModuleId, int contentId, String contentType) async {
     final response = _discussionRepository.getDiscussionsByContent(

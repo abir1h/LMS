@@ -17,6 +17,7 @@ import '../../feature/course/presentation/screens/overall_progress_screen.dart';
 import '../../feature/discussion/presentation/screens/detailed_discussion.dart';
 import '../../feature/discussion/presentation/screens/discussion_list_screen.dart';
 import '../../feature/discussion/presentation/screens/discussion_screen.dart';
+import '../../feature/discussion/presentation/screens/module_discussions_screen.dart';
 import '../../feature/landing/presentation/screens/landing_screen.dart';
 import '../../feature/leaderboard/presentation/screens/leaderboard_screen.dart';
 import '../../feature/notes/presentation/screens/note_details_screen.dart';
@@ -46,9 +47,11 @@ class AppRoute {
   static const String courseLiveClassScreen = "courseLiveClassScreen";
   static const String courseAssessmentScreen = "courseAssessmentScreen";
   static const String discussionScreen = "discussionScreen";
+  static const String moduleDiscussionsScreen = "moduleDiscussionsScreen";
   static const String assignmentScreen = "assignmentScreen";
   static const String assignmentSubmitScreen = "assignmentSubmitScreen";
-  static const String assessmentAllQuestionScreen = "assessmentAllQuestionScreen";
+  static const String assessmentAllQuestionScreen =
+      "assessmentAllQuestionScreen";
   static const String detailedDiscussion = "detailedDiscussion";
   static const String discussionListScreen = "discussionListScreen";
   static const String noteDetailsScreen = "noteDetailsScreen";
@@ -102,10 +105,14 @@ mixin RouteGenerator {
             return const DiscussionScreen();
           case AppRoute.assignmentScreen:
             return AssignmentScreen(arguments: setting.arguments);
+          case AppRoute.moduleDiscussionsScreen:
+            return ModuleDiscussionsScreen(arguments: setting.arguments);
           case AppRoute.assignmentSubmitScreen:
             return AssignmentSubmitScreen(arguments: setting.arguments);
           case AppRoute.assessmentAllQuestionScreen:
-            return  AssessmentAllQuestionScreen(arguments: setting.arguments,);
+            return AssessmentAllQuestionScreen(
+              arguments: setting.arguments,
+            );
           case AppRoute.detailedDiscussion:
             return DetailedDiscussion(arguments: setting.arguments);
           case AppRoute.discussionListScreen:

@@ -4,9 +4,13 @@ import '../../../../shared/data/models/response_model.dart';
 import '../../models/comment_data_model.dart';
 import '../../models/discussion_comments_data_model.dart';
 import '../../models/discussion_data_model.dart';
+import '../../models/weekly_view_data_model.dart';
 
 abstract class DiscussionRemoteDataSource {
   Future<ResponseModel> getDiscussionsAction(int courseId);
+  Future<ResponseModel> getWeekWiseDiscussionsAction(int courseId);
+  Future<ResponseModel> getWeekWiseDiscussionsDetailsAction(
+      int courseId, int courseModuleId);
   Future<ResponseModel> getDiscussionsByContentAction(
       int courseId, int courseModuleId, int contentId, String contentType);
   Future<ResponseModel> getDiscussionDetailsAction(int discussionId);
@@ -32,6 +36,26 @@ class DiscussionRemoteDataSourceImp extends DiscussionRemoteDataSource {
   Future<ResponseModel> getDiscussionsAction(int courseId) async {
     final responseJson = await Server.instance.getRequest(
         url: "${ApiCredential.getAllDiscussion}?course_id=$courseId");
+    ResponseModel responseModel = ResponseModel.fromJson(
+        responseJson, (dynamic json) => DiscussionDataModel.listFromJson(json));
+    return responseModel;
+  }
+
+  @override
+  Future<ResponseModel> getWeekWiseDiscussionsAction(int courseId) async {
+    final responseJson = await Server.instance.getRequest(
+        url: "${ApiCredential.getWeakWiseDiscussion}?course_id=$courseId");
+    ResponseModel responseModel = ResponseModel.fromJson(
+        responseJson, (dynamic json) => WeeklyViewDataModel.listFromJson(json));
+    return responseModel;
+  }
+
+  @override
+  Future<ResponseModel> getWeekWiseDiscussionsDetailsAction(
+      int courseId, int courseModuleId) async {
+    final responseJson = await Server.instance.getRequest(
+        url:
+            "${ApiCredential.getWeakWiseDiscussionDetails}?course_id=$courseId&course_module_id=$courseModuleId");
     ResponseModel responseModel = ResponseModel.fromJson(
         responseJson, (dynamic json) => DiscussionDataModel.listFromJson(json));
     return responseModel;

@@ -83,6 +83,11 @@ class AssignmentSubmitScreenArgs {
       {this.assignmentModel, this.assignmentDataEntity, this.answer});
 }
 
+class ModuleDiscussionArgs {
+  final int courseId, courseModuleId;
+  ModuleDiscussionArgs({required this.courseId, required this.courseModuleId});
+}
+
 class DetailedDiscussionArgs {
   final int discussionId;
   DetailedDiscussionArgs({required this.discussionId});

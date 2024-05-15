@@ -1,3 +1,6 @@
+import 'package:lms/src/feature/discussion/data/mapper/weekly_view_data_mapper.dart';
+
+import '../../domain/entities/weekly_view_data_entity.dart';
 import '../mapper/comment_data_mapper.dart';
 import '../models/comment_data_model.dart';
 import '../../domain/entities/comment_data_entity.dart';
@@ -12,6 +15,7 @@ import '../../domain/repositories/discussion_repository.dart';
 import '../data_sources/remote/discussion_data_source.dart';
 import '../models/discussion_comments_data_model.dart';
 import '../models/discussion_data_model.dart';
+import '../models/weekly_view_data_model.dart';
 
 class DiscussionRepositoryImp extends DiscussionRepository {
   final DiscussionRemoteDataSource discussionRemoteDataSource;
@@ -21,6 +25,35 @@ class DiscussionRepositoryImp extends DiscussionRepository {
   Future<ResponseEntity> getDiscussions(int courseId) async {
     ResponseModel responseModel =
         (await discussionRemoteDataSource.getDiscussionsAction(courseId));
+    return ResponseModelToEntityMapper<List<DiscussionDataEntity>,
+            List<DiscussionDataModel>>()
+        .toEntityFromModel(
+            responseModel,
+            (List<DiscussionDataModel> models) =>
+                List<DiscussionDataModel>.from(models)
+                    .map((e) => e.toDiscussionDataEntity)
+                    .toList());
+  }
+
+  @override
+  Future<ResponseEntity> getWeekWiseDiscussions(int courseId) async {
+    ResponseModel responseModel = (await discussionRemoteDataSource
+        .getWeekWiseDiscussionsAction(courseId));
+    return ResponseModelToEntityMapper<List<WeeklyViewDataEntity>,
+            List<WeeklyViewDataModel>>()
+        .toEntityFromModel(
+            responseModel,
+            (List<WeeklyViewDataModel> models) =>
+                List<WeeklyViewDataModel>.from(models)
+                    .map((e) => e.toWeeklyViewDataEntity)
+                    .toList());
+  }
+
+  @override
+  Future<ResponseEntity> getWeekWiseDiscussionsDetails(
+      int courseId, int courseModuleId) async {
+    ResponseModel responseModel = (await discussionRemoteDataSource
+        .getWeekWiseDiscussionsDetailsAction(courseId, courseModuleId));
     return ResponseModelToEntityMapper<List<DiscussionDataEntity>,
             List<DiscussionDataModel>>()
         .toEntityFromModel(
