@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lms/src/core/common_widgets/custom_action_button.dart';
-import 'package:lms/src/core/common_widgets/custom_toasty.dart';
-import 'package:lms/src/feature/assessment/presentation/widgets/assessment_result_widget.dart';
-import 'package:lms/src/feature/shared/domain/entities/response_entity.dart';
 
+import '../../../../core/common_widgets/custom_action_button.dart';
+import '../../../../core/common_widgets/custom_toasty.dart';
+import '../widgets/assessment_result_widget.dart';
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../../../core/common_widgets/circuler_widget.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
@@ -12,17 +11,17 @@ import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
 import '../../domain/entities/exam_data_entity.dart';
+import '../../domain/entities/option_data_entity.dart';
 import '../../domain/entities/question_data_entity.dart';
 import '../services/assessment_screen_service.dart';
 import '../widgets/comprehensive_answer_widget.dart';
-import '../widgets/descriptive_answer_widget.dart';
 import '../widgets/fill_in_the_gap_answer_widget.dart';
-import '../widgets/matching_answer_widget.dart';
 import '../widgets/mcq_answer_widget.dart';
 import '../widgets/question_list_widget.dart';
 import '../widgets/question_widget.dart';
 import '../widgets/time_digit_widget.dart';
 import '../widgets/true_false_answer_widget.dart';
+import '../widgets/written_text_field_widget.dart';
 
 class AssessmentAllQuestionScreen extends StatefulWidget {
   final Object? arguments;
@@ -154,21 +153,19 @@ class _AssessmentAllQuestionScreenState
     //   _onTimerTick(_examTimer);
     // });
   }
+
   //
   // void _onTimerTick(Timer timer) {
   //   var remaining = timerStreamController.value - const Duration(seconds: 1);
   //   timerStreamController.add(remaining);
   // }
 
+  int groupValue = -1;
+
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
       title: label(e: en.assessment, b: bn.assessment),
-      // actionChild: TimeDigitWidget(
-      //   examStateStream: pageStateStreamController.stream,
-      //   timerStream: timerStreamController.stream,
-      //   isExamRunning: (x) => x != null && (x is DataLoadedState),
-      // ),
       resizeToAvoidBottomInset: true,
       body: AppStreamBuilder<PageState>(
         stream: pageStateStreamController.stream,
@@ -176,7 +173,6 @@ class _AssessmentAllQuestionScreenState
         emptyBuilder: (context, message, icon) => const Offstage(),
         dataBuilder: (context, data) {
           if (data is ExamRunningState) {
-            // return Container();
             return SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Column(
@@ -191,20 +187,14 @@ class _AssessmentAllQuestionScreenState
                         fontSize: size.textXMedium,
                         fontWeight: FontWeight.w500,
                       ),
-                      // SizedBox(width: size.w16),
-                      // TimeDigitWidget(
-                      //   examStateStream: pageStateStreamController.stream,
-                      //   timerStream: timerStreamController.stream,
-                      //   isExamRunning: (x)=> x != null && (x is DataLoadedState) && x.data is ExamRunningState,
-                      //   // isExamRunning: (x) => true,
-                      // ),
-                      // SizedBox(width: size.w20)
+                      SizedBox(width: size.w16),
                       TimeDigitWidget(
                         examStateStream: pageStateStreamController.stream,
                         timerStream: timerStreamController.stream,
                         isExamRunning: (x) =>
                             x != null && (x is DataLoadedState),
                       ),
+                      SizedBox(width: size.w20)
                     ],
                   ),
                   SizedBox(height: size.h24),
@@ -228,24 +218,105 @@ class _AssessmentAllQuestionScreenState
                               questionText: data.questionType?.id != 4
                                   ? data.question
                                   : "",
-                              // child: Text(data.question),
                               child: data.questionType?.id == 2
-                                  ? MCQAnswerWidget(data: data)
+                                  ? MCQWidget(
+                                      items: data.options,
+                                      builder: (BuildContext context, int index,
+                                          item) {
+                                        return MCQAnswerOptionWidget(
+                                          value: item.optionValue,
+                                          imageValue: item.optionImg,
+                                          isSelected: item.isSelected,
+                                          onTap: () => setState(() {
+                                            for (OptionDataEntity optionDataEntity
+                                                in data.options) {
+                                              if (data.options.indexOf(
+                                                      optionDataEntity) !=
+                                                  index) {
+                                                optionDataEntity.isSelected =
+                                                    false;
+                                              } else {
+                                                optionDataEntity.isSelected =
+                                                    !optionDataEntity
+                                                        .isSelected;
+                                                item.userCorrectValue =
+                                                    item.optionValue;
+                                              }
+                                            }
+                                            print(
+                                                "Ansewwlelkfekf ${item.userCorrectValue}");
+                                          }),
+                                        );
+                                      })
+                                  // MCQAnswerWidget(data: data)
                                   // : data.questionType?.id == 3
                                   //     ? MatchingAnswerWidget(data: data)
                                   : data.questionType?.id == 4
-                                      ? FillInTheGapAnswerWidget(data: data)
+                                      ? FillInTheGapAnswerWidget(
+                                          question: data.question,
+                                          items: data.options,
+                                          builder: (BuildContext context,
+                                              int index, item) {
+                                            return FillInTheGapOptionWidget(
+                                              optionTitle: label(
+                                                  e: "ব্ল্যান্ক ${replaceEnglishNumberWithBengali((index + 1).toString())} এর উত্তর লিখুন:",
+                                                  b: "ব্ল্যান্ক ${replaceEnglishNumberWithBengali((index + 1).toString())} এর উত্তর লিখুন:"),
+                                              onChanged: (e) {
+                                                item.userInput = e;
+                                                print(
+                                                  "Blank  ${item.userInput}",
+                                                );
+                                              },
+                                            );
+                                          })
                                       : data.questionType?.id == 5
-                                          ? TrueFalseAnswerWidget(data: data)
+                                          ? MCQWidget(
+                                              items: data.options,
+                                              builder: (BuildContext context,
+                                                  int index, item) {
+                                                return TruFalseOptionWidget(
+                                                  optionValue: item.optionValue,
+                                                  groupValue: groupValue,
+                                                  index: index,
+                                                  onChanged: (v) {
+                                                    setState(() {
+                                                      groupValue = v!;
+                                                      item.userCorrectValue =
+                                                          v == 0
+                                                              ? "true"
+                                                              : "false";
+                                                    });
+                                                    print(groupValue);
+                                                    print(
+                                                        item.userCorrectValue);
+                                                  },
+                                                );
+                                              })
                                           : data.questionType?.id == 6
-                                              ? DescriptiveAnswerWidget(
-                                                  data: data)
+                                              ? WrittenTextFieldWidget(
+                                                  minLines: 5,
+                                                  maxLines: 10,
+                                                  onChanged: (e) {
+                                                    data.userInput == e;
+                                                  },
+                                                )
                                               : data.questionType?.id == 7
-                                                  ? ComprehensiveAnswerWidget(
-                                                      data: data)
+                                                  ? MCQWidget(
+                                                      items: data.options,
+                                                      builder:
+                                                          (BuildContext context,
+                                                              int index, item) {
+                                                        return ComprehensiveAnswerWidget(
+                                                          optionValue:
+                                                              item.optionValue,
+                                                          onChanged: (e) {
+                                                            item.userInput == e;
+                                                          },
+                                                        );
+                                                      })
                                                   : Container(),
                             )
-                          : Wrap();
+                          : const Wrap();
                     },
                   ),
                   SizedBox(height: size.h16),
@@ -255,8 +326,7 @@ class _AssessmentAllQuestionScreenState
                         title: label(e: "Submit Answer", b: "জমা দিন"),
                         // controller: _submitButtonController,
                         // onCheck: _showConfirmationDialog,
-                        tapAction: () =>
-                            onSubmitExam(examDataEntity: data.examData),
+                        tapAction: () => onSubmitExam(data.examData),
                         onSuccess: (x) {
                           examTimer.cancel();
                           onExamResultSubmitted(x);

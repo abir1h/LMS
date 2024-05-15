@@ -1,6 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
-@immutable
 class OptionDataModel {
   final int id;
   final int circularQuestionId;

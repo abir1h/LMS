@@ -212,7 +212,7 @@ class _CourseAssessmentScreenState extends State<CourseAssessmentScreen>
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: size.w10),
                         child: CustomButton(
-                          onTap: () => onTapStartExam(data.circularId),
+                          onTap: () => onTapStartExam(data.id),
                           title: label(e: en.getStarted, b: bn.getStarted),
                           radius: size.r4,
                         ),

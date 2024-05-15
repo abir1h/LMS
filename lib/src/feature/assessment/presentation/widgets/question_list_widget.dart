@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_theme.dart';
 
-class QuestionListWidget<T> extends StatefulWidget {
+class QuestionListWidget<T> extends StatelessWidget with AppTheme {
   final List<T> items;
   final Widget Function(BuildContext context, T data, int index) builder;
   const QuestionListWidget(
@@ -10,19 +10,12 @@ class QuestionListWidget<T> extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<QuestionListWidget<T>> createState() => _QuestionListWidgetState<T>();
-}
-
-class _QuestionListWidgetState<T> extends State<QuestionListWidget<T>>
-    with AppTheme {
-  @override
   Widget build(BuildContext context) {
     return ListView.separated(
       shrinkWrap: true,
-      itemCount: widget.items.length,
+      itemCount: items.length,
       physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) =>
-          widget.builder(context, widget.items[index], index),
+      itemBuilder: (context, index) => builder(context, items[index], index),
       separatorBuilder: (context, index) {
         return SizedBox(height: size.h12);
       },
