@@ -316,23 +316,23 @@ class Server {
     appPrint("------------------------------");
     switch (response.statusCode) {
       case 200:
-        return json.decode(response.body);
+        return json.decode(utf8.decode(response.bodyBytes));
       case 201:
-        return json.decode(response.body);
+        return json.decode(utf8.decode(response.bodyBytes));
       case 204:
-        return json.decode(response.body);
+        return json.decode(utf8.decode(response.bodyBytes));
       case 400:
-        return json.decode(response.body);
+        return json.decode(utf8.decode(response.bodyBytes));
       case 401:
-        return json.decode(response.body);
+        return json.decode(utf8.decode(response.bodyBytes));
       case 403:
-        throw UnauthorisedException(response.body);
+        throw UnauthorisedException(utf8.decode(response.bodyBytes));
       case 404:
-        return json.decode(response.body);
+        return json.decode(utf8.decode(response.bodyBytes));
       case 422:
-        return json.decode(response.body);
+        return json.decode(utf8.decode(response.bodyBytes));
       case 500:
-        return json.decode(response.body);
+        return json.decode(utf8.decode(response.bodyBytes));
       default:
         throw FetchDataException(
             'Error occured while Communication with Server with StatusCode : ${response.statusCode}');

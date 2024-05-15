@@ -79,8 +79,8 @@ class _TabSectionWidgetState extends State<TabSectionWidget>
               children: [
                 ChapterDetailsWidget(
                     description: label(
-                        e: "Pedagogy, most commonly understood as the approach to teaching, is the theory and practice of learning, and how this process influences, and is influenced by, the social, political, and psychological development of learners.",
-                        b: "শিক্ষাবিদ্যা, যা সাধারণত শিক্ষার পদ্ধতি হিসাবে বোঝা যায়, তা হল শিক্ষার তত্ত্ব এবং অনুশীলন এবং কীভাবে এই প্রক্রিয়াটি শিক্ষার্থীদের সামাজিক, রাজনৈতিক এবং মানসিক বিকাশকে প্রভাবিত করে এবং প্রভাবিত করে।")),
+                        e: widget.videoDataEntity.transcriptEn,
+                        b: widget.videoDataEntity.transcriptBn)),
                 NoteWidget(
                   courseModuleId: widget.videoDataEntity.courseModuleId,
                   contentId: widget.videoDataEntity.id,

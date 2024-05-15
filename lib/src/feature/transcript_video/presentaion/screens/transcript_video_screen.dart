@@ -297,7 +297,7 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                                       Expanded(
                                         child: Text(
                                           label(
-                                              e: "Training on Pedagory", b:"শিক্ষাবিদ্যার উপর প্রশিক্ষণ"),
+                                              e: data.titleEn, b: data.titleBn),
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 1,
                                           style: TextStyle(
@@ -361,8 +361,8 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                                       horizontal: size.w16),
                                   child: Text(
                                     label(
-                                        e: "Training on Pedagory",
-                                        b: "শিক্ষাবিদ্যার উপর প্রশিক্ষণ"),
+                                        e: _screenArgs.contentTitleEn,
+                                        b: _screenArgs.contentTitleBn),
                                     style: TextStyle(
                                         fontFamily:
                                             StringData.fontFamilyPoppins,
