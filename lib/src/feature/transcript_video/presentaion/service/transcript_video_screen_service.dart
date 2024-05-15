@@ -6,13 +6,14 @@ import '../../../course/data/repositories/course_repository_imp.dart';
 import '../../../course/domain/entities/video_data_entity.dart';
 import '../../../course/domain/use_cases/course_use_case.dart';
 import '../../../shared/domain/entities/response_entity.dart';
+import '../screens/transcript_video_screen.dart';
 
 abstract class _ViewModel {
   void showWarning(String message);
   void navigateToBack();
   bool isPlayerFullscreen();
   void changeOrientationToPortrait();
-  void setVideo(String url, String category);
+  void setYoutubeVideo(String url);
 }
 
 mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
@@ -27,9 +28,6 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
     return _courseUseCase.getVideoDetailsUseCase(courseContentId);
   }
 
-  final AppStreamController<bool> playbackPausePlayStreamController =
-  AppStreamController();
-
   ///Service configurations
   @override
   void initState() {
@@ -40,11 +38,14 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
   @override
   void dispose() {
     videoDetailsDataStreamController.dispose();
+    playbackPausePlayStreamController.dispose();
     super.dispose();
   }
 
   ///Stream controllers
   final AppStreamController<VideoDataEntity> videoDetailsDataStreamController =
+      AppStreamController();
+  final AppStreamController<bool> playbackPausePlayStreamController =
       AppStreamController();
 
   ///Load Video details
@@ -52,10 +53,14 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
     if (!mounted) return;
     videoDetailsDataStreamController.add(LoadingState());
     getVideoDetails(courseContentId).then((value) {
-      if (value.error == null && value.data != null && value.data.videoData != null) {
+      if (value.error == null &&
+          value.data != null &&
+          value.data.videoData != null) {
         videoDetailsDataStreamController
             .add(DataLoadedState<VideoDataEntity>(value.data.videoData));
-        // _view.setVideo(value.data.videoData.videoUrl, value.data.videoData.category);
+        if (value.data.videoData.category != VideoCategory.s3.name) {
+          _view.setYoutubeVideo(value.data.videoData.videoUrl);
+        }
       } else if (value.error == null && value.data == null) {
         _view.showWarning(value.message!);
       } else {
@@ -131,5 +136,4 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
   //   // }
   //   // }
   // }
-
 }
