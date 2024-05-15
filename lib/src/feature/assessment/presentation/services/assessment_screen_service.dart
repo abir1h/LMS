@@ -85,8 +85,7 @@ mixin AssessmentScreenService<T extends StatefulWidget> on State<T>
     }
   }
 
-  Future<ResponseEntity> onSubmitExam(
-      {required ExamDataEntity examDataEntity}) async {
+  Future<ResponseEntity> onSubmitExam(ExamDataEntity examDataEntity) async {
     ResponseEntity responseEntity = await onSubmit(examDataEntity);
     if (responseEntity.error == null && responseEntity.data != null) {
       _view.showSuccess(responseEntity.message!);

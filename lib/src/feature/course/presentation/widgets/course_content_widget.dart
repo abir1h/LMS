@@ -121,11 +121,11 @@ class CourseContentWidget extends StatelessWidget with AppTheme, Language {
               decoration: BoxDecoration(
                   color:
                       data.contentType == ContentType.course_blended_class.name
-                          ? (DateTime.parse(data.schedule) == DateTime.now()
+                          ? (data.schedule.isNotEmpty?DateTime.parse(data.schedule) == DateTime.now()
                               ? clr.iconColorBlue
                               : data.isCompleted
                                   ? clr.iconColorRedShade
-                                  : clr.iconColorHint)
+                                  : clr.iconColorHint: clr.iconColorHint)
                           : clr.cardFillColorCruise,
                   borderRadius: BorderRadius.circular(size.r4)),
               child: Icon(

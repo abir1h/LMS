@@ -78,9 +78,13 @@ class _CourseLiveClassScreenState extends State<CourseLiveClassScreen>
             Padding(
               padding: EdgeInsets.symmetric(
                   horizontal: size.w16, vertical: size.h16),
-              child: Center(child: TypeSelectorTab(onSelected: (e) {
-                onTabValueChange(e, _screenArgs.courseContentId);
-              })),
+              child: Center(
+                child: TypeSelectorTab(
+                  onSelected: (e) {
+                    onTabValueChange(e, _screenArgs.courseContentId);
+                  },
+                ),
+              ),
             ),
 
             AppStreamBuilder<StateType>(
@@ -675,7 +679,7 @@ class _TypeSelectorTabState extends State<TypeSelectorTab>
                         ? clr.shadeWhiteColor2
                         : clr.textColorAppleBlack,
                     fontWeight:
-                        _selectedType == 0 ? FontWeight.w500 : FontWeight.w400,
+                        _selectedType == 1 ? FontWeight.w500 : FontWeight.w400,
                     fontSize: size.textSmall,
                   ),
                 )),

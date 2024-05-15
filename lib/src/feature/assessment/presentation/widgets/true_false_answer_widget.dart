@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/common_imports.dart';
-import '../../../../core/utility/app_label.dart';
 import '../../domain/entities/question_data_entity.dart';
 
 class TrueFalseAnswerWidget extends StatefulWidget {
@@ -50,9 +49,7 @@ class _TrueFalseAnswerWidgetState extends State<TrueFalseAnswerWidget>
               ),
             ),
             Text(
-              label(
-                  e: widget.data.options[index].optionValue,
-                  b: widget.data.options[index].optionValue),
+              widget.data.options[index].optionValue,
               style: TextStyle(
                   color: clr.textColorAppleBlack,
                   fontSize: size.textSmall,
@@ -118,12 +115,52 @@ class _TrueFalseAnswerWidgetState extends State<TrueFalseAnswerWidget>
       // ),
     );
   }
+}
 
-  void _toggleSelection() {
-    if (mounted) {
-      setState(() {
-        // widget.data.isSelected = !widget.data.isSelected;
-      });
-    }
+class TruFalseOptionWidget extends StatelessWidget with AppTheme {
+  final String optionValue;
+  final int groupValue;
+  final int index;
+  final ValueChanged<int?>? onChanged;
+  TruFalseOptionWidget(
+      {super.key,
+      required this.optionValue,
+      required this.groupValue,
+      required this.index,
+      required this.onChanged});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Transform.scale(
+          scale: 1,
+          child: Radio(
+            activeColor: clr.appPrimaryColorGreen,
+            groupValue: groupValue,
+            value: index,
+            onChanged: onChanged,
+            // onChanged: (newValue) {
+            //   setState(() {
+            //     groupValue = newValue!;
+            //     widget.data.options[index].userCorrectValue =
+            //         newValue == 0 ? "true" : "false";
+            //   });
+            //   print(groupValue);
+            //   print(widget.data.options[index].userCorrectValue);
+            // },
+          ),
+        ),
+        Text(
+          optionValue,
+          style: TextStyle(
+              color: clr.textColorAppleBlack,
+              fontSize: size.textSmall,
+              fontWeight: FontWeight.w500,
+              fontFamily: StringData.fontFamilyPoppins),
+        ),
+      ],
+    );
   }
 }

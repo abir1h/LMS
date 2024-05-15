@@ -37,6 +37,7 @@ mixin DiscussionScreenService<T extends StatefulWidget> on State<T>
   Future<ResponseEntity> getDiscussions(int courseId) async {
     return _discussionUseCase.getDiscussionsUseCase(courseId);
   }
+
   int _selectedTabIndex = 0;
 
   ///Service configurations
@@ -52,7 +53,6 @@ mixin DiscussionScreenService<T extends StatefulWidget> on State<T>
   void dispose() {
     allCourseDataStreamController.dispose();
     stateDataStreamController.dispose();
-
     super.dispose();
   }
 
@@ -85,6 +85,7 @@ mixin DiscussionScreenService<T extends StatefulWidget> on State<T>
       }
     });
   }
+
   void loadDataList() {
     if (!mounted) return;
 
@@ -92,12 +93,14 @@ mixin DiscussionScreenService<T extends StatefulWidget> on State<T>
     stateDataStreamController.add(LoadingState<StateType>());
     if (_selectedTabIndex == 0) {
       // _inPersonClassData(courseContentId);
-      stateDataStreamController.add(
-          DataLoadedState<StateType>(WeeklyDiscussionDataState()));
+      stateDataStreamController
+          .add(DataLoadedState<StateType>(WeeklyDiscussionDataState()));
     } else {
-      stateDataStreamController.add(
-          DataLoadedState<StateType>(AllDiscussionDataState()));    }
+      stateDataStreamController
+          .add(DataLoadedState<StateType>(AllDiscussionDataState()));
+    }
   }
+
   ///Load Discussion list
   void loadDiscussions(int courseId) {
     if (!mounted) return;
@@ -118,8 +121,10 @@ mixin DiscussionScreenService<T extends StatefulWidget> on State<T>
   void onTap(int discussionId) {
     _view.navigateToDetailedDiscussionScreen(discussionId);
   }
+
   void onTabValueChange(int value, int courseContentId) {
     _selectedTabIndex = value;
+    loadDataList();
   }
 }
 

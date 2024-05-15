@@ -36,7 +36,8 @@ class _DiscussionScreenState extends State<DiscussionScreen>
       title: label(e: en.discussion, b: bn.discussion),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h16),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomTextWidget(
               text: label(
@@ -54,13 +55,13 @@ class _DiscussionScreenState extends State<DiscussionScreen>
               fontFamily: StringData.fontFamilyRoboto,
               textColor: clr.gapStrokeGrey,
             ),
-            SizedBox(
-              height: size.h16,
+            SizedBox(height: size.h16),
+            Center(
+              child: DiscussionTypeSelectorTab(
+                onSelected: (e)=>   onTabValueChange(e, 1),
+              ),
             ),
-            Center(child: DiscussionTypeSelectorTab(onSelected: (e) {
-              onTabValueChange(e, 1);
-            })),
-            SizedBox(height: size.h20,),
+            SizedBox(height: size.h20),
             AppStreamBuilder<StateType>(
               stream: stateDataStreamController.stream,
               loadingBuilder: (context) {
@@ -69,12 +70,13 @@ class _DiscussionScreenState extends State<DiscussionScreen>
               dataBuilder: (context, data) {
                 if (data is WeeklyDiscussionDataState) {
                   return WeeklyDiscussionSectionWidget(
-                      items: const ['',',',''],
+                      items: const ['', ',', ''],
                       buildItem: (BuildContext context, int index, item) {
-                        return WeeklyDiscussionItemWidget(onTap: () => onTap(1));
+                        return WeeklyDiscussionItemWidget(
+                            onTap: () => onTap(1));
                       });
                 } else if (data is AllDiscussionDataState) {
-                  return Container();
+                  return Text("dkjhvcdkj");
                 } else {
                   return const CustomEmptyWidget(
                     icon: Icons.school_outlined,
@@ -234,7 +236,6 @@ class DiscussionItemWidget extends StatelessWidget with AppTheme, Language {
   }
 }
 
-
 class WeeklyDiscussionSectionWidget<T> extends StatelessWidget
     with AppTheme, Language {
   final List<T> items;
@@ -276,11 +277,11 @@ class WeeklyDiscussionSectionWidget<T> extends StatelessWidget
   }
 }
 
-
-class WeeklyDiscussionItemWidget extends StatelessWidget with AppTheme, Language{
+class WeeklyDiscussionItemWidget extends StatelessWidget
+    with AppTheme, Language {
   final VoidCallback onTap;
-  
-  const WeeklyDiscussionItemWidget({super.key,required this.onTap});
+
+  const WeeklyDiscussionItemWidget({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -291,34 +292,57 @@ class WeeklyDiscussionItemWidget extends StatelessWidget with AppTheme, Language
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(size.r8),
           color: Colors.white,
-
-        ),child:Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('সপ্তাহ ১',style: TextStyle(
-                  fontWeight: FontWeight.w500,fontSize: size.textSmall,fontFamily: StringData.fontFamilyRoboto,color: clr.blackText
-                ),),SizedBox(height: size.h8,),
-                Text('সর্বমোট আলোচনা ৫০ টি',style: TextStyle(
-                    fontWeight: FontWeight.w500,fontSize: size.textXSmall,fontFamily: StringData.fontFamilyRoboto,color: clr.gapStrokeGrey
-                ),),SizedBox(height: size.h8,),
-                Text('সর্বশেষ আলোচনা ২৫ মিনিট আগে',style: TextStyle(
-                    fontWeight: FontWeight.w500,fontSize: size.textXSmall,fontFamily: StringData.fontFamilyRoboto,color: clr.gapStrokeGrey
-                ),),
-
-              ],
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'সপ্তাহ ১',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: size.textSmall,
+                        fontFamily: StringData.fontFamilyRoboto,
+                        color: clr.blackText),
+                  ),
+                  SizedBox(
+                    height: size.h8,
+                  ),
+                  Text(
+                    'সর্বমোট আলোচনা ৫০ টি',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: size.textXSmall,
+                        fontFamily: StringData.fontFamilyRoboto,
+                        color: clr.gapStrokeGrey),
+                  ),
+                  SizedBox(
+                    height: size.h8,
+                  ),
+                  Text(
+                    'সর্বশেষ আলোচনা ২৫ মিনিট আগে',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: size.textXSmall,
+                        fontFamily: StringData.fontFamilyRoboto,
+                        color: clr.gapStrokeGrey),
+                  ),
+                ],
+              ),
             ),
-          ),
-          Icon(Icons.arrow_circle_right_outlined,size: size.r24,color: clr.gapStrokeGrey,)
-        ],
-      ),
+            Icon(
+              Icons.arrow_circle_right_outlined,
+              size: size.r24,
+              color: clr.gapStrokeGrey,
+            )
+          ],
+        ),
       ),
     );
   }
 }
-
 
 class DiscussionTypeSelectorTab extends StatefulWidget {
   final void Function(int type) onSelected;
@@ -414,7 +438,7 @@ class _DiscussionTypeSelectorTabState extends State<DiscussionTypeSelectorTab>
                         ? clr.shadeWhiteColor2
                         : clr.textColorAppleBlack,
                     fontWeight:
-                        _selectedType == 0 ? FontWeight.w500 : FontWeight.w400,
+                        _selectedType == 1 ? FontWeight.w500 : FontWeight.w400,
                     fontSize: size.textSmall,
                   ),
                 )),
@@ -435,7 +459,6 @@ class _DiscussionTypeSelectorTabState extends State<DiscussionTypeSelectorTab>
     }
   }
 }
-
 
 ///Previous
 /* AppStreamBuilder<AllCourseDataEntity>(
@@ -557,7 +580,8 @@ class _DiscussionTypeSelectorTabState extends State<DiscussionTypeSelectorTab>
         },
         emptyBuilder: (context, message, icon) => CustomEmptyWidget(
           message: message,
-          title: label(e: "No Discussions Found", b: "কোন আলোচনা পাওয়া যায়নি"),
+          title:
+              label(e: "No Discussions Found", b: "কোন আলোচনা পাওয়া যায়নি"),
           // constraints: constraints,
           // offset: 350.w,
         ),

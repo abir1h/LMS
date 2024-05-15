@@ -61,18 +61,19 @@ class _QuestionAnswerPanelState extends State<QuestionAnswerPanel>
                       )
                     ] else if (widget.questions.elementAt(position).type ==
                         QuestionType.fig) ...[
-                      QuestionWidget(
-                          questionNo: "${position + 1}",
-                          questionText: widget.questions
-                              .elementAt(position)
-                              .data
-                              .docTitle,
-                          child: FillInTheGapAnswerWidget(
-                            data: widget.questions.elementAt(position).data,
-                            // onChange: (v) {
-                            //   // controller.qusList[index].blank1 = v;
-                            // },
-                          ))
+                      // QuestionWidget(
+                      //     questionNo: "${position + 1}",
+                      //     questionText: widget.questions
+                      //         .elementAt(position)
+                      //         .data
+                      //         .docTitle,
+                      //     child:
+                      //     FillInTheGapAnswerWidget(
+                      //       data: widget.questions.elementAt(position).data,
+                      //       // onChange: (v) {
+                      //       //   // controller.qusList[index].blank1 = v;
+                      //       // },
+                      //     ))
                     ] else if (widget.questions.elementAt(position).type ==
                         QuestionType.matching) ...[
                       QuestionWidget(
