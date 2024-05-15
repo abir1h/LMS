@@ -9,6 +9,9 @@ import '../../../shared/domain/entities/response_entity.dart';
 
 abstract class _ViewModel {
   void showWarning(String message);
+  void navigateToBack();
+  bool isPlayerFullscreen();
+  void changeOrientationToPortrait();
   void setVideo(String url, String category);
 }
 
@@ -23,6 +26,9 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
   Future<ResponseEntity> getVideoDetails(int courseContentId) async {
     return _courseUseCase.getVideoDetailsUseCase(courseContentId);
   }
+
+  final AppStreamController<bool> playbackPausePlayStreamController =
+  AppStreamController();
 
   ///Service configurations
   @override
@@ -49,7 +55,7 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
       if (value.error == null && value.data != null && value.data.videoData != null) {
         videoDetailsDataStreamController
             .add(DataLoadedState<VideoDataEntity>(value.data.videoData));
-        _view.setVideo(value.data.videoData.videoUrl, value.data.videoData.category);
+        // _view.setVideo(value.data.videoData.videoUrl, value.data.videoData.category);
       } else if (value.error == null && value.data == null) {
         _view.showWarning(value.message!);
       } else {
@@ -57,4 +63,73 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
       }
     });
   }
+
+  ///Change video playback orientation
+  Future<bool> onGoBack() async {
+    if (_view.isPlayerFullscreen()) {
+      _view.changeOrientationToPortrait();
+    }
+    _view.navigateToBack();
+    return Future.value(false);
+  }
+
+  ///Video playback section
+  // void _onPlayVideo(VideoDataEntity content) async {
+  //   ///Activate player widget
+  //   playerActivationStreamController
+  //       .add(DataLoadedState<ActivePlayerType>(content.rawUrl.isNotEmpty
+  //       ? ActivePlayerType.solidVidePlayer
+  //       : content.youtubeUrl.isNotEmpty
+  //       ? ActivePlayerType.youtubePlayer
+  //       : ActivePlayerType.none));
+  //   // Wakelock.enable();
+  //   var videoContent = VideoContentViewModel.fromJson(content.toJson());
+  //   playerStreamController
+  //       .add(DataLoadedState<VideoContentViewModel>(videoContent));
+  // }
+
+  //player related code
+  // double onInterceptPlaybackSeekToPosition(VideoDataEntity currentContent,
+  //     double seekPosition, double totalDuration) {
+  //   /// seekIntercept logic
+  //   return currentContent.playedDurationTimeSec * 1000 >= seekPosition
+  //       ? seekPosition
+  //       : (currentContent.playedDurationTimeSec * 1000).toDouble();
+  // }
+
+  // void onPlaybackProgressChanged(VideoDataEntity currentContent,
+  //     double playedPosition, double totalDuration) {
+  //   ///Update last played position only if played position is larger
+  //   int playedPositionSec = (playedPosition ~/ 1000).round();
+  //   _watchSession.lastPlayedDuration = playedPositionSec;
+  //   // if (currentContent.playedDurationTimeSec < playedPositionSec) {
+  //   currentContent.playedDurationTimeSec = currentContent.playedDurationTimeSec < playedPositionSec?playedPositionSec:currentContent.playedDurationTimeSec;
+  //   // if (playedPositionSec % 5 == 0) {
+  //   _watchSession = VideoWatchSession(
+  //       id: currentContent.id,
+  //       classId: currentContent.classId,
+  //       chapterId: currentContent.chapterId,
+  //       totalDuration: currentContent.videoDurationSecond,
+  //       guid: _watchSession.guid.isEmpty ? _guid : _watchSession.guid,
+  //       playedDuration: currentContent.playedDurationTimeSec,
+  //       startTime: '',
+  //       endTime: '',
+  //       lastPlayedDuration: _watchSession.lastPlayedDuration);
+  //   _storeActualWatchedSession();
+  //   // } else if (playedPositionSec == currentContent.videoDurationSecond) {
+  //   //   _watchSession = VideoWatchSession(
+  //   //       id: currentContent.id,
+  //   //       classId: currentContent.classId,
+  //   //       chapterId: currentContent.chapterId,
+  //   //       totalDuration: currentContent.videoDurationSecond,
+  //   //       guid: _watchSession.guid.isEmpty ? _guid : _watchSession.guid,
+  //   //       playedDuration: currentContent.playedDurationTimeSec,
+  //   //       startTime: '',
+  //   //       endTime: '',
+  //   //       lastPlayedDuration: _watchSession.lastPlayedDuration);
+  //   //     _storeActualWatchedSession();
+  //   // }
+  //   // }
+  // }
+
 }

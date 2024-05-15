@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lms/src/core/common_widgets/custom_toasty.dart';
 import 'package:lms/src/feature/course/domain/entities/video_data_entity.dart';
@@ -17,6 +18,7 @@ import '../../../../core/utility/app_label.dart';
 import '../../../course/presentation/widgets/tab_section_widget.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../service/transcript_video_screen_service.dart';
+import '../widgets/content_player_widget.dart';
 
 enum VideoCategory { s3, link }
 
@@ -92,38 +94,28 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                     children: [
                       if (data.category == VideoCategory.s3.name) ...[
                         ///Activate solid video player
-
-                        _controller!.value.isInitialized
-                            ? Stack(
+                        Stack(
                           fit: StackFit.loose,
                           children: [
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _onTouch == true
-                                      ? _onTouch = false
-                                      : _onTouch = true;
-                                });
-
-                                /*  playVideo == true
-                                        ? _controller!.pause()
-                                        : _controller!.play();*/
-                              },
-                              child: AspectRatio(
-                                aspectRatio: 16 / 9,
-                                // child: VideoPlayer(_controller!),
-                                  child: Chewie(
-                                    controller: _chewieController!,
-                                  ),
-                              ),
+                            ContentPlayerWidget(
+                              playerStream: videoDetailsDataStreamController.stream,
+                              playbackStream: playbackPausePlayStreamController.stream,
+                              // onProgressChanged: onPlaybackProgressChanged,
+                              // interceptSeekTo: onInterceptPlaybackSeekToPosition,
+                              // overlay: GestureDetector(
+                              //     onTap: (){},
+                              //     child: Icon(
+                              //       Icons.arrow_back,
+                              //       color: clr.shadeWhiteColor2,
+                              //       size: size.r20,
+                              //     ),
+                              // ),
                             ),
                             Positioned(
                                 top: size.h16,
                                 left: size.w16,
                                 child: InkWell(
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
+                                  onTap: onGoBack,
                                   child: Icon(
                                     Icons.arrow_back,
                                     color: clr.shadeWhiteColor2,
@@ -164,7 +156,88 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                             // )
                           ],
                         )
-                            : const Center(child: CircularProgressIndicator()),
+                        // _controller!.value.isInitialized
+                        //     ? Stack(
+                        //   fit: StackFit.loose,
+                        //   children: [
+                        //     GestureDetector(
+                        //       onTap: () {
+                        //         setState(() {
+                        //           _onTouch == true
+                        //               ? _onTouch = false
+                        //               : _onTouch = true;
+                        //         });
+                        //
+                        //         /*  playVideo == true
+                        //                 ? _controller!.pause()
+                        //                 : _controller!.play();*/
+                        //       },
+                        //       child: AspectRatio(
+                        //         aspectRatio: 16 / 9,
+                        //         // child: VideoPlayer(_controller!),
+                        //         //   child: Chewie(
+                        //         //     controller: _chewieController!,
+                        //         //   ),
+                        //           child: ContentPlayerWidget(
+                        //             playerStream: videoDetailsDataStreamController.stream,
+                        //             playbackStream: playbackPausePlayStreamController.stream,
+                        //             // onProgressChanged: onPlaybackProgressChanged,
+                        //             // interceptSeekTo: onInterceptPlaybackSeekToPosition,
+                        //             overlay: GestureDetector(
+                        //               onTap: (){},
+                        //               child: const Icon(Icons.arrow_back)
+                        //             ),
+                        //           ),
+                        //       ),
+                        //     ),
+                        //     Positioned(
+                        //         top: size.h16,
+                        //         left: size.w16,
+                        //         child: InkWell(
+                        //           onTap: () {
+                        //             Navigator.pop(context);
+                        //           },
+                        //           child: Icon(
+                        //             Icons.arrow_back,
+                        //             color: clr.shadeWhiteColor2,
+                        //             size: size.r20,
+                        //           ),
+                        //         )),
+                        //     // Positioned(
+                        //     //   top: 80,
+                        //     //   left: .45.sw,
+                        //     //   child: Visibility(
+                        //     //     visible: _onTouch,
+                        //     //     child:  GestureDetector(
+                        //     //       onTap: (){
+                        //     //         _timer?.cancel();
+                        //     //
+                        //     //         // pause while video is playing, play while video is pausing
+                        //     //         setState(() {
+                        //     //           _controller!.value.isPlaying ?
+                        //     //           _controller!.pause() :
+                        //     //           _controller!.play();
+                        //     //         });
+                        //     //
+                        //     //         // Auto dismiss overlay after 1 second
+                        //     //         _timer = Timer.periodic(Duration(milliseconds: 2000), (_) {
+                        //     //           setState(() {
+                        //     //             _onTouch = false;
+                        //     //           });
+                        //     //         });
+                        //     //       },
+                        //     //       child: CircleAvatar(
+                        //     //           backgroundColor: Colors.grey.withOpacity(0.5),
+                        //     //           radius: 25,
+                        //     //           child: Icon(_controller!.value.isPlaying ? Icons.pause : Icons.play_arrow, color: Colors.white,)),
+                        //     //     ),
+                        //     //
+                        //     //
+                        //     //   ),
+                        //     // )
+                        //   ],
+                        // )
+                        //     : const Center(child: CircularProgressIndicator()),
 
                       ] else ...[
                         ///Activate Youtube video player
@@ -658,6 +731,23 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
     //       setState(() {});
     //     });
     //   });
+  }
+
+  @override
+  void navigateToBack() {
+    Navigator.of(context).pop();
+  }
+
+  @override
+  bool isPlayerFullscreen() {
+    return MediaQuery.of(context).orientation != Orientation.portrait;
+  }
+
+  @override
+  void changeOrientationToPortrait() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
   }
 }
 
