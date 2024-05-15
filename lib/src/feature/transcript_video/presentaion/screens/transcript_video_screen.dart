@@ -56,6 +56,7 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
   void dispose() {
     _controller?.dispose();
     _chewieController?.dispose();
+    _youtubeController?.dispose();
     _timer?.cancel();
 
     super.dispose();
@@ -678,60 +679,60 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
   }
 
   @override
-  void setVideo(String url, String category) {
-    if(category == VideoCategory.s3.name){
-      _controller = VideoPlayerController.networkUrl(
-          Uri.parse("http://116.204.155.53/$url"))
-        ..initialize().then((_) {
-          Future.delayed((const Duration(microseconds: 100))).then((value) {
-            setState(() {
-              _chewieController = ChewieController(
-                videoPlayerController: _controller!,
-                autoPlay: true,
-                looping: true,
-
-                // Try playing around with some of these other options:
-
-                showControls: true,
-
-                materialProgressColors: ChewieProgressColors(
-                  playedColor: Colors.red,
-                  handleColor: Colors.grey,
-                  backgroundColor: Colors.grey,
-                  bufferedColor: Colors.grey,
-                ),
-                //
-                // placeholder: Container(
-                //   color: Colors.grey,
-                // ),
-                autoInitialize: true,
-              );
-            });
-          });
-        });
-    }else{
-      _youtubeController = YoutubePlayerController(
-        initialVideoId: url.split("=").last,
-        flags: const YoutubePlayerFlags(
-            mute: false,
-            autoPlay: false,
-            disableDragSeek: false,
-            loop: false,
-            isLive: false,
-            forceHD: false,
-            enableCaption: true,
-            showLiveFullscreenButton: true),
-      );
-    }
-
-    // _controller = VideoPlayerController.networkUrl(
-    //     Uri.parse(url))
-    //   ..initialize().then((_) {
-    //     Future.delayed((const Duration(microseconds: 100))).then((value) {
-    //       setState(() {});
-    //     });
-    //   });
-  }
+  // void setVideo(String url, String category) {
+  //   if(category == VideoCategory.s3.name){
+  //     _controller = VideoPlayerController.networkUrl(
+  //         Uri.parse("http://116.204.155.53/$url"))
+  //       ..initialize().then((_) {
+  //         Future.delayed((const Duration(microseconds: 100))).then((value) {
+  //           setState(() {
+  //             _chewieController = ChewieController(
+  //               videoPlayerController: _controller!,
+  //               autoPlay: true,
+  //               looping: true,
+  //
+  //               // Try playing around with some of these other options:
+  //
+  //               showControls: true,
+  //
+  //               materialProgressColors: ChewieProgressColors(
+  //                 playedColor: Colors.red,
+  //                 handleColor: Colors.grey,
+  //                 backgroundColor: Colors.grey,
+  //                 bufferedColor: Colors.grey,
+  //               ),
+  //               //
+  //               // placeholder: Container(
+  //               //   color: Colors.grey,
+  //               // ),
+  //               autoInitialize: true,
+  //             );
+  //           });
+  //         });
+  //       });
+  //   }else{
+  //     _youtubeController = YoutubePlayerController(
+  //       initialVideoId: url.split("=").last,
+  //       flags: const YoutubePlayerFlags(
+  //           mute: false,
+  //           autoPlay: false,
+  //           disableDragSeek: false,
+  //           loop: false,
+  //           isLive: false,
+  //           forceHD: false,
+  //           enableCaption: true,
+  //           showLiveFullscreenButton: true),
+  //     );
+  //   }
+  //
+  //   // _controller = VideoPlayerController.networkUrl(
+  //   //     Uri.parse(url))
+  //   //   ..initialize().then((_) {
+  //   //     Future.delayed((const Duration(microseconds: 100))).then((value) {
+  //   //       setState(() {});
+  //   //     });
+  //   //   });
+  // }
 
   @override
   void navigateToBack() {
@@ -748,6 +749,22 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
+  }
+
+  @override
+  void setYoutubeVideo(String url) {
+    _youtubeController = YoutubePlayerController(
+      initialVideoId: url.split("=").last,
+      flags: const YoutubePlayerFlags(
+          mute: false,
+          autoPlay: false,
+          disableDragSeek: false,
+          loop: false,
+          isLive: false,
+          forceHD: false,
+          enableCaption: true,
+          showLiveFullscreenButton: true),
+    );
   }
 }
 
