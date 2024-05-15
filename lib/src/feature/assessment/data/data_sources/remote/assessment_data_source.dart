@@ -63,7 +63,7 @@ class AssessmentRemoteDataSourceImp extends AssessmentRemoteDataSource {
       "exam_result_id": examDataModel.examResultId,
       "submission_type": "Manual",
       "assessment_id": examDataModel.assessment!.id,
-      "questions": examDataModel.questions
+      "questions": examDataModel.assessment?.questions
           .map((e) => e.questionType!.id != 6
               ? {
                   "question_id": e.id,
