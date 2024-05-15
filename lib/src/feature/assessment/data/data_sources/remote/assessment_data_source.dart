@@ -6,6 +6,7 @@ import '../../models/assessment_data_model.dart';
 import '../../../../shared/data/models/response_model.dart';
 import '../../../../../core/constants/urls.dart';
 import '../../../../../core/network/api_service.dart';
+import '../../models/result_data_model.dart';
 
 abstract class AssessmentRemoteDataSource {
   Future<ResponseModel> getAssessmentDetailsAction(int courseContentId);
@@ -102,7 +103,7 @@ class AssessmentRemoteDataSourceImp extends AssessmentRemoteDataSource {
     final responseJson = await Server.instance
         .postRequest(url: ApiCredential.submitExam, postData: data);
     ResponseModel responseModel = ResponseModel.fromJson(
-        responseJson, (dynamic json) => ExamDataModel.fromJson(json));
+        responseJson, (dynamic json) => ResultDataModel.fromJson(json));
     return responseModel;
   }
 }

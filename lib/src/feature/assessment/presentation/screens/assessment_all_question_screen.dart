@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lms/src/feature/assessment/domain/entities/result_data_entity.dart';
 
 import '../../../../core/common_widgets/custom_action_button.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
@@ -322,7 +323,7 @@ class _AssessmentAllQuestionScreenState
                   SizedBox(height: size.h16),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: size.w32),
-                    child: CustomActionButton<ExamDataEntity>(
+                    child: CustomActionButton<ResultDataEntity>(
                         title: label(e: "Submit Answer", b: "জমা দিন"),
                         // controller: _submitButtonController,
                         // onCheck: _showConfirmationDialog,
@@ -339,7 +340,7 @@ class _AssessmentAllQuestionScreenState
           } else if (data is TimeExpiredState) {
             return Container();
           } else if (data is AnswerSubmittedState) {
-            return AssessmentResultWidget(data: data.examData);
+            return AssessmentResultWidget(data: data.resultData);
           } else {
             return const Offstage();
           }

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:lms/src/core/utility/app_label.dart';
 
+import '../../../../core/utility/app_label.dart';
 import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
 import '../../../../core/constants/common_imports.dart';
-import '../../domain/entities/exam_data_entity.dart';
+import '../../domain/entities/result_data_entity.dart';
 
 class AssessmentResultWidget extends StatelessWidget with AppTheme, Language {
-  final ExamDataEntity data;
+  final ResultDataEntity data;
   const AssessmentResultWidget({super.key, required this.data});
 
   @override
@@ -33,7 +33,7 @@ class AssessmentResultWidget extends StatelessWidget with AppTheme, Language {
 }
 
 class ResultCardWidget extends StatelessWidget with AppTheme, Language {
-  final ExamDataEntity data;
+  final ResultDataEntity data;
   const ResultCardWidget({super.key, required this.data});
 
   @override
@@ -89,11 +89,17 @@ class ResultCardWidget extends StatelessWidget with AppTheme, Language {
           SizedBox(height: size.h16),
           AssessmentResultRowWidget(
               leftText: label(e: "Total Mark", b: "মোট মার্ক"),
-              rightText: label(e: "", b: replaceEnglishNumberWithBengali("5"))),
+              rightText: label(
+                  e: "",
+                  b: replaceEnglishNumberWithBengali(
+                      data.totalMark.toString()))),
           SizedBox(height: size.h16),
           AssessmentResultRowWidget(
               leftText: label(e: "Availed Mark", b: "প্রাপ্ত মার্ক"),
-              rightText: label(e: "", b: replaceEnglishNumberWithBengali("0"))),
+              rightText: label(
+                  e: "",
+                  b: replaceEnglishNumberWithBengali(
+                      data.availedMark.toString()))),
           SizedBox(height: size.h16),
           AssessmentResultRowWidget(
               leftText: label(e: "Exam Time", b: "মূল্যায়নের সময়"),

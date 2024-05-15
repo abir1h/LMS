@@ -7,7 +7,9 @@ import '../../../../core/common_widgets/app_stream.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../../../shared/domain/entities/response_entity.dart';
 import '../../data/data_sources/remote/assessment_data_source.dart';
+import '../../data/models/result_data_model.dart';
 import '../../data/repositories/assessment_repository_imp.dart';
+import '../../domain/entities/result_data_entity.dart';
 import '../../domain/use_cases/assessment_use_case.dart';
 
 abstract class _ViewModel {
@@ -95,7 +97,7 @@ mixin AssessmentScreenService<T extends StatefulWidget> on State<T>
     return responseEntity;
   }
 
-  void onExamResultSubmitted(ExamDataEntity data) {
+  void onExamResultSubmitted(ResultDataEntity data) {
     pageStateStreamController
         .add(DataLoadedState<PageState>(AnswerSubmittedState(data)));
   }
@@ -118,6 +120,6 @@ class TimeExpiredState extends PageState {
 }
 
 class AnswerSubmittedState extends PageState {
-  final ExamDataEntity examData;
-  AnswerSubmittedState(this.examData);
+  final ResultDataEntity resultData;
+  AnswerSubmittedState(this.resultData);
 }

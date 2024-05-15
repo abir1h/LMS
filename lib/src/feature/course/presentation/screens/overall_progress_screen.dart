@@ -57,18 +57,7 @@ class _OverallProgressScreenState extends State<OverallProgressScreen>
             ),
             SizedBox(height: size.h8),
             const SfGraph(),
-            SizedBox(height: size.h16),
 
-            ///Progress Line 2
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: size.w16),
-              child: CustomTextWidget(
-                text: label(e: en.progressLine, b: bn.progressLine),
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            SizedBox(height: size.h8),
-            const SfGraph(),
             SizedBox(height: size.h20),
 
             /// Tab Button

@@ -83,19 +83,19 @@ class _ModuleDiscussionsScreenState extends State<ModuleDiscussionsScreen>
                   ],
                 ),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: CustomButton(
-                  onTap: () => onTapCreateDiscussion(
-                      courseId: 1,
-                      courseModuleId: 1,
-                      contentId: 1,
-                      contentType: 'course_script'),
-                  icon: Icons.add_comment,
-                  radius: 0.0,
-                  title: label(e: en.newDiscussion, b: bn.newDiscussion),
-                ),
-              )
+              // Align(
+              //   alignment: Alignment.bottomCenter,
+              //   child: CustomButton(
+              //     onTap: () => onTapCreateDiscussion(
+              //         courseId: 1,
+              //         courseModuleId: 1,
+              //         contentId: 1,
+              //         contentType: 'course_script'),
+              //     icon: Icons.add_comment,
+              //     radius: 0.0,
+              //     title: label(e: en.newDiscussion, b: bn.newDiscussion),
+              //   ),
+              // )
             ],
           );
         },

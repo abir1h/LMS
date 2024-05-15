@@ -1,3 +1,6 @@
+import 'package:lms/src/feature/assessment/data/mapper/result_data_model.dart';
+
+import '../../domain/entities/result_data_entity.dart';
 import '../mapper/exam_data_mapper.dart';
 import '../models/exam_data_model.dart';
 import '../../domain/entities/exam_data_entity.dart';
@@ -12,6 +15,7 @@ import '../../domain/entities/assessment_data_entity.dart';
 import '../../domain/repositories/assessment_repository.dart';
 import '../data_sources/remote/assessment_data_source.dart';
 import '../models/assessment_data_model.dart';
+import '../models/result_data_model.dart';
 
 class AssessmentRepositoryImp extends AssessmentRepository {
   final AssessmentRemoteDataSource assessmentRemoteDataSource;
@@ -54,8 +58,8 @@ class AssessmentRepositoryImp extends AssessmentRepository {
   Future<ResponseEntity> submitExam(ExamDataEntity examDataEntity) async {
     ResponseModel responseModel = (await assessmentRemoteDataSource
         .submitExamAction(examDataEntity.toExamDataModel));
-    return ResponseModelToEntityMapper<ExamDataEntity, ExamDataModel>()
+    return ResponseModelToEntityMapper<ResultDataEntity, ResultDataModel>()
         .toEntityFromModel(
-            responseModel, (ExamDataModel model) => model.toExamDataEntity);
+            responseModel, (ResultDataModel model) => model.toResultDataEntity);
   }
 }

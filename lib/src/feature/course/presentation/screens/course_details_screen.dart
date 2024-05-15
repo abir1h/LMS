@@ -682,7 +682,7 @@ class _CourseMaterialWidgetState<T> extends State<CourseMaterialWidget<T>>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CourseMaterialItemWidget(
-                  icon: Icons.calendar_month_outlined,
+                  icon: Icons.calendar_month,
                   title: label(e: "Duration", b: "সময়কাল"),
                   duration: label(
                       e: "${widget.data.courseWeekCount.toString()} Week",
@@ -690,7 +690,7 @@ class _CourseMaterialWidgetState<T> extends State<CourseMaterialWidget<T>>
                 ),
                 SizedBox(height: size.h8),
                 CourseMaterialItemWidget(
-                  icon: Icons.quiz_outlined,
+                  icon: Icons.quiz,
                   title: label(e: "Assessment", b: "মূল্যায়ন"),
                   duration: label(
                       e: widget.data.assessmentCount.toString(),
@@ -698,7 +698,7 @@ class _CourseMaterialWidgetState<T> extends State<CourseMaterialWidget<T>>
                 ),
                 SizedBox(height: size.h8),
                 CourseMaterialItemWidget(
-                  icon: Icons.video_call_outlined,
+                  icon: Icons.video_call,
                   title: label(e: "Blended Class", b: "ব্লেনডেড ক্লাস"),
                   duration: label(
                       e: widget.data.blendedClassCount.toString(),
@@ -706,15 +706,15 @@ class _CourseMaterialWidgetState<T> extends State<CourseMaterialWidget<T>>
                 ),
                 SizedBox(height: size.h8),
                 CourseMaterialItemWidget(
-                  icon: Icons.play_circle_outline_outlined,
-                  title: label(e: "Script", b: "স্ক্রিপ্ট"),
+                  icon: Icons.text_snippet,
+                  title: label(e: "Reading Materials", b: "রিডিং ম্যাটেরিয়ালস"),
                   duration: label(
                       e: widget.data.scriptCount.toString(),
                       b: "${replaceEnglishNumberWithBengali(widget.data.scriptCount.toString())} টি"),
                 ),
                 SizedBox(height: size.h8),
                 CourseMaterialItemWidget(
-                  icon: Icons.assignment_outlined,
+                  icon: Icons.assignment,
                   title: label(e: "Assignment", b: "এসাইনমেন্ট"),
                   duration: label(
                       e: widget.data.assignmentCount.toString(),
