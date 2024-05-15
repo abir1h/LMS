@@ -34,8 +34,7 @@ class CircularItemWidget extends StatelessWidget with AppTheme, Language {
                     SvgPicture.asset(ImageAssets.icCircular),
                     SizedBox(width: size.w4),
                     CustomTextWidget(
-                      text: label(
-                          e: "বিজ্ঞপ্তির শিরোনাম", b: "বিজ্ঞপ্তির শিরোনাম"),
+                      text: label(e: "Circular Title", b: "বিজ্ঞপ্তির শিরোনাম"),
                       fontWeight: FontWeight.w500,
                       fontFamily: StringData.fontFamilyPoppins,
                     ),
@@ -58,7 +57,7 @@ class CircularItemWidget extends StatelessWidget with AppTheme, Language {
                     ),
                     SizedBox(width: size.w4),
                     CustomTextWidget(
-                      text: label(e: "রেফারেন্স নম্বর", b: "রেফারেন্স নম্বর"),
+                      text: label(e: "Reference Number", b: "রেফারেন্স নম্বর"),
                       fontWeight: FontWeight.w500,
                       fontFamily: StringData.fontFamilyPoppins,
                     ),
@@ -95,7 +94,7 @@ class CircularItemWidget extends StatelessWidget with AppTheme, Language {
                 child: Row(
                   children: [
                     CustomTextWidget(
-                      text: label(e: "বিস্তারিত দেখুন", b: "বিস্তারিত দেখুন"),
+                      text: label(e: "Details", b: "বিস্তারিত দেখুন"),
                       textColor: clr.shadeWhiteColor2,
                     ),
                     Icon(

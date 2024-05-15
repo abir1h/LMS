@@ -59,7 +59,7 @@ class _CircularDetailsScreenState extends State<CircularDetailsScreen>
                 ///Circular Info
                 CustomTextWidget(
                   text: label(
-                      e: "বিজ্ঞপ্তির বিস্তারিত তথ্য",
+                      e: "Circular Details Info",
                       b: "বিজ্ঞপ্তির বিস্তারিত তথ্য"),
                   fontWeight: FontWeight.w500,
                   padding: EdgeInsets.symmetric(horizontal: size.w16),
@@ -82,7 +82,7 @@ class _CircularDetailsScreenState extends State<CircularDetailsScreen>
                 ///Circular Description
                 CustomTextWidget(
                   text: label(
-                      e: "বিজ্ঞপ্তির সংক্ষিপ্ত বিবরণ",
+                      e: "Circular Description",
                       b: "বিজ্ঞপ্তির সংক্ষিপ্ত বিবরণ"),
                   fontWeight: FontWeight.w500,
                   padding: EdgeInsets.symmetric(horizontal: size.w16),
@@ -142,7 +142,7 @@ class CircularNameWidget extends StatelessWidget with AppTheme, Language {
               SvgPicture.asset(ImageAssets.icCircular),
               SizedBox(width: size.w4),
               CustomTextWidget(
-                text: label(e: "বিজ্ঞপ্তির শিরোনাম", b: "বিজ্ঞপ্তির শিরোনাম"),
+                text: label(e: "Circular Title", b: "বিজ্ঞপ্তির শিরোনাম"),
                 fontWeight: FontWeight.w500,
                 fontFamily: StringData.fontFamilyPoppins,
               ),
@@ -165,7 +165,7 @@ class CircularNameWidget extends StatelessWidget with AppTheme, Language {
               ),
               SizedBox(width: size.w4),
               CustomTextWidget(
-                text: label(e: "রেফারেন্স নম্বর", b: "রেফারেন্স নম্বর"),
+                text: label(e: "Reference Number", b: "রেফারেন্স নম্বর"),
                 fontWeight: FontWeight.w500,
                 fontFamily: StringData.fontFamilyPoppins,
               ),
@@ -201,7 +201,6 @@ class RowItemWidgetText extends StatelessWidget with AppTheme, Language {
   @override
   Widget build(BuildContext context) {
     return Row(
-
       // crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Icon(Icons.circle, size: size.r8, color: clr.appPrimaryColorGreen),
@@ -216,7 +215,7 @@ class RowItemWidgetText extends StatelessWidget with AppTheme, Language {
         ),
         CustomTextWidget(
           text: label(e: ":", b: ":"),
-          textColor: leftTextColor??clr.textColorAppleBlack,
+          textColor: leftTextColor ?? clr.textColorAppleBlack,
           fontWeight: FontWeight.w500,
           padding: EdgeInsets.only(left: size.w8, right: size.w24),
         ),
@@ -224,7 +223,7 @@ class RowItemWidgetText extends StatelessWidget with AppTheme, Language {
           Expanded(
             child: CustomTextWidget(
               text: rightText.toString(),
-              textColor: rightTextColor??clr.textColorAppleBlack,
+              textColor: rightTextColor ?? clr.textColorAppleBlack,
               fontSize: size.textXSmall,
               fontWeight: FontWeight.w500,
             ),
@@ -485,7 +484,7 @@ class CircularTrainerWidget extends StatelessWidget with AppTheme, Language {
         children: [
           CustomTextWidget(
             text: label(
-                e: "বিজ্ঞপ্তির নির্ধারিত প্রশিক্ষক",
+                e: "Circular Scheduled Instructors",
                 b: "বিজ্ঞপ্তির নির্ধারিত প্রশিক্ষক"),
             fontWeight: FontWeight.w500,
           ),
