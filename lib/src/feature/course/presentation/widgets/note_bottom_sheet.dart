@@ -422,7 +422,7 @@ class _NoteBottomSheetState extends State<NoteBottomSheet>
                                       },
                                     ),
                                   ),
-                                  QuillToolbarColorButton(
+                                 /* QuillToolbarColorButton(
                                     controller: controller,
                                     isBackground: false,
                                     options:
@@ -430,7 +430,7 @@ class _NoteBottomSheetState extends State<NoteBottomSheet>
                                       iconData: Icons.text_format,
                                       dialogBarrierColor: Colors.white,
                                     ),
-                                  ),
+                                  ),*/
                                   QuillToolbarSelectAlignmentButton(
                                     showLeftAlignment: true,
                                     showRightAlignment: true,
