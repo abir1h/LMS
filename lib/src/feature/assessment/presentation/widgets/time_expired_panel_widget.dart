@@ -8,11 +8,11 @@ import '../../domain/entities/exam_data_entity.dart';
 import '../../domain/entities/result_data_entity.dart';
 
 class TimeExpiredPanelWidget<T> extends StatefulWidget {
-  final ExamDataEntity questionDataEntity;
-  final Future<ResponseEntity> Function(ExamDataEntity datat) doSubmitResult;
+  final ExamDataEntity examDataEntity;
+  final Future<ResponseEntity> Function(ExamDataEntity data) doSubmitResult;
   const TimeExpiredPanelWidget({
     Key? key,
-    required this.questionDataEntity,
+    required this.examDataEntity,
     required this.doSubmitResult,
   }) : super(key: key);
 
@@ -23,7 +23,7 @@ class TimeExpiredPanelWidget<T> extends StatefulWidget {
 
 class _TimeExpiredPanelWidgetState<T> extends State<TimeExpiredPanelWidget<T>>
     with AppTheme {
-  final BehaviorSubject<ResponseEntity> answerSubmissionController =
+  final BehaviorSubject<ResultDataEntity> answerSubmissionController =
       BehaviorSubject();
 
   @override
@@ -34,20 +34,21 @@ class _TimeExpiredPanelWidgetState<T> extends State<TimeExpiredPanelWidget<T>>
     });
   }
 
-  void _submitResult() {
-    widget.doSubmitResult(widget.questionDataEntity).then((value) {
-      if (value.error == null && value.data != null) {
-        if (mounted) {
-          answerSubmissionController.sink.add(value.data as ResponseEntity);
-        }
-      } else {
-        Future.delayed(const Duration(seconds: 5)).then((_) {
-          if (mounted) {
-            _submitResult();
-          }
-        });
+  Future<ResponseEntity> _submitResult() async {
+    ResponseEntity responseEntity =
+        await widget.doSubmitResult(widget.examDataEntity);
+    if (responseEntity.error == null && responseEntity.data != null) {
+      if (mounted) {
+        answerSubmissionController.sink.add(responseEntity.data);
       }
-    });
+    } else {
+      Future.delayed(const Duration(seconds: 5)).then((_) {
+        if (mounted) {
+          _submitResult();
+        }
+      });
+    }
+    return responseEntity;
   }
 
   @override
@@ -56,7 +57,7 @@ class _TimeExpiredPanelWidgetState<T> extends State<TimeExpiredPanelWidget<T>>
       width: double.maxFinite,
       height: double.maxFinite,
       padding: EdgeInsets.all(size.h24),
-      child: StreamBuilder<ResponseEntity>(
+      child: StreamBuilder<ResultDataEntity>(
           stream: answerSubmissionController.stream,
           builder: (context, snapshot) {
             if (!snapshot.hasData) {

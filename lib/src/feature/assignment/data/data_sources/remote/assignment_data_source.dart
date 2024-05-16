@@ -102,7 +102,7 @@ class AssignmentRemoteDataSourceImp extends AssignmentRemoteDataSource {
       "circular_sub_assignment_id": json.encode(subAssignmentId),
       "course_id": json.encode(courseId),
       "circular_id": json.encode(circularId),
-      "answer": "answer",
+      "answer": answer,
     };
     data["_method"] = "PUT";
     final responseJson = await Server.instance.postRequestWithFile(

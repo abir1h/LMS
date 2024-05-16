@@ -29,6 +29,11 @@ class CourseDetailsScreenArgs {
       {required this.courseId, required this.curriculumType});
 }
 
+class CourseLearningOutcomeScreenArgs {
+  final String text;
+  CourseLearningOutcomeScreenArgs({required this.text});
+}
+
 class CourseScriptScreenArgs {
   final int courseContentId;
   final String courseContentType;

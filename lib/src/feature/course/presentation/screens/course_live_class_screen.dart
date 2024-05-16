@@ -465,8 +465,12 @@ class OnlineClassCardWidget extends StatelessWidget with AppTheme, Language {
                 ),
                 SizedBox(width: size.w4),
                 InkWell(
-                  onTap: () =>
-                      Clipboard.setData(ClipboardData(text: data.meetingLink)),
+                  onTap: () => Clipboard.setData(
+                          ClipboardData(text: data.meetingLink))
+                      .then((value) => CustomToasty.of(context).showSuccess(
+                          label(
+                              e: "Copied to your clipboard !",
+                              b: "আপনার ক্লিপবোর্ডে অনুলিপি করা হয়েছে !"))),
                   child: Icon(
                     Icons.copy_rounded,
                     size: size.r16,

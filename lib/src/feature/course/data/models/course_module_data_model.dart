@@ -12,6 +12,8 @@ class CourseModuleDataModel {
   final String startDate;
   final String endDate;
   final int sort;
+  final String learningOutcomeEn;
+  final String learningOutcomeBn;
   final bool isModified;
   final int status;
   final List<CourseContentDataModel>? courseContents;
@@ -25,6 +27,8 @@ class CourseModuleDataModel {
       required this.startDate,
       required this.endDate,
       required this.sort,
+      required this.learningOutcomeEn,
+      required this.learningOutcomeBn,
       required this.isModified,
       required this.courseContents,
       required this.status});
@@ -39,6 +43,8 @@ class CourseModuleDataModel {
         startDate: json["start_date"] ?? "",
         endDate: json["end_date"] ?? "",
         sort: json["sort"] ?? -1,
+        learningOutcomeEn: json["learning_outcome_en"] ?? "",
+        learningOutcomeBn: json["learning_outcome_bn"] ?? "",
         isModified: json["is_modified"] ?? false,
         status: json["status"] ?? -1,
         courseContents: List<CourseContentDataModel>.from(
@@ -55,6 +61,8 @@ class CourseModuleDataModel {
         "start_date": startDate,
         "end_date": endDate,
         "sort": sort,
+        "learning_outcome_en": learningOutcomeEn,
+        "learning_outcome_bn": learningOutcomeBn,
         "is_modified": isModified,
         "status": status,
         "course_contents": List<CourseContentDataModel>.from(

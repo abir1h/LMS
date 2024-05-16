@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../../../core/common_widgets/circuler_widget.dart';
@@ -335,12 +336,20 @@ class CircularDetailsInfoWidget extends StatelessWidget
           SizedBox(height: size.h16),
           RowItemWidgetText(
             leftText: label(e: "Circular Link", b: "বিজ্ঞপ্তির লিংক "),
-            widget: CustomTextWidget(
-              text: data.url,
-              fontSize: size.textXSmall,
-              fontWeight: FontWeight.w500,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 3,
+            widget: GestureDetector(
+              onTap: () {
+                if (data.url.isNotEmpty) {
+                  launchUrl(Uri.parse(data.url),
+                      mode: LaunchMode.externalApplication);
+                }
+              },
+              child: CustomTextWidget(
+                text: data.url,
+                fontSize: size.textXSmall,
+                fontWeight: FontWeight.w500,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 3,
+              ),
             ),
           ),
           // SizedBox(height: size.h16),

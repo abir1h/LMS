@@ -45,7 +45,7 @@ class LanguageEn {
 
   String learningManagementSystem = "Learning Management System (LMS)";
   String teachersGuide = "Instructional Guide for Teachers";
-  String eLibrary = "E-Library";
+  String eLibrary = "E Library";
   String formativeAssessment = "Formative Assessment System";
   String socialLearningPlatform = "Professional Learning Community";
 
@@ -77,6 +77,7 @@ class LanguageEn {
   String emisId = "EMIS Id: ";
 
   String ongoingModule = "Ongoing Module";
+  String ongoingWeek = "Ongoing Week";
   String completed = "Completed";
   String ongoingCurriculum = "Ongoing Curriculum";
   String completedCurriculum = "Completed curriculum";
@@ -173,7 +174,7 @@ class LanguageEn {
   String enter = "Enter";
 
   String assessment = "Assessment";
-  String instructions = "Instructions";
+  String instructions = "Assessment Instructions";
   String trueText = "True";
   String falseText = "False";
   String writeOneWordAnswer = "Write the answer in one word:";
@@ -223,7 +224,7 @@ class LanguageBn {
 
   String learningManagementSystem = "লার্নিং ম্যানেজমেন্ট সিস্টেম (এলএমএস)";
   String teachersGuide = "ইন্সট্রাকশনাল গাইড ফর টিচার্স";
-  String eLibrary = "ই-লাইব্রেরি";
+  String eLibrary = "ই লাইব্রেরি";
   String formativeAssessment = "ফরম্যাটিভ এসেসমেন্ট সিস্টেম";
   String socialLearningPlatform = "প্রফেশনাল লার্নিং কমিউনিটি";
 
@@ -251,6 +252,7 @@ class LanguageBn {
   String emisId = "ইএমআইএস আইডি: ";
 
   String ongoingModule = "চলমান মডিউল";
+  String ongoingWeek = "চলমান সপ্তাহ";
   String completed = "সম্পন্ন";
   String ongoingCurriculum = "চলমান কোর্স";
   String completedCurriculum = "সম্পন্ন কোর্স";
@@ -346,7 +348,7 @@ class LanguageBn {
   String enter = "প্রবেশ করুন";
 
   String assessment = "মূল্যায়ন";
-  String instructions = "নির্দেশাবলী";
+  String instructions = "এসেসমেন্টের নির্দেশাবলী";
   String trueText = "সত্য";
   String falseText = "মিথ্যা";
   String writeOneWordAnswer = "এক কথায় উত্তর লিখুন:";

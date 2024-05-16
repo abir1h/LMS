@@ -9,6 +9,7 @@ import '../../../shared/domain/entities/response_entity.dart';
 
 abstract class _ViewModel {
   void showWarning(String message);
+  void navigateToCourseLearningOutcomeScreen(String learningOutcome);
   void navigateToCourseVideoScreen(int contentId, String contentType,
       String contentTitleEn, String contentTitleBn);
   void navigateToOverallProgressScreen();
@@ -73,8 +74,7 @@ mixin CourseDetailsScreenService<T extends StatefulWidget> on State<T>
         courseDetailsDataStreamController
             .add(DataLoadedState<CourseDetailsDataEntity>(value.data));
       } else if (value.error == null && value.data == null) {
-        courseDetailsDataStreamController
-            .add(EmptyState(message: ""));
+        courseDetailsDataStreamController.add(EmptyState(message: ""));
       } else {
         _view.showWarning(value.message!);
       }
@@ -89,6 +89,10 @@ mixin CourseDetailsScreenService<T extends StatefulWidget> on State<T>
       _view.showWarning(responseEntity.message!);
     }
     return responseEntity;
+  }
+
+  void onTapLearningOutcome(String learningOutcome) {
+    _view.navigateToCourseLearningOutcomeScreen(learningOutcome);
   }
 
   void onTapCourseVideo(int contentId, String contentType,

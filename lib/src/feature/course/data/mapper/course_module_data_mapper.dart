@@ -22,6 +22,8 @@ class CourseModuleDataModelToEntityMapper extends CourseModuleDataMapper<
       startDate: entity.startDate,
       endDate: entity.endDate,
       sort: entity.sort,
+      learningOutcomeEn: entity.learningOutcomeEn,
+      learningOutcomeBn: entity.learningOutcomeBn,
       isModified: entity.isModified,
       status: entity.status,
       courseContents: List<CourseContentDataEntity>.from(entity.courseContents!)
@@ -41,6 +43,8 @@ class CourseModuleDataModelToEntityMapper extends CourseModuleDataMapper<
       startDate: model.startDate,
       endDate: model.endDate,
       sort: model.sort,
+      learningOutcomeEn: model.learningOutcomeEn,
+      learningOutcomeBn: model.learningOutcomeBn,
       isModified: model.isModified,
       status: model.status,
       courseContents: List<CourseContentDataModel>.from(model.courseContents!)

@@ -50,7 +50,7 @@ class RunningCourseCard extends StatelessWidget with AppTheme, Language {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CustomTextWidget(
-                      text: label(e: en.ongoingModule, b: bn.ongoingModule)),
+                      text: label(e: en.ongoingWeek, b: bn.ongoingWeek)),
                   Icon(
                     Icons.arrow_forward,
                     size: size.r24,

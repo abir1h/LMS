@@ -1,7 +1,4 @@
-import 'dart:ffi';
-
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +9,6 @@ import '../../feature/accessibility/presentation/controllers/accessibility_contr
 import '../../feature/accessibility/presentation/screens/accessibility_bottom_sheet.dart';
 import '../../feature/profile/domain/entities/all_progress_data_entity.dart';
 import '../../feature/profile/presentation/service/profile_service.dart';
-import '../../feature/transcript_video/presentaion/screens/demo_interactive_player.dart';
 import '../routes/app_route.dart';
 import '../service/auth_cache_manager.dart';
 import '../service/notifier/app_events_notifier.dart';
@@ -30,7 +26,7 @@ class DrawerWidget extends StatefulWidget {
 }
 
 class _DrawerWidgetState extends State<DrawerWidget>
-    with AppTheme, Language, AppEventsNotifier,ProfileService {
+    with AppTheme, Language, AppEventsNotifier, ProfileService {
   final AccessibilityController accessibilityController =
       Get.put(AccessibilityController());
 
@@ -50,7 +46,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
               AppStreamBuilder<AllProgressDataEntity>(
                 stream: headerDataStreamController.stream,
                 loadingBuilder: (context) {
-                  return  Padding(
+                  return Padding(
                     padding: EdgeInsets.only(
                         left: size.w16, top: size.h32, right: size.w16),
                     child: Shimmer.fromColors(
@@ -61,7 +57,6 @@ class _DrawerWidgetState extends State<DrawerWidget>
                           CircleAvatar(
                             radius: 24.r,
                             backgroundColor: Colors.white,
-
                           ),
                           SizedBox(width: size.w12),
                           Expanded(
@@ -74,8 +69,10 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                   decoration: BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(10)),
-                                ),  SizedBox(height: size.h8,),
-
+                                ),
+                                SizedBox(
+                                  height: size.h8,
+                                ),
                                 Container(
                                   width: .5.sw,
                                   height: 12.0,
@@ -92,7 +89,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
                   );
                 },
                 dataBuilder: (context, data) {
-                  return  Padding(
+                  return Padding(
                     padding: EdgeInsets.only(
                         left: size.w16, top: size.h32, right: size.w16),
                     child: Row(
@@ -105,28 +102,29 @@ class _DrawerWidgetState extends State<DrawerWidget>
                           child: CircleAvatar(
                             radius: 24.r,
                             backgroundColor: clr.appPrimaryColorGreen,
-                            child: Center(child: Text(
-                              data.userInfoDataEntity!.emisUserDataEntity !=
-                                  null
-                                  ? data.userInfoDataEntity!.emisUserDataEntity!
-                                  .name[0]
-                                  .toUpperCase()
-                                  : "",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: size.textXLarge),
-                            ),),
+                            child: Center(
+                              child: Text(
+                                data.userInfoDataEntity!.emisUserDataEntity !=
+                                        null
+                                    ? data.userInfoDataEntity!
+                                        .emisUserDataEntity!.name[0]
+                                        .toUpperCase()
+                                    : "",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: size.textXLarge),
+                              ),
+                            ),
                           ),
                         ),
                         SizedBox(width: size.w12),
                         Expanded(
                           child: Text(
-                            data.userInfoDataEntity!.emisUserDataEntity !=
-                                null
+                            data.userInfoDataEntity!.emisUserDataEntity != null
                                 ? data.userInfoDataEntity!.emisUserDataEntity!
-                                .name
-                                .toUpperCase()
+                                    .name
+                                    .toUpperCase()
                                 : "",
                             style: TextStyle(
                                 color: clr.appPrimaryColorGreen,
@@ -143,7 +141,6 @@ class _DrawerWidgetState extends State<DrawerWidget>
                 },
                 emptyBuilder: (context, message, icon) => Container(),
               ),
-
               SizedBox(height: size.h24),
               Padding(
                 padding: EdgeInsets.only(left: size.w16),

@@ -218,7 +218,10 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
                 //     ],
                 //   ),
                 // ),
-                AssignmentInstructionWidget(),
+                InstructionWidget(
+                  instruction:
+                      label(e: data.instructionsEn, b: data.instructionsBn),
+                ),
                 SizedBox(height: size.h16),
 
                 ///Instructions
@@ -266,41 +269,14 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
   }
 }
 
-class AssignmentInstructionRowWidget extends StatelessWidget
-    with AppTheme, Language {
-  final String text;
-  const AssignmentInstructionRowWidget({super.key, required this.text});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(
-          Icons.circle,
-          size: size.r8,
-          color: clr.appPrimaryColorGreen,
-        ),
-        SizedBox(width: size.w8),
-        Expanded(
-          child: CustomTextWidget(
-            text: text,
-            textColor: clr.gapStrokeGrey,
-            fontSize: size.textXSmall,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class AssignmentInstructionWidget extends StatelessWidget
-    with AppTheme, Language {
-  const AssignmentInstructionWidget({super.key});
+class InstructionWidget extends StatelessWidget with AppTheme, Language {
+  final String instruction;
+  const InstructionWidget({super.key, required this.instruction});
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       margin: EdgeInsets.symmetric(horizontal: size.w16),
       padding: EdgeInsets.symmetric(horizontal: size.w10, vertical: size.h12),
       decoration: BoxDecoration(
@@ -315,26 +291,11 @@ class AssignmentInstructionWidget extends StatelessWidget
               color: clr.blackColor.withOpacity(.15))
         ],
       ),
-      child: Column(
-        children: [
-          AssignmentInstructionRowWidget(
-            text: label(
-                e: "You can submit maximum 2 times within the deadline. If you miss the deadline, you can submit once.",
-                b: "আপনি সর্বোচ্চ ২ বার ডেডলাইনের মধ্যে সাবমিট করতে পারবেন। ডেডলাইন মিস হলে ১ বার সাবমিট করতে পারবেন।"),
-          ),
-          SizedBox(height: size.h16),
-          AssignmentInstructionRowWidget(
-            text: label(
-                e: "Once your submission limit is over, you can no longer submit.",
-                b: "আপনার সাবমিশন লিমিট শেষ হয়ে গেলে আর সাবমিট করতে পারবেন না।"),
-          ),
-          SizedBox(height: size.h16),
-          AssignmentInstructionRowWidget(
-            text: label(
-                e: "You can write or upload files as an assignment.",
-                b: "এসাইনমেন্ট হিসেবে আপনি লিখতে পারবেন কিংবা ফাইল আপলোড করতে পারবেন"),
-          ),
-        ],
+      child: CustomTextWidget(
+        text: instruction,
+        textColor: clr.gapStrokeGrey,
+        fontSize: size.textXSmall,
+        fontWeight: FontWeight.w500,
       ),
     );
   }

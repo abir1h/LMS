@@ -223,6 +223,10 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
                                 : "",
                             status: item.status,
                             items: item.courseContents!,
+                            onTapLearningOutcome: () => onTapLearningOutcome(
+                                label(
+                                    e: item.learningOutcomeEn,
+                                    b: item.learningOutcomeBn)),
                             buildItem: (BuildContext context, int index, item) {
                               return CourseContentWidget(
                                 data: item,
@@ -349,6 +353,12 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
             courseDescriptionEn: courseDescriptionEn,
             courseDescriptionBn: courseDescriptionBn));
     contentReadPost(courseContentId, courseId);
+  }
+
+  @override
+  void navigateToCourseLearningOutcomeScreen(String learningOutcome) {
+    Navigator.of(context).pushNamed(AppRoute.courseLearningOutcomeScreen,
+        arguments: CourseLearningOutcomeScreenArgs(text: learningOutcome));
   }
 }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/common_widgets/custom_dialog_widget.dart';
 import '../../domain/entities/result_data_entity.dart';
 import '../../../../core/common_widgets/custom_action_button.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
@@ -60,6 +61,7 @@ class _AssessmentAllQuestionScreenState
     return CustomScaffold(
       title: label(e: en.assessment, b: bn.assessment),
       resizeToAvoidBottomInset: true,
+      leadingBack: onGoBack,
       body: AppStreamBuilder<PageState>(
         stream: pageStateStreamController.stream,
         loadingBuilder: (context) => const Center(child: CircularLoader()),
@@ -212,10 +214,11 @@ class _AssessmentAllQuestionScreenState
                           : const Wrap();
                     },
                   ),
-                  SizedBox(height: size.h16),
+                  SizedBox(height: size.h20),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: size.w32),
+                    padding: EdgeInsets.symmetric(horizontal: size.w40),
                     child: CustomActionButton<ResultDataEntity>(
+                        radius: size.r4,
                         title: label(e: "Submit Answer", b: "জমা দিন"),
                         // controller: _submitButtonController,
                         // onCheck: _showConfirmationDialog,
@@ -231,7 +234,7 @@ class _AssessmentAllQuestionScreenState
             );
           } else if (data is TimeExpiredState) {
             return TimeExpiredPanelWidget(
-              questionDataEntity: data.examData,
+              examDataEntity: data.examData,
               doSubmitResult: (v) => onSubmitExam(v),
             );
           } else if (data is AnswerSubmittedState) {
@@ -351,6 +354,27 @@ class _AssessmentAllQuestionScreenState
   @override
   void showWarning(String message) {
     CustomToasty.of(context).showSuccess(message);
+  }
+
+  @override
+  void showExamCancellationDialog() {
+    CustomDialogWidget.show(
+      context: context,
+      infoText:
+          "Do you want to cancel the test? Your answer(s) will not be submitted.\n\nBut, your participation quota will still be reduced.",
+      rightButtonText: label(e: en.cancelText, b: bn.cancelText),
+      leftButtonText: label(e: en.exitText, b: bn.exitText),
+    ).then((value) {
+      if (value) {
+        ///Force close
+        forceClose();
+      }
+    });
+  }
+
+  @override
+  void forceClose() {
+    Navigator.of(context).pop();
   }
 }
 

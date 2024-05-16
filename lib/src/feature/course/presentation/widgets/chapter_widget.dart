@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -22,6 +23,7 @@ class ChapterWidget<T> extends StatefulWidget {
   final String chapterTitle;
   final String duration;
   final int status;
+  final VoidCallback onTapLearningOutcome;
   final List<T> items;
   final Widget Function(BuildContext context, int index, T item) buildItem;
   const ChapterWidget(
@@ -29,6 +31,7 @@ class ChapterWidget<T> extends StatefulWidget {
       required this.chapterTitle,
       required this.duration,
       required this.status,
+      required this.onTapLearningOutcome,
       required this.items,
       required this.buildItem});
 
@@ -320,6 +323,58 @@ class _ChapterWidgetState<T> extends State<ChapterWidget<T>>
 
           Column(
             children: [
+              GestureDetector(
+                onTap: widget.onTapLearningOutcome,
+                child: Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.only(
+                      left: size.w12 * 2,
+                      top: size.h16,
+                      bottom: size.h16,
+                      right: size.w16),
+                  decoration: BoxDecoration(
+                      color: clr.shadeWhiteColor2,
+                      border: Border(
+                          bottom: BorderSide(color: clr.boxStrokeColor))),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.local_library,
+                        size: size.r24,
+                        color: clr.appPrimaryColorGreen,
+                      ),
+                      SizedBox(width: size.w8),
+                      Expanded(
+                        child: CustomTextWidget(
+                          text: label(
+                            e: "Learning Outcomes",
+                            b: "শিখনফল",
+                          ),
+                          textColor: clr.textColorAppleBlack,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: StringData.fontFamilyPoppins,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      SizedBox(width: size.w8),
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: size.w6, vertical: size.h2),
+                        decoration: BoxDecoration(
+                            color: clr.cardFillColorCruise,
+                            borderRadius: BorderRadius.circular(size.r4)),
+                        child: Icon(
+                          Icons.visibility,
+                          size: size.r20,
+                          color: clr.textColorAppleBlack,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
               ListView.builder(
                 itemCount: widget.items.length,
                 shrinkWrap: true,

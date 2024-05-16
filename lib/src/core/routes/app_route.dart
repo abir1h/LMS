@@ -10,6 +10,7 @@ import '../../feature/circular/presentation/screens/circular_screen.dart';
 import '../../feature/course/presentation/screens/course_assessment_screen.dart';
 import '../../feature/course/presentation/screens/course_assignment_screen.dart';
 import '../../feature/course/presentation/screens/course_details_screen.dart';
+import '../../feature/course/presentation/screens/course_learning_outcome_screen.dart';
 import '../../feature/course/presentation/screens/course_script_screen.dart';
 import '../../feature/course/presentation/screens/course_list_screen.dart';
 import '../../feature/course/presentation/screens/course_live_class_screen.dart';
@@ -41,6 +42,8 @@ class AppRoute {
   static const String overallProgressScreen = "overallProgressScreen";
   static const String courseListScreen = "courseListScreen";
   static const String courseDetailsScreen = "courseDetailsScreen";
+  static const String courseLearningOutcomeScreen =
+      "courseLearningOutcomeScreen";
   static const String courseScriptScreen = "courseScriptScreen";
   static const String transcriptVideoScreen = "transcriptVideoScreen";
   static const String courseAssignmentScreen = "courseAssignmentScreen";
@@ -91,6 +94,8 @@ mixin RouteGenerator {
             return CourseListScreen(arguments: setting.arguments);
           case AppRoute.courseDetailsScreen:
             return CourseDetailsScreen(arguments: setting.arguments);
+          case AppRoute.courseLearningOutcomeScreen:
+            return CourseLearningOutcomeScreen(arguments: setting.arguments);
           case AppRoute.courseScriptScreen:
             return CourseScriptScreen(arguments: setting.arguments);
           case AppRoute.transcriptVideoScreen:

@@ -9,6 +9,8 @@ class CourseModuleDataEntity {
   final String startDate;
   final String endDate;
   final int sort;
+  final String learningOutcomeEn;
+  final String learningOutcomeBn;
   final bool isModified;
   final int status;
   final List<CourseContentDataEntity>? courseContents;
@@ -22,6 +24,8 @@ class CourseModuleDataEntity {
     required this.startDate,
     required this.endDate,
     required this.sort,
+    required this.learningOutcomeEn,
+    required this.learningOutcomeBn,
     required this.isModified,
     required this.status,
     required this.courseContents,

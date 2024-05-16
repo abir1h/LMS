@@ -47,11 +47,11 @@ mixin CourseLiveClassScreenService<T extends StatefulWidget> on State<T>
     ResponseEntity responseEntity = await contentRead(contentId, contentType,
         courseId, isCompleted, lastWatchTime, attendanceType);
     if (responseEntity.error == null && responseEntity.data != null) {
-      CustomToasty.of(context).releaseUI();
-      _view.showSuccess(responseEntity.message!);
+      // CustomToasty.of(context).releaseUI();
+      // _view.showSuccess(responseEntity.message!);
     } else {
-      _view.showWarning(responseEntity.message!);
-      CustomToasty.of(context).releaseUI();
+      // _view.showWarning(responseEntity.message!);
+      // CustomToasty.of(context).releaseUI();
     }
     return responseEntity;
   }

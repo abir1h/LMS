@@ -15,6 +15,8 @@ import '../../domain/use_cases/assessment_use_case.dart';
 abstract class _ViewModel {
   void showWarning(String message);
   void showSuccess(String message);
+  void showExamCancellationDialog();
+  void forceClose();
 }
 
 mixin AssessmentScreenService<T extends StatefulWidget> on State<T>
@@ -33,6 +35,7 @@ mixin AssessmentScreenService<T extends StatefulWidget> on State<T>
   late AssessmentScreenArgs screenArgs;
   late Timer examTimer;
   late DateTime _examStartTime;
+  bool _isExamRunning = false;
 
   ///Stream Controllers
   final AppStreamController<PageState> pageStateStreamController =
@@ -64,6 +67,7 @@ mixin AssessmentScreenService<T extends StatefulWidget> on State<T>
   ///Set screen args and load questions
   void initService(AssessmentScreenArgs args) {
     if (!mounted) return;
+    _isExamRunning = true;
 
     ///Loading state
     pageStateStreamController.add(LoadingState<PageState>());
@@ -83,9 +87,19 @@ mixin AssessmentScreenService<T extends StatefulWidget> on State<T>
     ///Exam expired check
     if (remaining.inSeconds <= 0) {
       examTimer.cancel();
-      pageStateStreamController
-          .add(DataLoadedState<PageState>(TimeExpiredState(screenArgs.examData)));
+      pageStateStreamController.add(
+          DataLoadedState<PageState>(TimeExpiredState(screenArgs.examData)));
+      _isExamRunning = false;
     }
+  }
+
+  Future<bool> onGoBack() {
+    if (_isExamRunning) {
+      _view.showExamCancellationDialog();
+    } else {
+      _view.forceClose();
+    }
+    return Future.value(false);
   }
 
   Future<ResponseEntity> onSubmitExam(ExamDataEntity examDataEntity) async {
@@ -101,6 +115,7 @@ mixin AssessmentScreenService<T extends StatefulWidget> on State<T>
   void onExamResultSubmitted(ResultDataEntity data) {
     pageStateStreamController
         .add(DataLoadedState<PageState>(AnswerSubmittedState(data)));
+    _isExamRunning = false;
   }
 }
 
@@ -118,12 +133,12 @@ class TimeExpiredState extends PageState {
   // final DateTime startTime;
   // final DateTime endTime;
   TimeExpiredState(
-      this.examData,
-      // this.questions,
-      // this.shouldShowAnswerSheet,
-      // this.startTime,
-      // this.endTime,
-      );
+    this.examData,
+    // this.questions,
+    // this.shouldShowAnswerSheet,
+    // this.startTime,
+    // this.endTime,
+  );
 }
 
 class AnswerSubmittedState extends PageState {

@@ -265,14 +265,14 @@ Future<void> downloadFiles(
       }
     }
   }
-  var status = await Permission.storage.request();
-  if (status.isGranted) {
-    // Proceed with the file download
-    downloadFile(url: fileUrl, filename: filename, context: context);
-  } else {
-    // Permission denied
-    CustomToasty.of(context).showSuccess('Storage permission denied');
-  }
+  // var status = await Permission.storage.request();
+  // if (status.isGranted) {
+  //   // Proceed with the file download
+  //   downloadFile(url: fileUrl, filename: filename, context: context);
+  // } else {
+  //   // Permission denied
+  //   CustomToasty.of(context).showSuccess('Storage permission denied');
+  // }
 }
 
 Future<void> downloadFile({
