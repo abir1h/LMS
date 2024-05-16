@@ -236,6 +236,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
                                 onTapAssessment: () =>
                                     onTapCourseAssessment(item.contentId),
                                 onTapScript: () => onTapScript(
+                                    courseId: data.id,
                                     courseContentId: item.contentId,
                                     courseContentType: item.contentType,
                                     courseCode: data.code,
@@ -334,6 +335,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
 
   @override
   void navigateToCourseScriptScreen(
+      int courseId,
       int courseContentId,
       String courseContentType,
       String courseCode,
@@ -346,6 +348,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
             courseCode: courseCode,
             courseDescriptionEn: courseDescriptionEn,
             courseDescriptionBn: courseDescriptionBn));
+    contentReadPost(courseContentId, courseId);
   }
 }
 

@@ -16,6 +16,7 @@ abstract class _ViewModel {
   void navigateToCourseAssessmentScreen(int courseContentId);
   void navigateToCourseLiveClassScreen(int courseContentId);
   void navigateToCourseScriptScreen(
+      int courseId,
       int courseContentId,
       String courseContentType,
       String courseCode,
@@ -33,6 +34,17 @@ mixin CourseDetailsScreenService<T extends StatefulWidget> on State<T>
 
   Future<ResponseEntity> getCourseDetails(int courseId) async {
     return _courseUseCase.getCourseDetailsUseCase(courseId);
+  }
+
+  Future<ResponseEntity> contentRead(
+      int contentId,
+      String contentType,
+      int courseId,
+      bool isCompleted,
+      String lastWatchTime,
+      String attendanceType) async {
+    return _courseUseCase.contentReadUseCase(contentId, contentType, courseId,
+        isCompleted, lastWatchTime, attendanceType);
   }
 
   ///Service configurations
@@ -69,6 +81,16 @@ mixin CourseDetailsScreenService<T extends StatefulWidget> on State<T>
     });
   }
 
+  Future<ResponseEntity> contentReadPost(int contentId, int courseId) async {
+    ResponseEntity responseEntity =
+        await contentRead(contentId, "course_script", courseId, true, "", "");
+    if (responseEntity.error == null && responseEntity.data != null) {
+    } else {
+      _view.showWarning(responseEntity.message!);
+    }
+    return responseEntity;
+  }
+
   void onTapCourseVideo(int contentId, String contentType,
       String contentTitleEn, String contentTitleBn) {
     _view.navigateToCourseVideoScreen(
@@ -92,12 +114,18 @@ mixin CourseDetailsScreenService<T extends StatefulWidget> on State<T>
   }
 
   void onTapScript(
-      {required int courseContentId,
+      {required int courseId,
+      required int courseContentId,
       required String courseContentType,
       required String courseCode,
       required String courseDescriptionEn,
       required String courseDescriptionBn}) {
-    _view.navigateToCourseScriptScreen(courseContentId, courseContentType,
-        courseCode, courseDescriptionEn, courseDescriptionBn);
+    _view.navigateToCourseScriptScreen(
+        courseId,
+        courseContentId,
+        courseContentType,
+        courseCode,
+        courseDescriptionEn,
+        courseDescriptionBn);
   }
 }

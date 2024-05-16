@@ -83,7 +83,8 @@ mixin AssessmentScreenService<T extends StatefulWidget> on State<T>
     ///Exam expired check
     if (remaining.inSeconds <= 0) {
       examTimer.cancel();
-      // widget.onTimeExpired(widget.data,widget.overview,_examStartTime,DateTime.now());
+      pageStateStreamController
+          .add(DataLoadedState<PageState>(TimeExpiredState(screenArgs.examData)));
     }
   }
 
@@ -111,12 +112,18 @@ class ExamRunningState extends PageState {
 }
 
 class TimeExpiredState extends PageState {
-  final ExamDataEntity questions;
-  final bool shouldShowAnswerSheet;
-  final DateTime startTime;
-  final DateTime endTime;
+  final ExamDataEntity examData;
+  // final ExamDataEntity questions;
+  // final bool shouldShowAnswerSheet;
+  // final DateTime startTime;
+  // final DateTime endTime;
   TimeExpiredState(
-      this.questions, this.shouldShowAnswerSheet, this.startTime, this.endTime);
+      this.examData,
+      // this.questions,
+      // this.shouldShowAnswerSheet,
+      // this.startTime,
+      // this.endTime,
+      );
 }
 
 class AnswerSubmittedState extends PageState {

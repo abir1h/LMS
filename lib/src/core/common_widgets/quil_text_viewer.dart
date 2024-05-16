@@ -5,7 +5,8 @@ import '../constants/common_imports.dart';
 
 class QuilTextViewer extends StatefulWidget {
   final QuillController controller;
-  const QuilTextViewer({super.key, required this.controller});
+  final String? hintText;
+  const QuilTextViewer({super.key, required this.controller, this.hintText});
 
   @override
   State<QuilTextViewer> createState() => _QuilTextViewerState();
@@ -27,6 +28,7 @@ class _QuilTextViewerState extends State<QuilTextViewer> with AppTheme {
             scrollController: ScrollController(),
             configurations: QuillEditorConfigurations(
               readOnly: true,
+              showCursor: false,
               scrollPhysics: const NeverScrollableScrollPhysics(),
               customStyles: DefaultStyles(
                 code: DefaultTextBlockStyle(
@@ -51,7 +53,7 @@ class _QuilTextViewerState extends State<QuilTextViewer> with AppTheme {
                 ),
               ),
               scrollable: true,
-              placeholder: 'Note...',
+              placeholder: widget.hintText ?? 'Note...',
             ),
             focusNode: FocusNode(),
           );

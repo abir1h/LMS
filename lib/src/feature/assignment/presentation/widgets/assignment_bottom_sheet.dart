@@ -1,26 +1,22 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
-import 'package:get/get.dart';
-import 'package:lms/src/core/service/notifier/app_events_notifier.dart';
-import 'package:lms/src/feature/assignment/presentation/services/assignement_bottom_sheet_service.dart';
+import 'package:lms/src/core/common_widgets/custom_toasty.dart';
 
+import '../../../../core/service/notifier/app_events_notifier.dart';
 import '../../../../core/routes/app_route.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../../domain/entities/assignment_data_entity.dart';
-import '../models/assignment_model.dart';
 import '../../../../core/utility/app_label.dart';
-import '../controllers/assignment_controller.dart';
 import '../../../../core/constants/common_imports.dart';
 
 class AssignmentBottomSheet extends StatefulWidget {
-  final String from;
+  final String type;
   final AssignmentDataEntity? assignmentDataEntity;
   final String? answer;
   const AssignmentBottomSheet({
     super.key,
-    required this.from,
+    required this.type,
     this.assignmentDataEntity,
     this.answer,
   });
@@ -30,7 +26,7 @@ class AssignmentBottomSheet extends StatefulWidget {
 }
 
 class _AssignmentBottomSheetState extends State<AssignmentBottomSheet>
-    with AppTheme, Language, AssignmentBottomSheetService {
+    with AppTheme, Language {
   final _controller = QuillController.basic();
   final _editorFocusNode = FocusNode();
   final _editorScrollController = ScrollController();
@@ -44,8 +40,7 @@ class _AssignmentBottomSheetState extends State<AssignmentBottomSheet>
 
   setContent() {
     if (widget.answer != null) {
-      final Document doc =
-      Document.fromJson(json.decode(widget.answer!));
+      final Document doc = Document.fromJson(json.decode(widget.answer!));
       _controller.document = doc;
     }
   }
@@ -68,7 +63,6 @@ class _AssignmentBottomSheetState extends State<AssignmentBottomSheet>
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
@@ -81,7 +75,7 @@ class _AssignmentBottomSheetState extends State<AssignmentBottomSheet>
           width: double.infinity,
           margin: EdgeInsets.only(top: mediaQuery.padding.top * 3),
           padding:
-          EdgeInsets.only(top: size.h10, right: size.w16, left: size.w20),
+              EdgeInsets.only(top: size.h10, right: size.w16, left: size.w20),
           decoration: BoxDecoration(
             color: clr.whiteColor,
             borderRadius: BorderRadius.only(
@@ -94,7 +88,7 @@ class _AssignmentBottomSheetState extends State<AssignmentBottomSheet>
               controller: _controller,
               sharedConfigurations: QuillSharedConfigurations(
                 animationConfigurations:
-                QuillAnimationConfigurations.disableAll(),
+                    QuillAnimationConfigurations.disableAll(),
               ),
             ),
             child: Column(
@@ -105,17 +99,23 @@ class _AssignmentBottomSheetState extends State<AssignmentBottomSheet>
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Navigator.of(context).pop();
-                        Navigator.of(context).pushNamed(
-                            AppRoute.assignmentSubmitScreen,
-                            arguments: AssignmentSubmitScreenArgs(
-                                assignmentDataEntity:
-                                widget.assignmentDataEntity,
-                                answer: jsonEncode(
-                                  _controller.document.toDelta().toJson(),
-                                )));
-                        AppEventsNotifier.notify(EventAction.assignmentSubmitScreen);
-
+                        if (_controller.document.isEmpty()) {
+                          CustomToasty.of(context)
+                              .showWarning("Assignment should not be empty");
+                        } else {
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pushNamed(
+                              AppRoute.assignmentSubmitScreen,
+                              arguments: AssignmentSubmitScreenArgs(
+                                  assignmentDataEntity:
+                                      widget.assignmentDataEntity,
+                                  answer: jsonEncode(
+                                    _controller.document.toDelta().toJson(),
+                                  ),
+                                  type: widget.type));
+                          AppEventsNotifier.notify(
+                              EventAction.assignmentSubmitScreen);
+                        }
                       },
                       child: Container(
                         padding: EdgeInsets.all(size.r4),
@@ -169,7 +169,7 @@ class _AssignmentBottomSheetState extends State<AssignmentBottomSheet>
                             ),
                             scrollable: true,
                             placeholder:
-                            label(e: en.writeHere, b: bn.writeHere),
+                                label(e: en.writeHere, b: bn.writeHere),
                           ),
                         ),
                       ),
@@ -178,123 +178,119 @@ class _AssignmentBottomSheetState extends State<AssignmentBottomSheet>
                 ),
                 isKeyboardOpen
                     ? Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: QuillBaseToolbar(
-                    configurations: QuillBaseToolbarConfigurations(
-                      toolbarSize: 20 * 2,
-                      multiRowsDisplay: false,
-                      color: Colors.white,
-                      buttonOptions: const QuillToolbarButtonOptions(
-                        base: QuillToolbarBaseButtonOptions(
-                          iconTheme: QuillIconTheme(
-                              iconSelectedColor: Colors.white,
-                              iconUnselectedFillColor:
-                              Colors.transparent),
-                          globalIconSize: 30,
-                        ),
-                      ),
-                      childrenBuilder: (context) {
-                        final controller =
-                            context.requireQuillController;
-                        return [
-                          QuillToolbarToggleStyleButton(
-                            attribute: Attribute.bold,
-                            controller: controller,
-                            options:
-                            QuillToolbarToggleStyleButtonOptions(
-                              iconTheme: QuillIconTheme(
-                                  iconSelectedColor:
-                                  clr.appPrimaryColorGreen,
-                                  iconUnselectedFillColor:
-                                  Colors.transparent),
-                              childBuilder: (options, extraOptions) {
-                                final buttonBackgroundColor = extraOptions
-                                    .isToggled
-                                    ? clr
-                                    .appPrimaryColorGreen // Background color when toggled
-                                    : Colors.transparent;
-                                if (extraOptions.isToggled) {
-                                  return Container(
-                                    color: buttonBackgroundColor,
-                                    child: IconButton(
-                                      onPressed: extraOptions.onPressed,
-                                      icon: Icon(
-                                        options.iconData,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  );
-                                }
-                                return IconButton(
-                                  onPressed: extraOptions.onPressed,
-                                  icon: Icon(
-                                    options.iconData,
+                        padding: const EdgeInsets.all(8.0),
+                        child: QuillBaseToolbar(
+                          configurations: QuillBaseToolbarConfigurations(
+                            toolbarSize: 20 * 2,
+                            multiRowsDisplay: false,
+                            color: Colors.white,
+                            buttonOptions: const QuillToolbarButtonOptions(
+                              base: QuillToolbarBaseButtonOptions(
+                                iconTheme: QuillIconTheme(
+                                    iconSelectedColor: Colors.white,
+                                    iconUnselectedFillColor:
+                                        Colors.transparent),
+                                globalIconSize: 30,
+                              ),
+                            ),
+                            childrenBuilder: (context) {
+                              final controller = context.requireQuillController;
+                              return [
+                                QuillToolbarToggleStyleButton(
+                                  attribute: Attribute.bold,
+                                  controller: controller,
+                                  options: QuillToolbarToggleStyleButtonOptions(
+                                    iconTheme: QuillIconTheme(
+                                        iconSelectedColor:
+                                            clr.appPrimaryColorGreen,
+                                        iconUnselectedFillColor:
+                                            Colors.transparent),
+                                    childBuilder: (options, extraOptions) {
+                                      final buttonBackgroundColor = extraOptions
+                                              .isToggled
+                                          ? clr
+                                              .appPrimaryColorGreen // Background color when toggled
+                                          : Colors.transparent;
+                                      if (extraOptions.isToggled) {
+                                        return Container(
+                                          color: buttonBackgroundColor,
+                                          child: IconButton(
+                                            onPressed: extraOptions.onPressed,
+                                            icon: Icon(
+                                              options.iconData,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      return IconButton(
+                                        onPressed: extraOptions.onPressed,
+                                        icon: Icon(
+                                          options.iconData,
+                                        ),
+                                      );
+                                    },
                                   ),
-                                );
-                              },
-                            ),
-                          ),
-                          QuillToolbarToggleStyleButton(
-                            attribute: Attribute.italic,
-                            controller: controller,
-                            options:
-                            QuillToolbarToggleStyleButtonOptions(
-                              childBuilder: (options, extraOptions) {
-                                final buttonBackgroundColor = extraOptions
-                                    .isToggled
-                                    ? clr
-                                    .appPrimaryColorGreen // Background color when toggled
-                                    : Colors.transparent;
-                                if (extraOptions.isToggled) {
-                                  return Container(
-                                    color: buttonBackgroundColor,
-                                    child: IconButton(
-                                      onPressed: extraOptions.onPressed,
-                                      icon: Icon(
-                                        options.iconData,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  );
-                                }
-                                return IconButton(
-                                  onPressed: extraOptions.onPressed,
-                                  icon: Icon(options.iconData),
-                                );
-                              },
-                            ),
-                          ),
-                          QuillToolbarToggleStyleButton(
-                            attribute: Attribute.underline,
-                            controller: controller,
-                            options:
-                            QuillToolbarToggleStyleButtonOptions(
-                              childBuilder: (options, extraOptions) {
-                                final buttonBackgroundColor = extraOptions
-                                    .isToggled
-                                    ? clr
-                                    .appPrimaryColorGreen // Background color when toggled
-                                    : Colors.transparent;
-                                if (extraOptions.isToggled) {
-                                  return Container(
-                                    color: buttonBackgroundColor,
-                                    child: IconButton(
-                                      onPressed: extraOptions.onPressed,
-                                      icon: Icon(
-                                        options.iconData,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  );
-                                }
-                                return IconButton(
-                                  onPressed: extraOptions.onPressed,
-                                  icon: Icon(options.iconData),
-                                );
-                              },
-                            ),
-                          ),
-                      /*    QuillToolbarColorButton(
+                                ),
+                                QuillToolbarToggleStyleButton(
+                                  attribute: Attribute.italic,
+                                  controller: controller,
+                                  options: QuillToolbarToggleStyleButtonOptions(
+                                    childBuilder: (options, extraOptions) {
+                                      final buttonBackgroundColor = extraOptions
+                                              .isToggled
+                                          ? clr
+                                              .appPrimaryColorGreen // Background color when toggled
+                                          : Colors.transparent;
+                                      if (extraOptions.isToggled) {
+                                        return Container(
+                                          color: buttonBackgroundColor,
+                                          child: IconButton(
+                                            onPressed: extraOptions.onPressed,
+                                            icon: Icon(
+                                              options.iconData,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      return IconButton(
+                                        onPressed: extraOptions.onPressed,
+                                        icon: Icon(options.iconData),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                QuillToolbarToggleStyleButton(
+                                  attribute: Attribute.underline,
+                                  controller: controller,
+                                  options: QuillToolbarToggleStyleButtonOptions(
+                                    childBuilder: (options, extraOptions) {
+                                      final buttonBackgroundColor = extraOptions
+                                              .isToggled
+                                          ? clr
+                                              .appPrimaryColorGreen // Background color when toggled
+                                          : Colors.transparent;
+                                      if (extraOptions.isToggled) {
+                                        return Container(
+                                          color: buttonBackgroundColor,
+                                          child: IconButton(
+                                            onPressed: extraOptions.onPressed,
+                                            icon: Icon(
+                                              options.iconData,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      return IconButton(
+                                        onPressed: extraOptions.onPressed,
+                                        icon: Icon(options.iconData),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                /*    QuillToolbarColorButton(
                             controller: controller,
                             isBackground: true,
                             options:
@@ -303,23 +299,23 @@ class _AssignmentBottomSheetState extends State<AssignmentBottomSheet>
                               dialogBarrierColor: Colors.white,
                             ),
                           ),*/
-                          QuillToolbarSelectAlignmentButton(
-                            showLeftAlignment: true,
-                            showRightAlignment: true,
-                            showJustifyAlignment: true,
-                            showCenterAlignment: true,
-                            controller: controller,
-                            options:
-                            const QuillToolbarSelectAlignmentButtonOptions(
-                              iconButtonFactor: 2,
-                              iconSize: 20,
-                            ),
+                                QuillToolbarSelectAlignmentButton(
+                                  showLeftAlignment: true,
+                                  showRightAlignment: true,
+                                  showJustifyAlignment: true,
+                                  showCenterAlignment: true,
+                                  controller: controller,
+                                  options:
+                                      const QuillToolbarSelectAlignmentButtonOptions(
+                                    iconButtonFactor: 2,
+                                    iconSize: 20,
+                                  ),
+                                ),
+                              ];
+                            },
                           ),
-                        ];
-                      },
-                    ),
-                  ),
-                )
+                        ),
+                      )
                     : const SizedBox(),
               ],
             ),

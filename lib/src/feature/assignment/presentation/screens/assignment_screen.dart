@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
-import 'package:lms/src/feature/assignment/presentation/screens/assignement_request_bottomsheet.dart';
 
+import '../../../../core/common_widgets/quil_text_viewer.dart';
+import 'assignement_request_bottomsheet.dart';
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../../../core/common_widgets/circuler_widget.dart';
 import '../../../../core/common_widgets/custom_empty_widget.dart';
@@ -141,8 +145,7 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                         if (data.submissionType == "written" &&
                             data.assignmentSubmissions!.evaluatedBy.isEmpty)
                           GestureDetector(
-                            onTap: () =>
-                                onTapWriteHere("assignmentScreen", data),
+                            onTap: () => onTapWriteHere("update", data),
                             child: Container(
                               padding: EdgeInsets.all(size.w2),
                               decoration: BoxDecoration(
@@ -205,9 +208,12 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                   //   );
                   // }),
                   WrittenAnswerWidget(
+                    answer: data.assignmentSubmissions != null
+                        ? data.assignmentSubmissions!.answer
+                        : "",
                     onTap: () {
                       if (data.assignmentSubmissions == null) {
-                        onTapWriteHere("assignmentScreen", data);
+                        onTapWriteHere("store", data);
                       }
                     },
                   ),
@@ -336,8 +342,10 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                                     circularId: data.circularId,
                                     answer: '',
                                     files: files!)
-                                .then((value) => loadAssignmentData(
-                                    _screenArgs.courseContentId));
+                                .then((value) {
+                              contentReadPost(data.id, data.courseId, true);
+                              loadAssignmentData(_screenArgs.courseContentId);
+                            });
                           },
                           title: label(e: en.upload, b: bn.upload),
                           bgColor: files!.isEmpty
@@ -433,13 +441,13 @@ class _AssignmentScreenState extends State<AssignmentScreen>
     );
   }
 
-  void onTapWriteHere(
-      String screenName, AssignmentDataEntity assignmentDataEntity) {
+  void onTapWriteHere(String type, AssignmentDataEntity assignmentDataEntity) {
     showCupertinoModalPopup(
       context: context,
       builder: (context) => AssignmentBottomSheet(
-        from: screenName,
+        type: type,
         assignmentDataEntity: assignmentDataEntity,
+        answer: assignmentDataEntity.assignmentSubmissions?.answer,
       ),
     );
   }
@@ -510,32 +518,61 @@ class SupportingDocWidget<T> extends StatelessWidget with AppTheme, Language {
   }
 }
 
-class WrittenAnswerWidget extends StatelessWidget with AppTheme, Language {
+class WrittenAnswerWidget extends StatefulWidget {
+  final String answer;
   final VoidCallback onTap;
-  const WrittenAnswerWidget({super.key, required this.onTap});
+  const WrittenAnswerWidget(
+      {super.key, required this.answer, required this.onTap});
+
+  @override
+  State<WrittenAnswerWidget> createState() => _WrittenAnswerWidgetState();
+}
+
+class _WrittenAnswerWidgetState extends State<WrittenAnswerWidget>
+    with AppTheme, Language {
+  final _controller = QuillController.basic();
+
+  @override
+  void initState() {
+    super.initState();
+    setContent();
+  }
+
+  setContent() {
+    if (widget.answer.isNotEmpty) {
+      if (widget.answer.contains("{")) {
+        final Document doc = Document.fromJson(json.decode(widget.answer));
+        _controller.document = doc;
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: widget.onTap,
       child: Container(
         width: double.infinity,
-        padding: EdgeInsets.only(
-            left: size.w16, right: size.w16, top: size.h12, bottom: size.h44),
+        padding: EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h12),
         decoration: BoxDecoration(
           color: clr.whiteColor,
           borderRadius: BorderRadius.circular(size.r8),
           border: Border.all(color: clr.boxStrokeColor, width: size.w1),
         ),
-        child: Text(
-          label(e: en.writeHere, b: bn.writeHere),
-          style: TextStyle(
-              color: clr.placeHolderTextColorGray,
-              // : clr.textColorAppleBlack,
-              fontSize: size.textSmall,
-              fontWeight: FontWeight.w500,
-              fontFamily: StringData.fontFamilyPoppins),
-        ),
+        child: widget.answer.isEmpty
+            ? Text(
+                label(e: en.writeHere, b: bn.writeHere),
+                style: TextStyle(
+                    color: clr.placeHolderTextColorGray,
+                    // : clr.textColorAppleBlack,
+                    fontSize: size.textSmall,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: StringData.fontFamilyPoppins),
+              )
+            : QuilTextViewer(
+                controller: _controller,
+                hintText: label(e: en.writeHere, b: bn.writeHere),
+              ),
       ),
     );
   }

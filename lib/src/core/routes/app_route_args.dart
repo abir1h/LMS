@@ -76,11 +76,14 @@ class AssignmentArgs {
 }
 
 class AssignmentSubmitScreenArgs {
-  final AssignmentModel? assignmentModel;
   final AssignmentDataEntity? assignmentDataEntity;
   final String? answer;
-  AssignmentSubmitScreenArgs(
-      {this.assignmentModel, this.assignmentDataEntity, this.answer});
+  final String? type;
+  AssignmentSubmitScreenArgs({
+    this.assignmentDataEntity,
+    this.answer,
+    this.type,
+  });
 }
 
 class ModuleDiscussionArgs {

@@ -52,32 +52,9 @@ mixin CourseLiveClassScreenService<T extends StatefulWidget> on State<T>
     } else {
       _view.showWarning(responseEntity.message!);
       CustomToasty.of(context).releaseUI();
-
     }
     return responseEntity;
-
-    // CustomToasty.of(context).lockUI();
-    // contentRead(contentId, contentType, courseId, isCompleted, lastWatchTime,
-    //         attendanceType)
-    //     .then((value) {
-    //   if (value.error == null && value.data != null) {
-    //     _view.showSuccess(value.message!);
-    //     CustomToasty.of(context).releaseUI();
-    //   } else {
-    //     _view.showWarning(value.message!);
-    //     CustomToasty.of(context).releaseUI();
-    //   }
-    // });
-    return responseEntity;
   }
-
-  // contentReadPost(int contentId, String contentType, int courseId,
-  //     bool isCompleted, String lastWatchTime, String attendanceType) async {
-  //   CustomToasty.of(context).lockUI();
-  //   contentRead(contentId, contentType, courseId, isCompleted, lastWatchTime,
-  //       attendanceType);
-  //   CustomToasty.of(context).releaseUI();
-  // }
 
   int _selectedTabIndex = 0;
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lms/src/feature/assessment/domain/entities/result_data_entity.dart';
 
+import '../../domain/entities/result_data_entity.dart';
 import '../../../../core/common_widgets/custom_action_button.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
 import '../widgets/assessment_result_widget.dart';
@@ -11,7 +11,6 @@ import '../../../../core/constants/common_imports.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
-import '../../domain/entities/exam_data_entity.dart';
 import '../../domain/entities/option_data_entity.dart';
 import '../../domain/entities/question_data_entity.dart';
 import '../services/assessment_screen_service.dart';
@@ -21,6 +20,7 @@ import '../widgets/mcq_answer_widget.dart';
 import '../widgets/question_list_widget.dart';
 import '../widgets/question_widget.dart';
 import '../widgets/time_digit_widget.dart';
+import '../widgets/time_expired_panel_widget.dart';
 import '../widgets/true_false_answer_widget.dart';
 import '../widgets/written_text_field_widget.dart';
 
@@ -36,114 +36,6 @@ class AssessmentAllQuestionScreen extends StatefulWidget {
 class _AssessmentAllQuestionScreenState
     extends State<AssessmentAllQuestionScreen>
     with AppTheme, Language, AssessmentScreenService {
-  // final BehaviorSubject<Duration> timerStreamController = BehaviorSubject();
-  // final Stream<DataState> pageStateStreamController = const Stream.empty();
-
-  // // List<Question> questions = [
-  // //   Question(
-  // //     type: QuestionType.mcq,
-  // //     data: QuestionsEntity(
-  // //       id: 0,
-  // //       questionText:
-  // //           "শেখার জন্য শিক্ষাদানের প্রযুক্তি হল তাদের শিক্ষা, বা যারা শিক্ষা দিতে চান, যে কোনো বিষয়ে, যে কোনো সময়?",
-  // //       questionImage: "",
-  // //       option1: "উত্তর বিকল্প ১",
-  // //       option2: "উত্তর বিকল্প ২",
-  // //       option3: "উত্তর বিকল্প ৩",
-  // //       option4: "উত্তর বিকল্প ৪",
-  // //       option5: "উত্তর বিকল্প ৫",
-  // //       option1Image: "",
-  // //       option2Image: "",
-  // //       option3Image: "",
-  // //       option4Image: "",
-  // //       option5Image: "",
-  // //       userAnswer1: false,
-  // //       userAnswer2: false,
-  // //       userAnswer3: false,
-  // //       userAnswer4: false,
-  // //       userAnswer5: false,
-  // //       answer1: false,
-  // //       answer2: false,
-  // //       answer3: false,
-  // //       answer4: false,
-  // //       answer5: false,
-  // //     ),
-  // //   ),
-  // //   Question(
-  // //     type: QuestionType.fig,
-  // //     data: BlankModel(
-  // //         fillInTheGapModelId: 0,
-  // //         title:
-  // //             "অনুগ্রহ করেবাক্য গুলো পড়ুন এবং শূন্যস্থানের জন্য সঠিক উত্তরটি লিখুন।",
-  // //         description:
-  // //             "রবীন্দ্রনাথ ঠাকুর  _____  উপন্যাসের উপর নভেল পুরস্কার লাভ করেন এবং তিনি  _____  সালে এটি অর্জন করেন|"),
-  // //   ),
-  // //   Question(
-  // //     type: QuestionType.fig,
-  // //     data: BlankModel(
-  // //         fillInTheGapModelId: 0,
-  // //         title:
-  // //             "অনুগ্রহ করেবাক্য গুলো পড়ুন এবং শূন্যস্থানের জন্য সঠিক উত্তরটি লিখুন।",
-  // //         description:
-  // //             "রবীন্দ্রনাথ ঠাকুর  _____  উপন্যাসের উপর নভেল পুরস্কার লাভ করেন এবং তিনি _____  সালে এটি অর্জন করেন|"),
-  // //   ),
-  // //   Question(
-  // //       type: QuestionType.matching,
-  // //       data: MatchingQuestions(
-  // //         questionTitle: "সঠিক উত্তর ম্যাচিং:",
-  // //         leftSides: [
-  // //           MatchingLeftSide(
-  // //               id: 1,
-  // //               leftSide:
-  // //                   "একজন শিক্ষক হিসাবে আপনি কীভাবে আপনার বিদ্যমান জ্ঞানকে গড়ে তুলবেন এবং প্রসারিত করবেন?",
-  // //               selectedRightSide: MatchingRightSide(),
-  // //               mark: 0.0),
-  // //           MatchingLeftSide(
-  // //               id: 2,
-  // //               leftSide:
-  // //                   "একজন শিক্ষক হিসাবে আপনি কীভাবে আপনার বিদ্যমান জ্ঞানকে গড়ে তুলবেন এবং প্রসারিত করবেন?",
-  // //               selectedRightSide: MatchingRightSide(),
-  // //               mark: 0.0),
-  // //           MatchingLeftSide(
-  // //               id: 3,
-  // //               leftSide:
-  // //                   "একজন শিক্ষক হিসাবে আপনি কীভাবে আপনার বিদ্যমান জ্ঞানকে গড়ে তুলবেন এবং প্রসারিত করবেন?",
-  // //               selectedRightSide: MatchingRightSide(),
-  // //               mark: 0.0),
-  // //           MatchingLeftSide(
-  // //               id: 4,
-  // //               leftSide:
-  // //                   "একজন শিক্ষক হিসাবে আপনি কীভাবে আপনার বিদ্যমান জ্ঞানকে গড়ে তুলবেন এবং প্রসারিত করবেন?",
-  // //               selectedRightSide: MatchingRightSide(),
-  // //               mark: 0.0),
-  // //         ],
-  // //         rightSides: [
-  // //           MatchingRightSide(
-  // //               index: 1, isUsed: false, rightSideText: "উত্তর 4"),
-  // //           MatchingRightSide(
-  // //               index: 2, isUsed: false, rightSideText: "উত্তর 3"),
-  // //           MatchingRightSide(
-  // //               index: 3, isUsed: false, rightSideText: "উত্তর 2"),
-  // //           MatchingRightSide(
-  // //               index: 4, isUsed: false, rightSideText: "উত্তর 1"),
-  // //         ],
-  // //       )),
-  // //   Question(
-  // //     type: QuestionType.trueFalse,
-  // //     data: "",
-  // //   ),
-  // //   Question(
-  // //     type: QuestionType.oneWordAnswer,
-  // //     data: "",
-  // //   ),
-  // //   Question(
-  // //     type: QuestionType.written,
-  // //     data: "",
-  // //   ),
-  // // ];
-  // late Timer _examTimer;
-  // var remaining;
-
   @override
   void initState() {
     super.initState();
@@ -338,7 +230,10 @@ class _AssessmentAllQuestionScreenState
               ),
             );
           } else if (data is TimeExpiredState) {
-            return Container();
+            return TimeExpiredPanelWidget(
+              questionDataEntity: data.examData,
+              doSubmitResult: (v) => onSubmitExam(v),
+            );
           } else if (data is AnswerSubmittedState) {
             return AssessmentResultWidget(data: data.resultData);
           } else {

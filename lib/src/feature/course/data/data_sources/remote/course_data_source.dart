@@ -85,9 +85,9 @@ class CourseRemoteDataSourceImp extends CourseRemoteDataSource {
       String attendanceType) async {
     Map<String, dynamic> data = {
       "content_id": contentId,
-      "content_type":contentType,
-      "is_completed":isCompleted,
-      "course_id":courseId,
+      "content_type": contentType,
+      "is_completed": isCompleted,
+      "course_id": courseId,
       "last_watch_time": lastWatchTime,
       "attendance_type": attendanceType
     };

@@ -94,26 +94,58 @@ class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
                   children: [
                     FilledButton(
                         onPressed: () {
-                          onStoreAssignment(
-                              assignmentId:
-                                  _screenArgs.assignmentDataEntity!.id,
-                              subAssignmentId: _screenArgs.assignmentDataEntity
-                                          ?.circularSubAssignments !=
-                                      null
-                                  ? _screenArgs.assignmentDataEntity!
-                                      .circularSubAssignments!.id
-                                  : -1,
-                              courseId:
-                                  _screenArgs.assignmentDataEntity!.courseId,
-                              circularId:
-                                  _screenArgs.assignmentDataEntity!.circularId,
-                              answer: _screenArgs.answer!,
-                              files: []);
-                          Navigator.of(context).pushNamed(
-                              AppRoute.assignmentScreen,
-                              arguments: AssignmentArgs(
-                                  courseContentId:
-                                      _screenArgs.assignmentDataEntity!.id));
+                          _screenArgs.type == "store"
+                              ? onStoreAssignment(
+                                  assignmentId:
+                                      _screenArgs.assignmentDataEntity!.id,
+                                  subAssignmentId: _screenArgs.assignmentDataEntity?.circularSubAssignments != null
+                                      ? _screenArgs.assignmentDataEntity!
+                                          .circularSubAssignments!.id
+                                      : -1,
+                                  courseId: _screenArgs
+                                      .assignmentDataEntity!.courseId,
+                                  circularId: _screenArgs
+                                      .assignmentDataEntity!.circularId,
+                                  answer: _screenArgs.answer!,
+                                  files: []).then((value) {
+                                  contentReadPost(
+                                      _screenArgs.assignmentDataEntity!.id,
+                                      _screenArgs
+                                          .assignmentDataEntity!.courseId,
+                                      true);
+                                  Navigator.of(context).pushNamed(
+                                      AppRoute.assignmentScreen,
+                                      arguments: AssignmentArgs(
+                                          courseContentId: _screenArgs
+                                              .assignmentDataEntity!.id));
+                                })
+                              : onUpdateAssignment(
+                                  submissionId: _screenArgs
+                                      .assignmentDataEntity!
+                                      .assignmentSubmissions!
+                                      .id,
+                                  assignmentId:
+                                      _screenArgs.assignmentDataEntity!.id,
+                                  subAssignmentId:
+                                      _screenArgs.assignmentDataEntity?.circularSubAssignments != null
+                                          ? _screenArgs.assignmentDataEntity!
+                                              .circularSubAssignments!.id
+                                          : -1,
+                                  courseId: _screenArgs.assignmentDataEntity!.courseId,
+                                  circularId: _screenArgs.assignmentDataEntity!.circularId,
+                                  answer: _screenArgs.answer!,
+                                  files: []).then((value) {
+                                  contentReadPost(
+                                      _screenArgs.assignmentDataEntity!.id,
+                                      _screenArgs
+                                          .assignmentDataEntity!.courseId,
+                                      true);
+                                  Navigator.of(context).pushNamed(
+                                      AppRoute.assignmentScreen,
+                                      arguments: AssignmentArgs(
+                                          courseContentId: _screenArgs
+                                              .assignmentDataEntity!.id));
+                                });
                         },
                         style: FilledButton.styleFrom(
                           side: BorderSide(
@@ -146,7 +178,7 @@ class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
     showCupertinoModalPopup(
       context: context,
       builder: (context) => AssignmentBottomSheet(
-        from: screenName,
+        type: screenName,
         answer: _screenArgs.answer!,
         assignmentDataEntity: _screenArgs.assignmentDataEntity,
       ),
