@@ -76,6 +76,8 @@ mixin ProfileService<T extends StatefulWidget> on State<T>
           headerDataStreamController
               .add(DataLoadedState<AllProgressDataEntity>(value.data));
         } else if (value.error == null && value.data == null) {
+          headerDataStreamController
+              .add(EmptyState(message: ""));
         } else {
           _view.showWarning(value.message!);
         }
@@ -92,6 +94,8 @@ mixin ProfileService<T extends StatefulWidget> on State<T>
         stateDataStreamController
             .add(DataLoadedState<StateType>(ProfileDataState(value.data)));
       } else if (value.error == null && value.data == null) {
+        stateDataStreamController
+            .add(EmptyState(message: ""));
       } else {
         _view.showWarning(value.message!);
       }
@@ -106,6 +110,8 @@ mixin ProfileService<T extends StatefulWidget> on State<T>
         stateDataStreamController
             .add(DataLoadedState<StateType>(ProgressDataState(value.data)));
       } else if (value.error == null && value.data == null) {
+        stateDataStreamController
+            .add(EmptyState(message: ""));
       } else {
         _view.showWarning(value.message!);
       }

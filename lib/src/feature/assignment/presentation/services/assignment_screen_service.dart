@@ -81,6 +81,8 @@ mixin AssignmentScreenService<T extends StatefulWidget> on State<T>
         assignmentDetailsDataStreamController
             .add(DataLoadedState<AssignmentDataEntity>(value.data));
       } else if (value.error == null && value.data == null) {
+        assignmentDetailsDataStreamController
+            .add(EmptyState(message: ""));
       } else {
         _view.showWarning(value.message!);
       }

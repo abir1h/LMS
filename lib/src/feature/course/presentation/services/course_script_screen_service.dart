@@ -49,6 +49,8 @@ mixin CourseScriptScreenService<T extends StatefulWidget> on State<T>
         scriptDetailsDataStreamController
             .add(DataLoadedState<ScriptDataEntity>(value.data));
       } else if (value.error == null && value.data == null) {
+        scriptDetailsDataStreamController
+            .add(EmptyState(message: ""));
       } else {
         _view.showWarning(value.message!);
       }

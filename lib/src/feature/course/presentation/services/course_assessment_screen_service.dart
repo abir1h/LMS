@@ -57,6 +57,8 @@ mixin CourseAssessmentScreenService<T extends StatefulWidget> on State<T>
             .add(DataLoadedState<AssessmentDataEntity>(value.data));
       } else if (value.error == null && value.data == null) {
         _view.showWarning(value.message!);
+        assessmentDetailsDataStreamController
+            .add(EmptyState(message: ""));
       } else {
         _view.showWarning(value.message!);
       }

@@ -118,6 +118,8 @@ mixin CourseLiveClassScreenService<T extends StatefulWidget> on State<T>
         stateDataStreamController.add(
             DataLoadedState<StateType>(InPersonClassDataState(value.data)));
       } else if (value.error == null && value.data == null) {
+        stateDataStreamController
+            .add(EmptyState(message: ""));
       } else {
         _view.showWarning(value.message!);
       }
@@ -131,6 +133,8 @@ mixin CourseLiveClassScreenService<T extends StatefulWidget> on State<T>
         stateDataStreamController
             .add(DataLoadedState<StateType>(OnlineClassDataState(value.data)));
       } else if (value.error == null && value.data == null) {
+        stateDataStreamController
+            .add(EmptyState(message: ""));
       } else {
         _view.showWarning(value.message!);
       }

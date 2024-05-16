@@ -53,6 +53,8 @@ mixin DashboardScreenService<T extends StatefulWidget> on State<T>
         dashboardDataStreamController
             .add(DataLoadedState<DashboardDataEntity>(value.data));
       } else if (value.error == null && value.data == null) {
+        dashboardDataStreamController
+            .add(EmptyState(message: ""));
       } else {
         _view.showWarning(value.message!);
       }

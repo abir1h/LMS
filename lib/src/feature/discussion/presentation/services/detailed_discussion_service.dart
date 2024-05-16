@@ -71,6 +71,8 @@ mixin DetailedDiscussionService<T extends StatefulWidget> on State<T>
         discussionDataStreamController
             .add(DataLoadedState<DiscussionDataEntity>(value.data));
       } else if (value.error == null && value.data == null) {
+        discussionDataStreamController
+            .add(EmptyState(message: ""));
       } else {
         _view.showWarning(value.message!);
       }
