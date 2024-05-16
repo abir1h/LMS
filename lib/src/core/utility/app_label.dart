@@ -232,19 +232,7 @@ Future<void> downloadFiles(
     {required String fileUrl,
     required String filename,
     required BuildContext context}) async {
-  final deviceInfo = await DeviceInfoPlugin().androidInfo;
-
-  if (deviceInfo.version.sdkInt > 32) {
-    var status = await Permission.manageExternalStorage.request();
-    if (status.isGranted) {
-      // Proceed with the file download
-      downloadFile(url: fileUrl, filename: filename, context: context);
-    } else {
-      // Permission denied
-
-      CustomToasty.of(context).showSuccess('Storage permission denied');
-    }
-  } else {
+  if (Platform.isIOS) {
     var status = await Permission.storage.request();
     if (status.isGranted) {
       // Proceed with the file download
@@ -253,6 +241,37 @@ Future<void> downloadFiles(
       // Permission denied
       CustomToasty.of(context).showSuccess('Storage permission denied');
     }
+  } else {
+    final deviceInfo = await DeviceInfoPlugin().androidInfo;
+
+    if (deviceInfo.version.sdkInt > 32) {
+      var status = await Permission.manageExternalStorage.request();
+      if (status.isGranted) {
+        // Proceed with the file download
+        downloadFile(url: fileUrl, filename: filename, context: context);
+      } else {
+        // Permission denied
+
+        CustomToasty.of(context).showSuccess('Storage permission denied');
+      }
+    } else {
+      var status = await Permission.storage.request();
+      if (status.isGranted) {
+        // Proceed with the file download
+        downloadFile(url: fileUrl, filename: filename, context: context);
+      } else {
+        // Permission denied
+        CustomToasty.of(context).showSuccess('Storage permission denied');
+      }
+    }
+  }
+  var status = await Permission.storage.request();
+  if (status.isGranted) {
+    // Proceed with the file download
+    downloadFile(url: fileUrl, filename: filename, context: context);
+  } else {
+    // Permission denied
+    CustomToasty.of(context).showSuccess('Storage permission denied');
   }
 }
 
@@ -281,7 +300,7 @@ Future<void> downloadFile({
     bool fileExists = await savedFile.exists();
 
     if (fileExists && context.mounted) {
-      CustomToasty.of(context).showSuccess("File already downloaded");
+      CustomToasty.of(context).showWarning("File already downloaded");
     } else {
       client.getUrl(Uri.parse(url)).then(
         (HttpClientRequest request) {
