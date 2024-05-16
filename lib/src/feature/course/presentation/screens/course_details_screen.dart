@@ -182,12 +182,8 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
                         docTitle: data.supportingDoc.split("/").last,
                         onTap: () {
                           downloadFiles(
-                              fileUrl:
-                                  "https://api-saas.bacbonx.com/uploads/attachment/bb_1696234990.pdf",
-                              filename:
-                                  "https://api-saas.bacbonx.com/uploads/attachment/bb_1696234990.pdf"
-                                      .split("/")
-                                      .last,
+                              fileUrl: data.supportingDoc,
+                              filename: data.supportingDoc.split("/").last,
                               context: context);
                         },
                       ),

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/common_widgets/app_stream.dart';
@@ -87,25 +88,34 @@ class _CourseScriptScreenState extends State<CourseScriptScreen>
                           ),
                         ),
                         SizedBox(width: size.w10),
-                        Container(
-                          padding: EdgeInsets.all(size.r1),
-                          decoration: BoxDecoration(
-                            color: clr.whiteColor,
-                            borderRadius: BorderRadius.circular(size.r4),
-                            border: Border.all(
-                                color: clr.cardStrokeColor, width: size.r1),
-                            boxShadow: [
-                              BoxShadow(
-                                color: clr.blackColor.withOpacity(.2),
-                                blurRadius: size.r4,
-                                offset: Offset(0.0, size.h2),
-                              ),
-                            ],
-                          ),
-                          child: Icon(
-                            Icons.save_alt,
-                            color: clr.appPrimaryColorGreen,
-                            size: size.r24,
+                        if(data.file.isNotEmpty)
+                        GestureDetector(
+                          onTap: () {
+                            downloadFiles(
+                                fileUrl: data.file,
+                                filename: data.file.split("/").last,
+                                context: context);
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(size.r1),
+                            decoration: BoxDecoration(
+                              color: clr.whiteColor,
+                              borderRadius: BorderRadius.circular(size.r4),
+                              border: Border.all(
+                                  color: clr.cardStrokeColor, width: size.r1),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: clr.blackColor.withOpacity(.2),
+                                  blurRadius: size.r4,
+                                  offset: Offset(0.0, size.h2),
+                                ),
+                              ],
+                            ),
+                            child: Icon(
+                              Icons.save_alt,
+                              color: clr.appPrimaryColorGreen,
+                              size: size.r24,
+                            ),
                           ),
                         ),
                       ],

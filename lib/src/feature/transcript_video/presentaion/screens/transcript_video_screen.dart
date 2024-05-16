@@ -99,8 +99,10 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                           fit: StackFit.loose,
                           children: [
                             ContentPlayerWidget(
-                              playerStream: videoDetailsDataStreamController.stream,
-                              playbackStream: playbackPausePlayStreamController.stream,
+                              playerStream:
+                                  videoDetailsDataStreamController.stream,
+                              playbackStream:
+                                  playbackPausePlayStreamController.stream,
                               // onProgressChanged: onPlaybackProgressChanged,
                               // interceptSeekTo: onInterceptPlaybackSeekToPosition,
                               // overlay: GestureDetector(
@@ -239,7 +241,6 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                         //   ],
                         // )
                         //     : const Center(child: CircularProgressIndicator()),
-
                       ] else ...[
                         ///Activate Youtube video player
                         YoutubePlayerBuilder(
@@ -308,11 +309,13 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                                               color: clr.appPrimaryColorGreen),
                                         ),
                                       ),
-                                      Icon(
-                                        Icons.download,
-                                        size: size.r20,
-                                        color: clr.appPrimaryColorGreen,
-                                      ),
+
+                                      ///Todo Add later
+                                      // Icon(
+                                      //   Icons.download,
+                                      //   size: size.r20,
+                                      //   color: clr.appPrimaryColorGreen,
+                                      // ),
                                       Padding(
                                         padding: EdgeInsets.only(left: size.w8),
                                         child: CustomSwitchButton(

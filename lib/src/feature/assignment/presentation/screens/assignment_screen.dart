@@ -75,8 +75,13 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                       ? Padding(
                           padding: EdgeInsets.only(bottom: size.h20),
                           child: SupportingDocWidget(
-                            docTitle: data.supportingDoc.split("/")[1],
-                            onTap: () {},
+                            docTitle: data.supportingDoc.split("/").last,
+                            onTap: () {
+                              downloadFiles(
+                                  fileUrl: data.supportingDoc,
+                                  filename: data.supportingDoc.split("/").last,
+                                  context: context);
+                            },
                           ),
                         )
                       : Padding(
@@ -635,27 +640,36 @@ class SubmissionCompletedWidget extends StatelessWidget
                 ),
               ),
               SizedBox(width: size.w10),
-              Container(
-                padding: EdgeInsets.all(size.r1),
-                decoration: BoxDecoration(
-                  color: clr.whiteColor,
-                  borderRadius: BorderRadius.circular(size.r4),
-                  border:
-                      Border.all(color: clr.cardStrokeColor, width: size.r1),
-                  boxShadow: [
-                    BoxShadow(
-                      color: clr.blackColor.withOpacity(.2),
-                      blurRadius: size.r4,
-                      offset: Offset(0.0, size.h2),
+              if (data.attachments.isNotEmpty)
+                Container(
+                  padding: EdgeInsets.all(size.r1),
+                  decoration: BoxDecoration(
+                    color: clr.whiteColor,
+                    borderRadius: BorderRadius.circular(size.r4),
+                    border:
+                        Border.all(color: clr.cardStrokeColor, width: size.r1),
+                    boxShadow: [
+                      BoxShadow(
+                        color: clr.blackColor.withOpacity(.2),
+                        blurRadius: size.r4,
+                        offset: Offset(0.0, size.h2),
+                      ),
+                    ],
+                  ),
+                  child: GestureDetector(
+                    onTap: () {
+                      downloadFiles(
+                          fileUrl: data.attachments.first.file,
+                          filename: data.attachments.first.file.split("/").last,
+                          context: context);
+                    },
+                    child: Icon(
+                      Icons.save_alt,
+                      color: clr.appPrimaryColorGreen,
+                      size: size.r20,
                     ),
-                  ],
+                  ),
                 ),
-                child: Icon(
-                  Icons.save_alt,
-                  color: clr.appPrimaryColorGreen,
-                  size: size.r20,
-                ),
-              ),
               // SizedBox(width: size.w8),
               // Container(
               //   padding: EdgeInsets.all(size.r1),
