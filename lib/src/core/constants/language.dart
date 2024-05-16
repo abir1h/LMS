@@ -14,7 +14,7 @@ class LanguageEn {
   String splashScreenText = "Welcome To CLMS";
   String authScreenHeaderText = "About HSEP";
   String authScreenContentText =
-      "CLMS is a self-contained large-scale learning management system. It includes LMS, e-library, e-teacher side, social learning platform or PLC and formative assessment the entire system is designed in such a way that it can play an effective role in improving the professional quality of teachers.";
+      "CLMS is a self-contained large-scale learning management system. It includes LMS,eLibrary, eTeacher guide, social learning platform or PLC  the entire system is designed in such a way that it can play an effective role in improving the professional quality of teachers.";
   String authScreenContentText2 =
       "This system is designed only to improve the professional quality of teachers, apart from teachers it will also play an effective role in providing training to head teachers and assistant head teachers.";
   String authScreenContentText3 =
@@ -192,7 +192,7 @@ class LanguageBn {
 
   String authScreenHeaderText = "HSEP সম্পর্কে";
   String authScreenContentText =
-      "সিএলএমএস একটি স্বয়ংসম্পূর্ণ বৃহৎ আকারের লার্নিং ম্যানেজমেন্ট সিস্টেম। এতে রয়েছে এলএমএস, ই লাইব্রেরী, ই টিচার সাইড, সোশ্যাল লার্নিং প্ল্যাটফর্ম অথবা পিএলসি এবং ফরমেটিভ অ্যাসেসমেন্ট পুরো সিস্টেমটিকে এমনভাবে তৈরি করা হয়েছে যেন এটি শিক্ষকদের পেশাগত মান উন্নয়নের ক্ষেত্রে কার্যকর ভূমিকা রাখতে পারে ।";
+      "সিএলএমএস একটি স্বয়ংসম্পূর্ণ বৃহৎ আকারের লার্নিং ম্যানেজমেন্ট সিস্টেম। এতে রয়েছে এলএমএস, ই লাইব্রেরী, ই টিচার সাইড, সোশ্যাল লার্নিং প্ল্যাটফর্ম অথবা পিএলসি  পুরো সিস্টেমটিকে এমনভাবে তৈরি করা হয়েছে যেন এটি শিক্ষকদের পেশাগত মান উন্নয়নের ক্ষেত্রে কার্যকর ভূমিকা রাখতে পারে ।";
   String authScreenContentText2 =
       "এই সিস্টেমটি শুধুমাত্র শিক্ষকদের পেশাগত মান উন্নয়নকে লক্ষ্য করেই তৈরি করা হয়েছে, শিক্ষকদের পাশাপাশি এটি প্রধান শিক্ষক এবং সহকারী প্রধান শিক্ষকদেরকেও ট্রেনিং প্রদানে কার্যকর ভূমিকা পালন করবে ।";
   String authScreenContentText3 =

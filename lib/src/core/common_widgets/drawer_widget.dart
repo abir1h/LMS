@@ -1,15 +1,22 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lms/src/core/common_widgets/custom_shimmer.dart';
 
 import '../../feature/accessibility/presentation/controllers/accessibility_controller.dart';
 import '../../feature/accessibility/presentation/screens/accessibility_bottom_sheet.dart';
+import '../../feature/profile/domain/entities/all_progress_data_entity.dart';
+import '../../feature/profile/presentation/service/profile_service.dart';
 import '../../feature/transcript_video/presentaion/screens/demo_interactive_player.dart';
 import '../routes/app_route.dart';
 import '../service/auth_cache_manager.dart';
 import '../service/notifier/app_events_notifier.dart';
+import 'app_stream.dart';
 import 'custom_dialog_widget.dart';
 import 'custom_switch_button.dart';
 import '../utility/app_label.dart';
@@ -23,7 +30,7 @@ class DrawerWidget extends StatefulWidget {
 }
 
 class _DrawerWidgetState extends State<DrawerWidget>
-    with AppTheme, Language, AppEventsNotifier {
+    with AppTheme, Language, AppEventsNotifier,ProfileService {
   final AccessibilityController accessibilityController =
       Get.put(AccessibilityController());
 
@@ -40,39 +47,103 @@ class _DrawerWidgetState extends State<DrawerWidget>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: EdgeInsets.only(
-                    left: size.w16, top: size.h32, right: size.w16),
-                child: Row(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                              color: clr.cardStrokeColor, width: size.w1)),
-                      child: CircleAvatar(
-                        radius: 24.r,
-                        backgroundImage: AssetImage(
-                          ImageAssets.imgProfile,
+              AppStreamBuilder<AllProgressDataEntity>(
+                stream: headerDataStreamController.stream,
+                loadingBuilder: (context) {
+                  return  Padding(
+                    padding: EdgeInsets.only(
+                        left: size.w16, top: size.h32, right: size.w16),
+                    child: Shimmer.fromColors(
+                      baseColor: Colors.grey.shade300,
+                      highlightColor: Colors.grey.shade100,
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 24.r,
+                            backgroundColor: Colors.white,
+
+                          ),
+                          SizedBox(width: size.w12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: .5.sw,
+                                  height: 12.0,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10)),
+                                ),  SizedBox(height: size.h8,),
+
+                                Container(
+                                  width: .5.sw,
+                                  height: 12.0,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10)),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+                dataBuilder: (context, data) {
+                  return  Padding(
+                    padding: EdgeInsets.only(
+                        left: size.w16, top: size.h32, right: size.w16),
+                    child: Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                  color: clr.cardStrokeColor, width: size.w1)),
+                          child: CircleAvatar(
+                            radius: 24.r,
+                            backgroundColor: clr.appPrimaryColorGreen,
+                            child: Center(child: Text(
+                              data.userInfoDataEntity!.emisUserDataEntity !=
+                                  null
+                                  ? data.userInfoDataEntity!.emisUserDataEntity!
+                                  .name[0]
+                                  .toUpperCase()
+                                  : "",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: size.textXLarge),
+                            ),),
+                          ),
                         ),
-                      ),
+                        SizedBox(width: size.w12),
+                        Expanded(
+                          child: Text(
+                            data.userInfoDataEntity!.emisUserDataEntity !=
+                                null
+                                ? data.userInfoDataEntity!.emisUserDataEntity!
+                                .name
+                                .toUpperCase()
+                                : "",
+                            style: TextStyle(
+                                color: clr.appPrimaryColorGreen,
+                                fontSize: size.textMedium,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: StringData.fontFamilyPoppins),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(width: size.w12),
-                    Expanded(
-                      child: Text(
-                        label(e: en.userNameText, b: bn.userNameText),
-                        style: TextStyle(
-                            color: clr.appPrimaryColorGreen,
-                            fontSize: size.textXMedium,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: StringData.fontFamilyPoppins),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
-                ),
+                  );
+                },
+                emptyBuilder: (context, message, icon) => Container(),
               ),
+
               SizedBox(height: size.h24),
               Padding(
                 padding: EdgeInsets.only(left: size.w16),
@@ -250,6 +321,11 @@ class _DrawerWidgetState extends State<DrawerWidget>
         setState(() {});
       }
     }
+  }
+
+  @override
+  void showWarning(String message) {
+    // TODO: implement showWarning
   }
 }
 
