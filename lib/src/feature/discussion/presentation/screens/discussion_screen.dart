@@ -527,10 +527,11 @@ class WeeklyDiscussionItemWidget extends StatelessWidget
                   SizedBox(
                     height: size.h8,
                   ),
+
                   Text(
-                    label(
+                    data.latestTime.isNotEmpty? label(
                         e: timeago.format(DateTime.parse(data.latestTime)),
-                        b: "সর্বশেষ আলোচনা ${timeAgoToBengali(timeago.format(DateTime.parse(data.latestTime.trim())))}"),
+                        b: "সর্বশেষ আলোচনা ${timeAgoToBengali(timeago.format(DateTime.parse(data.latestTime.trim())))}"):"",
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: size.textXSmall,
