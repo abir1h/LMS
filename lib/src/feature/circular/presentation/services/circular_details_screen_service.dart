@@ -50,6 +50,8 @@ mixin CircularDetailsScreenService<T extends StatefulWidget> on State<T>
         circularDataStreamController
             .add(DataLoadedState<CircularDetailsDataEntity>(value.data));
       } else if (value.error == null && value.data == null) {
+        circularDataStreamController
+            .add(EmptyState(message: ""));
       } else {
         _view.showWarning(value.message!);
       }

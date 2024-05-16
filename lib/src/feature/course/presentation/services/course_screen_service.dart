@@ -55,6 +55,8 @@ mixin CourseScreenService<T extends StatefulWidget> on State<T>
         allCourseDataStreamController
             .add(DataLoadedState<AllCourseDataEntity>(value.data));
       } else if (value.error == null && value.data == null) {
+        allCourseDataStreamController
+            .add(EmptyState(message: ""));
       } else {
         _view.showWarning(value.message!);
       }

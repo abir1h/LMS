@@ -63,6 +63,8 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
         }
       } else if (value.error == null && value.data == null) {
         _view.showWarning(value.message!);
+        videoDetailsDataStreamController
+            .add(EmptyState(message: ""));
       } else {
         _view.showWarning(value.message!);
       }
