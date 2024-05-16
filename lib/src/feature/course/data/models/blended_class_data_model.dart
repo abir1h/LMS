@@ -65,7 +65,7 @@ class BlendedClassDataModel {
         titleBn: json["title_bn"] ?? "",
         classSchedule: json["class_schedule"] ?? "",
         durations: json["durations"] ?? -1,
-        time: json["time"] ?? -1,
+        time: json["time"] ?? "",
         location: json["location"] ?? "",
         details: json["details"] ?? "",
         attachment: json["attachment"] ?? "",
