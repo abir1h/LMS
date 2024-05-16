@@ -25,7 +25,7 @@ class VideoQustionDataModel {
         questionText: json["question_text"]??"",
         popUpTimeSecond: json["pop_up_time_second"]??-1,
         status: json["status"]??false,
-        choices: json["courses"] != null
+        choices: json["choices"] != null
             ? List<VideoChoiceDataModel>.from(
                 (json["choices"]).map((x) => VideoChoiceDataModel.fromJson(x)))
             : [],

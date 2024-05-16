@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lms/src/core/common_widgets/custom_toasty.dart';
+import 'package:lms/src/feature/course/domain/entities/video_content_data_entity.dart';
 import 'package:lms/src/feature/course/domain/entities/video_data_entity.dart';
 import 'package:video_player/video_player.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -48,7 +49,7 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
     _screenArgs = widget.arguments as CourseVideoScreenArgs;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       loadVideoData(_screenArgs.contentId);
-      // loadVideoData(136);
+      // loadVideoData(113);
     });
   }
 
@@ -69,7 +70,7 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
       resizeToAvoidBottomInset: true,
       backgroundColor: clr.whiteColor,
       body: LayoutBuilder(
-        builder: (context, constraints) => AppStreamBuilder<VideoDataEntity>(
+        builder: (context, constraints) => AppStreamBuilder<VideoContentDataEntity>(
           stream: videoDetailsDataStreamController.stream,
           loadingBuilder: (context) {
             return Column(
@@ -93,7 +94,7 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      if (data.category == VideoCategory.s3.name) ...[
+                      if (data.videoData?.category == VideoCategory.s3.name) ...[
                         ///Activate solid video player
                         Stack(
                           fit: StackFit.loose,
@@ -298,7 +299,7 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                                       Expanded(
                                         child: Text(
                                           label(
-                                              e: data.titleEn, b: data.titleBn),
+                                              e: data.videoData!.titleEn, b: data.videoData!.titleEn),
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 1,
                                           style: TextStyle(
@@ -378,7 +379,7 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                                 TabSectionWidget(
                                   tabTitle1:
                                       label(e: en.transcript, b: bn.transcript),
-                                  videoDataEntity: data,
+                                  videoDataEntity: data.videoData!,
                                   contentType: _screenArgs.contentType,
                                 )
                               ],

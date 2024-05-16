@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lms/src/feature/course/domain/entities/video_content_data_entity.dart';
 
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../../course/data/data_sources/remote/course_data_source.dart';
@@ -43,7 +44,7 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
   }
 
   ///Stream controllers
-  final AppStreamController<VideoDataEntity> videoDetailsDataStreamController =
+  final AppStreamController<VideoContentDataEntity> videoDetailsDataStreamController =
       AppStreamController();
   final AppStreamController<bool> playbackPausePlayStreamController =
       AppStreamController();
@@ -57,7 +58,7 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
           value.data != null &&
           value.data.videoData != null) {
         videoDetailsDataStreamController
-            .add(DataLoadedState<VideoDataEntity>(value.data.videoData));
+            .add(DataLoadedState<VideoContentDataEntity>(value.data));
         if (value.data.videoData.category != VideoCategory.s3.name) {
           _view.setYoutubeVideo(value.data.videoData.videoUrl);
         }
