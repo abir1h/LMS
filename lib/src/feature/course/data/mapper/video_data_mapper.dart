@@ -22,7 +22,7 @@ class VideoDataModelToEntityMapper
       sort: entity.sort,
       status: entity.status,
       category: entity.category,
-      videoUrl: entity.videoUrl,
+      videoUrl: entity.videoUrl,createdAt: entity.createdAt,updatedAt: entity.updatedAt
     );
   }
 
@@ -40,7 +40,7 @@ class VideoDataModelToEntityMapper
       sort: model.sort,
       status: model.status,
       category: model.category,
-      videoUrl: model.videoUrl,
+      videoUrl: model.videoUrl,createdAt: model.createdAt,updatedAt: model.updatedAt
     );
   }
 }
