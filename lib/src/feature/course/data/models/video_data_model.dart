@@ -14,6 +14,8 @@ class VideoDataModel {
   final int status;
   final String category;
   final String videoUrl;
+  final String createdAt;
+  final String updatedAt;
 
   const VideoDataModel({
     required this.id,
@@ -28,6 +30,8 @@ class VideoDataModel {
     required this.status,
     required this.category,
     required this.videoUrl,
+    required this.createdAt,
+    required this.updatedAt
   });
 
   factory VideoDataModel.fromJson(Map<String, dynamic> json) => VideoDataModel(
@@ -43,6 +47,8 @@ class VideoDataModel {
         status: json["status"] ?? -1,
         category: json["category"] ?? "",
         videoUrl: json["video_url"] ?? "",
+        createdAt: json["created_at"] ?? "",
+        updatedAt: json["updated_at"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {
@@ -58,5 +64,7 @@ class VideoDataModel {
         "status": status,
         "category": category,
         "video_url": videoUrl,
+        "created_at": createdAt,
+        "updated_at": updatedAt,
       };
 }

@@ -11,7 +11,8 @@ class VideoDataEntity {
   final int status;
   final String category;
   final String videoUrl;
-
+  final String createdAt;
+  final String updatedAt;
   VideoDataEntity({
     required this.id,
     required this.circularId,
@@ -25,5 +26,8 @@ class VideoDataEntity {
     required this.status,
     required this.category,
     required this.videoUrl,
+    required this.createdAt,
+    required this.updatedAt,
+
   });
 }
