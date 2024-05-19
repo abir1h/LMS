@@ -31,8 +31,8 @@ class UserInfoDataModel {
         deletedAt: json["deleted_at"] ?? "",
         role: json["role"] ?? "",
         status: json["status"] ?? "",
-        emisUserDataModel: json['emisUser'] != null
-            ? EmisUserDataModel.fromJson(json['emisUser'])
+        emisUserDataModel: json['emisUserJson'] != null
+            ? EmisUserDataModel.fromJson(json['emisUserJson'])
             : null,
       );
 

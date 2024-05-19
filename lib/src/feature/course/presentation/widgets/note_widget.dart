@@ -315,6 +315,7 @@ class _NoteWidgetState extends State<NoteWidget>
   void _onDelete({required int noteId}) {
     CustomDialogWidget.show(
             context: context,
+
             title: label(
                 e: "Do you want to delete this note?",
                 b: "আপনি কি এই নোটটি মুছতে চান?"),
