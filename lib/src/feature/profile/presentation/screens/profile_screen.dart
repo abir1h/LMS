@@ -41,7 +41,7 @@ class _ProfileScreenState extends State<ProfileScreen>
         AppStreamBuilder<AllProgressDataEntity>(
           stream: headerDataStreamController.stream,
           loadingBuilder: (context) {
-            return Container(
+            return SizedBox(
               height: 130.h,
               width: 1.sw,
             );
@@ -195,20 +195,17 @@ class _ProfileScreenState extends State<ProfileScreen>
                     },
                     dataBuilder: (context, data) {
                       if (data is ProfileDataState) {
-                        return data.userInfoDataEntity.userInfoDataEntity!
-                                    .emisUserDataEntity !=
-                                null
-                            ? PersonalInfoWidget(
-                                data: data.userInfoDataEntity,
-                                onTapLogout: showLogoutPromptDialog,
-                              )
-                            : Container(
-                                height: .5.sh,
-                                child: CustomEmptyWidget(
-                                  icon: Icons.school_outlined,
-                                  title: "No data from server",
-                                  message: "",
-                                ));
+                        return data.userInfoDataEntity.userInfoDataEntity!.emisUserDataEntity!=null? PersonalInfoWidget(
+                          data: data.userInfoDataEntity,
+                          onTapLogout: showLogoutPromptDialog,
+                        ): SizedBox(
+                          height: .5.sh,
+                          child: CustomEmptyWidget(
+                            icon: Icons.school_outlined,
+                            title: label(e: "No data from server", b: "সার্ভার থেকে কোন তথ্য নেই"),
+                            message: "",
+                          )
+                        );
                       } else if (data is ProgressDataState) {
                         return ProgressInfoWidget(
                           data: data.progressDataEntity,

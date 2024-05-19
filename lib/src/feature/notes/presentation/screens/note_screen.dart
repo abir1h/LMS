@@ -250,9 +250,12 @@ class _NoteScreenState extends State<NoteScreen>
   void _onDelete({required int noteId}) {
     CustomDialogWidget.show(
             context: context,
+            rightButtonText: label(e: 'Yes', b: 'হ্যাঁ'),
+            leftButtonText: label(e: 'Cancel', b: 'বাতিল করুন'),
             title: label(
                 e: "Do you want to delete Note?", b: "আপনি নোট মুছে দিতে চান?"),
             infoText: label(e: "Are you Sure?", b: "আপনি কি নিশ্চিত?"))
+    
         .then((x) {
       if (x) {
         onNotesDelete(noteId);
