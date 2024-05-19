@@ -3,17 +3,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
+import '../../domain/entities/option_data_entity.dart';
 import '../../domain/entities/question_data_entity.dart';
 import '../models/matching_question.dart';
 import 'dashed_border.dart';
 
 class MatchingAnswerWidget extends StatefulWidget {
-  // final MatchingQuestions data;
   final QuestionDataEntity data;
-  const MatchingAnswerWidget({
-    Key? key,
-    required this.data,
-  }) : super(key: key);
+  final Function(int optionDataId, String value)? onMatched;
+  const MatchingAnswerWidget({Key? key, required this.data, this.onMatched})
+      : super(key: key);
 
   @override
   State<MatchingAnswerWidget> createState() => _MatchingAnswerWidgetState();
@@ -21,6 +20,36 @@ class MatchingAnswerWidget extends StatefulWidget {
 
 class _MatchingAnswerWidgetState extends State<MatchingAnswerWidget>
     with AppTheme, Language {
+  List<MatchingLeftSide> leftSideList = [];
+  List<MatchingRightSide> rightSideList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _setData();
+    });
+  }
+
+  _setData() {
+    for (OptionDataEntity optionDataEntity in widget.data.options) {
+      MatchingLeftSide matchingLeftSide = MatchingLeftSide(
+          id: optionDataEntity.id,
+          leftSide: optionDataEntity.optionKey,
+          selectedRightSide: MatchingRightSide(),
+          mark: 1);
+      MatchingRightSide matchingRightSide = MatchingRightSide(
+          index: widget.data.options.indexOf(optionDataEntity) + 1,
+          isUsed: false,
+          rightSideText: optionDataEntity.optionValue);
+      leftSideList.add(matchingLeftSide);
+      rightSideList.add(matchingRightSide);
+    }
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,7 +66,7 @@ class _MatchingAnswerWidgetState extends State<MatchingAnswerWidget>
             physics: const BouncingScrollPhysics(),
             clipBehavior: Clip.none,
             child: Row(
-              children: widget.data.options
+              children: leftSideList
                   .asMap()
                   .map((key, lhs) => MapEntry(
                       key,
@@ -69,7 +98,7 @@ class _MatchingAnswerWidgetState extends State<MatchingAnswerWidget>
                                 ),
                                 Expanded(
                                   child: Text(
-                                    lhs.optionKey,
+                                    lhs.leftSide,
                                     style: TextStyle(
                                         color: clr.blackColor,
                                         fontSize: size.textSmall,
@@ -84,10 +113,13 @@ class _MatchingAnswerWidgetState extends State<MatchingAnswerWidget>
                             SizedBox(height: size.h28),
 
                             ///RHS
-                            // MatchingRHSReceiverWidget(
-                            //   lhs: lhs,
-                            //   onUpdate: () => setState(() {}),
-                            // ),
+                            MatchingRHSReceiverWidget(
+                              lhs: lhs,
+                              onUpdate: () => setState(() {
+                                widget.onMatched!(lhs.id,
+                                    lhs.selectedRightSide.rightSideText);
+                              }),
+                            ),
                           ],
                         ),
                       )))
@@ -112,22 +144,22 @@ class _MatchingAnswerWidgetState extends State<MatchingAnswerWidget>
           SizedBox(height: size.h8),
 
           ///RHS
-          // SingleChildScrollView(
-          //   child: Column(
-          //     children: widget.data.options
-          //         .asMap()
-          //         .map((key, value) {
-          //           // value.index = key + 1;
-          //           return MapEntry(
-          //               key,
-          //               MatchingRHSSenderWidget(
-          //                 rhs: value,
-          //               ));
-          //         })
-          //         .values
-          //         .toList(),
-          //   ),
-          // ),
+          SingleChildScrollView(
+            child: Column(
+              children: rightSideList
+                  .asMap()
+                  .map((key, value) {
+                    value.index = key + 1;
+                    return MapEntry(
+                        key,
+                        MatchingRHSSenderWidget(
+                          rhs: value,
+                        ));
+                  })
+                  .values
+                  .toList(),
+            ),
+          ),
         ],
       ),
     );

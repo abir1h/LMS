@@ -17,6 +17,7 @@ import '../../domain/entities/question_data_entity.dart';
 import '../services/assessment_screen_service.dart';
 import '../widgets/comprehensive_answer_widget.dart';
 import '../widgets/fill_in_the_gap_answer_widget.dart';
+import '../widgets/matching_answer_widget.dart';
 import '../widgets/mcq_answer_widget.dart';
 import '../widgets/question_list_widget.dart';
 import '../widgets/question_widget.dart';
@@ -106,112 +107,114 @@ class _AssessmentAllQuestionScreenState
                     items: data.examData.assessment!.questions,
                     builder: (context, data, index) {
                       ///Todo Fixed After Demo
-                      return data.questionType?.id != 3
-                          ? QuestionWidget(
-                              questionNo: replaceEnglishNumberWithBengali(
-                                  (index + 1).toString()),
-                              questionText: data.questionType?.id != 4
-                                  ? data.question
-                                  : "",
-                              child: data.questionType?.id == 2
-                                  ? MCQWidget(
-                                      items: data.options,
-                                      builder: (BuildContext context, int index,
-                                          item) {
-                                        return MCQAnswerOptionWidget(
-                                          value: item.optionValue,
-                                          imageValue: item.optionImg,
-                                          isSelected: item.isSelected,
-                                          onTap: () => setState(() {
-                                            for (OptionDataEntity optionDataEntity
-                                                in data.options) {
-                                              if (data.options.indexOf(
-                                                      optionDataEntity) !=
-                                                  index) {
-                                                optionDataEntity.isSelected =
-                                                    false;
-                                              } else {
-                                                optionDataEntity.isSelected =
-                                                    !optionDataEntity
-                                                        .isSelected;
-                                                item.userCorrectValue =
-                                                    item.optionValue;
-                                              }
-                                            }
-                                            print(
-                                                "Ansewwlelkfekf ${item.userCorrectValue}");
-                                          }),
-                                        );
-                                      })
-                                  // MCQAnswerWidget(data: data)
-                                  // : data.questionType?.id == 3
-                                  //     ? MatchingAnswerWidget(data: data)
-                                  : data.questionType?.id == 4
-                                      ? FillInTheGapAnswerWidget(
-                                          question: data.question,
-                                          items: data.options,
-                                          builder: (BuildContext context,
-                                              int index, item) {
-                                            return FillInTheGapOptionWidget(
-                                              optionTitle: label(
-                                                  e: "ব্ল্যান্ক ${replaceEnglishNumberWithBengali((index + 1).toString())} এর উত্তর লিখুন:",
-                                                  b: "ব্ল্যান্ক ${replaceEnglishNumberWithBengali((index + 1).toString())} এর উত্তর লিখুন:"),
-                                              onChanged: (e) {
-                                                item.userInput = e;
-                                                print(
-                                                  "Blank  ${item.userInput}",
-                                                );
-                                              },
-                                            );
-                                          })
-                                      : data.questionType?.id == 5
-                                          ? MCQWidget(
-                                              items: data.options,
-                                              builder: (BuildContext context,
-                                                  int index, item) {
-                                                return TruFalseOptionWidget(
-                                                  optionValue: item.optionValue,
-                                                  groupValue: groupValue,
-                                                  index: index,
-                                                  onChanged: (v) {
-                                                    setState(() {
-                                                      groupValue = v!;
-                                                      item.userCorrectValue =
-                                                          v == 0
-                                                              ? "true"
-                                                              : "false";
-                                                    });
-                                                    print(groupValue);
-                                                    print(
-                                                        item.userCorrectValue);
-                                                  },
-                                                );
-                                              })
-                                          : data.questionType?.id == 6
-                                              ? WrittenTextFieldWidget(
-                                                  minLines: 5,
-                                                  maxLines: 10,
-                                                  onChanged: (e) {
-                                                    data.userInput == e;
-                                                  },
-                                                )
-                                              : data.questionType?.id == 7
-                                                  ? MCQWidget(
-                                                      items: data.options,
-                                                      builder:
-                                                          (BuildContext context,
-                                                              int index, item) {
-                                                        return ComprehensiveAnswerWidget(
-                                                          optionValue:
-                                                              item.optionValue,
-                                                          onChanged: (e) {
-                                                            item.userInput == e;
-                                                          },
-                                                        );
-                                                      })
-                                                  : Container(),
-                            )
-                          : const Wrap();
+                      return QuestionWidget(
+                        questionNo: replaceEnglishNumberWithBengali(
+                            (index + 1).toString()),
+                        questionText:
+                            data.questionType?.id != 4 ? data.question : "",
+                        child: data.questionType?.id == 2
+                            ? MCQWidget(
+                                items: data.options,
+                                builder:
+                                    (BuildContext context, int index, item) {
+                                  return MCQAnswerOptionWidget(
+                                    value: item.optionValue,
+                                    imageValue: item.optionImg,
+                                    isSelected: item.isSelected,
+                                    onTap: () => setState(() {
+                                      for (OptionDataEntity optionDataEntity
+                                          in data.options) {
+                                        if (data.options
+                                                .indexOf(optionDataEntity) !=
+                                            index) {
+                                          optionDataEntity.isSelected = false;
+                                          optionDataEntity.userCorrectValue = "";
+                                        } else {
+                                          optionDataEntity.isSelected =
+                                              !optionDataEntity.isSelected;
+                                          item.userCorrectValue =
+                                              item.optionValue;
+                                        }
+                                      }
+                                      print(
+                                          "Ansewwlelkfekf ${item.userCorrectValue}");
+                                    }),
+                                  );
+                                })
+                            : data.questionType?.id == 3
+                                ? MatchingAnswerWidget(
+                                    data: data,
+                                    onMatched: (int optionId, String value) {
+                                      OptionDataEntity option = data.options
+                                          .singleWhere((option) =>
+                                              option.id == optionId);
+                                      option.userCorrectInput = value;
+                                    },
+                                  )
+                                : data.questionType?.id == 4
+                                    ? FillInTheGapAnswerWidget(
+                                        question: data.question,
+                                        items: data.options,
+                                        builder: (BuildContext context,
+                                            int index, item) {
+                                          return FillInTheGapOptionWidget(
+                                            optionTitle: label(
+                                                e: "ব্ল্যান্ক ${replaceEnglishNumberWithBengali((index + 1).toString())} এর উত্তর লিখুন:",
+                                                b: "ব্ল্যান্ক ${replaceEnglishNumberWithBengali((index + 1).toString())} এর উত্তর লিখুন:"),
+                                            onChanged: (e) {
+                                              item.userInput = e;
+                                              print(
+                                                "Blank  ${item.userInput}",
+                                              );
+                                            },
+                                          );
+                                        })
+                                    : data.questionType?.id == 5
+                                        ? MCQWidget(
+                                            items: data.options,
+                                            builder: (BuildContext context,
+                                                int index, item) {
+                                              return TruFalseOptionWidget(
+                                                optionValue: item.optionValue,
+                                                groupValue: groupValue,
+                                                index: index,
+                                                onChanged: (v) {
+                                                  setState(() {
+                                                    groupValue = v!;
+                                                    item.userCorrectValue =
+                                                        v == 0
+                                                            ? "true"
+                                                            : "false";
+                                                  });
+                                                  print(groupValue);
+                                                  print(item.userCorrectValue);
+                                                },
+                                              );
+                                            })
+                                        : data.questionType?.id == 6
+                                            ? WrittenTextFieldWidget(
+                                                minLines: 5,
+                                                maxLines: 10,
+                                                onChanged: (e) {
+                                                  data.userInput = e;
+                                                },
+                                              )
+                                            : data.questionType?.id == 7
+                                                ? MCQWidget(
+                                                    items: data.options,
+                                                    builder:
+                                                        (BuildContext context,
+                                                            int index, item) {
+                                                      return ComprehensiveAnswerWidget(
+                                                        optionValue:
+                                                            item.optionValue,
+                                                        onChanged: (e) {
+                                                          item.userInput = e;
+                                                        },
+                                                      );
+                                                    })
+                                                : Container(),
+                      );
                     },
                   ),
                   SizedBox(height: size.h20),
