@@ -19,12 +19,8 @@ class NoteBottomSheet extends StatefulWidget {
   final String? ref;
   final VoidCallback onSuccess;
 
-  const NoteBottomSheet({
-    super.key,
-    this.arguments,
-    this.ref,
-    required this.onSuccess
-  });
+  const NoteBottomSheet(
+      {super.key, this.arguments, this.ref, required this.onSuccess});
 
   @override
   State<NoteBottomSheet> createState() => _NoteBottomSheetState();
@@ -49,12 +45,15 @@ class _NoteBottomSheetState extends State<NoteBottomSheet>
   setContent() {
     if (_screenArgs.noteDataEntity != null) {
       if (_screenArgs.noteDataEntity!.description.isNotEmpty) {
-        // final Document doc =
-        //     Document.fromJson(widget.noteDataEntity?.description as List);
-        // _controller.document = doc;
-        final Document doc = Document.fromJson(
-            json.decode(_screenArgs.noteDataEntity!.description));
-        _controller.document = doc;
+        try {
+          final Document doc = Document.fromJson(
+              json.decode(_screenArgs.noteDataEntity!.description));
+          _controller.document = doc;
+        } on FormatException catch (_) {
+          Delta deltaText =
+              convertStringToDelta(_screenArgs.noteDataEntity!.description);
+          _controller.document = Document.fromDelta(deltaText);
+        }
       }
       if (_screenArgs.noteDataEntity!.title.isNotEmpty) {
         titleController.text = _screenArgs.noteDataEntity!.title;
@@ -422,7 +421,7 @@ class _NoteBottomSheetState extends State<NoteBottomSheet>
                                       },
                                     ),
                                   ),
-                                 /* QuillToolbarColorButton(
+                                  /* QuillToolbarColorButton(
                                     controller: controller,
                                     isBackground: false,
                                     options:

@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
+import '../../../../core/utility/app_label.dart';
 import '../../domain/entities/note_data_entity.dart';
 import '../service/note_edit_screen_service.dart';
 
@@ -44,11 +45,15 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen>
     if (_screenArgs.noteDataEntity != null) {
       if (_screenArgs.noteDataEntity!.description.isNotEmpty) {
         log(_screenArgs.noteDataEntity!.description);
-
-        final Document doc = Document.fromJson(
-            json.decode(_screenArgs.noteDataEntity!.description));
-        _controller.document = doc;
-        contentText = doc.toPlainText();
+        try{
+          final Document doc = Document.fromJson(
+              json.decode(_screenArgs.noteDataEntity!.description));
+          _controller.document = doc;
+          contentText = doc.toPlainText();
+        } on FormatException catch (_) {
+          Delta deltaText = convertStringToDelta(_screenArgs.noteDataEntity!.description);
+          _controller.document = Document.fromDelta(deltaText);
+        }
       }
     }
   }

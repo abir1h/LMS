@@ -8,9 +8,9 @@ import 'package:lms/src/core/common_widgets/custom_toasty.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/routes/app_route.dart';
 import '../../../../core/routes/app_route_args.dart';
+import '../../../../core/utility/app_label.dart';
 import '../../domain/entities/note_data_entity.dart';
 import '../controllers/note_controller.dart';
-import '../models/note_model.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../service/note_edit_screen_service.dart';
 
@@ -44,9 +44,15 @@ class _NoteEditScreenState extends State<NoteEditScreen>
   setContent() {
     if (_screenArgs.noteDataEntity != null) {
       if (_screenArgs.noteDataEntity!.description.isNotEmpty) {
-        final Document doc = Document.fromJson(
-            json.decode(_screenArgs.noteDataEntity!.description));
-        _controller.document = doc;
+        try {
+          final Document doc = Document.fromJson(
+              json.decode(_screenArgs.noteDataEntity!.description));
+          _controller.document = doc;
+        } on FormatException catch (_) {
+          Delta deltaText =
+              convertStringToDelta(_screenArgs.noteDataEntity!.description);
+          _controller.document = Document.fromDelta(deltaText);
+        }
       }
       if (_screenArgs.noteDataEntity!.title.isNotEmpty) {
         titleController.text = _screenArgs.noteDataEntity!.title;
@@ -380,7 +386,8 @@ class _NoteEditScreenState extends State<NoteEditScreen>
 
   @override
   void showSuccess(String message) {
-CustomToasty.of(context).showSuccess(message);  }
+    CustomToasty.of(context).showSuccess(message);
+  }
 
   @override
   void showWarning(String message) {

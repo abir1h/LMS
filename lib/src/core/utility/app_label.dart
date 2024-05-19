@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -226,6 +227,12 @@ String nightDayConvertor(String timeAgo, String timstamp) {
   }).join(' ');
 
   return banglaText;
+}
+
+Delta convertStringToDelta(String text) {
+  Delta delta = Delta();
+  delta.insert('$text\n');
+  return delta;
 }
 
 Future<void> downloadFiles(
