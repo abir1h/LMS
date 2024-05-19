@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:lms/src/core/common_widgets/empty_widget.dart';
 
+import '../../../../core/common_widgets/custom_empty_widget.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
@@ -28,13 +30,34 @@ class _CourseLearningOutcomeScreenState
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      title: label(e: "Learning Outcomes", b: "শিখনফল"),
+      title: label(e: "Learning Outcome", b: "শিখনফল"),
       bgColor: clr.whiteColor,
-      body: SingleChildScrollView(
-        child: CustomTextWidget(
-          text: _screenArgs.text,
-        ),
-      ),
+      body: _screenArgs.text.isNotEmpty
+          ? SingleChildScrollView(
+              padding: EdgeInsets.symmetric(
+                  horizontal: size.w16, vertical: size.h12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomTextWidget(
+                    text: label(e: "Learning Outcome", b: "শিখনফল"),
+                    textColor: clr.blackColor,
+                    fontSize: size.textXMedium,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  SizedBox(height: size.h8),
+                  CustomTextWidget(
+                    text: _screenArgs.text,
+                  ),
+                ],
+              ),
+            )
+          : CustomEmptyWidget(
+              message: '',
+              title: label(
+                  e: "No Learning Outcome Found",
+                  b: "কোন শিখনফল পাওয়া যায়নি"),
+            ),
     );
   }
 }
