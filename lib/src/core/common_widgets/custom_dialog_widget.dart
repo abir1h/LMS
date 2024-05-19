@@ -75,7 +75,7 @@ mixin CustomDialogWidget {
                                     ? const Offstage()
                                     : GestureDetector(
                                         onTap: () =>
-                                            Navigator.of(context).pop(true),
+                                            Navigator.of(context).pop(false),
                                         child: Container(
                                           width: double.infinity,
                                           padding: EdgeInsets.symmetric(
@@ -84,7 +84,7 @@ mixin CustomDialogWidget {
                                             borderRadius:
                                                 BorderRadius.circular(10.w),
                                             color: ThemeColor
-                                                .instance.shadeWhiteColor2,
+                                                .instance.appPrimaryColorGreen,
                                             border: Border.all(
                                                 color: ThemeColor.instance
                                                     .appPrimaryColorGreen,
@@ -95,7 +95,7 @@ mixin CustomDialogWidget {
                                               leftButtonText,
                                               style: TextStyle(
                                                   color: ThemeColor.instance
-                                                      .appPrimaryColorGreen,
+                                                      .shadeWhiteColor2,
                                                   fontSize: ThemeSize
                                                       .instance.textSmall,
                                                   fontWeight: FontWeight.w500,
@@ -110,15 +110,15 @@ mixin CustomDialogWidget {
                               SizedBox(width: 12.w),
                               Expanded(
                                 child: GestureDetector(
-                                  onTap: () => Navigator.of(context).pop(false),
+                                  onTap: () => Navigator.of(context).pop(true),
                                   child: Container(
                                     width: double.infinity,
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 16.w, vertical: 10.w),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10.w),
-                                      color: ThemeColor
-                                          .instance.appPrimaryColorGreen,
+                                      color:
+                                          ThemeColor.instance.shadeWhiteColor2,
                                       border: Border.all(
                                           color: ThemeColor
                                               .instance.appPrimaryColorGreen,
@@ -129,7 +129,7 @@ mixin CustomDialogWidget {
                                         rightButtonText,
                                         style: TextStyle(
                                             color: ThemeColor
-                                                .instance.shadeWhiteColor2,
+                                                .instance.appPrimaryColorGreen,
                                             fontSize:
                                                 ThemeSize.instance.textSmall,
                                             fontWeight: FontWeight.w500,

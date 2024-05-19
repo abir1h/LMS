@@ -195,17 +195,20 @@ class _ProfileScreenState extends State<ProfileScreen>
                     },
                     dataBuilder: (context, data) {
                       if (data is ProfileDataState) {
-                        return data.userInfoDataEntity.userInfoDataEntity!.emisUserDataEntity!=null? PersonalInfoWidget(
-                          data: data.userInfoDataEntity,
-                          onTapLogout: showLogoutPromptDialog,
-                        ): Container(
-                          height: .5.sh,
-                          child: CustomEmptyWidget(
-                            icon: Icons.school_outlined,
-                            title: "No data from server",
-                            message: "",
-                          )
-                        );
+                        return data.userInfoDataEntity.userInfoDataEntity!
+                                    .emisUserDataEntity !=
+                                null
+                            ? PersonalInfoWidget(
+                                data: data.userInfoDataEntity,
+                                onTapLogout: showLogoutPromptDialog,
+                              )
+                            : Container(
+                                height: .5.sh,
+                                child: CustomEmptyWidget(
+                                  icon: Icons.school_outlined,
+                                  title: "No data from server",
+                                  message: "",
+                                ));
                       } else if (data is ProgressDataState) {
                         return ProgressInfoWidget(
                           data: data.progressDataEntity,
@@ -240,8 +243,8 @@ class _ProfileScreenState extends State<ProfileScreen>
       infoText: label(
           e: "Your ID login is required for your courses and assessment news.",
           b: "আপনার কোর্সগুলো এবং মূল্যায়নের খবরের জন্য আপনার আইডি লগইন থাকা প্রয়োজন।"),
-      rightButtonText: label(e: en.cancelText, b: bn.cancelText),
-      leftButtonText: label(e: en.exitText, b: bn.exitText),
+      leftButtonText: label(e: en.cancelText, b: bn.cancelText),
+      rightButtonText: label(e: en.exitText, b: bn.exitText),
     ).then((value) {
       if (value) {
         if (value) {
@@ -516,20 +519,24 @@ class ProgressInfoWidget extends StatelessWidget with Language, AppTheme {
         SizedBox(
           height: size.h12,
         ),
-        data.running.isNotEmpty?RunningItemSectionWidget(
-            items: data.running,
-            buildItem: (BuildContext context, int index, item) {
-              return RunningItemWidget(
-                progressCourseDataEntity: item,
-                onTap: () {},
-              );
-            }):SizedBox(
-          height: 300.h,
-          child: CustomEmptyWidget(
-            icon: Icons.school_outlined,title: '',
-            message: label(e: "No Course Found", b: "কোন কোর্স পাওয়া যায় নি"),
-          ),
-        ),
+        data.running.isNotEmpty
+            ? RunningItemSectionWidget(
+                items: data.running,
+                buildItem: (BuildContext context, int index, item) {
+                  return RunningItemWidget(
+                    progressCourseDataEntity: item,
+                    onTap: () {},
+                  );
+                })
+            : SizedBox(
+                height: 300.h,
+                child: CustomEmptyWidget(
+                  icon: Icons.school_outlined,
+                  title: '',
+                  message:
+                      label(e: "No Course Found", b: "কোন কোর্স পাওয়া যায় নি"),
+                ),
+              ),
         SizedBox(
           height: size.h16,
         ),
@@ -546,20 +553,24 @@ class ProgressInfoWidget extends StatelessWidget with Language, AppTheme {
         SizedBox(
           height: size.h12,
         ),
-        data.completed.isNotEmpty?CompletedItemSectionWidget(
-            items: data.completed,
-            buildItem: (BuildContext context, int index, item) {
-              return CompletedCourseItemWidget(
-                completedCourseDataEntity: item,
-                onTap: () {},
-              );
-            }):SizedBox(
-          height: 300.h,
-          child: CustomEmptyWidget(
-            icon: Icons.school_outlined,title: '',
-            message: label(e: "No Course Found", b: "কোন কোর্স পাওয়া যায় নি"),
-          ),
-        ),
+        data.completed.isNotEmpty
+            ? CompletedItemSectionWidget(
+                items: data.completed,
+                buildItem: (BuildContext context, int index, item) {
+                  return CompletedCourseItemWidget(
+                    completedCourseDataEntity: item,
+                    onTap: () {},
+                  );
+                })
+            : SizedBox(
+                height: 300.h,
+                child: CustomEmptyWidget(
+                  icon: Icons.school_outlined,
+                  title: '',
+                  message:
+                      label(e: "No Course Found", b: "কোন কোর্স পাওয়া যায় নি"),
+                ),
+              ),
       ],
     );
   }

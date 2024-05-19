@@ -262,30 +262,6 @@ class _DrawerWidgetState extends State<DrawerWidget>
     );
   }
 
-  String replaceEnglishNumberWithBangla(String inputString) {
-    Map<String, String> numberMap = {
-      '0': '০',
-      '1': '১',
-      '2': '২',
-      '3': '৩',
-      '4': '৪',
-      '5': '৫',
-      '6': '৬',
-      '7': '৭',
-      '8': '৮',
-      '9': '৯',
-    };
-
-    String result = '';
-    for (int i = 0; i < inputString.length; i++) {
-      String char = inputString[i];
-      String replacement = numberMap[char] ?? char;
-      result += replacement;
-    }
-
-    return result;
-  }
-
   void onTapAccessibility() {
     showCupertinoModalPopup(
       context: context,
@@ -300,8 +276,8 @@ class _DrawerWidgetState extends State<DrawerWidget>
       infoText: label(
           e: "Your ID login is required for your courses and assessment news.",
           b: "আপনার কোর্সগুলো এবং মূল্যায়নের খবরের জন্য আপনার আইডি লগইন থাকা প্রয়োজন।"),
-      rightButtonText: label(e: en.cancelText, b: bn.cancelText),
-      leftButtonText: label(e: en.exitText, b: bn.exitText),
+      leftButtonText: label(e: en.cancelText, b: bn.cancelText),
+      rightButtonText: label(e: en.exitText, b: bn.exitText),
     ).then((value) {
       if (value) {
         AuthCacheManager.userLogout();

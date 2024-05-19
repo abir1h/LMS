@@ -1,13 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:lms/src/core/common_widgets/custom_toasty.dart';
-import 'package:lms/src/core/utility/app_label.dart';
-import 'package:lms/src/feature/notes/domain/entities/note_data_entity.dart';
 
+import '../../../../core/common_widgets/custom_toasty.dart';
+import '../../../../core/utility/app_label.dart';
+import '../../domain/entities/note_data_entity.dart';
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../../../core/common_widgets/circuler_widget.dart';
 import '../../../../core/common_widgets/custom_dialog_widget.dart';
@@ -19,7 +17,6 @@ import '../../../../core/service/notifier/app_events_notifier.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../controllers/note_controller.dart';
 import '../service/note_screen_service.dart';
-import '../widgets/note_tile.dart';
 
 class NoteScreen extends StatefulWidget {
   const NoteScreen({super.key});
@@ -30,20 +27,7 @@ class NoteScreen extends StatefulWidget {
 
 class _NoteScreenState extends State<NoteScreen>
     with AppTheme, Language, AppEventsNotifier, NoteScreenService {
-  final List<dynamic> contents = [
-    {
-      "insert":
-          "প্রযুক্তি বিশ্বজুড়ে মানুষের কাছে শিক্ষা দেওয়ার পদ্ধতিকে বদলে দিয়েছে আমরা এখন একটি আন্তঃসংযুক্ত বিশ্বে বাস করি যেখানে আনুষ্ঠানিক শিক্ষার ঐতিহ্যগত ধারণা, একটি একক শারীরিক অবস্থানে সংঘটিত হওয়া. প্রযুক্তি বিশ্বজুড়ে মানুষের কাছে শিক্ষা দেওয়ার পদ্ধতিকে বদলে দিয়েছে আমরা এখন একটি আন্তঃসংযুক্ত বিশ্বে বাস করি যেখানে আনুষ্ঠানিক শিক্ষার ঐতিহ্যগত ধারণা, একটি একক শারীরিক অবস্থানে সংঘটিত হওয়া | প্রযুক্তি বিশ্বজুড়ে মানুষের কাছে শিক্ষা দেওয়ার পদ্ধতিকে বদলে দিয়েছে আমরা এখন একটি আন্তঃসংযুক্ত বিশ্বে বাস করি যেখানে আনুষ্ঠানিক শিক্ষার ঐতিহ্যগত ধারণা, একটি একক শারীরিক অবস্থানে সংঘটিত হওয়া."
-    },
-    {
-      "attributes": {"code-block": true},
-      "insert": "\n\n\n"
-    },
-    {"insert": "\n"}
-  ];
-
   final controller = Get.put(NoteController());
-
 
   @override
   Widget build(BuildContext context) {
@@ -80,8 +64,9 @@ class _NoteScreenState extends State<NoteScreen>
                         if (value == 1) {
                           loadNotesData(1, sortBy: null, sortDesc: true);
                         } else {
-                          String? sortBy = (value == 2) ? 'created_at' : 'updated_at';
-                          loadNotesData(1, sortBy:sortBy,sortDesc:  null);
+                          String? sortBy =
+                              (value == 2) ? 'created_at' : 'updated_at';
+                          loadNotesData(1, sortBy: sortBy, sortDesc: null);
                         }
                       });
                     },
@@ -155,7 +140,6 @@ class _NoteScreenState extends State<NoteScreen>
                           children: [
                             Text(
                               label(e: 'Date Modified', b: 'ডেট মডিফাইড'),
-
                               style: selectedValue == 3
                                   ? TextStyle(
                                       color: clr.appPrimaryColorGreen,
@@ -192,10 +176,11 @@ class _NoteScreenState extends State<NoteScreen>
                           SizedBox(width: size.w8),
                           Text(
                             selectedValue == 1
-                                ?  label(e: "Title", b: "টাইটেল")
+                                ? label(e: "Title", b: "টাইটেল")
                                 : selectedValue == 2
                                     ? label(e: 'Date Created', b: 'ডেট ক্রিটেড')
-                                    :   label(e: 'Date Modified', b: 'ডেট মডিফাইড'),
+                                    : label(
+                                        e: 'Date Modified', b: 'ডেট মডিফাইড'),
                             style: TextStyle(
                               color: clr.textColorBlack,
                               fontWeight: FontWeight.w400,
@@ -212,7 +197,7 @@ class _NoteScreenState extends State<NoteScreen>
             ),
 
             SizedBox(height: size.h8),
-                    Expanded(
+            Expanded(
               child:
                   AppStreamBuilder<PaginatedListViewController<NoteDataEntity>>(
                 stream: pageStateStreamController.stream,
@@ -247,15 +232,6 @@ class _NoteScreenState extends State<NoteScreen>
                       ),
                     ),
                   );
-                  // return NoteItemSectionWidget(
-                  //     items: data,
-                  //     buildItem: (context, index, item) {
-                  //       return item.book != null ? NoteItemWidget(
-                  //         noteDataEntity: item,
-                  //         onDelete: () => _onDelete(noteId: item.id!),
-                  //         onPressed: () => onTapNote(item),
-                  //       ) : const Offstage();
-                  //     });
                 },
                 emptyBuilder: (context, message, icon) => EmptyWidget(
                   message: message,
@@ -274,10 +250,11 @@ class _NoteScreenState extends State<NoteScreen>
   void _onDelete({required int noteId}) {
     CustomDialogWidget.show(
             context: context,
-            title: "Do you want to delete Notes?",
-            infoText: "Are you Sure?")
+            title: label(
+                e: "Do you want to delete Note?", b: "আপনি নোট মুছে দিতে চান?"),
+            infoText: label(e: "Are you Sure?", b: "আপনি কি নিশ্চিত?"))
         .then((x) {
-      if (!x) {
+      if (x) {
         onNotesDelete(noteId);
       }
     });
@@ -578,6 +555,5 @@ class NoteItemWidget extends StatelessWidget with AppTheme {
         ),
       ),
     )*/
-
   }
 }

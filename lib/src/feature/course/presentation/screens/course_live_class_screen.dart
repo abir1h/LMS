@@ -103,9 +103,10 @@ class _CourseLiveClassScreenState extends State<CourseLiveClassScreen>
                               title: label(
                                   e: "Do you want to confirm?",
                                   b: "আপনি কি নিশ্চিত করতে চান?"),
-                              infoText: "Are you Sure?")
+                              infoText: label(
+                                  e: "Are you Sure?", b: "আপনি কি নিশ্চিত?"))
                           .then((x) {
-                        if (!x) {
+                        if (x) {
                           contentReadPost(
                               data.blendedClassDataEntity.id,
                               'course_script',
@@ -127,9 +128,10 @@ class _CourseLiveClassScreenState extends State<CourseLiveClassScreen>
                               title: label(
                                   e: "Do you want to confirm?",
                                   b: "আপনি কি নিশ্চিত করতে চান?"),
-                              infoText: "Are you Sure?")
+                              infoText: label(
+                                  e: "Are you Sure?", b: "আপনি কি নিশ্চিত?"))
                           .then((x) {
-                        if (!x) {
+                        if (x) {
                           contentReadPost(
                                   data.blendedClassDataEntity.id,
                                   'course_script',

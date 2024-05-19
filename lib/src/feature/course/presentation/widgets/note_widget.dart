@@ -322,7 +322,7 @@ class _NoteWidgetState extends State<NoteWidget>
             leftButtonText: label(e: "Cancel", b: "বাতিল করুন"),
             rightButtonText: label(e: "Yes", b: "হ্যাঁ"))
         .then((x) {
-      if (!x) {
+      if (x) {
         onNoteDelete(noteId);
         loadNoteList(widget.contentId, widget.contentType);
       }
