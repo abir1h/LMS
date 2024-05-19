@@ -128,6 +128,7 @@ class _AssessmentAllQuestionScreenState
                                                 .indexOf(optionDataEntity) !=
                                             index) {
                                           optionDataEntity.isSelected = false;
+                                          optionDataEntity.userCorrectValue = "";
                                         } else {
                                           optionDataEntity.isSelected =
                                               !optionDataEntity.isSelected;
@@ -195,7 +196,7 @@ class _AssessmentAllQuestionScreenState
                                                 minLines: 5,
                                                 maxLines: 10,
                                                 onChanged: (e) {
-                                                  data.userInput == e;
+                                                  data.userInput = e;
                                                 },
                                               )
                                             : data.questionType?.id == 7
@@ -208,7 +209,7 @@ class _AssessmentAllQuestionScreenState
                                                         optionValue:
                                                             item.optionValue,
                                                         onChanged: (e) {
-                                                          item.userInput == e;
+                                                          item.userInput = e;
                                                         },
                                                       );
                                                     })
