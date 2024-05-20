@@ -128,7 +128,8 @@ class _AssessmentAllQuestionScreenState
                                                 .indexOf(optionDataEntity) !=
                                             index) {
                                           optionDataEntity.isSelected = false;
-                                          optionDataEntity.userCorrectValue = "";
+                                          optionDataEntity.userCorrectValue =
+                                              "";
                                         } else {
                                           optionDataEntity.isSelected =
                                               !optionDataEntity.isSelected;
@@ -363,10 +364,12 @@ class _AssessmentAllQuestionScreenState
   void showExamCancellationDialog() {
     CustomDialogWidget.show(
       context: context,
-      infoText:
-          "Do you want to cancel the test? Your answer(s) will not be submitted.\n\nBut, your participation quota will still be reduced.",
-      rightButtonText: label(e: en.cancelText, b: bn.cancelText),
-      leftButtonText: label(e: en.exitText, b: bn.exitText),
+      title: label(e: "Are You Sure?", b: "আপনি কি নিশ্চিত?"),
+      infoText: label(
+          e: "Do you want to cancel the test? Your answer(s) will not be submitted.\n\nBut, your participation quota will still be reduced.",
+          b: "আপনি পরীক্ষা বাতিল করতে চান? আপনার উত্তরগুলি জমা দেওয়া হবে না৷\n\nকিন্তু, আপনার অংশগ্রহণের কোটা হ্রাস করা হবে৷"),
+      leftButtonText: label(e: en.cancelText, b: bn.cancelText),
+      rightButtonText: label(e: en.exitText, b: bn.exitText),
     ).then((value) {
       if (value) {
         ///Force close
