@@ -100,6 +100,7 @@ class _CircularDetailsScreenState extends State<CircularDetailsScreen>
         },
         emptyBuilder: (context, message, icon) => CustomEmptyWidget(
           message: message,
+          title: label(e: 'No Circular Found', b: 'কোন বিজ্ঞপ্তির পাওয়া যায়নি'),
           // constraints: constraints,
           // offset: 350.w,
         ),

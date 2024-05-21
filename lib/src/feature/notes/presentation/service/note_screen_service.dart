@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/common_widgets/paginated_list_view.dart';
+import '../../../../core/utility/app_label.dart';
 import '../../../shared/domain/entities/response_entity.dart';
 import '../../data/data_sources/remote/note_data_source.dart';
 import '../../data/repositories/note_repository_imp.dart';
@@ -69,7 +70,8 @@ mixin NoteScreenService<T extends StatefulWidget> on State<T>
         paginationController.addItems(value.data!.noteDataEntity);
         pageStateStreamController.add(DataLoadedState(paginationController));
       } else if (value.error == null && value.data.noteDataEntity!.isEmpty) {
-        pageStateStreamController.add(EmptyState(message: 'No Notes Found'));
+        pageStateStreamController.add(EmptyState(message: label(
+            e: "No Notes Found", b: "কোন নোট পাওয়া যায়নি"),));
       } else {
         _view.showWarning(value.message!);
       }

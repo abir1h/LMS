@@ -271,6 +271,7 @@ class _DetailedDiscussionState extends State<DetailedDiscussion>
           },
           emptyBuilder: (context, message, icon) => CustomEmptyWidget(
             message: message,
+            title: label(e: 'No Discussion Found', b: 'কোন আলোচনা পাওয়া যায়নি'),
             // constraints: constraints,
             // offset: 350.w,
           ),

@@ -86,14 +86,15 @@ class _OverallProgressScreenState extends State<OverallProgressScreen>
                 } else if (data is OverallDataState) {
                   return const OverallProgressWidget();
                 } else {
-                  return const CustomEmptyWidget(
+                  return  CustomEmptyWidget(
                     icon: Icons.school_outlined,
-                    message: "No matching data found!",
+                    message:label(e: "No matching data found!", b: "কোনও   ডেটা পাওয়া যায়নি!"),
                   );
                 }
               },
               emptyBuilder: (context, message, icon) => CustomEmptyWidget(
                 message: message,
+                title: label(e: "No matching data found!", b: "কোনও   ডেটা পাওয়া যায়নি!"),
                 // constraints: constraints,
                 // offset: 350.w,
               ),

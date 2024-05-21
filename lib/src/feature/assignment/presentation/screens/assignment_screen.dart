@@ -434,6 +434,7 @@ class _AssignmentScreenState extends State<AssignmentScreen>
         },
         emptyBuilder: (context, message, icon) => CustomEmptyWidget(
           message: message,
+          title: label(e: 'No Assignment Found', b: 'কোন অ্যাসাইনমেন্ট পাওয়া যায়নি'),
           // constraints: constraints,
           // offset: 350.w,
         ),
