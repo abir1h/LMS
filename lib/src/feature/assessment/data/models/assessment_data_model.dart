@@ -64,11 +64,11 @@ class AssessmentDataModel {
         courseModuleId: json["course_module_id"] ?? -1,
         titleEn: json["title_en"] ?? "",
         titleBn: json["title_bn"] ?? "",
-        totalMark: json["total_mark"] ?? -1,
-        passMark: json["pass_mark"] ?? -1,
-        negativeMark: json["negative_mark"] ?? -1,
-        totalTime: json["total_time"] ?? -1,
-        tries: json["tries"] ?? -1,
+        totalMark: json["total_mark"] ?? 0,
+        passMark: json["pass_mark"] ?? 0,
+        negativeMark: json["negative_mark"] ?? 0,
+        totalTime: json["total_time"] ?? 0,
+        tries: json["tries"] ?? 0,
         isCertificationAssessment: json["is_certification_assessment"] ?? false,
         isHorizontal: json["is_horizontal"] ?? false,
         status: json["status"] ?? false,
@@ -79,7 +79,7 @@ class AssessmentDataModel {
         assessmentInstruction: json["assessment_instruction"] ?? "",
         startDate: json["start_date"] ?? "",
         endDate: json["end_date"] ?? "",
-        noOfQuestion: json["no_of_question"] ?? -1,
+        noOfQuestion: json["no_of_question"] ?? 0,
         questions: json["questions"] != null
             ? List<QuestionDataModel>.from(
                 (json["questions"]).map((x) => QuestionDataModel.fromJson(x)))

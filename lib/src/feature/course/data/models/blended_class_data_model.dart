@@ -8,21 +8,23 @@ class BlendedClassDataModel {
   final int id;
   final int courseId;
   final int courseModuleId;
+  final int circularId;
   final int trainerId;
-  final int batchGroupId;
-  final String classType;
   final String titleEn;
   final String titleBn;
   final String classSchedule;
-  final int durations;
+  final String durations;
   final String time;
-  final String location;
-  final String details;
+  final String locationEn;
+  final String locationBn;
+  final String detailsEn;
+  final String detailsBn;
   final String attachment;
   final String platform;
   final String meetingLink;
   final String videoUrl;
-  final String transcript;
+  final String transcriptEn;
+  final String transcriptBn;
   final List<BlendedCourseDataModel>? workstations;
   final BlendedCourseDataModel? course;
   final BlendedCourseDataModel? courseModule;
@@ -32,21 +34,23 @@ class BlendedClassDataModel {
     required this.id,
     required this.courseId,
     required this.courseModuleId,
+    required this.circularId,
     required this.trainerId,
-    required this.batchGroupId,
-    required this.classType,
     required this.titleEn,
     required this.titleBn,
     required this.classSchedule,
     required this.durations,
     required this.time,
-    required this.location,
-    required this.details,
+    required this.locationEn,
+    required this.locationBn,
+    required this.detailsEn,
+    required this.detailsBn,
     required this.attachment,
     required this.platform,
     required this.meetingLink,
     required this.videoUrl,
-    required this.transcript,
+    required this.transcriptEn,
+    required this.transcriptBn,
     required this.workstations,
     required this.course,
     required this.courseModule,
@@ -58,21 +62,23 @@ class BlendedClassDataModel {
         id: json["id"] ?? -1,
         courseId: json["course_id"] ?? -1,
         courseModuleId: json["course_module_id"] ?? -1,
+        circularId: json["circular_id"] ?? -1,
         trainerId: json["trainer_id"] ?? -1,
-        batchGroupId: json["batch_group_id"] ?? -1,
-        classType: json["class_type"] ?? "",
         titleEn: json["title_en"] ?? "",
         titleBn: json["title_bn"] ?? "",
         classSchedule: json["class_schedule"] ?? "",
-        durations: json["durations"] ?? -1,
+        durations: json["durations"] ?? "",
         time: json["time"] ?? "",
-        location: json["location"] ?? "",
-        details: json["details"] ?? "",
+        locationEn: json["location_en"] ?? "",
+        locationBn: json["location_bn"] ?? "",
+        detailsEn: json["details_en"] ?? "",
+        detailsBn: json["details_bn"] ?? "",
         attachment: json["attachment"] ?? "",
         platform: json["platform"] ?? "",
         meetingLink: json["meeting_link"] ?? "",
         videoUrl: json["video_url"] ?? "",
-        transcript: json["transcript"] ?? "",
+        transcriptEn: json["transcript_en"] ?? "",
+        transcriptBn: json["transcript_bn"] ?? "",
         workstations: json["workstations"] != null
             ? List<BlendedCourseDataModel>.from((json["workstations"])
                 .map((x) => BlendedCourseDataModel.fromJson(x)))
@@ -92,21 +98,23 @@ class BlendedClassDataModel {
         "id": id,
         "course_id": courseId,
         "course_module_id": courseModuleId,
+        "circular_id": circularId,
         "trainer_id": trainerId,
-        "batch_group_id": batchGroupId,
-        "class_type": classType,
         "title_en": titleEn,
         "title_bn": titleBn,
         "class_schedule": classSchedule,
         "durations": durations,
         "time": time,
-        "location": location,
-        "details": details,
+        "location_en": locationEn,
+        "location_bn": locationBn,
+        "details_en": detailsEn,
+        "details_bn": detailsBn,
         "attachment": attachment,
         "platform": platform,
         "meeting_link": meetingLink,
         "video_url": videoUrl,
-        "transcript": transcript,
+        "transcript_en": transcriptEn,
+        "transcript_bn": transcriptBn,
         "workstations": List<BlendedCourseDataModel>.from(
             workstations!.map((x) => x.toJson())),
         "course": course?.toJson(),

@@ -7,6 +7,7 @@ import '../../../../core/common_widgets/circuler_widget.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/custom_empty_widget.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
+import '../../../../core/common_widgets/empty_widget.dart';
 import '../../../../core/routes/app_route.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../../../course/domain/entities/all_course_data_entity.dart';
@@ -34,259 +35,278 @@ class _DiscussionScreenState extends State<DiscussionScreen>
   Widget build(BuildContext context) {
     return CustomScaffold(
         title: label(e: en.discussion, b: bn.discussion),
-        body: AppStreamBuilder<AllCourseDataEntity>(
-          stream: allCourseDataStreamController.stream,
-          loadingBuilder: (context) {
-            return const Center(child: CircularLoader());
-          },
-          dataBuilder: (context, data) {
-            return Stack(
-              children: [
-                /*SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.symmetric(
-                      horizontal: size.w16, vertical: size.h12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomTextWidget(
-                        text: label(
-                            e: "Running Course Discussion",
-                            b: "চলমান কোর্সের আলোচনাক্ষেত্র"),
-                        fontSize: size.textXMedium,
-                      ),
-                      SizedBox(height: size.h4),
-                      if (data.running.isNotEmpty)
-                        CustomTextWidget(
-                          text: label(
-                              e: data.running.first.nameBn,
-                              b: data.running.first.nameBn),
-                          textColor: clr.gapStrokeGrey,
-                          fontSize: size.textXSmall,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+        body: LayoutBuilder(builder: (context, constraints) {
+          return AppStreamBuilder<AllCourseDataEntity>(
+            stream: allCourseDataStreamController.stream,
+            loadingBuilder: (context) {
+              return const Center(child: CircularLoader());
+            },
+            dataBuilder: (context, data) {
+              return Stack(
+                children: [
+                  /*SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: size.w16, vertical: size.h12),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          PopupMenuButton<String>(
-                            surfaceTintColor: clr.shadeWhiteColor2,
-                            padding: EdgeInsets.symmetric(horizontal: size.w8),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(size.r4),
-                              ),
-                            ),
-                            position: PopupMenuPosition.under,
-                            onSelected: (String? value) {
-                              setState(() {
-                                // loadDiscussions(value)
-                              });
-                            },
-                            itemBuilder: (context) => data.courses
-                                .map<PopupMenuEntry<String>>(
-                                    (CourseDataEntity value) {
-                              return PopupMenuItem(
-                                onTap: () {
-                                  loadDiscussions(value.id);
-                                },
-                                child: CustomTextWidget(
-                                  text: label(e: value.nameEn, b: value.nameBn),
-                                  fontSize: size.textXSmall,
-                                  textColor: clr.gapStrokeGrey,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              );
-                            }).toList(),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.filter_list,
-                                  color: clr.appPrimaryColorGreen,
-                                  size: size.r16,
-                                ),
-                                SizedBox(width: size.w8),
-                                CustomTextWidget(
-                                  text: label(e: "Courses", b: "কোর্সেস"),
-                                  fontSize: size.textXSmall,
-                                  textColor: clr.gapStrokeGrey,
-                                  fontWeight: FontWeight.w400,
-                                )
-                              ],
-                            ),
+                          CustomTextWidget(
+                            text: label(
+                                e: "Running Course Discussion",
+                                b: "চলমান কোর্সের আলোচনাক্ষেত্র"),
+                            fontSize: size.textXMedium,
                           ),
-                        ],
-                      ),
-                      SizedBox(height: size.h12),
-                      AppStreamBuilder<List<DiscussionDataEntity>>(
-                        stream: discussionDataStreamController.stream,
-                        loadingBuilder: (context) {
-                          return const Center(child: CircularLoader());
-                        },
-                        dataBuilder: (context, data) {
-                          return DiscussionSectionWidget(
-                              items: data,
-                              buildItem:
-                                  (BuildContext context, int index, item) {
-                                return DiscussionItemWidget(
-                                    data: item, onTap: () => onTap(item.id));
-                              });
-                        },
-                        emptyBuilder: (context, message, icon) => Container(),
-                      ),
-                    ],
-                  ),
-                ),*/
-                SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.symmetric(
-                      horizontal: size.w16, vertical: size.h12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomTextWidget(
-                        text: label(
-                            e: "Running Course Discussion",
-                            b: "চলমান কোর্সের আলোচনাক্ষেত্র"),
-                        fontSize: size.textXMedium,
-                      ),
-                      SizedBox(height: size.h4),
-                      if (data.running.isNotEmpty)
-                        CustomTextWidget(
-                          text: label(
-                              e: data.running.first.nameBn,
-                              b: data.running.first.nameBn),
-                          textColor: clr.gapStrokeGrey,
-                          fontSize: size.textXSmall,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      SizedBox(height: size.h16),
-
-                      ///Filter
-                      /*Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          PopupMenuButton<String>(
-                            surfaceTintColor: clr.shadeWhiteColor2,
-                            padding: EdgeInsets.symmetric(horizontal: size.w8),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(size.r4),
-                              ),
+                          SizedBox(height: size.h4),
+                          if (data.running.isNotEmpty)
+                            CustomTextWidget(
+                              text: label(
+                                  e: data.running.first.nameBn,
+                                  b: data.running.first.nameBn),
+                              textColor: clr.gapStrokeGrey,
+                              fontSize: size.textXSmall,
+                              fontWeight: FontWeight.w500,
                             ),
-                            position: PopupMenuPosition.under,
-                            onSelected: (String? value) {
-                              setState(() {
-                                // loadDiscussions(value)
-                              });
-                            },
-                            itemBuilder: (context) => data.courses
-                                .map<PopupMenuEntry<String>>(
-                                    (CourseDataEntity value) {
-                              return PopupMenuItem(
-                                onTap: () {
-                                  loadDiscussions(value.id);
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              PopupMenuButton<String>(
+                                surfaceTintColor: clr.shadeWhiteColor2,
+                                padding: EdgeInsets.symmetric(horizontal: size.w8),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(size.r4),
+                                  ),
+                                ),
+                                position: PopupMenuPosition.under,
+                                onSelected: (String? value) {
+                                  setState(() {
+                                    // loadDiscussions(value)
+                                  });
                                 },
-                                child: CustomTextWidget(
-                                  text: label(e: value.nameEn, b: value.nameBn),
-                                  fontSize: size.textXSmall,
-                                  textColor: clr.gapStrokeGrey,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              );
-                            }).toList(),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.filter_list,
-                                  color: clr.appPrimaryColorGreen,
-                                  size: size.r16,
-                                ),
-                                SizedBox(width: size.w8),
-                                CustomTextWidget(
-                                  text: label(e: "Courses", b: "কোর্সেস"),
-                                  fontSize: size.textXSmall,
-                                  textColor: clr.gapStrokeGrey,
-                                  fontWeight: FontWeight.w400,
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: size.h12),*/
-                      Center(
-                        child: DiscussionTypeSelectorTab(
-                          onSelected: (e) => onTabValueChange(e, 1),
-                        ),
-                      ),
-                      SizedBox(height: size.h20),
-                      AppStreamBuilder<StateType>(
-                        stream: stateDataStreamController.stream,
-                        loadingBuilder: (context) {
-                          return const Center(child: CircularLoader());
-                        },
-                        dataBuilder: (context, data) {
-                          if (data is WeeklyDiscussionDataState) {
-                            return WeeklyDiscussionSectionWidget(
-                                items: data.weeklyViewDataEntity,
-                                buildItem:
-                                    (BuildContext context, int index, item) {
-                                  return WeeklyDiscussionItemWidget(
-                                    data: item,
-                                    onTap: () =>
-                                        onTapWeek(item.courseId, item.id),
+                                itemBuilder: (context) => data.courses
+                                    .map<PopupMenuEntry<String>>(
+                                        (CourseDataEntity value) {
+                                  return PopupMenuItem(
+                                    onTap: () {
+                                      loadDiscussions(value.id);
+                                    },
+                                    child: CustomTextWidget(
+                                      text: label(e: value.nameEn, b: value.nameBn),
+                                      fontSize: size.textXSmall,
+                                      textColor: clr.gapStrokeGrey,
+                                      fontWeight: FontWeight.w400,
+                                    ),
                                   );
-                                });
-                          } else if (data is AllDiscussionDataState) {
-                            return DiscussionSectionWidget(
-                                items: data.discussionDataEntity,
-                                buildItem:
-                                    (BuildContext context, int index, item) {
-                                  return DiscussionItemWidget(
-                                      data: item, onTap: () => onTap(item.id));
-                                });
-                            ;
-                          } else {
-                            return const CustomEmptyWidget(
-                              icon: Icons.school_outlined,
-                              message: "No matching data found!",
-                            );
-                          }
-                        },
-                        emptyBuilder: (context, message, icon) =>
-                            CustomEmptyWidget(
-                          message: message,
-                          // constraints: constraints,
-                          // offset: 350.w,
-                        ),
+                                }).toList(),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.filter_list,
+                                      color: clr.appPrimaryColorGreen,
+                                      size: size.r16,
+                                    ),
+                                    SizedBox(width: size.w8),
+                                    CustomTextWidget(
+                                      text: label(e: "Courses", b: "কোর্সেস"),
+                                      fontSize: size.textXSmall,
+                                      textColor: clr.gapStrokeGrey,
+                                      fontWeight: FontWeight.w400,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: size.h12),
+                          AppStreamBuilder<List<DiscussionDataEntity>>(
+                            stream: discussionDataStreamController.stream,
+                            loadingBuilder: (context) {
+                              return const Center(child: CircularLoader());
+                            },
+                            dataBuilder: (context, data) {
+                              return DiscussionSectionWidget(
+                                  items: data,
+                                  buildItem:
+                                      (BuildContext context, int index, item) {
+                                    return DiscussionItemWidget(
+                                        data: item, onTap: () => onTap(item.id));
+                                  });
+                            },
+                            emptyBuilder: (context, message, icon) => Container(),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),*/
+                  SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: size.w16, vertical: size.h12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomTextWidget(
+                          text: label(
+                              e: "Running Course Discussion",
+                              b: "চলমান কোর্সের আলোচনাক্ষেত্র"),
+                          fontSize: size.textXMedium,
+                        ),
+                        SizedBox(height: size.h4),
+                        if (data.running.isNotEmpty)
+                          CustomTextWidget(
+                            text: label(
+                                e: data.running.first.nameBn,
+                                b: data.running.first.nameBn),
+                            textColor: clr.gapStrokeGrey,
+                            fontSize: size.textXSmall,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        SizedBox(height: size.h16),
+
+                        ///Filter
+                        /*Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              PopupMenuButton<String>(
+                                surfaceTintColor: clr.shadeWhiteColor2,
+                                padding: EdgeInsets.symmetric(horizontal: size.w8),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(size.r4),
+                                  ),
+                                ),
+                                position: PopupMenuPosition.under,
+                                onSelected: (String? value) {
+                                  setState(() {
+                                    // loadDiscussions(value)
+                                  });
+                                },
+                                itemBuilder: (context) => data.courses
+                                    .map<PopupMenuEntry<String>>(
+                                        (CourseDataEntity value) {
+                                  return PopupMenuItem(
+                                    onTap: () {
+                                      loadDiscussions(value.id);
+                                    },
+                                    child: CustomTextWidget(
+                                      text: label(e: value.nameEn, b: value.nameBn),
+                                      fontSize: size.textXSmall,
+                                      textColor: clr.gapStrokeGrey,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  );
+                                }).toList(),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.filter_list,
+                                      color: clr.appPrimaryColorGreen,
+                                      size: size.r16,
+                                    ),
+                                    SizedBox(width: size.w8),
+                                    CustomTextWidget(
+                                      text: label(e: "Courses", b: "কোর্সেস"),
+                                      fontSize: size.textXSmall,
+                                      textColor: clr.gapStrokeGrey,
+                                      fontWeight: FontWeight.w400,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: size.h12),*/
+                        Center(
+                          child: DiscussionTypeSelectorTab(
+                            onSelected: (e) =>
+                                onTabValueChange(e, data.running.first.id),
+                          ),
+                        ),
+                        SizedBox(height: size.h20),
+                        AppStreamBuilder<StateType>(
+                          stream: stateDataStreamController.stream,
+                          loadingBuilder: (context) {
+                            return const Center(child: CircularLoader());
+                          },
+                          dataBuilder: (context, data) {
+                            if (data is WeeklyDiscussionDataState) {
+                              return data.weeklyViewDataEntity.isNotEmpty
+                                  ? WeeklyDiscussionSectionWidget(
+                                      items: data.weeklyViewDataEntity,
+                                      buildItem: (BuildContext context,
+                                          int index, item) {
+                                        return WeeklyDiscussionItemWidget(
+                                          data: item,
+                                          onTap: () =>
+                                              onTapWeek(item.courseId, item.id),
+                                        );
+                                      })
+                                  : EmptyWidget(
+                                      constraints: constraints,
+                                      message: label(
+                                          e: "No Weekly Discussions Found",
+                                          b: "কোন সাপ্তাহিক আলোচনা পাওয়া যায়নি"),
+                                    );
+                            } else if (data is AllDiscussionDataState) {
+                              return data.discussionDataEntity.isNotEmpty
+                                  ? DiscussionSectionWidget(
+                                      items: data.discussionDataEntity,
+                                      buildItem: (BuildContext context,
+                                          int index, item) {
+                                        return DiscussionItemWidget(
+                                            data: item,
+                                            onTap: () => onTap(item.id));
+                                      })
+                                  : EmptyWidget(
+                                      constraints: constraints,
+                                      message: label(
+                                          e: "No Discussions Found",
+                                          b: "কোন আলোচনা পাওয়া যায়নি"),
+                                    );
+                            } else {
+                              return CustomEmptyWidget(
+                                icon: Icons.school_outlined,
+                                message: label(
+                                    e: "No Discussions Found",
+                                    b: "কোন আলোচনা পাওয়া যায়নি"),
+                              );
+                            }
+                          },
+                          emptyBuilder: (context, message, icon) =>
+                              CustomEmptyWidget(
+                            message: message,
+                            // constraints: constraints,
+                            // offset: 350.w,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                // Align(
-                //   alignment: Alignment.bottomCenter,
-                //   child: CustomButton(
-                //     onTap: () => onTapCreateDiscussion(
-                //         courseId: data.running.first.id,
-                //         courseModuleId: 1,
-                //         contentId: 1,
-                //         contentType: 'course_script'),
-                //     icon: Icons.add_comment,
-                //     radius: 0.0,
-                //     title: label(e: en.newDiscussion, b: bn.newDiscussion),
-                //   ),
-                // )
-              ],
-            );
-          },
-          emptyBuilder: (context, message, icon) => CustomEmptyWidget(
-            message: message,
-            title:
-                label(e: "No Discussions Found", b: "কোন আলোচনা পাওয়া যায়নি"),
-            // constraints: constraints,
-            // offset: 350.w,
-          ),
-        ));
+                  // Align(
+                  //   alignment: Alignment.bottomCenter,
+                  //   child: CustomButton(
+                  //     onTap: () => onTapCreateDiscussion(
+                  //         courseId: data.running.first.id,
+                  //         courseModuleId: 1,
+                  //         contentId: 1,
+                  //         contentType: 'course_script'),
+                  //     icon: Icons.add_comment,
+                  //     radius: 0.0,
+                  //     title: label(e: en.newDiscussion, b: bn.newDiscussion),
+                  //   ),
+                  // )
+                ],
+              );
+            },
+            emptyBuilder: (context, message, icon) => CustomEmptyWidget(
+              message: message,
+              title: label(
+                  e: "No Discussions Found", b: "কোন আলোচনা পাওয়া যায়নি"),
+              // constraints: constraints,
+              // offset: 350.w,
+            ),
+          );
+        }));
   }
 
   void onTapCreateDiscussion(
@@ -527,11 +547,12 @@ class WeeklyDiscussionItemWidget extends StatelessWidget
                   SizedBox(
                     height: size.h8,
                   ),
-
                   Text(
-                    data.latestTime.isNotEmpty? label(
-                        e: timeago.format(DateTime.parse(data.latestTime)),
-                        b: "সর্বশেষ আলোচনা ${timeAgoToBengali(timeago.format(DateTime.parse(data.latestTime.trim())))}"):"",
+                    data.latestTime.isNotEmpty
+                        ? label(
+                            e: timeago.format(DateTime.parse(data.latestTime)),
+                            b: "সর্বশেষ আলোচনা ${timeAgoToBengali(timeago.format(DateTime.parse(data.latestTime.trim())))}")
+                        : "",
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: size.textXSmall,

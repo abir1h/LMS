@@ -48,9 +48,9 @@ mixin CourseLiveClassScreenService<T extends StatefulWidget> on State<T>
         courseId, isCompleted, lastWatchTime, attendanceType);
     if (responseEntity.error == null && responseEntity.data != null) {
       // CustomToasty.of(context).releaseUI();
-      // _view.showSuccess(responseEntity.message!);
+      _view.showSuccess(responseEntity.message!);
     } else {
-      // _view.showWarning(responseEntity.message!);
+      _view.showWarning(responseEntity.message!);
       // CustomToasty.of(context).releaseUI();
     }
     return responseEntity;
@@ -95,8 +95,7 @@ mixin CourseLiveClassScreenService<T extends StatefulWidget> on State<T>
         stateDataStreamController.add(
             DataLoadedState<StateType>(InPersonClassDataState(value.data)));
       } else if (value.error == null && value.data == null) {
-        stateDataStreamController
-            .add(EmptyState(message: ""));
+        stateDataStreamController.add(EmptyState(message: ""));
       } else {
         _view.showWarning(value.message!);
       }
@@ -110,8 +109,7 @@ mixin CourseLiveClassScreenService<T extends StatefulWidget> on State<T>
         stateDataStreamController
             .add(DataLoadedState<StateType>(OnlineClassDataState(value.data)));
       } else if (value.error == null && value.data == null) {
-        stateDataStreamController
-            .add(EmptyState(message: ""));
+        stateDataStreamController.add(EmptyState(message: ""));
       } else {
         _view.showWarning(value.message!);
       }

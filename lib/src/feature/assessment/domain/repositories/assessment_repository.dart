@@ -6,4 +6,5 @@ abstract class AssessmentRepository {
   Future<ResponseEntity> getQuestionType();
   Future<ResponseEntity> startExam(int circularAssessmentId);
   Future<ResponseEntity> submitExam(ExamDataEntity examDataEntity);
+  Future<ResponseEntity> requestExam(int circularAssessmentId, String remarks);
 }

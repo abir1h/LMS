@@ -100,7 +100,7 @@ class _ModuleDiscussionsScreenState extends State<ModuleDiscussionsScreen>
           );
         },
         emptyBuilder: (context, message, icon) => CustomEmptyWidget(
-          message: message,
+          message: "",
           title:
               label(e: "No Discussions Found", b: "কোন আলোচনা পাওয়া যায়নি"),
           // constraints: constraints,

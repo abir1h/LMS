@@ -10,7 +10,8 @@ class AssessmentUseCase {
 
   Future<ResponseEntity> getAssessmentDetailsUseCase(
       int courseContentId) async {
-    final response = _assessmentRepository.getAssessmentDetails(courseContentId);
+    final response =
+        _assessmentRepository.getAssessmentDetails(courseContentId);
     return response;
   }
 
@@ -24,8 +25,16 @@ class AssessmentUseCase {
     return response;
   }
 
-  Future<ResponseEntity> submitExamUseCase(ExamDataEntity examDataEntity) async {
+  Future<ResponseEntity> submitExamUseCase(
+      ExamDataEntity examDataEntity) async {
     final response = _assessmentRepository.submitExam(examDataEntity);
+    return response;
+  }
+
+  Future<ResponseEntity> requestExamUseCase(
+      int circularAssessmentId, String remarks) async {
+    final response =
+        _assessmentRepository.requestExam(circularAssessmentId, remarks);
     return response;
   }
 }
