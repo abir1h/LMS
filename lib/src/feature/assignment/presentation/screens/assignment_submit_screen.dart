@@ -56,7 +56,7 @@ class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
     return CustomScaffold(
         title: "",
         actionChild: InkWell(
-            onTap: () => onTapWriteHere("submit"),
+            onTap: () => onTapWriteHere(),
             child: Icon(Icons.edit,
                 size: size.r24, color: clr.appPrimaryColorGreen)),
         body: Stack(
@@ -174,11 +174,11 @@ class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
         ));
   }
 
-  void onTapWriteHere(String screenName) {
+  void onTapWriteHere() {
     showCupertinoModalPopup(
       context: context,
       builder: (context) => AssignmentBottomSheet(
-        type: screenName,
+        type: _screenArgs.type!,
         answer: _screenArgs.answer!,
         assignmentDataEntity: _screenArgs.assignmentDataEntity,
       ),
