@@ -259,6 +259,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
             },
             emptyBuilder: (context, message, icon) => CustomEmptyWidget(
               message: message,
+              title: label(e: 'No course Found', b: 'No course Found'),
               // constraints: constraints,
               // offset: 350.w,
             ),
