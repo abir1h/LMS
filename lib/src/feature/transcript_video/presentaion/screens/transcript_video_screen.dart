@@ -33,7 +33,7 @@ class TranscriptVideoScreen extends StatefulWidget {
 
 class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
     with AppTheme, Language, TranscriptScreenVideoService {
-  late CourseVideoScreenArgs _screenArgs;
+
   YoutubePlayerController? _youtubeController;
   VideoPlayerController? _controller;
   ChewieController? _chewieController;
@@ -46,9 +46,9 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
   void initState() {
     super.initState();
 
-    _screenArgs = widget.arguments as CourseVideoScreenArgs;
+    screenArgs = widget.arguments as CourseVideoScreenArgs;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      loadVideoData(_screenArgs.contentId);
+      loadVideoData(screenArgs.data.contentId);
       // loadVideoData(113);
     });
   }
@@ -104,7 +104,7 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                                   videoDetailsDataStreamController.stream,
                               playbackStream:
                                   playbackPausePlayStreamController.stream,
-                              // onProgressChanged: onPlaybackProgressChanged,
+                              onProgressChanged: onPlaybackProgressChanged,
                               // interceptSeekTo: onInterceptPlaybackSeekToPosition,
                               // overlay: GestureDetector(
                               //     onTap: (){},
@@ -365,8 +365,8 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                                       horizontal: size.w16),
                                   child: Text(
                                     label(
-                                        e: _screenArgs.contentTitleEn,
-                                        b: _screenArgs.contentTitleBn),
+                                        e: screenArgs.data.contentTitleEn,
+                                        b: screenArgs.data.contentTitleBn),
                                     style: TextStyle(
                                         fontFamily:
                                             StringData.fontFamilyPoppins,
@@ -380,7 +380,7 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                                   tabTitle1:
                                       label(e: en.transcript, b: bn.transcript),
                                   videoDataEntity: data.videoData!,
-                                  contentType: _screenArgs.contentType,
+                                  contentType: screenArgs.data.contentType,
                                 )
                               ],
                             );

@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../data/data_sources/remote/course_data_source.dart';
 import '../../data/repositories/course_repository_imp.dart';
+import '../../domain/entities/course_content_data_entity.dart';
 import '../../domain/entities/course_details_data_entity.dart';
 import '../../domain/use_cases/course_use_case.dart';
 import '../../../shared/domain/entities/response_entity.dart';
 
 abstract class _ViewModel {
   void showWarning(String message);
-  void navigateToCourseVideoScreen(int contentId, String contentType,
-      String contentTitleEn, String contentTitleBn);
+  void navigateToCourseVideoScreen(CourseContentDataEntity item);
   void navigateToOverallProgressScreen();
   void navigateToCourseAssignmentScreen(int courseContentId, bool isCompleted);
   void navigateToCourseAssessmentScreen(int courseContentId);
@@ -67,10 +67,8 @@ mixin CourseDetailsScreenService<T extends StatefulWidget> on State<T>
     });
   }
 
-  void onTapCourseVideo(int contentId, String contentType,
-      String contentTitleEn, String contentTitleBn) {
-    _view.navigateToCourseVideoScreen(
-        contentId, contentType, contentTitleEn, contentTitleBn);
+  void onTapCourseVideo(CourseContentDataEntity item) {
+    _view.navigateToCourseVideoScreen(item);
   }
 
   void onTapProgress() {

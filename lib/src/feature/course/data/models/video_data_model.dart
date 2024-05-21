@@ -11,28 +11,29 @@ class VideoDataModel {
   final String transcriptEn;
   final String transcriptBn;
   final int sort;
-  final int status;
+  final int message;
+  final int totalDuration;
   final String category;
   final String videoUrl;
   final String createdAt;
   final String updatedAt;
 
-  const VideoDataModel({
-    required this.id,
-    required this.circularId,
-    required this.courseId,
-    required this.courseModuleId,
-    required this.titleEn,
-    required this.titleBn,
-    required this.transcriptEn,
-    required this.transcriptBn,
-    required this.sort,
-    required this.status,
-    required this.category,
-    required this.videoUrl,
-    required this.createdAt,
-    required this.updatedAt
-  });
+  const VideoDataModel(
+      {required this.id,
+      required this.circularId,
+      required this.courseId,
+      required this.courseModuleId,
+      required this.titleEn,
+      required this.titleBn,
+      required this.transcriptEn,
+      required this.transcriptBn,
+      required this.sort,
+      required this.message,
+      required this.totalDuration,
+      required this.category,
+      required this.videoUrl,
+      required this.createdAt,
+      required this.updatedAt});
 
   factory VideoDataModel.fromJson(Map<String, dynamic> json) => VideoDataModel(
         id: json["id"] ?? -1,
@@ -44,7 +45,8 @@ class VideoDataModel {
         transcriptEn: json["transcript_en"] ?? "",
         transcriptBn: json["transcript_bn"] ?? "",
         sort: json["sort"] ?? -1,
-        status: json["status"] ?? -1,
+        message: json["message"] ?? -1,
+        totalDuration: json["total_ducation"] ?? -1,
         category: json["category"] ?? "",
         videoUrl: json["video_url"] ?? "",
         createdAt: json["created_at"] ?? "",
@@ -61,7 +63,8 @@ class VideoDataModel {
         "transcript_en": transcriptEn,
         "transcript_bn": transcriptBn,
         "sort": sort,
-        "status": status,
+        "message": message,
+        "total_ducation": totalDuration,
         "category": category,
         "video_url": videoUrl,
         "created_at": createdAt,

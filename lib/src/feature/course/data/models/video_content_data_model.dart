@@ -1,29 +1,37 @@
 import 'package:flutter/foundation.dart';
-import 'package:lms/src/feature/course/data/models/video_qustion_data_model.dart';
+import 'video_activity_data_model.dart';
+import 'video_qustion_data_model.dart';
 import 'video_data_model.dart';
 
 @immutable
 class VideoContentDataModel {
   final VideoDataModel? videoData;
-  final List<VideoQustionDataModel>? videoQustion;
+  final VideoActivityDataModel? videoActivity;
+  final List<VideoQuestionDataModel>? videoQuestion;
 
   const VideoContentDataModel(
-      {required this.videoData, required this.videoQustion});
+      {required this.videoData,
+      required this.videoActivity,
+      required this.videoQuestion});
 
   factory VideoContentDataModel.fromJson(Map<String, dynamic> json) =>
       VideoContentDataModel(
         videoData: json['video'] != null
             ? VideoDataModel.fromJson(json['video'])
             : null,
-        videoQustion: json["questions"] != null
-            ? List<VideoQustionDataModel>.from((json["questions"])
-                .map((x) => VideoQustionDataModel.fromJson(x)))
+        videoActivity: json['activity'] != null
+            ? VideoActivityDataModel.fromJson(json['activity'])
+            : null,
+        videoQuestion: json["questions"] != null
+            ? List<VideoQuestionDataModel>.from((json["questions"])
+                .map((x) => VideoQuestionDataModel.fromJson(x)))
             : [],
       );
 
   Map<String, dynamic> toJson() => {
         "video": videoData?.toJson(),
-        "questions": List<VideoQustionDataModel>.from(
-            videoQustion!.map((x) => x.toJson())),
+        "activity": videoActivity?.toJson(),
+        "questions": List<VideoQuestionDataModel>.from(
+            videoQuestion!.map((x) => x.toJson())),
       };
 }
