@@ -103,6 +103,7 @@ class _CourseListScreenState extends State<CourseListScreen>
               },
               emptyBuilder: (context, message, icon) => CustomEmptyWidget(
                 message: message,
+                title: label(e: 'No Course Found', b: 'কোন কোর্স পাওয়া যায়নি'),
                 // constraints: constraints,
                 // offset: 350.w,
               ),

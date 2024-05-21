@@ -228,6 +228,8 @@ class _CourseScriptScreenState extends State<CourseScriptScreen>
           },
           emptyBuilder: (context, message, icon) => CustomEmptyWidget(
             message: message,
+            title: label(e: 'No Script Found', b: 'কোনো স্ক্রিপ্ট পাওয়া যায়নি'
+            ),
             // constraints: constraints,
             // offset: 350.w,
           ),
