@@ -56,11 +56,15 @@ class _EMISWebViewScreenState extends State<EMISWebViewScreen> {
               AuthService.getToken(username, token).then((responseEntity) {
                 AuthDataEntity authData = responseEntity.data!;
                 print(authData.accessToken);
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    AppRoute.rootScreen, (x) => false,
+                    arguments: RootScreenArgs(index: 0));
               });
               CustomToasty.of(context).showSuccess("Login Successfully");
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                  AppRoute.rootScreen, (x) => false,
-                  arguments: RootScreenArgs(index: 0));
+
+              // Navigator.of(context).pushNamedAndRemoveUntil(
+              //     AppRoute.rootScreen, (x) => false,
+              //     arguments: RootScreenArgs(index: 0));
               return NavigationDecision.prevent;
             }
             return NavigationDecision.navigate;

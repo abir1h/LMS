@@ -1,13 +1,15 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:lms/src/feature/assessment/domain/entities/exam_data_entity.dart';
 import 'package:rxdart/rxdart.dart';
+
+import '../../../course/data/data_sources/remote/course_data_source.dart';
+import '../../../course/data/repositories/course_repository_imp.dart';
+import '../../../course/domain/use_cases/course_use_case.dart';
+import '../../domain/entities/exam_data_entity.dart';
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../../../shared/domain/entities/response_entity.dart';
 import '../../data/data_sources/remote/assessment_data_source.dart';
-import '../../data/models/result_data_model.dart';
 import '../../data/repositories/assessment_repository_imp.dart';
 import '../../domain/entities/result_data_entity.dart';
 import '../../domain/use_cases/assessment_use_case.dart';
@@ -15,6 +17,7 @@ import '../../domain/use_cases/assessment_use_case.dart';
 abstract class _ViewModel {
   void showWarning(String message);
   void showSuccess(String message);
+  void showExamSubmitDialog();
   void showExamCancellationDialog();
   void forceClose();
 }
@@ -29,6 +32,21 @@ mixin AssessmentScreenService<T extends StatefulWidget> on State<T>
 
   Future<ResponseEntity> onSubmit(ExamDataEntity examDataEntity) async {
     return _assessmentUseCase.submitExamUseCase(examDataEntity);
+  }
+
+  final CourseUseCase _courseUseCase = CourseUseCase(
+      courseRepository: CourseRepositoryImp(
+          courseRemoteDataSource: CourseRemoteDataSourceImp()));
+
+  Future<ResponseEntity> contentRead(
+      {required int contentId,
+      required String contentType,
+      required int courseId,
+      required bool isCompleted,
+      required String lastWatchTime,
+      required String attendanceType}) async {
+    return _courseUseCase.contentReadUseCase(contentId, contentType, courseId,
+        isCompleted, lastWatchTime, attendanceType);
   }
 
   ///Screen args
@@ -87,8 +105,10 @@ mixin AssessmentScreenService<T extends StatefulWidget> on State<T>
     ///Exam expired check
     if (remaining.inSeconds <= 0) {
       examTimer.cancel();
-      pageStateStreamController.add(
-          DataLoadedState<PageState>(TimeExpiredState(screenArgs.examData)));
+      _view.showExamSubmitDialog();
+      onSubmitExam(screenArgs.examData);
+      // pageStateStreamController.add(
+      //     DataLoadedState<PageState>(TimeExpiredState(screenArgs.examData)));
       _isExamRunning = false;
     }
   }
@@ -106,6 +126,7 @@ mixin AssessmentScreenService<T extends StatefulWidget> on State<T>
     ResponseEntity responseEntity = await onSubmit(examDataEntity);
     if (responseEntity.error == null && responseEntity.data != null) {
       _view.showSuccess(responseEntity.message!);
+      contentReadPost();
     } else {
       _view.showWarning(responseEntity.message!);
     }
@@ -116,6 +137,22 @@ mixin AssessmentScreenService<T extends StatefulWidget> on State<T>
     pageStateStreamController
         .add(DataLoadedState<PageState>(AnswerSubmittedState(data)));
     _isExamRunning = false;
+  }
+
+  Future<ResponseEntity> contentReadPost() async {
+    ResponseEntity responseEntity = await contentRead(
+        contentId: screenArgs.examData.assessment!.id,
+        contentType: "circular_assessment",
+        courseId: screenArgs.examData.assessment!.courseId,
+        isCompleted: true,
+        lastWatchTime: "",
+        attendanceType: "");
+    if (responseEntity.error == null && responseEntity.data != null) {
+      // _view.showSuccess(responseEntity.message!);
+    } else {
+      // _view.showWarning(responseEntity.message!);
+    }
+    return responseEntity;
   }
 }
 

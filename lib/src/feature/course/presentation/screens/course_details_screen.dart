@@ -261,19 +261,21 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
               // offset: 350.w,
             ),
           ),
-          if (_screenArgs.curriculumType == CircularStatus.upcoming.name)
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: EdgeInsets.only(
-                    bottom: size.h20, left: size.w16, right: size.w16),
-                child: CustomButton(
-                  onTap: () {},
-                  title: label(e: en.enroll, b: bn.enroll),
-                  radius: size.w24,
-                ),
-              ),
-            ),
+
+          ///Enroll will be add later
+          // if (_screenArgs.curriculumType == CircularStatus.upcoming.name)
+          //   Align(
+          //     alignment: Alignment.bottomCenter,
+          //     child: Padding(
+          //       padding: EdgeInsets.only(
+          //           bottom: size.h20, left: size.w16, right: size.w16),
+          //       child: CustomButton(
+          //         onTap: () {},
+          //         title: label(e: en.enroll, b: bn.enroll),
+          //         radius: size.w24,
+          //       ),
+          //     ),
+          //   ),
         ],
       ),
     );

@@ -116,10 +116,10 @@ class Server {
 
   Future<dynamic> getRequest({required String url}) async {
     try {
-      // String token = await AuthCacheManager.getUserToken();
+      String token = await AuthCacheManager.getUserToken();
       ///TODO:DELETE LATER
       ///
-      String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwMTM1Mzc2NCIsInVzZXJuYW1lIjoiTUQuIFJPS0lCVUwgSVNMQU0iLCJyb2xlIjo0LCJ0eXBlIjoidHJhaW5lZSIsImlhdCI6MTcxNjI5MzE0NiwiZXhwIjoxNzE4ODg1MTQ2fQ.Xk73Az_0RDFIcpbuS0JlAUlsgsTn-GEL2nzUonYQPrY";
+      // String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwMTM1Mzc2NCIsInVzZXJuYW1lIjoiTUQuIFJPS0lCVUwgSVNMQU0iLCJyb2xlIjo0LCJ0eXBlIjoidHJhaW5lZSIsImlhdCI6MTcxNjI5MzE0NiwiZXhwIjoxNzE4ODg1MTQ2fQ.Xk73Az_0RDFIcpbuS0JlAUlsgsTn-GEL2nzUonYQPrY";
 
       var response = await _client.get(Uri.parse(host + url), headers: {
         "Accept": "application/json",

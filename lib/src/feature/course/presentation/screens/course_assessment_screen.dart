@@ -224,7 +224,8 @@ class _CourseAssessmentScreenState extends State<CourseAssessmentScreen>
         },
         emptyBuilder: (context, message, icon) => CustomEmptyWidget(
           message: message,
-          title: label(e: 'No Assessment Found', b: 'কোন মূল্যায়ন পাওয়া যায়নি'),
+          title:
+              label(e: 'No Assessment Found', b: 'কোন মূল্যায়ন পাওয়া যায়নি'),
           // constraints: constraints,
           // offset: 350.w,
         ),
@@ -267,11 +268,11 @@ class AssessmentInfoWidget extends StatelessWidget with AppTheme, Language {
       ),
       child: Column(
         children: [
-          AssignmentInfoRowWidget(
-            leftText: label(e: "View Type", b: "ভিউ টাইপ"),
-            rightText: label(e: "", b: ""),
-          ),
-          SizedBox(height: size.h20),
+          // AssignmentInfoRowWidget(
+          //   leftText: label(e: "View Type", b: "ভিউ টাইপ"),
+          //   rightText: label(e: "", b: ""),
+          // ),
+          // SizedBox(height: size.h20),
           AssignmentInfoRowWidget(
             leftText: label(e: en.totalMark, b: bn.totalMark),
             rightText: label(

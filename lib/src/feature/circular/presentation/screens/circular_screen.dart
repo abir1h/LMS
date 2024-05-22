@@ -66,38 +66,38 @@ class _CircularScreenState extends State<CircularScreen>
                   ),
 
                 ///Upcoming Circular Section
-                if (data.upcoming.isNotEmpty)
-                  Padding(
-                    padding: EdgeInsets.only(top: size.h16),
-                    child: CircularItemSectionWidget(
-                        title: label(
-                            e: "Upcoming Circular List",
-                            b: "আসন্ন বিজ্ঞপ্তির তালিকা"),
-                        items: data.upcoming,
-                        buildItem: (BuildContext context, int index, item) {
-                          return CircularItemWidget(
-                            data: item,
-                            onTap: () => onTapCircular(item.id),
-                          );
-                        }),
-                  ),
+                // if (data.upcoming.isNotEmpty)
+                Padding(
+                  padding: EdgeInsets.only(top: size.h16),
+                  child: CircularItemSectionWidget(
+                      title: label(
+                          e: "Upcoming Circular List",
+                          b: "আসন্ন বিজ্ঞপ্তির তালিকা"),
+                      items: data.upcoming,
+                      buildItem: (BuildContext context, int index, item) {
+                        return CircularItemWidget(
+                          data: item,
+                          onTap: () => onTapCircular(item.id),
+                        );
+                      }),
+                ),
 
                 ///Completed Circular Section
-                if (data.completed.isNotEmpty)
-                  Padding(
-                    padding: EdgeInsets.only(top: size.h16),
-                    child: CircularItemSectionWidget(
-                        title: label(
-                            e: "Completed Circular List",
-                            b: "সম্পন্ন বিজ্ঞপ্তির তালিকা"),
-                        items: data.completed,
-                        buildItem: (BuildContext context, int index, item) {
-                          return CircularItemWidget(
-                            data: item,
-                            onTap: () => onTapCircular(item.id),
-                          );
-                        }),
-                  ),
+                // if (data.completed.isNotEmpty)
+                Padding(
+                  padding: EdgeInsets.only(top: size.h16),
+                  child: CircularItemSectionWidget(
+                      title: label(
+                          e: "Completed Circular List",
+                          b: "সম্পন্ন বিজ্ঞপ্তির তালিকা"),
+                      items: data.completed,
+                      buildItem: (BuildContext context, int index, item) {
+                        return CircularItemWidget(
+                          data: item,
+                          onTap: () => onTapCircular(item.id),
+                        );
+                      }),
+                ),
 
                 SizedBox(height: size.h64),
               ],
@@ -106,7 +106,8 @@ class _CircularScreenState extends State<CircularScreen>
         },
         emptyBuilder: (context, message, icon) => CustomEmptyWidget(
           message: message,
-          title: label(e: 'No Circular Found', b: 'কোন বিজ্ঞপ্তির পাওয়া যায়নি'),
+          title:
+              label(e: 'No Circular Found', b: 'কোন বিজ্ঞপ্তির পাওয়া যায়নি'),
 
           // constraints: constraints,
           // offset: 350.w,
