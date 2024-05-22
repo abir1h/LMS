@@ -67,6 +67,9 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
   final AppStreamController<bool> playbackPausePlayStreamController =
       AppStreamController();
 
+  final AppStreamController<VideoQuestionDataEntity>
+  videoQuestionDataStreamController = AppStreamController();
+
   ///Load Video details
   void loadVideoData(int courseContentId) {
     if (!mounted) return;
@@ -126,6 +129,7 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
         print("pop question");
         showOverlay=true;
         AppEventsNotifier.notify(EventAction.videoWidget);
+        videoQuestionDataStreamController.add(DataLoadedState<VideoQuestionDataEntity>(questionData!));
         playbackPausePlayStreamController.add(DataLoadedState<bool>(false));
       }
     }

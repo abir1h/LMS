@@ -8,6 +8,7 @@ class VideoQuestionDataEntity {
   final bool message;
   final bool seen;
   final List<VideoChoiceDataEntity> choices;
+  bool isSelected;
 
   VideoQuestionDataEntity({
     required this.id,
@@ -17,5 +18,6 @@ class VideoQuestionDataEntity {
     required this.message,
     required this.seen,
     required this.choices,
+    this.isSelected = false,
   });
 }

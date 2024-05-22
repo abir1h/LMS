@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lms/src/core/common_widgets/custom_toasty.dart';
 import 'package:lms/src/feature/course/domain/entities/video_content_data_entity.dart';
 import 'package:lms/src/feature/course/domain/entities/video_data_entity.dart';
+import 'package:lms/src/feature/course/domain/entities/video_qustion_data_entity.dart';
 import 'package:video_player/video_player.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -34,7 +35,7 @@ class TranscriptVideoScreen extends StatefulWidget {
 }
 
 class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
-    with AppTheme, Language, TranscriptScreenVideoService {
+    with AppTheme, Language, TranscriptScreenVideoService, AppEventsNotifier {
   YoutubePlayerController? _youtubeController;
   VideoPlayerController? _controller;
   ChewieController? _chewieController;
@@ -129,25 +130,33 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                                     size: size.r20,
                                   ),
                                 )),
-                            if (showOverlay)
-                              AspectRatio(
-                                aspectRatio: 16 / 9,
-                                child: OverlayMCQWidget(
-                                  items: data.videoQuestion![1].choices,
-                                  data: data.videoQuestion![1],
-                                  onTapSkip: () {
-                                    showOverlay = false;
-                                    AppEventsNotifier.notify(
-                                        EventAction.videoWidget);
-                                  },
-                                  OnTapSubmit: () {},
-                                  builder:
-                                      (BuildContext context, int index, item) {
-                                    return OverlayMCQAnswerOptionWidget(
-                                      value: item.choiceText,
-                                      isSelected: item.isCorrect,
-                                      onTap: () => setState(() {
-                                        /*  for (OptionDataEntity optionDataEntity
+                            AppStreamBuilder(
+                                stream:
+                                    videoQuestionDataStreamController.stream,
+                                loadingBuilder: (context) {
+                                  return Container();
+                                },
+                                dataBuilder: (context, data) {
+                                  return showOverlay
+                                      ? AspectRatio(
+                                          aspectRatio: 16 / 9,
+                                          child: OverlayMCQWidget(
+                                            items: data.choices,
+                                            data: data,
+                                            onTapSkip: () {
+                                              showOverlay = false;
+                                              AppEventsNotifier.notify(
+                                                  EventAction.videoWidget);
+                                            },
+                                            OnTapSubmit: () {},
+                                            builder: (BuildContext context,
+                                                int index, item) {
+                                              return OverlayMCQAnswerOptionWidget(
+                                                value: item.choiceText,
+                                                isSelected: item.isCorrect,
+                                                onTap: () => setState(() {
+
+                                                  /*  for (OptionDataEntity optionDataEntity
                                   in data.options) {
                                     if (data.options
                                         .indexOf(optionDataEntity) !=
@@ -164,11 +173,15 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                                   }
                                   print(
                                       "Ansewwlelkfekf ${item.userCorrectValue}");*/
-                                      }),
-                                    );
-                                  },
-                                ),
-                              )
+                                                }),
+                                              );
+                                            },
+                                          ),
+                                        )
+                                      : Container();
+                                },
+                                emptyBuilder: (context, message, icon) =>
+                                    Container()),
                             // Positioned(
                             //   top: 80,
                             //   left: .45.sw,
@@ -813,6 +826,15 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
           enableCaption: true,
           showLiveFullscreenButton: true),
     );
+  }
+
+  @override
+  void onEventReceived(EventAction action) {
+    if (mounted) {
+      if (action == EventAction.videoWidget) {
+        setState(() {});
+      }
+    }
   }
 }
 

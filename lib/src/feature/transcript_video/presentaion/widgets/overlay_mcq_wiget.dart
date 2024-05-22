@@ -10,13 +10,15 @@ import '../../../assessment/domain/entities/question_data_entity.dart';
 class OverlayMCQWidget<T> extends StatelessWidget with AppTheme {
   final List<T> items;
   final VideoQuestionDataEntity data;
-  final VoidCallback onTapSkip,OnTapSubmit;
+  final VoidCallback onTapSkip, OnTapSubmit;
   final Widget Function(BuildContext context, int index, T item) builder;
   const OverlayMCQWidget(
       {super.key,
       required this.items,
       required this.builder,
-      required this.data, required this.onTapSkip, required this.OnTapSubmit});
+      required this.data,
+      required this.onTapSkip,
+      required this.OnTapSubmit});
 
   @override
   Widget build(BuildContext context) {
@@ -81,31 +83,36 @@ class OverlayMCQWidget<T> extends StatelessWidget with AppTheme {
               },
             ),
           ),
-
           Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+            GestureDetector(
+              onTap: onTapSkip,
+              child:  Container(
+                padding:
+                EdgeInsets.symmetric(horizontal: size.w12, vertical: size.h2),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(size.r50),
+                    color: clr.placeHolderTextColorGray),
+                child: Text(
+                  label(e: "Skip", b: "স্কিপ"),
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: size.textXSmall,
+                      fontFamily: StringData.fontFamilyRoboto,
+                      color: clr.textColorAppleBlack),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: size.w8,
+            ),
             Container(
               padding:
                   EdgeInsets.symmetric(horizontal: size.w12, vertical: size.h2),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(size.r50),
-                  color: clr.placeHolderTextColorGray),
-              child: Text(
-                label(e: "Skip", b: "স্কিপ"),
-                style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: size.textXSmall,
-                    fontFamily: StringData.fontFamilyRoboto,
-                    color: clr.textColorAppleBlack),
-              ),
-            ),
-            SizedBox(width: size.w8,), Container(
-              padding:
-              EdgeInsets.symmetric(horizontal: size.w12, vertical: size.h2),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(size.r50),
                   color: clr.appPrimaryColorGreen),
               child: Text(
-               label(e: 'Submit', b: 'সাবমিট'),
+                label(e: 'Submit', b: 'সাবমিট'),
                 style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: size.textXSmall,
@@ -113,10 +120,10 @@ class OverlayMCQWidget<T> extends StatelessWidget with AppTheme {
                     color: clr.whiteColor),
               ),
             ),
-          ]), SizedBox(
+          ]),
+          SizedBox(
             height: size.h20,
           ),
-
         ],
       ),
     );
