@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:lms/src/feature/dashboard/presentation/screens/dashboard_screen.dart';
 
 import '../../../core/constants/common_imports.dart';
 import '../../../core/utility/app_label.dart';
+import '../../circular/domain/entities/circular_data_entity.dart';
 import '../../dashboard/presentation/widgets/custom_text_widget.dart';
 
 class LeaderboardItemWidget extends StatelessWidget with AppTheme, Language {
-  const LeaderboardItemWidget({super.key});
+  final LeaderBoardDataEntity data;
+  final VoidCallback onTap;
+  const LeaderboardItemWidget({super.key, required this.data, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +29,7 @@ class LeaderboardItemWidget extends StatelessWidget with AppTheme, Language {
       child: Row(
         children: [
           CustomTextWidget(
-            text: label(e: "1st", b: "১ম"),
+            text: data.position,
             textColor: clr.blackColor,
             fontWeight: FontWeight.w400,
           ),
@@ -37,7 +41,7 @@ class LeaderboardItemWidget extends StatelessWidget with AppTheme, Language {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomTextWidget(
-                  text: label(e: en.userNameText, b: bn.userNameText),
+                  text: data.name,
                   textColor: clr.blackColor,
                   fontWeight: FontWeight.w400,
                   overflow: TextOverflow.ellipsis,
@@ -45,8 +49,7 @@ class LeaderboardItemWidget extends StatelessWidget with AppTheme, Language {
                 ),
                 SizedBox(height: size.h4),
                 CustomTextWidget(
-                  text: label(
-                      e: "${en.emisId}101353764", b: "${bn.emisId}১০১৩৫৩৭৬৪"),
+                  text: data.emisUserId,
                   textColor: clr.textColorGray2,
                   fontSize: size.textXSmall,
                   fontWeight: FontWeight.w400,

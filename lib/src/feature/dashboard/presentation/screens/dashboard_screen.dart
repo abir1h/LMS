@@ -159,9 +159,9 @@ class _DashboardScreenState extends State<DashboardScreen>
               SizedBox(height: size.h32),
               LeaderboardSectionWidget(
                 onTapSeeAll: onTapSeeAll,
-                items: const ["", "", ""],
+                items: leaderBoardList,
                 buildItem: (BuildContext context, int index, item) {
-                  return LeaderboardItemWidget();
+                  return LeaderboardItemWidget(data: item,onTap: (){},);
                 },
               ),
               SizedBox(height: size.h32),
@@ -245,4 +245,10 @@ class EffectivePeriodSection extends StatelessWidget with AppTheme, Language {
       ),
     );
   }
+}
+class LeaderBoardDataEntity{
+  final String position;
+  final String name;
+  final String emisUserId;
+  LeaderBoardDataEntity({required this.position,required this.name,required this.emisUserId});
 }
