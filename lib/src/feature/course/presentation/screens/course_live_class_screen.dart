@@ -1,7 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -14,7 +13,6 @@ import '../../../../core/routes/app_route_args.dart';
 import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
 import '../../domain/entities/blended_class_data_entity.dart';
 import '../services/course_live_class_screen_service.dart';
-import '../widgets/sliver_tab_section_widget.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
@@ -31,6 +29,7 @@ class CourseLiveClassScreen extends StatefulWidget {
 class _CourseLiveClassScreenState extends State<CourseLiveClassScreen>
     with AppTheme, Language, CourseLiveClassScreenService {
   late CourseBlendedScreenArgs _screenArgs;
+  DateTime now = DateTime.now();
 
   @override
   void initState() {
@@ -97,65 +96,78 @@ class _CourseLiveClassScreenState extends State<CourseLiveClassScreen>
                   return InPersonClassWidget(
                     data: data.blendedClassDataEntity,
                     onTapConfirm: () {
-                      CustomDialogWidget.show(
-                              context: context,
-                              icon: Icons.info,
-                              title: label(
-                                  e: "Do you want to confirm?",
-                                  b: "আপনি কি নিশ্চিত করতে চান?"),
-                              infoText: label(
-                                  e: "Are you Sure?", b: "আপনি কি নিশ্চিত?"))
-                          .then((x) {
-                        if (x) {
-                          contentReadPost(
-                              data.blendedClassDataEntity.id,
-                              'course_script',
-                              data.blendedClassDataEntity.courseId,
-                              true,
-                              '40',
-                              'physical');
-                        }
-                      });
+                      if (areSameDateFast(DateTime.parse(
+                          data.blendedClassDataEntity.classSchedule))) {
+                        CustomDialogWidget.show(
+                                context: context,
+                                icon: Icons.info,
+                                title: label(
+                                    e: "Do you want to confirm?",
+                                    b: "আপনি কি নিশ্চিত করতে চান?"),
+                                infoText: label(
+                                    e: "Are you Sure?", b: "আপনি কি নিশ্চিত?"))
+                            .then((x) {
+                          if (x) {
+                            contentReadPost(
+                                data.blendedClassDataEntity.id,
+                                'course_script',
+                                data.blendedClassDataEntity.courseId,
+                                true,
+                                '40',
+                                'physical');
+                          }
+                        });
+                      }
                     },
                   );
                 } else if (data is OnlineClassDataState) {
                   return OnlineClassWidget(
                     data: data.blendedClassDataEntity,
                     onTapConfirm: () {
-                      CustomDialogWidget.show(
-                              context: context,
-                              icon: Icons.info,
-                              title: label(
-                                  e: "Do you want to confirm?",
-                                  b: "আপনি কি নিশ্চিত করতে চান?"),
-                              infoText: label(
-                                  e: "Are you Sure?", b: "আপনি কি নিশ্চিত?"))
-                          .then((x) {
-                        if (x) {
-                          contentReadPost(
-                                  data.blendedClassDataEntity.id,
-                                  'course_script',
-                                  data.blendedClassDataEntity.courseId,
-                                  true,
-                                  '40',
-                                  'online')
-                              .then((value) => launchUrl(
-                                  Uri.parse(
-                                      data.blendedClassDataEntity.meetingLink),
-                                  mode: LaunchMode.externalApplication));
-                        }
-                      });
+                      if (areSameDateFast(DateTime.parse(
+                          data.blendedClassDataEntity.classSchedule))) {
+                        CustomDialogWidget.show(
+                                context: context,
+                                icon: Icons.info,
+                                title: label(
+                                    e: "Do you want to confirm?",
+                                    b: "আপনি কি নিশ্চিত করতে চান?"),
+                                infoText: label(
+                                    e: "Are you Sure?", b: "আপনি কি নিশ্চিত?"))
+                            .then((x) {
+                          if (x) {
+                            contentReadPost(
+                                    data.blendedClassDataEntity.id,
+                                    'course_script',
+                                    data.blendedClassDataEntity.courseId,
+                                    true,
+                                    '40',
+                                    'online')
+                                .then((value) => launchUrl(
+                                    Uri.parse(data
+                                        .blendedClassDataEntity.meetingLink),
+                                    mode: LaunchMode.externalApplication));
+                          }
+                        });
+                      }
                     },
                   );
                 } else {
-                  return const CustomEmptyWidget(
+                  return  CustomEmptyWidget(
                     icon: Icons.school_outlined,
-                    message: "No matching data found!",
+                    message: label(
+                      e: "No matching data found!",b: "কোনও ডেটা পাওয়া যায়নি!"
+
+                    ),
                   );
                 }
               },
               emptyBuilder: (context, message, icon) => CustomEmptyWidget(
                 message: message,
+                title: label(
+                    e: "No matching data found!",b: "কোনও ডেটা পাওয়া যায়নি!"
+
+                ),
                 // constraints: constraints,
                 // offset: 350.w,
               ),
@@ -370,6 +382,7 @@ class InClassCardWidget extends StatelessWidget with AppTheme, Language {
                 .map((c) => label(e: c.nameEn, b: c.nameBn))
                 .toList()
                 .join(', '),
+            maxLines: 2,
           ),
           SizedBox(height: size.h20),
           CardRowItemWidget(
@@ -383,16 +396,20 @@ class InClassCardWidget extends StatelessWidget with AppTheme, Language {
                 : "",
           ),
           SizedBox(height: size.h20),
-          CardRowItemWidget(
-            leftText: label(e: en.classTime, b: bn.classTime),
-            rightText: label(e: data.time, b: data.time),
-          ),
-          SizedBox(height: size.h20),
+          if (data.time.isNotEmpty)
+            CardRowItemWidget(
+              leftText: label(e: en.classTime, b: bn.classTime),
+              rightText: label(e: data.time, b: data.time),
+            ),
+          if (data.time.isNotEmpty) SizedBox(height: size.h20),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: size.w44),
             child: CustomButton(
               onTap: onTapConfirm,
               title: label(e: en.confirmInPerson, b: bn.confirmInPerson),
+              bgColor: areSameDateFast(DateTime.parse(data.classSchedule))
+                  ? clr.appPrimaryColorGreen
+                  : clr.greyColor,
               textColor: clr.whiteColor,
               radius: size.r16,
             ),
@@ -420,12 +437,24 @@ class InPersonClassWidget extends StatelessWidget with AppTheme, Language {
           padding: EdgeInsets.symmetric(horizontal: size.w16),
         ),
         SizedBox(height: size.h12),
-        CustomTextWidget(
-          text: label(e: data.transcript, b: data.transcript),
-          textColor: clr.blackColor,
-          fontWeight: FontWeight.w500,
-          fontFamily: StringData.fontFamilyPoppins,
+        // CustomTextWidget(
+        //   text: label(e: data.transcript, b: data.transcript),
+        //   textColor: clr.blackColor,
+        //   fontWeight: FontWeight.w500,
+        //   fontFamily: StringData.fontFamilyPoppins,
+        //   padding: EdgeInsets.symmetric(horizontal: size.w16),
+        // ),
+        Padding(
           padding: EdgeInsets.symmetric(horizontal: size.w16),
+          child: HtmlWidget(
+            label(e: data.detailsEn, b: data.detailsBn),
+            textStyle: TextStyle(
+              color: clr.blackColor,
+              fontSize: size.textSmall,
+              fontWeight: FontWeight.w500,
+              fontFamily: StringData.fontFamilyPoppins,
+            ),
+          ),
         ),
         SizedBox(height: size.h12),
         InClassCardWidget(data: data, onTapConfirm: onTapConfirm),
@@ -489,21 +518,25 @@ class OnlineClassCardWidget extends StatelessWidget with AppTheme, Language {
                 ? label(
                     e: DateFormat('dd MMMM, yyyy')
                         .format(DateTime.parse(data.classSchedule)),
-                    b: DateFormat('dd MMMM, yyyy')
-                        .format(DateTime.parse(data.classSchedule)))
+                    b: timeAgoToBengali(DateFormat('dd MMMM, yyyy')
+                        .format(DateTime.parse(data.classSchedule))))
                 : "",
           ),
           SizedBox(height: size.h20),
-          CardRowItemWidget(
-            leftText: label(e: en.classTime, b: bn.classTime),
-            rightText: label(e: data.time, b: data.time),
-          ),
-          SizedBox(height: size.h20),
+          if (data.time.isNotEmpty)
+            CardRowItemWidget(
+              leftText: label(e: en.classTime, b: bn.classTime),
+              rightText: label(e: data.time, b: data.time),
+            ),
+          if (data.time.isNotEmpty) SizedBox(height: size.h20),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: size.w44),
             child: CustomButton(
               onTap: onTapConfirm,
               title: label(e: en.joinClass, b: bn.joinClass),
+              bgColor: areSameDateFast(DateTime.parse(data.classSchedule))
+                  ? clr.appPrimaryColorGreen
+                  : clr.greyColor,
               textColor: clr.whiteColor,
               radius: size.r16,
             ),
@@ -531,14 +564,26 @@ class OnlineClassWidget extends StatelessWidget with AppTheme, Language {
           padding: EdgeInsets.symmetric(horizontal: size.w16),
         ),
         SizedBox(height: size.h12),
-        CustomTextWidget(
-          text: label(
-              e: "Engage in effective postsecondary education teaching methods in this online short course, inspired by the in-person seminar program currently offered by the Ministry's Center for Teaching and Learning.",
-              b: "এই অনলাইন সংক্ষিপ্ত কোর্সে কার্যকর পোস্ট-সেকেন্ডারি শিক্ষা শিক্ষণ পদ্ধতির সাথে যুক্ত হন, যা বর্তমানে সেন্টার ফর টিচিং অ্যান্ড লার্নিং মন্ত্রকের দ্বারা দেওয়া ব্যক্তিগত সেমিনার প্রোগ্রাম দ্বারা অনুপ্রাণিত।"),
-          textColor: clr.blackColor,
-          fontWeight: FontWeight.w500,
-          fontFamily: StringData.fontFamilyPoppins,
+        // CustomTextWidget(
+        //   text: label(
+        //       e: "Engage in effective postsecondary education teaching methods in this online short course, inspired by the in-person seminar program currently offered by the Ministry's Center for Teaching and Learning.",
+        //       b: "এই অনলাইন সংক্ষিপ্ত কোর্সে কার্যকর পোস্ট-সেকেন্ডারি শিক্ষা শিক্ষণ পদ্ধতির সাথে যুক্ত হন, যা বর্তমানে সেন্টার ফর টিচিং অ্যান্ড লার্নিং মন্ত্রকের দ্বারা দেওয়া ব্যক্তিগত সেমিনার প্রোগ্রাম দ্বারা অনুপ্রাণিত।"),
+        //   textColor: clr.blackColor,
+        //   fontWeight: FontWeight.w500,
+        //   fontFamily: StringData.fontFamilyPoppins,
+        //   padding: EdgeInsets.symmetric(horizontal: size.w16),
+        // ),
+        Padding(
           padding: EdgeInsets.symmetric(horizontal: size.w16),
+          child: HtmlWidget(
+            label(e: data.detailsEn, b: data.detailsBn),
+            textStyle: TextStyle(
+              color: clr.blackColor,
+              fontSize: size.textSmall,
+              fontWeight: FontWeight.w500,
+              fontFamily: StringData.fontFamilyPoppins,
+            ),
+          ),
         ),
         SizedBox(height: size.h12),
         OnlineClassCardWidget(
@@ -553,9 +598,14 @@ class OnlineClassWidget extends StatelessWidget with AppTheme, Language {
 class CardRowItemWidget extends StatelessWidget with AppTheme, Language {
   final String leftText;
   final String? rightText;
+  final int maxLines;
   final Widget? widget;
   const CardRowItemWidget(
-      {super.key, required this.leftText, this.rightText, this.widget});
+      {super.key,
+      required this.leftText,
+      this.rightText,
+      this.maxLines = 1,
+      this.widget});
 
   @override
   Widget build(BuildContext context) {
@@ -584,7 +634,7 @@ class CardRowItemWidget extends StatelessWidget with AppTheme, Language {
               fontSize: size.textXSmall,
               fontWeight: FontWeight.w500,
               overflow: TextOverflow.ellipsis,
-              maxLines: 1,
+              maxLines: maxLines,
             ),
           ),
         if (widget != null) Expanded(child: widget!)

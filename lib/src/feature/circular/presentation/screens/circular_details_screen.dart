@@ -100,6 +100,7 @@ class _CircularDetailsScreenState extends State<CircularDetailsScreen>
         },
         emptyBuilder: (context, message, icon) => CustomEmptyWidget(
           message: message,
+          title: label(e: 'No Circular Found', b: 'কোন বিজ্ঞপ্তির পাওয়া যায়নি'),
           // constraints: constraints,
           // offset: 350.w,
         ),
@@ -256,14 +257,15 @@ class CircularDetailsInfoWidget extends StatelessWidget
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          RowItemWidgetText(
-            leftText: label(e: "Duration: (Start)", b: "সময়কাল: (শুরু)"),
-            rightText: label(
-              e: DateFormat('dd MMMM').format(DateTime.parse(data.startDate)),
-              b: timeAgoToBengali(
-                  DateFormat('dd MMMM').format(DateTime.parse(data.startDate))),
+          if (data.startDate.isNotEmpty)
+            RowItemWidgetText(
+              leftText: label(e: "Duration: (Start)", b: "সময়কাল: (শুরু)"),
+              rightText: label(
+                e: DateFormat('dd MMMM').format(DateTime.parse(data.startDate)),
+                b: timeAgoToBengali(DateFormat('dd MMMM')
+                    .format(DateTime.parse(data.startDate))),
+              ),
             ),
-          ),
           SizedBox(height: size.h16),
           RowItemWidgetText(
             leftText: label(e: "Duration: (End)", b: "সময়কাল: (শেষ)"),
@@ -273,16 +275,18 @@ class CircularDetailsInfoWidget extends StatelessWidget
                     .format(DateTime.parse(data.endDate)))),
           ),
           SizedBox(height: size.h16),
-          RowItemWidgetText(
-            leftText: label(
-                e: "Circular Publication Time", b: "বিজ্ঞপ্তির প্রকাশের সময়"),
-            rightText: label(
-                e: DateFormat('dd MMMM')
-                    .add_jm()
-                    .format(DateTime.parse(data.publishDate)),
-                b: timeAgoToBengali(DateFormat('dd MMMM h : mm a')
-                    .format(DateTime.parse(data.publishDate)))),
-          ),
+          if (data.publishDate.isNotEmpty)
+            RowItemWidgetText(
+              leftText: label(
+                  e: "Circular Publication Time",
+                  b: "বিজ্ঞপ্তির প্রকাশের সময়"),
+              rightText: label(
+                  e: DateFormat('dd MMMM')
+                      .add_jm()
+                      .format(DateTime.parse(data.publishDate)),
+                  b: timeAgoToBengali(DateFormat('dd MMMM h : mm a')
+                      .format(DateTime.parse(data.publishDate)))),
+            ),
           SizedBox(height: size.h16),
           RowItemWidgetText(
             leftText: label(
@@ -291,10 +295,11 @@ class CircularDetailsInfoWidget extends StatelessWidget
             rightText: label(e: data.batch.nameEn, b: data.batch.nameBn),
           ),
           SizedBox(height: size.h16),
-          RowItemWidgetText(
-            leftText: label(e: "Training Venue", b: "ট্রেনিং ভেন্যুু"),
-            rightText: data.venueName,
-          ),
+          if (data.venueName.isNotEmpty)
+            RowItemWidgetText(
+              leftText: label(e: "Training Venue", b: "ট্রেনিং ভেন্যুু"),
+              rightText: data.venueName,
+            ),
           SizedBox(height: size.h16),
           RowItemWidgetText(
             leftText: label(
@@ -334,24 +339,25 @@ class CircularDetailsInfoWidget extends StatelessWidget
             ),
           ),
           SizedBox(height: size.h16),
-          RowItemWidgetText(
-            leftText: label(e: "Circular Link", b: "বিজ্ঞপ্তির লিংক "),
-            widget: GestureDetector(
-              onTap: () {
-                if (data.url.isNotEmpty) {
-                  launchUrl(Uri.parse(data.url),
-                      mode: LaunchMode.externalApplication);
-                }
-              },
-              child: CustomTextWidget(
-                text: data.url,
-                fontSize: size.textXSmall,
-                fontWeight: FontWeight.w500,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 3,
+          if (data.url.isNotEmpty)
+            RowItemWidgetText(
+              leftText: label(e: "Circular Link", b: "বিজ্ঞপ্তির লিংক "),
+              widget: GestureDetector(
+                onTap: () {
+                  if (data.url.isNotEmpty) {
+                    launchUrl(Uri.parse(data.url),
+                        mode: LaunchMode.externalApplication);
+                  }
+                },
+                child: CustomTextWidget(
+                  text: data.url,
+                  fontSize: size.textXSmall,
+                  fontWeight: FontWeight.w500,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 3,
+                ),
               ),
             ),
-          ),
           // SizedBox(height: size.h16),
           if (data.supportingDoc.isNotEmpty)
             Padding(
@@ -443,21 +449,24 @@ class BatchCoordinatorWidget extends StatelessWidget with AppTheme, Language {
             ],
           ),
           SizedBox(height: size.h16),
-          RowItemWidgetText(
-            leftText:
-                label(e: "Batch Coordinator Name", b: "ব্যাচ সমন্বয়কারীর নাম"),
-            rightText: label(
-                e: data.batchCoordinatorNameEn, b: data.batchCoordinatorNameBn),
-          ),
+          if (data.batchCoordinatorNameEn.isNotEmpty)
+            RowItemWidgetText(
+              leftText: label(
+                  e: "Batch Coordinator Name", b: "ব্যাচ সমন্বয়কারীর নাম"),
+              rightText: label(
+                  e: data.batchCoordinatorNameEn,
+                  b: data.batchCoordinatorNameBn),
+            ),
           SizedBox(height: size.h16),
-          RowItemWidgetText(
-            leftText: label(e: "Code", b: "কোড"),
-            rightText: label(
-                e: data.batchCoordinatorId.toString(),
-                b: replaceEnglishNumberWithBengali(
-                    data.batchCoordinatorId.toString())),
-          ),
-          SizedBox(height: size.h16),
+          if (data.batchCoordinatorId != -1)
+            RowItemWidgetText(
+              leftText: label(e: "Code", b: "কোড"),
+              rightText: label(
+                  e: data.batchCoordinatorId.toString(),
+                  b: replaceEnglishNumberWithBengali(
+                      data.batchCoordinatorId.toString())),
+            ),
+         /* SizedBox(height: size.h16),
           RowItemWidgetText(
             leftText: label(e: "Email", b: "ইমেইল"),
             rightText: label(e: "", b: ""),
@@ -466,7 +475,7 @@ class BatchCoordinatorWidget extends StatelessWidget with AppTheme, Language {
           RowItemWidgetText(
             leftText: label(e: "Phone", b: "ফোন নাম্বার"),
             rightText: label(e: "", b: ""),
-          ),
+          ),*/
         ],
       ),
     );
@@ -514,7 +523,7 @@ class CircularTrainerWidget extends StatelessWidget with AppTheme, Language {
                       rightText: label(
                           e: data.trainers[index].fullnameEn,
                           b: data.trainers[index].fullnameBn)),
-                  SizedBox(height: size.h16),
+                 /* SizedBox(height: size.h16),
                   RowItemWidgetText(
                     leftText: label(e: "Subject", b: "বিষয়"),
                     rightText: label(e: "", b: ""),
@@ -528,7 +537,7 @@ class CircularTrainerWidget extends StatelessWidget with AppTheme, Language {
                   RowItemWidgetText(
                     leftText: label(e: "Phone Number", b: "ফোন নাম্বার"),
                     rightText: label(e: "", b: ""),
-                  ),
+                  ),*/
                   SizedBox(height: size.h16),
                 ],
               );

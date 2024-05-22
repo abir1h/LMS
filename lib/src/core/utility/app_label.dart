@@ -229,6 +229,11 @@ String nightDayConvertor(String timeAgo, String timstamp) {
   return banglaText;
 }
 
+bool areSameDateFast(DateTime a) {
+  DateTime now = DateTime.now();
+  return a.day == now.day && a.month == now.month && a.year == now.year;
+}
+
 Delta convertStringToDelta(String text) {
   Delta delta = Delta();
   delta.insert('$text\n');

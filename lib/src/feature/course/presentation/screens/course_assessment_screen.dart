@@ -224,6 +224,7 @@ class _CourseAssessmentScreenState extends State<CourseAssessmentScreen>
         },
         emptyBuilder: (context, message, icon) => CustomEmptyWidget(
           message: message,
+          title: label(e: 'No Assessment Found', b: 'কোন মূল্যায়ন পাওয়া যায়নি'),
           // constraints: constraints,
           // offset: 350.w,
         ),

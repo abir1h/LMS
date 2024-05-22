@@ -2,7 +2,6 @@ import '../../domain/entities/blended_course_data_entity.dart';
 import '../models/blended_course_data_model.dart';
 import 'blended_course_data_mapper.dart';
 import 'trainer_data_mapper.dart';
-
 import '../../domain/entities/blended_class_data_entity.dart';
 import '../models/blended_class_data_model.dart';
 
@@ -19,21 +18,23 @@ class BlendedClassDataModelToEntityMapper extends BlendedClassDataMapper<
         id: entity.id,
         courseId: entity.courseId,
         courseModuleId: entity.courseModuleId,
+        circularId: entity.circularId,
         trainerId: entity.trainerId,
-        batchGroupId: entity.batchGroupId,
-        classType: entity.classType,
         titleEn: entity.titleEn,
         titleBn: entity.titleBn,
         classSchedule: entity.classSchedule,
         durations: entity.durations,
         time: entity.time,
-        location: entity.location,
-        details: entity.details,
+        locationEn: entity.locationEn,
+        locationBn: entity.locationBn,
+        detailsEn: entity.detailsEn,
+        detailsBn: entity.detailsBn,
         attachment: entity.attachment,
         platform: entity.platform,
         meetingLink: entity.meetingLink,
         videoUrl: entity.videoUrl,
-        transcript: entity.transcript,
+        transcriptEn: entity.transcriptEn,
+        transcriptBn: entity.transcriptBn,
         workstations: List<BlendedCourseDataEntity>.from(entity.workstations!)
             .map((entity) => entity.toBlendedCourseDataModel)
             .toList(),
@@ -48,21 +49,23 @@ class BlendedClassDataModelToEntityMapper extends BlendedClassDataMapper<
         id: model.id,
         courseId: model.courseId,
         courseModuleId: model.courseModuleId,
+        circularId: model.circularId,
         trainerId: model.trainerId,
-        batchGroupId: model.batchGroupId,
-        classType: model.classType,
         titleEn: model.titleEn,
         titleBn: model.titleBn,
         classSchedule: model.classSchedule,
         durations: model.durations,
         time: model.time,
-        location: model.location,
-        details: model.details,
+        locationEn: model.locationEn,
+        locationBn: model.locationBn,
+        detailsEn: model.detailsEn,
+        detailsBn: model.detailsBn,
         attachment: model.attachment,
         platform: model.platform,
         meetingLink: model.meetingLink,
         videoUrl: model.videoUrl,
-        transcript: model.transcript,
+        transcriptEn: model.transcriptEn,
+        transcriptBn: model.transcriptBn,
         workstations: List<BlendedCourseDataModel>.from(model.workstations!)
             .map((entity) => entity.toBlendedCourseDataEntity)
             .toList(),
