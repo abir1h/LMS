@@ -229,7 +229,8 @@ class _AssessmentAllQuestionScreenState
                         tapAction: () => onSubmitExam(data.examData),
                         onSuccess: (x) {
                           examTimer.cancel();
-                          onExamResultSubmitted(x);
+                          showExamSubmitDialog();
+                          // onExamResultSubmitted(x);
                         }),
                   ),
                   SizedBox(height: size.h64),
@@ -358,6 +359,25 @@ class _AssessmentAllQuestionScreenState
   @override
   void showWarning(String message) {
     CustomToasty.of(context).showSuccess(message);
+  }
+
+  @override
+  void showExamSubmitDialog() {
+    CustomDialogWidget.show(
+            context: context,
+            icon: Icons.quiz_outlined,
+            title: label(
+                e: "Answer Submitted Successfully",
+                b: "উত্তরপত্র সফলভাবে জমা দেওয়া হয়েছে"),
+            infoText: "",
+            singleButtonText: label(e: "Close", b: "বন্ধ করুন"),
+            singleButton: true)
+        .then((value) {
+      if (value) {
+        ///Force close
+        forceClose();
+      }
+    });
   }
 
   @override
