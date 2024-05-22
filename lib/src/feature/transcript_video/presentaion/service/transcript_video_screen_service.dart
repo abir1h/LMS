@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../../../course/domain/entities/video_content_data_entity.dart';
 import '../../../../core/common_widgets/app_stream.dart';
+import '../../../../core/routes/app_route_args.dart';
 import '../../../course/data/data_sources/remote/course_data_source.dart';
 import '../../../course/data/repositories/course_repository_imp.dart';
 import '../../../course/domain/entities/video_data_entity.dart';
+import '../../../course/domain/entities/video_qustion_data_entity.dart';
 import '../../../course/domain/use_cases/course_use_case.dart';
 import '../../../shared/domain/entities/response_entity.dart';
 import '../screens/transcript_video_screen.dart';
@@ -19,6 +22,8 @@ abstract class _ViewModel {
 mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
     implements _ViewModel {
   late _ViewModel _view;
+  late CourseVideoScreenArgs screenArgs;
+  int currentPlayedPositionSec = 0;
 
   final CourseUseCase _courseUseCase = CourseUseCase(
       courseRepository: CourseRepositoryImp(
@@ -26,6 +31,17 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
 
   Future<ResponseEntity> getVideoDetails(int courseContentId) async {
     return _courseUseCase.getVideoDetailsUseCase(courseContentId);
+  }
+
+  Future<ResponseEntity> contentRead(
+      int contentId,
+      String contentType,
+      int courseId,
+      bool isCompleted,
+      String lastWatchTime,
+      String attendanceType) async {
+    return _courseUseCase.contentReadUseCase(contentId, contentType, courseId,
+        isCompleted, lastWatchTime, attendanceType);
   }
 
   ///Service configurations
@@ -43,8 +59,8 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
   }
 
   ///Stream controllers
-  final AppStreamController<VideoDataEntity> videoDetailsDataStreamController =
-      AppStreamController();
+  final AppStreamController<VideoContentDataEntity>
+      videoDetailsDataStreamController = AppStreamController();
   final AppStreamController<bool> playbackPausePlayStreamController =
       AppStreamController();
 
@@ -57,14 +73,13 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
           value.data != null &&
           value.data.videoData != null) {
         videoDetailsDataStreamController
-            .add(DataLoadedState<VideoDataEntity>(value.data.videoData));
+            .add(DataLoadedState<VideoContentDataEntity>(value.data));
         if (value.data.videoData.category != VideoCategory.s3.name) {
           _view.setYoutubeVideo(value.data.videoData.videoUrl);
         }
       } else if (value.error == null && value.data == null) {
         _view.showWarning(value.message!);
-        videoDetailsDataStreamController
-            .add(EmptyState(message: ""));
+        videoDetailsDataStreamController.add(EmptyState(message: ""));
       } else {
         _view.showWarning(value.message!);
       }
@@ -80,62 +95,39 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
     return Future.value(false);
   }
 
-  ///Video playback section
-  // void _onPlayVideo(VideoDataEntity content) async {
-  //   ///Activate player widget
-  //   playerActivationStreamController
-  //       .add(DataLoadedState<ActivePlayerType>(content.rawUrl.isNotEmpty
-  //       ? ActivePlayerType.solidVidePlayer
-  //       : content.youtubeUrl.isNotEmpty
-  //       ? ActivePlayerType.youtubePlayer
-  //       : ActivePlayerType.none));
-  //   // Wakelock.enable();
-  //   var videoContent = VideoContentViewModel.fromJson(content.toJson());
-  //   playerStreamController
-  //       .add(DataLoadedState<VideoContentViewModel>(videoContent));
-  // }
+  void onPlaybackProgressChanged(VideoContentDataEntity currentContent,
+      double playedPosition, double totalDuration) {
+    int playedPositionSec = (playedPosition ~/ 1000).round();
+    if (currentPlayedPositionSec != playedPositionSec) {
+      currentPlayedPositionSec = playedPositionSec;
+      // var   result = currentContent.videoQuestion?.singleWhere((element) => element == 1,
+      //       );
 
-  //player related code
-  // double onInterceptPlaybackSeekToPosition(VideoDataEntity currentContent,
-  //     double seekPosition, double totalDuration) {
-  //   /// seekIntercept logic
-  //   return currentContent.playedDurationTimeSec * 1000 >= seekPosition
-  //       ? seekPosition
-  //       : (currentContent.playedDurationTimeSec * 1000).toDouble();
-  // }
-
-  // void onPlaybackProgressChanged(VideoDataEntity currentContent,
-  //     double playedPosition, double totalDuration) {
-  //   ///Update last played position only if played position is larger
-  //   int playedPositionSec = (playedPosition ~/ 1000).round();
-  //   _watchSession.lastPlayedDuration = playedPositionSec;
-  //   // if (currentContent.playedDurationTimeSec < playedPositionSec) {
-  //   currentContent.playedDurationTimeSec = currentContent.playedDurationTimeSec < playedPositionSec?playedPositionSec:currentContent.playedDurationTimeSec;
-  //   // if (playedPositionSec % 5 == 0) {
-  //   _watchSession = VideoWatchSession(
-  //       id: currentContent.id,
-  //       classId: currentContent.classId,
-  //       chapterId: currentContent.chapterId,
-  //       totalDuration: currentContent.videoDurationSecond,
-  //       guid: _watchSession.guid.isEmpty ? _guid : _watchSession.guid,
-  //       playedDuration: currentContent.playedDurationTimeSec,
-  //       startTime: '',
-  //       endTime: '',
-  //       lastPlayedDuration: _watchSession.lastPlayedDuration);
-  //   _storeActualWatchedSession();
-  //   // } else if (playedPositionSec == currentContent.videoDurationSecond) {
-  //   //   _watchSession = VideoWatchSession(
-  //   //       id: currentContent.id,
-  //   //       classId: currentContent.classId,
-  //   //       chapterId: currentContent.chapterId,
-  //   //       totalDuration: currentContent.videoDurationSecond,
-  //   //       guid: _watchSession.guid.isEmpty ? _guid : _watchSession.guid,
-  //   //       playedDuration: currentContent.playedDurationTimeSec,
-  //   //       startTime: '',
-  //   //       endTime: '',
-  //   //       lastPlayedDuration: _watchSession.lastPlayedDuration);
-  //   //     _storeActualWatchedSession();
-  //   // }
-  //   // }
-  // }
+      // if(currentContent.videoQustion?.where((element) {element.popUpTimeSecond==playedPositionSec?true:false})){
+      //
+      // }
+      print(playedPositionSec);
+      VideoQuestionDataEntity? questionData = currentContent.videoQuestion
+          ?.singleWhere(
+              (element) => element.popUpTimeSecond == playedPositionSec,
+              orElse: () => VideoQuestionDataEntity(
+                    id: -1,
+                    videoId: -1,
+                    questionText: "",
+                    popUpTimeSecond: 0,
+                    message: false,
+                    seen: false,
+                    choices: [],
+                  ));
+      if (questionData?.id != -1) {
+        print("pop question");
+      }
+    }
+    if (screenArgs.data.lastWatchTime < playedPositionSec) {
+      screenArgs.data.lastWatchTime =
+          screenArgs.data.lastWatchTime < playedPositionSec
+              ? playedPositionSec
+              : screenArgs.data.lastWatchTime;
+    }
+  }
 }

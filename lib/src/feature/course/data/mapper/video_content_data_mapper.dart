@@ -1,3 +1,4 @@
+import 'package:lms/src/feature/course/data/mapper/video_activity_data_mapper.dart';
 import 'package:lms/src/feature/course/data/mapper/video_qustion_data_mapper.dart';
 import 'package:lms/src/feature/course/data/models/video_qustion_data_model.dart';
 import 'package:lms/src/feature/course/domain/entities/video_qustion_data_entity.dart';
@@ -17,8 +18,9 @@ class VideoContentDataModelToEntityMapper extends VideoContentDataMapper<
   VideoContentDataModel fromEntityToModel(VideoContentDataEntity entity) {
     return VideoContentDataModel(
       videoData: entity.videoData?.toVideoDataModel,
-      videoQustion: List<VideoQustionDataEntity>.from(entity.videoQustion!)
-          .map((entity) => entity.toVideoQustionDataModel)
+      videoActivity: entity.videoActivityData?.toVideoActivityDataModel,
+      videoQuestion: List<VideoQuestionDataEntity>.from(entity.videoQuestion!)
+          .map((entity) => entity.toVideoQuestionDataModel)
           .toList(),
     );
   }
@@ -27,8 +29,9 @@ class VideoContentDataModelToEntityMapper extends VideoContentDataMapper<
   VideoContentDataEntity toEntityFromModel(VideoContentDataModel model) {
     return VideoContentDataEntity(
       videoData: model.videoData?.toVideoDataEntity,
-      videoQustion: List<VideoQustionDataModel>.from(model.videoQustion!)
-          .map((model) => model.toVideoQustionDataEntity)
+      videoActivityData: model.videoActivity?.toVideoActivityDataEntity,
+      videoQuestion: List<VideoQuestionDataModel>.from(model.videoQuestion!)
+          .map((model) => model.toVideoQuestionDataEntity)
           .toList(),
     );
   }

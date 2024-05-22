@@ -1,19 +1,21 @@
-import 'package:lms/src/feature/course/domain/entities/video_choice_data_entity.dart';
+import 'video_choice_data_entity.dart';
 
-class VideoQustionDataEntity {
+class VideoQuestionDataEntity {
   final int id;
   final int videoId;
   final String questionText;
   final int popUpTimeSecond;
-  final bool status;
+  final bool message;
+  final bool seen;
   final List<VideoChoiceDataEntity> choices;
 
-  VideoQustionDataEntity({
+  VideoQuestionDataEntity({
     required this.id,
     required this.videoId,
     required this.questionText,
     required this.popUpTimeSecond,
-    required this.status,
+    required this.message,
+    required this.seen,
     required this.choices,
   });
 }

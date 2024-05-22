@@ -23,12 +23,20 @@ class _MatchingAnswerWidgetState extends State<MatchingAnswerWidget>
   List<MatchingLeftSide> leftSideList = [];
   List<MatchingRightSide> rightSideList = [];
 
+  ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _setData();
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
   }
 
   _setData() {
@@ -62,6 +70,7 @@ class _MatchingAnswerWidgetState extends State<MatchingAnswerWidget>
         children: [
           ///LHS and RHS receiver
           SingleChildScrollView(
+            controller: _scrollController,
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
             clipBehavior: Clip.none,
@@ -153,6 +162,7 @@ class _MatchingAnswerWidgetState extends State<MatchingAnswerWidget>
                     return MapEntry(
                         key,
                         MatchingRHSSenderWidget(
+                          scrollController: _scrollController,
                           rhs: value,
                         ));
                   })
@@ -293,9 +303,11 @@ class _MatchingRHSReceiverWidgetState extends State<MatchingRHSReceiverWidget>
 
 class MatchingRHSSenderWidget extends StatefulWidget {
   final MatchingRightSide rhs;
+  final ScrollController scrollController;
   const MatchingRHSSenderWidget({
     Key? key,
     required this.rhs,
+    required this.scrollController
   }) : super(key: key);
 
   @override
@@ -310,65 +322,83 @@ class _MatchingRHSSenderWidgetState extends State<MatchingRHSSenderWidget>
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(bottom: size.h8),
-      child: Draggable<MatchingRightSide>(
-        data: widget.rhs,
-        onDragCompleted: () => setState(() {}),
-        feedback: Material(
-          type: MaterialType.transparency,
-          child: Container(
-            width: MediaQuery.of(context).size.width * 0.7 - size.w32,
-            padding:
-                EdgeInsets.symmetric(horizontal: size.w8, vertical: size.h8),
-            decoration: BoxDecoration(
-              color: clr.cardFillColorGreen,
-              borderRadius: BorderRadius.circular(size.r8),
-            ),
-            child: Center(
-              child: Text(
-                widget.rhs.rightSideText,
-                style: TextStyle(
-                    color: clr.blackColor,
-                    fontSize: size.textSmall,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: StringData.fontFamilyPoppins),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+      child: Listener(
+
+        onPointerMove: (PointerMoveEvent event) {
+          // print(event.position);
+          // print(MediaQuery.of(context).size.width);
+          // print(widget.scrollController.offset);
+          if (event.position.dx > MediaQuery.of(context).size.width - 100) {
+            // 120 is height of your draggable.
+            widget.scrollController.jumpTo(widget.scrollController.offset + 20);
+            // print(widget.scrollController.offset + 20);
+          }
+          // if (event.position.dx > 100) {
+          //   // 120 is height of your draggable.
+          //   widget.scrollController.jumpTo(widget.scrollController.offset - 20);
+          //   print(widget.scrollController.offset - 20);
+          // }
+        },
+        child: Draggable<MatchingRightSide>(
+          data: widget.rhs,
+          onDragCompleted: () => setState(() {}),
+          feedback: Material(
+            type: MaterialType.transparency,
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.7 - size.w32,
+              padding:
+                  EdgeInsets.symmetric(horizontal: size.w8, vertical: size.h8),
+              decoration: BoxDecoration(
+                color: clr.cardFillColorGreen,
+                borderRadius: BorderRadius.circular(size.r8),
+              ),
+              child: Center(
+                child: Text(
+                  widget.rhs.rightSideText,
+                  style: TextStyle(
+                      color: clr.blackColor,
+                      fontSize: size.textSmall,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: StringData.fontFamilyPoppins),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
           ),
-        ),
-        childWhenDragging: Opacity(
-          opacity: 0.3,
-          child: _buildChild(),
-        ),
-        child: DragTarget<MatchingLeftSide>(
-          onWillAccept: (lhs) {
-            if ((lhs?.selectedRightSide.isUsed ?? false) &&
-                lhs!.selectedRightSide.index > 0 &&
-                lhs.selectedRightSide.index == widget.rhs.index) {
-              setState(() {
-                _highlightAccept = true;
-              });
-              return true;
-            } else {
-              return false;
-            }
-          },
-          onAccept: (lhs) {
-            ///Release old option
-            lhs.selectedRightSide.isUsed = false;
-            lhs.selectedRightSide = MatchingRightSide();
+          childWhenDragging: Opacity(
+            opacity: 0.3,
+            child: _buildChild(),
+          ),
+          child: DragTarget<MatchingLeftSide>(
+            onWillAccept: (lhs) {
+              if ((lhs?.selectedRightSide.isUsed ?? false) &&
+                  lhs!.selectedRightSide.index > 0 &&
+                  lhs.selectedRightSide.index == widget.rhs.index) {
+                setState(() {
+                  _highlightAccept = true;
+                });
+                return true;
+              } else {
+                return false;
+              }
+            },
+            onAccept: (lhs) {
+              ///Release old option
+              lhs.selectedRightSide.isUsed = false;
+              lhs.selectedRightSide = MatchingRightSide();
 
-            setState(() {
-              _highlightAccept = false;
-            });
-          },
-          onLeave: (x) {
-            setState(() {
-              _highlightAccept = false;
-            });
-          },
-          builder: (context, accepted, rejected) => _buildChild(),
+              setState(() {
+                _highlightAccept = false;
+              });
+            },
+            onLeave: (x) {
+              setState(() {
+                _highlightAccept = false;
+              });
+            },
+            builder: (context, accepted, rejected) => _buildChild(),
+          ),
         ),
       ),
     );

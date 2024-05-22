@@ -19,6 +19,7 @@ import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
 import '../../domain/entities/content_count_data_entity.dart';
+import '../../domain/entities/course_content_data_entity.dart';
 import '../../domain/entities/course_details_data_entity.dart';
 import '../../domain/entities/upcoming_class_data_entity.dart';
 import '../services/course_details_screen_service.dart';
@@ -230,11 +231,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
                             buildItem: (BuildContext context, int index, item) {
                               return CourseContentWidget(
                                 data: item,
-                                onTapVideo: () => onTapCourseVideo(
-                                    item.contentId,
-                                    item.contentType,
-                                    item.contentTitleEn,
-                                    item.contentTitleBn),
+                                onTapVideo: () => onTapCourseVideo(item),
                                 onTapAssignment: () => onTapCourseAssignment(
                                     item.contentId, item.isCompleted),
                                 onTapAssessment: () =>
@@ -323,14 +320,9 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
   }
 
   @override
-  void navigateToCourseVideoScreen(int contentId, String contentType,
-      String contentTitleEn, String contentTitleBn) {
+  void navigateToCourseVideoScreen(CourseContentDataEntity itemData) {
     Navigator.of(context).pushNamed(AppRoute.transcriptVideoScreen,
-        arguments: CourseVideoScreenArgs(
-            contentId: contentId,
-            contentType: contentType,
-            contentTitleEn: contentTitleEn,
-            contentTitleBn: contentTitleBn));
+        arguments: CourseVideoScreenArgs(data: itemData));
   }
 
   @override

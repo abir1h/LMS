@@ -9,7 +9,7 @@ class CourseContentDataModel {
   final int sort;
   final String schedule;
   final bool isCompleted;
-  final String lastWatchTime;
+  final int lastWatchTime;
 
   const CourseContentDataModel(
       {required this.contentTitleEn,
@@ -30,7 +30,7 @@ class CourseContentDataModel {
         sort: json["sort"] ?? -1,
         schedule: json["schedule"] ?? "",
         isCompleted: json["is_completed"] ?? false,
-        lastWatchTime: json["last_watch_time"] ?? "",
+        lastWatchTime: json["last_watch_time"] ?? 0,
       );
 
   Map<String, dynamic> toJson() => {

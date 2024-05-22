@@ -6,7 +6,7 @@ class CourseContentDataEntity {
   final int sort;
   final String schedule;
   final bool isCompleted;
-  final String lastWatchTime;
+   int lastWatchTime;
   CourseContentDataEntity(
       {required this.contentTitleEn,
       required this.contentTitleBn,
