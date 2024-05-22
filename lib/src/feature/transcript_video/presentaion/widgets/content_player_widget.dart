@@ -60,8 +60,8 @@ class _CustomPlayerWidgetState extends State<ContentPlayerWidget> {
     if (!mounted) return;
     _currentContent = (event as DataLoadedState<VideoContentDataEntity>).data;
     _playerController.play(
-      // getVideoFileUrl("http://116.204.155.53/${_currentContent.videoData?.videoUrl}"),
-        getVideoFileUrl('http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4'),
+      getVideoFileUrl("http://116.204.155.53/${_currentContent.videoData?.videoUrl}"),
+      //   getVideoFileUrl('http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4'),
       autoPlay: true,
       playPosition:const Duration(seconds: 0)
       // playPosition:Duration(seconds: _currentContent.lastPlayedDurationTimeSec)

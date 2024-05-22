@@ -18,9 +18,8 @@ class AuthCacheManager {
   static Future<String> getUserToken() async {
     LocalStorageService localStorageService =
         await LocalStorageService.getInstance();
-    String token = localStorageService
-            .getStringValue(StringData.accessTokenKey) ??
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoie1wiaWRcIjoxLFwibmFtZVwiOm51bGwsXCJlbXBpZFwiOlwiMTAxMzUzNzY0XCJ9IiwiaXNzIjoiaHR0cDovLzEwMy4yMDkuNDAuODk6ODEvIiwiYXVkIjoiaHR0cDovLzEwMy4yMDkuNDAuODk6ODEvIiwiaWF0IjoxNzA3Nzk1MTEwLCJuYmYiOjE3MDc3OTUxMTAsImV4cCI6MTcwNzgwNTkxMH0.sATodrBleM3kXoVeC3cfu6K7WiinxeFuKS3iasKRjJo";
+    String token =
+        localStorageService.getStringValue(StringData.accessTokenKey) ?? "";
     return token;
   }
 
