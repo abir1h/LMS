@@ -115,7 +115,7 @@ mixin DiscussionScreenService<T extends StatefulWidget> on State<T>
             .add(DataLoadedState<List<DiscussionDataEntity>>(value.data));
       } else if (value.error == null && value.data.isEmpty) {
         discussionDataStreamController
-            .add(EmptyState(message: 'No Discussions Found'));
+            .add(EmptyState(message:  label(e: "No Discussions Found", b: "কোন আলোচনা পাওয়া যায়নি"),));
       } else {
         _view.showWarning(value.message!);
       }
