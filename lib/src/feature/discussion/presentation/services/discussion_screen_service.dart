@@ -86,8 +86,7 @@ mixin DiscussionScreenService<T extends StatefulWidget> on State<T>
           allCourseDataStreamController.add(EmptyState(message: ''));
         }
       } else if (value.error == null && value.data == null) {
-        allCourseDataStreamController
-            .add(EmptyState(message: ""));
+        allCourseDataStreamController.add(EmptyState(message: ""));
       } else {
         _view.showWarning(value.message!);
       }
@@ -115,8 +114,10 @@ mixin DiscussionScreenService<T extends StatefulWidget> on State<T>
         discussionDataStreamController
             .add(DataLoadedState<List<DiscussionDataEntity>>(value.data));
       } else if (value.error == null && value.data.isEmpty) {
-        discussionDataStreamController
-            .add(EmptyState(message:  label(e: "No Discussions Found", b: "কোন আলোচনা পাওয়া যায়নি"),));
+        discussionDataStreamController.add(EmptyState(
+          message:
+              label(e: "No Discussions Found", b: "কোন আলোচনা পাওয়া যায়নি"),
+        ));
       } else {
         _view.showWarning(value.message!);
       }
@@ -130,8 +131,7 @@ mixin DiscussionScreenService<T extends StatefulWidget> on State<T>
         stateDataStreamController.add(
             DataLoadedState<StateType>(WeeklyDiscussionDataState(value.data)));
       } else if (value.error == null && value.data == null) {
-        stateDataStreamController
-            .add(EmptyState(message: ""));
+        stateDataStreamController.add(EmptyState(message: ""));
       } else {
         _view.showWarning(value.message!);
       }
@@ -145,8 +145,7 @@ mixin DiscussionScreenService<T extends StatefulWidget> on State<T>
         stateDataStreamController.add(
             DataLoadedState<StateType>(AllDiscussionDataState(value.data)));
       } else if (value.error == null && value.data == null) {
-        stateDataStreamController
-            .add(EmptyState(message: ""));
+        stateDataStreamController.add(EmptyState(message: ""));
       } else {
         _view.showWarning(value.message!);
       }
