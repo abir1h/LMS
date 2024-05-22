@@ -9,106 +9,6 @@ import '../service/auth_cache_manager.dart';
 import '../utility/log.dart';
 import 'app_exceptions.dart';
 
-/*class ApiService {
-  final BaseHttpClient _baseClient = locator.get<BaseHttpClient>();
-
-
-  Future<dynamic> getRequest(String url) async {
-    appPrint('url ${ApiCredential.baseUrl + url}');
-    try {
-      final response = await _baseClient.authenticatedClient.get(url);
-      return _returnResponse(response);
-    } on DioException catch (e) {
-      if (e.response != null) {
-        return _returnResponse(e.response!);
-      }
-    } on SocketException {
-      appPrint('No Internet');
-      throw FetchDataException('No Internet connection');
-    }
-  }
-
-  ///Todo must be modify later
-  Future<dynamic> getRequestForAuth({required String url}) async {
-    try {
-      String token = await AuthCacheManager.getUserToken();
-      var response = await _client.get(Uri.parse(url), headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-        "Authorization":
-        "Bearer $token"
-      });
-      debugPrint(
-          "REQUEST => ${response.request.toString()}\nRESPONSE DATA => ${response.body.toString()}");
-      return _returnResponse(response);
-    } on SocketException catch (_) {
-      dynamic response = {
-        "message": "Request failed! Check internet connection.",
-        "error": "Error message"
-      };
-      return response;
-    } on Exception catch (_) {
-      dynamic response = {
-        "message": "Request failed! Unknown error occurred.",
-        "error": "Error message"
-      };
-      return response;
-    }
-  }
-
-  Future<dynamic> postRequest(String url, dynamic body) async {
-    appPrint('url ${ApiCredential.baseUrl + url}');
-    try {
-      final response = await _baseClient.authenticatedClient.post(
-        url,
-        data: jsonEncode(body),
-      );
-      return _returnResponse(response);
-    } on DioException catch (e) {
-      if (e.response != null) {
-        return _returnResponse(e.response!);
-      }
-    } on SocketException {
-      appPrint('No Internet');
-      throw FetchDataException('No Internet connection');
-    }
-  }
-
-  dynamic _returnResponse(Response<dynamic> response) {
-    appPrint("------------------------------");
-    appPrint("Status Code ${response.statusCode}");
-    appPrint("------------------------------");
-    switch (response.statusCode) {
-      case 200:
-        var responseJson = jsonEncode(response.data);
-        return responseJson;
-      case 201:
-        var responseJson = jsonEncode(response.data);
-        return responseJson;
-      case 204:
-        var responseJson = {'status_code': 204};
-        return responseJson;
-      case 400:
-        var responseJson = jsonEncode(response.data);
-        return responseJson;
-      case 401:
-        var responseJson = jsonEncode(response.data);
-        return responseJson;
-      case 403:
-        throw UnauthorisedException(response.data);
-      case 404:
-        var responseJson = jsonEncode(response.data);
-        return responseJson;
-      case 422:
-        throw ValidationException(response.data);
-      case 500:
-      default:
-        throw FetchDataException(
-            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
-    }
-  }
-}*/
-
 class Server {
   static final Server _s = Server._();
   late http.Client _client;
@@ -131,9 +31,8 @@ class Server {
   }) async {
     try {
       var body = json.encode(postData);
-      // String token = await AuthCacheManager.getUserToken();///Todo Delete Later
-      String token =
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOm51bGwsInR5cGUiOiJzdXBlcmFkbWluIiwiaWF0IjoxNzEzNzY1OTcwLCJleHAiOjE3MTYzNTc5NzB9.ofkk_pPVNNwjKXxBb4g5B7f8_MT4PZOM9vN9yE0B3Do";
+      String token = await AuthCacheManager.getUserToken();
+
       var response = await _client.post(
         Uri.parse(host + url),
         headers: {
@@ -160,9 +59,8 @@ class Server {
   }) async {
     try {
       var body = json.encode(postData);
-      // String token = await AuthCacheManager.getUserToken();///Todo Delete Later
-      String token =
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOm51bGwsInR5cGUiOiJzdXBlcmFkbWluIiwiaWF0IjoxNzEzNzY1OTcwLCJleHAiOjE3MTYzNTc5NzB9.ofkk_pPVNNwjKXxBb4g5B7f8_MT4PZOM9vN9yE0B3Do";
+      String token = await AuthCacheManager.getUserToken();
+
       var response = await _client.put(
         Uri.parse(host + url),
         headers: {
@@ -188,10 +86,7 @@ class Server {
       required dynamic postData,
       required List<File> files}) async {
     try {
-      // String token = await AuthCacheManager.getUserToken();///Todo Delete Later
-      String token =
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOm51bGwsInR5cGUiOiJzdXBlcmFkbWluIiwiaWF0IjoxNzEzNzY1OTcwLCJleHAiOjE3MTYzNTc5NzB9.ofkk_pPVNNwjKXxBb4g5B7f8_MT4PZOM9vN9yE0B3Do";
-      // var body = json.encode(postData);
+      String token = await AuthCacheManager.getUserToken();
 
       Uri uri = Uri.parse(host + url);
       http.MultipartRequest request = http.MultipartRequest('POST', uri);
@@ -221,9 +116,7 @@ class Server {
 
   Future<dynamic> getRequest({required String url}) async {
     try {
-      // String token = await AuthCacheManager.getUserToken();///Todo Delete Later
-      String token =
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOm51bGwsInR5cGUiOiJzdXBlcmFkbWluIiwiaWF0IjoxNzEzNzY1OTcwLCJleHAiOjE3MTYzNTc5NzB9.ofkk_pPVNNwjKXxBb4g5B7f8_MT4PZOM9vN9yE0B3Do";
+      String token = await AuthCacheManager.getUserToken();
 
       var response = await _client.get(Uri.parse(host + url), headers: {
         "Accept": "application/json",
@@ -278,9 +171,7 @@ class Server {
 
   Future<dynamic> deleteRequest({required String url}) async {
     try {
-      // String token = await AuthCacheManager.getUserToken();///Todo Delete Later
-      String token =
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOm51bGwsInR5cGUiOiJzdXBlcmFkbWluIiwiaWF0IjoxNzEzNzY1OTcwLCJleHAiOjE3MTYzNTc5NzB9.ofkk_pPVNNwjKXxBb4g5B7f8_MT4PZOM9vN9yE0B3Do";
+      String token = await AuthCacheManager.getUserToken();
 
       var response = await _client.delete(Uri.parse(host + url), headers: {
         "Accept": "application/json",

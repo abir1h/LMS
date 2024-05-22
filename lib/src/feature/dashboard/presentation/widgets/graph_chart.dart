@@ -34,7 +34,9 @@ class _GraphChartState extends State<GraphChart>
       aspectRatio: 1.7,
       child: Padding(
         padding: EdgeInsets.only(right: size.w16),
-        child: LineChart(mainData(),),
+        child: LineChart(
+          mainData(),
+        ),
       ),
     );
   }
@@ -191,7 +193,7 @@ class _GraphChartState extends State<GraphChart>
         bottomTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
-            reservedSize: 42,
+            reservedSize: 50,
             interval: 1,
             getTitlesWidget: bottomTitleWidgets,
           ),
@@ -212,7 +214,8 @@ class _GraphChartState extends State<GraphChart>
       minX: 0,
       maxX: maxX,
       minY: 0,
-      maxY: maxY,baselineX: 100,
+      maxY: maxY,
+      baselineX: 100,
       lineBarsData: [
         LineChartBarData(
           spots: dynamicData,
