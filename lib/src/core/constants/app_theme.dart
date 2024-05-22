@@ -25,6 +25,7 @@ class ThemeColor {
   Color get shadeWhiteColor => HexColor("FDFDFD");
   Color get shadeWhiteColor2 => HexColor("FEFFFF");
   Color get blackColor => HexColor("000000");
+  Color get whiteShade => HexColor("FAFAFA");
   Color get greyColor => HexColor("B6B6B6");
   Color get dropdownHintColorGrey => HexColor("959596");
   Color get strokeToggleColor => HexColor("CBE1A9");
@@ -130,6 +131,7 @@ class ThemeSize {
   double get r20 => 20.r;
   double get r24 => 24.r;
   double get r28 => 28.r;
+  double get r50 => 50.r;
 
   double get w1 => 1.w;
   double get w2 => 2.w;

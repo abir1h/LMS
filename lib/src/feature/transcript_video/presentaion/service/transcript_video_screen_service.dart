@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lms/src/core/service/notifier/app_events_notifier.dart';
 
 import '../../../course/domain/entities/video_content_data_entity.dart';
 import '../../../../core/common_widgets/app_stream.dart';
@@ -17,6 +18,7 @@ abstract class _ViewModel {
   bool isPlayerFullscreen();
   void changeOrientationToPortrait();
   void setYoutubeVideo(String url);
+
 }
 
 mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
@@ -24,6 +26,7 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
   late _ViewModel _view;
   late CourseVideoScreenArgs screenArgs;
   int currentPlayedPositionSec = 0;
+  bool showOverlay = false;
 
   final CourseUseCase _courseUseCase = CourseUseCase(
       courseRepository: CourseRepositoryImp(
@@ -121,6 +124,8 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
                   ));
       if (questionData?.id != -1) {
         print("pop question");
+        showOverlay=true;
+       AppEventsNotifier.notify(EventAction.videoWidget);
       }
     }
     if (screenArgs.data.lastWatchTime < playedPositionSec) {
