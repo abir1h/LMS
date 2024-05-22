@@ -4,40 +4,37 @@ import 'package:lms/src/feature/course/domain/entities/video_choice_data_entity.
 
 import '../../domain/entities/video_qustion_data_entity.dart';
 import '../models/video_qustion_data_model.dart';
-import 'course_data_mapper.dart';
-import '../models/course_data_model.dart';
-import '../../domain/entities/course_data_entity.dart';
-import '../../domain/entities/all_course_data_entity.dart';
-import '../models/all_course_data_model.dart';
 
 abstract class VideoQustionDataMapper<M, E> {
   M fromEntityToModel(E entity);
   E toEntityFromModel(M model);
 }
 
-class VideoQustionDataModelToEntityMapper extends VideoQustionDataMapper<
-    VideoQustionDataModel, VideoQustionDataEntity> {
+class VideoQuestionDataModelToEntityMapper extends VideoQustionDataMapper<
+    VideoQuestionDataModel, VideoQuestionDataEntity> {
   @override
-  VideoQustionDataModel fromEntityToModel(VideoQustionDataEntity entity) {
-    return VideoQustionDataModel(
+  VideoQuestionDataModel fromEntityToModel(VideoQuestionDataEntity entity) {
+    return VideoQuestionDataModel(
         id: entity.id,
         videoId: entity.videoId,
         questionText: entity.questionText,
         popUpTimeSecond: entity.popUpTimeSecond,
-        status: entity.status,
+        message: entity.message,
+        seen: entity.seen,
         choices: List<VideoChoiceDataEntity>.from(entity.choices)
             .map((entity) => entity.toVideoChoiceDataModel)
             .toList());
   }
 
   @override
-  VideoQustionDataEntity toEntityFromModel(VideoQustionDataModel model) {
-    return VideoQustionDataEntity(
+  VideoQuestionDataEntity toEntityFromModel(VideoQuestionDataModel model) {
+    return VideoQuestionDataEntity(
       id: model.id,
       videoId: model.videoId,
       questionText: model.questionText,
       popUpTimeSecond: model.popUpTimeSecond,
-      status: model.status,
+      message: model.message,
+      seen: model.seen,
       choices: List<VideoChoiceDataModel>.from(model.choices)
           .map((model) => model.toVideoChoiceDataEntity)
           .toList(),
@@ -45,12 +42,12 @@ class VideoQustionDataModelToEntityMapper extends VideoQustionDataMapper<
   }
 }
 
-extension VideoQustionDataModelExt on VideoQustionDataModel {
-  VideoQustionDataEntity get toVideoQustionDataEntity =>
-      VideoQustionDataModelToEntityMapper().toEntityFromModel(this);
+extension VideoQuestionDataModelExt on VideoQuestionDataModel {
+  VideoQuestionDataEntity get toVideoQuestionDataEntity =>
+      VideoQuestionDataModelToEntityMapper().toEntityFromModel(this);
 }
 
-extension VideoQustionDataEntityExt on VideoQustionDataEntity {
-  VideoQustionDataModel get toVideoQustionDataModel =>
-      VideoQustionDataModelToEntityMapper().fromEntityToModel(this);
+extension VideoQustionDataEntityExt on VideoQuestionDataEntity {
+  VideoQuestionDataModel get toVideoQuestionDataModel =>
+      VideoQuestionDataModelToEntityMapper().fromEntityToModel(this);
 }

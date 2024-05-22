@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lms/src/core/common_widgets/custom_toasty.dart';
+import 'package:lms/src/feature/course/domain/entities/video_content_data_entity.dart';
 import 'package:lms/src/feature/course/domain/entities/video_data_entity.dart';
 import 'package:video_player/video_player.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -32,7 +33,7 @@ class TranscriptVideoScreen extends StatefulWidget {
 
 class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
     with AppTheme, Language, TranscriptScreenVideoService {
-  late CourseVideoScreenArgs _screenArgs;
+
   YoutubePlayerController? _youtubeController;
   VideoPlayerController? _controller;
   ChewieController? _chewieController;
@@ -45,10 +46,10 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
   void initState() {
     super.initState();
 
-    _screenArgs = widget.arguments as CourseVideoScreenArgs;
+    screenArgs = widget.arguments as CourseVideoScreenArgs;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      loadVideoData(_screenArgs.contentId);
-      // loadVideoData(136);
+      loadVideoData(screenArgs.data.contentId);
+      // loadVideoData(113);
     });
   }
 
@@ -69,7 +70,7 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
       resizeToAvoidBottomInset: true,
       backgroundColor: clr.whiteColor,
       body: LayoutBuilder(
-        builder: (context, constraints) => AppStreamBuilder<VideoDataEntity>(
+        builder: (context, constraints) => AppStreamBuilder<VideoContentDataEntity>(
           stream: videoDetailsDataStreamController.stream,
           loadingBuilder: (context) {
             return Column(
@@ -93,7 +94,7 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      if (data.category == VideoCategory.s3.name) ...[
+                      if (data.videoData?.category == VideoCategory.s3.name) ...[
                         ///Activate solid video player
                         Stack(
                           fit: StackFit.loose,
@@ -103,7 +104,7 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                                   videoDetailsDataStreamController.stream,
                               playbackStream:
                                   playbackPausePlayStreamController.stream,
-                              // onProgressChanged: onPlaybackProgressChanged,
+                              onProgressChanged: onPlaybackProgressChanged,
                               // interceptSeekTo: onInterceptPlaybackSeekToPosition,
                               // overlay: GestureDetector(
                               //     onTap: (){},
@@ -298,7 +299,7 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                                       Expanded(
                                         child: Text(
                                           label(
-                                              e: data.titleEn, b: data.titleBn),
+                                              e: data.videoData!.titleEn, b: data.videoData!.titleEn),
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 1,
                                           style: TextStyle(
@@ -364,8 +365,8 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                                       horizontal: size.w16),
                                   child: Text(
                                     label(
-                                        e: _screenArgs.contentTitleEn,
-                                        b: _screenArgs.contentTitleBn),
+                                        e: screenArgs.data.contentTitleEn,
+                                        b: screenArgs.data.contentTitleBn),
                                     style: TextStyle(
                                         fontFamily:
                                             StringData.fontFamilyPoppins,
@@ -378,8 +379,8 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                                 TabSectionWidget(
                                   tabTitle1:
                                       label(e: en.transcript, b: bn.transcript),
-                                  videoDataEntity: data,
-                                  contentType: _screenArgs.contentType,
+                                  videoDataEntity: data.videoData!,
+                                  contentType: screenArgs.data.contentType,
                                 )
                               ],
                             );

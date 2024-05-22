@@ -8,7 +8,8 @@ class VideoDataEntity {
   final String transcriptEn;
   final String transcriptBn;
   final int sort;
-  final int status;
+  final int message;
+  final int totalDuration;
   final String category;
   final String videoUrl;
   final String createdAt;
@@ -23,7 +24,8 @@ class VideoDataEntity {
     required this.transcriptEn,
     required this.transcriptBn,
     required this.sort,
-    required this.status,
+    required this.message,
+    required this.totalDuration,
     required this.category,
     required this.videoUrl,
     required this.createdAt,

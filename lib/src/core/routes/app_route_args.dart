@@ -3,6 +3,7 @@ import 'dart:ui';
 import '../../feature/assessment/domain/entities/exam_data_entity.dart';
 import '../../feature/assignment/domain/entities/assignment_data_entity.dart';
 import '../../feature/assignment/presentation/models/assignment_model.dart';
+import '../../feature/course/domain/entities/course_content_data_entity.dart';
 import '../../feature/notes/domain/entities/note_data_entity.dart';
 
 enum NoteType { edit, create, readMode }
@@ -57,15 +58,9 @@ class CourseBlendedScreenArgs {
 }
 
 class CourseVideoScreenArgs {
-  final int contentId;
-  final String contentType;
-  final String contentTitleEn;
-  final String contentTitleBn;
+  final CourseContentDataEntity data;
   CourseVideoScreenArgs(
-      {required this.contentId,
-      required this.contentType,
-      required this.contentTitleEn,
-      required this.contentTitleBn});
+      {required this.data});
 }
 
 class CourseAssessmentScreenArgs {
