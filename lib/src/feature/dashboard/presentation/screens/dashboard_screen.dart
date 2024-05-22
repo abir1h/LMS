@@ -112,7 +112,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                     title: label(e: en.allCourse, b: bn.allCourse),
                     onPressed: () => onTapCard(CircularStatus.courses.name),
                     subTitle: label(
-                        e: data.courses.length.toString(),
+                        e: (data.courseSummery.runningCourses +
+                            data.courseSummery.upcomingCourses).toString(),
                         b: replaceEnglishNumberWithBengali(
                             (data.courseSummery.runningCourses +
                                     data.courseSummery.upcomingCourses)
