@@ -7,7 +7,6 @@ import '../../../../core/common_widgets/app_stream.dart';
 import '../../../course/domain/entities/video_data_entity.dart';
 import 'video_player.dart';
 
-
 class ContentPlayerWidget extends StatefulWidget {
   final Stream<DataState<VideoContentDataEntity>> playerStream;
   final Stream<DataState<bool>> playbackStream;
@@ -32,7 +31,8 @@ class ContentPlayerWidget extends StatefulWidget {
 }
 
 class _CustomPlayerWidgetState extends State<ContentPlayerWidget> {
-  final ContentVideoPlayerController _playerController = ContentVideoPlayerController();
+  final ContentVideoPlayerController _playerController =
+      ContentVideoPlayerController();
 
   // VideoDataEntity _currentContent = VideoContentViewModel.empty();
   late VideoContentDataEntity _currentContent;
@@ -60,17 +60,18 @@ class _CustomPlayerWidgetState extends State<ContentPlayerWidget> {
     if (!mounted) return;
     _currentContent = (event as DataLoadedState<VideoContentDataEntity>).data;
     _playerController.play(
-      // getVideoFileUrl("http://116.204.155.53/${_currentContent.videoData?.videoUrl}"),
-      //   getVideoFileUrl('http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4'),
-        getVideoFileUrl("http://116.204.155.53/video/7b54b930-2fba-46d1-8741-50a60cb9ecdf.mp4"),
+        getVideoFileUrl(
+            "http://116.204.155.53/${_currentContent.videoData?.videoUrl}"),
+        //   getVideoFileUrl('http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4'),
+        //   getVideoFileUrl("http://116.204.155.53/video/7b54b930-2fba-46d1-8741-50a60cb9ecdf.mp4"),
 
-      autoPlay: true,
-      playPosition:const Duration(seconds: 0)
-      // playPosition:Duration(seconds: _currentContent.lastPlayedDurationTimeSec)
-      // _currentContent.playedDurationTimeSec < _currentContent.videoDurationSecond
-      //     ? Duration(seconds: _currentContent.playedDurationTimeSec)
-      //     : null,
-    );
+        autoPlay: true,
+        playPosition: const Duration(seconds: 0)
+        // playPosition:Duration(seconds: _currentContent.lastPlayedDurationTimeSec)
+        // _currentContent.playedDurationTimeSec < _currentContent.videoDurationSecond
+        //     ? Duration(seconds: _currentContent.playedDurationTimeSec)
+        //     : null,
+        );
   }
 
   void _onPlaybackChange(DataState<bool> event) {
@@ -84,7 +85,7 @@ class _CustomPlayerWidgetState extends State<ContentPlayerWidget> {
 
   double _interceptSeekTo(double seekPosition, double totalDuration) {
     return widget.interceptSeekTo
-        ?.call(_currentContent, seekPosition, totalDuration) ??
+            ?.call(_currentContent, seekPosition, totalDuration) ??
         seekPosition;
   }
 
@@ -106,7 +107,6 @@ String getVideoFileUrl(String filePath) {
   if (filePath.isEmpty) return "";
   return filePath;
 }
-
 
 // class VideoContentViewModel extends ContentEntity{
 //   VideoContentViewModel.fromJson(Map<String, dynamic> json) : super.fromJson(json);
