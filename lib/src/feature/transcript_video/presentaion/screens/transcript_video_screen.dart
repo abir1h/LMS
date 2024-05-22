@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lms/src/core/common_widgets/custom_toasty.dart';
+import 'package:lms/src/feature/course/domain/entities/video_choice_data_entity.dart';
 import 'package:lms/src/feature/course/domain/entities/video_content_data_entity.dart';
 import 'package:lms/src/feature/course/domain/entities/video_data_entity.dart';
 import 'package:lms/src/feature/course/domain/entities/video_qustion_data_entity.dart';
@@ -147,32 +148,51 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                                               showOverlay = false;
                                               AppEventsNotifier.notify(
                                                   EventAction.videoWidget);
+                                              playbackPausePlayStreamController
+                                                  .add(DataLoadedState<bool>(
+                                                      true));
                                             },
-                                            OnTapSubmit: () {},
+                                            onTapSubmit: () {
+                                              showOverlay = false;
+                                              AppEventsNotifier.notify(
+                                                  EventAction.videoWidget);
+                                              playbackPausePlayStreamController
+                                                  .add(DataLoadedState<bool>(
+                                                  true));
+                                              // VideoChoiceDataEntity choice =
+                                              //     data.choices.firstWhere(
+                                              //         (element) =>
+                                              //             element.isSelected ==
+                                              //             true);
+                                              // if (choice.isCorrect) {
+                                              //   CustomToasty.of(context).showSuccess(label(e: "Correct Answer", b: "সঠিক উত্তর"));
+                                              //   showOverlay = false;
+                                              //   AppEventsNotifier.notify(
+                                              //       EventAction.videoWidget);
+                                              //   playbackPausePlayStreamController
+                                              //       .add(DataLoadedState<bool>(
+                                              //       true));
+                                              // }
+                                            },
                                             builder: (BuildContext context,
                                                 int index, item) {
                                               return OverlayMCQAnswerOptionWidget(
                                                 value: item.choiceText,
-                                                isSelected: item.isCorrect,
+                                                isSelected: item.isSelected,
                                                 onTap: () => setState(() {
-
-                                                  /*  for (OptionDataEntity optionDataEntity
-                                  in data.options) {
-                                    if (data.options
-                                        .indexOf(optionDataEntity) !=
-                                        index) {
-                                      optionDataEntity.isSelected = false;
-                                      optionDataEntity.userCorrectValue =
-                                      "";
-                                    } else {
-                                      optionDataEntity.isSelected =
-                                      !optionDataEntity.isSelected;
-                                      item.userCorrectValue =
-                                          item.optionValue;
-                                    }
-                                  }
-                                  print(
-                                      "Ansewwlelkfekf ${item.userCorrectValue}");*/
+                                                  item.isSelected =
+                                                  !item.isSelected;
+                                                  // for (VideoChoiceDataEntity videoChoice
+                                                  //     in data.choices) {
+                                                  //   if (data.choices.indexOf(
+                                                  //           videoChoice) !=
+                                                  //       index) {
+                                                  //     item.isSelected = false;
+                                                  //   } else {
+                                                  //     item.isSelected =
+                                                  //         !item.isSelected;
+                                                  //   }
+                                                  // }
                                                 }),
                                               );
                                             },

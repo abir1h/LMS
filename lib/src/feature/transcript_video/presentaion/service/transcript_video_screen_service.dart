@@ -112,7 +112,7 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
       // if(currentContent.videoQustion?.where((element) {element.popUpTimeSecond==playedPositionSec?true:false})){
       //
       // }
-      print(playedPositionSec);
+
       VideoQuestionDataEntity? questionData = currentContent.videoQuestion
           ?.singleWhere(
               (element) => element.popUpTimeSecond == playedPositionSec,

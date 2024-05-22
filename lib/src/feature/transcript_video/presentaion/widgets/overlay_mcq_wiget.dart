@@ -10,7 +10,7 @@ import '../../../assessment/domain/entities/question_data_entity.dart';
 class OverlayMCQWidget<T> extends StatelessWidget with AppTheme {
   final List<T> items;
   final VideoQuestionDataEntity data;
-  final VoidCallback onTapSkip, OnTapSubmit;
+  final VoidCallback onTapSkip, onTapSubmit;
   final Widget Function(BuildContext context, int index, T item) builder;
   const OverlayMCQWidget(
       {super.key,
@@ -18,7 +18,7 @@ class OverlayMCQWidget<T> extends StatelessWidget with AppTheme {
       required this.builder,
       required this.data,
       required this.onTapSkip,
-      required this.OnTapSubmit});
+      required this.onTapSubmit});
 
   @override
   Widget build(BuildContext context) {
@@ -105,21 +105,25 @@ class OverlayMCQWidget<T> extends StatelessWidget with AppTheme {
             SizedBox(
               width: size.w8,
             ),
-            Container(
-              padding:
-                  EdgeInsets.symmetric(horizontal: size.w12, vertical: size.h2),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(size.r50),
-                  color: clr.appPrimaryColorGreen),
-              child: Text(
-                label(e: 'Submit', b: 'সাবমিট'),
-                style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: size.textXSmall,
-                    fontFamily: StringData.fontFamilyRoboto,
-                    color: clr.whiteColor),
+            GestureDetector(
+              onTap: onTapSubmit,
+              child:  Container(
+                padding:
+                EdgeInsets.symmetric(horizontal: size.w12, vertical: size.h2),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(size.r50),
+                    color: clr.appPrimaryColorGreen),
+                child: Text(
+                  label(e: 'Submit', b: 'সাবমিট'),
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: size.textXSmall,
+                      fontFamily: StringData.fontFamilyRoboto,
+                      color: clr.whiteColor),
+                ),
               ),
             ),
+
           ]),
           SizedBox(
             height: size.h20,
@@ -178,51 +182,6 @@ class _OverlayMCQAnswerOptionWidgetState
             ),
         ],
       ),
-    );
-  }
-}
-
-///Previous One
-class OverlayMCQAnswerWidget extends StatefulWidget {
-  // final QuestionsEntity data;
-  final VideoQuestionDataEntity data;
-  const OverlayMCQAnswerWidget({
-    Key? key,
-    required this.data,
-  }) : super(key: key);
-
-  @override
-  State<OverlayMCQAnswerWidget> createState() => _OverlayMCQAnswerWidgetState();
-}
-
-class _OverlayMCQAnswerWidgetState extends State<OverlayMCQAnswerWidget>
-    with AppTheme {
-  @override
-  Widget build(BuildContext context) {
-    return ListView.separated(
-      shrinkWrap: true,
-      itemCount: widget.data.choices.length,
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) => OverlayMCQAnswerOptionWidget(
-        value: widget.data.choices[index].choiceText,
-        isSelected: widget.data.choices[index].isCorrect,
-        onTap: () => setState(() {
-          /*  for (OptionDataEntity optionDataEntity in widget.data.options) {
-            if (widget.data.options.indexOf(optionDataEntity) != index) {
-              optionDataEntity.isSelected = false;
-            } else {
-              optionDataEntity.isSelected = !optionDataEntity.isSelected;
-              widget.data.options[index].userCorrectValue =
-                  widget.data.options[index].optionValue;
-            }
-          }
-          print(
-              "Ansewwlelkfekf ${widget.data.options[index].userCorrectValue}");*/
-        }),
-      ),
-      separatorBuilder: (context, index) {
-        return SizedBox(height: size.h12);
-      },
     );
   }
 }
