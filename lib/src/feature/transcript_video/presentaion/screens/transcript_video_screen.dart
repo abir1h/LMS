@@ -140,7 +140,7 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                                 dataBuilder: (context, data) {
                                   return showOverlay
                                       ? AspectRatio(
-                                          aspectRatio: 16 / 9,
+                                          aspectRatio: MediaQuery.of(context).orientation==Orientation.portrait? 16/9: 19/9,
                                           child: OverlayMCQWidget(
                                             items: data.choices,
                                             data: data,
