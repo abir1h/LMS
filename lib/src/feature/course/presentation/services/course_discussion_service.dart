@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/common_widgets/app_stream.dart';
+import '../../../../core/utility/app_label.dart';
 import '../../../discussion/data/data_sources/remote/discussion_data_source.dart';
 import '../../../discussion/data/repositories/discussion_repository_imp.dart';
 import '../../../discussion/domain/entities/discussion_data_entity.dart';
@@ -55,7 +56,7 @@ mixin CourseDiscussionWidgetService<T extends StatefulWidget> on State<T>
             .add(DataLoadedState<List<DiscussionDataEntity>>(value.data));
       } else if (value.error == null && value.data.isEmpty) {
         discussionDataStreamController
-            .add(EmptyState(message: 'No Discussions Found'));
+            .add(EmptyState(message:  label(e: "No Discussions Found", b: "কোন আলোচনা পাওয়া যায়নি"),));
       } else {
         _view.showWarning(value.message!);
       }
