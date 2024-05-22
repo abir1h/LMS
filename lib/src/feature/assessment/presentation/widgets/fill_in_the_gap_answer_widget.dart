@@ -15,13 +15,18 @@ class FillInTheGapAnswerWidget<T> extends StatelessWidget with AppTheme {
       required this.question,
       required this.items,
       required this.builder});
+  String _textSelect(String str) {
+    str = str.replaceAll('</p>', '');
+    str = str.replaceAll('<p>', '');
+    return str;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        BuildSentence(sentence: question),
+        BuildSentence(sentence: _textSelect(question)),
         SizedBox(height: size.h16),
         ListView.separated(
           shrinkWrap: true,
@@ -67,6 +72,7 @@ class BuildSentence extends StatelessWidget with AppTheme {
 
   @override
   Widget build(BuildContext context) {
+    // sentence.replaceAll('</p>', '');
     List<String> sentenceParts = sentence.split(' ');
 
     return Wrap(
@@ -75,7 +81,7 @@ class BuildSentence extends StatelessWidget with AppTheme {
       children: List.generate(
         sentenceParts.length,
         (index) {
-          if (sentenceParts[index].contains("{{")) {
+          if (sentenceParts[index].contains("..........")) {
             return const BuildBlank();
           } else {
             return Padding(
