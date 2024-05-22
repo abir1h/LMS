@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lms/src/core/common_widgets/custom_empty_widget.dart';
 
 import '../../../../core/utility/app_label.dart';
 import 'recognition_card.dart';
@@ -37,7 +38,12 @@ class RecognitionWidget extends StatelessWidget with AppTheme, Language {
               ),
             ),
             Expanded(
-              child: SingleChildScrollView(
+              child: CustomEmptyWidget(
+                message: '',
+                title: label(
+                    e: 'No certificates found',
+                    b: 'কোনো সার্টিফিকেট পাওয়া যায়নি'),
+              ), /*child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: Column(
                   children: [
@@ -93,7 +99,7 @@ class RecognitionWidget extends StatelessWidget with AppTheme, Language {
                             b: "সময়কাল  ১৫/১১/২৩ - ৩০/১১/২৩")),
                   ],
                 ),
-              ),
+              ),*/
             )
           ],
         ),

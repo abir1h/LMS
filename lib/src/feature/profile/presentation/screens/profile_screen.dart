@@ -419,6 +419,7 @@ class PersonalInfoWidget extends StatelessWidget with AppTheme, Language {
                     e: data.userInfoDataEntity!.emisUserDataEntity!.designation,
                     b: data.userInfoDataEntity!.emisUserDataEntity!.designation,
                   )),
+             if(data.userInfoDataEntity!.emisUserDataEntity!.indexNumber.isNotEmpty)
               TitleWithIcon(
                   onTap: () {},
                   icon: Icons.format_list_numbered,
