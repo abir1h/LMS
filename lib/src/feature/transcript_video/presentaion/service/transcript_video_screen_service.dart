@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:lms/src/feature/course/domain/entities/video_content_data_entity.dart';
 
+import '../../../course/domain/entities/video_content_data_entity.dart';
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../../../course/data/data_sources/remote/course_data_source.dart';
 import '../../../course/data/repositories/course_repository_imp.dart';
 import '../../../course/domain/entities/video_data_entity.dart';
+import '../../../course/domain/entities/video_qustion_data_entity.dart';
 import '../../../course/domain/use_cases/course_use_case.dart';
 import '../../../shared/domain/entities/response_entity.dart';
 import '../screens/transcript_video_screen.dart';
@@ -22,7 +23,7 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
     implements _ViewModel {
   late _ViewModel _view;
   late CourseVideoScreenArgs screenArgs;
-  int currentPlayedPositionSec=0;
+  int currentPlayedPositionSec = 0;
 
   final CourseUseCase _courseUseCase = CourseUseCase(
       courseRepository: CourseRepositoryImp(
@@ -58,8 +59,8 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
   }
 
   ///Stream controllers
-  final AppStreamController<VideoContentDataEntity> videoDetailsDataStreamController =
-      AppStreamController();
+  final AppStreamController<VideoContentDataEntity>
+      videoDetailsDataStreamController = AppStreamController();
   final AppStreamController<bool> playbackPausePlayStreamController =
       AppStreamController();
 
@@ -78,8 +79,7 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
         }
       } else if (value.error == null && value.data == null) {
         _view.showWarning(value.message!);
-        videoDetailsDataStreamController
-            .add(EmptyState(message: ""));
+        videoDetailsDataStreamController.add(EmptyState(message: ""));
       } else {
         _view.showWarning(value.message!);
       }
@@ -98,18 +98,36 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
   void onPlaybackProgressChanged(VideoContentDataEntity currentContent,
       double playedPosition, double totalDuration) {
     int playedPositionSec = (playedPosition ~/ 1000).round();
-    if(currentPlayedPositionSec!=playedPositionSec){
-      currentPlayedPositionSec=playedPositionSec;
-    var   result = currentContent.videoQuestion?.singleWhere((element) => element == 1,
-          );
+    if (currentPlayedPositionSec != playedPositionSec) {
+      currentPlayedPositionSec = playedPositionSec;
+      // var   result = currentContent.videoQuestion?.singleWhere((element) => element == 1,
+      //       );
 
       // if(currentContent.videoQustion?.where((element) {element.popUpTimeSecond==playedPositionSec?true:false})){
       //
       // }
       print(playedPositionSec);
+      VideoQuestionDataEntity? questionData = currentContent.videoQuestion
+          ?.singleWhere(
+              (element) => element.popUpTimeSecond == playedPositionSec,
+              orElse: () => VideoQuestionDataEntity(
+                    id: -1,
+                    videoId: -1,
+                    questionText: "",
+                    popUpTimeSecond: 0,
+                    message: false,
+                    seen: false,
+                    choices: [],
+                  ));
+      if (questionData?.id != -1) {
+        print("pop question");
+      }
     }
-  if (screenArgs.data.lastWatchTime < playedPositionSec) {
-    screenArgs.data.lastWatchTime = screenArgs.data.lastWatchTime < playedPositionSec?playedPositionSec:screenArgs.data.lastWatchTime;
-   }
+    if (screenArgs.data.lastWatchTime < playedPositionSec) {
+      screenArgs.data.lastWatchTime =
+          screenArgs.data.lastWatchTime < playedPositionSec
+              ? playedPositionSec
+              : screenArgs.data.lastWatchTime;
+    }
   }
 }

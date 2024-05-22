@@ -4,12 +4,15 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lms/src/core/common_widgets/custom_shimmer.dart';
+import 'package:lms/src/feature/transcript_video/presentaion/screens/transcript_video_screen.dart';
 
 import '../../feature/accessibility/presentation/controllers/accessibility_controller.dart';
 import '../../feature/accessibility/presentation/screens/accessibility_bottom_sheet.dart';
+import '../../feature/course/domain/entities/course_content_data_entity.dart';
 import '../../feature/profile/domain/entities/all_progress_data_entity.dart';
 import '../../feature/profile/presentation/service/profile_service.dart';
 import '../routes/app_route.dart';
+import '../routes/app_route_args.dart';
 import '../service/auth_cache_manager.dart';
 import '../service/notifier/app_events_notifier.dart';
 import 'app_stream.dart';
@@ -246,7 +249,23 @@ class _DrawerWidgetState extends State<DrawerWidget>
               DrawerLinkWidget(
                 icon: Icons.contact_support,
                 text: label(e: en.aboutUs, b: bn.aboutUs),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => TranscriptVideoScreen(
+                            arguments: CourseVideoScreenArgs(
+                                data: CourseContentDataEntity(
+                                    contentType: "circular_video",
+                                    contentId: 2,
+                                    contentTitleBn: "asd",
+                                    contentTitleEn: "asd",
+                                    isCompleted: false,
+                                    lastWatchTime: 0,
+                                    schedule: "",
+                                    sort: 0)))),
+                  );
+                },
               ),
               DrawerLinkWidget(
                 icon: Icons.logout,

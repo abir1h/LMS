@@ -48,8 +48,8 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
 
     screenArgs = widget.arguments as CourseVideoScreenArgs;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      loadVideoData(screenArgs.data.contentId);
-      // loadVideoData(113);
+      // loadVideoData(screenArgs.data.contentId);
+      loadVideoData(220);
     });
   }
 
