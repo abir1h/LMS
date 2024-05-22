@@ -171,6 +171,7 @@ class _DashboardScreenState extends State<DashboardScreen>
       },
       emptyBuilder: (context, message, icon) => CustomEmptyWidget(
         message: message,
+        title: label(e: "No Data Found", b: "কোন তথ্য পাওয়া যায়নি"),
         // constraints: constraints,
         // offset: 350.w,
       ),

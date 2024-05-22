@@ -67,6 +67,9 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
   final AppStreamController<bool> playbackPausePlayStreamController =
       AppStreamController();
 
+  final AppStreamController<VideoQuestionDataEntity>
+  videoQuestionDataStreamController = AppStreamController();
+
   ///Load Video details
   void loadVideoData(int courseContentId) {
     if (!mounted) return;
@@ -109,7 +112,7 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
       // if(currentContent.videoQustion?.where((element) {element.popUpTimeSecond==playedPositionSec?true:false})){
       //
       // }
-      print(playedPositionSec);
+
       VideoQuestionDataEntity? questionData = currentContent.videoQuestion
           ?.singleWhere(
               (element) => element.popUpTimeSecond == playedPositionSec,
@@ -125,7 +128,9 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
       if (questionData?.id != -1) {
         print("pop question");
         showOverlay=true;
-       AppEventsNotifier.notify(EventAction.videoWidget);
+        AppEventsNotifier.notify(EventAction.videoWidget);
+        videoQuestionDataStreamController.add(DataLoadedState<VideoQuestionDataEntity>(questionData!));
+        playbackPausePlayStreamController.add(DataLoadedState<bool>(false));
       }
     }
     if (screenArgs.data.lastWatchTime < playedPositionSec) {

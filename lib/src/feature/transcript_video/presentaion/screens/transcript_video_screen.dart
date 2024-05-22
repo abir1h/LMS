@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lms/src/core/common_widgets/custom_toasty.dart';
+import 'package:lms/src/feature/course/domain/entities/video_choice_data_entity.dart';
 import 'package:lms/src/feature/course/domain/entities/video_content_data_entity.dart';
 import 'package:lms/src/feature/course/domain/entities/video_data_entity.dart';
+import 'package:lms/src/feature/course/domain/entities/video_qustion_data_entity.dart';
 import 'package:video_player/video_player.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -34,7 +36,7 @@ class TranscriptVideoScreen extends StatefulWidget {
 }
 
 class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
-    with AppTheme, Language, TranscriptScreenVideoService {
+    with AppTheme, Language, TranscriptScreenVideoService, AppEventsNotifier {
   YoutubePlayerController? _youtubeController;
   VideoPlayerController? _controller;
   ChewieController? _chewieController;
@@ -49,8 +51,8 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
 
     screenArgs = widget.arguments as CourseVideoScreenArgs;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // loadVideoData(screenArgs.data.contentId);
-      loadVideoData(220);
+      loadVideoData(screenArgs.data.contentId);
+      // loadVideoData(220);
     });
   }
 
@@ -129,46 +131,77 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                                     size: size.r20,
                                   ),
                                 )),
-                            if (showOverlay)
-                              AspectRatio(
-                                aspectRatio: 16 / 9,
-                                child: OverlayMCQWidget(
-                                  items: data.videoQuestion![1].choices,
-                                  data: data.videoQuestion![1],
-                                  onTapSkip: () {
-                                    showOverlay = false;
-                                    AppEventsNotifier.notify(
-                                        EventAction.videoWidget);
-                                  },
-                                  OnTapSubmit: () {},
-                                  builder:
-                                      (BuildContext context, int index, item) {
-                                    return OverlayMCQAnswerOptionWidget(
-                                      value: item.choiceText,
-                                      isSelected: item.isCorrect,
-                                      onTap: () => setState(() {
-                                        /*  for (OptionDataEntity optionDataEntity
-                                  in data.options) {
-                                    if (data.options
-                                        .indexOf(optionDataEntity) !=
-                                        index) {
-                                      optionDataEntity.isSelected = false;
-                                      optionDataEntity.userCorrectValue =
-                                      "";
-                                    } else {
-                                      optionDataEntity.isSelected =
-                                      !optionDataEntity.isSelected;
-                                      item.userCorrectValue =
-                                          item.optionValue;
-                                    }
-                                  }
-                                  print(
-                                      "Ansewwlelkfekf ${item.userCorrectValue}");*/
-                                      }),
-                                    );
-                                  },
-                                ),
-                              )
+                            AppStreamBuilder(
+                                stream:
+                                    videoQuestionDataStreamController.stream,
+                                loadingBuilder: (context) {
+                                  return Container();
+                                },
+                                dataBuilder: (context, data) {
+                                  return showOverlay
+                                      ? AspectRatio(
+                                          aspectRatio: 16 / 9,
+                                          child: OverlayMCQWidget(
+                                            items: data.choices,
+                                            data: data,
+                                            onTapSkip: () {
+                                              showOverlay = false;
+                                              AppEventsNotifier.notify(
+                                                  EventAction.videoWidget);
+                                              playbackPausePlayStreamController
+                                                  .add(DataLoadedState<bool>(
+                                                      true));
+                                            },
+                                            onTapSubmit: () {
+                                              showOverlay = false;
+                                              AppEventsNotifier.notify(
+                                                  EventAction.videoWidget);
+                                              playbackPausePlayStreamController
+                                                  .add(DataLoadedState<bool>(
+                                                  true));
+                                              // VideoChoiceDataEntity choice =
+                                              //     data.choices.firstWhere(
+                                              //         (element) =>
+                                              //             element.isSelected ==
+                                              //             true);
+                                              // if (choice.isCorrect) {
+                                              //   CustomToasty.of(context).showSuccess(label(e: "Correct Answer", b: "সঠিক উত্তর"));
+                                              //   showOverlay = false;
+                                              //   AppEventsNotifier.notify(
+                                              //       EventAction.videoWidget);
+                                              //   playbackPausePlayStreamController
+                                              //       .add(DataLoadedState<bool>(
+                                              //       true));
+                                              // }
+                                            },
+                                            builder: (BuildContext context,
+                                                int index, item) {
+                                              return OverlayMCQAnswerOptionWidget(
+                                                value: item.choiceText,
+                                                isSelected: item.isSelected,
+                                                onTap: () => setState(() {
+                                                  item.isSelected =
+                                                  !item.isSelected;
+                                                  // for (VideoChoiceDataEntity videoChoice
+                                                  //     in data.choices) {
+                                                  //   if (data.choices.indexOf(
+                                                  //           videoChoice) !=
+                                                  //       index) {
+                                                  //     item.isSelected = false;
+                                                  //   } else {
+                                                  //     item.isSelected =
+                                                  //         !item.isSelected;
+                                                  //   }
+                                                  // }
+                                                }),
+                                              );
+                                            },
+                                          ),
+                                        )
+                                      : Container();
+                                },
+                                emptyBuilder: (context, message, icon) =>
+                                    Container()),
                             // Positioned(
                             //   top: 80,
                             //   left: .45.sw,
@@ -813,6 +846,15 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
           enableCaption: true,
           showLiveFullscreenButton: true),
     );
+  }
+
+  @override
+  void onEventReceived(EventAction action) {
+    if (mounted) {
+      if (action == EventAction.videoWidget) {
+        setState(() {});
+      }
+    }
   }
 }
 
