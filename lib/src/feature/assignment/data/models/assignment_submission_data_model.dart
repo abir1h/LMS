@@ -15,8 +15,8 @@ class AssignmentSubmissionDataModel {
   final String answer;
   final int marks;
   final String remarks;
-  final String status;
-  final String isResubmitted;
+  final int status;
+  final int isResubmitted;
   final String createdAt;
   final String updatedAt;
   final List<AttachmentDataModel> attachments;
@@ -53,8 +53,8 @@ class AssignmentSubmissionDataModel {
         answer: json["answer"] ?? "",
         marks: json["marks"] ?? -1,
         remarks: json["remarks"] ?? "",
-        status: json["status"] ?? "",
-        isResubmitted: json["is_resubmitted"] ?? "",
+        status: json["status"] ?? -1,
+        isResubmitted: json["is_resubmitted"] ?? -1,
         createdAt: json["created_at"] ?? "",
         updatedAt: json["updated_at"] ?? "",
         attachments: json["attachments"] != null

@@ -12,8 +12,8 @@ class AssignmentSubmissionDataEntity {
   final String answer;
   final int marks;
   final String remarks;
-  final String status;
-  final String isResubmitted;
+  final int status;
+  final int isResubmitted;
   final String createdAt;
   final String updatedAt;
   final List<AttachmentDataEntity> attachments;

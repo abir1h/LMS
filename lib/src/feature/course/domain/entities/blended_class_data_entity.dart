@@ -10,7 +10,7 @@ class BlendedClassDataEntity {
   final String titleEn;
   final String titleBn;
   final String classSchedule;
-  final String durations;
+  final int durations;
   final String time;
   final String locationEn;
   final String locationBn;

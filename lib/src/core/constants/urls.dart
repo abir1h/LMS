@@ -4,6 +4,8 @@ class ApiCredential {
   // static String baseUrl = "http://103.209.40.89:91/api/clms/dev/mobile";
   static String baseUrl = "http://103.209.40.89";
 
+  static String mediaBaseUrl = "http://116.204.155.53/";
+
   static String apiKey = "";
 
   static String getEMISLink = "http://103.209.40.89:81/api/auth/dev/emis-link";

@@ -13,7 +13,7 @@ class BlendedClassDataModel {
   final String titleEn;
   final String titleBn;
   final String classSchedule;
-  final String durations;
+  final int durations;
   final String time;
   final String locationEn;
   final String locationBn;
@@ -67,7 +67,7 @@ class BlendedClassDataModel {
         titleEn: json["title_en"] ?? "",
         titleBn: json["title_bn"] ?? "",
         classSchedule: json["class_schedule"] ?? "",
-        durations: json["durations"] ?? "",
+        durations: json["durations"] ?? -1,
         time: json["time"] ?? "",
         locationEn: json["location_en"] ?? "",
         locationBn: json["location_bn"] ?? "",

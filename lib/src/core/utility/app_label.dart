@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter_quill/flutter_quill.dart';
+import '../constants/common_imports.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -314,7 +315,7 @@ Future<void> downloadFile({
     if (fileExists && context.mounted) {
       CustomToasty.of(context).showWarning("File already downloaded");
     } else {
-      client.getUrl(Uri.parse("http://116.204.155.53/$url")).then(
+      client.getUrl(Uri.parse(ApiCredential.mediaBaseUrl + url)).then(
         (HttpClientRequest request) {
           CustomToasty.of(context).showSuccess("Downloading file...");
           return request.close();

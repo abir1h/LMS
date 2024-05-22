@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lms/src/feature/course/domain/entities/video_content_data_entity.dart';
 
 import '../../../../core/common_widgets/app_stream.dart';
+import '../../../../core/constants/common_imports.dart';
 import '../../../course/domain/entities/video_data_entity.dart';
 import 'video_player.dart';
 
@@ -61,7 +62,7 @@ class _CustomPlayerWidgetState extends State<ContentPlayerWidget> {
     _currentContent = (event as DataLoadedState<VideoContentDataEntity>).data;
     _playerController.play(
         getVideoFileUrl(
-            "http://116.204.155.53/${_currentContent.videoData?.videoUrl}"),
+            ApiCredential.mediaBaseUrl + _currentContent.videoData!.videoUrl),
         //   getVideoFileUrl('http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4'),
         //   getVideoFileUrl("http://116.204.155.53/video/7b54b930-2fba-46d1-8741-50a60cb9ecdf.mp4"),
 

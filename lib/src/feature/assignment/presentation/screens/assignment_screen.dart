@@ -93,11 +93,11 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                           child: GestureDetector(
                               onTap: () {
                                 ImagePreviewDialog.showImagePreview(
-                                    context, data.supportingDoc);
+                                    context, ApiCredential.mediaBaseUrl + data.supportingDoc);
                               },
                               child: Center(
                                 child: CachedNetworkImage(
-                                  imageUrl: data.supportingDoc,
+                                  imageUrl: ApiCredential.mediaBaseUrl + data.supportingDoc,
                                   placeholder: (context, url) =>
                                       const CircularProgressIndicator(),
                                   errorWidget: (context, url, error) =>
