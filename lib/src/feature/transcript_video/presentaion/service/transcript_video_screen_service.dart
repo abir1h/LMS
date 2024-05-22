@@ -121,6 +121,7 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
                   ));
       if (questionData?.id != -1) {
         print("pop question");
+        playbackPausePlayStreamController.add(DataLoadedState<bool>(false));
       }
     }
     if (screenArgs.data.lastWatchTime < playedPositionSec) {
