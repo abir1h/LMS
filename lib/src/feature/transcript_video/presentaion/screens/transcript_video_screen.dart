@@ -15,11 +15,13 @@ import '../../../../core/common_widgets/circuler_widget.dart';
 import '../../../../core/common_widgets/empty_widget.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/common_widgets/custom_switch_button.dart';
+import '../../../../core/service/notifier/app_events_notifier.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../course/presentation/widgets/tab_section_widget.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../service/transcript_video_screen_service.dart';
 import '../widgets/content_player_widget.dart';
+import '../widgets/overlay_mcq_wiget.dart';
 
 enum VideoCategory { s3, link }
 
@@ -33,7 +35,6 @@ class TranscriptVideoScreen extends StatefulWidget {
 
 class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
     with AppTheme, Language, TranscriptScreenVideoService {
-
   YoutubePlayerController? _youtubeController;
   VideoPlayerController? _controller;
   ChewieController? _chewieController;
@@ -70,7 +71,8 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
       resizeToAvoidBottomInset: true,
       backgroundColor: clr.whiteColor,
       body: LayoutBuilder(
-        builder: (context, constraints) => AppStreamBuilder<VideoContentDataEntity>(
+        builder: (context, constraints) =>
+            AppStreamBuilder<VideoContentDataEntity>(
           stream: videoDetailsDataStreamController.stream,
           loadingBuilder: (context) {
             return Column(
@@ -94,7 +96,8 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      if (data.videoData?.category == VideoCategory.s3.name) ...[
+                      if (data.videoData?.category ==
+                          VideoCategory.s3.name) ...[
                         ///Activate solid video player
                         Stack(
                           fit: StackFit.loose,
@@ -126,6 +129,46 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                                     size: size.r20,
                                   ),
                                 )),
+                            if (showOverlay)
+                              AspectRatio(
+                                aspectRatio: 16 / 9,
+                                child: OverlayMCQWidget(
+                                  items: data.videoQuestion![1].choices,
+                                  data: data.videoQuestion![1],
+                                  onTapSkip: () {
+                                    showOverlay = false;
+                                    AppEventsNotifier.notify(
+                                        EventAction.videoWidget);
+                                  },
+                                  OnTapSubmit: () {},
+                                  builder:
+                                      (BuildContext context, int index, item) {
+                                    return OverlayMCQAnswerOptionWidget(
+                                      value: item.choiceText,
+                                      isSelected: item.isCorrect,
+                                      onTap: () => setState(() {
+                                        /*  for (OptionDataEntity optionDataEntity
+                                  in data.options) {
+                                    if (data.options
+                                        .indexOf(optionDataEntity) !=
+                                        index) {
+                                      optionDataEntity.isSelected = false;
+                                      optionDataEntity.userCorrectValue =
+                                      "";
+                                    } else {
+                                      optionDataEntity.isSelected =
+                                      !optionDataEntity.isSelected;
+                                      item.userCorrectValue =
+                                          item.optionValue;
+                                    }
+                                  }
+                                  print(
+                                      "Ansewwlelkfekf ${item.userCorrectValue}");*/
+                                      }),
+                                    );
+                                  },
+                                ),
+                              )
                             // Positioned(
                             //   top: 80,
                             //   left: .45.sw,
@@ -299,7 +342,8 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                                       Expanded(
                                         child: Text(
                                           label(
-                                              e: data.videoData!.titleEn, b: data.videoData!.titleEn),
+                                              e: data.videoData!.titleEn,
+                                              b: data.videoData!.titleEn),
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 1,
                                           style: TextStyle(

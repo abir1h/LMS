@@ -267,6 +267,7 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
             ),
           ),
 
+
           ///Player controls
           StreamBuilder<String>(
               stream: _uiRefreshController.stream,
