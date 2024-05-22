@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../../core/constants/app_theme.dart';
+import '../../../../core/constants/common_imports.dart';
+import '../../../../core/utility/app_label.dart';
 import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
 
 class CircularItemSectionWidget<T> extends StatelessWidget with AppTheme {
@@ -24,18 +27,34 @@ class CircularItemSectionWidget<T> extends StatelessWidget with AppTheme {
             padding: EdgeInsets.only(
                 left: size.w16, right: size.w16, bottom: size.h12),
           ),
-        ListView.separated(
-          itemCount: items.length,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          padding: EdgeInsets.symmetric(horizontal: size.w16),
-          itemBuilder: (context, index) {
-            return buildItem(context, index, items[index]);
-          },
-          separatorBuilder: (context, index) {
-            return SizedBox(height: size.h16);
-          },
-        ),
+        items.isNotEmpty
+            ? ListView.separated(
+                itemCount: items.length,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.symmetric(horizontal: size.w16),
+                itemBuilder: (context, index) {
+                  return buildItem(context, index, items[index]);
+                },
+                separatorBuilder: (context, index) {
+                  return SizedBox(height: size.h16);
+                },
+              )
+            : Center(
+                child: Column(
+                  children: [
+                    Lottie.asset(ImageAssets.animEmpty, height: size.h56 * 1.2),
+                    CustomTextWidget(
+                      text: label(
+                          e: "No Running Course Found",
+                          b: "কোনো বিজ্ঞপ্তি পাওয়া যায়নি"),
+                      textColor: clr.textColorBlack,
+                      fontSize: size.textXXSmall,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ],
+                ),
+              ),
       ],
     );
   }
