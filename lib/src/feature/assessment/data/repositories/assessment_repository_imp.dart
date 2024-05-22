@@ -1,5 +1,4 @@
-import 'package:lms/src/feature/assessment/data/mapper/result_data_model.dart';
-
+import '../mapper/result_data_model.dart';
 import '../../domain/entities/result_data_entity.dart';
 import '../mapper/exam_data_mapper.dart';
 import '../models/exam_data_model.dart';
@@ -58,6 +57,16 @@ class AssessmentRepositoryImp extends AssessmentRepository {
   Future<ResponseEntity> submitExam(ExamDataEntity examDataEntity) async {
     ResponseModel responseModel = (await assessmentRemoteDataSource
         .submitExamAction(examDataEntity.toExamDataModel));
+    return ResponseModelToEntityMapper<ResultDataEntity, ResultDataModel>()
+        .toEntityFromModel(
+            responseModel, (ResultDataModel model) => model.toResultDataEntity);
+  }
+
+  @override
+  Future<ResponseEntity> requestExam(
+      int circularAssessmentId, String remarks) async {
+    ResponseModel responseModel = (await assessmentRemoteDataSource
+        .requestExamAction(circularAssessmentId, remarks));
     return ResponseModelToEntityMapper<ResultDataEntity, ResultDataModel>()
         .toEntityFromModel(
             responseModel, (ResultDataModel model) => model.toResultDataEntity);

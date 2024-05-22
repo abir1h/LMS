@@ -45,7 +45,7 @@ class LanguageEn {
 
   String learningManagementSystem = "Learning Management System (LMS)";
   String teachersGuide = "Instructional Guide for Teachers";
-  String eLibrary = "E Library";
+  String eLibrary = "eLibrary";
   String formativeAssessment = "Formative Assessment System";
   String socialLearningPlatform = "Professional Learning Community";
 

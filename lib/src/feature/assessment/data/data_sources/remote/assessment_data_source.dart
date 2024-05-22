@@ -13,6 +13,8 @@ abstract class AssessmentRemoteDataSource {
   Future<ResponseModel> getQuestionTypeAction();
   Future<ResponseModel> startExamAction(int circularAssessmentId);
   Future<ResponseModel> submitExamAction(ExamDataModel examDataModel);
+  Future<ResponseModel> requestExamAction(
+      int circularAssessmentId, String remarks);
 }
 
 class AssessmentRemoteDataSourceImp extends AssessmentRemoteDataSource {
@@ -102,6 +104,20 @@ class AssessmentRemoteDataSourceImp extends AssessmentRemoteDataSource {
     log(data.toString());
     final responseJson = await Server.instance
         .postRequest(url: ApiCredential.submitExam, postData: data);
+    ResponseModel responseModel = ResponseModel.fromJson(
+        responseJson, (dynamic json) => ResultDataModel.fromJson(json));
+    return responseModel;
+  }
+
+  @override
+  Future<ResponseModel> requestExamAction(
+      int circularAssessmentId, String remarks) async {
+    Map<String, dynamic> data = {
+      "circular_assessment_id": circularAssessmentId,
+      "remarks": remarks,
+    };
+    final responseJson = await Server.instance
+        .postRequest(url: ApiCredential.requestExam, postData: data);
     ResponseModel responseModel = ResponseModel.fromJson(
         responseJson, (dynamic json) => ResultDataModel.fromJson(json));
     return responseModel;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lms/src/core/common_widgets/custom_toasty.dart';
 
+import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../../assessment/data/data_sources/remote/assessment_data_source.dart';
 import '../../../assessment/data/repositories/assessment_repository_imp.dart';
@@ -11,7 +11,7 @@ import '../../../shared/domain/entities/response_entity.dart';
 
 abstract class _ViewModel {
   void showWarning(String message);
-  void onTapExamDetailsScreen(ExamDataEntity data );
+  void onTapExamDetailsScreen(ExamDataEntity data);
 }
 
 mixin CourseAssessmentScreenService<T extends StatefulWidget> on State<T>
@@ -28,6 +28,11 @@ mixin CourseAssessmentScreenService<T extends StatefulWidget> on State<T>
 
   Future<ResponseEntity> startExam(int circularAssessmentId) async {
     return _assessmentUseCase.startExamUseCase(circularAssessmentId);
+  }
+
+  Future<ResponseEntity> requestExam(
+      int circularAssessmentId, String remarks) async {
+    return _assessmentUseCase.requestExamUseCase(circularAssessmentId, remarks);
   }
 
   ///Service configurations
@@ -57,8 +62,7 @@ mixin CourseAssessmentScreenService<T extends StatefulWidget> on State<T>
             .add(DataLoadedState<AssessmentDataEntity>(value.data));
       } else if (value.error == null && value.data == null) {
         _view.showWarning(value.message!);
-        assessmentDetailsDataStreamController
-            .add(EmptyState(message: ""));
+        assessmentDetailsDataStreamController.add(EmptyState(message: ""));
       } else {
         _view.showWarning(value.message!);
       }

@@ -48,6 +48,7 @@ class ApiCredential {
       "/assessment-service/admin/quiz-types";
   static String startExam = "/assessment-service/mobile/exam/start";
   static String submitExam = "/assessment-service/mobile/exam/submit";
+  static String requestExam = "/assessment-service/mobile/exam/permission-request";
 
   static String getAssignment = "/assignment-service/api/mobile/assignments";
   static String createAssignment =
