@@ -91,10 +91,18 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen>
                   size: size.r24, color: clr.appPrimaryColorGreen)),
           IconButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(AppRoute.noteEditScreen,
-                    arguments: NoteDetailsScreenArgs(
-                        noteDataEntity: _screenArgs.noteDataEntity,
-                        noteType: NoteType.edit));
+                if(_screenArgs.noteType == NoteType.edit){
+                  Navigator.of(context).pushNamed(AppRoute.noteEditScreen,
+                      arguments: NoteDetailsScreenArgs(
+                          noteDataEntity: _screenArgs.noteDataEntity,
+                          noteType: NoteType.edit));
+                }else{
+                  Navigator.of(context).pushNamed(AppRoute.noteEditScreen,
+                      arguments: NoteDetailsScreenArgs(
+                          noteDataEntity: _screenArgs.noteDataEntity,
+                          noteType: NoteType.create));
+                }
+
               },
               icon: Icon(Icons.edit, size: size.r24, color: clr.iconColorBlack))
         ],
