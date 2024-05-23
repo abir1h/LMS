@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 @immutable
 class TrainerDataModel{
   final int id;
-  final int emisUserId;
+  final String emisUserId;
   final String fullnameEn;
   final String fullnameBn;
 
@@ -16,7 +16,7 @@ class TrainerDataModel{
 
   factory TrainerDataModel.fromJson(Map<String, dynamic> json) => TrainerDataModel(
     id: json["id"]??-1,
-    emisUserId: json["emis_user_id"]??-1,
+    emisUserId: json["emis_user_id"]??"",
     fullnameEn: json["fullname_en"]??"",
     fullnameBn: json["fullname_bn"]??"",
   );

@@ -1,6 +1,6 @@
 class TrainerDataEntity {
   final int id;
-  final int emisUserId;
+  final String emisUserId;
   final String fullnameEn;
   final String fullnameBn;
 
