@@ -2,13 +2,14 @@ class ApiCredential {
   const ApiCredential._();
 
   // static String baseUrl = "http://103.209.40.89:91/api/clms/dev/mobile";
-  static String baseUrl = "http://103.209.40.89";
+  // static String baseUrl = "http://103.209.40.89";
+  static String baseUrl = "http://10.10.100.8";
 
   static String mediaBaseUrl = "http://116.204.155.53/";
 
   static String apiKey = "";
 
-  static String getEMISLink = "http://103.209.40.89:81/api/auth/dev/emis-link";
+  static String getEMISLink = "http://10.10.100.8:81/api/auth/dev/emis-link";
   static String eMISLink =
       "http://103.69.149.41/SSO/Account/Login?MerchantId=000010&token=obA5ijGMXHoQEiOtEYTlw34tyKVqM9pUVFcqaPNlC5e1reRojM&RETURNURL=http://103.209.40.89/auth-service/api/auth/emis-login";
   // static String getToken = "http://103.209.40.89:81/api/auth/dev/emis-auth";
@@ -50,7 +51,8 @@ class ApiCredential {
       "/assessment-service/admin/quiz-types";
   static String startExam = "/assessment-service/mobile/exam/start";
   static String submitExam = "/assessment-service/mobile/exam/submit";
-  static String requestExam = "/assessment-service/mobile/exam/permission-request";
+  static String requestExam =
+      "/assessment-service/mobile/exam/permission-request";
 
   static String getAssignment = "/assignment-service/api/mobile/assignments";
   static String createAssignment =
