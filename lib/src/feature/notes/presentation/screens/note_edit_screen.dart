@@ -210,39 +210,36 @@ class _NoteEditScreenState extends State<NoteEditScreen>
             Builder(
               builder: (context) {
                 return Expanded(
-                  child: InkWell(
-                    onDoubleTap: () {},
-                    child: QuillEditor(
-                      scrollController: _editorScrollController,
-                      focusNode: _editorFocusNode,
-                      configurations: QuillEditorConfigurations(
-                        readOnly: _isReadOnly,
-                        customStyles: DefaultStyles(
-                          code: DefaultTextBlockStyle(
-                            TextStyle(
-                                fontSize: size.textSmall,
-                                color: clr.textColorAppleBlack,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: StringData.fontFamilyPoppins),
-                            const VerticalSpacing(16, 0),
-                            const VerticalSpacing(0, 0),
-                            null,
-                          ),
-                          placeHolder: DefaultTextBlockStyle(
-                            TextStyle(
-                                fontSize: size.textXXSmall,
-                                color: clr.placeHolderTextColorGray,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: StringData.fontFamilyPoppins),
-                            const VerticalSpacing(16, 0),
-                            const VerticalSpacing(0, 0),
-                            null,
-                          ),
+                  child: QuillEditor(
+                    scrollController: _editorScrollController,
+                    focusNode: _editorFocusNode,
+                    configurations: QuillEditorConfigurations(
+                      readOnly: _isReadOnly,
+                      customStyles: DefaultStyles(
+                        code: DefaultTextBlockStyle(
+                          TextStyle(
+                              fontSize: size.textSmall,
+                              color: clr.textColorAppleBlack,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: StringData.fontFamilyPoppins),
+                          const VerticalSpacing(16, 0),
+                          const VerticalSpacing(0, 0),
+                          null,
                         ),
-                        scrollable: true,
-                        placeholder: 'Note...',
-                        padding: const EdgeInsets.all(16),
+                        placeHolder: DefaultTextBlockStyle(
+                          TextStyle(
+                              fontSize: size.textXXSmall,
+                              color: clr.placeHolderTextColorGray,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: StringData.fontFamilyPoppins),
+                          const VerticalSpacing(16, 0),
+                          const VerticalSpacing(0, 0),
+                          null,
+                        ),
                       ),
+                      scrollable: true,
+                      placeholder: 'Note...',
+                      padding: const EdgeInsets.all(16),
                     ),
                   ),
                 );

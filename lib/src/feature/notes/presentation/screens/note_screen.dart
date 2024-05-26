@@ -236,7 +236,6 @@ class _NoteScreenState extends State<NoteScreen>
                 emptyBuilder: (context, message, icon) => EmptyWidget(
                   message: message,
                   constraints: constraints,
-                  offset: 350.w,
                 ),
               ),
             ),

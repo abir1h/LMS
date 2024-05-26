@@ -747,7 +747,6 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
           emptyBuilder: (context, message, icon) => EmptyWidget(
             message: message,
             constraints: constraints,
-            offset: 350.w,
           ),
         ),
       ),
