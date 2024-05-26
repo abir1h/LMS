@@ -116,7 +116,7 @@ class _MCQAnswerWidgetState extends State<MCQAnswerWidget> with AppTheme {
             } else {
               optionDataEntity.isSelected = !optionDataEntity.isSelected;
               widget.data.options[index].userCorrectValue =
-                  widget.data.options[index].optionValue;
+                  optionDataEntity.isSelected;
             }
           }
           print(

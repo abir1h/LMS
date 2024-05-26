@@ -41,7 +41,7 @@ class _TrueFalseAnswerWidgetState extends State<TrueFalseAnswerWidget>
                   setState(() {
                     groupValue = newValue!;
                     widget.data.options[index].userCorrectValue =
-                        newValue == 0 ? "true" : "false";
+                        newValue == 0 ? true : false;
                   });
                   print(groupValue);
                   print(widget.data.options[index].userCorrectValue);

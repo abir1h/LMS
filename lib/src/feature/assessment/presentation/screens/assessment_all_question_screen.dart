@@ -129,12 +129,12 @@ class _AssessmentAllQuestionScreenState
                                             index) {
                                           optionDataEntity.isSelected = false;
                                           optionDataEntity.userCorrectValue =
-                                              "";
+                                              optionDataEntity.isSelected;
                                         } else {
                                           optionDataEntity.isSelected =
                                               !optionDataEntity.isSelected;
                                           item.userCorrectValue =
-                                              item.optionValue;
+                                              optionDataEntity.isSelected;
                                         }
                                       }
                                       print(
@@ -182,10 +182,20 @@ class _AssessmentAllQuestionScreenState
                                                 onChanged: (v) {
                                                   setState(() {
                                                     groupValue = v!;
-                                                    item.userCorrectValue =
-                                                        v == 0
-                                                            ? "true"
-                                                            : "false";
+                                                    // item.userCorrectValue =
+                                                    //     v == 0 ? true : false;
+                                                    // item.userCorrectValue = true;
+
+                                                    for (OptionDataEntity optionDataEntity
+                                                    in data.options) {
+                                                      if (data.options
+                                                          .indexOf(optionDataEntity) !=
+                                                          index) {
+                                                        optionDataEntity.userCorrectValue = false;
+                                                      } else {
+                                                        item.userCorrectValue = true;
+                                                      }
+                                                    }
                                                   });
                                                   print(groupValue);
                                                   print(item.userCorrectValue);

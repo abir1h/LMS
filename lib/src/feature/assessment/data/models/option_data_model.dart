@@ -6,7 +6,7 @@ class OptionDataModel {
   final String optionImg;
   final int sort;
   String userInput;
-  String userCorrectValue;
+  bool userCorrectValue;
   String userCorrectInput;
 
   OptionDataModel({
@@ -30,7 +30,7 @@ class OptionDataModel {
         optionImg: json["option_img"] ?? "",
         sort: json["sort"] ?? -1,
         userInput: json["user_input"] ?? "",
-        userCorrectValue: json["user_correct_value"] ?? "",
+        userCorrectValue: json["user_correct_value"] ?? false,
         userCorrectInput: json["user_correct_input"] ?? "",
       );
 
