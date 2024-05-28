@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:lms/src/core/service/notifier/app_events_notifier.dart';
 
+import '../../../../core/service/notifier/app_events_notifier.dart';
 import '../../../course/domain/entities/video_content_data_entity.dart';
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../../../course/data/data_sources/remote/course_data_source.dart';
 import '../../../course/data/repositories/course_repository_imp.dart';
-import '../../../course/domain/entities/video_data_entity.dart';
 import '../../../course/domain/entities/video_qustion_data_entity.dart';
 import '../../../course/domain/use_cases/course_use_case.dart';
 import '../../../shared/domain/entities/response_entity.dart';
@@ -18,7 +17,6 @@ abstract class _ViewModel {
   bool isPlayerFullscreen();
   void changeOrientationToPortrait();
   void setYoutubeVideo(String url);
-
 }
 
 mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
@@ -68,7 +66,7 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
       AppStreamController();
 
   final AppStreamController<VideoQuestionDataEntity>
-  videoQuestionDataStreamController = AppStreamController();
+      videoQuestionDataStreamController = AppStreamController();
 
   ///Load Video details
   void loadVideoData(int courseContentId) {
@@ -106,13 +104,6 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
     int playedPositionSec = (playedPosition ~/ 1000).round();
     if (currentPlayedPositionSec != playedPositionSec) {
       currentPlayedPositionSec = playedPositionSec;
-      // var   result = currentContent.videoQuestion?.singleWhere((element) => element == 1,
-      //       );
-
-      // if(currentContent.videoQustion?.where((element) {element.popUpTimeSecond==playedPositionSec?true:false})){
-      //
-      // }
-
       VideoQuestionDataEntity? questionData = currentContent.videoQuestion
           ?.singleWhere(
               (element) => element.popUpTimeSecond == playedPositionSec,
@@ -125,11 +116,12 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
                     seen: false,
                     choices: [],
                   ));
-      if (questionData?.id != -1) {
-        print("pop question");
-        showOverlay=true;
+      if (questionData?.id != -1 && questionData?.seen == false) {
+        debugPrint("pop question");
+        showOverlay = true;
         AppEventsNotifier.notify(EventAction.videoWidget);
-        videoQuestionDataStreamController.add(DataLoadedState<VideoQuestionDataEntity>(questionData!));
+        videoQuestionDataStreamController
+            .add(DataLoadedState<VideoQuestionDataEntity>(questionData!));
         playbackPausePlayStreamController.add(DataLoadedState<bool>(false));
       }
     }
@@ -139,5 +131,11 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
               ? playedPositionSec
               : screenArgs.data.lastWatchTime;
     }
+  }
+
+  void onSkipInteractiveAction() {
+    showOverlay = false;
+    AppEventsNotifier.notify(EventAction.videoWidget);
+    playbackPausePlayStreamController.add(DataLoadedState<bool>(true));
   }
 }
