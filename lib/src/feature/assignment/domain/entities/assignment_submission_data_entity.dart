@@ -1,3 +1,4 @@
+import 'assignment_result_data_entity.dart';
 import 'attachment_data_entity.dart';
 
 class AssignmentSubmissionDataEntity {
@@ -7,7 +8,7 @@ class AssignmentSubmissionDataEntity {
   final int circularAssignmentId;
   final int circularSubAssignmentId;
   final int submittedBy;
-  final String evaluatedBy;
+  final int evaluatedBy;
   final String ipAddress;
   final String answer;
   final int marks;
@@ -17,6 +18,7 @@ class AssignmentSubmissionDataEntity {
   final String createdAt;
   final String updatedAt;
   final List<AttachmentDataEntity> attachments;
+  final AssignmentResultDataEntity? assignmentResultDataEntity;
 
   AssignmentSubmissionDataEntity({
     required this.id,
@@ -35,5 +37,6 @@ class AssignmentSubmissionDataEntity {
     required this.createdAt,
     required this.updatedAt,
     required this.attachments,
+    required this.assignmentResultDataEntity,
   });
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'assignment_submission_data_model.dart';
+
 @immutable
 class SubAssignmentDataModel {
   final int id;
@@ -14,6 +16,7 @@ class SubAssignmentDataModel {
   final int status;
   final String createdAt;
   final String updatedAt;
+  final AssignmentSubmissionDataModel? assignmentSubmissions;
 
   const SubAssignmentDataModel({
     required this.id,
@@ -28,6 +31,7 @@ class SubAssignmentDataModel {
     required this.status,
     required this.createdAt,
     required this.updatedAt,
+    required this.assignmentSubmissions,
   });
 
   factory SubAssignmentDataModel.fromJson(Map<String, dynamic> json) =>
@@ -44,6 +48,10 @@ class SubAssignmentDataModel {
         status: json["status"] ?? -1,
         createdAt: json["created_at"] ?? "",
         updatedAt: json["updated_at"] ?? "",
+        assignmentSubmissions: json['assignment_submissions'] != null
+            ? AssignmentSubmissionDataModel.fromJson(
+                json["assignment_submissions"])
+            : null,
       );
 
   Map<String, dynamic> toJson() => {
@@ -59,5 +67,6 @@ class SubAssignmentDataModel {
         "status": status,
         "created_at": createdAt,
         "updated_at": updatedAt,
+        "assignment_submissions": assignmentSubmissions?.toJson(),
       };
 }

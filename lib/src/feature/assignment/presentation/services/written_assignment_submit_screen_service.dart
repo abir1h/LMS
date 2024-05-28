@@ -77,7 +77,7 @@ mixin WrittenAssignmentSubmitScreenService<T extends StatefulWidget> on State<T>
       required String answer,
       required List<File> files}) async {
     ResponseEntity responseEntity = await storeAssignment(
-        assignmentId, -1, courseId, circularId, answer, files);
+        assignmentId, subAssignmentId, courseId, circularId, answer, files);
     if (responseEntity.error == null && responseEntity.data != null) {
       _view.showSuccess(responseEntity.message!);
     } else {
@@ -94,8 +94,8 @@ mixin WrittenAssignmentSubmitScreenService<T extends StatefulWidget> on State<T>
       required int circularId,
       required String answer,
       required List<File> files}) async {
-    ResponseEntity responseEntity = await updateAssignment(
-        submissionId, assignmentId, -1, courseId, circularId, answer, files);
+    ResponseEntity responseEntity = await updateAssignment(submissionId,
+        assignmentId, subAssignmentId, courseId, circularId, answer, files);
     if (responseEntity.error == null && responseEntity.data != null) {
       _view.showSuccess(responseEntity.message!);
     } else {

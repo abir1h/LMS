@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'content_count_data_model.dart';
+import 'course_content_data_model.dart';
 import 'course_module_data_model.dart';
 import 'course_type_data_model.dart';
-import 'last_viewed_content_data_model.dart';
 import 'upcoming_class_data_model.dart';
 
 @immutable
@@ -22,7 +22,7 @@ class CourseDetailsDataModel {
   final String longDescBn;
   final UpcomingClassDataModel? upcomingClass;
   final ContentCountDataModel? contentCount;
-  final LastViewedContentDataModel? lastViewedContent;
+  final CourseContentDataModel? lastViewedContent;
   final CourseTypeDataModel? courseType;
   final List<CourseModuleDataModel>? courseModules;
 
@@ -67,7 +67,7 @@ class CourseDetailsDataModel {
             ? ContentCountDataModel.fromJson(json['content_count'])
             : null,
         lastViewedContent: json['last_viewed_content'] != null
-            ? LastViewedContentDataModel.fromJson(json['last_viewed_content'])
+            ? CourseContentDataModel.fromJson(json['last_viewed_content'])
             : null,
         courseType: json['course_type'] != null
             ? CourseTypeDataModel.fromJson(json['course_type'])

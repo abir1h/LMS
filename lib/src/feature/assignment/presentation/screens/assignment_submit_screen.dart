@@ -120,17 +120,13 @@ class _AssignmentSubmitScreenState extends State<AssignmentSubmitScreen>
                                               .assignmentDataEntity!.id));
                                 })
                               : onUpdateAssignment(
-                                  submissionId: _screenArgs
-                                      .assignmentDataEntity!
-                                      .assignmentSubmissions!
-                                      .id,
-                                  assignmentId:
-                                      _screenArgs.assignmentDataEntity!.id,
-                                  subAssignmentId:
-                                      _screenArgs.assignmentDataEntity?.circularSubAssignments != null
+                                  submissionId:
+                                      _screenArgs.assignmentDataEntity!.type == "individual"
                                           ? _screenArgs.assignmentDataEntity!
-                                              .circularSubAssignments!.id
-                                          : -1,
+                                              .assignmentSubmissions!.id
+                                          : _screenArgs.assignmentDataEntity!.circularSubAssignments!.assignmentSubmissions!.id,
+                                  assignmentId: _screenArgs.assignmentDataEntity!.id,
+                                  subAssignmentId: _screenArgs.assignmentDataEntity?.circularSubAssignments != null ? _screenArgs.assignmentDataEntity!.circularSubAssignments!.id : -1,
                                   courseId: _screenArgs.assignmentDataEntity!.courseId,
                                   circularId: _screenArgs.assignmentDataEntity!.circularId,
                                   answer: _screenArgs.answer!,

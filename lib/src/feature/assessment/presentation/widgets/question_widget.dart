@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/common_widgets/image_preview.dart';
@@ -66,7 +67,15 @@ class QuestionWidget extends StatelessWidget with AppTheme, ImagePreviewDialog {
                   onTap: () {
                     ImagePreviewDialog.showImagePreview(context, questionImage);
                   },
-                  child: Center(child: Image.asset(questionImage))),
+                  child: Center(
+                      child: CachedNetworkImage(
+                    fit: BoxFit.fitWidth,
+                    imageUrl: ApiCredential.mediaBaseUrl + questionImage,
+                    placeholder: (context, url) =>
+                        const CircularProgressIndicator(),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                  ))),
             ),
           if (questionDescription.isNotEmpty)
             Padding(

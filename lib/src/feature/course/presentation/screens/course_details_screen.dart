@@ -6,7 +6,6 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../../../core/common_widgets/circuler_widget.dart';
-import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/custom_empty_widget.dart';
 import '../../../../core/common_widgets/custom_expanded_text.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
@@ -87,7 +86,41 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
                     if (_screenArgs.curriculumType ==
                         CircularStatus.running.name)
                       LastSeenWidget(
-                        onTap: () => onTapCourseVideo,
+                        data: data.lastViewedContent!,
+                        onTap: () {
+                          data.lastViewedContent!.contentType ==
+                                  ContentType.circular_video.name
+                              ? onTapCourseVideo(data.lastViewedContent!)
+                              : data.lastViewedContent!.contentType ==
+                                      ContentType.circular_assignment.name
+                                  ? onTapCourseAssignment(
+                                      data.lastViewedContent!.contentId,
+                                      data.lastViewedContent!.isCompleted)
+                                  : data.lastViewedContent!.contentType ==
+                                          ContentType.circular_assessment.name
+                                      ? onTapCourseAssessment(
+                                          data.lastViewedContent!.contentId)
+                                      : data.lastViewedContent!.contentType ==
+                                              ContentType.course_script.name
+                                          ? onTapScript(
+                                              courseId: data.id,
+                                              courseContentId: data
+                                                  .lastViewedContent!.contentId,
+                                              courseContentType: data
+                                                  .lastViewedContent!
+                                                  .contentType,
+                                              courseCode: data.code,
+                                              courseDescriptionEn:
+                                                  data.longDescEn,
+                                              courseDescriptionBn:
+                                                  data.longDescBn)
+                                          : data.lastViewedContent!
+                                                      .contentType ==
+                                                  ContentType.course_script.name
+                                              ? onTapCourseLiveClass(data
+                                                  .lastViewedContent!.contentId)
+                                              : Container();
+                        },
                       ),
                     CustomTextWidget(
                       text: label(e: data.nameEn, b: data.nameBn),
@@ -454,8 +487,9 @@ class LiveClassTopicWidget extends StatelessWidget with AppTheme, Language {
 }
 
 class LastSeenWidget extends StatelessWidget with AppTheme, Language {
+  final CourseContentDataEntity data;
   final VoidCallback onTap;
-  const LastSeenWidget({super.key, required this.onTap});
+  const LastSeenWidget({super.key, required this.data, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -501,9 +535,11 @@ class LastSeenWidget extends StatelessWidget with AppTheme, Language {
             LinearPercentIndicator(
               animation: true,
               lineHeight: size.h16,
-              percent: 0.6,
+              percent: data.isCompleted ? 1 : 0,
               center: CustomTextWidget(
-                text: label(e: "60%", b: "৬০%"),
+                text: label(
+                    e: data.isCompleted ? "100%" : "0%",
+                    b: data.isCompleted ? "১০০%" : "০%"),
                 textColor: clr.blackColor,
                 fontSize: size.textXXSmall,
                 fontWeight: FontWeight.w500,
@@ -519,32 +555,6 @@ class LastSeenWidget extends StatelessWidget with AppTheme, Language {
     );
   }
 }
-
-// class SupportingTextItemSection<T> extends StatelessWidget with AppTheme {
-//   final List<T> items;
-//   final Widget Function(BuildContext context, int index, T item) buildItem;
-//   const SupportingTextItemSection(
-//       {super.key, required this.items, required this.buildItem});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return GridView.builder(
-//       physics: const NeverScrollableScrollPhysics(),
-//       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-//         crossAxisCount: 2,
-//         childAspectRatio: 3,
-//         crossAxisSpacing: size.w8,
-//         mainAxisSpacing: size.h8,
-//       ),
-//       itemCount: items.length,
-//       shrinkWrap: true,
-//       padding: EdgeInsets.symmetric(horizontal: size.w16),
-//       itemBuilder: (context, index) {
-//         return buildItem(context, index, items[index]);
-//       },
-//     );
-//   }
-// }
 
 class SupportingDocWidget<T> extends StatelessWidget with AppTheme, Language {
   final String docTitle;

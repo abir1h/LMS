@@ -67,34 +67,6 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
                         fontFamily: StringData.fontFamilyPoppins),
                   ),
                 ),
-                // SizedBox(height: size.h12),
-                // Padding(
-                //   padding: EdgeInsets.symmetric(horizontal: size.w16),
-                //   child: Text(
-                //     label(
-                //         e: "Assignment Instructions",
-                //         b: "অ্যাসাইনমেন্টের নির্দেশাবলী"),
-                //     style: TextStyle(
-                //         color: clr.textColorAppleBlack,
-                //         fontSize: size.textSmall,
-                //         fontWeight: FontWeight.w600,
-                //         fontFamily: StringData.fontFamilyPoppins),
-                //   ),
-                // ),
-                // SizedBox(height: size.h20),
-                // Padding(
-                //   padding: EdgeInsets.symmetric(horizontal: size.w16),
-                //   child: Text(
-                //     label(
-                //         e: "Reflect on your own identity and aspirations as a teacher",
-                //         b: "একজন শিক্ষক হিসাবে আপনার নিজের পরিচয় এবং আকাঙ্খাগুলিকে প্রতিফলিত করুন"),
-                //     style: TextStyle(
-                //         color: clr.textColorAppleBlack,
-                //         fontSize: size.textSmall,
-                //         fontWeight: FontWeight.w500,
-                //         fontFamily: StringData.fontFamilyPoppins),
-                //   ),
-                // ),
                 SizedBox(height: size.h12),
 
                 ///Instructions
@@ -106,118 +78,6 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
                   padding: EdgeInsets.symmetric(horizontal: size.w16),
                 ),
                 SizedBox(height: size.h8),
-                // Container(
-                //   margin: EdgeInsets.symmetric(horizontal: size.w16),
-                //   padding: EdgeInsets.symmetric(
-                //       horizontal: size.w20, vertical: size.h20),
-                //   decoration: BoxDecoration(
-                //       color: clr.whiteColor,
-                //       borderRadius: BorderRadius.circular(size.r8),
-                //       border: Border.all(
-                //           color: clr.boxStrokeColor, width: size.w1)),
-                //   child: Column(
-                //     children: [
-                //       Row(
-                //         children: [
-                //           Icon(
-                //             Icons.calendar_month_rounded,
-                //             color: clr.iconColorDarkGrey,
-                //             size: size.r20,
-                //           ),
-                //           SizedBox(width: size.w8),
-                //           Expanded(
-                //             child: Text(
-                //               label(
-                //                   e: "Closing Date: 31st January",
-                //                   b: "সমাপ্তির শেষ তারিখ: ৩১ জানুয়ারী"),
-                //               style: TextStyle(
-                //                   color: clr.blackColor,
-                //                   fontSize: size.textSmall,
-                //                   fontWeight: FontWeight.w500,
-                //                   fontFamily: StringData.fontFamilyPoppins),
-                //               maxLines: 2,
-                //               overflow: TextOverflow.ellipsis,
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //       SizedBox(height: size.h16),
-                //       Row(
-                //         children: [
-                //           SvgPicture.asset(
-                //             ImageAssets.icAlarm,
-                //             colorFilter: ColorFilter.mode(
-                //                 clr.iconColorDarkGrey, BlendMode.srcIn),
-                //           ),
-                //           SizedBox(width: size.w8),
-                //           Text(
-                //             label(e: "5 pm", b: "বিকেল ৫টা"),
-                //             style: TextStyle(
-                //                 color: clr.blackColor,
-                //                 fontSize: size.textSmall,
-                //                 fontWeight: FontWeight.w500,
-                //                 fontFamily: StringData.fontFamilyPoppins),
-                //           ),
-                //           SizedBox(width: size.w16),
-                //           SvgPicture.asset(
-                //             ImageAssets.icDictionary,
-                //             colorFilter: ColorFilter.mode(
-                //                 clr.iconColorDarkGrey, BlendMode.srcIn),
-                //           ),
-                //           SizedBox(width: size.w8),
-                //           Expanded(
-                //             child: Text(
-                //               label(
-                //                   e: "Word range: 200", b: "শব্দ পরিসীমা: ২০০"),
-                //               style: TextStyle(
-                //                   color: clr.blackColor,
-                //                   fontSize: size.textSmall,
-                //                   fontWeight: FontWeight.w500,
-                //                   fontFamily: StringData.fontFamilyPoppins),
-                //               maxLines: 2,
-                //               overflow: TextOverflow.ellipsis,
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //       SizedBox(height: size.h16),
-                //       Row(
-                //         children: [
-                //           Icon(
-                //             Icons.quiz,
-                //             color: clr.iconColorDarkGrey,
-                //             size: size.r20,
-                //           ),
-                //           SizedBox(width: size.w8),
-                //           Expanded(
-                //             child: Text(
-                //               label(
-                //                   e: "Total Questions: 01",
-                //                   b: "প্রশ্নের সংখ্যা: ০১"),
-                //               style: TextStyle(
-                //                   color: clr.blackColor,
-                //                   fontSize: size.textSmall,
-                //                   fontWeight: FontWeight.w500,
-                //                   fontFamily: StringData.fontFamilyPoppins),
-                //               maxLines: 2,
-                //               overflow: TextOverflow.ellipsis,
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //       SizedBox(height: size.h20),
-                //       Padding(
-                //         padding: EdgeInsets.symmetric(horizontal: size.w10),
-                //         child: CustomButton(
-                //           onTap: () => Navigator.of(context)
-                //               .pushNamed(AppRoute.assignmentScreen),
-                //           title: label(e: en.getStarted, b: bn.getStarted),
-                //           radius: size.r4,
-                //         ),
-                //       )
-                //     ],
-                //   ),
-                // ),
                 InstructionWidget(
                   instruction:
                       label(e: data.instructionsEn, b: data.instructionsBn),
@@ -238,9 +98,16 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: size.w40),
                   child: CustomButton(
-                    onTap: () => onTap(_screenArgs.courseContentId),
+                    onTap: () {
+                      if (data.circularSubAssignments != null) {
+                        onTap(_screenArgs.courseContentId);
+                      }
+                    },
                     title: label(e: en.enter, b: bn.enter),
                     textColor: clr.whiteColor,
+                    bgColor: data.circularSubAssignments != null
+                        ? clr.appPrimaryColorGreen
+                        : clr.greyColor,
                     radius: size.r4,
                   ),
                 ),
@@ -250,7 +117,8 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
         },
         emptyBuilder: (context, message, icon) => CustomEmptyWidget(
           message: message,
-          title: label(e: 'No Assignment Found', b: 'কোন অ্যাসাইনমেন্ট পাওয়া যায়নি'),
+          title: label(
+              e: 'No Assignment Found', b: 'কোন অ্যাসাইনমেন্ট পাওয়া যায়নি'),
 
           // constraints: constraints,
           // offset: 350.w,

@@ -3,8 +3,8 @@ class ApiCredential {
 
   // static String baseUrl = "http://103.209.40.89:91/api/clms/dev/mobile";
   // static String baseUrl = "http://103.209.40.89";
-  // static String baseUrl = "http://10.10.100.8"; // Development Server
-  static String baseUrl = "http://10.10.100.10"; // Testing Server
+  static String baseUrl = "http://10.10.100.8"; // Development Server
+  // static String baseUrl = "http://10.10.100.10"; // Testing Server
 
   static String mediaBaseUrl = "http://116.204.155.53/";
 
@@ -47,7 +47,7 @@ class ApiCredential {
   static String voteComment = "/circular-service/api/mobile/vote-comment";
   static String reportComment = "/circular-service/api/mobile/report-comment";
 
-  static String getAssessment = "/assessment-service/web/assessment-details";
+  static String getAssessment = "/assessment-service/mobile/assessment-details";
   static String getAssessmentQuestionType =
       "/assessment-service/admin/quiz-types";
   static String startExam = "/assessment-service/mobile/exam/start";

@@ -21,6 +21,8 @@ class AssignmentDataEntity {
   final String instructionsBn;
   final String type;
   final String supportingDoc;
+  final int assignmentRequestCount;
+  final bool allowed;
   final SubAssignmentDataEntity? circularSubAssignments;
   final AssignmentSubmissionDataEntity? assignmentSubmissions;
 
@@ -44,6 +46,8 @@ class AssignmentDataEntity {
     required this.instructionsBn,
     required this.type,
     required this.supportingDoc,
+    required this.assignmentRequestCount,
+    required this.allowed,
     required this.circularSubAssignments,
     required this.assignmentSubmissions,
   });

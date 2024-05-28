@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/option_data_entity.dart';
@@ -66,7 +67,14 @@ class _MCQAnswerOptionWidgetState extends State<MCQAnswerOptionWidget>
                   : clr.gapStrokeGrey,
             ),
             SizedBox(width: size.w24),
-            if (widget.imageValue.isNotEmpty) Image.asset(widget.imageValue),
+            if (widget.imageValue.isNotEmpty)
+              CachedNetworkImage(
+                fit: BoxFit.fitWidth,
+                imageUrl: ApiCredential.mediaBaseUrl + widget.imageValue,
+                placeholder: (context, url) =>
+                    const CircularProgressIndicator(),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+              ),
             if (widget.value.isNotEmpty)
               Expanded(
                 child: Text(

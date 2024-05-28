@@ -1,3 +1,5 @@
+import 'assignment_submission_data_entity.dart';
+
 class SubAssignmentDataEntity {
   final int id;
   final int circularAssignmentsId;
@@ -11,6 +13,7 @@ class SubAssignmentDataEntity {
   final int status;
   final String createdAt;
   final String updatedAt;
+  final AssignmentSubmissionDataEntity? assignmentSubmissions;
 
   SubAssignmentDataEntity({
     required this.id,
@@ -25,5 +28,6 @@ class SubAssignmentDataEntity {
     required this.status,
     required this.createdAt,
     required this.updatedAt,
+    required this.assignmentSubmissions,
   });
 }

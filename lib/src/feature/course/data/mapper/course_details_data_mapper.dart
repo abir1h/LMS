@@ -1,3 +1,5 @@
+import 'package:lms/src/feature/course/data/mapper/course_content_data_mapper.dart';
+
 import 'content_count_data_mapper.dart';
 import 'last_viewed_content_data_mapper.dart';
 import 'upcoming_class_data_mapper.dart';
@@ -32,7 +34,7 @@ class CourseDetailsDataModelToEntityMapper extends CourseDetailsDataMapper<
       longDescBn: entity.longDescBn,
       upcomingClass: entity.upcomingClass?.toUpcomingClassDataModel,
       contentCount: entity.contentCount?.toContentCountDataModel,
-      lastViewedContent: entity.lastViewedContent?.toLastViewedContentDataModel,
+      lastViewedContent: entity.lastViewedContent?.toCourseContentDataModel,
       courseType: entity.courseType?.toCourseTypeDataModel,
       courseModules: List<CourseModuleDataEntity>.from(entity.courseModules!)
           .map((entity) => entity.toCourseModuleDataModel)
@@ -57,7 +59,7 @@ class CourseDetailsDataModelToEntityMapper extends CourseDetailsDataMapper<
       longDescBn: model.longDescBn,
       upcomingClass: model.upcomingClass?.toUpcomingClassDataEntity,
       contentCount: model.contentCount?.toContentCountDataEntity,
-      lastViewedContent: model.lastViewedContent?.toLastViewedContentDataEntity,
+      lastViewedContent: model.lastViewedContent?.toCourseContentDataEntity,
       courseType: model.courseType?.toCourseTypeDataEntity,
       courseModules: List<CourseModuleDataModel>.from(model.courseModules!)
           .map((model) => model.toCourseModuleDataEntity)

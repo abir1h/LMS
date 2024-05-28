@@ -1,3 +1,4 @@
+import 'package:lms/src/feature/assignment/data/mapper/assignment_result_data_mapper.dart';
 import 'package:lms/src/feature/assignment/data/mapper/attachment_data_mapper.dart';
 
 import '../../domain/entities/assignment_submission_data_entity.dart';
@@ -35,6 +36,8 @@ class AssignmentSubmissionDataModelToEntityMapper
       attachments: List<AttachmentDataEntity>.from(entity.attachments)
           .map((entity) => entity.toAttachmentDataModel)
           .toList(),
+      assignmentResultDataModel:
+          entity.assignmentResultDataEntity?.toAssignmentResultDataModel,
     );
   }
 
@@ -60,6 +63,8 @@ class AssignmentSubmissionDataModelToEntityMapper
       attachments: List<AttachmentDataModel>.from(model.attachments)
           .map((model) => model.toAttachmentDataEntity)
           .toList(),
+      assignmentResultDataEntity:
+          model.assignmentResultDataModel?.toAssignmentResultDataEntity,
     );
   }
 }

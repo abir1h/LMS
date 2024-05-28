@@ -33,6 +33,8 @@ class AssignmentDataModelToEntityMapper
         instructionsBn: entity.instructionsBn,
         type: entity.type,
         supportingDoc: entity.supportingDoc,
+        assignmentRequestCount: entity.assignmentRequestCount,
+        allowed: entity.allowed,
         circularSubAssignments:
             entity.circularSubAssignments?.toSubAssignmentDataModel,
         assignmentSubmissions:
@@ -61,6 +63,8 @@ class AssignmentDataModelToEntityMapper
         instructionsBn: model.instructionsBn,
         type: model.type,
         supportingDoc: model.supportingDoc,
+        assignmentRequestCount: model.assignmentRequestCount,
+        allowed: model.allowed,
         circularSubAssignments:
             model.circularSubAssignments?.toSubAssignmentDataEntity,
         assignmentSubmissions:

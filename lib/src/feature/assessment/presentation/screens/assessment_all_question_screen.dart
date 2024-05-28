@@ -112,6 +112,7 @@ class _AssessmentAllQuestionScreenState
                             (index + 1).toString()),
                         questionText:
                             data.questionType?.id != 4 ? data.question : "",
+                        questionImage: data.questionImg,
                         child: data.questionType?.id == 2
                             ? MCQWidget(
                                 items: data.options,
@@ -187,13 +188,16 @@ class _AssessmentAllQuestionScreenState
                                                     // item.userCorrectValue = true;
 
                                                     for (OptionDataEntity optionDataEntity
-                                                    in data.options) {
-                                                      if (data.options
-                                                          .indexOf(optionDataEntity) !=
+                                                        in data.options) {
+                                                      if (data.options.indexOf(
+                                                              optionDataEntity) !=
                                                           index) {
-                                                        optionDataEntity.userCorrectValue = false;
+                                                        optionDataEntity
+                                                                .userCorrectValue =
+                                                            false;
                                                       } else {
-                                                        item.userCorrectValue = true;
+                                                        item.userCorrectValue =
+                                                            true;
                                                       }
                                                     }
                                                   });

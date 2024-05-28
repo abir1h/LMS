@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../../assessment/domain/entities/exam_data_entity.dart';
 import '../../../../core/common_widgets/app_stream.dart';
@@ -288,10 +287,16 @@ class AssessmentInfoWidget extends StatelessWidget with AppTheme, Language {
           ),
           SizedBox(height: size.h20),
           AssignmentInfoRowWidget(
-            leftText: label(e: "Negative Mark", b: "নেগেটিভ মার্ক"),
+              leftText: label(e: "Total Time", b: "সর্বমোট সময়"),
+              rightText: label(
+                  e: "${data.totalTime.toString()} Minutes",
+                  b: "${replaceEnglishNumberWithBengali(data.totalTime.toString())} মিনিট")),
+          SizedBox(height: size.h20),
+          AssignmentInfoRowWidget(
+            leftText: label(e: "Total Opportunity", b: "সর্বমোট চেষ্টার সুযোগ"),
             rightText: label(
-                e: data.negativeMark.toString(),
-                b: "${replaceEnglishNumberWithBengali(data.negativeMark.toString())} পয়েন্টস"),
+                e: data.totalTime.toString(),
+                b: "${replaceEnglishNumberWithBengali(data.totalTime.toString())} পয়েন্টস"),
           ),
         ],
       ),

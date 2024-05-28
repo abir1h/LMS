@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'assignment_result_data_model.dart';
 import 'attachment_data_model.dart';
 
 @immutable
@@ -10,7 +11,7 @@ class AssignmentSubmissionDataModel {
   final int circularAssignmentId;
   final int circularSubAssignmentId;
   final int submittedBy;
-  final String evaluatedBy;
+  final int evaluatedBy;
   final String ipAddress;
   final String answer;
   final int marks;
@@ -20,6 +21,7 @@ class AssignmentSubmissionDataModel {
   final String createdAt;
   final String updatedAt;
   final List<AttachmentDataModel> attachments;
+  final AssignmentResultDataModel? assignmentResultDataModel;
 
   const AssignmentSubmissionDataModel({
     required this.id,
@@ -38,6 +40,7 @@ class AssignmentSubmissionDataModel {
     required this.createdAt,
     required this.updatedAt,
     required this.attachments,
+    required this.assignmentResultDataModel,
   });
 
   factory AssignmentSubmissionDataModel.fromJson(Map<String, dynamic> json) =>
@@ -48,7 +51,7 @@ class AssignmentSubmissionDataModel {
         circularAssignmentId: json["circular_assignment_id"] ?? -1,
         circularSubAssignmentId: json["circular_sub_assignment_id"] ?? -1,
         submittedBy: json["submitted_by"] ?? -1,
-        evaluatedBy: json["evaluated_by"] ?? "",
+        evaluatedBy: json["evaluated_by"] ?? -1,
         ipAddress: json["ip_address"] ?? "",
         answer: json["answer"] ?? "",
         marks: json["marks"] ?? -1,
@@ -61,6 +64,9 @@ class AssignmentSubmissionDataModel {
             ? List<AttachmentDataModel>.from((json["attachments"])
                 .map((x) => AttachmentDataModel.fromJson(x)))
             : [],
+        assignmentResultDataModel: json['result'] != null
+            ? AssignmentResultDataModel.fromJson(json["result"])
+            : null,
       );
 
   Map<String, dynamic> toJson() => {
@@ -81,5 +87,6 @@ class AssignmentSubmissionDataModel {
         "updated_at": updatedAt,
         "attachments":
             List<AttachmentDataModel>.from(attachments.map((x) => x.toJson())),
+        "result": assignmentResultDataModel?.toJson(),
       };
 }

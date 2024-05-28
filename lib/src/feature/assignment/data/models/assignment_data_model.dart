@@ -24,6 +24,8 @@ class AssignmentDataModel {
   final String instructionsBn;
   final String type;
   final String supportingDoc;
+  final int assignmentRequestCount;
+  final bool allowed;
   final SubAssignmentDataModel? circularSubAssignments;
   final AssignmentSubmissionDataModel? assignmentSubmissions;
 
@@ -47,6 +49,8 @@ class AssignmentDataModel {
     required this.instructionsBn,
     required this.type,
     required this.supportingDoc,
+    required this.assignmentRequestCount,
+    required this.allowed,
     required this.circularSubAssignments,
     required this.assignmentSubmissions,
   });
@@ -72,6 +76,8 @@ class AssignmentDataModel {
         instructionsBn: json["instructions_bn"] ?? "",
         type: json["type"] ?? "",
         supportingDoc: json["supporting_doc"] ?? "",
+        assignmentRequestCount: json["assignment_request_count"] ?? 0,
+        allowed: json["allowed"] ?? false,
         circularSubAssignments: json['circular_sub_assignments'] != null
             ? SubAssignmentDataModel.fromJson(json["circular_sub_assignments"])
             : null,
@@ -101,6 +107,8 @@ class AssignmentDataModel {
         "instructions_bn": instructionsBn,
         "type": type,
         "supporting_doc": supportingDoc,
+        "assignment_request_count": assignmentRequestCount,
+        "allowed": allowed,
         "circular_sub_assignments": circularSubAssignments?.toJson(),
         "assignment_submissions": assignmentSubmissions?.toJson(),
       };

@@ -12,3 +12,7 @@ enum ContentType {
   course_script,
   course_blended_class
 }
+
+enum AssignmentSubType { written, upload, both }
+
+enum AssignmentType { group, individual }

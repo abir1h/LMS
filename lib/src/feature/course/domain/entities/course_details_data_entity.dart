@@ -1,7 +1,7 @@
 import 'content_count_data_entity.dart';
+import 'course_content_data_entity.dart';
 import 'course_module_data_entity.dart';
 import 'course_type_data_entity.dart';
-import 'last_viewed_content_data_entity.dart';
 import 'upcoming_class_data_entity.dart';
 
 class CourseDetailsDataEntity {
@@ -19,7 +19,7 @@ class CourseDetailsDataEntity {
   final String longDescBn;
   final UpcomingClassDataEntity? upcomingClass;
   final ContentCountDataEntity? contentCount;
-  final LastViewedContentDataEntity? lastViewedContent;
+  final CourseContentDataEntity? lastViewedContent;
   final CourseTypeDataEntity? courseType;
   final List<CourseModuleDataEntity>? courseModules;
 

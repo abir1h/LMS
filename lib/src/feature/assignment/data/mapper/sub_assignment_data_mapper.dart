@@ -1,3 +1,4 @@
+import 'assignment_submission_data_mapper.dart';
 import '../../domain/entities/sub_assignment_data_entity.dart';
 import '../models/sub_assignment_data_model.dart';
 
@@ -22,7 +23,9 @@ class SubAssignmentDataModelToEntityMapper extends SubAssignmentDataMapper<
         supportingDoc: entity.supportingDoc,
         status: entity.status,
         createdAt: entity.createdAt,
-        updatedAt: entity.updatedAt);
+        updatedAt: entity.updatedAt,
+        assignmentSubmissions:
+            entity.assignmentSubmissions?.toAssignmentSubmissionDataModel);
   }
 
   @override
@@ -39,7 +42,9 @@ class SubAssignmentDataModelToEntityMapper extends SubAssignmentDataMapper<
         supportingDoc: model.supportingDoc,
         status: model.status,
         createdAt: model.createdAt,
-        updatedAt: model.updatedAt);
+        updatedAt: model.updatedAt,
+        assignmentSubmissions:
+            model.assignmentSubmissions?.toAssignmentSubmissionDataEntity);
   }
 }
 
