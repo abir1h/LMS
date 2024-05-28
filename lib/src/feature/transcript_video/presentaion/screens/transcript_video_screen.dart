@@ -4,11 +4,6 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lms/src/core/common_widgets/custom_toasty.dart';
-import 'package:lms/src/feature/course/domain/entities/video_choice_data_entity.dart';
-import 'package:lms/src/feature/course/domain/entities/video_content_data_entity.dart';
-import 'package:lms/src/feature/course/domain/entities/video_data_entity.dart';
-import 'package:lms/src/feature/course/domain/entities/video_qustion_data_entity.dart';
 import 'package:video_player/video_player.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -20,6 +15,9 @@ import '../../../../core/common_widgets/custom_switch_button.dart';
 import '../../../../core/service/notifier/app_events_notifier.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../course/presentation/widgets/tab_section_widget.dart';
+import '../../../../core/common_widgets/custom_toasty.dart';
+import '../../../course/domain/entities/video_choice_data_entity.dart';
+import '../../../course/domain/entities/video_content_data_entity.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../service/transcript_video_screen_service.dart';
 import '../widgets/content_player_widget.dart';
@@ -140,39 +138,33 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                                 dataBuilder: (context, data) {
                                   return showOverlay
                                       ? AspectRatio(
-                                          aspectRatio: MediaQuery.of(context).orientation==Orientation.portrait? 16/9: 19/9,
+                                          aspectRatio: MediaQuery.of(context)
+                                                      .orientation ==
+                                                  Orientation.portrait
+                                              ? 16 / 9
+                                              : 19 / 9,
                                           child: OverlayMCQWidget(
                                             items: data.choices,
                                             data: data,
-                                            onTapSkip: () {
-                                              showOverlay = false;
-                                              AppEventsNotifier.notify(
-                                                  EventAction.videoWidget);
-                                              playbackPausePlayStreamController
-                                                  .add(DataLoadedState<bool>(
-                                                      true));
-                                            },
+                                            onTapSkip: onSkipInteractiveAction,
                                             onTapSubmit: () {
-                                              showOverlay = false;
-                                              AppEventsNotifier.notify(
-                                                  EventAction.videoWidget);
-                                              playbackPausePlayStreamController
-                                                  .add(DataLoadedState<bool>(
-                                                  true));
-                                              // VideoChoiceDataEntity choice =
-                                              //     data.choices.firstWhere(
-                                              //         (element) =>
-                                              //             element.isSelected ==
-                                              //             true);
-                                              // if (choice.isCorrect) {
-                                              //   CustomToasty.of(context).showSuccess(label(e: "Correct Answer", b: "সঠিক উত্তর"));
-                                              //   showOverlay = false;
-                                              //   AppEventsNotifier.notify(
-                                              //       EventAction.videoWidget);
-                                              //   playbackPausePlayStreamController
-                                              //       .add(DataLoadedState<bool>(
-                                              //       true));
-                                              // }
+                                              VideoChoiceDataEntity choice =
+                                                  data.choices.firstWhere(
+                                                      (element) =>
+                                                          element.isSelected ==
+                                                          true);
+                                              if (choice.isCorrect) {
+                                                CustomToasty.of(context)
+                                                    .showSuccess(label(
+                                                        e: "Your answer is correct",
+                                                        b: "আপনার উত্তর সঠিক"));
+                                              } else {
+                                                CustomToasty.of(context)
+                                                    .showWarning(label(
+                                                        e: "Your answer is wrong",
+                                                        b: "আপনার উত্তর ভুল"));
+                                              }
+                                              onSkipInteractiveAction();
                                             },
                                             builder: (BuildContext context,
                                                 int index, item) {
@@ -180,19 +172,20 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                                                 value: item.choiceText,
                                                 isSelected: item.isSelected,
                                                 onTap: () => setState(() {
-                                                  item.isSelected =
-                                                  !item.isSelected;
-                                                  // for (VideoChoiceDataEntity videoChoice
-                                                  //     in data.choices) {
-                                                  //   if (data.choices.indexOf(
-                                                  //           videoChoice) !=
-                                                  //       index) {
-                                                  //     item.isSelected = false;
-                                                  //   } else {
-                                                  //     item.isSelected =
-                                                  //         !item.isSelected;
-                                                  //   }
-                                                  // }
+                                                  for (VideoChoiceDataEntity videoChoiceDataEntity
+                                                      in data.choices) {
+                                                    if (data.choices.indexOf(
+                                                            videoChoiceDataEntity) !=
+                                                        index) {
+                                                      videoChoiceDataEntity
+                                                          .isSelected = false;
+                                                    } else {
+                                                      videoChoiceDataEntity
+                                                              .isSelected =
+                                                          !videoChoiceDataEntity
+                                                              .isSelected;
+                                                    }
+                                                  }
                                                 }),
                                               );
                                             },
@@ -461,133 +454,6 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                                 )
                               ],
                             );
-                            // return SingleChildScrollView(
-                            //   child: Column(
-                            //     mainAxisSize: MainAxisSize.min,
-                            //     crossAxisAlignment: CrossAxisAlignment.start,
-                            //     children: [
-                            //       ///Title and Details section
-                            //       SizedBox(height: size.h16),
-                            //       Padding(
-                            //         padding: EdgeInsets.symmetric(horizontal: size.w16),
-                            //         child: Row(
-                            //           children: [
-                            //             Expanded(
-                            //               child: Text(
-                            //                 label(
-                            //                     e: "Video 1: Course Introduction",
-                            //                     b: "ভিডিও ১: কোর্সের পরিচিতি"),
-                            //                 overflow: TextOverflow.ellipsis,
-                            //                 maxLines: 1,
-                            //                 style: TextStyle(
-                            //                     fontFamily: StringData.fontFamilyPoppins,
-                            //                     fontWeight: FontWeight.w600,
-                            //                     fontSize: size.textSmall,
-                            //                     color: clr.appPrimaryColorGreen),
-                            //               ),
-                            //             ),
-                            //             Icon(
-                            //               Icons.download,
-                            //               size: size.r20,
-                            //               color: clr.appPrimaryColorGreen,
-                            //             ),
-                            //             Padding(
-                            //               padding: EdgeInsets.only(left: size.w8),
-                            //               child: CustomSwitchButton(
-                            //                 value: App.currentAppLanguage ==
-                            //                     AppLanguage.english,
-                            //                 textOn: 'EN',
-                            //                 textSize: size.textXXSmall,
-                            //                 textOff: 'বাং',
-                            //                 bgColor: clr.whiteColor,
-                            //                 width: 64.w,
-                            //                 animationDuration:
-                            //                     const Duration(milliseconds: 300),
-                            //                 onChanged: (bool state) {
-                            //                   App.setAppLanguage(state ? 1 : 0)
-                            //                       .then((value) {
-                            //                     if (mounted) {
-                            //                       setState(() {});
-                            //                     }
-                            //                     AppEventsNotifier.notify(
-                            //                         EventAction.courseDetailsScreen);
-                            //                     AppEventsNotifier.notify(
-                            //                         EventAction.onGoingCoursesScreen);
-                            //                     AppEventsNotifier.notify(
-                            //                         EventAction.dashBoardScreen);
-                            //                     AppEventsNotifier.notify(
-                            //                         EventAction.bottomNavBar);
-                            //                     AppEventsNotifier.notify(
-                            //                         EventAction.graphChart);
-                            //                   });
-                            //                 },
-                            //                 buttonHolder: const Icon(
-                            //                   Icons.check,
-                            //                   color: Colors.transparent,
-                            //                 ),
-                            //                 onTap: () {},
-                            //                 onDoubleTap: () {},
-                            //                 onSwipe: () {},
-                            //               ),
-                            //             ),
-                            //           ],
-                            //         ),
-                            //       ),
-                            //       SizedBox(height: size.h8),
-                            //       Padding(
-                            //         padding: EdgeInsets.symmetric(horizontal: size.w16),
-                            //         child: Text(
-                            //           label(
-                            //               e: "Traditional Concepts of Interconnected Formal Education",
-                            //               b: "আন্তঃসংযুক্ত আনুষ্ঠানিক শিক্ষার ঐতিহ্যগত ধারণা"),
-                            //           style: TextStyle(
-                            //               fontFamily: StringData.fontFamilyPoppins,
-                            //               fontSize: size.textSmall,
-                            //               fontWeight: FontWeight.w400,
-                            //               color: clr.textColorBlack),
-                            //         ),
-                            //       ),
-                            //       SizedBox(height: size.h16),
-                            //
-                            //       ///Transcript, Discussions & Notes section
-                            //       SectionTabWidget(
-                            //         key: _bodyKey,
-                            //         onTabChange: (value) {},
-                            //         builder: (context, index) {
-                            //           switch (index) {
-                            //             ///Transcript
-                            //             case 0:
-                            //               return Container(
-                            //                 color: Colors.red,
-                            //                 height: 100,
-                            //                 width: 100,
-                            //               );
-                            //
-                            //             ///Notes
-                            //             case 1:
-                            //               return Container(
-                            //                 color: Colors.green,
-                            //                 height: 100,
-                            //                 width: 100,
-                            //               );
-                            //
-                            //             ///Discussions
-                            //             case 2:
-                            //               return Container(
-                            //                 color: Colors.black,
-                            //                 height: 100,
-                            //                 width: 100,
-                            //               );
-                            //
-                            //             ///Loading state
-                            //             default:
-                            //               return Container();
-                            //           }
-                            //         },
-                            //       ),
-                            //     ],
-                            //   ),
-                            // );
                           }),
                         ),
                     ],
@@ -597,148 +463,6 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                   // const  Align(
                   //     alignment: Alignment.topLeft,
                   //     child: Offstage()
-                  // ),
-
-                  // SafeArea(
-                  // child: CustomYoutubePlayer(
-                  //   videoUrl: "uGqidUUFzwY",
-                  //   body: Expanded(
-                  //     child: ListView(
-                  //       physics: const BouncingScrollPhysics(),
-                  //       padding: EdgeInsets.only(
-                  //           top: size.h16, right: size.w16, left: size.w16),
-                  //       children: [
-                  //         Row(
-                  //           children: [
-                  //             Expanded(
-                  //               child: Text(
-                  //                 label(
-                  //                     e: "Video 1: Course Introduction",
-                  //                     b: "ভিডিও ১: কোর্সের পরিচিতি"),
-                  //                 overflow: TextOverflow.ellipsis,
-                  //                 maxLines: 1,
-                  //                 style: TextStyle(
-                  //                     fontFamily: StringData.fontFamilyPoppins,
-                  //                     fontWeight: FontWeight.w600,
-                  //                     fontSize: size.textSmall,
-                  //                     color: clr.appPrimaryColorGreen),
-                  //               ),
-                  //             ),
-                  //             Icon(
-                  //               Icons.download,
-                  //               size: size.r20,
-                  //               color: clr.appPrimaryColorGreen,
-                  //             ),
-                  //             Padding(
-                  //               padding: EdgeInsets.only(left: size.w8),
-                  //               child: CustomSwitchButton(
-                  //                 value: App.currentAppLanguage == AppLanguage.english,
-                  //                 textOn: 'EN',
-                  //                 textSize: size.textXXSmall,
-                  //                 textOff: 'বাং',
-                  //                 bgColor: clr.whiteColor,
-                  //                 width: 64.w,
-                  //                 animationDuration: const Duration(milliseconds: 300),
-                  //                 onChanged: (bool state) {
-                  //                   App.setAppLanguage(state ? 1 : 0).then((value) {
-                  //                     if (mounted) {
-                  //                       setState(() {});
-                  //                     }
-                  //                     AppEventsNotifier.notify(
-                  //                         EventAction.courseDetailsScreen);
-                  //                     AppEventsNotifier.notify(
-                  //                         EventAction.onGoingCoursesScreen);
-                  //                     AppEventsNotifier.notify(
-                  //                         EventAction.dashBoardScreen);
-                  //                     AppEventsNotifier.notify(EventAction.bottomNavBar);
-                  //                     AppEventsNotifier.notify(EventAction.graphChart);
-                  //                   });
-                  //                 },
-                  //                 buttonHolder: const Icon(
-                  //                   Icons.check,
-                  //                   color: Colors.transparent,
-                  //                 ),
-                  //                 onTap: () {},
-                  //                 onDoubleTap: () {},
-                  //                 onSwipe: () {},
-                  //               ),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //         SizedBox(height: size.h8),
-                  //         Text(
-                  //           label(
-                  //               e: "Traditional Concepts of Interconnected Formal Education",
-                  //               b: "আন্তঃসংযুক্ত আনুষ্ঠানিক শিক্ষার ঐতিহ্যগত ধারণা"),
-                  //           style: TextStyle(
-                  //               fontFamily: StringData.fontFamilyPoppins,
-                  //               fontSize: size.textSmall,
-                  //               fontWeight: FontWeight.w400,
-                  //               color: clr.textColorBlack),
-                  //         ),
-                  //         SizedBox(height: size.h12),
-                  //         Row(
-                  //           mainAxisAlignment: MainAxisAlignment.end,
-                  //           children: [
-                  //             CustomButton(
-                  //               onTap: () => Get.to(() => const NoteEditScreen()),
-                  //               icon: Icons.add,
-                  //               title: label(e: en.takeNotes, b: bn.takeNotes),
-                  //               textSize: size.textXXXSmall,
-                  //               horizontalPadding: size.w10,
-                  //               verticalPadding: 6.5.h,
-                  //               radius: size.w8,
-                  //             ),
-                  //             SizedBox(width: size.w16),
-                  //             CustomButton(
-                  //               // onTap: onTapDiscussion,
-                  //               onTap: () {},
-                  //               icon: Icons.add,
-                  //               title: label(e: en.discussion, b: bn.discussion),
-                  //               textSize: size.textXXXSmall,
-                  //               horizontalPadding: size.w10,
-                  //               verticalPadding: 6.5.h,
-                  //               radius: size.w8,
-                  //             )
-                  //           ],
-                  //         ),
-                  //         SizedBox(height: size.h16),
-                  //         Text(
-                  //           label(e: en.transcript, b: bn.transcript),
-                  //           overflow: TextOverflow.ellipsis,
-                  //           maxLines: 1,
-                  //           style: TextStyle(
-                  //               fontFamily: StringData.fontFamilyPoppins,
-                  //               fontWeight: FontWeight.w600,
-                  //               fontSize: size.textSmall,
-                  //               color: clr.appPrimaryColorGreen),
-                  //         ),
-                  //         SizedBox(height: size.h8),
-                  //         ExpandableText(
-                  //           text: label(
-                  //               e: StringData.transcriptTitle2Description,
-                  //               b: StringData.transcriptTitle2DescriptionBn),
-                  //           style: TextStyle(
-                  //               fontFamily: StringData.fontFamilyPoppins,
-                  //               fontSize: size.textSmall,
-                  //               fontWeight: FontWeight.w400,
-                  //               color: clr.textColorBlack),
-                  //           minimumTextLengthToFold: 200,
-                  //         ),
-                  //         SizedBox(height: size.h56),
-                  //         Padding(
-                  //           padding: EdgeInsets.symmetric(horizontal: 106.w),
-                  //           child: CustomButton(
-                  //             onTap: () {},
-                  //             title: label(e: en.next, b: bn.next),
-                  //             verticalPadding: 2.h,
-                  //             radius: size.w4,
-                  //           ),
-                  //         ),
-                  //         SizedBox(height: size.h56),
-                  //       ],
-                  //     ),
-                  //   ),
                   // ),
                 ],
               ),
