@@ -43,13 +43,9 @@ class ChapterDetailsWidget extends StatelessWidget with AppTheme, Language {
               fontFamily: StringData.fontFamilyPoppins,
             ),
             SizedBox(height: size.h8),
-            CustomTextWidget(
-              text: description,
-              textColor: clr.textColorBlack,
-              fontWeight: FontWeight.w400,
-              fontFamily: StringData.fontFamilyPoppins,
-              textAlign: TextAlign.justify,
-            ),
+           stringToWidget(input: description,textStyle: TextStyle(color: clr.textColorBlack,
+             fontWeight: FontWeight.w400,fontSize: size.textSmall,
+             fontFamily: StringData.fontFamilyPoppins,)),
             SizedBox(height: size.h64)
           ],
         ),
