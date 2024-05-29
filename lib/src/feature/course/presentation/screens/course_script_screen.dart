@@ -14,6 +14,7 @@ import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
 import '../../domain/entities/script_data_entity.dart';
 import '../services/course_script_screen_service.dart';
 import '../widgets/chapter_details_widget.dart';
+import '../widgets/custom_html_expanded_text_widget.dart';
 import '../widgets/discussion_widget.dart';
 import '../widgets/note_widget.dart';
 import '../widgets/sliver_tab_section_widget.dart';
@@ -143,7 +144,7 @@ class _CourseScriptScreenState extends State<CourseScriptScreen>
                   SizedBox(height: size.h4),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: size.w16),
-                    child: ExpandableText(
+                    child: HtmlExpandableText(
                       text: label(e: data.descriptionEn, b: data.descriptionBn),
                       style: TextStyle(
                           color: clr.textColorAppleBlack,
