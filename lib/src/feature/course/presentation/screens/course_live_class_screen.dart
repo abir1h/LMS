@@ -153,21 +153,19 @@ class _CourseLiveClassScreenState extends State<CourseLiveClassScreen>
                     },
                   );
                 } else {
-                  return  CustomEmptyWidget(
+                  return CustomEmptyWidget(
                     icon: Icons.school_outlined,
                     message: label(
-                      e: "No matching data found!",b: "কোনও ডেটা পাওয়া যায়নি!"
-
-                    ),
+                        e: "No matching data found!",
+                        b: "কোনও ডেটা পাওয়া যায়নি!"),
                   );
                 }
               },
               emptyBuilder: (context, message, icon) => CustomEmptyWidget(
                 message: message,
                 title: label(
-                    e: "No matching data found!",b: "কোনও ডেটা পাওয়া যায়নি!"
-
-                ),
+                    e: "No matching data found!",
+                    b: "কোনও ডেটা পাওয়া যায়নি!"),
                 // constraints: constraints,
                 // offset: 350.w,
               ),
@@ -402,18 +400,19 @@ class InClassCardWidget extends StatelessWidget with AppTheme, Language {
               rightText: label(e: data.time, b: data.time),
             ),
           if (data.time.isNotEmpty) SizedBox(height: size.h20),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: size.w44),
-            child: CustomButton(
-              onTap: onTapConfirm,
-              title: label(e: en.confirmInPerson, b: bn.confirmInPerson),
-              bgColor: areSameDateFast(DateTime.parse(data.classSchedule))
-                  ? clr.appPrimaryColorGreen
-                  : clr.greyColor,
-              textColor: clr.whiteColor,
-              radius: size.r16,
-            ),
-          )
+          if (data.classSchedule.isNotEmpty)
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: size.w44),
+              child: CustomButton(
+                onTap: onTapConfirm,
+                title: label(e: en.confirmInPerson, b: bn.confirmInPerson),
+                bgColor: areSameDateFast(DateTime.parse(data.classSchedule))
+                    ? clr.appPrimaryColorGreen
+                    : clr.greyColor,
+                textColor: clr.whiteColor,
+                radius: size.r16,
+              ),
+            )
         ],
       ),
     );
@@ -511,17 +510,18 @@ class OnlineClassCardWidget extends StatelessWidget with AppTheme, Language {
               ],
             ),
           ),
-          SizedBox(height: size.h20),
-          CardRowItemWidget(
-            leftText: label(e: en.classSchedule, b: bn.classSchedule),
-            rightText: data.classSchedule.isNotEmpty
-                ? label(
-                    e: DateFormat('dd MMMM, yyyy')
-                        .format(DateTime.parse(data.classSchedule)),
-                    b: timeAgoToBengali(DateFormat('dd MMMM, yyyy')
-                        .format(DateTime.parse(data.classSchedule))))
-                : "",
-          ),
+          if (data.classSchedule.isNotEmpty) SizedBox(height: size.h20),
+          if (data.classSchedule.isNotEmpty)
+            CardRowItemWidget(
+              leftText: label(e: en.classSchedule, b: bn.classSchedule),
+              rightText: data.classSchedule.isNotEmpty
+                  ? label(
+                      e: DateFormat('dd MMMM, yyyy')
+                          .format(DateTime.parse(data.classSchedule)),
+                      b: timeAgoToBengali(DateFormat('dd MMMM, yyyy')
+                          .format(DateTime.parse(data.classSchedule))))
+                  : "",
+            ),
           SizedBox(height: size.h20),
           if (data.time.isNotEmpty)
             CardRowItemWidget(
@@ -529,18 +529,19 @@ class OnlineClassCardWidget extends StatelessWidget with AppTheme, Language {
               rightText: label(e: data.time, b: data.time),
             ),
           if (data.time.isNotEmpty) SizedBox(height: size.h20),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: size.w44),
-            child: CustomButton(
-              onTap: onTapConfirm,
-              title: label(e: en.joinClass, b: bn.joinClass),
-              bgColor: areSameDateFast(DateTime.parse(data.classSchedule))
-                  ? clr.appPrimaryColorGreen
-                  : clr.greyColor,
-              textColor: clr.whiteColor,
-              radius: size.r16,
-            ),
-          )
+          if (data.classSchedule.isNotEmpty)
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: size.w44),
+              child: CustomButton(
+                onTap: onTapConfirm,
+                title: label(e: en.joinClass, b: bn.joinClass),
+                bgColor: areSameDateFast(DateTime.parse(data.classSchedule))
+                    ? clr.appPrimaryColorGreen
+                    : clr.greyColor,
+                textColor: clr.whiteColor,
+                radius: size.r16,
+              ),
+            )
         ],
       ),
     );

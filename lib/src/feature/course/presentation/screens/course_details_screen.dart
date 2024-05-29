@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:lms/src/feature/course/presentation/widgets/custom_html_expanded_text_widget.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../../../../core/common_widgets/app_stream.dart';
@@ -84,7 +85,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
 
                     ///Last Seen Widget
                     if (_screenArgs.curriculumType ==
-                        CircularStatus.running.name)
+                        CircularStatus.running.name  && data.lastViewedContent!=null)
                       LastSeenWidget(
                         data: data.lastViewedContent!,
                         onTap: () {
@@ -184,7 +185,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
                     SizedBox(height: size.h4),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: size.w16),
-                      child: ExpandableText(
+                      child: HtmlExpandableText(
                         text: label(e: data.shortDescEn, b: data.shortDescBn),
                         style: TextStyle(
                             color: clr.textColorAppleBlack,
@@ -194,6 +195,18 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
                         minimumTextLengthToFold: 130,
                       ),
                     ),
+                    // Padding(
+                    //   padding: EdgeInsets.symmetric(horizontal: size.w16),
+                    //   child: ExpandableText(
+                    //     text: label(e: data.shortDescEn, b: data.shortDescBn),
+                    //     style: TextStyle(
+                    //         color: clr.textColorAppleBlack,
+                    //         fontSize: size.textSmall,
+                    //         fontWeight: FontWeight.w500,
+                    //         fontFamily: StringData.fontFamilyPoppins),
+                    //     minimumTextLengthToFold: 130,
+                    //   ),
+                    // ),
                     // CourseText(
                     //   text: label(e: data.shortDescEn, b: data.shortDescBn),
                     //   textColor: clr.textColorAppleBlack,
