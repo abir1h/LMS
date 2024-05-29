@@ -233,7 +233,7 @@ String nightDayConvertor(String timeAgo, String timstamp) {
   return banglaText;
 }
 
-Widget stringToWidget(String input) {
+Widget stringToWidget({required String input,TextStyle? textStyle}) {
   // Check if the input string contains HTML tags
   bool containsHtmlTags(String text) {
     final htmlTagsRegExp = RegExp(r'<[^>]*>');
@@ -243,14 +243,18 @@ Widget stringToWidget(String input) {
   if (containsHtmlTags(input)) {
     // Return HtmlWidget if the string contains HTML tags
     return HtmlWidget(
-      input,
+      input,textStyle: textStyle??TextStyle(
+      color: HexColor("646464"),
+      fontSize: 14.sp,
+      fontWeight: FontWeight.w500,
+    ),
       // Optionally, you can customize the HtmlWidget properties here
     );
   } else {
     // Return Text widget if the string does not contain HTML tags
     return Text(
       input,
-      style: TextStyle(
+      style: textStyle??TextStyle(
         color: HexColor("646464"),
         fontSize: 14.sp,
         fontWeight: FontWeight.w500,

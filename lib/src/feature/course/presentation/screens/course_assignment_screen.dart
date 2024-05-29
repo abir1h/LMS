@@ -161,7 +161,7 @@ class InstructionWidget extends StatelessWidget with AppTheme, Language {
               color: clr.blackColor.withOpacity(.15))
         ],
       ),
-      child: stringToWidget(instruction),
+      child: stringToWidget(input: instruction),
     );
   }
 }
