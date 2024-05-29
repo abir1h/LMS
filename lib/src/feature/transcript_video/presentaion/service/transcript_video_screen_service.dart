@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import '../../data/repositories/video_repository_imp.dart';
+import '../../domain/use_cases/video_use_case.dart';
 import '../../../../core/service/notifier/app_events_notifier.dart';
 import '../../../course/domain/entities/video_content_data_entity.dart';
 import '../../../../core/common_widgets/app_stream.dart';
@@ -9,6 +10,7 @@ import '../../../course/data/repositories/course_repository_imp.dart';
 import '../../../course/domain/entities/video_qustion_data_entity.dart';
 import '../../../course/domain/use_cases/course_use_case.dart';
 import '../../../shared/domain/entities/response_entity.dart';
+import '../../data/data_sources/remote/video_data_source.dart';
 import '../screens/transcript_video_screen.dart';
 
 abstract class _ViewModel {
@@ -29,6 +31,9 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
   final CourseUseCase _courseUseCase = CourseUseCase(
       courseRepository: CourseRepositoryImp(
           courseRemoteDataSource: CourseRemoteDataSourceImp()));
+  final VideoUseCase _videoUseCase = VideoUseCase(
+      videoRepository: VideoRepositoryImp(
+          videoRemoteDataSource: VideoRemoteDataSourceImp()));
 
   Future<ResponseEntity> getVideoDetails(int courseContentId) async {
     return _courseUseCase.getVideoDetailsUseCase(courseContentId);
@@ -43,6 +48,12 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
       String attendanceType) async {
     return _courseUseCase.contentReadUseCase(contentId, contentType, courseId,
         isCompleted, lastWatchTime, attendanceType);
+  }
+
+  Future<ResponseEntity> videoActivity(int circularVideoId, int lastWatchTime,
+      List<int> questionSeenList) async {
+    return _videoUseCase.videoActivityUseCase(
+        circularVideoId, lastWatchTime, questionSeenList);
   }
 
   ///Service configurations
