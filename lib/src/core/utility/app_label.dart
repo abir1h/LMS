@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter_quill/flutter_quill.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import '../constants/common_imports.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../common_widgets/custom_toasty.dart';
+import 'color_tools.dart';
 
 ///App Language
 enum AppLanguage { english, bangla }
@@ -228,6 +231,33 @@ String nightDayConvertor(String timeAgo, String timstamp) {
   }).join(' ');
 
   return banglaText;
+}
+
+Widget stringToWidget(String input) {
+  // Check if the input string contains HTML tags
+  bool containsHtmlTags(String text) {
+    final htmlTagsRegExp = RegExp(r'<[^>]*>');
+    return htmlTagsRegExp.hasMatch(text);
+  }
+
+  if (containsHtmlTags(input)) {
+    // Return HtmlWidget if the string contains HTML tags
+    return HtmlWidget(
+      input,
+      // Optionally, you can customize the HtmlWidget properties here
+    );
+  } else {
+    // Return Text widget if the string does not contain HTML tags
+    return Text(
+      input,
+      style: TextStyle(
+        color: HexColor("646464"),
+        fontSize: 14.sp,
+        fontWeight: FontWeight.w500,
+      ),
+      // Optionally, you can customize the Text widget properties here
+    );
+  }
 }
 
 bool areSameDateFast(DateTime a) {
