@@ -161,12 +161,7 @@ class InstructionWidget extends StatelessWidget with AppTheme, Language {
               color: clr.blackColor.withOpacity(.15))
         ],
       ),
-      child: CustomTextWidget(
-        text: instruction,
-        textColor: clr.gapStrokeGrey,
-        fontSize: size.textXSmall,
-        fontWeight: FontWeight.w500,
-      ),
+      child: stringToWidget(instruction),
     );
   }
 }
