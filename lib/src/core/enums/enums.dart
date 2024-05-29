@@ -15,4 +15,4 @@ enum ContentType {
 
 enum AssignmentSubType { written, upload, both }
 
-enum AssignmentType { group, individual }
+enum AssignmentType { group, individual, collaborative }

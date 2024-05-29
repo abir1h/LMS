@@ -130,9 +130,9 @@ class _AssignmentScreenState extends State<AssignmentScreen>
 
                 SizedBox(height: size.h12),
 
-                if (data.type == "individual")
+                if (data.type == AssignmentType.individual.name)
                   if (data.assignmentSubmissions != null &&
-                      data.submissionType == "written")
+                      data.submissionType == AssignmentSubType.written.name)
                     Padding(
                       padding: EdgeInsets.only(bottom: size.h12),
                       child: Row(
@@ -147,7 +147,8 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                             ),
                           ),
                           SizedBox(width: size.w8),
-                          if (data.submissionType == "written" &&
+                          if (data.submissionType ==
+                                  AssignmentSubType.written.name &&
                               data.assignmentSubmissions!
                                       .assignmentResultDataEntity ==
                                   null)
@@ -179,10 +180,10 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                         ],
                       ),
                     ),
-                if (data.type == "group")
+                if (data.type == AssignmentType.group.name)
                   if (data.circularSubAssignments?.assignmentSubmissions !=
                           null &&
-                      data.submissionType == "written")
+                      data.submissionType == AssignmentSubType.written.name)
                     Padding(
                       padding: EdgeInsets.only(bottom: size.h12),
                       child: Row(
@@ -197,7 +198,8 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                             ),
                           ),
                           SizedBox(width: size.w8),
-                          if (data.submissionType == "written" &&
+                          if (data.submissionType ==
+                                  AssignmentSubType.written.name &&
                               data
                                       .circularSubAssignments!
                                       .assignmentSubmissions!
@@ -234,18 +236,23 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                     ),
 
                 ///Written
-                if (data.submissionType == "written" ||
-                    data.submissionType == "both")
+                if (data.submissionType == AssignmentSubType.written.name ||
+                    data.submissionType == AssignmentSubType.both.name)
                   WrittenAnswerWidget(
-                    answer: data.type == "individual"
+                    answer: data.type == AssignmentType.individual.name
                         ? (data.assignmentSubmissions != null
                             ? data.assignmentSubmissions!.answer
                             : "")
-                        : (data.circularSubAssignments!.assignmentSubmissions !=
-                                null
-                            ? data.circularSubAssignments!
-                                .assignmentSubmissions!.answer
-                            : ""),
+                        : data.type == AssignmentType.group.name
+                            ? (data.circularSubAssignments!
+                                        .assignmentSubmissions !=
+                                    null
+                                ? data.circularSubAssignments!
+                                    .assignmentSubmissions!.answer
+                                : "")
+                            : "",
+
+                    ///Need to work after Complete collaborative Api
                     onTap: () {
                       if (data.assignmentSubmissions == null ||
                           data.circularSubAssignments?.assignmentSubmissions ==
@@ -254,9 +261,9 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                       }
                     },
                   ),
-                if (data.type == "individual")
+                if (data.type == AssignmentType.individual.name)
                   if (data.assignmentSubmissions != null &&
-                      data.submissionType == "written" &&
+                      data.submissionType == AssignmentSubType.written.name &&
                       data.assignmentSubmissions?.assignmentResultDataEntity ==
                           null)
                     Container(
@@ -293,10 +300,10 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                if (data.type == "group")
+                if (data.type == AssignmentType.group.name)
                   if (data.circularSubAssignments?.assignmentSubmissions !=
                           null &&
-                      data.submissionType == "written" &&
+                      data.submissionType == AssignmentSubType.written.name &&
                       data.circularSubAssignments!.assignmentSubmissions
                               ?.assignmentResultDataEntity ==
                           null)
@@ -327,7 +334,7 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                       ),
                     ),
 
-                if (data.submissionType == "both")
+                if (data.submissionType == AssignmentSubType.both.name)
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: size.h12),
                     child: Center(
@@ -343,8 +350,8 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                   ),
 
                 ///File Upload
-                if ((data.submissionType == "upload" ||
-                        data.submissionType == "both") &&
+                if ((data.submissionType == AssignmentSubType.upload.name ||
+                        data.submissionType == AssignmentSubType.both.name) &&
                     data.allowed)
                   Text(
                     label(e: en.uploadTheFile, b: bn.uploadTheFile),
@@ -354,8 +361,8 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                         fontWeight: FontWeight.w500,
                         fontFamily: StringData.fontFamilyPoppins),
                   ),
-                if ((data.submissionType == "upload" ||
-                        data.submissionType == "both") &&
+                if ((data.submissionType == AssignmentSubType.upload.name ||
+                        data.submissionType == AssignmentSubType.both.name) &&
                     data.allowed)
                   Padding(
                     padding: EdgeInsets.only(top: size.h12),
@@ -396,8 +403,8 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                   ),
 
                 ///Submit
-                if ((data.submissionType == "upload" ||
-                        data.submissionType == "both") &&
+                if ((data.submissionType == AssignmentSubType.upload.name ||
+                        data.submissionType == AssignmentSubType.both.name) &&
                     (data.assignmentSubmissions == null &&
                         data.circularSubAssignments?.assignmentSubmissions ==
                             null))
@@ -436,8 +443,8 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                   ),
 
                 ///Re-Submit
-                if ((data.submissionType == "upload" ||
-                        data.submissionType == "both") &&
+                if ((data.submissionType == AssignmentSubType.upload.name ||
+                        data.submissionType == AssignmentSubType.both.name) &&
                     (data.assignmentSubmissions != null ||
                         data.circularSubAssignments?.assignmentSubmissions !=
                             null) &&
@@ -452,7 +459,8 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                         CustomButton(
                           onTap: () {
                             onUpdateAssignment(
-                                    submissionId: data.type == "individual"
+                                    submissionId: data.type ==
+                                            AssignmentType.individual.name
                                         ? data.assignmentSubmissions!.id
                                         : data.circularSubAssignments!
                                             .assignmentSubmissions!.id,
@@ -484,15 +492,15 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                 if ((data.assignmentSubmissions != null ||
                         data.circularSubAssignments?.assignmentSubmissions !=
                             null) &&
-                    data.submissionType == "upload")
+                    data.submissionType == AssignmentSubType.upload.name)
                   SubmissionCompletedWidget(
-                      data: data.type == "individual"
+                      data: data.type == AssignmentType.individual.name
                           ? data.assignmentSubmissions!
                           : data
                               .circularSubAssignments!.assignmentSubmissions!),
 
                 ///Assignment Result for Individual
-                if (data.type == "individual")
+                if (data.type == AssignmentType.individual.name)
                   if (data.assignmentSubmissions != null &&
                       data.assignmentSubmissions!.assignmentResultDataEntity !=
                           null)
@@ -515,7 +523,7 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                     ),
 
                 ///Assignment Result for Group
-                if (data.type == "group")
+                if (data.type == AssignmentType.group.name)
                   if (data.circularSubAssignments?.assignmentSubmissions !=
                           null &&
                       data.circularSubAssignments!.assignmentSubmissions!
@@ -544,10 +552,7 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                     data.assignmentSubmissions!.assignmentResultDataEntity !=
                         null)
                   InstructorCommentWidget(
-                      remarks: data.type == "individual"
-                          ? data.assignmentSubmissions!.remarks
-                          : data.circularSubAssignments!.assignmentSubmissions!
-                              .remarks),
+                      remarks: data.assignmentSubmissions!.remarks),
 
                 ///Instructor Comment for Group
                 if (data.circularSubAssignments?.assignmentSubmissions !=
@@ -579,7 +584,7 @@ class _AssignmentScreenState extends State<AssignmentScreen>
       builder: (context) => AssignmentBottomSheet(
         type: type,
         assignmentDataEntity: assignmentDataEntity,
-        answer: assignmentDataEntity.type == "individual"
+        answer: assignmentDataEntity.type == AssignmentType.individual.name
             ? assignmentDataEntity.assignmentSubmissions?.answer
             : assignmentDataEntity
                 .circularSubAssignments!.assignmentSubmissions?.answer,
@@ -938,7 +943,7 @@ class AssignmentReviewWidget extends StatelessWidget with AppTheme, Language {
               color: clr.appPrimaryColorGreen,
             ),
           ),
-          if (data.type == "individual")
+          if (data.type == AssignmentType.individual.name)
             if (data.passMark > data.assignmentSubmissions!.marks)
               Container(
                 width: double.infinity,
@@ -967,7 +972,7 @@ class AssignmentReviewWidget extends StatelessWidget with AppTheme, Language {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-          if (data.type == "group")
+          if (data.type == AssignmentType.group.name)
             if (data.passMark >
                 data.circularSubAssignments!.assignmentSubmissions!.marks)
               Container(
@@ -1035,7 +1040,7 @@ class AssignmentReviewWidget extends StatelessWidget with AppTheme, Language {
                       b: replaceEnglishNumberWithBengali(data
                           .circularSubAssignments!.assignmentSubmissions!.marks
                           .toString()))),
-          if (data.type == "individual")
+          if (data.type == AssignmentType.individual.name)
             if (data.passMark > data.assignmentSubmissions!.marks)
               Padding(
                 padding: EdgeInsets.only(top: size.h20),
@@ -1059,7 +1064,7 @@ class AssignmentReviewWidget extends StatelessWidget with AppTheme, Language {
                   ],
                 ),
               ),
-          if (data.type == "group")
+          if (data.type == AssignmentType.group.name)
             if (data.passMark >
                 data.circularSubAssignments!.assignmentSubmissions!.marks)
               Padding(
@@ -1084,7 +1089,7 @@ class AssignmentReviewWidget extends StatelessWidget with AppTheme, Language {
                   ],
                 ),
               ),
-          if (data.type == "individual")
+          if (data.type == AssignmentType.individual.name)
             if (data.passMark > data.assignmentSubmissions!.marks)
               Padding(
                 padding: EdgeInsets.only(
@@ -1098,7 +1103,7 @@ class AssignmentReviewWidget extends StatelessWidget with AppTheme, Language {
                   verticalPadding: size.h4,
                 ),
               ),
-          if (data.type == "group")
+          if (data.type == AssignmentType.group.name)
             if (data.passMark >
                 data.circularSubAssignments!.assignmentSubmissions!.marks)
               Padding(
