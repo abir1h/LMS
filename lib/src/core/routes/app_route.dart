@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../feature/assessment/presentation/screens/assessment_all_question_screen.dart';
+import '../../feature/assessment/presentation/screens/assessment_slide_view_screen.dart';
+import '../../feature/assessment/presentation/screens/assessment_scroll_view_screen.dart';
 import '../../feature/assignment/presentation/screens/assignment_screen.dart';
 import '../../feature/assignment/presentation/screens/assignment_submit_screen.dart';
 import '../../feature/authentication/presentation/screens/authentication_screen.dart';
@@ -53,8 +54,8 @@ class AppRoute {
   static const String moduleDiscussionsScreen = "moduleDiscussionsScreen";
   static const String assignmentScreen = "assignmentScreen";
   static const String assignmentSubmitScreen = "assignmentSubmitScreen";
-  static const String assessmentAllQuestionScreen =
-      "assessmentAllQuestionScreen";
+  static const String assessmentScrollViewScreen = "assessmentScrollViewScreen";
+  static const String assessmentSlideViewScreen = "assessmentSlideViewScreen";
   static const String detailedDiscussion = "detailedDiscussion";
   static const String discussionListScreen = "discussionListScreen";
   static const String noteDetailsScreen = "noteDetailsScreen";
@@ -114,10 +115,10 @@ mixin RouteGenerator {
             return ModuleDiscussionsScreen(arguments: setting.arguments);
           case AppRoute.assignmentSubmitScreen:
             return AssignmentSubmitScreen(arguments: setting.arguments);
-          case AppRoute.assessmentAllQuestionScreen:
-            return AssessmentAllQuestionScreen(
-              arguments: setting.arguments,
-            );
+          case AppRoute.assessmentScrollViewScreen:
+            return AssessmentScrollViewScreen(arguments: setting.arguments);
+          case AppRoute.assessmentSlideViewScreen:
+            return AssessmentSlideViewScreen(arguments: setting.arguments);
           case AppRoute.detailedDiscussion:
             return DetailedDiscussion(arguments: setting.arguments);
           case AppRoute.discussionListScreen:

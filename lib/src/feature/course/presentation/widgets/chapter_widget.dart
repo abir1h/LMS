@@ -7,7 +7,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import '../../../../core/common_widgets/popup_widget.dart';
 import '../../../../core/routes/app_route.dart';
 import '../../../../core/routes/app_route_args.dart';
-import '../../../assessment/presentation/screens/assesment_single_question_screen.dart';
+import '../../../assessment/presentation/screens/assessment_slide_view_screen.dart';
 import '../../../assessment/presentation/screens/assessment_answer_in_one_word_screen.dart';
 import '../../../assessment/presentation/screens/assessment_matching_screen.dart';
 import '../../../assessment/presentation/screens/assessment_true_false_screen.dart';

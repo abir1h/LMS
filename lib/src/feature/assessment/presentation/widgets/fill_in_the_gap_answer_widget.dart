@@ -72,7 +72,6 @@ class BuildSentence extends StatelessWidget with AppTheme {
 
   @override
   Widget build(BuildContext context) {
-    // sentence.replaceAll('</p>', '');
     List<String> sentenceParts = sentence.split(' ');
 
     return Wrap(

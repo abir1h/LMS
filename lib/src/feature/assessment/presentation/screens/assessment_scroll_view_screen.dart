@@ -26,36 +26,22 @@ import '../widgets/time_expired_panel_widget.dart';
 import '../widgets/true_false_answer_widget.dart';
 import '../widgets/written_text_field_widget.dart';
 
-class AssessmentAllQuestionScreen extends StatefulWidget {
+class AssessmentScrollViewScreen extends StatefulWidget {
   final Object? arguments;
-  const AssessmentAllQuestionScreen({super.key, this.arguments});
+  const AssessmentScrollViewScreen({super.key, this.arguments});
 
   @override
-  State<AssessmentAllQuestionScreen> createState() =>
-      _AssessmentAllQuestionScreenState();
+  State<AssessmentScrollViewScreen> createState() =>
+      _AssessmentScrollViewScreenState();
 }
 
-class _AssessmentAllQuestionScreenState
-    extends State<AssessmentAllQuestionScreen>
+class _AssessmentScrollViewScreenState extends State<AssessmentScrollViewScreen>
     with AppTheme, Language, AssessmentScreenService {
   @override
   void initState() {
     super.initState();
     initService(widget.arguments as AssessmentScreenArgs);
-    // timerStreamController.add(const Duration(minutes: 45));
-    // _examTimer = Timer.periodic(const Duration(seconds: 1), _onTimerTick);
-    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-    //   _onTimerTick(_examTimer);
-    // });
   }
-
-  //
-  // void _onTimerTick(Timer timer) {
-  //   var remaining = timerStreamController.value - const Duration(seconds: 1);
-  //   timerStreamController.add(remaining);
-  // }
-
-  int groupValue = -1;
 
   @override
   Widget build(BuildContext context) {
@@ -238,8 +224,8 @@ class _AssessmentAllQuestionScreenState
                     child: CustomActionButton<ResultDataEntity>(
                         radius: size.r4,
                         title: label(e: "Submit Answer", b: "জমা দিন"),
-                        // controller: _submitButtonController,
-                        // onCheck: _showConfirmationDialog,
+                        controller: submitButtonController,
+                        onCheck: _showConfirmationDialog,
                         tapAction: () => onSubmitExam(data.examData),
                         onSuccess: (x) {
                           examTimer.cancel();
@@ -363,6 +349,24 @@ class _AssessmentAllQuestionScreenState
       //   ),
       // )
     );
+  }
+
+  bool _showConfirmationDialog() {
+    CustomDialogWidget.show(
+      context: context,
+      icon: Icons.quiz_outlined,
+      title: label(e: "Are You Sure?", b: "আপনি কি নিশ্চিত?"),
+      infoText: label(
+          e: "You are about to submit answers. Before submitting, you should double-check your answers.\n\nHowever, do you like to submit it now?",
+          b: "আপনি উত্তর জমা দিতে চলেছেন৷ জমা দেওয়ার আগে, আপনার উত্তরগুলি দুবার চেক করা উচিত৷\n\nতবে, আপনি কি এখন এটি জমা দিতে চান?"),
+      leftButtonText: label(e: "Cancel", b: "বাতিল করুন"),
+      rightButtonText: label(e: "Yes", b: "হ্যাঁ"),
+    ).then((value) {
+      if (value) {
+        submitButtonController.forceTap();
+      }
+    });
+    return false;
   }
 
   @override

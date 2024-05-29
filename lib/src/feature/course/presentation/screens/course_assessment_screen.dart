@@ -103,120 +103,6 @@ class _CourseAssessmentScreenState extends State<CourseAssessmentScreen>
                   ),
                 ),
                 SizedBox(height: size.h40),
-                // Container(
-                //   margin: EdgeInsets.symmetric(horizontal: size.w16),
-                //   padding: EdgeInsets.symmetric(
-                //       horizontal: size.w20, vertical: size.h20),
-                //   decoration: BoxDecoration(
-                //       color: clr.whiteColor,
-                //       borderRadius: BorderRadius.circular(size.r8),
-                //       border: Border.all(
-                //           color: clr.boxStrokeColor, width: size.w1)),
-                //   child: Column(
-                //     children: [
-                //       Row(
-                //         children: [
-                //           Icon(
-                //             Icons.calendar_month_rounded,
-                //             color: clr.iconColorDarkGrey,
-                //             size: size.r20,
-                //           ),
-                //           SizedBox(width: size.w8),
-                //           Expanded(
-                //             child: Text(
-                //               label(
-                //                   e: "Last date for submission: ${data.endDate}",
-                //                   b: "জমাদানের শেষ তারিখ: ${data.endDate}"),
-                //               style: TextStyle(
-                //                   color: clr.blackColor,
-                //                   fontSize: size.textSmall,
-                //                   fontWeight: FontWeight.w500,
-                //                   fontFamily: StringData.fontFamilyPoppins),
-                //               maxLines: 2,
-                //               overflow: TextOverflow.ellipsis,
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //       SizedBox(height: size.h16),
-                //       Row(
-                //         children: [
-                //           SvgPicture.asset(
-                //             ImageAssets.icAlarm,
-                //             colorFilter: ColorFilter.mode(
-                //                 clr.iconColorDarkGrey, BlendMode.srcIn),
-                //           ),
-                //           SizedBox(width: size.w8),
-                //           Text(
-                //             label(
-                //                 e: "Time: ${data.totalTime} minutes",
-                //                 b: "সময়ঃ ${replaceEnglishNumberWithBengali(data.totalTime.toString())} মিনিট"),
-                //             style: TextStyle(
-                //                 color: clr.blackColor,
-                //                 fontSize: size.textSmall,
-                //                 fontWeight: FontWeight.w500,
-                //                 fontFamily: StringData.fontFamilyPoppins),
-                //           ),
-                //           SizedBox(width: size.w16),
-                //           SvgPicture.asset(
-                //             ImageAssets.icDictionary,
-                //             colorFilter: ColorFilter.mode(
-                //                 clr.iconColorDarkGrey, BlendMode.srcIn),
-                //           ),
-                //           SizedBox(width: size.w8),
-                //           Expanded(
-                //             child: Text(
-                //               label(
-                //                   e: "Marks: ${data.totalMark}",
-                //                   b: "মার্কস : ${replaceEnglishNumberWithBengali(data.totalMark.toString())}"),
-                //               style: TextStyle(
-                //                   color: clr.blackColor,
-                //                   fontSize: size.textSmall,
-                //                   fontWeight: FontWeight.w500,
-                //                   fontFamily: StringData.fontFamilyPoppins),
-                //               maxLines: 2,
-                //               overflow: TextOverflow.ellipsis,
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //       SizedBox(height: size.h16),
-                //       Row(
-                //         children: [
-                //           Icon(
-                //             Icons.quiz,
-                //             color: clr.iconColorDarkGrey,
-                //             size: size.r20,
-                //           ),
-                //           SizedBox(width: size.w8),
-                //           Expanded(
-                //             child: Text(
-                //               label(
-                //                   e: "Total Questions: 10",
-                //                   b: "প্রশ্নের সংখ্যা: ১০"),
-                //               style: TextStyle(
-                //                   color: clr.blackColor,
-                //                   fontSize: size.textSmall,
-                //                   fontWeight: FontWeight.w500,
-                //                   fontFamily: StringData.fontFamilyPoppins),
-                //               maxLines: 2,
-                //               overflow: TextOverflow.ellipsis,
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //       SizedBox(height: size.h20),
-                //       Padding(
-                //         padding: EdgeInsets.symmetric(horizontal: size.w10),
-                //         child: CustomButton(
-                //           onTap: () => onTapStartExam(data.id),
-                //           title: label(e: en.getStarted, b: bn.getStarted),
-                //           radius: size.r4,
-                //         ),
-                //       )
-                //     ],
-                //   ),
-                // ),
               ],
             ),
           );
@@ -239,8 +125,13 @@ class _CourseAssessmentScreenState extends State<CourseAssessmentScreen>
 
   @override
   void onTapExamDetailsScreen(ExamDataEntity data) {
-    Navigator.of(context).pushNamed(AppRoute.assessmentAllQuestionScreen,
-        arguments: AssessmentScreenArgs(examData: data));
+    if (data.assessment!.isHorizontal) {
+      Navigator.of(context).pushNamed(AppRoute.assessmentSlideViewScreen,
+          arguments: AssessmentScreenArgs(examData: data));
+    } else {
+      Navigator.of(context).pushNamed(AppRoute.assessmentScrollViewScreen,
+          arguments: AssessmentScreenArgs(examData: data));
+    }
   }
 }
 
@@ -295,8 +186,8 @@ class AssessmentInfoWidget extends StatelessWidget with AppTheme, Language {
           AssignmentInfoRowWidget(
             leftText: label(e: "Total Opportunity", b: "সর্বমোট চেষ্টার সুযোগ"),
             rightText: label(
-                e: data.totalTime.toString(),
-                b: "${replaceEnglishNumberWithBengali(data.totalTime.toString())} পয়েন্টস"),
+                e: "${data.tries.toString()} Times",
+                b: "${replaceEnglishNumberWithBengali(data.tries.toString())} বার"),
           ),
         ],
       ),

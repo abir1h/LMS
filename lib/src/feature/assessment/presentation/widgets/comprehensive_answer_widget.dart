@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/constants/common_imports.dart';
 import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
-import '../../domain/entities/question_data_entity.dart';
 import 'written_text_field_widget.dart';
 
 class ComprehensiveAnswerWidget extends StatelessWidget with AppTheme {
@@ -23,9 +22,7 @@ class ComprehensiveAnswerWidget extends StatelessWidget with AppTheme {
           fontWeight: FontWeight.w400,
         ),
         SizedBox(height: size.h8),
-        WrittenTextFieldWidget(
-          onChanged: onChanged
-        ),
+        WrittenTextFieldWidget(onChanged: onChanged),
       ],
     );
   }
