@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../../../../core/common_widgets/circuler_widget.dart';
+import '../../../../core/common_widgets/circular_loader_widget.dart';
 import '../../../../core/constants/app_theme.dart';
 import '../../../shared/domain/entities/response_entity.dart';
 import '../../domain/entities/exam_data_entity.dart';

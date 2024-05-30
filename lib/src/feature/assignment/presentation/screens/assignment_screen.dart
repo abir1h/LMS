@@ -3,13 +3,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
-import 'package:get/get.dart';
 
 import '../../../../core/common_widgets/quil_text_viewer.dart';
 import '../../../../core/enums/enums.dart';
-import 'assignement_request_bottomsheet.dart';
+import 'assignment_request_bottom_sheet.dart';
 import '../../../../core/common_widgets/app_stream.dart';
-import '../../../../core/common_widgets/circuler_widget.dart';
+import '../../../../core/common_widgets/circular_loader_widget.dart';
 import '../../../../core/common_widgets/custom_empty_widget.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/common_widgets/custom_button.dart';
@@ -18,7 +17,6 @@ import '../../../../core/routes/app_route_args.dart';
 import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
 import '../../domain/entities/assignment_data_entity.dart';
 import '../../domain/entities/assignment_submission_data_entity.dart';
-import '../controllers/assignment_controller.dart';
 import '../services/assignment_screen_service.dart';
 import '../widgets/assignment_bottom_sheet.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
@@ -35,8 +33,6 @@ class AssignmentScreen extends StatefulWidget {
 
 class _AssignmentScreenState extends State<AssignmentScreen>
     with AppTheme, Language, ImagePreviewDialog, AssignmentScreenService {
-  final controller = Get.put(AssignmentController());
-
   late AssignmentArgs _screenArgs;
 
   @override

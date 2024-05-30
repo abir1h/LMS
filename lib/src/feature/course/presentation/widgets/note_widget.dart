@@ -15,7 +15,7 @@ import '../../../../core/utility/app_label.dart';
 import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
 import '../../../notes/domain/entities/note_data_entity.dart';
 import '../../../../core/common_widgets/app_stream.dart';
-import '../../../../core/common_widgets/circuler_widget.dart';
+import '../../../../core/common_widgets/circular_loader_widget.dart';
 import '../../../../core/common_widgets/custom_empty_widget.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/service/notifier/app_events_notifier.dart';

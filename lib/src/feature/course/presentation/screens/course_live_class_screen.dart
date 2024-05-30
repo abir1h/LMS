@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/common_widgets/app_stream.dart';
-import '../../../../core/common_widgets/circuler_widget.dart';
+import '../../../../core/common_widgets/circular_loader_widget.dart';
 import '../../../../core/common_widgets/custom_dialog_widget.dart';
 import '../../../../core/common_widgets/custom_empty_widget.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';

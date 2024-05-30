@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/common_widgets/app_stream.dart';
-import '../../../../core/common_widgets/circuler_widget.dart';
+import '../../../../core/common_widgets/circular_loader_widget.dart';
 import '../../../../core/common_widgets/custom_empty_widget.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
+import '../../../../core/enums/enums.dart';
 import '../../../../core/routes/app_route.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/routes/app_route_args.dart';
@@ -99,9 +99,9 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
                   padding: EdgeInsets.symmetric(horizontal: size.w40),
                   child: CustomButton(
                     onTap: () {
-                      if (data.circularSubAssignments != null) {
-                        onTap(_screenArgs.courseContentId);
-                      }
+                      // if (data.circularSubAssignments != null) {
+                        onTap(data.type, _screenArgs.courseContentId);
+                      // }
                     },
                     title: label(e: en.enter, b: bn.enter),
                     textColor: clr.whiteColor,
@@ -133,9 +133,14 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
   }
 
   @override
-  void navigateToAssignmentScreen(int courseContentId) {
-    Navigator.of(context).pushNamed(AppRoute.assignmentScreen,
-        arguments: AssignmentArgs(courseContentId: courseContentId));
+  void navigateToAssignmentScreen(String assignmentType, int courseContentId) {
+    if (assignmentType == AssignmentType.collaborative.name) {
+      Navigator.of(context).pushNamed(AppRoute.collaborativeAssignmentScreen,
+          arguments: AssignmentArgs(courseContentId: courseContentId));
+    } else {
+      Navigator.of(context).pushNamed(AppRoute.assignmentScreen,
+          arguments: AssignmentArgs(courseContentId: courseContentId));
+    }
   }
 }
 

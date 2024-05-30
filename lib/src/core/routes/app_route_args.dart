@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import '../../feature/assessment/domain/entities/exam_data_entity.dart';
 import '../../feature/assignment/domain/entities/assignment_data_entity.dart';
-import '../../feature/assignment/presentation/models/assignment_model.dart';
 import '../../feature/course/domain/entities/course_content_data_entity.dart';
 import '../../feature/notes/domain/entities/note_data_entity.dart';
 
@@ -59,8 +58,7 @@ class CourseBlendedScreenArgs {
 
 class CourseVideoScreenArgs {
   final CourseContentDataEntity data;
-  CourseVideoScreenArgs(
-      {required this.data});
+  CourseVideoScreenArgs({required this.data});
 }
 
 class CourseAssessmentScreenArgs {

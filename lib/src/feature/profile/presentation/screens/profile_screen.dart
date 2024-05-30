@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
-import 'package:lms/src/feature/profile/domain/entities/all_progress_data_entity.dart';
-import 'package:lms/src/feature/profile/presentation/widgets/running_course_item_widget.dart';
-import 'package:lms/src/feature/profile/presentation/widgets/running_course_section_widget.dart';
 
+import '../../domain/entities/all_progress_data_entity.dart';
+import '../widgets/running_course_item_widget.dart';
+import '../widgets/running_course_section_widget.dart';
 import '../../../../core/common_widgets/app_stream.dart';
-import '../../../../core/common_widgets/circuler_widget.dart';
+import '../../../../core/common_widgets/circular_loader_widget.dart';
 import '../../../../core/common_widgets/custom_empty_widget.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../circular/presentation/screens/circular_details_screen.dart';
-import '../../../course/presentation/screens/overall_progress_screen.dart';
 import '../../../course/presentation/widgets/tab_switch_widget.dart';
-import '../../domain/entities/profile_data_entity.dart';
 import '../service/profile_service.dart';
 import '../../../../core/routes/app_route.dart';
 import '../../../../core/service/auth_cache_manager.dart';
@@ -195,30 +192,40 @@ class _ProfileScreenState extends State<ProfileScreen>
                     },
                     dataBuilder: (context, data) {
                       if (data is ProfileDataState) {
-                        return data.userInfoDataEntity.userInfoDataEntity!.emisUserDataEntity!=null? PersonalInfoWidget(
-                          data: data.userInfoDataEntity,
-                          onTapLogout: showLogoutPromptDialog,
-                        ): SizedBox(
-                          height: .5.sh,
-                          child: CustomEmptyWidget(
-                            icon: Icons.school_outlined,
-                            title: label(e: "No data from server", b: "সার্ভার থেকে কোন তথ্য নেই"),
-                            message: "",
-                          )
-                        );
+                        return data.userInfoDataEntity.userInfoDataEntity!
+                                    .emisUserDataEntity !=
+                                null
+                            ? PersonalInfoWidget(
+                                data: data.userInfoDataEntity,
+                                onTapLogout: showLogoutPromptDialog,
+                              )
+                            : SizedBox(
+                                height: .5.sh,
+                                child: CustomEmptyWidget(
+                                  icon: Icons.school_outlined,
+                                  title: label(
+                                      e: "No data from server",
+                                      b: "সার্ভার থেকে কোন তথ্য নেই"),
+                                  message: "",
+                                ));
                       } else if (data is ProgressDataState) {
                         return ProgressInfoWidget(
                           data: data.progressDataEntity,
                         );
                       } else {
-                        return  CustomEmptyWidget(
+                        return CustomEmptyWidget(
                           icon: Icons.school_outlined,
-                          message: label(e: "No matching data found!", b: "কোনও   ডেটা পাওয়া যায়নি!"),
+                          message: label(
+                              e: "No matching data found!",
+                              b: "কোনও   ডেটা পাওয়া যায়নি!"),
                         );
                       }
                     },
                     emptyBuilder: (context, message, icon) => CustomEmptyWidget(
-                      message: message,title: label(e: "No matching data found!", b: "কোনও   ডেটা পাওয়া যায়নি!"),
+                      message: message,
+                      title: label(
+                          e: "No matching data found!",
+                          b: "কোনও   ডেটা পাওয়া যায়নি!"),
                       // constraints: constraints,
                       // offset: 350.w,
                     ),
@@ -419,15 +426,18 @@ class PersonalInfoWidget extends StatelessWidget with AppTheme, Language {
                     e: data.userInfoDataEntity!.emisUserDataEntity!.designation,
                     b: data.userInfoDataEntity!.emisUserDataEntity!.designation,
                   )),
-             if(data.userInfoDataEntity!.emisUserDataEntity!.indexNumber.isNotEmpty)
-              TitleWithIcon(
-                  onTap: () {},
-                  icon: Icons.format_list_numbered,
-                  leftText: label(e: 'Index Number', b: 'ইনডেক্স নম্বর '),
-                  rightText: label(
-                    e: data.userInfoDataEntity!.emisUserDataEntity!.indexNumber,
-                    b: data.userInfoDataEntity!.emisUserDataEntity!.indexNumber,
-                  )),
+              if (data.userInfoDataEntity!.emisUserDataEntity!.indexNumber
+                  .isNotEmpty)
+                TitleWithIcon(
+                    onTap: () {},
+                    icon: Icons.format_list_numbered,
+                    leftText: label(e: 'Index Number', b: 'ইনডেক্স নম্বর '),
+                    rightText: label(
+                      e: data
+                          .userInfoDataEntity!.emisUserDataEntity!.indexNumber,
+                      b: data
+                          .userInfoDataEntity!.emisUserDataEntity!.indexNumber,
+                    )),
               TitleWithIcon(
                   onTap: () {},
                   icon: Icons.format_list_numbered,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../assessment/domain/entities/exam_data_entity.dart';
 import '../../../../core/common_widgets/app_stream.dart';
-import '../../../../core/common_widgets/circuler_widget.dart';
+import '../../../../core/common_widgets/circular_loader_widget.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../../../../core/common_widgets/custom_empty_widget.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';

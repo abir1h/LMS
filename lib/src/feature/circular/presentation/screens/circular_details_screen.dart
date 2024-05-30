@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/common_widgets/app_stream.dart';
-import '../../../../core/common_widgets/circuler_widget.dart';
+import '../../../../core/common_widgets/circular_loader_widget.dart';
 import '../../../../core/common_widgets/custom_empty_widget.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
@@ -391,7 +391,7 @@ class CircularDetailsInfoWidget extends StatelessWidget
                 leftText: label(e: "Circular Status", b: "বিজ্ঞপ্তির স্টেটাস"),
                 widget: Container(
                   decoration: BoxDecoration(
-                      color: clr.cardFillColorLeafGreen,
+                      color: clr.cardFillColorMintCream,
                       borderRadius: BorderRadius.circular(size.r4),
                       border: Border.all(
                           color: clr.cardStrokeColorLeafGreen, width: size.r1)),

@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-import 'package:lms/src/feature/course/presentation/widgets/custom_html_expanded_text_widget.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../../../../core/common_widgets/app_stream.dart';
-import '../../../../core/common_widgets/circuler_widget.dart';
+import '../../../../core/common_widgets/circular_loader_widget.dart';
 import '../../../../core/common_widgets/custom_empty_widget.dart';
-import '../../../../core/common_widgets/custom_expanded_text.dart';
+import '../widgets/custom_html_expanded_text_widget.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/enums/enums.dart';
@@ -85,7 +84,8 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
 
                     ///Last Seen Widget
                     if (_screenArgs.curriculumType ==
-                        CircularStatus.running.name  && data.lastViewedContent!=null)
+                            CircularStatus.running.name &&
+                        data.lastViewedContent != null)
                       LastSeenWidget(
                         data: data.lastViewedContent!,
                         onTap: () {

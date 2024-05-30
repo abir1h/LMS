@@ -6,7 +6,7 @@ import '../../../../core/common_widgets/custom_action_button.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
 import '../widgets/assessment_result_widget.dart';
 import '../../../../core/common_widgets/app_stream.dart';
-import '../../../../core/common_widgets/circuler_widget.dart';
+import '../../../../core/common_widgets/circular_loader_widget.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/routes/app_route_args.dart';

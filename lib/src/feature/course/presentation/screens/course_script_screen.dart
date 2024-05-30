@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/common_widgets/app_stream.dart';
-import '../../../../core/common_widgets/circuler_widget.dart';
+import '../../../../core/common_widgets/circular_loader_widget.dart';
 import '../../../../core/common_widgets/custom_empty_widget.dart';
-import '../../../../core/common_widgets/custom_expanded_text.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/utility/app_label.dart';
@@ -43,9 +41,7 @@ class _CourseScriptScreenState extends State<CourseScriptScreen>
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-        title: label(
-            e: "Introduction, Chapter Description",
-            b: "ভূমিকা, অধ্যায়ের বিবরণ"),
+        title: label(e: "Reading Material", b: "পড়ার উপাদান"),
         bgColor: clr.whiteColor,
         body: AppStreamBuilder<ScriptDataEntity>(
           stream: scriptDetailsDataStreamController.stream,
@@ -89,36 +85,36 @@ class _CourseScriptScreenState extends State<CourseScriptScreen>
                           ),
                         ),
                         SizedBox(width: size.w10),
-                        if(data.file.isNotEmpty)
-                        GestureDetector(
-                          onTap: () {
-                            downloadFiles(
-                                fileUrl: data.file,
-                                filename: data.file.split("/").last,
-                                context: context);
-                          },
-                          child: Container(
-                            padding: EdgeInsets.all(size.r1),
-                            decoration: BoxDecoration(
-                              color: clr.whiteColor,
-                              borderRadius: BorderRadius.circular(size.r4),
-                              border: Border.all(
-                                  color: clr.cardStrokeColor, width: size.r1),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: clr.blackColor.withOpacity(.2),
-                                  blurRadius: size.r4,
-                                  offset: Offset(0.0, size.h2),
-                                ),
-                              ],
-                            ),
-                            child: Icon(
-                              Icons.save_alt,
-                              color: clr.appPrimaryColorGreen,
-                              size: size.r24,
+                        if (data.file.isNotEmpty)
+                          GestureDetector(
+                            onTap: () {
+                              downloadFiles(
+                                  fileUrl: data.file,
+                                  filename: data.file.split("/").last,
+                                  context: context);
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(size.r1),
+                              decoration: BoxDecoration(
+                                color: clr.whiteColor,
+                                borderRadius: BorderRadius.circular(size.r4),
+                                border: Border.all(
+                                    color: clr.cardStrokeColor, width: size.r1),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: clr.blackColor.withOpacity(.2),
+                                    blurRadius: size.r4,
+                                    offset: Offset(0.0, size.h2),
+                                  ),
+                                ],
+                              ),
+                              child: Icon(
+                                Icons.save_alt,
+                                color: clr.appPrimaryColorGreen,
+                                size: size.r24,
+                              ),
                             ),
                           ),
-                        ),
                       ],
                     ),
                   ),
@@ -229,8 +225,8 @@ class _CourseScriptScreenState extends State<CourseScriptScreen>
           },
           emptyBuilder: (context, message, icon) => CustomEmptyWidget(
             message: message,
-            title: label(e: 'No Script Found', b: 'কোনো স্ক্রিপ্ট পাওয়া যায়নি'
-            ),
+            title:
+                label(e: 'No Script Found', b: 'কোনো স্ক্রিপ্ট পাওয়া যায়নি'),
             // constraints: constraints,
             // offset: 350.w,
           ),

@@ -4,6 +4,7 @@ import '../../feature/assessment/presentation/screens/assessment_slide_view_scre
 import '../../feature/assessment/presentation/screens/assessment_scroll_view_screen.dart';
 import '../../feature/assignment/presentation/screens/assignment_screen.dart';
 import '../../feature/assignment/presentation/screens/assignment_submit_screen.dart';
+import '../../feature/assignment/presentation/screens/collaborative_assignment_screen.dart';
 import '../../feature/authentication/presentation/screens/authentication_screen.dart';
 import '../../feature/authentication/presentation/screens/emis_webview_screen.dart';
 import '../../feature/circular/presentation/screens/circular_details_screen.dart';
@@ -53,6 +54,8 @@ class AppRoute {
   static const String discussionScreen = "discussionScreen";
   static const String moduleDiscussionsScreen = "moduleDiscussionsScreen";
   static const String assignmentScreen = "assignmentScreen";
+  static const String collaborativeAssignmentScreen =
+      "collaborativeAssignmentScreen";
   static const String assignmentSubmitScreen = "assignmentSubmitScreen";
   static const String assessmentScrollViewScreen = "assessmentScrollViewScreen";
   static const String assessmentSlideViewScreen = "assessmentSlideViewScreen";
@@ -109,10 +112,12 @@ mixin RouteGenerator {
             return CourseAssessmentScreen(arguments: setting.arguments);
           case AppRoute.discussionScreen:
             return const DiscussionScreen();
-          case AppRoute.assignmentScreen:
-            return AssignmentScreen(arguments: setting.arguments);
           case AppRoute.moduleDiscussionsScreen:
             return ModuleDiscussionsScreen(arguments: setting.arguments);
+          case AppRoute.assignmentScreen:
+            return AssignmentScreen(arguments: setting.arguments);
+          case AppRoute.collaborativeAssignmentScreen:
+            return CollaborativeAssignmentScreen(arguments: setting.arguments);
           case AppRoute.assignmentSubmitScreen:
             return AssignmentSubmitScreen(arguments: setting.arguments);
           case AppRoute.assessmentScrollViewScreen:

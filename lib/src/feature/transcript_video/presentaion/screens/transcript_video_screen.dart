@@ -8,7 +8,7 @@ import 'package:video_player/video_player.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../../../core/common_widgets/app_stream.dart';
-import '../../../../core/common_widgets/circuler_widget.dart';
+import '../../../../core/common_widgets/circular_loader_widget.dart';
 import '../../../../core/common_widgets/empty_widget.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/common_widgets/custom_switch_button.dart';
