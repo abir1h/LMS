@@ -223,13 +223,14 @@ class _AssessmentSlideViewScreenState extends State<AssessmentSlideViewScreen>
                                                       builder: (BuildContext context, int index, item) {
                                                         return TruFalseOptionWidget(
                                                           optionValue:
-                                                              item.optionValue,
-                                                          groupValue:
-                                                              groupValue,
+                                                              item.optionKey,
+                                                          groupValue: item
+                                                              .radioGroupValue,
                                                           index: index,
                                                           onChanged: (v) {
                                                             setState(() {
-                                                              groupValue = v!;
+                                                              item.radioGroupValue =
+                                                                  v!;
 
                                                               for (OptionDataEntity optionDataEntity
                                                                   in data
@@ -252,6 +253,7 @@ class _AssessmentSlideViewScreenState extends State<AssessmentSlideViewScreen>
                                                                   optionDataEntity
                                                                           .userCorrectValue =
                                                                       false;
+                                                                  optionDataEntity.radioGroupValue = -1;
                                                                 } else {
                                                                   item.userCorrectValue =
                                                                       true;
