@@ -163,12 +163,12 @@ class _AssessmentScrollViewScreenState extends State<AssessmentScrollViewScreen>
                                             builder: (BuildContext context,
                                                 int index, item) {
                                               return TruFalseOptionWidget(
-                                                optionValue: item.optionValue,
-                                                groupValue: groupValue,
+                                                optionValue: item.optionKey,
+                                                groupValue: item.radioGroupValue,
                                                 index: index,
                                                 onChanged: (v) {
                                                   setState(() {
-                                                    groupValue = v!;
+                                                    item.radioGroupValue = v!;
                                                     // item.userCorrectValue =
                                                     //     v == 0 ? true : false;
                                                     // item.userCorrectValue = true;
@@ -181,13 +181,14 @@ class _AssessmentScrollViewScreenState extends State<AssessmentScrollViewScreen>
                                                         optionDataEntity
                                                                 .userCorrectValue =
                                                             false;
+                                                        optionDataEntity.radioGroupValue = -1;
                                                       } else {
                                                         item.userCorrectValue =
                                                             true;
                                                       }
                                                     }
                                                   });
-                                                  print(groupValue);
+                                                  print(item.radioGroupValue);
                                                   print(item.userCorrectValue);
                                                 },
                                               );

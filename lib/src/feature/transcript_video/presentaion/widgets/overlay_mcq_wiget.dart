@@ -164,7 +164,7 @@ class _OverlayMCQAnswerOptionWidgetState
             widget.isSelected
                 ? Icons.check_box_rounded
                 : Icons.check_box_outline_blank,
-            size: size.r24,
+            size: MediaQuery.of(context).orientation == Orientation.portrait ? size.r24 : size.r50,
             color: widget.isSelected ? clr.appPrimaryColorGreen : clr.greyColor,
           ),
           SizedBox(width: size.w12),

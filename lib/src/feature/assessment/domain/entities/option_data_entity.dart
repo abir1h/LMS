@@ -9,6 +9,7 @@ class OptionDataEntity {
   String userInput;
   bool userCorrectValue;
   String userCorrectInput;
+  int radioGroupValue;
 
   OptionDataEntity({
     required this.id,
@@ -21,5 +22,6 @@ class OptionDataEntity {
     required this.userInput,
     required this.userCorrectValue,
     required this.userCorrectInput,
+    this.radioGroupValue = -1
   });
 }

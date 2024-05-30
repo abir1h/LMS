@@ -58,8 +58,6 @@ mixin AssessmentScreenService<T extends StatefulWidget> on State<T>
   late DateTime _examStartTime;
   bool _isExamRunning = false;
 
-  int groupValue = -1;
-
   final DefaultActionButtonController submitButtonController =
       DefaultActionButtonController();
 
