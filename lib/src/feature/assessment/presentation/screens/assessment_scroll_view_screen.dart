@@ -49,6 +49,11 @@ class _AssessmentScrollViewScreenState extends State<AssessmentScrollViewScreen>
       title: label(e: en.assessment, b: bn.assessment),
       resizeToAvoidBottomInset: true,
       leadingBack: onGoBack,
+      actionChild: TimeDigitWidget(
+        examStateStream: pageStateStreamController.stream,
+        timerStream: timerStreamController.stream,
+        isExamRunning: (x) => x != null && (x is DataLoadedState),
+      ),
       body: AppStreamBuilder<PageState>(
         stream: pageStateStreamController.stream,
         loadingBuilder: (context) => const Center(child: CircularLoader()),
@@ -60,7 +65,7 @@ class _AssessmentScrollViewScreenState extends State<AssessmentScrollViewScreen>
               child: Column(
                 children: [
                   SizedBox(height: size.h12),
-                  Row(
+                  /*Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       CustomTextWidget(
@@ -79,7 +84,7 @@ class _AssessmentScrollViewScreenState extends State<AssessmentScrollViewScreen>
                       SizedBox(width: size.w20)
                     ],
                   ),
-                  SizedBox(height: size.h24),
+                  SizedBox(height: size.h24),*/
                   CustomTextWidget(
                     text: label(
                         e: data.examData.assessment!.titleEn,
@@ -164,7 +169,8 @@ class _AssessmentScrollViewScreenState extends State<AssessmentScrollViewScreen>
                                                 int index, item) {
                                               return TruFalseOptionWidget(
                                                 optionValue: item.optionKey,
-                                                groupValue: item.radioGroupValue,
+                                                groupValue:
+                                                    item.radioGroupValue,
                                                 index: index,
                                                 onChanged: (v) {
                                                   setState(() {
@@ -181,7 +187,8 @@ class _AssessmentScrollViewScreenState extends State<AssessmentScrollViewScreen>
                                                         optionDataEntity
                                                                 .userCorrectValue =
                                                             false;
-                                                        optionDataEntity.radioGroupValue = -1;
+                                                        optionDataEntity
+                                                            .radioGroupValue = -1;
                                                       } else {
                                                         item.userCorrectValue =
                                                             true;
@@ -408,7 +415,7 @@ class _AssessmentScrollViewScreenState extends State<AssessmentScrollViewScreen>
           e: "Do you want to cancel the test? Your answer(s) will not be submitted.\n\nBut, your participation quota will still be reduced.",
           b: "আপনি পরীক্ষা বাতিল করতে চান? আপনার উত্তরগুলি জমা দেওয়া হবে না৷\n\nকিন্তু, আপনার অংশগ্রহণের কোটা হ্রাস করা হবে৷"),
       leftButtonText: label(e: en.cancelText, b: bn.cancelText),
-      rightButtonText: label(e: en.exitText, b: bn.exitText),
+      rightButtonText: label(e: "Leave", b: bn.exitText),
     ).then((value) {
       if (value) {
         ///Force close
