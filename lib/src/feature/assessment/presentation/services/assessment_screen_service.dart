@@ -125,7 +125,7 @@ mixin AssessmentScreenService<T extends StatefulWidget> on State<T>
     ///Exam expired check
     if (remaining.inSeconds <= 0) {
       examTimer.cancel();
-      _view.showExamSubmitDialog();
+      // _view.showExamSubmitDialog();
       onSubmitExam(screenArgs.examData);
       // pageStateStreamController.add(
       //     DataLoadedState<PageState>(TimeExpiredState(screenArgs.examData)));
@@ -145,6 +145,7 @@ mixin AssessmentScreenService<T extends StatefulWidget> on State<T>
   Future<ResponseEntity> onSubmitExam(ExamDataEntity examDataEntity) async {
     ResponseEntity responseEntity = await onSubmit(examDataEntity);
     if (responseEntity.error == null && responseEntity.data != null) {
+      _view.showExamSubmitDialog();
       _view.showSuccess(responseEntity.message!);
       contentReadPost();
     } else {
@@ -243,7 +244,7 @@ mixin AssessmentScreenService<T extends StatefulWidget> on State<T>
       if (value) {
         onSubmitExam(screenArgs.examData).then((value) {
           examTimer.cancel();
-          _view.showExamSubmitDialog();
+          // _view.showExamSubmitDialog();
         });
       }
     });
