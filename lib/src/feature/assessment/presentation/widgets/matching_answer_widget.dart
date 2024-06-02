@@ -325,7 +325,7 @@ class _MatchingRHSSenderWidgetState extends State<MatchingRHSSenderWidget>
       child: Listener(
 
         onPointerMove: (PointerMoveEvent event) {
-          // print(event.position);
+          // print(event.position.dx);
           // print(MediaQuery.of(context).size.width);
           // print(widget.scrollController.offset);
           if (event.position.dx > MediaQuery.of(context).size.width - 100) {
@@ -333,11 +333,11 @@ class _MatchingRHSSenderWidgetState extends State<MatchingRHSSenderWidget>
             widget.scrollController.jumpTo(widget.scrollController.offset + 20);
             // print(widget.scrollController.offset + 20);
           }
-          // if (event.position.dx > 100) {
-          //   // 120 is height of your draggable.
-          //   widget.scrollController.jumpTo(widget.scrollController.offset - 20);
-          //   print(widget.scrollController.offset - 20);
-          // }
+          if (event.position.dx < 80) {
+            // 120 is height of your draggable.
+            widget.scrollController.jumpTo(widget.scrollController.offset - 20);
+            // print(widget.scrollController.offset - 20);
+          }
         },
         child: Draggable<MatchingRightSide>(
           data: widget.rhs,
