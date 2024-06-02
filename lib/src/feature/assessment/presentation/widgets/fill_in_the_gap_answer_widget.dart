@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
+import '../../../../core/utility/color_tools.dart';
 import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
 import 'written_text_field_widget.dart';
 import '../../../../core/constants/common_imports.dart';
 import 'dashed_border.dart';
+import 'package:html/parser.dart';
 
 class FillInTheGapAnswerWidget<T> extends StatelessWidget with AppTheme {
   final String question;
@@ -72,7 +75,10 @@ class BuildSentence extends StatelessWidget with AppTheme {
 
   @override
   Widget build(BuildContext context) {
-    List<String> sentenceParts = sentence.split(' ');
+    var document = parse(sentence);
+    String text = document.body!.text;
+
+    List<String> sentenceParts = text.split(' ');
 
     return Wrap(
       runSpacing: -8,
@@ -85,22 +91,63 @@ class BuildSentence extends StatelessWidget with AppTheme {
           } else {
             return Padding(
               padding: EdgeInsets.only(bottom: size.h12, right: 10),
-              child: Text(
-                sentenceParts[index],
-                softWrap: true,
-                textAlign: TextAlign.justify,
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontFamily: StringData.fontFamilyRoboto,
-                  fontSize: size.textSmall,
-                  color: clr.blackColor,
-                ),
+              child: blankHtmlToWidget(input: sentenceParts[index],textStyle:  TextStyle(
+                fontWeight: FontWeight.w500,
+                fontFamily: StringData.fontFamilyRoboto,
+                fontSize: size.textSmall,
+                color: clr.blackColor,
+              ), )
+             /* Text(
+              sentenceParts[index],
+              softWrap: true,
+              textAlign: TextAlign.justify,
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontFamily: StringData.fontFamilyRoboto,
+                fontSize: size.textSmall,
+                color: clr.blackColor,
               ),
+            ),*/
             );
           }
         },
       ),
     );
+  }
+
+  Widget blankHtmlToWidget({required String input, TextStyle? textStyle}) {
+    // Check if the input string contains HTML tags
+    bool containsHtmlTags(String text) {
+      final htmlTagsRegExp = RegExp(r'<[^>]*>');
+      return htmlTagsRegExp.hasMatch(text);
+    }
+
+    if (containsHtmlTags(input)) {
+      // Return HtmlWidget if the string contains HTML tags
+      return HtmlWidget(
+        input,
+        textStyle: textStyle ??
+            TextStyle(
+              color: HexColor("646464"),
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w500,
+            ),
+        // Optionally, you can customize the HtmlWidget properties here
+      );
+    } else {
+      // Return Text widget if the string does not contain HTML tags
+      return Text(
+        input,
+        style: textStyle ??
+            TextStyle(
+              color: HexColor("646464"),
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w500,
+            ),softWrap: true,
+        textAlign: TextAlign.justify,
+        // Optionally, you can customize the Text widget properties here
+      );
+    }
   }
 }
 
