@@ -46,6 +46,11 @@ class _AssessmentSlideViewScreenState extends State<AssessmentSlideViewScreen>
       title: label(e: en.assessment, b: bn.assessment),
       resizeToAvoidBottomInset: true,
       leadingBack: onGoBack,
+      actionChild: TimeDigitWidget(
+        examStateStream: pageStateStreamController.stream,
+        timerStream: timerStreamController.stream,
+        isExamRunning: (x) => x != null && (x is DataLoadedState),
+      ),
       body: AppStreamBuilder<PageState>(
         stream: pageStateStreamController.stream,
         loadingBuilder: (context) => const Center(child: CircularLoader()),
@@ -60,7 +65,7 @@ class _AssessmentSlideViewScreenState extends State<AssessmentSlideViewScreen>
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   SizedBox(height: size.h12),
-                  Row(
+                  /*Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       CustomTextWidget(
@@ -79,7 +84,7 @@ class _AssessmentSlideViewScreenState extends State<AssessmentSlideViewScreen>
                       SizedBox(width: size.w20)
                     ],
                   ),
-                  SizedBox(height: size.h24),
+                  SizedBox(height: size.h24),*/
                   Container(
                     color: clr.whiteColor,
                     child: Center(
@@ -253,7 +258,8 @@ class _AssessmentSlideViewScreenState extends State<AssessmentSlideViewScreen>
                                                                   optionDataEntity
                                                                           .userCorrectValue =
                                                                       false;
-                                                                  optionDataEntity.radioGroupValue = -1;
+                                                                  optionDataEntity
+                                                                      .radioGroupValue = -1;
                                                                 } else {
                                                                   item.userCorrectValue =
                                                                       true;
