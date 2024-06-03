@@ -11,6 +11,7 @@ import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/common_widgets/image_preview.dart';
 import '../../../../core/constants/common_imports.dart';
+import '../../../../core/routes/app_route.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../course/presentation/widgets/tab_switch_widget.dart';
@@ -265,7 +266,11 @@ class _CollaborativeAssignmentScreenState
             SubmittedTraineeSectionWidget(
               items: const ["", "", "", "", ""],
               builder: (BuildContext context, int index, item) =>
-                  SubmittedTraineeItemWidget(),
+                  SubmittedTraineeItemWidget(
+                onTapAccept: () => Navigator.of(context).pushNamed(
+                  AppRoute.collaborativeAssignmentInstructionScreen,
+                ),
+              ),
             ),
             SizedBox(height: size.h56),
           ],
@@ -396,7 +401,8 @@ class SubmittedTraineeSectionWidget<T> extends StatelessWidget with AppTheme {
 }
 
 class SubmittedTraineeItemWidget extends StatelessWidget with AppTheme {
-  const SubmittedTraineeItemWidget({super.key});
+  const SubmittedTraineeItemWidget({super.key, required this.onTapAccept});
+  final VoidCallback onTapAccept;
 
   @override
   Widget build(BuildContext context) {
@@ -424,7 +430,7 @@ class SubmittedTraineeItemWidget extends StatelessWidget with AppTheme {
           ),
           SizedBox(width: size.w8),
           CustomButton(
-            onTap: () {},
+            onTap: onTapAccept,
             title: label(e: "Accept", b: "গ্রহণ করুন"),
             textColor: clr.appPrimaryColorGreen,
             bgColor: clr.scaffoldBackgroundColor,
