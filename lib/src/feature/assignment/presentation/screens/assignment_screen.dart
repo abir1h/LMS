@@ -6,6 +6,7 @@ import 'package:flutter_quill/flutter_quill.dart';
 
 import '../../../../core/common_widgets/quil_text_viewer.dart';
 import '../../../../core/enums/enums.dart';
+import '../widgets/file_picker_widget.dart';
 import 'assignment_request_bottom_sheet.dart';
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../../../core/common_widgets/circular_loader_widget.dart';
@@ -395,7 +396,7 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                             ],
                           );
                         },
-                        onPick: pickFiles),
+                        onPickFile: pickFiles),
                   ),
 
                 ///Submit
@@ -714,67 +715,6 @@ class _WrittenAnswerWidgetState extends State<WrittenAnswerWidget>
   }
 }
 
-class FilePickerWidget<T> extends StatelessWidget with AppTheme, Language {
-  final List<T> items;
-  final Widget Function(BuildContext context, int index, T item) builder;
-  final VoidCallback onPick;
-  const FilePickerWidget(
-      {super.key,
-      required this.items,
-      required this.builder,
-      required this.onPick});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h12),
-      decoration: BoxDecoration(
-        color: clr.whiteColor,
-        borderRadius: BorderRadius.circular(size.r8),
-        border: Border.all(color: clr.boxStrokeColor, width: size.w1),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          items.isEmpty
-              ? Expanded(
-                  child: CustomTextWidget(
-                    text: label(
-                        e: "Upload Your File Here",
-                        b: "আপনার ফাইলটি এখানে আপলোড করুন"),
-                    textColor: clr.textColorGray,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: StringData.fontFamilyPoppins,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                )
-              : Expanded(
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    itemCount: items.length,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) =>
-                        builder(context, index, items[index]),
-                    separatorBuilder: (context, index) {
-                      return SizedBox(height: size.h4);
-                    },
-                  ),
-                ),
-          GestureDetector(
-            onTap: onPick,
-            child: Icon(
-              Icons.attach_file,
-              color: clr.iconColorHint,
-              size: size.r24,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 class SubmissionCompletedWidget extends StatelessWidget
     with AppTheme, Language {

@@ -99,15 +99,17 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
                   padding: EdgeInsets.symmetric(horizontal: size.w40),
                   child: CustomButton(
                     onTap: () {
-                      // if (data.circularSubAssignments != null) {
-                        onTap(data.type, _screenArgs.courseContentId);
+                      // if (data.type == AssignmentType.group.name &&
+                      //     data.circularSubAssignments != null) {
+                      onTap(data.type, _screenArgs.courseContentId);
                       // }
                     },
                     title: label(e: en.enter, b: bn.enter),
                     textColor: clr.whiteColor,
-                    bgColor: data.circularSubAssignments != null
-                        ? clr.appPrimaryColorGreen
-                        : clr.greyColor,
+                    bgColor: (data.type == AssignmentType.group.name &&
+                            data.circularSubAssignments == null)
+                        ? clr.greyColor
+                        : clr.appPrimaryColorGreen,
                     radius: size.r4,
                   ),
                 ),
