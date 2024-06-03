@@ -1,5 +1,6 @@
 import 'assignment_submission_data_entity.dart';
 import 'sub_assignment_data_entity.dart';
+import 'submitted_trainee_list_data_entity.dart';
 
 class AssignmentDataEntity {
   final int id;
@@ -23,6 +24,7 @@ class AssignmentDataEntity {
   final String supportingDoc;
   final int assignmentRequestCount;
   final bool allowed;
+  final List<SubmittedTraineeListDataEntity> submittedTraineeList;
   final SubAssignmentDataEntity? circularSubAssignments;
   final AssignmentSubmissionDataEntity? assignmentSubmissions;
 
@@ -48,6 +50,7 @@ class AssignmentDataEntity {
     required this.supportingDoc,
     required this.assignmentRequestCount,
     required this.allowed,
+    required this.submittedTraineeList,
     required this.circularSubAssignments,
     required this.assignmentSubmissions,
   });

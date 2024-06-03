@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lms/src/feature/assignment/data/models/sub_assignment_data_model.dart';
 
 import 'assignment_submission_data_model.dart';
+import 'submitted_trainee_list_data_model.dart';
 
 @immutable
 class AssignmentDataModel {
@@ -26,6 +27,7 @@ class AssignmentDataModel {
   final String supportingDoc;
   final int assignmentRequestCount;
   final bool allowed;
+  final List<SubmittedTraineeListDataModel> submittedTraineeList;
   final SubAssignmentDataModel? circularSubAssignments;
   final AssignmentSubmissionDataModel? assignmentSubmissions;
 
@@ -51,6 +53,7 @@ class AssignmentDataModel {
     required this.supportingDoc,
     required this.assignmentRequestCount,
     required this.allowed,
+    required this.submittedTraineeList,
     required this.circularSubAssignments,
     required this.assignmentSubmissions,
   });
@@ -78,6 +81,11 @@ class AssignmentDataModel {
         supportingDoc: json["supporting_doc"] ?? "",
         assignmentRequestCount: json["assignment_request_count"] ?? 0,
         allowed: json["allowed"] ?? false,
+        submittedTraineeList: json["submited_trainee_list"] != null
+            ? List<SubmittedTraineeListDataModel>.from(
+                (json["submited_trainee_list"])
+                    .map((x) => SubmittedTraineeListDataModel.fromJson(x)))
+            : [],
         circularSubAssignments: json['circular_sub_assignments'] != null
             ? SubAssignmentDataModel.fromJson(json["circular_sub_assignments"])
             : null,
@@ -109,6 +117,8 @@ class AssignmentDataModel {
         "supporting_doc": supportingDoc,
         "assignment_request_count": assignmentRequestCount,
         "allowed": allowed,
+        "submited_trainee_list": List<SubmittedTraineeListDataModel>.from(
+            submittedTraineeList.map((x) => x.toJson())),
         "circular_sub_assignments": circularSubAssignments?.toJson(),
         "assignment_submissions": assignmentSubmissions?.toJson(),
       };

@@ -353,7 +353,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
   @override
   void navigateToCourseAssignmentScreen(int courseContentId, bool isCompleted) {
     if (isCompleted) {
-      Navigator.of(context).pushNamed(AppRoute.assignmentScreen,
+      Navigator.of(context).pushNamed(AppRoute.collaborativeAssignmentScreen,
           arguments: AssignmentArgs(courseContentId: courseContentId));
     } else {
       Navigator.of(context).pushNamed(AppRoute.courseAssignmentScreen,

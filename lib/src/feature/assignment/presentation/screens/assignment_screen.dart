@@ -715,7 +715,6 @@ class _WrittenAnswerWidgetState extends State<WrittenAnswerWidget>
   }
 }
 
-
 class SubmissionCompletedWidget extends StatelessWidget
     with AppTheme, Language {
   final AssignmentSubmissionDataEntity data;

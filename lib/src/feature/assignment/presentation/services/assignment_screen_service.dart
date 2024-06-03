@@ -89,11 +89,6 @@ mixin AssignmentScreenService<T extends StatefulWidget> on State<T>
   final AppStreamController<AssignmentDataEntity>
       assignmentDetailsDataStreamController = AppStreamController();
 
-  final AppStreamController<StateType> stateDataStreamController =
-      AppStreamController();
-
-  int _selectedTabIndex = 0;
-
   ///Load assessment details
   void loadAssignmentData(int courseContentId) {
     if (!mounted) return;
@@ -199,61 +194,4 @@ mixin AssignmentScreenService<T extends StatefulWidget> on State<T>
       print("No file selected");
     }
   }
-
-  void loadCollaborativeData(int courseContentId) {
-    if (!mounted) return;
-
-    ///Loading state
-    stateDataStreamController.add(LoadingState<StateType>());
-    if (_selectedTabIndex == 0) {
-      _criteriaData(courseContentId);
-    } else {
-      _submissionData(courseContentId);
-    }
-  }
-
-  void _criteriaData(int courseContentId) {
-    getAssignmentDetails(courseContentId).then((value) {
-      if (_selectedTabIndex != 0) return;
-      if (value.error == null && value.data != null) {
-        stateDataStreamController
-            .add(DataLoadedState<StateType>(CriteriaDataState(value.data)));
-      } else if (value.error == null && value.data == null) {
-        stateDataStreamController.add(EmptyState(message: ""));
-      } else {
-        _view.showWarning(value.message!);
-      }
-    });
-  }
-
-  void _submissionData(int courseContentId) {
-    getAssignmentDetails(courseContentId).then((value) {
-      if (_selectedTabIndex != 1) return;
-      if (value.error == null && value.data != null) {
-        stateDataStreamController
-            .add(DataLoadedState<StateType>(SubmissionDataState(value.data)));
-      } else if (value.error == null && value.data == null) {
-        stateDataStreamController.add(EmptyState(message: ""));
-      } else {
-        _view.showWarning(value.message!);
-      }
-    });
-  }
-
-  void onTabValueChange(int value, int courseContentId) {
-    _selectedTabIndex = value;
-    loadCollaborativeData(courseContentId);
-  }
-}
-
-abstract class StateType {}
-
-class CriteriaDataState extends StateType {
-  final AssignmentDataEntity assignmentDataEntity;
-  CriteriaDataState(this.assignmentDataEntity);
-}
-
-class SubmissionDataState extends StateType {
-  final AssignmentDataEntity assignmentDataEntity;
-  SubmissionDataState(this.assignmentDataEntity);
 }

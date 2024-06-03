@@ -1,8 +1,11 @@
 import 'package:lms/src/feature/assignment/data/mapper/assignment_submission_data_mapper.dart';
 import 'package:lms/src/feature/assignment/data/mapper/sub_assignment_data_mapper.dart';
+import 'package:lms/src/feature/assignment/data/mapper/submitted_trainee_list_data_mapper.dart';
 
 import '../../domain/entities/assignment_data_entity.dart';
+import '../../domain/entities/submitted_trainee_list_data_entity.dart';
 import '../models/assignment_data_model.dart';
+import '../models/submitted_trainee_list_data_model.dart';
 
 abstract class AssignmentDataMapper<M, E> {
   M fromEntityToModel(E entity);
@@ -35,6 +38,10 @@ class AssignmentDataModelToEntityMapper
         supportingDoc: entity.supportingDoc,
         assignmentRequestCount: entity.assignmentRequestCount,
         allowed: entity.allowed,
+        submittedTraineeList: List<SubmittedTraineeListDataEntity>.from(
+                entity.submittedTraineeList)
+            .map((entity) => entity.toSubmittedTraineeListDataModel)
+            .toList(),
         circularSubAssignments:
             entity.circularSubAssignments?.toSubAssignmentDataModel,
         assignmentSubmissions:
@@ -65,6 +72,10 @@ class AssignmentDataModelToEntityMapper
         supportingDoc: model.supportingDoc,
         assignmentRequestCount: model.assignmentRequestCount,
         allowed: model.allowed,
+        submittedTraineeList:
+            List<SubmittedTraineeListDataModel>.from(model.submittedTraineeList)
+                .map((entity) => entity.toSubmittedTraineeListDataEntity)
+                .toList(),
         circularSubAssignments:
             model.circularSubAssignments?.toSubAssignmentDataEntity,
         assignmentSubmissions:
