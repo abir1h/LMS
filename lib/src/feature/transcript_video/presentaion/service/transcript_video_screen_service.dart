@@ -135,6 +135,10 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
       _view.changeOrientationToPortrait();
     }
     _view.navigateToBack();
+     videoActivity(_watchSession.circularVideoId,
+        _watchSession.lastPlayedDuration, _watchSession.videoQuestionSeenId).then((value) {
+        print(value);
+     });
     return Future.value(false);
   }
 
@@ -177,6 +181,7 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
           totalDuration: 324,
           lastPlayedDuration: currentContent.videoActivityData!.lastViewTime,
           videoQuestionSeenId: []);
+      _storeActualWatchedSession();
     }
   }
 

@@ -67,411 +67,414 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
   bool playerFlag = false;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      backgroundColor: clr.whiteColor,
-      body: LayoutBuilder(
-        builder: (context, constraints) =>
-            AppStreamBuilder<VideoContentDataEntity>(
-          stream: videoDetailsDataStreamController.stream,
-          loadingBuilder: (context) {
-            return Column(
-              children: [
-                SizedBox(
-                  height: .3.sh,
-                ),
-                const Center(
-                  child: CircularLoader(),
-                ),
-              ],
-            );
-          },
-          dataBuilder: (context, data) {
-            return SafeArea(
-              top: MediaQuery.of(context).orientation == Orientation.portrait,
-              child: Stack(
-                fit: StackFit.expand,
+    return WillPopScope(
+      onWillPop: onGoBack,
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        backgroundColor: clr.whiteColor,
+        body: LayoutBuilder(
+          builder: (context, constraints) =>
+              AppStreamBuilder<VideoContentDataEntity>(
+            stream: videoDetailsDataStreamController.stream,
+            loadingBuilder: (context) {
+              return Column(
                 children: [
-                  ///Page body
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (data.videoData?.category ==
-                          VideoCategory.s3.name) ...[
-                        ///Activate solid video player
-                        Stack(
-                          fit: StackFit.loose,
-                          children: [
-                            ContentPlayerWidget(
-                              playerStream:
-                                  videoDetailsDataStreamController.stream,
-                              playbackStream:
-                                  playbackPausePlayStreamController.stream,
-                              onProgressChanged: onPlaybackProgressChanged,
-                              interceptSeekTo: onInterceptPlaybackSeekToPosition,
-                              // overlay: GestureDetector(
-                              //     onTap: (){},
-                              //     child: Icon(
-                              //       Icons.arrow_back,
-                              //       color: clr.shadeWhiteColor2,
-                              //       size: size.r20,
-                              //     ),
-                              // ),
-                            ),
-                            Positioned(
-                                top: size.h16,
-                                left: size.w16,
-                                child: InkWell(
-                                  onTap: onGoBack,
-                                  child: Icon(
-                                    Icons.arrow_back,
-                                    color: clr.shadeWhiteColor2,
-                                    size: size.r20,
-                                  ),
-                                )),
-                            AppStreamBuilder(
-                                stream:
-                                    videoQuestionDataStreamController.stream,
-                                loadingBuilder: (context) {
-                                  return Container();
-                                },
-                                dataBuilder: (context, data) {
-                                  return showOverlay
-                                      ? AspectRatio(
-                                          aspectRatio: MediaQuery.of(context)
-                                                      .orientation ==
-                                                  Orientation.portrait
-                                              ? 16 / 9
-                                              : 19 / 9,
-                                          child: OverlayMCQWidget(
-                                            items: data.choices,
-                                            data: data,
-                                            onTapSkip: onSkipInteractiveAction,
-                                            onTapSubmit: () {
-                                              VideoChoiceDataEntity choice =
-                                                  data.choices.firstWhere(
-                                                      (element) =>
-                                                          element.isSelected ==
-                                                          true);
-                                              if (choice.isCorrect) {
-                                                CustomToasty.of(context)
-                                                    .showSuccess(label(
-                                                        e: "Your answer is correct",
-                                                        b: "আপনার উত্তর সঠিক"));
-                                              } else {
-                                                CustomToasty.of(context)
-                                                    .showWarning(label(
-                                                        e: "Your answer is wrong",
-                                                        b: "আপনার উত্তর ভুল"));
-                                              }
-                                              onSkipInteractiveAction();
-                                              data.seen=!data.seen;
-                                            },
-                                            builder: (BuildContext context,
-                                                int index, item) {
-                                              return OverlayMCQAnswerOptionWidget(
-                                                value: item.choiceText,
-                                                isSelected: item.isSelected,
-                                                onTap: () => setState(() {
-                                                  for (VideoChoiceDataEntity videoChoiceDataEntity
-                                                      in data.choices) {
-                                                    if (data.choices.indexOf(
-                                                            videoChoiceDataEntity) !=
-                                                        index) {
-                                                      videoChoiceDataEntity
-                                                          .isSelected = false;
-                                                    } else {
-                                                      videoChoiceDataEntity
-                                                              .isSelected =
-                                                          !videoChoiceDataEntity
-                                                              .isSelected;
+                  SizedBox(
+                    height: .3.sh,
+                  ),
+                  const Center(
+                    child: CircularLoader(),
+                  ),
+                ],
+              );
+            },
+            dataBuilder: (context, data) {
+              return SafeArea(
+                top: MediaQuery.of(context).orientation == Orientation.portrait,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    ///Page body
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (data.videoData?.category ==
+                            VideoCategory.s3.name) ...[
+                          ///Activate solid video player
+                          Stack(
+                            fit: StackFit.loose,
+                            children: [
+                              ContentPlayerWidget(
+                                playerStream:
+                                    videoDetailsDataStreamController.stream,
+                                playbackStream:
+                                    playbackPausePlayStreamController.stream,
+                                onProgressChanged: onPlaybackProgressChanged,
+                                interceptSeekTo: onInterceptPlaybackSeekToPosition,
+                                // overlay: GestureDetector(
+                                //     onTap: (){},
+                                //     child: Icon(
+                                //       Icons.arrow_back,
+                                //       color: clr.shadeWhiteColor2,
+                                //       size: size.r20,
+                                //     ),
+                                // ),
+                              ),
+                              Positioned(
+                                  top: size.h16,
+                                  left: size.w16,
+                                  child: InkWell(
+                                    onTap: onGoBack,
+                                    child: Icon(
+                                      Icons.arrow_back,
+                                      color: clr.shadeWhiteColor2,
+                                      size: size.r20,
+                                    ),
+                                  )),
+                              AppStreamBuilder(
+                                  stream:
+                                      videoQuestionDataStreamController.stream,
+                                  loadingBuilder: (context) {
+                                    return Container();
+                                  },
+                                  dataBuilder: (context, data) {
+                                    return showOverlay
+                                        ? AspectRatio(
+                                            aspectRatio: MediaQuery.of(context)
+                                                        .orientation ==
+                                                    Orientation.portrait
+                                                ? 16 / 9
+                                                : 19 / 9,
+                                            child: OverlayMCQWidget(
+                                              items: data.choices,
+                                              data: data,
+                                              onTapSkip: onSkipInteractiveAction,
+                                              onTapSubmit: () {
+                                                VideoChoiceDataEntity choice =
+                                                    data.choices.firstWhere(
+                                                        (element) =>
+                                                            element.isSelected ==
+                                                            true);
+                                                if (choice.isCorrect) {
+                                                  CustomToasty.of(context)
+                                                      .showSuccess(label(
+                                                          e: "Your answer is correct",
+                                                          b: "আপনার উত্তর সঠিক"));
+                                                } else {
+                                                  CustomToasty.of(context)
+                                                      .showWarning(label(
+                                                          e: "Your answer is wrong",
+                                                          b: "আপনার উত্তর ভুল"));
+                                                }
+                                                onSkipInteractiveAction();
+                                                data.seen=!data.seen;
+                                              },
+                                              builder: (BuildContext context,
+                                                  int index, item) {
+                                                return OverlayMCQAnswerOptionWidget(
+                                                  value: item.choiceText,
+                                                  isSelected: item.isSelected,
+                                                  onTap: () => setState(() {
+                                                    for (VideoChoiceDataEntity videoChoiceDataEntity
+                                                        in data.choices) {
+                                                      if (data.choices.indexOf(
+                                                              videoChoiceDataEntity) !=
+                                                          index) {
+                                                        videoChoiceDataEntity
+                                                            .isSelected = false;
+                                                      } else {
+                                                        videoChoiceDataEntity
+                                                                .isSelected =
+                                                            !videoChoiceDataEntity
+                                                                .isSelected;
+                                                      }
                                                     }
-                                                  }
-                                                }),
-                                              );
-                                            },
-                                          ),
-                                        )
-                                      : Container();
-                                },
-                                emptyBuilder: (context, message, icon) =>
-                                    Container()),
-                            // Positioned(
-                            //   top: 80,
-                            //   left: .45.sw,
-                            //   child: Visibility(
-                            //     visible: _onTouch,
-                            //     child:  GestureDetector(
-                            //       onTap: (){
-                            //         _timer?.cancel();
-                            //
-                            //         // pause while video is playing, play while video is pausing
-                            //         setState(() {
-                            //           _controller!.value.isPlaying ?
-                            //           _controller!.pause() :
-                            //           _controller!.play();
-                            //         });
-                            //
-                            //         // Auto dismiss overlay after 1 second
-                            //         _timer = Timer.periodic(Duration(milliseconds: 2000), (_) {
-                            //           setState(() {
-                            //             _onTouch = false;
-                            //           });
-                            //         });
-                            //       },
-                            //       child: CircleAvatar(
-                            //           backgroundColor: Colors.grey.withOpacity(0.5),
-                            //           radius: 25,
-                            //           child: Icon(_controller!.value.isPlaying ? Icons.pause : Icons.play_arrow, color: Colors.white,)),
-                            //     ),
-                            //
-                            //
-                            //   ),
-                            // )
-                          ],
-                        )
-                        // _controller!.value.isInitialized
-                        //     ? Stack(
-                        //   fit: StackFit.loose,
-                        //   children: [
-                        //     GestureDetector(
-                        //       onTap: () {
-                        //         setState(() {
-                        //           _onTouch == true
-                        //               ? _onTouch = false
-                        //               : _onTouch = true;
-                        //         });
-                        //
-                        //         /*  playVideo == true
-                        //                 ? _controller!.pause()
-                        //                 : _controller!.play();*/
-                        //       },
-                        //       child: AspectRatio(
-                        //         aspectRatio: 16 / 9,
-                        //         // child: VideoPlayer(_controller!),
-                        //         //   child: Chewie(
-                        //         //     controller: _chewieController!,
-                        //         //   ),
-                        //           child: ContentPlayerWidget(
-                        //             playerStream: videoDetailsDataStreamController.stream,
-                        //             playbackStream: playbackPausePlayStreamController.stream,
-                        //             // onProgressChanged: onPlaybackProgressChanged,
-                        //             // interceptSeekTo: onInterceptPlaybackSeekToPosition,
-                        //             overlay: GestureDetector(
-                        //               onTap: (){},
-                        //               child: const Icon(Icons.arrow_back)
-                        //             ),
-                        //           ),
-                        //       ),
-                        //     ),
-                        //     Positioned(
-                        //         top: size.h16,
-                        //         left: size.w16,
-                        //         child: InkWell(
-                        //           onTap: () {
-                        //             Navigator.pop(context);
-                        //           },
-                        //           child: Icon(
-                        //             Icons.arrow_back,
-                        //             color: clr.shadeWhiteColor2,
-                        //             size: size.r20,
-                        //           ),
-                        //         )),
-                        //     // Positioned(
-                        //     //   top: 80,
-                        //     //   left: .45.sw,
-                        //     //   child: Visibility(
-                        //     //     visible: _onTouch,
-                        //     //     child:  GestureDetector(
-                        //     //       onTap: (){
-                        //     //         _timer?.cancel();
-                        //     //
-                        //     //         // pause while video is playing, play while video is pausing
-                        //     //         setState(() {
-                        //     //           _controller!.value.isPlaying ?
-                        //     //           _controller!.pause() :
-                        //     //           _controller!.play();
-                        //     //         });
-                        //     //
-                        //     //         // Auto dismiss overlay after 1 second
-                        //     //         _timer = Timer.periodic(Duration(milliseconds: 2000), (_) {
-                        //     //           setState(() {
-                        //     //             _onTouch = false;
-                        //     //           });
-                        //     //         });
-                        //     //       },
-                        //     //       child: CircleAvatar(
-                        //     //           backgroundColor: Colors.grey.withOpacity(0.5),
-                        //     //           radius: 25,
-                        //     //           child: Icon(_controller!.value.isPlaying ? Icons.pause : Icons.play_arrow, color: Colors.white,)),
-                        //     //     ),
-                        //     //
-                        //     //
-                        //     //   ),
-                        //     // )
-                        //   ],
-                        // )
-                        //     : const Center(child: CircularProgressIndicator()),
-                      ] else ...[
-                        ///Activate Youtube video player
-                        YoutubePlayerBuilder(
-                          player: YoutubePlayer(
-                            controller: _youtubeController!,
-                            aspectRatio: 16 / 9,
-                            showVideoProgressIndicator: true,
-                            progressColors: ProgressBarColors(
-                                backgroundColor: clr.progressBGColor,
-                                playedColor: clr.appSecondaryColorFlagRed,
-                                handleColor: clr.appSecondaryColorFlagRed),
-                          ),
-                          builder: (context, player) {
-                            return Column(
-                              children: [
-                                Stack(
-                                  fit: StackFit.loose,
-                                  children: [
-                                    player,
-                                    Positioned(
-                                        top: size.h16,
-                                        left: size.w16,
-                                        child: InkWell(
-                                          onTap: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: Icon(
-                                            Icons.arrow_back,
-                                            color: clr.shadeWhiteColor2,
-                                            size: size.r20,
-                                          ),
-                                        ))
-                                  ],
-                                ),
-                              ],
-                            );
-                          },
-                        )
-                      ],
-
-                      ///Details section
-                      if (MediaQuery.of(context).orientation ==
-                          Orientation.portrait)
-                        Expanded(
-                          child: LayoutBuilder(builder: (context, constraints) {
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(height: size.h16),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: size.w16),
-                                  child: Row(
+                                                  }),
+                                                );
+                                              },
+                                            ),
+                                          )
+                                        : Container();
+                                  },
+                                  emptyBuilder: (context, message, icon) =>
+                                      Container()),
+                              // Positioned(
+                              //   top: 80,
+                              //   left: .45.sw,
+                              //   child: Visibility(
+                              //     visible: _onTouch,
+                              //     child:  GestureDetector(
+                              //       onTap: (){
+                              //         _timer?.cancel();
+                              //
+                              //         // pause while video is playing, play while video is pausing
+                              //         setState(() {
+                              //           _controller!.value.isPlaying ?
+                              //           _controller!.pause() :
+                              //           _controller!.play();
+                              //         });
+                              //
+                              //         // Auto dismiss overlay after 1 second
+                              //         _timer = Timer.periodic(Duration(milliseconds: 2000), (_) {
+                              //           setState(() {
+                              //             _onTouch = false;
+                              //           });
+                              //         });
+                              //       },
+                              //       child: CircleAvatar(
+                              //           backgroundColor: Colors.grey.withOpacity(0.5),
+                              //           radius: 25,
+                              //           child: Icon(_controller!.value.isPlaying ? Icons.pause : Icons.play_arrow, color: Colors.white,)),
+                              //     ),
+                              //
+                              //
+                              //   ),
+                              // )
+                            ],
+                          )
+                          // _controller!.value.isInitialized
+                          //     ? Stack(
+                          //   fit: StackFit.loose,
+                          //   children: [
+                          //     GestureDetector(
+                          //       onTap: () {
+                          //         setState(() {
+                          //           _onTouch == true
+                          //               ? _onTouch = false
+                          //               : _onTouch = true;
+                          //         });
+                          //
+                          //         /*  playVideo == true
+                          //                 ? _controller!.pause()
+                          //                 : _controller!.play();*/
+                          //       },
+                          //       child: AspectRatio(
+                          //         aspectRatio: 16 / 9,
+                          //         // child: VideoPlayer(_controller!),
+                          //         //   child: Chewie(
+                          //         //     controller: _chewieController!,
+                          //         //   ),
+                          //           child: ContentPlayerWidget(
+                          //             playerStream: videoDetailsDataStreamController.stream,
+                          //             playbackStream: playbackPausePlayStreamController.stream,
+                          //             // onProgressChanged: onPlaybackProgressChanged,
+                          //             // interceptSeekTo: onInterceptPlaybackSeekToPosition,
+                          //             overlay: GestureDetector(
+                          //               onTap: (){},
+                          //               child: const Icon(Icons.arrow_back)
+                          //             ),
+                          //           ),
+                          //       ),
+                          //     ),
+                          //     Positioned(
+                          //         top: size.h16,
+                          //         left: size.w16,
+                          //         child: InkWell(
+                          //           onTap: () {
+                          //             Navigator.pop(context);
+                          //           },
+                          //           child: Icon(
+                          //             Icons.arrow_back,
+                          //             color: clr.shadeWhiteColor2,
+                          //             size: size.r20,
+                          //           ),
+                          //         )),
+                          //     // Positioned(
+                          //     //   top: 80,
+                          //     //   left: .45.sw,
+                          //     //   child: Visibility(
+                          //     //     visible: _onTouch,
+                          //     //     child:  GestureDetector(
+                          //     //       onTap: (){
+                          //     //         _timer?.cancel();
+                          //     //
+                          //     //         // pause while video is playing, play while video is pausing
+                          //     //         setState(() {
+                          //     //           _controller!.value.isPlaying ?
+                          //     //           _controller!.pause() :
+                          //     //           _controller!.play();
+                          //     //         });
+                          //     //
+                          //     //         // Auto dismiss overlay after 1 second
+                          //     //         _timer = Timer.periodic(Duration(milliseconds: 2000), (_) {
+                          //     //           setState(() {
+                          //     //             _onTouch = false;
+                          //     //           });
+                          //     //         });
+                          //     //       },
+                          //     //       child: CircleAvatar(
+                          //     //           backgroundColor: Colors.grey.withOpacity(0.5),
+                          //     //           radius: 25,
+                          //     //           child: Icon(_controller!.value.isPlaying ? Icons.pause : Icons.play_arrow, color: Colors.white,)),
+                          //     //     ),
+                          //     //
+                          //     //
+                          //     //   ),
+                          //     // )
+                          //   ],
+                          // )
+                          //     : const Center(child: CircularProgressIndicator()),
+                        ] else ...[
+                          ///Activate Youtube video player
+                          YoutubePlayerBuilder(
+                            player: YoutubePlayer(
+                              controller: _youtubeController!,
+                              aspectRatio: 16 / 9,
+                              showVideoProgressIndicator: true,
+                              progressColors: ProgressBarColors(
+                                  backgroundColor: clr.progressBGColor,
+                                  playedColor: clr.appSecondaryColorFlagRed,
+                                  handleColor: clr.appSecondaryColorFlagRed),
+                            ),
+                            builder: (context, player) {
+                              return Column(
+                                children: [
+                                  Stack(
+                                    fit: StackFit.loose,
                                     children: [
-                                      Expanded(
-                                        child: Text(
-                                          label(
-                                              e: data.videoData!.titleEn,
-                                              b: data.videoData!.titleEn),
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 1,
-                                          style: TextStyle(
-                                              fontFamily:
-                                                  StringData.fontFamilyPoppins,
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: size.textSmall,
-                                              color: clr.appPrimaryColorGreen),
-                                        ),
-                                      ),
-
-                                      ///Todo Add later
-                                      // Icon(
-                                      //   Icons.download,
-                                      //   size: size.r20,
-                                      //   color: clr.appPrimaryColorGreen,
-                                      // ),
-                                      Padding(
-                                        padding: EdgeInsets.only(left: size.w8),
-                                        child: CustomSwitchButton(
-                                          value: App.currentAppLanguage ==
-                                              AppLanguage.english,
-                                          textOn: 'EN',
-                                          textSize: size.textXXSmall,
-                                          textOff: 'বাং',
-                                          bgColor: clr.whiteColor,
-                                          width: 64.w,
-                                          animationDuration:
-                                              const Duration(milliseconds: 300),
-                                          onChanged: (bool state) {
-                                            App.setAppLanguage(state ? 1 : 0)
-                                                .then((value) {
-                                              if (mounted) {
-                                                setState(() {});
-                                              }
-                                              /*AppEventsNotifier.notify(
-                                            EventAction.courseDetailsScreen);
-                                        AppEventsNotifier.notify(
-                                            EventAction.onGoingCoursesScreen);
-                                        AppEventsNotifier.notify(
-                                            EventAction.dashBoardScreen);
-                                        AppEventsNotifier.notify(
-                                            EventAction.bottomNavBar);
-                                        AppEventsNotifier.notify(
-                                            EventAction.graphChart);*/
-                                            });
-                                          },
-                                          buttonHolder: const Icon(
-                                            Icons.check,
-                                            color: Colors.transparent,
-                                          ),
-                                          onTap: () {},
-                                          onDoubleTap: () {},
-                                          onSwipe: () {},
-                                        ),
-                                      ),
+                                      player,
+                                      Positioned(
+                                          top: size.h16,
+                                          left: size.w16,
+                                          child: InkWell(
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Icon(
+                                              Icons.arrow_back,
+                                              color: clr.shadeWhiteColor2,
+                                              size: size.r20,
+                                            ),
+                                          ))
                                     ],
                                   ),
-                                ),
-                                SizedBox(height: size.h8),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: size.w16),
-                                  child: Text(
-                                    label(
-                                        e: screenArgs.data.contentTitleEn,
-                                        b: screenArgs.data.contentTitleBn),
-                                    style: TextStyle(
-                                        fontFamily:
-                                            StringData.fontFamilyPoppins,
-                                        fontSize: size.textSmall,
-                                        fontWeight: FontWeight.w400,
-                                        color: clr.textColorBlack),
-                                  ),
-                                ),
-                                SizedBox(height: size.h16),
-                                TabSectionWidget(
-                                  tabTitle1:
-                                      label(e: en.transcript, b: bn.transcript),
-                                  videoDataEntity: data.videoData!,
-                                  contentType: screenArgs.data.contentType,
-                                )
-                              ],
-                            );
-                          }),
-                        ),
-                    ],
-                  )
+                                ],
+                              );
+                            },
+                          )
+                        ],
 
-                  // ///Back Button
-                  // const  Align(
-                  //     alignment: Alignment.topLeft,
-                  //     child: Offstage()
-                  // ),
-                ],
-              ),
-            );
-          },
-          emptyBuilder: (context, message, icon) => EmptyWidget(
-            message: message,
-            constraints: constraints,
+                        ///Details section
+                        if (MediaQuery.of(context).orientation ==
+                            Orientation.portrait)
+                          Expanded(
+                            child: LayoutBuilder(builder: (context, constraints) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(height: size.h16),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: size.w16),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            label(
+                                                e: data.videoData!.titleEn,
+                                                b: data.videoData!.titleEn),
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
+                                            style: TextStyle(
+                                                fontFamily:
+                                                    StringData.fontFamilyPoppins,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: size.textSmall,
+                                                color: clr.appPrimaryColorGreen),
+                                          ),
+                                        ),
+
+                                        ///Todo Add later
+                                        // Icon(
+                                        //   Icons.download,
+                                        //   size: size.r20,
+                                        //   color: clr.appPrimaryColorGreen,
+                                        // ),
+                                        Padding(
+                                          padding: EdgeInsets.only(left: size.w8),
+                                          child: CustomSwitchButton(
+                                            value: App.currentAppLanguage ==
+                                                AppLanguage.english,
+                                            textOn: 'EN',
+                                            textSize: size.textXXSmall,
+                                            textOff: 'বাং',
+                                            bgColor: clr.whiteColor,
+                                            width: 64.w,
+                                            animationDuration:
+                                                const Duration(milliseconds: 300),
+                                            onChanged: (bool state) {
+                                              App.setAppLanguage(state ? 1 : 0)
+                                                  .then((value) {
+                                                if (mounted) {
+                                                  setState(() {});
+                                                }
+                                                /*AppEventsNotifier.notify(
+                                              EventAction.courseDetailsScreen);
+                                          AppEventsNotifier.notify(
+                                              EventAction.onGoingCoursesScreen);
+                                          AppEventsNotifier.notify(
+                                              EventAction.dashBoardScreen);
+                                          AppEventsNotifier.notify(
+                                              EventAction.bottomNavBar);
+                                          AppEventsNotifier.notify(
+                                              EventAction.graphChart);*/
+                                              });
+                                            },
+                                            buttonHolder: const Icon(
+                                              Icons.check,
+                                              color: Colors.transparent,
+                                            ),
+                                            onTap: () {},
+                                            onDoubleTap: () {},
+                                            onSwipe: () {},
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(height: size.h8),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: size.w16),
+                                    child: Text(
+                                      label(
+                                          e: screenArgs.data.contentTitleEn,
+                                          b: screenArgs.data.contentTitleBn),
+                                      style: TextStyle(
+                                          fontFamily:
+                                              StringData.fontFamilyPoppins,
+                                          fontSize: size.textSmall,
+                                          fontWeight: FontWeight.w400,
+                                          color: clr.textColorBlack),
+                                    ),
+                                  ),
+                                  SizedBox(height: size.h16),
+                                  TabSectionWidget(
+                                    tabTitle1:
+                                        label(e: en.transcript, b: bn.transcript),
+                                    videoDataEntity: data.videoData!,
+                                    contentType: screenArgs.data.contentType,
+                                  )
+                                ],
+                              );
+                            }),
+                          ),
+                      ],
+                    )
+
+                    // ///Back Button
+                    // const  Align(
+                    //     alignment: Alignment.topLeft,
+                    //     child: Offstage()
+                    // ),
+                  ],
+                ),
+              );
+            },
+            emptyBuilder: (context, message, icon) => EmptyWidget(
+              message: message,
+              constraints: constraints,
+            ),
           ),
         ),
       ),
