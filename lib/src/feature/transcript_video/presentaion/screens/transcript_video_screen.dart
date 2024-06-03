@@ -43,10 +43,10 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
   bool _onTouch = true;
   Timer? _timer;
 
+
   @override
   void initState() {
     super.initState();
-
     screenArgs = widget.arguments as CourseVideoScreenArgs;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       loadVideoData(screenArgs.data.contentId);
@@ -108,7 +108,7 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                               playbackStream:
                                   playbackPausePlayStreamController.stream,
                               onProgressChanged: onPlaybackProgressChanged,
-                              // interceptSeekTo: onInterceptPlaybackSeekToPosition,
+                              interceptSeekTo: onInterceptPlaybackSeekToPosition,
                               // overlay: GestureDetector(
                               //     onTap: (){},
                               //     child: Icon(
@@ -165,6 +165,7 @@ class _TranscriptVideoScreenState extends State<TranscriptVideoScreen>
                                                         b: "আপনার উত্তর ভুল"));
                                               }
                                               onSkipInteractiveAction();
+                                              data.seen=!data.seen;
                                             },
                                             builder: (BuildContext context,
                                                 int index, item) {

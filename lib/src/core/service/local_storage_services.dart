@@ -34,3 +34,4 @@ class LocalStorageService{
   int? getIntValue(String key) => _sharedPreferences.getInt(key);
 
 }
+
