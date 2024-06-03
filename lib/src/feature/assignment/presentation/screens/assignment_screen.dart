@@ -608,6 +608,11 @@ class _AssignmentScreenState extends State<AssignmentScreen>
   void showWarning(String message) {
     CustomToasty.of(context).showWarning(message);
   }
+
+  @override
+  void navigateToCollaborativeInstructionScreen() {
+    // TODO: implement navigateToCollaborativeInstructionScreen
+  }
 }
 
 class SupportingDocWidget<T> extends StatelessWidget with AppTheme, Language {

@@ -45,5 +45,6 @@ enum EventAction {
   drawer,
   discussion,
   assignmentSubmitScreen,
+  assignmentScreen,
   videoWidget,
 }

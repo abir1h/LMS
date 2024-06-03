@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:lms/src/core/service/notifier/app_events_notifier.dart';
 
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../../../core/utility/validator.dart';
@@ -16,6 +17,7 @@ import '../../domain/use_cases/assignment_use_case.dart';
 abstract class _ViewModel {
   void showWarning(String message);
   void showSuccess(String message);
+  void navigateToCollaborativeInstructionScreen();
 }
 
 mixin AssignmentScreenService<T extends StatefulWidget> on State<T>
@@ -71,6 +73,8 @@ mixin AssignmentScreenService<T extends StatefulWidget> on State<T>
 
   List<String> fileName = [];
   List<File>? files = [];
+  var quillData;
+  bool isWrite = false;
 
   ///Service configurations
   @override
@@ -193,5 +197,9 @@ mixin AssignmentScreenService<T extends StatefulWidget> on State<T>
     } else {
       print("No file selected");
     }
+  }
+
+  void onTapAccept() {
+    _view.navigateToCollaborativeInstructionScreen();
   }
 }

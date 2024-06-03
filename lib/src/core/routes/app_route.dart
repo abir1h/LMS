@@ -58,6 +58,10 @@ class AppRoute {
   static const String assignmentScreen = "assignmentScreen";
   static const String collaborativeAssignmentScreen =
       "collaborativeAssignmentScreen";
+  static const String collaborativeAssignmentInstructionScreen =
+      "collaborativeAssignmentInstructionScreen";
+  static const String collaborativeAssignmentVerifyScreen =
+      "collaborativeAssignmentVerifyScreen";
   static const String assignmentSubmitScreen = "assignmentSubmitScreen";
   static const String assessmentScrollViewScreen = "assessmentScrollViewScreen";
   static const String assessmentSlideViewScreen = "assessmentSlideViewScreen";
@@ -67,9 +71,6 @@ class AppRoute {
   static const String noteEditScreen = "noteEditScreen";
   static const String circularScreen = "circularScreen";
   static const String circularDetailsScreen = "circularDetailsScreen";
-  static const String collaborativeAssignmentInstructionScreen =
-      "collaborativeAssignmentInstructionScreen";  static const String collaborativeAssignmentVerifyScreen =
-      "collaborativeAssignmentVerifyScreen";
 }
 
 mixin RouteGenerator {
@@ -123,6 +124,12 @@ mixin RouteGenerator {
             return AssignmentScreen(arguments: setting.arguments);
           case AppRoute.collaborativeAssignmentScreen:
             return CollaborativeAssignmentScreen(arguments: setting.arguments);
+          case AppRoute.collaborativeAssignmentInstructionScreen:
+            return CollaborativeAssignmentInstructionScreen(
+                arguments: setting.arguments);
+          case AppRoute.collaborativeAssignmentVerifyScreen:
+            return CollaborativeAssignmentVerificationScreen(
+                arguments: setting.arguments);
           case AppRoute.assignmentSubmitScreen:
             return AssignmentSubmitScreen(arguments: setting.arguments);
           case AppRoute.assessmentScrollViewScreen:
@@ -141,11 +148,6 @@ mixin RouteGenerator {
             return const CircularScreen();
           case AppRoute.circularDetailsScreen:
             return CircularDetailsScreen(arguments: setting.arguments);
-          case AppRoute.collaborativeAssignmentInstructionScreen:
-            return CollaborativeAssignmentInstructionScreen(
-                arguments: setting.arguments);     case AppRoute.collaborativeAssignmentVerifyScreen:
-            return CollaborativeAssignmentVerificationScreen(
-                arguments: setting.arguments);
 
           default:
             return const SplashScreen();

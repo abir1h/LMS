@@ -9,6 +9,7 @@ import '../../../../core/routes/app_route_args.dart';
 import '../../domain/entities/assignment_data_entity.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../../core/constants/common_imports.dart';
+import '../services/assignment_screen_service.dart';
 
 class AssignmentBottomSheet extends StatefulWidget {
   final String type;
@@ -26,7 +27,7 @@ class AssignmentBottomSheet extends StatefulWidget {
 }
 
 class _AssignmentBottomSheetState extends State<AssignmentBottomSheet>
-    with AppTheme, Language {
+    with AppTheme, Language, AssignmentScreenService {
   final _controller = QuillController.basic();
   final _editorFocusNode = FocusNode();
   final _editorScrollController = ScrollController();
@@ -103,8 +104,10 @@ class _AssignmentBottomSheetState extends State<AssignmentBottomSheet>
                           CustomToasty.of(context)
                               .showWarning("Assignment should not be empty");
                         } else {
-                          Navigator.of(context).pop();
-                          Navigator.of(context).pushNamed(
+                          Navigator.of(context).pop(jsonEncode(
+                              _controller.document.toDelta().toJson()));
+
+                          /*Navigator.of(context).pushNamed(
                               AppRoute.assignmentSubmitScreen,
                               arguments: AssignmentSubmitScreenArgs(
                                   assignmentDataEntity:
@@ -114,7 +117,7 @@ class _AssignmentBottomSheetState extends State<AssignmentBottomSheet>
                                   ),
                                   type: widget.type));
                           AppEventsNotifier.notify(
-                              EventAction.assignmentSubmitScreen);
+                              EventAction.assignmentSubmitScreen);*/
                         }
                       },
                       child: Container(
@@ -323,5 +326,20 @@ class _AssignmentBottomSheetState extends State<AssignmentBottomSheet>
         ),
       ),
     );
+  }
+
+  @override
+  void navigateToCollaborativeInstructionScreen() {
+    // TODO: implement navigateToCollaborativeInstructionScreen
+  }
+
+  @override
+  void showSuccess(String message) {
+    // TODO: implement showSuccess
+  }
+
+  @override
+  void showWarning(String message) {
+    // TODO: implement showWarning
   }
 }

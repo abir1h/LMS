@@ -149,4 +149,9 @@ class _AssignmentRequestBottomSheetState
   void showSuccess(String message) {
     CustomToasty.of(context).showSuccess(message);
   }
+
+  @override
+  void navigateToCollaborativeInstructionScreen() {
+    // TODO: implement navigateToCollaborativeInstructionScreen
+  }
 }

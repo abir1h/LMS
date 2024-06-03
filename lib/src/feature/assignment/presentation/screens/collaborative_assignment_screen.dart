@@ -1,5 +1,10 @@
+import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 
+import '../../../../core/common_widgets/quil_text_viewer.dart';
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../../../core/common_widgets/circular_loader_widget.dart';
 import '../../../../core/common_widgets/custom_button.dart';
@@ -8,14 +13,16 @@ import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/common_widgets/image_preview.dart';
 import '../../../../core/constants/common_imports.dart';
+import '../../../../core/enums/enums.dart';
+import '../../../../core/routes/app_route.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
 import '../../domain/entities/assignment_data_entity.dart';
 import '../../domain/entities/submitted_trainee_list_data_entity.dart';
 import '../services/assignment_screen_service.dart';
+import '../widgets/assignment_bottom_sheet.dart';
 import '../widgets/file_picker_widget.dart';
-import 'assignment_screen.dart';
 
 class CollaborativeAssignmentScreen extends StatefulWidget {
   final Object? arguments;
@@ -30,7 +37,7 @@ class _CollaborativeAssignmentScreenState
     extends State<CollaborativeAssignmentScreen>
     with AppTheme, Language, ImagePreviewDialog, AssignmentScreenService {
   late AssignmentArgs _screenArgs;
-
+  final _controller = QuillController.basic();
   @override
   void initState() {
     super.initState();
@@ -38,6 +45,15 @@ class _CollaborativeAssignmentScreenState
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       loadAssignmentData(_screenArgs.courseContentId);
     });
+  }
+
+  setContent() {
+    if (quillData != null) {
+      if (quillData.contains("{")) {
+        final Document doc = Document.fromJson(json.decode(quillData));
+        _controller.document = doc;
+      }
+    }
   }
 
   @override
@@ -50,6 +66,14 @@ class _CollaborativeAssignmentScreenState
           return const Center(child: CircularLoader());
         },
         dataBuilder: (context, data) {
+          if (quillData == null) {
+            if (data.assignmentSubmissions != null) {
+              if (data.assignmentSubmissions!.answer.isNotEmpty) {
+                quillData = data.assignmentSubmissions!.answer;
+                setContent();
+              }
+            }
+          }
           return SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,11 +90,15 @@ class _CollaborativeAssignmentScreenState
                       text: label(e: data.titleEn, b: data.titleBn),
                       fontFamily: StringData.fontFamilyPoppins),
                 ),
+
+                ///Assignment Instruction
                 if (data.instructionsEn.isNotEmpty &&
                     data.instructionsBn.isNotEmpty)
                   AssignmentInstructions(
                     text: label(e: data.instructionsEn, b: data.instructionsBn),
                   ),
+
+                ///Assignment Description
                 CustomTextWidget(
                   text: label(e: "Points Criteria", b: "অ্যাসাইনমেন্টের বিবরণ"),
                   textColor: clr.blackText,
@@ -107,6 +135,8 @@ class _CollaborativeAssignmentScreenState
                     ],
                   ),
                 ),
+
+                ///Submission
                 CustomTextWidget(
                   text: label(
                       e: "Assignment Submission", b: "এসাইনমেন্ট সাবমিশন"),
@@ -129,72 +159,127 @@ class _CollaborativeAssignmentScreenState
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CustomTextWidget(
-                        text: label(
-                            e: "Write The Assignment", b: "এসাইনমেন্ট লিখুন"),
-                        textColor: clr.textColorAppleBlack,
-                        fontSize: size.textXSmall,
-                        fontWeight: FontWeight.w400,
+                      Row(
+                        children: [
+                          Expanded(
+                            child: CustomTextWidget(
+                              text: label(
+                                  e: "Write The Assignment",
+                                  b: "এসাইনমেন্ট লিখুন"),
+                              textColor: clr.textColorAppleBlack,
+                              fontSize: size.textXSmall,
+                              fontWeight: FontWeight.w400,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          if (quillData != null ||
+                              data.assignmentSubmissions != null)
+                            InkWell(
+                                onTap: () =>
+                                    onTapWriteHere("store", data, quillData),
+                                child: Icon(Icons.edit,
+                                    size: size.r24,
+                                    color: clr.appPrimaryColorGreen)),
+                        ],
                       ),
                       SizedBox(height: size.h8),
-                      WrittenAnswerWidget(
-                        answer: "",
-                        onTap: () {},
-                      ),
-                      SizedBox(height: size.h16),
-                      Center(
+
+                      ///Written
+                      GestureDetector(
+                        onTap: () {
+                          if (data.assignmentSubmissions == null) {
+                            onTapWriteHere("store", data, quillData);
+                          }
+                        },
                         child: Container(
+                          width: double.infinity,
                           padding: EdgeInsets.symmetric(
-                              horizontal: size.w16, vertical: size.h8),
+                              horizontal: size.w16, vertical: size.h12),
                           decoration: BoxDecoration(
-                            color: clr.shadeWhiteColor,
-                            borderRadius: BorderRadius.circular(size.r4),
+                            color: clr.whiteColor,
+                            borderRadius: BorderRadius.circular(size.r8),
                             border: Border.all(
-                                color: clr.placeHolderTextColorGray,
-                                width: size.w1),
+                                color: clr.boxStrokeColor, width: size.w1),
                           ),
-                          child: CustomTextWidget(
-                            text: label(e: "Or", b: "অথবা"),
-                            textColor: clr.textColorAppleBlack,
-                          ),
+                          child: quillData == null
+                              ? Text(
+                                  label(e: en.writeHere, b: bn.writeHere),
+                                  style: TextStyle(
+                                      color: clr.placeHolderTextColorGray,
+                                      // : clr.textColorAppleBlack,
+                                      fontSize: size.textSmall,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: StringData.fontFamilyPoppins),
+                                )
+                              : QuilTextViewer(
+                                  controller: _controller,
+                                  hintText:
+                                      label(e: en.writeHere, b: bn.writeHere),
+                                ),
                         ),
                       ),
-                      SizedBox(height: size.h16),
-                      FilePickerWidget(
-                          items: files!,
-                          builder: (BuildContext context, int index, item) {
-                            return Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    files![index].path.split('/').last,
-                                    style: TextStyle(
-                                        color: clr.appPrimaryColorGreen,
-                                        fontSize: size.textSmall,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily:
-                                            StringData.fontFamilyPoppins),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
+
+                      ///Or
+                      if (data.submissionType == AssignmentSubType.both.name)
+                        Center(
+                          child: Container(
+                            margin: EdgeInsets.symmetric(vertical: size.h16),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: size.w16, vertical: size.h8),
+                            decoration: BoxDecoration(
+                              color: clr.shadeWhiteColor,
+                              borderRadius: BorderRadius.circular(size.r4),
+                              border: Border.all(
+                                  color: clr.placeHolderTextColorGray,
+                                  width: size.w1),
+                            ),
+                            child: CustomTextWidget(
+                              text: label(e: "Or", b: "অথবা"),
+                              textColor: clr.textColorAppleBlack,
+                            ),
+                          ),
+                        ),
+
+                      ///Upload
+                      if (data.submissionType ==
+                              AssignmentSubType.upload.name ||
+                          data.submissionType == AssignmentSubType.both.name)
+                        FilePickerWidget(
+                            items: files!,
+                            builder: (BuildContext context, int index, item) {
+                              return Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      files![index].path.split('/').last,
+                                      style: TextStyle(
+                                          color: clr.appPrimaryColorGreen,
+                                          fontSize: size.textSmall,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily:
+                                              StringData.fontFamilyPoppins),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                   ),
-                                ),
-                                if (files!.isNotEmpty)
-                                  InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          files!.removeWhere((element) =>
-                                              element == files![index]);
-                                        });
-                                      },
-                                      child: Icon(
-                                        Icons.close,
-                                        color: clr.appPrimaryColorGreen,
-                                        size: size.r24,
-                                      )),
-                              ],
-                            );
-                          },
-                          onPickFile: pickFiles),
+                                  if (files!.isNotEmpty)
+                                    InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            files!.removeWhere((element) =>
+                                                element == files![index]);
+                                          });
+                                        },
+                                        child: Icon(
+                                          Icons.close,
+                                          color: clr.appPrimaryColorGreen,
+                                          size: size.r24,
+                                        )),
+                                ],
+                              );
+                            },
+                            onPickFile: pickFiles),
                       /*if (files!.isNotEmpty)
                         GridView.builder(
                           shrinkWrap: true,
@@ -250,76 +335,102 @@ class _CollaborativeAssignmentScreenState
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      CustomButton(
-                        onTap: () {
-                          /*onStoreAssignment(
-                          assignmentId: data.id,
-                          subAssignmentId:
-                          data.circularSubAssignments != null
-                              ? data.circularSubAssignments!.id
-                              : -1,
-                          courseId: data.courseId,
-                          circularId: data.circularId,
-                          answer: '',
-                          files: files!)
-                          .then((value) {
-                        contentReadPost(data.id, data.courseId, true);
-                        loadAssignmentData(_screenArgs.courseContentId);
-                      });*/
-                        },
-                        title: label(e: "Submit", b: "জমা দিন"),
-                        bgColor: files!.isEmpty
-                            ? clr.iconColorHint
-                            : clr.appPrimaryColorGreen,
-                        borderColor: Colors.transparent,
-                        radius: size.r4,
-                        horizontalPadding: size.w20,
-                        verticalPadding: size.h4,
-                      )
+                      if (data.assignmentSubmissions == null)
+                        CustomButton(
+                          onTap: () => onStoreAssignment(
+                                  assignmentId: data.id,
+                                  subAssignmentId:
+                                      data.circularSubAssignments != null
+                                          ? data.circularSubAssignments!.id
+                                          : -1,
+                                  courseId: data.courseId,
+                                  circularId: data.circularId,
+                                  answer: quillData,
+                                  files: files!)
+                              .then((value) {
+                            contentReadPost(data.id, data.courseId, true);
+                            loadAssignmentData(_screenArgs.courseContentId);
+                          }),
+                          title: label(e: "Submit", b: "জমা দিন"),
+                          bgColor: (files!.isEmpty && !isWrite)
+                              ? clr.iconColorHint
+                              : clr.appPrimaryColorGreen,
+                          borderColor: Colors.transparent,
+                          radius: size.r4,
+                          horizontalPadding: size.w20,
+                          verticalPadding: size.h4,
+                        ),
+                      if (data.assignmentSubmissions != null)
+                        CustomButton(
+                          onTap: () => onStoreAssignment(
+                                  assignmentId: data.id,
+                                  subAssignmentId:
+                                      data.circularSubAssignments != null
+                                          ? data.circularSubAssignments!.id
+                                          : -1,
+                                  courseId: data.courseId,
+                                  circularId: data.circularId,
+                                  answer: quillData,
+                                  files: files!)
+                              .then((value) {
+                            contentReadPost(data.id, data.courseId, true);
+                            loadAssignmentData(_screenArgs.courseContentId);
+                          }),
+                          title: label(e: "Re-Submit", b: "পুনরায় জমা দিন"),
+                          bgColor: (files!.isEmpty && !isWrite)
+                              ? clr.iconColorHint
+                              : clr.appPrimaryColorGreen,
+                          borderColor: Colors.transparent,
+                          radius: size.r4,
+                          horizontalPadding: size.w20,
+                          verticalPadding: size.h4,
+                        ),
                     ],
                   ),
                 ),
-                CustomTextWidget(
-                  text: label(e: "Submission Status", b: "সাবমিশন স্ট্যাটাস"),
-                  textColor: clr.textColorAppleBlack,
-                  fontWeight: FontWeight.w500,
-                  padding: EdgeInsets.only(
-                      left: size.w16, right: size.w16, top: size.h16),
-                ),
-                Container(
-                  width: double.infinity,
-                  margin: EdgeInsets.only(
-                      left: size.w16, right: size.w16, top: size.h12),
-                  decoration: BoxDecoration(
-                    color: clr.cardFillColorMintCream,
-                    borderRadius: BorderRadius.circular(size.r8),
-                    border:
-                        Border.all(color: clr.cardStrokeColor, width: size.w1),
-                    boxShadow: [
-                      BoxShadow(
-                          offset: const Offset(0, 4),
-                          blurRadius: 4,
-                          spreadRadius: 0,
-                          color: clr.blackColor.withOpacity(.2))
-                    ],
-                  ),
-                  padding: EdgeInsets.symmetric(
-                      horizontal: size.w12, vertical: size.h8),
-                  child: CustomTextWidget(
-                    text: label(
-                        e: "Your assignment has been submitted, please wait for review Review You can edit it before the review",
-                        b: "আপনার এসাইনমেন্ট সাবমিট করা হয়েছে, দয়া করে রিভিউ এর জন্য অপেক্ষা করুন| রিভিউ এর পূর্ব  পর্যন্ত আপনি এটি এডিট করতে পারবেন"),
-                    fontSize: size.textXXSmall,
+                if (data.assignmentSubmissions != null)
+                  CustomTextWidget(
+                    text: label(e: "Submission Status", b: "সাবমিশন স্ট্যাটাস"),
+                    textColor: clr.textColorAppleBlack,
                     fontWeight: FontWeight.w500,
+                    padding: EdgeInsets.only(
+                        left: size.w16, right: size.w16, top: size.h16),
                   ),
-                ),
+                if (data.assignmentSubmissions != null)
+                  Container(
+                    width: double.infinity,
+                    margin: EdgeInsets.only(
+                        left: size.w16, right: size.w16, top: size.h12),
+                    decoration: BoxDecoration(
+                      color: clr.cardFillColorMintCream,
+                      borderRadius: BorderRadius.circular(size.r8),
+                      border: Border.all(
+                          color: clr.cardStrokeColor, width: size.w1),
+                      boxShadow: [
+                        BoxShadow(
+                            offset: const Offset(0, 4),
+                            blurRadius: 4,
+                            spreadRadius: 0,
+                            color: clr.blackColor.withOpacity(.2))
+                      ],
+                    ),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: size.w12, vertical: size.h8),
+                    child: CustomTextWidget(
+                      text: label(
+                          e: "Your assignment has been submitted, please wait for review Review You can edit it before the review",
+                          b: "আপনার এসাইনমেন্ট সাবমিট করা হয়েছে, দয়া করে রিভিউ এর জন্য অপেক্ষা করুন| রিভিউ এর পূর্ব  পর্যন্ত আপনি এটি এডিট করতে পারবেন"),
+                      fontSize: size.textXXSmall,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                 if (data.submittedTraineeList.isNotEmpty)
                   SubmittedTraineeSectionWidget(
                     items: data.submittedTraineeList,
                     builder: (BuildContext context, int index, item) =>
                         SubmittedTraineeItemWidget(
                       submittedTraineeListDataEntity: item,
-                      onTap: () {},
+                      onTap: onTapAccept,
                     ),
                   ),
                 SizedBox(height: size.h56),
@@ -338,6 +449,25 @@ class _CollaborativeAssignmentScreenState
     );
   }
 
+  void onTapWriteHere(
+      String type, AssignmentDataEntity assignmentDataEntity, String? answer) {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (context) => AssignmentBottomSheet(
+        type: type,
+        assignmentDataEntity: assignmentDataEntity,
+        answer: answer,
+      ),
+    ).then((value) {
+      quillData = value;
+      setState(() {
+        setContent();
+        isWrite = true;
+        print("Writeee$isWrite");
+      });
+    });
+  }
+
   @override
   void showSuccess(String message) {
     CustomToasty.of(context).showSuccess(message);
@@ -346,6 +476,12 @@ class _CollaborativeAssignmentScreenState
   @override
   void showWarning(String message) {
     CustomToasty.of(context).showWarning(message);
+  }
+
+  @override
+  void navigateToCollaborativeInstructionScreen() {
+    Navigator.of(context)
+        .pushNamed(AppRoute.collaborativeAssignmentInstructionScreen);
   }
 }
 
