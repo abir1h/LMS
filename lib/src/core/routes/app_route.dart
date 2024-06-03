@@ -4,7 +4,9 @@ import '../../feature/assessment/presentation/screens/assessment_slide_view_scre
 import '../../feature/assessment/presentation/screens/assessment_scroll_view_screen.dart';
 import '../../feature/assignment/presentation/screens/assignment_screen.dart';
 import '../../feature/assignment/presentation/screens/assignment_submit_screen.dart';
+import '../../feature/assignment/presentation/screens/collaborative_assignment_instruction_screen.dart';
 import '../../feature/assignment/presentation/screens/collaborative_assignment_screen.dart';
+import '../../feature/assignment/presentation/screens/collaborative_assignment_verify_screen.dart';
 import '../../feature/authentication/presentation/screens/authentication_screen.dart';
 import '../../feature/authentication/presentation/screens/emis_webview_screen.dart';
 import '../../feature/circular/presentation/screens/circular_details_screen.dart';
@@ -65,6 +67,9 @@ class AppRoute {
   static const String noteEditScreen = "noteEditScreen";
   static const String circularScreen = "circularScreen";
   static const String circularDetailsScreen = "circularDetailsScreen";
+  static const String collaborativeAssignmentInstructionScreen =
+      "collaborativeAssignmentInstructionScreen";  static const String collaborativeAssignmentVerifyScreen =
+      "collaborativeAssignmentVerifyScreen";
 }
 
 mixin RouteGenerator {
@@ -136,6 +141,11 @@ mixin RouteGenerator {
             return const CircularScreen();
           case AppRoute.circularDetailsScreen:
             return CircularDetailsScreen(arguments: setting.arguments);
+          case AppRoute.collaborativeAssignmentInstructionScreen:
+            return CollaborativeAssignmentInstructionScreen(
+                arguments: setting.arguments);     case AppRoute.collaborativeAssignmentVerifyScreen:
+            return CollaborativeAssignmentVerificationScreen(
+                arguments: setting.arguments);
 
           default:
             return const SplashScreen();
