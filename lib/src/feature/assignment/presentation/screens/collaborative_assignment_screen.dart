@@ -1,12 +1,5 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-
-import '../../../../core/common_widgets/app_stream.dart';
-import '../../../../core/common_widgets/circular_loader_widget.dart';
 import '../../../../core/common_widgets/custom_button.dart';
-import '../../../../core/common_widgets/custom_empty_widget.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
 import '../../../../core/common_widgets/image_preview.dart';
@@ -14,7 +7,6 @@ import '../../../../core/constants/common_imports.dart';
 import '../../../../core/routes/app_route.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/utility/app_label.dart';
-import '../../../course/presentation/widgets/tab_switch_widget.dart';
 import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
 import '../services/assignment_screen_service.dart';
 import '../widgets/file_picker_widget.dart';
