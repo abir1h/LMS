@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../domain/entities/assignment_data_entity.dart';
 import '../services/assignment_screen_service.dart';
 import '../../../../core/common_widgets/custom_action_button.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
@@ -151,7 +152,7 @@ class _AssignmentRequestBottomSheetState
   }
 
   @override
-  void navigateToCollaborativeInstructionScreen() {
+  void navigateToCollaborativeInstructionScreen(int traineeId,AssignmentDataEntity assignmentDataEntity) {
     // TODO: implement navigateToCollaborativeInstructionScreen
   }
 }

@@ -84,6 +84,15 @@ class AssignmentSubmitScreenArgs {
   });
 }
 
+class AssignmentReviewArgs {
+  final int traineeId;
+  final AssignmentDataEntity? assignmentDataEntity;
+  AssignmentReviewArgs({
+    required this.traineeId,
+    this.assignmentDataEntity,
+  });
+}
+
 class ModuleDiscussionArgs {
   final int courseId, courseModuleId;
   ModuleDiscussionArgs({required this.courseId, required this.courseModuleId});

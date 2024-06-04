@@ -6,6 +6,7 @@ import '../../../../../core/network/api_service.dart';
 import '../../../../shared/data/models/response_model.dart';
 import '../../models/assignment_data_model.dart';
 import '../../models/assignment_request_model.dart';
+import '../../models/collaborative_accept_review_data_model.dart';
 
 abstract class AssignmentRemoteDataSource {
   Future<ResponseModel> getAssignmentDetailsAction(int courseContentId);
@@ -31,6 +32,12 @@ abstract class AssignmentRemoteDataSource {
     int courseModuleId,
     String message,
   );
+  Future<ResponseModel> getAcceptReviewAction(int traineeId);
+  Future<ResponseModel> reviewResultSubmitAction(
+    int assignmentSubId,
+    int resultId,
+    String markObtained,
+  );
 }
 
 class AssignmentRemoteDataSourceImp extends AssignmentRemoteDataSource {
@@ -42,29 +49,6 @@ class AssignmentRemoteDataSourceImp extends AssignmentRemoteDataSource {
         responseJson, (dynamic json) => AssignmentDataModel.fromJson(json));
     return responseModel;
   }
-
-  // @override
-  // Future<ResponseModel> storeAssignmentAction(
-  //     int assignmentId,
-  //     int subAssignmentId,
-  //     int courseId,
-  //     int circularId,
-  //     String answer,
-  //     List<File> files) async {
-  //   Map<String, dynamic> data = {
-  //     "circular_assignment_id": assignmentId,
-  //     "circular_sub_assignment_id": subAssignmentId,
-  //     "course_id": courseId,
-  //     "circular_id": circularId,
-  //     "answer": answer,
-  //     "file[]": files,
-  //   };
-  //   final responseJson = await Server.instance
-  //       .postRequest(url: ApiCredential.createAssignment, postData: data);
-  //   ResponseModel responseModel = ResponseModel.fromJson(
-  //       responseJson, (dynamic json) => AssignmentDataModel.fromJson(json));
-  //   return responseModel;
-  // }
 
   @override
   Future<ResponseModel> storeAssignmentAction(
@@ -130,6 +114,32 @@ class AssignmentRemoteDataSourceImp extends AssignmentRemoteDataSource {
     );
     ResponseModel responseModel = ResponseModel.fromJson(
         responseJson, (dynamic json) => AssignmentRequestModel.fromJson(json));
+    return responseModel;
+  }
+
+  @override
+  Future<ResponseModel> getAcceptReviewAction(int traineeId) async {
+    final responseJson = await Server.instance
+        .getRequest(url: "${ApiCredential.acceptReview}/$traineeId");
+    ResponseModel responseModel = ResponseModel.fromJson(responseJson,
+        (dynamic json) => CollaborativeAcceptReviewDataModel.fromJson(json));
+    return responseModel;
+  }
+
+  @override
+  Future<ResponseModel> reviewResultSubmitAction(
+      int assignmentSubId, int resultId, String markObtained) async {
+    Map<String, String> data = {
+      "assignment_submission_id": assignmentSubId.toString(),
+      "collaborative_assignment_result_id": resultId.toString(),
+      "mark_obtained": markObtained,
+    };
+    final responseJson = await Server.instance.postRequest(
+      url: ApiCredential.reviewResultSubmit,
+      postData: data,
+    );
+    ResponseModel responseModel = ResponseModel.fromJson(responseJson,
+        (dynamic json) => CollaborativeAcceptReviewDataModel.fromJson(json));
     return responseModel;
   }
 }

@@ -37,6 +37,7 @@ class FilePickerWidget<T> extends StatelessWidget with AppTheme, Language {
                         e: "Upload Your File Here",
                         b: "আপনার ফাইলটি এখানে আপলোড করুন"),
                     textColor: clr.textColorGray,
+                    fontSize: size.textXSmall,
                     fontWeight: FontWeight.w500,
                     fontFamily: StringData.fontFamilyPoppins,
                     maxLines: 1,
@@ -55,14 +56,14 @@ class FilePickerWidget<T> extends StatelessWidget with AppTheme, Language {
                     },
                   ),
                 ),
-          InkWell(
-            onTap: onPickImage,
-            child: Icon(
-              Icons.add_a_photo,
-              color: clr.iconColorHint,
-              size: size.r24,
-            ),
-          ),
+          // InkWell(
+          //   onTap: onPickImage,
+          //   child: Icon(
+          //     Icons.add_a_photo,
+          //     color: clr.iconColorHint,
+          //     size: size.r24,
+          //   ),
+          // ),
           SizedBox(width: size.w12),
           InkWell(
             onTap: onPickFile,

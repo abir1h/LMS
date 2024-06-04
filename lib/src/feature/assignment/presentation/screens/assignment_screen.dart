@@ -610,7 +610,7 @@ class _AssignmentScreenState extends State<AssignmentScreen>
   }
 
   @override
-  void navigateToCollaborativeInstructionScreen() {
+  void navigateToCollaborativeInstructionScreen(int traineeId,AssignmentDataEntity assignmentDataEntity) {
     // TODO: implement navigateToCollaborativeInstructionScreen
   }
 }

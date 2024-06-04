@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lms/src/feature/assignment/data/models/sub_assignment_data_model.dart';
 
+import 'sub_assignment_data_model.dart';
 import 'assignment_submission_data_model.dart';
 import 'submitted_trainee_list_data_model.dart';
 

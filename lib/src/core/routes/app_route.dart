@@ -6,7 +6,7 @@ import '../../feature/assignment/presentation/screens/assignment_screen.dart';
 import '../../feature/assignment/presentation/screens/assignment_submit_screen.dart';
 import '../../feature/assignment/presentation/screens/collaborative_assignment_instruction_screen.dart';
 import '../../feature/assignment/presentation/screens/collaborative_assignment_screen.dart';
-import '../../feature/assignment/presentation/screens/collaborative_assignment_verify_screen.dart';
+import '../../feature/assignment/presentation/screens/assignment_review_screen.dart';
 import '../../feature/authentication/presentation/screens/authentication_screen.dart';
 import '../../feature/authentication/presentation/screens/emis_webview_screen.dart';
 import '../../feature/circular/presentation/screens/circular_details_screen.dart';
@@ -60,8 +60,8 @@ class AppRoute {
       "collaborativeAssignmentScreen";
   static const String collaborativeAssignmentInstructionScreen =
       "collaborativeAssignmentInstructionScreen";
-  static const String collaborativeAssignmentVerifyScreen =
-      "collaborativeAssignmentVerifyScreen";
+  static const String assignmentReviewScreen =
+      "assignmentReviewScreen";
   static const String assignmentSubmitScreen = "assignmentSubmitScreen";
   static const String assessmentScrollViewScreen = "assessmentScrollViewScreen";
   static const String assessmentSlideViewScreen = "assessmentSlideViewScreen";
@@ -127,8 +127,8 @@ mixin RouteGenerator {
           case AppRoute.collaborativeAssignmentInstructionScreen:
             return CollaborativeAssignmentInstructionScreen(
                 arguments: setting.arguments);
-          case AppRoute.collaborativeAssignmentVerifyScreen:
-            return CollaborativeAssignmentVerificationScreen(
+          case AppRoute.assignmentReviewScreen:
+            return AssignmentReviewScreen(
                 arguments: setting.arguments);
           case AppRoute.assignmentSubmitScreen:
             return AssignmentSubmitScreen(arguments: setting.arguments);

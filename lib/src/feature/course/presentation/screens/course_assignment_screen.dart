@@ -136,13 +136,13 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
 
   @override
   void navigateToAssignmentScreen(String assignmentType, int courseContentId) {
-    if (assignmentType == AssignmentType.collaborative.name) {
-      Navigator.of(context).pushNamed(AppRoute.collaborativeAssignmentScreen,
-          arguments: AssignmentArgs(courseContentId: courseContentId));
-    } else {
-      Navigator.of(context).pushNamed(AppRoute.assignmentScreen,
-          arguments: AssignmentArgs(courseContentId: courseContentId));
-    }
+    // if (assignmentType == AssignmentType.collaborative.name) {
+    Navigator.of(context).pushNamed(AppRoute.collaborativeAssignmentScreen,
+        arguments: AssignmentArgs(courseContentId: courseContentId));
+    // } else {
+    //   Navigator.of(context).pushNamed(AppRoute.assignmentScreen,
+    //       arguments: AssignmentArgs(courseContentId: courseContentId));
+    // }
   }
 }
 

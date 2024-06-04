@@ -329,7 +329,8 @@ class _AssignmentBottomSheetState extends State<AssignmentBottomSheet>
   }
 
   @override
-  void navigateToCollaborativeInstructionScreen() {
+  void navigateToCollaborativeInstructionScreen(
+      int traineeId, AssignmentDataEntity assignmentDataEntity) {
     // TODO: implement navigateToCollaborativeInstructionScreen
   }
 

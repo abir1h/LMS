@@ -99,8 +99,10 @@ class _AssessmentScrollViewScreenState extends State<AssessmentScrollViewScreen>
                     builder: (context, data, index) {
                       ///Todo Fixed After Demo
                       return QuestionWidget(
-                        questionNo: replaceEnglishNumberWithBengali(
-                            (index + 1).toString()),
+                        questionNo: label(
+                            e: (index + 1).toString(),
+                            b: replaceEnglishNumberWithBengali(
+                                (index + 1).toString())),
                         questionText:
                             data.questionType?.id != 4 ? data.question : "",
                         questionImage: data.questionImg,

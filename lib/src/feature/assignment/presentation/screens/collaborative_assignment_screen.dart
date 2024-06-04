@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 
 import '../../../../core/common_widgets/quil_text_viewer.dart';
@@ -74,213 +73,348 @@ class _CollaborativeAssignmentScreenState
               }
             }
           }
-          return SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.symmetric(
-                      horizontal: size.w16, vertical: size.h16),
-                  decoration: BoxDecoration(
-                      border: Border(
-                          bottom: BorderSide(color: clr.boxStrokeColor))),
-                  child: CustomTextWidget(
-                      text: label(e: data.titleEn, b: data.titleBn),
-                      fontFamily: StringData.fontFamilyPoppins),
-                ),
-
-                ///Assignment Instruction
-                if (data.instructionsEn.isNotEmpty &&
-                    data.instructionsBn.isNotEmpty)
-                  AssignmentInstructions(
-                    text: label(e: data.instructionsEn, b: data.instructionsBn),
-                  ),
-
-                ///Assignment Description
-                CustomTextWidget(
-                  text: label(e: "Points Criteria", b: "অ্যাসাইনমেন্টের বিবরণ"),
-                  textColor: clr.blackText,
-                  padding: EdgeInsets.only(
-                      left: size.w16, right: size.w16, top: size.h16),
-                ),
-                Container(
-                  margin: EdgeInsets.only(
-                      left: size.w16, right: size.w16, top: size.h8),
-                  padding: EdgeInsets.symmetric(
-                      horizontal: size.w12, vertical: size.h12),
-                  decoration: BoxDecoration(
-                    color: clr.shadeWhiteColor2,
-                    borderRadius: BorderRadius.circular(size.r8),
-                    border: Border.all(
-                        color: clr.cardStrokeColorGrey2, width: size.w1),
-                    boxShadow: [
-                      BoxShadow(
-                          offset: const Offset(0, 4),
-                          blurRadius: 4,
-                          spreadRadius: 0,
-                          color: clr.blackColor.withOpacity(.15))
-                    ],
-                  ),
-                  child: Column(
-                    children: [
-                      CustomTextWidget(
-                        text:
-                            label(e: data.descriptionEn, b: data.descriptionBn),
-                        textColor: clr.gapStrokeGrey,
-                        fontSize: size.textXSmall,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ],
-                  ),
-                ),
-
-                ///Submission
-                CustomTextWidget(
-                  text: label(
-                      e: "Assignment Submission", b: "এসাইনমেন্ট সাবমিশন"),
-                  textColor: clr.blackText,
-                  padding: EdgeInsets.only(
-                      left: size.w16, right: size.w16, top: size.h16),
-                ),
-                Container(
-                  width: double.infinity,
-                  margin: EdgeInsets.only(
-                      left: size.w16, right: size.w16, top: size.h8),
-                  padding: EdgeInsets.symmetric(
-                      horizontal: size.w12, vertical: size.h16),
-                  decoration: BoxDecoration(
-                    color: clr.cardFillColorMintCream,
-                    borderRadius: BorderRadius.circular(size.r8),
-                    border:
-                        Border.all(color: clr.cardStrokeColor, width: size.w1),
-                  ),
+          return (data.type == AssignmentType.group.name)
+              ? Container()
+              : SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: CustomTextWidget(
+                      ///Title
+                      Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: size.w16, vertical: size.h16),
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(color: clr.boxStrokeColor))),
+                        child: CustomTextWidget(
+                            text: label(e: data.titleEn, b: data.titleBn),
+                            fontFamily: StringData.fontFamilyPoppins),
+                      ),
+
+                      ///Assignment Instruction
+                      if (data.instructionsEn.isNotEmpty &&
+                          data.instructionsBn.isNotEmpty)
+                        AssignmentInstructions(
+                          text: label(
+                              e: data.instructionsEn, b: data.instructionsBn),
+                        ),
+
+                      ///Assignment Description
+                      CustomTextWidget(
+                        text: label(
+                            e: "Points Criteria", b: "অ্যাসাইনমেন্টের বিবরণ"),
+                        textColor: clr.blackText,
+                        padding: EdgeInsets.only(
+                            left: size.w16, right: size.w16, top: size.h16),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(
+                            left: size.w16, right: size.w16, top: size.h8),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: size.w12, vertical: size.h12),
+                        decoration: BoxDecoration(
+                          color: clr.shadeWhiteColor2,
+                          borderRadius: BorderRadius.circular(size.r8),
+                          border: Border.all(
+                              color: clr.cardStrokeColorGrey2, width: size.w1),
+                          boxShadow: [
+                            BoxShadow(
+                                offset: const Offset(0, 4),
+                                blurRadius: 4,
+                                spreadRadius: 0,
+                                color: clr.blackColor.withOpacity(.15))
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            CustomTextWidget(
                               text: label(
-                                  e: "Write The Assignment",
-                                  b: "এসাইনমেন্ট লিখুন"),
-                              textColor: clr.textColorAppleBlack,
+                                  e: data.descriptionEn, b: data.descriptionBn),
+                              textColor: clr.gapStrokeGrey,
                               fontSize: size.textXSmall,
                               fontWeight: FontWeight.w400,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
                             ),
-                          ),
-                          if (quillData != null ||
-                              data.assignmentSubmissions != null)
-                            InkWell(
-                                onTap: () =>
-                                    onTapWriteHere("store", data, quillData),
-                                child: Icon(Icons.edit,
-                                    size: size.r24,
-                                    color: clr.appPrimaryColorGreen)),
-                        ],
-                      ),
-                      SizedBox(height: size.h8),
-
-                      ///Written
-                      GestureDetector(
-                        onTap: () {
-                          if (data.assignmentSubmissions == null) {
-                            onTapWriteHere("store", data, quillData);
-                          }
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: size.w16, vertical: size.h12),
-                          decoration: BoxDecoration(
-                            color: clr.whiteColor,
-                            borderRadius: BorderRadius.circular(size.r8),
-                            border: Border.all(
-                                color: clr.boxStrokeColor, width: size.w1),
-                          ),
-                          child: quillData == null
-                              ? Text(
-                                  label(e: en.writeHere, b: bn.writeHere),
-                                  style: TextStyle(
-                                      color: clr.placeHolderTextColorGray,
-                                      // : clr.textColorAppleBlack,
-                                      fontSize: size.textSmall,
-                                      fontWeight: FontWeight.w500,
-                                      fontFamily: StringData.fontFamilyPoppins),
-                                )
-                              : QuilTextViewer(
-                                  controller: _controller,
-                                  hintText:
-                                      label(e: en.writeHere, b: bn.writeHere),
-                                ),
+                          ],
                         ),
                       ),
 
-                      ///Or
-                      if (data.submissionType == AssignmentSubType.both.name)
-                        Center(
-                          child: Container(
-                            margin: EdgeInsets.symmetric(vertical: size.h16),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: size.w16, vertical: size.h8),
-                            decoration: BoxDecoration(
-                              color: clr.shadeWhiteColor,
-                              borderRadius: BorderRadius.circular(size.r4),
-                              border: Border.all(
-                                  color: clr.placeHolderTextColorGray,
-                                  width: size.w1),
-                            ),
-                            child: CustomTextWidget(
-                              text: label(e: "Or", b: "অথবা"),
-                              textColor: clr.textColorAppleBlack,
-                            ),
-                          ),
+                      ///Submission
+                      CustomTextWidget(
+                        text: label(
+                            e: "Assignment Submission",
+                            b: "এসাইনমেন্ট সাবমিশন"),
+                        textColor: clr.blackText,
+                        padding: EdgeInsets.only(
+                            left: size.w16, right: size.w16, top: size.h16),
+                      ),
+                      Container(
+                        width: double.infinity,
+                        margin: EdgeInsets.only(
+                            left: size.w16, right: size.w16, top: size.h8),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: size.w12, vertical: size.h16),
+                        decoration: BoxDecoration(
+                          color: clr.cardFillColorMintCream,
+                          borderRadius: BorderRadius.circular(size.r8),
+                          border: Border.all(
+                              color: clr.cardStrokeColor, width: size.w1),
                         ),
-
-                      ///Upload
-                      if (data.submissionType ==
-                              AssignmentSubType.upload.name ||
-                          data.submissionType == AssignmentSubType.both.name)
-                        FilePickerWidget(
-                            items: files!,
-                            builder: (BuildContext context, int index, item) {
-                              return Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      files![index].path.split('/').last,
-                                      style: TextStyle(
-                                          color: clr.appPrimaryColorGreen,
-                                          fontSize: size.textSmall,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily:
-                                              StringData.fontFamilyPoppins),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (data.assignmentSubmissions != null)
+                              Padding(
+                                padding: EdgeInsets.only(bottom: size.h8),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: CustomTextWidget(
+                                        text: label(
+                                            e: "Your Submission",
+                                            b: "আপনার সাবমিশন"),
+                                        textColor: clr.textColorAppleBlack,
+                                        fontSize: size.textXSmall,
+                                        fontWeight: FontWeight.w500,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
                                     ),
+                                    if ((quillData != null ||
+                                            data.assignmentSubmissions !=
+                                                null) &&
+                                        data.submissionType ==
+                                            AssignmentSubType.written.name)
+                                      EditButtonWidget(
+                                        onTap: () => onTapWriteHere(
+                                            "store", data, quillData),
+                                      ),
+                                  ],
+                                ),
+                              ),
+
+                            ///Written
+                            if ((data.submissionType ==
+                                        AssignmentSubType.written.name ||
+                                    data.submissionType ==
+                                        AssignmentSubType.both.name) &&
+                                data.assignmentSubmissions == null)
+                              Padding(
+                                padding: EdgeInsets.only(bottom: size.h8),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: CustomTextWidget(
+                                        text: label(
+                                            e: "Write The Assignment",
+                                            b: "এসাইনমেন্ট লিখুন"),
+                                        textColor: clr.textColorAppleBlack,
+                                        fontSize: size.textXSmall,
+                                        fontWeight: FontWeight.w500,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                    if (quillData != null ||
+                                        data.assignmentSubmissions != null)
+                                      EditButtonWidget(
+                                        onTap: () => onTapWriteHere(
+                                            "store", data, quillData),
+                                      ),
+                                  ],
+                                ),
+                              ),
+                            if (data.submissionType ==
+                                    AssignmentSubType.written.name ||
+                                data.submissionType ==
+                                    AssignmentSubType.both.name)
+                              GestureDetector(
+                                onTap: () {
+                                  if (data.assignmentSubmissions == null) {
+                                    onTapWriteHere("store", data, quillData);
+                                  }
+                                },
+                                child: Container(
+                                  width: double.infinity,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: size.w16, vertical: size.h12),
+                                  decoration: BoxDecoration(
+                                    color: clr.whiteColor,
+                                    borderRadius:
+                                        BorderRadius.circular(size.r8),
+                                    border: Border.all(
+                                        color: clr.boxStrokeColor,
+                                        width: size.w1),
                                   ),
-                                  if (files!.isNotEmpty)
-                                    InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            files!.removeWhere((element) =>
-                                                element == files![index]);
-                                          });
-                                        },
-                                        child: Icon(
-                                          Icons.close,
-                                          color: clr.appPrimaryColorGreen,
-                                          size: size.r24,
-                                        )),
-                                ],
-                              );
-                            },
-                            onPickFile: pickFiles),
-                      /*if (files!.isNotEmpty)
+                                  child: quillData == null
+                                      ? Text(
+                                          label(
+                                              e: en.writeHere, b: bn.writeHere),
+                                          style: TextStyle(
+                                              color:
+                                                  clr.placeHolderTextColorGray,
+                                              // : clr.textColorAppleBlack,
+                                              fontSize: size.textSmall,
+                                              fontWeight: FontWeight.w500,
+                                              fontFamily:
+                                                  StringData.fontFamilyPoppins),
+                                        )
+                                      : QuilTextViewer(
+                                          controller: _controller,
+                                          hintText: label(
+                                              e: en.writeHere, b: bn.writeHere),
+                                        ),
+                                ),
+                              ),
+
+                            ///Or
+                            if (data.submissionType ==
+                                AssignmentSubType.both.name)
+                              Center(
+                                child: Container(
+                                  margin:
+                                      EdgeInsets.symmetric(vertical: size.h16),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: size.w16, vertical: size.h8),
+                                  decoration: BoxDecoration(
+                                    color: clr.shadeWhiteColor,
+                                    borderRadius:
+                                        BorderRadius.circular(size.r4),
+                                    border: Border.all(
+                                        color: clr.placeHolderTextColorGray,
+                                        width: size.w1),
+                                  ),
+                                  child: CustomTextWidget(
+                                    text: label(e: "Or", b: "অথবা"),
+                                    textColor: clr.textColorAppleBlack,
+                                  ),
+                                ),
+                              ),
+
+                            ///Upload
+                            if ((data.submissionType ==
+                                        AssignmentSubType.upload.name ||
+                                    data.submissionType ==
+                                        AssignmentSubType.both.name) &&
+                                data.assignmentSubmissions == null)
+                              CustomTextWidget(
+                                text: label(
+                                    e: en.uploadTheFile, b: bn.uploadTheFile),
+                                textColor: clr.textColorAppleBlack,
+                                fontSize: size.textXSmall,
+                                fontWeight: FontWeight.w500,
+                                padding: EdgeInsets.only(bottom: size.h8),
+                              ),
+
+                            ///Submitted File
+                            if (data.assignmentSubmissions != null &&
+                                data.assignmentSubmissions!.attachments
+                                    .isNotEmpty)
+                              Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: clr.shadeWhiteColor2,
+                                  borderRadius: BorderRadius.circular(size.r8),
+                                  border: Border.all(
+                                      color: clr.boxStrokeColor,
+                                      width: size.w1),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        offset: const Offset(0, 2),
+                                        blurRadius: 4,
+                                        spreadRadius: 0,
+                                        color: clr.blackColor.withOpacity(.15))
+                                  ],
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: size.w16, vertical: size.h12),
+                                margin: EdgeInsets.only(bottom: size.h12),
+                                child: ListView.separated(
+                                  shrinkWrap: true,
+                                  itemCount: data.assignmentSubmissions!
+                                      .attachments.length,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemBuilder: (context, index) => Row(
+                                    children: [
+                                      Expanded(
+                                        child: CustomTextWidget(
+                                          text: data.assignmentSubmissions!
+                                              .attachments[index].file
+                                              .split("/")
+                                              .last,
+                                          fontSize: size.textXSmall,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      DownloadButtonWidget(
+                                          onTap: () => downloadFiles(
+                                              fileUrl: data
+                                                  .assignmentSubmissions!
+                                                  .attachments
+                                                  .first
+                                                  .file,
+                                              filename: data
+                                                  .assignmentSubmissions!
+                                                  .attachments
+                                                  .first
+                                                  .file
+                                                  .split("/")
+                                                  .last,
+                                              context: context)),
+                                    ],
+                                  ),
+                                  separatorBuilder: (context, index) {
+                                    return SizedBox(height: size.h12);
+                                  },
+                                ),
+                              ),
+
+                            ///Attach File
+                            if (data.submissionType ==
+                                    AssignmentSubType.upload.name ||
+                                data.submissionType ==
+                                    AssignmentSubType.both.name)
+                              FilePickerWidget(
+                                  items: files!,
+                                  builder:
+                                      (BuildContext context, int index, item) {
+                                    return Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            item.path.split('/').last,
+                                            style: TextStyle(
+                                                color: clr.appPrimaryColorGreen,
+                                                fontSize: size.textSmall,
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: StringData
+                                                    .fontFamilyPoppins),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                        if (files!.isNotEmpty)
+                                          InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  files!.removeWhere(
+                                                      (element) =>
+                                                          element ==
+                                                          files![index]);
+                                                });
+                                              },
+                                              child: Icon(
+                                                Icons.close,
+                                                color: clr.appPrimaryColorGreen,
+                                                size: size.r24,
+                                              )),
+                                      ],
+                                    );
+                                  },
+                                  onPickFile: pickFiles),
+
+                            /*if (files!.isNotEmpty)
                         GridView.builder(
                           shrinkWrap: true,
                           gridDelegate:
@@ -326,117 +460,119 @@ class _CollaborativeAssignmentScreenState
                             ],
                           ),
                         )*/
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      left: size.w16, right: size.w16, top: size.h16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      if (data.assignmentSubmissions == null)
-                        CustomButton(
-                          onTap: () => onStoreAssignment(
-                                  assignmentId: data.id,
-                                  subAssignmentId:
-                                      data.circularSubAssignments != null
-                                          ? data.circularSubAssignments!.id
-                                          : -1,
-                                  courseId: data.courseId,
-                                  circularId: data.circularId,
-                                  answer: quillData,
-                                  files: files!)
-                              .then((value) {
-                            contentReadPost(data.id, data.courseId, true);
-                            loadAssignmentData(_screenArgs.courseContentId);
-                          }),
-                          title: label(e: "Submit", b: "জমা দিন"),
-                          bgColor: (files!.isEmpty && !isWrite)
-                              ? clr.iconColorHint
-                              : clr.appPrimaryColorGreen,
-                          borderColor: Colors.transparent,
-                          radius: size.r4,
-                          horizontalPadding: size.w20,
-                          verticalPadding: size.h4,
+                          ],
+                        ),
+                      ),
+
+                      ///Submit Button
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: size.w16, right: size.w16, top: size.h16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            if (data.assignmentSubmissions == null)
+                              CustomButton(
+                                onTap: () => onStoreAssignment(
+                                    assignmentId: data.id,
+                                    subAssignmentId:
+                                        data.circularSubAssignments != null
+                                            ? data.circularSubAssignments!.id
+                                            : -1,
+                                    courseId: data.courseId,
+                                    circularId: data.circularId,
+                                    answer: quillData ?? "",
+                                    files: files!),
+                                title: label(e: "Submit", b: "জমা দিন"),
+                                bgColor: (files!.isEmpty && !isWrite)
+                                    ? clr.iconColorHint
+                                    : clr.appPrimaryColorGreen,
+                                borderColor: Colors.transparent,
+                                radius: size.r4,
+                                horizontalPadding: size.w20,
+                                verticalPadding: size.h4,
+                              ),
+                            if (data.assignmentSubmissions != null)
+                              CustomButton(
+                                onTap: () => onUpdateAssignment(
+                                    submissionId:
+                                        data.assignmentSubmissions!.id,
+                                    assignmentId: data.id,
+                                    subAssignmentId:
+                                        data.circularSubAssignments != null
+                                            ? data.circularSubAssignments!.id
+                                            : -1,
+                                    courseId: data.courseId,
+                                    circularId: data.circularId,
+                                    answer: '',
+                                    files: files!),
+                                title:
+                                    label(e: "Re-Submit", b: "পুনরায় জমা দিন"),
+                                bgColor: (files!.isEmpty && !isWrite)
+                                    ? clr.iconColorHint
+                                    : clr.appPrimaryColorGreen,
+                                borderColor: Colors.transparent,
+                                radius: size.r4,
+                                horizontalPadding: size.w20,
+                                verticalPadding: size.h4,
+                              ),
+                          ],
+                        ),
+                      ),
+
+                      ///Submit Status
+                      if (data.assignmentSubmissions != null)
+                        CustomTextWidget(
+                          text: label(
+                              e: "Submission Status", b: "সাবমিশন স্ট্যাটাস"),
+                          textColor: clr.textColorAppleBlack,
+                          fontWeight: FontWeight.w500,
+                          padding: EdgeInsets.only(
+                              left: size.w16, right: size.w16, top: size.h16),
                         ),
                       if (data.assignmentSubmissions != null)
-                        CustomButton(
-                          onTap: () => onStoreAssignment(
-                                  assignmentId: data.id,
-                                  subAssignmentId:
-                                      data.circularSubAssignments != null
-                                          ? data.circularSubAssignments!.id
-                                          : -1,
-                                  courseId: data.courseId,
-                                  circularId: data.circularId,
-                                  answer: quillData,
-                                  files: files!)
-                              .then((value) {
-                            contentReadPost(data.id, data.courseId, true);
-                            loadAssignmentData(_screenArgs.courseContentId);
-                          }),
-                          title: label(e: "Re-Submit", b: "পুনরায় জমা দিন"),
-                          bgColor: (files!.isEmpty && !isWrite)
-                              ? clr.iconColorHint
-                              : clr.appPrimaryColorGreen,
-                          borderColor: Colors.transparent,
-                          radius: size.r4,
-                          horizontalPadding: size.w20,
-                          verticalPadding: size.h4,
+                        Container(
+                          width: double.infinity,
+                          margin: EdgeInsets.only(
+                              left: size.w16, right: size.w16, top: size.h12),
+                          decoration: BoxDecoration(
+                            color: clr.cardFillColorMintCream,
+                            borderRadius: BorderRadius.circular(size.r8),
+                            border: Border.all(
+                                color: clr.cardStrokeColor, width: size.w1),
+                            boxShadow: [
+                              BoxShadow(
+                                  offset: const Offset(0, 4),
+                                  blurRadius: 4,
+                                  spreadRadius: 0,
+                                  color: clr.blackColor.withOpacity(.2))
+                            ],
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: size.w12, vertical: size.h8),
+                          child: CustomTextWidget(
+                            text: label(
+                                e: "Your assignment has been submitted, please wait for review Review You can edit it before the review",
+                                b: "আপনার এসাইনমেন্ট সাবমিট করা হয়েছে, দয়া করে রিভিউ এর জন্য অপেক্ষা করুন| রিভিউ এর পূর্ব  পর্যন্ত আপনি এটি এডিট করতে পারবেন"),
+                            fontSize: size.textXXSmall,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
+
+                      ///Submitted Trainee List
+                      if (data.submittedTraineeList.isNotEmpty)
+                        SubmittedTraineeSectionWidget(
+                          items: data.submittedTraineeList,
+                          builder: (BuildContext context, int index, item) =>
+                              SubmittedTraineeItemWidget(
+                            data: item,
+                            onTap: () => onTapAccept(item.id, data),
+                          ),
+                        ),
+                      SizedBox(height: size.h56),
                     ],
                   ),
-                ),
-                if (data.assignmentSubmissions != null)
-                  CustomTextWidget(
-                    text: label(e: "Submission Status", b: "সাবমিশন স্ট্যাটাস"),
-                    textColor: clr.textColorAppleBlack,
-                    fontWeight: FontWeight.w500,
-                    padding: EdgeInsets.only(
-                        left: size.w16, right: size.w16, top: size.h16),
-                  ),
-                if (data.assignmentSubmissions != null)
-                  Container(
-                    width: double.infinity,
-                    margin: EdgeInsets.only(
-                        left: size.w16, right: size.w16, top: size.h12),
-                    decoration: BoxDecoration(
-                      color: clr.cardFillColorMintCream,
-                      borderRadius: BorderRadius.circular(size.r8),
-                      border: Border.all(
-                          color: clr.cardStrokeColor, width: size.w1),
-                      boxShadow: [
-                        BoxShadow(
-                            offset: const Offset(0, 4),
-                            blurRadius: 4,
-                            spreadRadius: 0,
-                            color: clr.blackColor.withOpacity(.2))
-                      ],
-                    ),
-                    padding: EdgeInsets.symmetric(
-                        horizontal: size.w12, vertical: size.h8),
-                    child: CustomTextWidget(
-                      text: label(
-                          e: "Your assignment has been submitted, please wait for review Review You can edit it before the review",
-                          b: "আপনার এসাইনমেন্ট সাবমিট করা হয়েছে, দয়া করে রিভিউ এর জন্য অপেক্ষা করুন| রিভিউ এর পূর্ব  পর্যন্ত আপনি এটি এডিট করতে পারবেন"),
-                      fontSize: size.textXXSmall,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                if (data.submittedTraineeList.isNotEmpty)
-                  SubmittedTraineeSectionWidget(
-                    items: data.submittedTraineeList,
-                    builder: (BuildContext context, int index, item) =>
-                        SubmittedTraineeItemWidget(
-                      submittedTraineeListDataEntity: item,
-                      onTap: onTapAccept,
-                    ),
-                  ),
-                SizedBox(height: size.h56),
-              ],
-            ),
-          );
+                );
         },
         emptyBuilder: (context, message, icon) => CustomEmptyWidget(
           message: message,
@@ -463,7 +599,6 @@ class _CollaborativeAssignmentScreenState
       setState(() {
         setContent();
         isWrite = true;
-        print("Writeee$isWrite");
       });
     });
   }
@@ -479,12 +614,16 @@ class _CollaborativeAssignmentScreenState
   }
 
   @override
-  void navigateToCollaborativeInstructionScreen() {
-    Navigator.of(context)
-        .pushNamed(AppRoute.collaborativeAssignmentInstructionScreen);
+  void navigateToCollaborativeInstructionScreen(
+      int traineeId, AssignmentDataEntity assignmentDataEntity) {
+    Navigator.of(context).pushNamed(
+        AppRoute.collaborativeAssignmentInstructionScreen,
+        arguments: AssignmentReviewArgs(
+            traineeId: traineeId, assignmentDataEntity: assignmentDataEntity));
   }
 }
 
+///Assignment Instruction
 class AssignmentInstructions<T> extends StatefulWidget {
   final String text;
   const AssignmentInstructions({super.key, required this.text});
@@ -566,6 +705,7 @@ class _AssignmentInstructionsState<T> extends State<AssignmentInstructions<T>>
   }
 }
 
+///Submitted Trainee List
 class SubmittedTraineeSectionWidget<T> extends StatelessWidget with AppTheme {
   final List<T> items;
   final Widget Function(BuildContext context, int index, T item) builder;
@@ -613,12 +753,10 @@ class SubmittedTraineeSectionWidget<T> extends StatelessWidget with AppTheme {
 }
 
 class SubmittedTraineeItemWidget extends StatelessWidget with AppTheme {
-  final SubmittedTraineeListDataEntity submittedTraineeListDataEntity;
+  final SubmittedTraineeListDataEntity data;
   final VoidCallback onTap;
   const SubmittedTraineeItemWidget(
-      {super.key,
-      required this.submittedTraineeListDataEntity,
-      required this.onTap});
+      {super.key, required this.data, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -645,17 +783,102 @@ class SubmittedTraineeItemWidget extends StatelessWidget with AppTheme {
             ),
           ),
           SizedBox(width: size.w8),
-          CustomButton(
-            onTap: onTap,
-            title: label(e: "Accept", b: "গ্রহণ করুন"),
-            textColor: clr.appPrimaryColorGreen,
-            bgColor: clr.scaffoldBackgroundColor,
-            borderColor: clr.appPrimaryColorGreen,
-            radius: size.r4,
-            horizontalPadding: size.w12,
-            verticalPadding: size.h4,
-          ),
+          data.isReviewed == 0
+              ? CustomButton(
+                  onTap: onTap,
+                  title: data.isAccepted == 0
+                      ? label(e: "Accept", b: "গ্রহণ করুন")
+                      : label(e: "Accepted", b: "গৃহীত"),
+                  textColor: data.isAccepted == 0
+                      ? clr.appPrimaryColorGreen
+                      : clr.shadeWhiteColor2,
+                  bgColor: data.isAccepted == 0
+                      ? clr.scaffoldBackgroundColor
+                      : clr.iconColorHint,
+                  borderColor: data.isAccepted == 0
+                      ? clr.appPrimaryColorGreen
+                      : Colors.transparent,
+                  radius: size.r4,
+                  horizontalPadding: size.w12,
+                  verticalPadding: size.h4,
+                )
+              : CustomButton(
+                  onTap: onTap,
+                  title: label(e: "Reviewed", b: "পর্যালোচনা করা হয়েছে"),
+                  textColor: clr.appPrimaryColorGreen,
+                  bgColor: clr.cardFillColorOlive,
+                  borderColor: clr.cardStrokeColorGreen,
+                  radius: size.r4,
+                  horizontalPadding: size.w12,
+                  verticalPadding: size.h4,
+                ),
         ],
+      ),
+    );
+  }
+}
+
+///Download Button
+class DownloadButtonWidget extends StatelessWidget with AppTheme {
+  final VoidCallback onTap;
+  const DownloadButtonWidget({super.key, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.all(size.r1),
+        decoration: BoxDecoration(
+          color: clr.whiteColor,
+          borderRadius: BorderRadius.circular(size.r4),
+          border: Border.all(color: clr.cardStrokeColor, width: size.r1),
+          boxShadow: [
+            BoxShadow(
+              color: clr.blackColor.withOpacity(.2),
+              blurRadius: size.r4,
+              offset: Offset(0.0, size.h2),
+            ),
+          ],
+        ),
+        child: Icon(
+          Icons.save_alt,
+          color: clr.appPrimaryColorGreen,
+          size: size.r20,
+        ),
+      ),
+    );
+  }
+}
+
+///Edit Button
+class EditButtonWidget extends StatelessWidget with AppTheme {
+  final VoidCallback onTap;
+  const EditButtonWidget({super.key, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.all(size.w2),
+        decoration: BoxDecoration(
+          color: clr.whiteColor,
+          borderRadius: BorderRadius.circular(size.r4),
+          border: Border.all(color: clr.cardStrokeColor, width: size.r1),
+          boxShadow: [
+            BoxShadow(
+              color: clr.blackColor.withOpacity(.2),
+              blurRadius: size.r4,
+              offset: Offset(0.0, size.h2),
+            ),
+          ],
+        ),
+        child: Icon(
+          Icons.border_color_outlined,
+          color: clr.appPrimaryColorGreen,
+          size: size.r20,
+        ),
       ),
     );
   }

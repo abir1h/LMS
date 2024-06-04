@@ -17,7 +17,8 @@ import '../../domain/use_cases/assignment_use_case.dart';
 abstract class _ViewModel {
   void showWarning(String message);
   void showSuccess(String message);
-  void navigateToCollaborativeInstructionScreen();
+  void navigateToCollaborativeInstructionScreen(
+      int traineeId, AssignmentDataEntity assignmentDataEntity);
 }
 
 mixin AssignmentScreenService<T extends StatefulWidget> on State<T>
@@ -132,6 +133,8 @@ mixin AssignmentScreenService<T extends StatefulWidget> on State<T>
         assignmentId, subAssignmentId, courseId, circularId, answer, files);
     if (responseEntity.error == null && responseEntity.data != null) {
       _view.showSuccess(responseEntity.message!);
+      contentReadPost(assignmentId, courseId, true);
+      loadAssignmentData(assignmentId);
     } else {
       _view.showWarning(responseEntity.message!);
     }
@@ -150,6 +153,7 @@ mixin AssignmentScreenService<T extends StatefulWidget> on State<T>
         assignmentId, subAssignmentId, courseId, circularId, answer, files);
     if (responseEntity.error == null && responseEntity.data != null) {
       _view.showSuccess(responseEntity.message!);
+      loadAssignmentData(assignmentId);
     } else {
       _view.showWarning(responseEntity.message!);
     }
@@ -199,7 +203,8 @@ mixin AssignmentScreenService<T extends StatefulWidget> on State<T>
     }
   }
 
-  void onTapAccept() {
-    _view.navigateToCollaborativeInstructionScreen();
+  void onTapAccept(int traineeId, AssignmentDataEntity assignmentDataEntity) {
+    _view.navigateToCollaborativeInstructionScreen(
+        traineeId, assignmentDataEntity);
   }
 }

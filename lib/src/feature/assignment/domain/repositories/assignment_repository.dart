@@ -21,4 +21,10 @@ abstract class AssignmentRepository {
     int courseModuleId,
     String message,
   );
+  Future<ResponseEntity> getAcceptReview(int traineeId);
+  Future<ResponseEntity> reviewResultSubmit(
+    int assignmentSubId,
+    int resultId,
+    String markObtained,
+  );
 }

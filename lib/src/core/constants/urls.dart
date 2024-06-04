@@ -62,6 +62,11 @@ class ApiCredential {
   static String requestAssignment =
       "/assignment-service/api/mobile/assignment-request";
 
+  static String acceptReview =
+      "/assignment-service/api/mobile/collaborative-accept-review";
+  static String reviewResultSubmit =
+      "/assignment-service/api/mobile/collaborative-assignment-result";
+
   static String getNotes = "/circular-service/api/mobile/notes";
   static String createNotes = "/circular-service/api/mobile/notes";
   static String getNotesByContent =

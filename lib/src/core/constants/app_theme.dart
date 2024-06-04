@@ -69,6 +69,7 @@ class ThemeColor {
   Color get cardFillColorCruise => HexColor("B3E0DD");
   Color get cardFillColorAliceBlue => HexColor("F0FCF9");
   Color get cardFillColorMintCream => HexColor("F9FFFD");
+  Color get cardFillColorOlive=> HexColor("DEEEC6");
   Color get drawerFillColor => HexColor("E6F8F4");
 
   Color get clickableLinkColor => HexColor("4A88FF");
