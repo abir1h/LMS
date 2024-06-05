@@ -155,7 +155,7 @@ class _DiscussionScreenState extends State<DiscussionScreen>
                         if (data.running.isNotEmpty)
                           CustomTextWidget(
                             text: label(
-                                e: data.running.first.nameBn,
+                                e: data.running.first.nameEn,
                                 b: data.running.first.nameBn),
                             textColor: clr.gapStrokeGrey,
                             fontSize: size.textXSmall,
