@@ -23,6 +23,7 @@ class AssignmentDataEntity {
   final String type;
   final String supportingDoc;
   final int assignmentRequestCount;
+  final bool inReview;
   final bool allowed;
   final List<SubmittedTraineeListDataEntity> submittedTraineeList;
   final SubAssignmentDataEntity? circularSubAssignments;
@@ -49,6 +50,7 @@ class AssignmentDataEntity {
     required this.type,
     required this.supportingDoc,
     required this.assignmentRequestCount,
+    required this.inReview,
     required this.allowed,
     required this.submittedTraineeList,
     required this.circularSubAssignments,

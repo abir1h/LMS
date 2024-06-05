@@ -37,6 +37,7 @@ class AssignmentDataModelToEntityMapper
         type: entity.type,
         supportingDoc: entity.supportingDoc,
         assignmentRequestCount: entity.assignmentRequestCount,
+        inReview: entity.inReview,
         allowed: entity.allowed,
         submittedTraineeList: List<SubmittedTraineeListDataEntity>.from(
                 entity.submittedTraineeList)
@@ -71,6 +72,7 @@ class AssignmentDataModelToEntityMapper
         type: model.type,
         supportingDoc: model.supportingDoc,
         assignmentRequestCount: model.assignmentRequestCount,
+        inReview: model.inReview,
         allowed: model.allowed,
         submittedTraineeList:
             List<SubmittedTraineeListDataModel>.from(model.submittedTraineeList)

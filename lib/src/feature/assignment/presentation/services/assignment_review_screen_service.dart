@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:rxdart/rxdart.dart';
 
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../../../core/utility/validator.dart';
@@ -34,17 +37,43 @@ mixin AssignmentReviewScreenService<T extends StatefulWidget> on State<T>
         assignmentSubId, resultId, markObtained);
   }
 
+  late Timer examTimer;
+  late DateTime _examStartTime;
+
+  final BehaviorSubject<Duration> timerStreamController = BehaviorSubject();
+
   ///Service configurations
   @override
   void initState() {
     _view = this;
     super.initState();
+
+    ///Initialized timer
+    _examStartTime = DateTime.now();
+    examTimer = Timer.periodic(const Duration(seconds: 1), _onTimerTick);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _onTimerTick(examTimer);
+    });
   }
 
   @override
   void dispose() {
     acceptReviewDataStreamController.dispose();
+    timerStreamController.close();
+    examTimer.cancel();
     super.dispose();
+  }
+
+  void _onTimerTick(Timer timer) {
+    ///Exam started
+    var elapsedTime = DateTime.now().difference(_examStartTime);
+    var remaining = Duration(minutes: 1) - elapsedTime;
+    timerStreamController.sink.add(remaining);
+
+    ///Exam expired check
+    if (remaining.inSeconds <= 0) {
+      examTimer.cancel();
+    }
   }
 
   ///Stream controllers

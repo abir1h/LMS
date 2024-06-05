@@ -1,18 +1,13 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
-import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lms/src/core/constants/common_imports.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:lms/src/core/common_widgets/custom_toasty.dart';
 
+import 'package:lms/src/core/constants/common_imports.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
-import '../../../../core/common_widgets/custom_toasty.dart';
-import '../../../../core/constants/app_theme.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../services/document_screen_service.dart';
 
@@ -27,7 +22,7 @@ class DocumentViewScreen extends StatefulWidget {
 }
 
 class _DocumentViewScreenState extends State<DocumentViewScreen>
-    with WidgetsBindingObserver,DocumentViewScreenService {
+    with WidgetsBindingObserver,DocumentViewScreenService, AppTheme {
   final Completer<PDFViewController> _controller =
       Completer<PDFViewController>();
   int? pages = 0;
@@ -41,7 +36,7 @@ class _DocumentViewScreenState extends State<DocumentViewScreen>
   void initState() {
     if (widget.arguments != null) {
       screenArgs = widget.arguments as DocumentViewScreenArgs;
-      createFileOfPdfUrl(ApiCredential.mediaBaseUrl+screenArgs.url).then((f) {
+      createFileOfPdfUrl(ApiCredential.mediaBaseUrl + screenArgs.url).then((f) {
         setState(() {
           remotePDFpath = f.path;
         });
@@ -52,16 +47,9 @@ class _DocumentViewScreenState extends State<DocumentViewScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(screenArgs.url.split('/').last.toString()),
-        actions: <Widget>[
-         /* IconButton(
-            icon: Icon(Icons.share),
-            onPressed: () {},
-          ),*/
-        ],
-      ),
+    return CustomScaffold(
+      title: screenArgs.url.split('/').last.toString(),
+      bgColor: clr.whiteColor,
       body: Stack(
         children: <Widget>[
         remotePDFpath.isNotEmpty?  PDFView(
@@ -80,18 +68,8 @@ class _DocumentViewScreenState extends State<DocumentViewScreen>
               isReady = true;
             });
           },
-          onError: (error) {
-            setState(() {
-              errorMessage = error.toString();
-            });
-            print(error.toString());
-          },
-          onPageError: (page, error) {
-            setState(() {
-              errorMessage = '$page: ${error.toString()}';
-            });
-            print('$page: ${error.toString()}');
-          },
+          onError: (error) => onErrorState(error),
+          onPageError: (page, error) => onPageErrorState(page, error),
           onViewCreated: (PDFViewController pdfViewController) {
             _controller.complete(pdfViewController);
           },
@@ -107,7 +85,7 @@ class _DocumentViewScreenState extends State<DocumentViewScreen>
         ): Column(
           children: [
             SizedBox(height: .4.sh,),
-            const Center(child: CircularProgressIndicator(),),SizedBox(height: 20,),
+            const Center(child: CircularProgressIndicator(),), const SizedBox(height: 20,),
             const Center(child: Text('Please wait While Loading',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.black),),)
           ],
         ),
@@ -141,11 +119,11 @@ class _DocumentViewScreenState extends State<DocumentViewScreen>
 
   @override
   void showSuccess(String msg) {
-    // TODO: implement showSuccess
+    CustomToasty.of(context).showSuccess(msg);
   }
 
   @override
   void showWarning(String msg) {
-    // TODO: implement showWarning
+    CustomToasty.of(context).showWarning(msg);
   }
 }
