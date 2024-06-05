@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:path/path.dart' as path;
 
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../../../core/common_widgets/circular_loader_widget.dart';
 import '../../../../core/common_widgets/custom_empty_widget.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
+import '../../../../core/routes/app_route.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../../../../core/utility/app_label.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
+import '../../../../core/utility/file_signature.dart';
 import '../../../dashboard/presentation/widgets/custom_text_widget.dart';
 import '../../domain/entities/script_data_entity.dart';
 import '../services/course_script_screen_service.dart';
@@ -89,10 +92,17 @@ class _CourseScriptScreenState extends State<CourseScriptScreen>
                         if (data.file.isNotEmpty)
                           GestureDetector(
                             onTap: () {
-                              downloadFiles(
-                                  fileUrl: data.file,
-                                  filename: data.file.split("/").last,
-                                  context: context, openFile: true);
+                              if(path.extension(data.file).split(".").last == FileExtension.pdf.name){
+                                Navigator.of(context).pushNamed(
+                                    AppRoute.documentViewScreen,
+                                    arguments: DocumentViewScreenArgs(
+                                        url: data.file));
+                              }else{
+                                downloadFiles(
+                                    fileUrl: data.file,
+                                    filename: data.file.split("/").last,
+                                    context: context, openFile: true);
+                              }
                             },
                             child: Container(
                               padding: EdgeInsets.all(size.r1),

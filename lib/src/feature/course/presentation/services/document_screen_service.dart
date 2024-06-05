@@ -1,13 +1,11 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:math';
-import 'dart:typed_data';
+
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'package:http/http.dart' as http;
-import 'package:mime/mime.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:saf/saf.dart';
@@ -15,12 +13,9 @@ import 'package:share_plus/share_plus.dart';
 
 import '../../../../core/routes/app_route_args.dart';
 
-import '../../../shared/domain/entities/response_entity.dart';
-
 abstract class _ViewModel {
   void forceClose();
   void showWarning(String msg);
-
   void showSuccess(String msg);
 }
 
@@ -81,8 +76,6 @@ implements _ViewModel {
 
   void loadFile(DocumentViewScreenArgs args) async {
     screenArgs = args;
-    // _screenArgs.url = "https://www.orimi.com/pdf-test.pdf";
-
   }
 
   Future<File> createFileOfPdfUrl(String pdfUrl) async {
@@ -93,17 +86,20 @@ implements _ViewModel {
 
       final url = pdfUrl;
       final filename = url.substring(url.lastIndexOf("/") + 1);
-      var request = await HttpClient().getUrl(Uri.parse(url));
-      var response = await request.close();
-      var bytes = await consolidateHttpClientResponseBytes(response);
       var dir = await getApplicationDocumentsDirectory();
-      print("Download files");
-      print("${dir.path}/$filename");
       File file = File("${dir.path}/$filename");
-
-      await file.writeAsBytes(bytes, flush: true);
+      bool fileExists = await file.exists();
+      debugPrint("Download files");
+      debugPrint("${dir.path}/$filename");
+      if (fileExists && context.mounted) {
+        return file;
+      }else{
+        var request = await HttpClient().getUrl(Uri.parse(url));
+        var response = await request.close();
+        var bytes = await consolidateHttpClientResponseBytes(response);
+        await file.writeAsBytes(bytes, flush: true);
+      }
       loaded=false;
-
       completer.complete(file);
     } catch (e) {
       loaded=false;
@@ -113,6 +109,15 @@ implements _ViewModel {
 
     return completer.future;
   }
+
+  void onErrorState(dynamic error){
+    _view.showWarning(error.toString());
+  }
+
+  void onPageErrorState(int? page, String error){
+    _view.showWarning('$page: ${error.toString()}');
+  }
+
   void _onDownloadFailed(dynamic x) {
     if (!_pageStateStreamController.isClosed) {
       _pageStateSink?.add(ErrorState("Download failed!",

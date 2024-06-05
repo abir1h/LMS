@@ -3,10 +3,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:path/path.dart' as path;
 
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../../../core/common_widgets/circular_loader_widget.dart';
 import '../../../../core/common_widgets/custom_empty_widget.dart';
+import '../../../../core/utility/file_signature.dart';
 import '../widgets/custom_html_expanded_text_widget.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/common_widgets/custom_toasty.dart';
@@ -233,11 +235,18 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
                                 filename: data.supportingDoc.split("/").last,
                                 context: context);
                           },
-                          onTapViewPDf: () {
-                            Navigator.of(context).pushNamed(
-                                AppRoute.documentViewScreen,
-                                arguments: DocumentViewScreenArgs(
-                                    url: data.supportingDoc));
+                          onTapView: () {
+                            if(path.extension(data.supportingDoc).split(".").last == FileExtension.pdf.name){
+                              Navigator.of(context).pushNamed(
+                                  AppRoute.documentViewScreen,
+                                  arguments: DocumentViewScreenArgs(
+                                      url: data.supportingDoc));
+                            }else{
+                              downloadFiles(
+                                  fileUrl: data.supportingDoc,
+                                  filename: data.supportingDoc.split("/").last,
+                                  context: context, openFile: true);
+                            }
                           }),
                     // SupportingTextItemSection(
                     //     items: const ["", ""],
@@ -577,12 +586,12 @@ class LastSeenWidget extends StatelessWidget with AppTheme, Language {
 class SupportingDocWidget<T> extends StatelessWidget with AppTheme, Language {
   final String docTitle;
   final VoidCallback onTap;
-  final VoidCallback onTapViewPDf;
+  final VoidCallback onTapView;
   const SupportingDocWidget(
       {Key? key,
       required this.docTitle,
       required this.onTap,
-      required this.onTapViewPDf})
+      required this.onTapView})
       : super(key: key);
 
   @override
@@ -596,7 +605,7 @@ class SupportingDocWidget<T> extends StatelessWidget with AppTheme, Language {
       padding: EdgeInsets.symmetric(horizontal: size.w8, vertical: size.h4),
       margin: EdgeInsets.symmetric(horizontal: size.w16),
       child: GestureDetector(
-        onTap: onTapViewPDf,
+        onTap: onTapView,
         child: Row(
           children: [
             Image.asset(ImageAssets.imgPdf),
