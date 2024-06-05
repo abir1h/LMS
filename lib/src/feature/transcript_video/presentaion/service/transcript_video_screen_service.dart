@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../core/service/local_database_service.dart';
 import '../../data/repositories/video_repository_imp.dart';
 import '../../domain/use_cases/video_use_case.dart';
 import '../../../../core/service/notifier/app_events_notifier.dart';
@@ -27,6 +28,8 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
   late CourseVideoScreenArgs screenArgs;
   int currentPlayedPositionSec = 0;
   bool showOverlay = false;
+  String _guid = "";
+  VideoWatchSession _watchSession = VideoWatchSession.empty();
 
   final CourseUseCase _courseUseCase = CourseUseCase(
       courseRepository: CourseRepositoryImp(
@@ -79,8 +82,24 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
   final AppStreamController<VideoQuestionDataEntity>
       videoQuestionDataStreamController = AppStreamController();
 
+  _getVideoWatchSessions(int circularVideoId) async {
+    await LocalDatabase.instance
+        .getLectureWatchSessions()
+        .then((history) async {
+      if (history.isNotEmpty) {
+        var data = history
+            .where((element) => element.circularVideoId == circularVideoId)
+            .toList();
+        if (data.isNotEmpty) {
+          _watchSession = data[0];
+        }
+      }
+    });
+  }
+
   ///Load Video details
   void loadVideoData(int courseContentId) {
+    _getVideoWatchSessions(screenArgs.data.contentId);
     if (!mounted) return;
     videoDetailsDataStreamController.add(LoadingState());
     getVideoDetails(courseContentId).then((value) {
@@ -101,12 +120,25 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
     });
   }
 
+  double onInterceptPlaybackSeekToPosition(
+      VideoContentDataEntity currentContent,
+      double seekPosition,
+      double totalDuration) {
+    return currentContent.videoActivityData!.lastViewTime * 1000 >= seekPosition
+        ? seekPosition
+        : (currentContent.videoActivityData!.lastViewTime * 1000).toDouble();
+  }
+
   ///Change video playback orientation
   Future<bool> onGoBack() async {
     if (_view.isPlayerFullscreen()) {
       _view.changeOrientationToPortrait();
     }
     _view.navigateToBack();
+     videoActivity(_watchSession.circularVideoId,
+        _watchSession.lastPlayedDuration, _watchSession.videoQuestionSeenId).then((value) {
+        print(value);
+     });
     return Future.value(false);
   }
 
@@ -136,11 +168,20 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
         playbackPausePlayStreamController.add(DataLoadedState<bool>(false));
       }
     }
-    if (screenArgs.data.lastWatchTime < playedPositionSec) {
-      screenArgs.data.lastWatchTime =
-          screenArgs.data.lastWatchTime < playedPositionSec
+    if (currentContent.videoActivityData!.lastViewTime < playedPositionSec) {
+      currentContent.videoActivityData!.lastViewTime =
+          currentContent.videoActivityData!.lastViewTime < playedPositionSec
               ? playedPositionSec
-              : screenArgs.data.lastWatchTime;
+              : currentContent.videoActivityData!.lastViewTime;
+      _watchSession = VideoWatchSession(
+          circularVideoId: screenArgs.data.contentId,
+          startTime: "",
+          endTime: "",
+          guid: _guid,
+          totalDuration: 324,
+          lastPlayedDuration: currentContent.videoActivityData!.lastViewTime,
+          videoQuestionSeenId: []);
+      _storeActualWatchedSession();
     }
   }
 
@@ -148,5 +189,14 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
     showOverlay = false;
     AppEventsNotifier.notify(EventAction.videoWidget);
     playbackPausePlayStreamController.add(DataLoadedState<bool>(true));
+  }
+
+  Future<void> _storeActualWatchedSession() async {
+    try {
+      await LocalDatabase.instance.storeLectureWatchSession(_watchSession);
+      //   }
+    } catch (_) {
+      print(_);
+    }
   }
 }

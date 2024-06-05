@@ -67,7 +67,8 @@ class _CustomPlayerWidgetState extends State<ContentPlayerWidget> {
         //   getVideoFileUrl("http://116.204.155.53/video/7b54b930-2fba-46d1-8741-50a60cb9ecdf.mp4"),
 
         autoPlay: true,
-        playPosition: const Duration(seconds: 0)
+        playPosition:
+            Duration(seconds: _currentContent.videoActivityData!.lastViewTime)
         // playPosition:Duration(seconds: _currentContent.lastPlayedDurationTimeSec)
         // _currentContent.playedDurationTimeSec < _currentContent.videoDurationSecond
         //     ? Duration(seconds: _currentContent.playedDurationTimeSec)

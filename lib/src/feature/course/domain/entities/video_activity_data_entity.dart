@@ -2,7 +2,7 @@ class VideoActivityDataEntity {
   final int id;
   final int traineeId;
   final int circularVideoId;
-  final int lastViewTime;
+   int lastViewTime;
   final List<int> questionsSeen;
 
   VideoActivityDataEntity({

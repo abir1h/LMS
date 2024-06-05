@@ -6,7 +6,7 @@ class VideoQuestionDataEntity {
   final String questionText;
   final int popUpTimeSecond;
   final bool message;
-  final bool seen;
+   bool seen;
   final List<VideoChoiceDataEntity> choices;
 
   VideoQuestionDataEntity({
