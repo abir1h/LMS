@@ -1,11 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:lms/src/core/utility/app_label.dart';
-import 'package:lms/src/feature/course/domain/entities/video_qustion_data_entity.dart';
 
+import '../../../../core/utility/app_label.dart';
+import '../../../course/domain/entities/video_qustion_data_entity.dart';
 import '../../../../core/constants/common_imports.dart';
-import '../../../assessment/domain/entities/question_data_entity.dart';
 
 class OverlayMCQWidget<T> extends StatelessWidget with AppTheme {
   final List<T> items;
