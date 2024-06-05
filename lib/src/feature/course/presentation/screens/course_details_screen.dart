@@ -226,14 +226,19 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen>
                     SizedBox(height: size.h8),
                     if (data.supportingDoc.isNotEmpty)
                       SupportingDocWidget(
-                        docTitle: data.supportingDoc.split("/").last,
-                        onTap: () {
-                          downloadFiles(
-                              fileUrl: data.supportingDoc,
-                              filename: data.supportingDoc.split("/").last,
-                              context: context);
-                        },
-                      ),
+                          docTitle: data.supportingDoc.split("/").last,
+                          onTap: () {
+                            downloadFiles(
+                                fileUrl: data.supportingDoc,
+                                filename: data.supportingDoc.split("/").last,
+                                context: context);
+                          },
+                          onTapViewPDf: () {
+                            Navigator.of(context).pushNamed(
+                                AppRoute.documentViewScreen,
+                                arguments: DocumentViewScreenArgs(
+                                    url: data.supportingDoc));
+                          }),
                     // SupportingTextItemSection(
                     //     items: const ["", ""],
                     //     buildItem: (BuildContext context, int index, item) {
@@ -572,8 +577,12 @@ class LastSeenWidget extends StatelessWidget with AppTheme, Language {
 class SupportingDocWidget<T> extends StatelessWidget with AppTheme, Language {
   final String docTitle;
   final VoidCallback onTap;
+  final VoidCallback onTapViewPDf;
   const SupportingDocWidget(
-      {Key? key, required this.docTitle, required this.onTap})
+      {Key? key,
+      required this.docTitle,
+      required this.onTap,
+      required this.onTapViewPDf})
       : super(key: key);
 
   @override
@@ -586,30 +595,33 @@ class SupportingDocWidget<T> extends StatelessWidget with AppTheme, Language {
       alignment: Alignment.center,
       padding: EdgeInsets.symmetric(horizontal: size.w8, vertical: size.h4),
       margin: EdgeInsets.symmetric(horizontal: size.w16),
-      child: Row(
-        children: [
-          Image.asset(ImageAssets.imgPdf),
-          SizedBox(width: size.w8),
-          Expanded(
-            child: CustomTextWidget(
-              text: docTitle,
-              textColor: clr.textColorBlack,
-              fontSize: size.textXSmall,
-              fontWeight: FontWeight.w500,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 2,
+      child: GestureDetector(
+        onTap: onTapViewPDf,
+        child: Row(
+          children: [
+            Image.asset(ImageAssets.imgPdf),
+            SizedBox(width: size.w8),
+            Expanded(
+              child: CustomTextWidget(
+                text: docTitle,
+                textColor: clr.textColorBlack,
+                fontSize: size.textXSmall,
+                fontWeight: FontWeight.w500,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+              ),
             ),
-          ),
-          SizedBox(width: size.w4),
-          GestureDetector(
-            onTap: onTap,
-            child: Icon(
-              Icons.file_download_outlined,
-              color: clr.appPrimaryColorGreen,
-              size: size.r24,
-            ),
-          )
-        ],
+            SizedBox(width: size.w4),
+            GestureDetector(
+              onTap: onTap,
+              child: Icon(
+                Icons.file_download_outlined,
+                color: clr.appPrimaryColorGreen,
+                size: size.r24,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

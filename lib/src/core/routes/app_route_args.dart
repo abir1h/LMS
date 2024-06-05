@@ -118,3 +118,7 @@ class AssessmentScreenArgs {
   final ExamDataEntity examData;
   AssessmentScreenArgs({required this.examData});
 }
+class DocumentViewScreenArgs {
+  final String url;
+  DocumentViewScreenArgs({required this.url});
+}
