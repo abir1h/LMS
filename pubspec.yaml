@@ -43,6 +43,7 @@ dependencies:
   url_launcher: ^6.2.6
   permission_handler:
   device_info_plus:
+  open_filex: ^4.4.0
   path_provider:
   chewie: ^1.8.1
   flutter_widget_from_html: ^0.15.0

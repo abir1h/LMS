@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:open_filex/open_filex.dart';
 import '../constants/common_imports.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
@@ -278,12 +279,12 @@ Delta convertStringToDelta(String text) {
 Future<void> downloadFiles(
     {required String fileUrl,
     required String filename,
-    required BuildContext context}) async {
+    required BuildContext context, bool? openFile}) async {
   if (Platform.isIOS) {
     var status = await Permission.storage.request();
     if (status.isGranted) {
       // Proceed with the file download
-      downloadFile(url: fileUrl, filename: filename, context: context);
+      downloadFile(url: fileUrl, filename: filename, context: context, openFile: openFile);
     } else {
       // Permission denied
       CustomToasty.of(context).showSuccess('Storage permission denied');
@@ -295,7 +296,7 @@ Future<void> downloadFiles(
       var status = await Permission.manageExternalStorage.request();
       if (status.isGranted) {
         // Proceed with the file download
-        downloadFile(url: fileUrl, filename: filename, context: context);
+        downloadFile(url: fileUrl, filename: filename, context: context, openFile: openFile);
       } else {
         // Permission denied
 
@@ -305,7 +306,7 @@ Future<void> downloadFiles(
       var status = await Permission.storage.request();
       if (status.isGranted) {
         // Proceed with the file download
-        downloadFile(url: fileUrl, filename: filename, context: context);
+        downloadFile(url: fileUrl, filename: filename, context: context, openFile: openFile);
       } else {
         // Permission denied
         CustomToasty.of(context).showSuccess('Storage permission denied');
@@ -326,6 +327,7 @@ Future<void> downloadFile({
   required String url,
   required String filename,
   required BuildContext context,
+  bool? openFile
 }) async {
   try {
     HttpClient client = HttpClient();
@@ -347,7 +349,11 @@ Future<void> downloadFile({
     bool fileExists = await savedFile.exists();
 
     if (fileExists && context.mounted) {
-      CustomToasty.of(context).showWarning("File already downloaded");
+      if(openFile != null && openFile){
+        OpenFilex.open(savedFile.path);
+      }else{
+        CustomToasty.of(context).showWarning("File already downloaded");
+      }
     } else {
       client.getUrl(Uri.parse(ApiCredential.mediaBaseUrl + url)).then(
         (HttpClientRequest request) {
@@ -360,6 +366,9 @@ Future<void> downloadFile({
             savedFile.writeAsBytes(downloadData);
             CustomToasty.of(context)
                 .showSuccess("File downloaded successfully");
+            if(openFile != null && openFile){
+              OpenFilex.open(savedFile.path);
+            }
           });
         },
       );

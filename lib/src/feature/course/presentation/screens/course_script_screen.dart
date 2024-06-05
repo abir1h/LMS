@@ -85,6 +85,39 @@ class _CourseScriptScreenState extends State<CourseScriptScreen>
                           ),
                         ),
                         SizedBox(width: size.w10),
+
+                        if (data.file.isNotEmpty)
+                          GestureDetector(
+                            onTap: () {
+                              downloadFiles(
+                                  fileUrl: data.file,
+                                  filename: data.file.split("/").last,
+                                  context: context, openFile: true);
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(size.r1),
+                              decoration: BoxDecoration(
+                                color: clr.whiteColor,
+                                borderRadius: BorderRadius.circular(size.r4),
+                                border: Border.all(
+                                    color: clr.cardStrokeColor, width: size.r1),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: clr.blackColor.withOpacity(.2),
+                                    blurRadius: size.r4,
+                                    offset: Offset(0.0, size.h2),
+                                  ),
+                                ],
+                              ),
+                              child: Icon(
+                                Icons.remove_red_eye,
+                                color: clr.appPrimaryColorGreen,
+                                size: size.r24,
+                              ),
+                            ),
+                          ),
+
+                        SizedBox(width: size.w12),
                         if (data.file.isNotEmpty)
                           GestureDetector(
                             onTap: () {
