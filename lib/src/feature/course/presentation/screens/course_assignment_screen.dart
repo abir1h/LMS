@@ -99,10 +99,10 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
                   padding: EdgeInsets.symmetric(horizontal: size.w40),
                   child: CustomButton(
                     onTap: () {
-                      // if (data.type == AssignmentType.group.name &&
-                      //     data.circularSubAssignments != null) {
-                      onTap(data.type, _screenArgs.courseContentId);
-                      // }
+                      if (data.type == AssignmentType.group.name &&
+                          data.circularSubAssignments != null) {
+                        onTap(_screenArgs.courseContentId);
+                      }
                     },
                     title: label(e: en.enter, b: bn.enter),
                     textColor: clr.whiteColor,
@@ -135,14 +135,9 @@ class _CourseAssignmentScreenState extends State<CourseAssignmentScreen>
   }
 
   @override
-  void navigateToAssignmentScreen(String assignmentType, int courseContentId) {
-    // if (assignmentType == AssignmentType.collaborative.name) {
+  void navigateToAssignmentScreen(int courseContentId) {
     Navigator.of(context).pushNamed(AppRoute.collaborativeAssignmentScreen,
         arguments: AssignmentArgs(courseContentId: courseContentId));
-    // } else {
-    //   Navigator.of(context).pushNamed(AppRoute.assignmentScreen,
-    //       arguments: AssignmentArgs(courseContentId: courseContentId));
-    // }
   }
 }
 

@@ -26,6 +26,7 @@ class AssignmentDataModel {
   final String type;
   final String supportingDoc;
   final int assignmentRequestCount;
+  final int inReview;
   final bool allowed;
   final List<SubmittedTraineeListDataModel> submittedTraineeList;
   final SubAssignmentDataModel? circularSubAssignments;
@@ -52,6 +53,7 @@ class AssignmentDataModel {
     required this.type,
     required this.supportingDoc,
     required this.assignmentRequestCount,
+    required this.inReview,
     required this.allowed,
     required this.submittedTraineeList,
     required this.circularSubAssignments,
@@ -80,6 +82,7 @@ class AssignmentDataModel {
         type: json["type"] ?? "",
         supportingDoc: json["supporting_doc"] ?? "",
         assignmentRequestCount: json["assignment_request_count"] ?? 0,
+        inReview: json["in_review"] ?? -1,
         allowed: json["allowed"] ?? false,
         submittedTraineeList: json["submited_trainee_list"] != null
             ? List<SubmittedTraineeListDataModel>.from(
@@ -116,6 +119,7 @@ class AssignmentDataModel {
         "type": type,
         "supporting_doc": supportingDoc,
         "assignment_request_count": assignmentRequestCount,
+        "in_review": inReview,
         "allowed": allowed,
         "submited_trainee_list": List<SubmittedTraineeListDataModel>.from(
             submittedTraineeList.map((x) => x.toJson())),
