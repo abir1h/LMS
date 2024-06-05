@@ -26,7 +26,7 @@ class AssignmentDataModel {
   final String type;
   final String supportingDoc;
   final int assignmentRequestCount;
-  final int inReview;
+  final bool inReview;
   final bool allowed;
   final List<SubmittedTraineeListDataModel> submittedTraineeList;
   final SubAssignmentDataModel? circularSubAssignments;
@@ -82,7 +82,7 @@ class AssignmentDataModel {
         type: json["type"] ?? "",
         supportingDoc: json["supporting_doc"] ?? "",
         assignmentRequestCount: json["assignment_request_count"] ?? 0,
-        inReview: json["in_review"] ?? -1,
+        inReview: json["in_review"] ?? false,
         allowed: json["allowed"] ?? false,
         submittedTraineeList: json["submited_trainee_list"] != null
             ? List<SubmittedTraineeListDataModel>.from(

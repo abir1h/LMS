@@ -194,7 +194,7 @@ class _CollaborativeAssignmentScreenState
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
-                                    if (data.inReview != 1 &&
+                                    if (!data.inReview &&
                                         (quillData != null ||
                                             data.circularSubAssignments
                                                     ?.assignmentSubmissions !=
@@ -407,7 +407,7 @@ class _CollaborativeAssignmentScreenState
                               ),
 
                             ///Attach New File
-                            if (data.inReview != 1 &&
+                            if (!data.inReview &&
                                 (data.submissionType ==
                                         AssignmentSubType.upload.name ||
                                     data.submissionType ==
@@ -532,7 +532,7 @@ class _CollaborativeAssignmentScreenState
                                   horizontalPadding: size.w20,
                                   verticalPadding: size.h4,
                                 ),
-                              if (data.inReview != 1 &&
+                              if (!data.inReview &&
                                   data.circularSubAssignments
                                           ?.assignmentSubmissions !=
                                       null)
@@ -754,7 +754,7 @@ class _CollaborativeAssignmentScreenState
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
-                                    if (data.inReview != 1 &&
+                                    if (!data.inReview &&
                                         (quillData != null ||
                                             data.assignmentSubmissions !=
                                                 null) &&
@@ -945,7 +945,7 @@ class _CollaborativeAssignmentScreenState
                               ),
 
                             ///Attach New File
-                            if (data.inReview != 1 &&
+                            if (!data.inReview &&
                                 (data.submissionType ==
                                         AssignmentSubType.upload.name ||
                                     data.submissionType ==
@@ -1070,7 +1070,7 @@ class _CollaborativeAssignmentScreenState
                                   horizontalPadding: size.w20,
                                   verticalPadding: size.h4,
                                 ),
-                              if (data.inReview != 1 &&
+                              if (!data.inReview &&
                                   data.assignmentSubmissions != null)
                                 CustomButton(
                                   onTap: () => onUpdateAssignment(
@@ -1100,8 +1100,7 @@ class _CollaborativeAssignmentScreenState
                         ),
 
                       ///Submit Status
-                      if (data.inReview != 1 &&
-                          data.assignmentSubmissions != null)
+                      if (!data.inReview && data.assignmentSubmissions != null)
                         CustomTextWidget(
                           text: label(
                               e: "Submission Status", b: "সাবমিশন স্ট্যাটাস"),
@@ -1131,9 +1130,15 @@ class _CollaborativeAssignmentScreenState
                           padding: EdgeInsets.symmetric(
                               horizontal: size.w12, vertical: size.h8),
                           child: CustomTextWidget(
-                            text: label(
-                                e: "Your assignment has been submitted, please wait for review Review You can edit it before the review",
-                                b: "আপনার এসাইনমেন্ট সাবমিট করা হয়েছে, দয়া করে রিভিউ এর জন্য অপেক্ষা করুন| রিভিউ এর পূর্ব  পর্যন্ত আপনি এটি এডিট করতে পারবেন"),
+                            text: !data.inReview
+                                ? label(
+                                    e:
+                                        "Your assignment has been submitted, please wait for review Review You can edit it before the review",
+                                    b:
+                                        "আপনার এসাইনমেন্ট সাবমিট করা হয়েছে, দয়া করে রিভিউ এর জন্য অপেক্ষা করুন| রিভিউ এর পূর্ব  পর্যন্ত আপনি এটি এডিট করতে পারবেন")
+                                : label(
+                                    e: "Your assignment has been submitted, please wait for review Review.",
+                                    b: "আপনার এসাইনমেন্ট সাবমিট করা হয়েছে, দয়া করে রিভিউ এর জন্য অপেক্ষা করুন|"),
                             fontSize: size.textXXSmall,
                             fontWeight: FontWeight.w500,
                           ),
