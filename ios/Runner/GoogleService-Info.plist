@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyDhJMU2ROvPxEYB4MKA5eg1oPG2Z6ok8jI</string>
+	<string>AIzaSyC9LX38Ak4hPAabn3SKL2VLE1zDR-E_D5U</string>
 	<key>GCM_SENDER_ID</key>
-	<string>298008715510</string>
+	<string>254222419009</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.hsep.lms</string>
+	<string>com.bacbon.lms-demo</string>
 	<key>PROJECT_ID</key>
-	<string>clms-lms-app</string>
+	<string>hsep-notification</string>
 	<key>STORAGE_BUCKET</key>
-	<string>clms-lms-app.appspot.com</string>
+	<string>hsep-notification.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:298008715510:ios:c4eb99b33f018ae50b4cd7</string>
+	<string>1:254222419009:ios:0eea814a0dd647c69ef2c0</string>
 </dict>
 </plist>
