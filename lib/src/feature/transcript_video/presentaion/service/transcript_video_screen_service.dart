@@ -138,7 +138,9 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
     videoActivity(_watchSession.circularVideoId,
             _watchSession.lastPlayedDuration, _watchSession.videoQuestionSeenId)
         .then((value) {
-      print(value);
+      if (value.error == null){
+
+      }
     });
     return Future.value(false);
   }
