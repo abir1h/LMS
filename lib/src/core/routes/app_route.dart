@@ -18,6 +18,7 @@ import '../../feature/course/presentation/screens/course_learning_outcome_screen
 import '../../feature/course/presentation/screens/course_script_screen.dart';
 import '../../feature/course/presentation/screens/course_list_screen.dart';
 import '../../feature/course/presentation/screens/course_live_class_screen.dart';
+import '../../feature/course/presentation/screens/document_view_screen.dart';
 import '../../feature/course/presentation/screens/overall_progress_screen.dart';
 import '../../feature/discussion/presentation/screens/detailed_discussion.dart';
 import '../../feature/discussion/presentation/screens/discussion_list_screen.dart';
@@ -71,6 +72,8 @@ class AppRoute {
   static const String noteEditScreen = "noteEditScreen";
   static const String circularScreen = "circularScreen";
   static const String circularDetailsScreen = "circularDetailsScreen";
+  static const String documentViewScreen =
+      "documentViewScreen";
 }
 
 mixin RouteGenerator {
@@ -148,7 +151,9 @@ mixin RouteGenerator {
             return const CircularScreen();
           case AppRoute.circularDetailsScreen:
             return CircularDetailsScreen(arguments: setting.arguments);
-
+          case AppRoute.documentViewScreen:
+            return DocumentViewScreen(
+                arguments: setting.arguments);
           default:
             return const SplashScreen();
         }

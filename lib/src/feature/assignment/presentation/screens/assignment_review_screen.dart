@@ -101,11 +101,14 @@ class _AssignmentReviewScreenState extends State<AssignmentReviewScreen>
                         fontWeight: FontWeight.w500,
                       ),
                       SizedBox(width: size.w16),
-                      CustomTextWidget(
-                        text: label(e: "Hour", b: "ঘণ্টা"),
-                        textColor: clr.blackText,
-                        fontWeight: FontWeight.w500,
-                      )
+                      ReviewTimerWidget(
+                          timerStream: timerStreamController.stream),
+                      // SizedBox(width: size.w16),
+                      // CustomTextWidget(
+                      //   text: label(e: "Minutes", b: "মিনিট"),
+                      //   textColor: clr.blackText,
+                      //   fontWeight: FontWeight.w500,
+                      // )
                     ],
                   ),
                 ),
@@ -259,7 +262,7 @@ class _AssignmentReviewScreenState extends State<AssignmentReviewScreen>
                       CustomButton(
                         onTap: () => onReviewResultSubmit(
                             assignmentSubId: data.id,
-                            resultId: data.id,
+                            resultId: data.collaborativeAssignmentResult!.id,
                             markObtained: marksController.text.trim()),
                         title: label(e: "Submit", b: "জমা দিন"),
                         bgColor: marksController.text.isEmpty
@@ -296,5 +299,103 @@ class _AssignmentReviewScreenState extends State<AssignmentReviewScreen>
   @override
   void showWarning(String message) {
     CustomToasty.of(context).showWarning(message);
+  }
+}
+
+class ReviewTimerWidget extends StatelessWidget with AppTheme {
+  final Stream<Duration> timerStream;
+  const ReviewTimerWidget({super.key, required this.timerStream});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: size.w8,
+        vertical: size.h6,
+      ),
+      decoration: BoxDecoration(
+        color: clr.shadeWhiteColor2,
+        borderRadius: BorderRadius.circular(size.h4),
+        boxShadow: [
+          BoxShadow(
+              offset: const Offset(0, 4),
+              blurRadius: 4,
+              spreadRadius: 0,
+              color: clr.blackColor.withOpacity(.2))
+        ],
+      ),
+      child: StreamBuilder<Duration>(
+          initialData: const Duration(),
+          stream: timerStream,
+          builder: (context, snapshot) {
+            int min = snapshot.data!.inMinutes;
+            int sec = snapshot.data!.inSeconds % 60;
+
+            var minMsbRaw = min ~/ 10;
+            var minMMsb = minMsbRaw ~/ 10;
+            var minMsb = minMsbRaw % 10;
+            var minLsb = min % 10;
+
+            var secMsb = sec ~/ 10;
+            var secLsb = sec % 10;
+            return Row(
+              children: [
+                if (minMMsb > 0) _buildDigitBox(minMMsb),
+                if (minMMsb > 0) SizedBox(width: size.w2),
+                _buildDigitBox(minMsb),
+                SizedBox(width: size.w2),
+                _buildDigitBox(minLsb),
+                SizedBox(width: size.w2),
+                _buildDigitSeparatorBox(":"),
+                SizedBox(width: size.w2),
+                _buildDigitBox(secMsb),
+                SizedBox(width: size.w2),
+                _buildDigitBox(secLsb),
+              ],
+            );
+          }),
+    );
+  }
+
+  Widget _buildDigitBox(int value) {
+    return Container(
+      height: size.h24,
+      width: size.w20,
+      decoration: BoxDecoration(
+        color: clr.iconColorSweetRed,
+        borderRadius: BorderRadius.circular(size.w2),
+      ),
+      child: FittedBox(
+        child: Text(
+          value.toString(),
+          style: TextStyle(
+            fontSize: size.textXXXLarge,
+            color: clr.whiteColor,
+            height: 1.1,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDigitSeparatorBox(String value) {
+    return Container(
+      height: size.h24,
+      width: size.w12,
+      decoration: BoxDecoration(
+        color: clr.iconColorSweetRed,
+        borderRadius: BorderRadius.circular(size.w2),
+      ),
+      child: FittedBox(
+        child: Text(
+          value,
+          style: TextStyle(
+            fontSize: size.textXXXLarge,
+            color: clr.whiteColor,
+            height: 1,
+          ),
+        ),
+      ),
+    );
   }
 }

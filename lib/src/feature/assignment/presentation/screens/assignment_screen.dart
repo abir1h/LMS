@@ -23,6 +23,7 @@ import '../widgets/assignment_bottom_sheet.dart';
 import '../../../../core/common_widgets/custom_scaffold.dart';
 import '../../../../core/constants/common_imports.dart';
 import '../../../../core/utility/app_label.dart';
+import 'collaborative_assignment_screen.dart';
 
 class AssignmentScreen extends StatefulWidget {
   final Object? arguments;
@@ -497,52 +498,52 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                               .circularSubAssignments!.assignmentSubmissions!),
 
                 ///Assignment Result for Individual
-                if (data.type == AssignmentType.individual.name)
-                  if (data.assignmentSubmissions != null &&
-                      data.assignmentSubmissions!.assignmentResultDataEntity !=
-                          null)
-                    AssignmentReviewWidget(
-                      data: data,
-                      onTapRequest: () {
-                        showCupertinoModalPopup(
-                          context: context,
-                          builder: (context) => AssignmentRequestBottomSheet(
-                            circularAssignmentId: data.id,
-                            circularId: data.circularId,
-                            courseId: data.courseId,
-                            courseModuleId: data.courseModuleId,
-                            onSuccess: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                        );
-                      },
-                    ),
+                // if (data.type == AssignmentType.individual.name)
+                //   if (data.assignmentSubmissions != null &&
+                //       data.assignmentSubmissions!.assignmentResultDataEntity !=
+                //           null)
+                //     AssignmentReviewWidget(
+                //       data: data,
+                //       onTapRequest: () {
+                //         showCupertinoModalPopup(
+                //           context: context,
+                //           builder: (context) => AssignmentRequestBottomSheet(
+                //             circularAssignmentId: data.id,
+                //             circularId: data.circularId,
+                //             courseId: data.courseId,
+                //             courseModuleId: data.courseModuleId,
+                //             onSuccess: () {
+                //               Navigator.of(context).pop();
+                //             },
+                //           ),
+                //         );
+                //       },
+                //     ),
 
                 ///Assignment Result for Group
-                if (data.type == AssignmentType.group.name)
-                  if (data.circularSubAssignments?.assignmentSubmissions !=
-                          null &&
-                      data.circularSubAssignments!.assignmentSubmissions!
-                              .assignmentResultDataEntity !=
-                          null)
-                    AssignmentReviewWidget(
-                      data: data,
-                      onTapRequest: () {
-                        showCupertinoModalPopup(
-                          context: context,
-                          builder: (context) => AssignmentRequestBottomSheet(
-                            circularAssignmentId: data.id,
-                            circularId: data.circularId,
-                            courseId: data.courseId,
-                            courseModuleId: data.courseModuleId,
-                            onSuccess: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                        );
-                      },
-                    ),
+                // if (data.type == AssignmentType.group.name)
+                //   if (data.circularSubAssignments?.assignmentSubmissions !=
+                //           null &&
+                //       data.circularSubAssignments!.assignmentSubmissions!
+                //               .assignmentResultDataEntity !=
+                //           null)
+                //     AssignmentReviewWidget(
+                //       data: data,
+                //       onTapRequest: () {
+                //         showCupertinoModalPopup(
+                //           context: context,
+                //           builder: (context) => AssignmentRequestBottomSheet(
+                //             circularAssignmentId: data.id,
+                //             circularId: data.circularId,
+                //             courseId: data.courseId,
+                //             courseModuleId: data.courseModuleId,
+                //             onSuccess: () {
+                //               Navigator.of(context).pop();
+                //             },
+                //           ),
+                //         );
+                //       },
+                //     ),
 
                 ///Instructor Comment for Individual
                 if (data.assignmentSubmissions != null &&
@@ -849,286 +850,3 @@ class SubmissionCompletedWidget extends StatelessWidget
   }
 }
 
-class AssignmentReviewWidget extends StatelessWidget with AppTheme, Language {
-  final AssignmentDataEntity data;
-  final VoidCallback onTapRequest;
-  const AssignmentReviewWidget(
-      {super.key, required this.data, required this.onTapRequest});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: clr.shadeWhiteColor2,
-        borderRadius: BorderRadius.circular(size.r8),
-        border: Border.all(color: clr.boxStrokeColor, width: size.w1),
-        boxShadow: [
-          BoxShadow(
-              offset: const Offset(0, 4),
-              blurRadius: 4,
-              spreadRadius: 0,
-              color: clr.blackColor.withOpacity(.2))
-        ],
-      ),
-      padding: EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h12),
-      margin: EdgeInsets.only(top: size.h16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: Icon(
-              Icons.assignment,
-              size: size.r16 * 2,
-              color: clr.appPrimaryColorGreen,
-            ),
-          ),
-          if (data.type == AssignmentType.individual.name)
-            if (data.passMark > data.assignmentSubmissions!.marks)
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: clr.shadeWhiteColor2,
-                  borderRadius: BorderRadius.circular(size.r8),
-                  border:
-                      Border.all(color: clr.cardStrokeColor, width: size.w1),
-                  boxShadow: [
-                    BoxShadow(
-                        offset: const Offset(0, 4),
-                        blurRadius: 4,
-                        spreadRadius: 0,
-                        color: clr.blackColor.withOpacity(.2))
-                  ],
-                ),
-                padding: EdgeInsets.symmetric(
-                    horizontal: size.w16, vertical: size.h12),
-                margin: EdgeInsets.only(top: size.h16),
-                child: CustomTextWidget(
-                  text: label(
-                      e: "Sorry, you failed to complete the assignment, please try again",
-                      b: "দুঃখিত, অ্যাসাইনমেন্ট টি সম্পন্ন করতে আপনি ব্যার্থ হয়েছেন, দয়া করে আবার চেষ্টা করুন"),
-                  textColor: clr.iconColorSweetRed,
-                  fontSize: size.textXSmall,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-          if (data.type == AssignmentType.group.name)
-            if (data.passMark >
-                data.circularSubAssignments!.assignmentSubmissions!.marks)
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: clr.shadeWhiteColor2,
-                  borderRadius: BorderRadius.circular(size.r8),
-                  border:
-                      Border.all(color: clr.cardStrokeColor, width: size.w1),
-                  boxShadow: [
-                    BoxShadow(
-                        offset: const Offset(0, 4),
-                        blurRadius: 4,
-                        spreadRadius: 0,
-                        color: clr.blackColor.withOpacity(.2))
-                  ],
-                ),
-                padding: EdgeInsets.symmetric(
-                    horizontal: size.w16, vertical: size.h12),
-                margin: EdgeInsets.only(top: size.h16),
-                child: CustomTextWidget(
-                  text: label(
-                      e: "Sorry, you failed to complete the assignment, please try again",
-                      b: "দুঃখিত, অ্যাসাইনমেন্ট টি সম্পন্ন করতে আপনি ব্যার্থ হয়েছেন, দয়া করে আবার চেষ্টা করুন"),
-                  textColor: clr.iconColorSweetRed,
-                  fontSize: size.textXSmall,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-          Center(
-            child: CustomTextWidget(
-              text: label(
-                  e: "Assignment Review Completed",
-                  b: "অ্যাসাইনমেন্ট রিভিউ সম্পন্ন হয়েছে"),
-              fontSize: size.textXMedium,
-              fontWeight: FontWeight.w500,
-              padding: EdgeInsets.only(top: size.h16),
-            ),
-          ),
-          SizedBox(height: size.h16),
-          AssignmentResultRowWidget(
-              leftText: label(e: "Total Mark", b: "মোট মার্ক"),
-              rightText: label(
-                  e: data.mark.toString(),
-                  b: replaceEnglishNumberWithBengali(data.mark.toString()))),
-          SizedBox(height: size.h16),
-          AssignmentResultRowWidget(
-              leftText: label(e: "Pass Mark", b: "পাশ মার্ক"),
-              rightText: label(
-                  e: data.passMark.toString(),
-                  b: replaceEnglishNumberWithBengali(
-                      data.passMark.toString()))),
-          SizedBox(height: size.h16),
-          AssignmentResultRowWidget(
-              leftText: label(e: "Marks Obtained", b: "প্রাপ্ত মার্ক"),
-              rightText: data.type == "individual"
-                  ? label(
-                      e: data.assignmentSubmissions!.marks.toString(),
-                      b: replaceEnglishNumberWithBengali(
-                          data.assignmentSubmissions!.marks.toString()))
-                  : label(
-                      e: data
-                          .circularSubAssignments!.assignmentSubmissions!.marks
-                          .toString(),
-                      b: replaceEnglishNumberWithBengali(data
-                          .circularSubAssignments!.assignmentSubmissions!.marks
-                          .toString()))),
-          if (data.type == AssignmentType.individual.name)
-            if (data.passMark > data.assignmentSubmissions!.marks)
-              Padding(
-                padding: EdgeInsets.only(top: size.h20),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.chat_bubble_outline,
-                      size: size.r24,
-                      color: clr.appPrimaryColorGreen,
-                    ),
-                    SizedBox(width: size.w8),
-                    Expanded(
-                      child: CustomTextWidget(
-                        text: label(
-                            e: "You have more opportunities. You can try a maximum of 10 times. Request the instructor to participate in the re-evaluation.",
-                            b: "আপনার কাছে আরো সুযোগ আছে. আপনি সর্বোচ্চ ১০ বার চেষ্টা করতে পারবেন. পুনরায় মূল্যায়নে অংশগ্রহণ করার জন্য প্রশিক্ষকের কাছে অনুরোধ করুন."),
-                        fontSize: size.textXSmall,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-          if (data.type == AssignmentType.group.name)
-            if (data.passMark >
-                data.circularSubAssignments!.assignmentSubmissions!.marks)
-              Padding(
-                padding: EdgeInsets.only(top: size.h20),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.chat_bubble_outline,
-                      size: size.r24,
-                      color: clr.appPrimaryColorGreen,
-                    ),
-                    SizedBox(width: size.w8),
-                    Expanded(
-                      child: CustomTextWidget(
-                        text: label(
-                            e: "You have more opportunities. You can try a maximum of 10 times. Request the instructor to participate in the re-evaluation.",
-                            b: "আপনার কাছে আরো সুযোগ আছে. আপনি সর্বোচ্চ ১০ বার চেষ্টা করতে পারবেন. পুনরায় মূল্যায়নে অংশগ্রহণ করার জন্য প্রশিক্ষকের কাছে অনুরোধ করুন."),
-                        fontSize: size.textXSmall,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-          if (data.type == AssignmentType.individual.name)
-            if (data.passMark > data.assignmentSubmissions!.marks)
-              Padding(
-                padding: EdgeInsets.only(
-                    left: size.w64, right: size.w64, top: size.h24),
-                child: CustomButton(
-                  onTap: onTapRequest,
-                  title: label(e: "Send Request", b: "অনুরোধ পাঠান"),
-                  bgColor: clr.appPrimaryColorGreen,
-                  borderColor: Colors.transparent,
-                  radius: size.r8,
-                  verticalPadding: size.h4,
-                ),
-              ),
-          if (data.type == AssignmentType.group.name)
-            if (data.passMark >
-                data.circularSubAssignments!.assignmentSubmissions!.marks)
-              Padding(
-                padding: EdgeInsets.only(
-                    left: size.w64, right: size.w64, top: size.h24),
-                child: CustomButton(
-                  onTap: onTapRequest,
-                  title: label(e: "Send Request", b: "অনুরোধ পাঠান"),
-                  bgColor: clr.appPrimaryColorGreen,
-                  borderColor: Colors.transparent,
-                  radius: size.r8,
-                  verticalPadding: size.h4,
-                ),
-              )
-        ],
-      ),
-    );
-  }
-}
-
-class InstructorCommentWidget extends StatelessWidget with AppTheme, Language {
-  final String remarks;
-  const InstructorCommentWidget({super.key, required this.remarks});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: clr.shadeWhiteColor2,
-        borderRadius: BorderRadius.circular(size.r8),
-        border: Border.all(color: clr.boxStrokeColor, width: size.w1),
-        boxShadow: [
-          BoxShadow(
-              offset: const Offset(0, 4),
-              blurRadius: 4,
-              spreadRadius: 0,
-              color: clr.blackColor.withOpacity(.2))
-        ],
-      ),
-      padding: EdgeInsets.symmetric(horizontal: size.w16, vertical: size.h12),
-      margin: EdgeInsets.only(top: size.h12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CustomTextWidget(
-            text: label(e: "Instructor Comments", b: "প্রশিক্ষকের মন্তব্য"),
-            textColor: clr.textColorBlack,
-            fontSize: size.textXMedium,
-            fontWeight: FontWeight.w500,
-          ),
-          SizedBox(height: size.h16),
-          CustomTextWidget(
-            text: remarks,
-            fontSize: size.textXMedium,
-            fontWeight: FontWeight.w500,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class AssignmentResultRowWidget extends StatelessWidget with AppTheme {
-  final String leftText;
-  final String rightText;
-  const AssignmentResultRowWidget(
-      {super.key, required this.leftText, required this.rightText});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        CustomTextWidget(
-          text: leftText,
-          textColor: clr.textColorBlack,
-          fontWeight: FontWeight.w500,
-        ),
-        CustomTextWidget(
-          text: rightText,
-          textColor: clr.textColorBlack,
-          fontWeight: FontWeight.w500,
-        ),
-      ],
-    );
-  }
-}

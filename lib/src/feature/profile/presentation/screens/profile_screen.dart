@@ -213,22 +213,26 @@ class _ProfileScreenState extends State<ProfileScreen>
                           data: data.progressDataEntity,
                         );
                       } else {
-                        return CustomEmptyWidget(
-                          icon: Icons.school_outlined,
-                          message: label(
-                              e: "No matching data found!",
-                              b: "কোনও   ডেটা পাওয়া যায়নি!"),
-                        );
+                        return SizedBox(
+                            height: .5.sh,
+                            child: CustomEmptyWidget(
+                              icon: Icons.school_outlined,
+                              title: label(
+                                  e: "No data from server",
+                                  b: "সার্ভার থেকে কোন তথ্য নেই"),
+                              message: "",
+                            ));
                       }
                     },
-                    emptyBuilder: (context, message, icon) => CustomEmptyWidget(
-                      message: message,
-                      title: label(
-                          e: "No matching data found!",
-                          b: "কোনও   ডেটা পাওয়া যায়নি!"),
-                      // constraints: constraints,
-                      // offset: 350.w,
-                    ),
+                    emptyBuilder: (context, message, icon) =>SizedBox(
+                        height: .5.sh,
+                        child: CustomEmptyWidget(
+                          icon: Icons.school_outlined,
+                          title: label(
+                              e: "No data from server",
+                              b: "সার্ভার থেকে কোন তথ্য নেই"),
+                          message: "",
+                        ))
                   ),
                   SizedBox(height: size.h40),
                 ],
