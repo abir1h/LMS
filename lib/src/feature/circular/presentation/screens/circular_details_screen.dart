@@ -100,7 +100,8 @@ class _CircularDetailsScreenState extends State<CircularDetailsScreen>
         },
         emptyBuilder: (context, message, icon) => CustomEmptyWidget(
           message: message,
-          title: label(e: 'No Circular Found', b: 'কোন বিজ্ঞপ্তির পাওয়া যায়নি'),
+          title:
+              label(e: 'No Circular Found', b: 'কোন বিজ্ঞপ্তির পাওয়া যায়নি'),
           // constraints: constraints,
           // offset: 350.w,
         ),
@@ -399,7 +400,7 @@ class CircularDetailsInfoWidget extends StatelessWidget
                       horizontal: size.w12, vertical: size.h2),
                   alignment: Alignment.center,
                   child: CustomTextWidget(
-                    text: label(e: "Published", b: "Published"),
+                    text: label(e: "Published", b: "প্রকাশিত"),
                     textColor: clr.appPrimaryColorGreen,
                     fontWeight: FontWeight.w500,
                   ),
@@ -466,7 +467,7 @@ class BatchCoordinatorWidget extends StatelessWidget with AppTheme, Language {
                   b: replaceEnglishNumberWithBengali(
                       data.batchCoordinatorId.toString())),
             ),
-         /* SizedBox(height: size.h16),
+          /* SizedBox(height: size.h16),
           RowItemWidgetText(
             leftText: label(e: "Email", b: "ইমেইল"),
             rightText: label(e: "", b: ""),
@@ -523,7 +524,7 @@ class CircularTrainerWidget extends StatelessWidget with AppTheme, Language {
                       rightText: label(
                           e: data.trainers[index].fullnameEn,
                           b: data.trainers[index].fullnameBn)),
-                 /* SizedBox(height: size.h16),
+                  /* SizedBox(height: size.h16),
                   RowItemWidgetText(
                     leftText: label(e: "Subject", b: "বিষয়"),
                     rightText: label(e: "", b: ""),

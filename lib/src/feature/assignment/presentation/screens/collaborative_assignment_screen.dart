@@ -502,9 +502,10 @@ class _CollaborativeAssignmentScreenState
                       ),
 
                       ///Submit Button
-                      if (data.circularSubAssignments!.assignmentSubmissions
-                              ?.assignmentResultDataEntity ==
-                          null)
+                      if (data.circularSubAssignments != null &&
+                          data.circularSubAssignments!.assignmentSubmissions
+                                  ?.assignmentResultDataEntity ==
+                              null)
                         Padding(
                           padding: EdgeInsets.only(
                               left: size.w16, right: size.w16, top: size.h16),
