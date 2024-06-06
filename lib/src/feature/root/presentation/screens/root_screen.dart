@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
+import '../services/root_service.dart';
 import '../../../../core/config/notification_client.dart';
 import '../../../../core/config/push_notification.dart';
 import '../../../../core/routes/app_route.dart';
@@ -30,7 +31,7 @@ class RootScreen extends StatefulWidget {
 }
 
 class _RootScreenState extends State<RootScreen>
-    with AppTheme, Language, AppEventsNotifier {
+    with AppTheme, Language, AppEventsNotifier, RootService {
   late RootScreenArgs _screenArgs;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -51,7 +52,7 @@ class _RootScreenState extends State<RootScreen>
       PushNotification.instance.init();
       NotificationClient.instance
           .startListening(onNotificationClicked, _onNotificationReceived)
-          .then(_onFCMTokenUpdate)
+          .then(onFCMTokenUpdate)
           .catchError((_) {});
     });
     _screenArgs = widget.arguments as RootScreenArgs;
@@ -231,9 +232,9 @@ class _RootScreenState extends State<RootScreen>
     }
   }
   ///Push Notification Section
-  void _onFCMTokenUpdate(String? token) async {
-    print(token);
-  }
+  // void _onFCMTokenUpdate(String? token) async {
+  //   print(token);
+  // }
 
   void onNotificationClicked(NotificationEntity notification,
       {bool isFromTray = true}) async {
