@@ -218,7 +218,7 @@ class _AssessmentScrollViewScreenState extends State<AssessmentScrollViewScreen>
                                                             int index, item) {
                                                       return ComprehensiveAnswerWidget(
                                                         optionValue:
-                                                            item.optionValue,
+                                                            item.optionKey,
                                                         onChanged: (e) {
                                                           item.userInput = e;
                                                         },

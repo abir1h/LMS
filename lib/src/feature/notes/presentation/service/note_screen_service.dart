@@ -63,15 +63,24 @@ mixin NoteScreenService<T extends StatefulWidget> on State<T>
     paginationController.clear();
     pageStateStreamController.add(LoadingState());
     getNoteList(pageNumber, sortBy, sortDesc).then((value) {
-      if (value.error == null && value.data.noteDataEntity!.isNotEmpty) {
+      if (value.error == null && value.data == null) {
+        pageStateStreamController.add(EmptyState(
+          message: label(e: "No Notes Found", b: "কোন নোট পাওয়া যায়নি"),
+        ));
+      } else if (value.error == null && value.data.noteDataEntity!.isNotEmpty) {
         // noteDataStreamController.add(
         //     DataLoadedState<List<NoteDataEntity>>(value.data!.noteDataEntity));
         paginationController.setTotalItemCount(value.data!.total);
         paginationController.addItems(value.data!.noteDataEntity);
         pageStateStreamController.add(DataLoadedState(paginationController));
       } else if (value.error == null && value.data.noteDataEntity!.isEmpty) {
-        pageStateStreamController.add(EmptyState(message: label(
-            e: "No Notes Found", b: "কোন নোট পাওয়া যায়নি"),));
+        pageStateStreamController.add(EmptyState(
+          message: label(e: "No Notes Found", b: "কোন নোট পাওয়া যায়নি"),
+        ));
+      } else if (value.error == null && value.data == null) {
+        pageStateStreamController.add(EmptyState(
+          message: label(e: "No Notes Found", b: "কোন নোট পাওয়া যায়নি"),
+        ));
       } else {
         _view.showWarning(value.message!);
       }

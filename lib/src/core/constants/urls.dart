@@ -75,4 +75,6 @@ class ApiCredential {
 
   static String getProfile = "/circular-service/api/mobile/profile";
   static String imageUrl = "$baseUrl/circular-service/uploads/";
+
+  static String getCertificate = "/circular-service/api/mobile/generate-certificate";
 }

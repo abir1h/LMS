@@ -1,26 +1,36 @@
 {
   "project_info": {
-    "project_number": "1070641891745",
-    "project_id": "clms-lms-app-3e6c1",
-    "storage_bucket": "clms-lms-app-3e6c1.appspot.com"
+    "project_number": "254222419009",
+    "project_id": "hsep-notification",
+    "storage_bucket": "hsep-notification.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1070641891745:android:3ed7f6a8c84e1a1d3aa3e0",
+        "mobilesdk_app_id": "1:254222419009:android:1ce05ada477c35c49ef2c0",
         "android_client_info": {
           "package_name": "com.hsep.lms"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "254222419009-lecj6csk6ojcinkhnf4orii2geqdkc7q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyCX8meM5Y6xUWXzB3NxgDsGYzZA52X2UKk"
+          "current_key": "AIzaSyB0XZq0rrDpo8sHn1R6G_AVVz3OHv75YT0"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "254222419009-lecj6csk6ojcinkhnf4orii2geqdkc7q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

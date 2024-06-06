@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:async';
-import 'dart:math';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class PushNotification {
@@ -115,7 +114,8 @@ class PushNotification {
 
   ///Show notification
   void sendNotification(
-      {required String title,
+      {required int id,
+      required String title,
       required String body,
       required Map<String, dynamic> payload}) async {
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
@@ -124,13 +124,14 @@ class PushNotification {
       androidChannelName,
       importance: Importance.max,
       priority: Priority.high,
+      icon: "@mipmap/ic_launcher"
     );
-    await _notify(title, body, payload,
+    await _notify(id, title, body, payload,
         android: androidPlatformChannelSpecifics);
   }
 
   ///Core stuff
-  Future<void> _notify(String title, String body, Map<String, dynamic> payload,
+  Future<void> _notify(int id, String title, String body, Map<String, dynamic> payload,
       {AndroidNotificationDetails? android,
       DarwinNotificationDetails? ios}) async {
     final NotificationDetails notificationDetails = NotificationDetails(
@@ -139,7 +140,7 @@ class PushNotification {
     );
     await _flutterLocalNotificationsPlugin
         .show(
-          Random().nextInt(99999999),
+          id,
           title,
           body,
           notificationDetails,

@@ -1,3 +1,4 @@
+import '../../models/certificate_data_model.dart';
 import '../../../../../core/constants/urls.dart';
 import '../../../../../core/network/api_service.dart';
 import '../../../../shared/data/models/response_model.dart';
@@ -7,6 +8,7 @@ import '../../models/profile_data_model.dart';
 abstract class ProfileRemoteDataSource {
   Future<ResponseModel> userProfileInformationAction();
   Future<ResponseModel> getUserProfileInformationAction();
+  Future<ResponseModel> getCertificateAction();
 }
 
 class ProfileRemoteDataSourceImp extends ProfileRemoteDataSource {
@@ -26,6 +28,15 @@ class ProfileRemoteDataSourceImp extends ProfileRemoteDataSource {
     ResponseModel responseModel = ResponseModel.fromJson(
         responseJson, (dynamic json) => AllProgressDataModel.fromJson(json));
 
+    return responseModel;
+  }
+
+  @override
+  Future<ResponseModel> getCertificateAction() async {
+    final responseJson =
+        await Server.instance.getRequest(url: ApiCredential.getCertificate);
+    ResponseModel responseModel = ResponseModel.fromJson(
+        responseJson, (dynamic json) => CertificateDataModel.fromJson(json));
     return responseModel;
   }
 }

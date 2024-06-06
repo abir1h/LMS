@@ -289,7 +289,7 @@ class _AssessmentSlideViewScreenState extends State<AssessmentSlideViewScreen>
                                                               builder: (BuildContext context, int index, item) {
                                                                 return ComprehensiveAnswerWidget(
                                                                   optionValue: item
-                                                                      .optionValue,
+                                                                      .optionKey,
                                                                   onChanged:
                                                                       (e) {
                                                                     item.userInput =

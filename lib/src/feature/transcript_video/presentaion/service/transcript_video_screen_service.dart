@@ -135,10 +135,11 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
       _view.changeOrientationToPortrait();
     }
     _view.navigateToBack();
-     videoActivity(_watchSession.circularVideoId,
-        _watchSession.lastPlayedDuration, _watchSession.videoQuestionSeenId).then((value) {
-        print(value);
-     });
+    videoActivity(_watchSession.circularVideoId,
+            _watchSession.lastPlayedDuration, _watchSession.videoQuestionSeenId)
+        .then((value) {
+      print(value);
+    });
     return Future.value(false);
   }
 
@@ -168,6 +169,7 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
         playbackPausePlayStreamController.add(DataLoadedState<bool>(false));
       }
     }
+
     if (currentContent.videoActivityData!.lastViewTime < playedPositionSec) {
       currentContent.videoActivityData!.lastViewTime =
           currentContent.videoActivityData!.lastViewTime < playedPositionSec
@@ -180,7 +182,13 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
           guid: _guid,
           totalDuration: 324,
           lastPlayedDuration: currentContent.videoActivityData!.lastViewTime,
-          videoQuestionSeenId: []);
+          videoQuestionSeenId: (videoDetailsDataStreamController.value
+                  as DataLoadedState<VideoContentDataEntity>)
+              .data
+              .videoQuestion!
+              .where((item) => item.seen)
+              .map((data) => data.id)
+              .toList());
       _storeActualWatchedSession();
     }
   }
