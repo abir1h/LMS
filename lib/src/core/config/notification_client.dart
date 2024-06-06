@@ -105,6 +105,7 @@ class NotificationClient {
   void _onForegroundNotificationReceived(RemoteMessage message) {
     _onNotificationReceived?.call(NotificationEntity.fromJson(message.data));
     PushNotification.instance.sendNotification(
+      id: message.hashCode,
       title: message.notification?.title ?? "HSEP-LMS",
       body: message.notification?.body ?? "",
       payload: message.data,
