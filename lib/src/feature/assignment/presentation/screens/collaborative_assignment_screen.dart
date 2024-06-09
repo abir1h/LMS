@@ -140,13 +140,23 @@ class _CollaborativeAssignmentScreenState
                         ),
                         child: Column(
                           children: [
-                            CustomTextWidget(
+                            stringToWidget(
+                                input: label(
+                                    e: data.descriptionEn,
+                                    b: data.descriptionBn),
+                                textStyle: TextStyle(
+                                  color: clr.gapStrokeGrey,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: size.textXSmall,
+                                  fontFamily: StringData.fontFamilyPoppins,
+                                )),
+                            /*CustomTextWidget(
                               text: label(
                                   e: data.descriptionEn, b: data.descriptionBn),
                               textColor: clr.gapStrokeGrey,
                               fontSize: size.textXSmall,
                               fontWeight: FontWeight.w400,
-                            ),
+                            ),*/
                           ],
                         ),
                       ),
@@ -702,14 +712,23 @@ class _CollaborativeAssignmentScreenState
                           ],
                         ),
                         child: Column(
-                          children: [
-                            CustomTextWidget(
+                          children: [stringToWidget(
+                              input: label(
+                                  e: data.descriptionEn,
+                                  b: data.descriptionBn),
+                              textStyle: TextStyle(
+                                color: clr.gapStrokeGrey,
+                                fontWeight: FontWeight.w400,
+                                fontSize: size.textXSmall,
+                                fontFamily: StringData.fontFamilyPoppins,
+                              )),
+                            /*CustomTextWidget(
                               text: label(
                                   e: data.descriptionEn, b: data.descriptionBn),
                               textColor: clr.gapStrokeGrey,
                               fontSize: size.textXSmall,
                               fontWeight: FontWeight.w400,
-                            ),
+                            ),*/
                           ],
                         ),
                       ),
@@ -1314,13 +1333,22 @@ class _AssignmentInstructionsState<T> extends State<AssignmentInstructions<T>>
             ),
           ),
           if (_isExpanded)
-            CustomTextWidget(
+            stringToWidget(
+                input: label(
+                    e: widget.text,
+                    b: widget.text,),
+                textStyle: TextStyle(
+                  color: clr.blackText,
+                  fontWeight: FontWeight.w500,
+                  fontSize: size.textXSmall,
+                )),
+           /* CustomTextWidget(
               text: widget.text,
               textColor: clr.blackText,
               fontSize: size.textXSmall,
               fontWeight: FontWeight.w500,
               padding: EdgeInsets.only(top: size.h12),
-            ),
+            ),*/
         ],
       ),
     );
