@@ -196,7 +196,7 @@ class _NoteEditScreenState extends State<NoteEditScreen>
                             color: clr.boxStrokeColor,
                             width: 1.w), // Customize border color
                       ),
-                      hintText: "Title",
+                      hintText: label(e: "Title", b: 'টাইটেল'),
                       hintStyle: TextStyle(
                           fontSize: size.textXMedium,
                           color: clr.placeHolderTextColorGray,
@@ -238,7 +238,7 @@ class _NoteEditScreenState extends State<NoteEditScreen>
                         ),
                       ),
                       scrollable: true,
-                      placeholder: 'Note...',
+                      placeholder:  label(e: "Note....", b: 'এখানে লিখুন...'),
                       padding: const EdgeInsets.all(16),
                     ),
                   ),

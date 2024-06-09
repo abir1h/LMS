@@ -102,7 +102,7 @@ class _RootScreenState extends State<RootScreen>
           trailing: _currentPageIndex == 2
               ? Icon(
                   Icons.search,
-                  color: clr.appPrimaryColorGreen,
+                  color: Colors.transparent,
                   size: size.r24,
                 )
               : Stack(

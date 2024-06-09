@@ -310,7 +310,7 @@ class LanguageBn {
   String confirmInPerson = "কর্নফার্ম ইন পার্সন";
   String joinClass = "জয়েন অনলাইন";
 
-  String allNotes = "অল নোটস";
+  String allNotes = "সকল নোটস";
   String noteContent = "";
 
   String discussion = "আলোচনা";
