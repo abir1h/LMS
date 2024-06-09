@@ -68,7 +68,7 @@ class _CustomPlayerWidgetState extends State<ContentPlayerWidget> {
 
         autoPlay: true,
         playPosition:
-            Duration(seconds: _currentContent.videoActivityData!.lastViewTime)
+            Duration(seconds: _currentContent.videoActivityData != null ? _currentContent.videoActivityData!.lastViewTime : 0)
         // playPosition:Duration(seconds: _currentContent.lastPlayedDurationTimeSec)
         // _currentContent.playedDurationTimeSec < _currentContent.videoDurationSecond
         //     ? Duration(seconds: _currentContent.playedDurationTimeSec)
