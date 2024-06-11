@@ -6,11 +6,6 @@ class ProfileUseCase {
   ProfileUseCase({required ProfileRepository profileRepository})
       : _profileRepository = profileRepository;
 
-  Future<ResponseEntity> userProfileInformationUseCase() async {
-    final response = _profileRepository.userProfileInformation();
-    return response;
-  }
-
   Future<ResponseEntity> getUserProfileInformationUseCase() async {
     final response = _profileRepository.getUserProfileInformation();
     return response;

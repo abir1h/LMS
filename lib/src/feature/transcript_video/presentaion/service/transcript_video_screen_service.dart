@@ -138,9 +138,7 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
     videoActivity(_watchSession.circularVideoId,
             _watchSession.lastPlayedDuration, _watchSession.videoQuestionSeenId)
         .then((value) {
-      if (value.error == null){
-
-      }
+      if (value.error == null) {}
     });
     return Future.value(false);
   }
@@ -171,28 +169,46 @@ mixin TranscriptScreenVideoService<T extends StatefulWidget> on State<T>
         playbackPausePlayStreamController.add(DataLoadedState<bool>(false));
       }
     }
-
-    if (currentContent.videoActivityData!.lastViewTime < playedPositionSec) {
-      currentContent.videoActivityData!.lastViewTime =
-          currentContent.videoActivityData!.lastViewTime < playedPositionSec
-              ? playedPositionSec
-              : currentContent.videoActivityData!.lastViewTime;
+    if(currentContent.videoActivityData == null){
       _watchSession = VideoWatchSession(
           circularVideoId: screenArgs.data.contentId,
           startTime: "",
           endTime: "",
           guid: _guid,
           totalDuration: 324,
-          lastPlayedDuration: currentContent.videoActivityData!.lastViewTime,
+          lastPlayedDuration: playedPositionSec,
           videoQuestionSeenId: (videoDetailsDataStreamController.value
-                  as DataLoadedState<VideoContentDataEntity>)
+          as DataLoadedState<VideoContentDataEntity>)
               .data
               .videoQuestion!
               .where((item) => item.seen)
               .map((data) => data.id)
               .toList());
       _storeActualWatchedSession();
+    }else{
+      if (currentContent.videoActivityData!.lastViewTime < playedPositionSec) {
+        currentContent.videoActivityData!.lastViewTime =
+        currentContent.videoActivityData!.lastViewTime < playedPositionSec
+            ? playedPositionSec
+            : currentContent.videoActivityData!.lastViewTime;
+        _watchSession = VideoWatchSession(
+            circularVideoId: screenArgs.data.contentId,
+            startTime: "",
+            endTime: "",
+            guid: _guid,
+            totalDuration: 324,
+            lastPlayedDuration: currentContent.videoActivityData!.lastViewTime,
+            videoQuestionSeenId: (videoDetailsDataStreamController.value
+            as DataLoadedState<VideoContentDataEntity>)
+                .data
+                .videoQuestion!
+                .where((item) => item.seen)
+                .map((data) => data.id)
+                .toList());
+        _storeActualWatchedSession();
+      }
     }
+
   }
 
   void onSkipInteractiveAction() {

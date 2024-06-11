@@ -21,12 +21,12 @@ class AuthRepositoryImp extends AuthRepository {
             responseModel, (AuthDataModel model) => model.toAuthDataEntity);
   }
 
-  @override
-  Future<ResponseEntity> getEMISLink() async{
-    ResponseModel responseModel =
-    (await authRemoteDataSource.getEMISLinkAction());
-    return ResponseModelToEntityMapper<AuthDataEntity, AuthDataModel>()
-        .toEntityFromModel(
-    responseModel, (AuthDataModel model) => model.toAuthDataEntity);
-  }
+  // @override
+  // Future<ResponseEntity> getEMISLink() async{
+  //   ResponseModel responseModel =
+  //   (await authRemoteDataSource.getEMISLinkAction());
+  //   return ResponseModelToEntityMapper<AuthDataEntity, AuthDataModel>()
+  //       .toEntityFromModel(
+  //   responseModel, (AuthDataModel model) => model.toAuthDataEntity);
+  // }
 }

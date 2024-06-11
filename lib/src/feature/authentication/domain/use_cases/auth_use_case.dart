@@ -11,8 +11,8 @@ class AuthUseCase {
     return response;
   }
 
-  Future<ResponseEntity> getEMISLinkUseCase() async {
-    final response = _authRepository.getEMISLink();
-    return response;
-  }
+  // Future<ResponseEntity> getEMISLinkUseCase() async {
+  //   final response = _authRepository.getEMISLink();
+  //   return response;
+  // }
 }
