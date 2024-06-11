@@ -71,4 +71,5 @@ class ApiCredential {
 
   static String getCertificate = "/circular-service/api/mobile/generate-certificate";
   static String fcmUpdate = "/notification-service/api/fcm-update";
+  static String fcmUpdateUser = "/user-service/trainee";
 }

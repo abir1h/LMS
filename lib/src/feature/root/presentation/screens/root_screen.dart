@@ -32,7 +32,6 @@ class RootScreen extends StatefulWidget {
 
 class _RootScreenState extends State<RootScreen>
     with AppTheme, Language, AppEventsNotifier, RootService {
-  late RootScreenArgs _screenArgs;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final PageController _pageController = PageController();
@@ -47,6 +46,7 @@ class _RootScreenState extends State<RootScreen>
   @override
   void initState() {
     super.initState();
+    screenArgs = widget.arguments as RootScreenArgs;
     ///Init notification and firebase
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       PushNotification.instance.init();
@@ -54,15 +54,15 @@ class _RootScreenState extends State<RootScreen>
           .startListening(onNotificationClicked, _onNotificationReceived)
           .then(onFCMTokenUpdate)
           .catchError((_) {});
+
     });
-    _screenArgs = widget.arguments as RootScreenArgs;
     setPage();
     Get.put(DashboardController());
     Get.put(CourseController());
   }
 
   setPage() {
-    _currentPageIndex = _screenArgs.index;
+    _currentPageIndex = screenArgs.index;
   }
 
 

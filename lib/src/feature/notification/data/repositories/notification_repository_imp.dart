@@ -10,7 +10,16 @@ class NotificationRepositoryImp extends NotificationRepository {
   @override
   Future<ResponseEntity> updateFCMToken(String token) async {
     ResponseModel responseModel =
-        (await notificationRemoteDataSource.updateFCMToken(token));
+        (await notificationRemoteDataSource.updateFCMTokenAction(token));
+    return ResponseEntity(
+        message: responseModel.message, error: responseModel.error, data: null);
+  }
+
+  @override
+  Future<ResponseEntity> updateUserFCMToken(
+      String eMISUserId, String token) async {
+    ResponseModel responseModel = (await notificationRemoteDataSource
+        .updateUserFCMTokenAction(eMISUserId, token));
     return ResponseEntity(
         message: responseModel.message, error: responseModel.error, data: null);
   }

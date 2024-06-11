@@ -14,7 +14,8 @@ class EMISWebViewScreenArgs {
 
 class RootScreenArgs {
   final int index;
-  RootScreenArgs({required this.index});
+  final String? eMISUserId;
+  RootScreenArgs({required this.index, this.eMISUserId});
 }
 
 class CourseListScreenArgs {

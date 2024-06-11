@@ -10,4 +10,8 @@ class NotificationUseCase {
     final response = _notificationRepository.updateFCMToken(token);
     return response;
   }
+  Future<ResponseEntity> updateUserFCMTokenUseCase(String eMISUserId, String token) async {
+    final response = _notificationRepository.updateUserFCMToken(eMISUserId, token);
+    return response;
+  }
 }
