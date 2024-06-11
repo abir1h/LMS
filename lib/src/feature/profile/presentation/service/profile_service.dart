@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lms/src/feature/profile/domain/entities/all_progress_data_entity.dart';
-import 'package:lms/src/feature/profile/domain/entities/user_info_data_entity.dart';
 
+import '../../domain/entities/all_progress_data_entity.dart';
 import '../../../../core/common_widgets/app_stream.dart';
 import '../../data/data_sources/remote/profile_data_source.dart';
 import '../../data/repositories/profile_repository_imp.dart';
-import '../../domain/entities/profile_data_entity.dart';
 import '../../domain/use_cases/profile_use_case.dart';
 import '../../../shared/domain/entities/response_entity.dart';
 
@@ -20,10 +18,6 @@ mixin ProfileService<T extends StatefulWidget> on State<T>
   final ProfileUseCase _profileUseCase = ProfileUseCase(
       profileRepository: ProfileRepositoryImp(
           profileRemoteDataSource: ProfileRemoteDataSourceImp()));
-
-  Future<ResponseEntity> getProfileInformation() async {
-    return _profileUseCase.userProfileInformationUseCase();
-  }
 
   Future<ResponseEntity> getProfileData() async {
     return _profileUseCase.getUserProfileInformationUseCase();

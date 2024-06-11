@@ -16,9 +16,9 @@ class AuthService {
     return responseEntity;
   }
 
-  static Future<ResponseEntity> getEMISLink() async {
-    return _authUseCase.getEMISLinkUseCase();
-  }
+  // static Future<ResponseEntity> getEMISLink() async {
+  //   return _authUseCase.getEMISLinkUseCase();
+  // }
 
 /*  static storeUserInfo(ResponseEntity responseEntity) async {
     LocalStorageService localStorageService =
