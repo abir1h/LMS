@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
+import '../../../../core/service/auth_cache_manager.dart';
 import '../../../../core/routes/app_route_args.dart';
 import '../../../notification/data/data_sources/remote/notification_data_source.dart';
 import '../../../notification/data/repositories/notification_repository_imp.dart';
@@ -21,7 +22,9 @@ mixin RootService<T extends StatefulWidget> on State<T> implements _ViewModel {
   Future<ResponseEntity> updateFCMTokenData(String token) async {
     return _notificationUseCase.updateFCMTokenUseCase(token);
   }
-  Future<ResponseEntity> updateUserFCMTokenData(String eMISUserId, String token) async {
+
+  Future<ResponseEntity> updateUserFCMTokenData(
+      String eMISUserId, String token) async {
     return _notificationUseCase.updateUserFCMTokenUseCase(eMISUserId, token);
   }
 
@@ -37,16 +40,25 @@ mixin RootService<T extends StatefulWidget> on State<T> implements _ViewModel {
           //error
         }
       });
-      if(screenArgs.eMISUserId != null && screenArgs.eMISUserId!.isNotEmpty){
-        updateUserFCMTokenData(screenArgs.eMISUserId!, token).then((value) {
-          if (value.error == null) {
-            //success
-            log("Successfully Updated User FCM Token");
-          } else {
-            //error
-          }
-        });
+      if (screenArgs.eMISUserId != null && screenArgs.eMISUserId!.isNotEmpty) {
+        _updateUserFCMToken(screenArgs.eMISUserId!, token);
+      } else {
+        String eMISUserId = await AuthCacheManager.getUserId();
+        if (eMISUserId.isNotEmpty) {
+          _updateUserFCMToken(eMISUserId, token);
+        }
       }
     }
+  }
+
+  void _updateUserFCMToken(String eMISUserId, String token) {
+    updateUserFCMTokenData(eMISUserId, token).then((value) {
+      if (value.error == null) {
+        //success
+        log("Successfully Updated User FCM Token");
+      } else {
+        //error
+      }
+    });
   }
 }

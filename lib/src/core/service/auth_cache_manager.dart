@@ -4,8 +4,8 @@ import 'local_storage_services.dart';
 class AuthCacheManager {
   AuthCacheManager._();
 
-  static storeUserInfo(String userId, String userName,String role, String accessToken,
-      String refreshToken, String expireAt) async {
+  static storeUserInfo(String userId, String userName, String role,
+      String accessToken, String refreshToken, String expireIn) async {
     LocalStorageService localStorageService =
         await LocalStorageService.getInstance();
     localStorageService.storeStringValue(StringData.userId, userId);
@@ -15,7 +15,7 @@ class AuthCacheManager {
         StringData.accessTokenKey, accessToken);
     localStorageService.storeStringValue(
         StringData.refreshTokenKey, refreshToken);
-    localStorageService.storeStringValue(StringData.expiresIn, expireAt);
+    localStorageService.storeStringValue(StringData.expiresIn, expireIn);
   }
 
   static Future<String> getUserToken() async {
@@ -24,6 +24,13 @@ class AuthCacheManager {
     String token =
         localStorageService.getStringValue(StringData.accessTokenKey) ?? "";
     return token;
+  }
+
+  static Future<String> getUserId() async {
+    LocalStorageService localStorageService =
+        await LocalStorageService.getInstance();
+    String userId = localStorageService.getStringValue(StringData.userId) ?? "";
+    return userId;
   }
 
   static Future<bool> isUserLoggedIn() async {
@@ -41,6 +48,9 @@ class AuthCacheManager {
   static userLogout() async {
     LocalStorageService localStorageService =
         await LocalStorageService.getInstance();
+    localStorageService.removeValue(StringData.userId);
+    localStorageService.removeValue(StringData.userName);
+    localStorageService.removeValue(StringData.role);
     localStorageService.removeValue(StringData.accessTokenKey);
     localStorageService.removeValue(StringData.refreshTokenKey);
     localStorageService.removeValue(StringData.expiresIn);
