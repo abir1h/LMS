@@ -47,9 +47,9 @@ class Server {
       debugPrint("RESPONSE DATA => ${response.body.toString()}");
       return _returnResponse(response);
     } on SocketException catch (_) {
-      return '{"message": "Request failed! Check internet connection.", "error": "Error message"}';
+      return json.decode('{"message": "Request failed! Check internet connection.", "error": "Error message"}');
     } on Exception catch (_) {
-      return '{"message": "Request failed! Unknown error occurred.", "error": "Error message"}';
+      return json.decode('{"message": "Request failed! Unknown error occurred.", "error": "Error message"}');
     }
   }
 
@@ -75,9 +75,9 @@ class Server {
       debugPrint("RESPONSE DATA => ${response.body.toString()}");
       return _returnResponse(response);
     } on SocketException catch (_) {
-      return '{"message": "Request failed! Check internet connection.", "error": "Error message"}';
+      return json.decode('{"message": "Request failed! Check internet connection.", "error": "Error message"}');
     } on Exception catch (_) {
-      return '{"message": "Request failed! Unknown error occurred.", "error": "Error message"}';
+      return json.decode('{"message": "Request failed! Unknown error occurred.", "error": "Error message"}');
     }
   }
 
@@ -108,9 +108,9 @@ class Server {
       debugPrint("RESPONSE DATA => ${response.body.toString()}");
       return _returnResponse(response);
     } on SocketException catch (_) {
-      return '{"message": "Request failed! Check internet connection.", "error": "Error message"}';
+      return json.decode('{"message": "Request failed! Check internet connection.", "error": "Error message"}');
     } on Exception catch (_) {
-      return '{"message": "Request failed! Unknown error occurred.", "error": "Error message"}';
+      return json.decode('{"message": "Request failed! Unknown error occurred.", "error": "Error message"}');
     }
   }
 
@@ -131,17 +131,9 @@ class Server {
           "REQUEST => ${response.request.toString()}\nRESPONSE DATA => ${response.body.toString()}");
       return _returnResponse(response);
     } on SocketException catch (_) {
-      dynamic response = {
-        "message": "Request failed! Check internet connection.",
-        "error": "Error message"
-      };
-      return response;
+      return json.decode('{"message": "Request failed! Check internet connection.", "error": "Error message"}');
     } on Exception catch (_) {
-      dynamic response = {
-        "message": "Request failed! Unknown error occurred.",
-        "error": "Error message"
-      };
-      return response;
+      return json.decode('{"message": "Request failed! Unknown error occurred.", "error": "Error message"}');
     }
   }
 
@@ -158,17 +150,9 @@ class Server {
           "REQUEST => ${response.request.toString()}\nRESPONSE DATA => ${response.body.toString()}");
       return _returnResponse(response);
     } on SocketException catch (_) {
-      dynamic response = {
-        "message": "Request failed! Check internet connection.",
-        "error": "Error message"
-      };
-      return response;
+      return json.decode('{"message": "Request failed! Check internet connection.", "error": "Error message"}');
     } on Exception catch (_) {
-      dynamic response = {
-        "message": "Request failed! Unknown error occurred.",
-        "error": "Error message"
-      };
-      return response;
+      return json.decode('{"message": "Request failed! Unknown error occurred.", "error": "Error message"}');
     }
   }
 
@@ -185,17 +169,9 @@ class Server {
           "REQUEST => ${response.request.toString()}\nRESPONSE DATA => ${response.body.toString()}");
       return _returnResponse(response);
     } on SocketException catch (_) {
-      dynamic response = {
-        "message": "Request failed! Check internet connection.",
-        "error": "Error message"
-      };
-      return response;
+      return json.decode('{"message": "Request failed! Check internet connection.", "error": "Error message"}');
     } on Exception catch (_) {
-      dynamic response = {
-        "message": "Request failed! Unknown error occurred.",
-        "error": "Error message"
-      };
-      return response;
+      return json.decode('{"message": "Request failed! Unknown error occurred.", "error": "Error message"}');
     }
   }
 
