@@ -30,7 +30,7 @@ mixin ProfileService<T extends StatefulWidget> on State<T>
   void initState() {
     _view = this;
     super.initState();
-    _loadHeader();
+    // _loadHeader();
     _loadDataList();
   }
 

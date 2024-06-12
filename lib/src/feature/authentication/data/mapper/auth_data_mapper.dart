@@ -1,3 +1,4 @@
+import 'user_data_mapper.dart';
 import '../models/auth_data_model.dart';
 import '../../domain/entities/auth_data_entity.dart';
 
@@ -11,23 +12,21 @@ class _AuthDataModelToEntityMapper
   @override
   AuthDataModel fromEntityToModel(AuthDataEntity entity) {
     return AuthDataModel(
-        url: entity.url,
+        user: entity.user.toUserDataModel,
         accessToken: entity.accessToken,
-        expiresAt: entity.expiresAt,
         refreshToken: entity.refreshToken,
-        role: entity.role,
-        permissions: entity.permissions);
+        expiresIn: entity.expiresIn,
+        policy: entity.policy);
   }
 
   @override
   AuthDataEntity toEntityFromModel(AuthDataModel model) {
     return AuthDataEntity(
-        url: model.url,
+        user: model.user!.toUserDataEntity,
         accessToken: model.accessToken,
-        expiresAt: model.expiresAt,
         refreshToken: model.refreshToken,
-        role: model.role,
-        permissions: model.permissions);
+        expiresIn: model.expiresIn,
+        policy: model.policy);
   }
 }
 

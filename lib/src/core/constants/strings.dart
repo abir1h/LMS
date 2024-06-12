@@ -1,9 +1,12 @@
 class StringData {
   const StringData._();
 
+  static const String userId = "userId";
+  static const String userName = "userName";
+  static const String role = "role";
   static const String accessTokenKey = "accessTokenKey";
   static const String refreshTokenKey = "refreshTokenKey";
-  static const String expiresAt = "expiresAt";
+  static const String expiresIn = "expiresIn";
   static const String userRoleKey = "userRoleKey";
   static const String userPermissionKey = "userPermissionKey";
 

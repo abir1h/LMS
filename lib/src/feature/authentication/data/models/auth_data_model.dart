@@ -1,38 +1,39 @@
 import 'package:flutter/foundation.dart';
 
+import 'user_data_model.dart';
+
 @immutable
 class AuthDataModel {
-  final String url;
+  final UserDataModel? user;
   final String accessToken;
-  final String expiresAt;
   final String refreshToken;
-  final String role;
-  final List<String> permissions;
+  final int expiresIn;
+  final List<String> policy;
 
-  const AuthDataModel(
-      {required this.url,
-      required this.accessToken,
-      required this.expiresAt,
-      required this.refreshToken,
-      required this.role,
-      required this.permissions});
+  const AuthDataModel({
+    required this.user,
+    required this.accessToken,
+    required this.refreshToken,
+    required this.expiresIn,
+    required this.policy,
+  });
 
   factory AuthDataModel.fromJson(Map<String, dynamic> json) => AuthDataModel(
-      url: json["url"] ?? "",
-      accessToken: json["access_token"] ?? "",
-      expiresAt: json["expires_at"] ?? "",
-      refreshToken: json["refresh_token"] ?? "",
-      role: json["role"] ?? "",
-      permissions: json['permissions'] == null
-          ? []
-          : List<String>.from(json["permissions"].map((x) => x)));
+        user:
+            json["user"] != null ? UserDataModel.fromJson(json["user"]) : null,
+        accessToken: json["access_token"],
+        refreshToken: json["refresh_token"],
+        expiresIn: json["expires_in"],
+        policy: json["policy"] == null
+            ? []
+            : List<String>.from(json["policy"].map((x) => x)),
+      );
 
   Map<String, dynamic> toJson() => {
-        "url": url,
+        "user": user?.toJson(),
         "access_token": accessToken,
-        "expires_at": expiresAt,
         "refresh_token": refreshToken,
-        "role": role,
-        "permissions": List<dynamic>.from(permissions.map((x) => x)),
+        "expires_in": expiresIn,
+        "policy": List<String>.from(policy.map((x) => x)),
       };
 }

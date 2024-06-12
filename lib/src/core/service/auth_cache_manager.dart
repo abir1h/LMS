@@ -4,15 +4,18 @@ import 'local_storage_services.dart';
 class AuthCacheManager {
   AuthCacheManager._();
 
-  static storeUserInfo(
-      String accessToken, String refreshToken, String expireAt) async {
+  static storeUserInfo(String userId, String userName,String role, String accessToken,
+      String refreshToken, String expireAt) async {
     LocalStorageService localStorageService =
         await LocalStorageService.getInstance();
+    localStorageService.storeStringValue(StringData.userId, userId);
+    localStorageService.storeStringValue(StringData.userName, userName);
+    localStorageService.storeStringValue(StringData.role, role);
     localStorageService.storeStringValue(
         StringData.accessTokenKey, accessToken);
     localStorageService.storeStringValue(
         StringData.refreshTokenKey, refreshToken);
-    localStorageService.storeStringValue(StringData.expiresAt, expireAt);
+    localStorageService.storeStringValue(StringData.expiresIn, expireAt);
   }
 
   static Future<String> getUserToken() async {
@@ -40,6 +43,6 @@ class AuthCacheManager {
         await LocalStorageService.getInstance();
     localStorageService.removeValue(StringData.accessTokenKey);
     localStorageService.removeValue(StringData.refreshTokenKey);
-    localStorageService.removeValue(StringData.expiresAt);
+    localStorageService.removeValue(StringData.expiresIn);
   }
 }

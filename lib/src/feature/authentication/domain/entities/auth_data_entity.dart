@@ -1,16 +1,17 @@
-class AuthDataEntity {
-  final String url;
-  final String accessToken;
-  final String expiresAt;
-  final String refreshToken;
-  final String role;
-  final List<String> permissions;
+import 'user_data_entity.dart';
 
-  AuthDataEntity(
-      {required this.url,
-      required this.accessToken,
-      required this.expiresAt,
-      required this.refreshToken,
-      required this.role,
-      required this.permissions});
+class AuthDataEntity {
+  final UserDataEntity user;
+  final String accessToken;
+  final String refreshToken;
+  final int expiresIn;
+  final List<String> policy;
+
+  AuthDataEntity({
+    required this.user,
+    required this.accessToken,
+    required this.refreshToken,
+    required this.expiresIn,
+    required this.policy,
+  });
 }

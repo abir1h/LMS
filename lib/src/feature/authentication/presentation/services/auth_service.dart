@@ -40,11 +40,19 @@ class AuthService {
   }*/
   static storeUserInfo(ResponseEntity responseEntity) async {
     if (responseEntity.data != null) {
-      if (responseEntity.data?.accessToken != null &&
+      if (responseEntity.data?.user.id != null &&
+          responseEntity.data?.user.name != null &&
+          responseEntity.data?.user.role != null &&
+          responseEntity.data?.accessToken != null &&
           responseEntity.data?.refreshToken != null &&
-          responseEntity.data?.expiresAt != null) {
-        AuthCacheManager.storeUserInfo(responseEntity.data?.accessToken,
-            responseEntity.data?.refreshToken, responseEntity.data?.expiresAt);
+          responseEntity.data?.expiresIn != null) {
+        AuthCacheManager.storeUserInfo(
+            responseEntity.data?.user.id,
+            responseEntity.data?.user.name,
+            responseEntity.data?.user.role.first,
+            responseEntity.data?.accessToken,
+            responseEntity.data?.refreshToken,
+            responseEntity.data!.expiresIn.toString());
       }
     }
   }

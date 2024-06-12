@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 import '../../domain/entities/all_progress_data_entity.dart';
 import '../widgets/running_course_item_widget.dart';
@@ -35,128 +36,107 @@ class _ProfileScreenState extends State<ProfileScreen>
   Widget build(BuildContext context) {
     return Column(
       children: [
-        AppStreamBuilder<AllProgressDataEntity>(
-          stream: headerDataStreamController.stream,
-          loadingBuilder: (context) {
-            return SizedBox(
-              height: 130.h,
-              width: 1.sw,
-            );
-          },
-          dataBuilder: (context, data) {
-            return Stack(
-              children: [
-                Center(
-                  child: Column(
-                    children: [
-                      SizedBox(height: size.h20),
-                      Container(
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                                color: clr.cardStrokeColor, width: size.w1)),
-                        child: CircleAvatar(
-                          radius: 45.r,
-                          /*backgroundImage: AssetImage(
+        Stack(
+          children: [
+            Center(
+              child: Column(
+                children: [
+                  SizedBox(height: size.h20),
+                  Container(
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                            color: clr.cardStrokeColor, width: size.w1)),
+                    child: CircleAvatar(
+                      radius: 45.r,
+                      /*backgroundImage: AssetImage(
                            ImageAssets.imgProfile,
                          ),*/
-                          backgroundColor: clr.appPrimaryColorGreen,
-                          child: Center(
-                            child: Text(
-                              data.userInfoDataEntity!.emisUserDataEntity !=
-                                      null
-                                  ? data.userInfoDataEntity!.emisUserDataEntity!
-                                      .name[0]
-                                      .toUpperCase()
-                                  : "",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: size.textXLarge),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: size.h12),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: size.w16),
+                      backgroundColor: clr.appPrimaryColorGreen,
+                      child: Center(
                         child: Text(
-                          data.userInfoDataEntity!.emisUserDataEntity != null
-                              ? label(
-                                  e: data.userInfoDataEntity!
-                                      .emisUserDataEntity!.name,
-                                  b: data.userInfoDataEntity!
-                                      .emisUserDataEntity!.name)
-                              : "",
+                          localStorage
+                              .getStringValue(StringData.userName)![0]
+                              .toUpperCase(),
                           style: TextStyle(
-                              color: clr.appPrimaryColorGreen,
-                              fontSize: size.textXMedium,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: StringData.fontFamilyRoboto),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.center,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: size.textXLarge),
                         ),
                       ),
-                      Text(
-                        label(
-                            e: data.userInfoDataEntity!.role,
-                            b: data.userInfoDataEntity!.role),
-                        style: TextStyle(
-                            color: clr.gapStrokeGrey,
-                            fontSize: size.textXXSmall,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: StringData.fontFamilyRoboto),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(height: size.h10)
-                    ],
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        left: size.w24, right: size.w16, top: size.h16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        // SvgPicture.asset(ImageAssets.icEdit),
-                        CustomSwitchButton(
-                          value: App.currentAppLanguage == AppLanguage.english,
-                          textOn: 'EN',
-                          textSize: size.textXXSmall,
-                          textOff: 'বাং',
-                          bgColor: clr.whiteColor,
-                          width: 64.w,
-                          animationDuration: const Duration(milliseconds: 300),
-                          onChanged: (bool state) {
-                            App.setAppLanguage(state ? 1 : 0).then((value) {
-                              if (mounted) {
-                                setState(() {});
-                              }
-                              AppEventsNotifier.notify(
-                                  EventAction.bottomNavBar);
-                            });
-                          },
-                          buttonHolder: const Icon(
-                            Icons.check,
-                            color: Colors.transparent,
-                          ),
-                          onTap: () {},
-                          onDoubleTap: () {},
-                          onSwipe: () {},
-                        ),
-                      ],
                     ),
                   ),
+                  SizedBox(height: size.h12),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: size.w16),
+                    child: Text(
+                      localStorage.getStringValue(StringData.userName)!,
+                      style: TextStyle(
+                          color: clr.appPrimaryColorGreen,
+                          fontSize: size.textXMedium,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: StringData.fontFamilyRoboto),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Text(
+                    localStorage
+                        .getStringValue(StringData.role)!
+                        .capitalizeFirst
+                        .toString(),
+                    style: TextStyle(
+                        color: clr.gapStrokeGrey,
+                        fontSize: size.textXXSmall,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: StringData.fontFamilyRoboto),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: size.h10)
+                ],
+              ),
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: EdgeInsets.only(
+                    left: size.w24, right: size.w16, top: size.h16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    // SvgPicture.asset(ImageAssets.icEdit),
+                    CustomSwitchButton(
+                      value: App.currentAppLanguage == AppLanguage.english,
+                      textOn: 'EN',
+                      textSize: size.textXXSmall,
+                      textOff: 'বাং',
+                      bgColor: clr.whiteColor,
+                      width: 64.w,
+                      animationDuration: const Duration(milliseconds: 300),
+                      onChanged: (bool state) {
+                        App.setAppLanguage(state ? 1 : 0).then((value) {
+                          if (mounted) {
+                            setState(() {});
+                          }
+                          AppEventsNotifier.notify(EventAction.bottomNavBar);
+                        });
+                      },
+                      buttonHolder: const Icon(
+                        Icons.check,
+                        color: Colors.transparent,
+                      ),
+                      onTap: () {},
+                      onDoubleTap: () {},
+                      onSwipe: () {},
+                    ),
+                  ],
                 ),
-              ],
-            );
-          },
-          emptyBuilder: (context, message, icon) => Container(),
+              ),
+            ),
+          ],
         ),
         Expanded(
           child: Container(
@@ -186,54 +166,53 @@ class _ProfileScreenState extends State<ProfileScreen>
                   ),
                   SizedBox(height: size.h16),
                   AppStreamBuilder<StateType>(
-                    stream: stateDataStreamController.stream,
-                    loadingBuilder: (context) {
-                      return const Center(child: CircularLoader());
-                    },
-                    dataBuilder: (context, data) {
-                      if (data is ProfileDataState) {
-                        return data.userInfoDataEntity.userInfoDataEntity!
-                                    .emisUserDataEntity !=
-                                null
-                            ? PersonalInfoWidget(
-                                data: data.userInfoDataEntity,
-                                onTapLogout: showLogoutPromptDialog,
-                              )
-                            : SizedBox(
-                                height: .5.sh,
-                                child: CustomEmptyWidget(
-                                  icon: Icons.school_outlined,
-                                  title: label(
-                                      e: "No data from server",
-                                      b: "সার্ভার থেকে কোন তথ্য নেই"),
-                                  message: "",
-                                ));
-                      } else if (data is ProgressDataState) {
-                        return ProgressInfoWidget(
-                          data: data.progressDataEntity,
-                        );
-                      } else {
-                        return SizedBox(
-                            height: .5.sh,
-                            child: CustomEmptyWidget(
-                              icon: Icons.school_outlined,
-                              title: label(
-                                  e: "No data from server",
-                                  b: "সার্ভার থেকে কোন তথ্য নেই"),
-                              message: "",
-                            ));
-                      }
-                    },
-                    emptyBuilder: (context, message, icon) =>SizedBox(
-                        height: .5.sh,
-                        child: CustomEmptyWidget(
-                          icon: Icons.school_outlined,
-                          title: label(
-                              e: "No data from server",
-                              b: "সার্ভার থেকে কোন তথ্য নেই"),
-                          message: "",
-                        ))
-                  ),
+                      stream: stateDataStreamController.stream,
+                      loadingBuilder: (context) {
+                        return const Center(child: CircularLoader());
+                      },
+                      dataBuilder: (context, data) {
+                        if (data is ProfileDataState) {
+                          return data.userInfoDataEntity.userInfoDataEntity!
+                                      .emisUserDataEntity !=
+                                  null
+                              ? PersonalInfoWidget(
+                                  data: data.userInfoDataEntity,
+                                  onTapLogout: showLogoutPromptDialog,
+                                )
+                              : SizedBox(
+                                  height: .5.sh,
+                                  child: CustomEmptyWidget(
+                                    icon: Icons.school_outlined,
+                                    title: label(
+                                        e: "No data from server",
+                                        b: "সার্ভার থেকে কোন তথ্য নেই"),
+                                    message: "",
+                                  ));
+                        } else if (data is ProgressDataState) {
+                          return ProgressInfoWidget(
+                            data: data.progressDataEntity,
+                          );
+                        } else {
+                          return SizedBox(
+                              height: .5.sh,
+                              child: CustomEmptyWidget(
+                                icon: Icons.school_outlined,
+                                title: label(
+                                    e: "No data from server",
+                                    b: "সার্ভার থেকে কোন তথ্য নেই"),
+                                message: "",
+                              ));
+                        }
+                      },
+                      emptyBuilder: (context, message, icon) => SizedBox(
+                          height: .5.sh,
+                          child: CustomEmptyWidget(
+                            icon: Icons.school_outlined,
+                            title: label(
+                                e: "No data from server",
+                                b: "সার্ভার থেকে কোন তথ্য নেই"),
+                            message: "",
+                          ))),
                   SizedBox(height: size.h40),
                 ],
               ),
