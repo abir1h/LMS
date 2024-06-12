@@ -44,6 +44,8 @@ mixin RecognitionWidgetService<T extends StatefulWidget> on State<T>
 
   ///Load Certificate data
   void _loadCertificateData() {
+    if (!mounted) return;
+    certificateDataStreamController.add(LoadingState());
     getCertificate().then((value) {
       if (value.error == null && value.data != null) {
         certificateDataStreamController

@@ -26,7 +26,7 @@ class ProfileRemoteDataSourceImp extends ProfileRemoteDataSource {
   @override
   Future<ResponseModel> getCertificateAction() async {
     final responseJson =
-        await Server.instance.getRequest(url: ApiCredential.getCertificate);
+        await Server.instance.getRequest(url: "${ApiCredential.getCertificate}?circular_id=2&course_id=2");
     ResponseModel responseModel = ResponseModel.fromJson(
         responseJson, (dynamic json) => CertificateDataModel.fromJson(json));
     return responseModel;
