@@ -14,6 +14,7 @@ class LanguageEn {
   String splashScreenText = "Welcome To CLMS";
   String authScreenHeaderText = "About HSEP";
   String authScreenContentText =
+
       "CLMS is a self-contained large-scale learning management system. It includes LMS,eLibrary, eTeacher guide, social learning platform or PLC  the entire system is designed in such a way that it can play an effective role in improving the professional quality of teachers.";
   String authScreenContentText2 =
       "This system is designed only to improve the professional quality of teachers, apart from teachers it will also play an effective role in providing training to head teachers and assistant head teachers.";
